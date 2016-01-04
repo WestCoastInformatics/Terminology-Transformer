@@ -1,0 +1,214 @@
+/*
+ * Copyright 2015 West Coast Informatics, LLC
+ */
+package com.wci.tt.model;
+
+import static org.junit.Assert.assertTrue;
+
+import org.apache.log4j.Logger;
+import com.wci.tt.Refset;
+import com.wci.tt.helpers.CopyConstructorTester;
+import com.wci.tt.helpers.EqualsHashcodeTester;
+import com.wci.tt.helpers.GetterSetterTester;
+import com.wci.tt.helpers.ProxyTester;
+import com.wci.tt.helpers.XmlSerializationTester;
+import com.wci.tt.jpa.ProjectJpa;
+import com.wci.tt.jpa.RefsetJpa;
+import com.wci.tt.jpa.helpers.IndexedFieldTester;
+import com.wci.tt.jpa.helpers.NullableFieldTester;
+import com.wci.tt.rf2.ConceptRefsetMember;
+import com.wci.tt.rf2.jpa.ConceptRefsetMemberJpa;
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+
+/**
+ * Unit testing for {@link ConceptRefsetMemberJpa}.
+ */
+public class ConceptRefsetMemberJpaUnitTest extends ModelUnitSupport {
+
+  /** The model object to test. */
+  private ConceptRefsetMemberJpa object;
+
+  /** The r1. */
+  private RefsetJpa r1;
+
+  /** The r2. */
+  private RefsetJpa r2;
+
+  /**
+   * Setup class.
+   */
+  @BeforeClass
+  public static void setupClass() {
+    // n/a
+  }
+
+  /**
+   * Setup.
+   * @throws Exception
+   */
+  @Before
+  public void setup() throws Exception {
+    object = new ConceptRefsetMemberJpa();
+
+    ProxyTester tester = new ProxyTester(new RefsetJpa());
+    r1 = (RefsetJpa) tester.createObject(1);
+    r2 = (RefsetJpa) tester.createObject(2);
+    r1.setProject(new ProjectJpa());
+    r2.setProject(new ProjectJpa());
+  }
+
+  /**
+   * Test getter and setter methods of model object.
+   *
+   * @throws Exception the exception
+   */
+  @Test
+  public void testModelGetSet021() throws Exception {
+    Logger.getLogger(getClass()).debug("TEST " + name.getMethodName());
+    GetterSetterTester tester = new GetterSetterTester(object);
+    tester.exclude("conceptName");
+    tester.exclude("refsetId");
+    tester.test();
+  }
+
+  /**
+   * Test equals and hascode methods.
+   *
+   * @throws Exception the exception
+   */
+  @Test
+  public void testModelEqualsHashcode021() throws Exception {
+    // TODO: need to get this working
+    Logger.getLogger(getClass()).debug("TEST " + name.getMethodName());
+    EqualsHashcodeTester tester = new EqualsHashcodeTester(object);
+    tester.include("active");
+    tester.include("moduleId");
+    tester.include("terminology");
+    tester.include("terminologyId");
+    tester.include("conceptId");
+    tester.include("conceptName");
+    tester.include("conceptActive");
+    tester.include("refset");
+
+    tester.proxy(Refset.class, 1, r1);
+    tester.proxy(Refset.class, 2, r2);
+    assertTrue(tester.testIdentitiyFieldEquals());
+    assertTrue(tester.testNonIdentitiyFieldEquals());
+    assertTrue(tester.testIdentityFieldNotEquals());
+    assertTrue(tester.testIdentitiyFieldHashcode());
+    assertTrue(tester.testNonIdentitiyFieldHashcode());
+    assertTrue(tester.testIdentityFieldDifferentHashcode());
+  }
+
+  /**
+   * Test copy constructor.
+   *
+   * @throws Exception the exception
+   */
+  @Test
+  public void testModelCopy021() throws Exception {
+    Logger.getLogger(getClass()).debug("TEST " + name.getMethodName());
+    CopyConstructorTester tester = new CopyConstructorTester(object);
+    tester.proxy(Refset.class, 1, r1);
+    tester.proxy(Refset.class, 1, r2);
+    assertTrue(tester.testCopyConstructor(ConceptRefsetMember.class));
+  }
+
+  /**
+   * Test XML serialization.
+   *
+   * @throws Exception the exception
+   */
+  @Test
+  public void testModelXmlSerialization021() throws Exception {
+    Logger.getLogger(getClass()).debug("TEST " + name.getMethodName());
+    XmlSerializationTester tester = new XmlSerializationTester(object);
+
+    Refset r = new RefsetJpa();
+    r.setId(1L);
+    tester.proxy(Refset.class, 1, r);
+    assertTrue(tester.testXmlSerialization());
+  }
+
+  /**
+   * Test not null fields.
+   *
+   * @throws Exception the exception
+   */
+  @Test
+  public void testModelNotNullField021() throws Exception {
+    Logger.getLogger(getClass()).debug("TEST " + name.getMethodName());
+    NullableFieldTester tester = new NullableFieldTester(object);
+
+    tester.include("active");
+    tester.include("moduleId");
+    tester.include("terminology");
+    tester.include("terminologyId");
+    tester.include("lastModified");
+    tester.include("lastModifiedBy");
+    tester.include("published");
+    tester.include("publishable");
+
+    tester.include("version");
+    tester.include("memberType");
+
+    tester.include("conceptId");
+    tester.include("conceptName");
+    tester.include("conceptActive");
+    assertTrue(tester.testNotNullFields());
+  }
+
+  /**
+   * Test field indexing.
+   *
+   * @throws Exception the exception
+   */
+  @Test
+  public void testModelIndexedFields021() throws Exception {
+    Logger.getLogger(getClass()).debug("TEST " + name.getMethodName());
+
+    // Test analyzed fields
+    IndexedFieldTester tester = new IndexedFieldTester(object);
+    tester.include("conceptName");
+    assertTrue(tester.testAnalyzedIndexedFields());
+
+    // Test non analyzed fields
+    assertTrue(tester.testAnalyzedIndexedFields());
+    tester = new IndexedFieldTester(object);
+    tester.include("terminologyId");
+    tester.include("terminology");
+    tester.include("version");
+    tester.include("effectiveTime");
+    tester.include("lastModified");
+    tester.include("lastModifiedBy");
+    tester.include("moduleId");
+    tester.include("conceptId");
+    tester.include("refsetId");
+    tester.include("memberType");
+    tester.include("conceptNameSort");
+
+    assertTrue(tester.testNotAnalyzedIndexedFields());
+
+  }
+
+  /**
+   * Teardown.
+   */
+  @After
+  public void teardown() {
+    // do nothing
+  }
+
+  /**
+   * Teardown class.
+   */
+  @AfterClass
+  public static void teardownClass() {
+    // do nothing
+  }
+
+}

@@ -4,14 +4,14 @@
 
   <!-- Module Metadata -->
   <parent>
-    <groupId>org.ihtsdo.otf.refset</groupId>
-    <artifactId>refset-parent</artifactId>
+    <groupId>com.wci.tt</groupId>
+    <artifactId>tt-parent</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <relativePath>../parent</relativePath>
   </parent>
 
-  <artifactId>refset-rest-client</artifactId>
-  <name>IHTSDO refset management service REST client</name>
+  <artifactId>tt-rest-client</artifactId>
+  <name>WCI Terminology Transformer Project service REST client</name>
   <description>Performs calls against REST services.</description>
 
   <!-- Declare Project Dependency Versions -->
@@ -19,13 +19,13 @@
 
     <!-- Model interfaces. -->
     <dependency>
-      <groupId>org.ihtsdo.otf.refset</groupId>
-      <artifactId>refset-jpa-services</artifactId>
+      <groupId>com.wci.tt</groupId>
+      <artifactId>tt-jpa-services</artifactId>
     </dependency>
 
     <dependency>
-      <groupId>org.ihtsdo.otf.refset</groupId>
-      <artifactId>refset-services</artifactId>
+      <groupId>com.wci.tt</groupId>
+      <artifactId>tt-services</artifactId>
     </dependency>
 
     <!-- Logger -->

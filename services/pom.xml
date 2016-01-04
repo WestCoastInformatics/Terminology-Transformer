@@ -4,14 +4,14 @@
 
   <!-- Module Metadata -->
   <parent>
-    <groupId>org.ihtsdo.otf.refset</groupId>
-    <artifactId>refset-parent</artifactId>
+    <groupId>com.wci.tt</groupId>
+    <artifactId>tt-parent</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <relativePath>../parent</relativePath>
   </parent>
 
-  <artifactId>refset-services</artifactId>
-  <name>IHTSDO refset management service API</name>
+  <artifactId>tt-services</artifactId>
+  <name>WCI Terminology Transformer Project service API</name>
   <description>Services for domain model objects.</description>
 
 
@@ -49,8 +49,8 @@
 
     <!-- Model interfaces. -->
     <dependency>
-      <groupId>org.ihtsdo.otf.refset</groupId>
-      <artifactId>refset-model</artifactId>
+      <groupId>com.wci.tt</groupId>
+      <artifactId>tt-model</artifactId>
     </dependency>
 
     <!-- Logging -->

@@ -4,21 +4,21 @@
 
   <!-- Module Metadata -->
   <parent>
-    <groupId>org.ihtsdo.otf.refset</groupId>
-    <artifactId>refset-parent</artifactId>
+    <groupId>com.wci.tt</groupId>
+    <artifactId>tt-parent</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <relativePath>../parent</relativePath>
   </parent>
 
-  <artifactId>refset-config</artifactId>
+  <artifactId>tt-config</artifactId>
   <packaging>pom</packaging>
-  <name>IHTSDO refset management service configuration project.</name>
+  <name>WCI Terminology Transformer Project configuration</name>
   <description>Sample data and template configuration files.</description>
 
   <!-- Assemble and attach resources -->
   <build>
     <plugins>
-      <!-- Assemble resources into refset-config*.zip -->
+      <!-- Assemble resources into tt-config*.zip -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-assembly-plugin</artifactId>
@@ -45,9 +45,7 @@
   <!-- Create your own version of one of these projects for custom config -->
   <modules>
     <module>dev-windows</module>
-    <module>uat</module>
     <module>prod</module>
-    <module>prod-wci</module>
   </modules>
 
 </project>

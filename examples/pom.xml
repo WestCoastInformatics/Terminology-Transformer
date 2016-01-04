@@ -4,14 +4,14 @@
 
   <!-- Module Metadata -->
   <parent>
-    <groupId>org.ihtsdo.otf.refset</groupId>
-    <artifactId>refset-parent</artifactId>
+    <groupId>com.wci.tt</groupId>
+    <artifactId>tt-parent</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <relativePath>../parent</relativePath>
   </parent>
 
-  <artifactId>refset-examples</artifactId>
-  <name>IHTSDO refset management service examples module</name>
+  <artifactId>tt-examples</artifactId>
+  <name>WCI Terminology Transformer Project examples</name>
   <description>Provides useful examples for common activities</description>
 
   <!-- Avoid running examples by default, use -DskipTests=false -->
@@ -25,13 +25,13 @@
 
     <!-- Dependencies -->
     <dependency>
-      <groupId>org.ihtsdo.otf.refset</groupId>
-      <artifactId>refset-rest-client</artifactId>
+      <groupId>com.wci.tt</groupId>
+      <artifactId>tt-rest-client</artifactId>
     </dependency>
 
     <dependency>
-      <groupId>org.ihtsdo.otf.refset</groupId>
-      <artifactId>refset-model</artifactId>
+      <groupId>com.wci.tt</groupId>
+      <artifactId>tt-model</artifactId>
     </dependency>
 
     <dependency>

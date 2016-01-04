@@ -1,0 +1,61 @@
+/**
+ * Copyright 2015 West Coast Informatics, LLC
+ */
+package com.wci.tt.services.handlers;
+
+import java.io.InputStream;
+import java.util.List;
+
+import com.wci.tt.Translation;
+import com.wci.tt.helpers.Configurable;
+import com.wci.tt.rf2.Concept;
+
+/**
+ * Generically represents a handler for exporting translation data.
+ * 
+ * <pre>
+ * Requirements
+ *  - be able to display available export handlers to a user for exporting content
+ *  - a global list of export handlers is sufficient (no need to be project specific)
+ *  - know that it is exporting a translation
+ *  - export content to an input stream.
+ * </pre>
+ */
+public interface ExportTranslationHandler extends Configurable {
+
+  /**
+   * Returns the file type filter.
+   *
+   * @return the file type filter
+   */
+  public String getFileTypeFilter();
+
+  /**
+   * Returns the file name.
+   *
+   * @param namespace the namespace
+   * @param type the type
+   * @param version the version
+   * @return the file name
+   */
+  public String getFileName(String namespace, String type, String version);
+
+  /**
+   * Returns the mime type.
+   *
+   * @return the mime type
+   */
+  public String getMimeType();
+
+  /**
+   * Export descriptions and language refset members connected to them.
+   *
+   * @param translation the translation
+   * @param concepts the concepts
+   * @return the list
+   * @throws Exception the exception
+   */
+  public InputStream exportConcepts(Translation translation,
+    List<Concept> concepts) throws Exception;
+
+}

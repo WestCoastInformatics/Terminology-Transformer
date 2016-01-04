@@ -5,21 +5,21 @@
   <modelVersion>4.0.0</modelVersion>
   <!-- Module Metadata -->
   <parent>
-    <groupId>org.ihtsdo.otf.refset</groupId>
-    <artifactId>refset-parent</artifactId>
+    <groupId>com.wci.tt</groupId>
+    <artifactId>tt-parent</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <relativePath>../parent</relativePath>
   </parent>
 
-  <artifactId>refset-rest</artifactId>
+  <artifactId>tt-rest</artifactId>
   <packaging>war</packaging>
-  <name>IHTSDO refset management REST service implementation</name>
+  <name>WCI Terminology Transformer Project REST service implementation</name>
   <description>REST service implementation.</description>
 
   <properties>
     <!-- Specify the config artifact parameters -->
-    <config.groupId>org.ihtsdo.otf.refset</config.groupId>
-    <config.artifactId>refset-config-dev-windows</config.artifactId>
+    <config.groupId>com.wci.tt</config.groupId>
+    <config.artifactId>tt-config-dev-windows</config.artifactId>
     <config.version>${project.version}</config.version>
 
     <!-- Defaults for Eclipse dev -->
@@ -28,7 +28,7 @@
     <deploy.footer.copyright>(c) Copyright IHTSDO 2015</deploy.footer.copyright>
     <deploy.presented.by></deploy.presented.by>
     <base.url>http://localhost:8080</base.url>
-    <logout.url>http://localhost:8080/refset-rest/index.html</logout.url>
+    <logout.url>http://localhost:8080/tt-rest/index.html</logout.url>
   </properties>
 
   <dependencies>
@@ -40,20 +40,20 @@
     </dependency>
     <!-- Model interfaces. -->
     <dependency>
-      <groupId>org.ihtsdo.otf.refset</groupId>
-      <artifactId>refset-jpa-model</artifactId>
+      <groupId>com.wci.tt</groupId>
+      <artifactId>tt-jpa-model</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.ihtsdo.otf.refset</groupId>
-      <artifactId>refset-jpa-services</artifactId>
+      <groupId>com.wci.tt</groupId>
+      <artifactId>tt-jpa-services</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.ihtsdo.otf.refset</groupId>
-      <artifactId>refset-model</artifactId>
+      <groupId>com.wci.tt</groupId>
+      <artifactId>tt-model</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.ihtsdo.otf.refset</groupId>
-      <artifactId>refset-custom</artifactId>
+      <groupId>com.wci.tt</groupId>
+      <artifactId>tt-custom</artifactId>
     </dependency>
 
     <!-- JPA dependencies -->
@@ -224,7 +224,7 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-war-plugin</artifactId>
         <configuration>
-          <warName>refset-rest</warName>
+          <warName>tt-rest</warName>
           <attachClasses>true</attachClasses>
           <filteringDeploymentDescriptors>true</filteringDeploymentDescriptors>
           <webResources>
@@ -290,6 +290,41 @@
       </plugin>
     </plugins>
 
+    <pluginManagement>
+    	<plugins>
+    		<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+    		<plugin>
+    			<groupId>org.eclipse.m2e</groupId>
+    			<artifactId>lifecycle-mapping</artifactId>
+    			<version>1.0.0</version>
+    			<configuration>
+    				<lifecycleMappingMetadata>
+    					<pluginExecutions>
+    						<pluginExecution>
+    							<pluginExecutionFilter>
+    								<groupId>org.codehaus.mojo</groupId>
+    								<artifactId>
+    									properties-maven-plugin
+    								</artifactId>
+    								<versionRange>
+    									[1.0-alpha-2,)
+    								</versionRange>
+    								<goals>
+    									<goal>
+    										read-project-properties
+    									</goal>
+    								</goals>
+    							</pluginExecutionFilter>
+    							<action>
+    								<ignore></ignore>
+    							</action>
+    						</pluginExecution>
+    					</pluginExecutions>
+    				</lifecycleMappingMetadata>
+    			</configuration>
+    		</plugin>
+    	</plugins>
+    </pluginManagement>
   </build>
 </project>
 

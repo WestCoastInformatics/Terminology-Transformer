@@ -4,11 +4,11 @@
   <modelVersion>4.0.0</modelVersion>
 
   <!-- Module Metadata -->
-  <groupId>org.ihtsdo.otf.refset</groupId>
-  <artifactId>refset-aggregator</artifactId>
+  <groupId>com.wci.tt</groupId>
+  <artifactId>tt-aggregator</artifactId>
   <version>1.0.0-SNAPSHOT</version>
   <packaging>pom</packaging>
-  <name>IHTSDO refset management service</name>
+  <name>WCI Terminology Transformer Project aggregator</name>
   <description>Aggregator project.</description>
 
   <!-- Sub-modules -->

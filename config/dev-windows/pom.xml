@@ -4,21 +4,21 @@
 
   <!-- Module Metadata -->
   <parent>
-    <groupId>org.ihtsdo.otf.refset</groupId>
-    <artifactId>refset-parent</artifactId>
+    <groupId>com.wci.tt</groupId>
+    <artifactId>tt-parent</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <relativePath>../../parent</relativePath>
   </parent>
 
-  <artifactId>refset-config-dev-windows</artifactId>
+  <artifactId>tt-config-dev-windows</artifactId>
   <packaging>pom</packaging>
-  <name>IHTSDO refset management service configuration project for a windows dev environment.</name>
+  <name>WCI Terminology Transformer Project configuration project for a windows dev environment.</name>
   <description>Template configuration files for windows dev environment.</description>
 
   <!-- Package as .zip -->
   <build>
     <plugins>
-      <!-- Assemble resources into refset-config*.zip -->
+      <!-- Assemble resources into tt-config*.zip -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-assembly-plugin</artifactId>
