@@ -61,7 +61,7 @@ public class SampleDataLoadAndUnloadTest {
     request.setProfiles(Arrays.asList("Createdb"));
     request.setGoals(Arrays.asList("clean", "install"));
     Properties p = new Properties();
-    p.setProperty("refset.config", System.getProperty("refset.config"));
+    p.setProperty("tt.config", System.getProperty("tt.config"));
     p.setProperty("server", server);
     request.setProperties(p);
     DefaultInvoker invoker = new DefaultInvoker();
@@ -76,7 +76,7 @@ public class SampleDataLoadAndUnloadTest {
     request.setProfiles(Arrays.asList("Reindex"));
     request.setGoals(Arrays.asList("clean", "install"));
     p = new Properties();
-    p.setProperty("refset.config", System.getProperty("refset.config"));
+    p.setProperty("tt.config", System.getProperty("tt.config"));
     p.setProperty("server", server);
     request.setProperties(p);
     invoker = new DefaultInvoker();

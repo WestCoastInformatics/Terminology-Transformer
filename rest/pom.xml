@@ -23,9 +23,9 @@
     <config.version>${project.version}</config.version>
 
     <!-- Defaults for Eclipse dev -->
-    <deploy.title>Development Refset Deployment</deploy.title>
+    <deploy.title>WCI Terminology Transmogrifier</deploy.title>
     <site.tracking.code></site.tracking.code>
-    <deploy.footer.copyright>(c) Copyright IHTSDO 2015</deploy.footer.copyright>
+    <deploy.footer.copyright>(c) Copyright WCI 2016</deploy.footer.copyright>
     <deploy.presented.by></deploy.presented.by>
     <base.url>http://localhost:8080</base.url>
     <logout.url>http://localhost:8080/tt-rest/index.html</logout.url>

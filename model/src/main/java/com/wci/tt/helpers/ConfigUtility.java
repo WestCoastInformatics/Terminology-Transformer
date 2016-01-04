@@ -155,12 +155,12 @@ public class ConfigUtility {
           ConfigUtility.class.getResourceAsStream("/label.prop");
       if (input != null) {
         labelProp.load(input);
-        // If a refset.config.label override can be found, use it
-        String candidateLabel = labelProp.getProperty("refset.config.label");
+        // If a tt.config.label override can be found, use it
+        String candidateLabel = labelProp.getProperty("tt.config.label");
         // If the default, uninterpolated value is used, stick again with the
         // default
         if (candidateLabel != null
-            && !candidateLabel.equals("${refset.config.label}")) {
+            && !candidateLabel.equals("${tt.config.label}")) {
           label = candidateLabel;
         }
       } else {
@@ -169,17 +169,17 @@ public class ConfigUtility {
 
       }
       Logger.getLogger(ConfigUtility.class.getName()).info(
-          "  refset.config.label = " + label);
+          "  tt.config.label = " + label);
 
       // Now get the properties from the corresponding setting
       // This is a complicated mechanism to support multiple simulataneous
       // installations within the same container (e.g. tomcat).
       // Default setups do not require this.
       String configFileName =
-          System.getProperty("refset.config"
+          System.getProperty("tt.config"
               + (label.isEmpty() ? "" : "." + label));
       Logger.getLogger(ConfigUtility.class.getName()).info(
-          "  refset.config" + (label.isEmpty() ? "" : "." + label) + " = "
+          "  tt.config" + (label.isEmpty() ? "" : "." + label) + " = "
               + configFileName);
       config = new Properties();
       FileReader in = new FileReader(new File(configFileName));

@@ -2,4 +2,4 @@
 # applications within the same container and can
 # be safely ignored if not needed. 
 
-refset.config.label=${refset.config.label}
+tt.config.label=${tt.config.label}

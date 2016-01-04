@@ -140,53 +140,6 @@ tsApp.controller('TabCtrl', [ '$scope', '$interval', '$timeout', 'securityServic
 
   } ]);
 
-// Header controller
-tsApp.controller('HeaderCtrl', [ '$scope', '$location', '$http', 'securityService',
-  function($scope, $location, $http, securityService) {
-    console.debug('configure HeaderCtrl');
-
-    // Declare user
-    $scope.user = securityService.getUser();
-
-    // Logout method
-    $scope.logout = function() {
-      securityService.logout();
-    }
-
-    // Open help page dynamically
-    $scope.goToHelp = function() {
-      var path = $location.path();
-      path = '/help' + path + '?authToken=' + $http.defaults.headers.common.Authorization;
-      var currentUrl = window.location.href;
-      var baseUrl = currentUrl.substring(0, currentUrl.indexOf('#') + 1);
-      var newUrl = baseUrl + path;
-      var myWindow = window.open(newUrl, 'helpWindow');
-      myWindow.focus();
-    };
-
-    // for ng-show
-    $scope.isShowing = function() {
-      return securityService.isLoggedIn();
-    }
-
-  } ]);
-
-// Footer controller
-tsApp.controller('FooterCtrl', [ '$scope', 'gpService', 'securityService',
-  function($scope, gpService, securityService) {
-    console.debug('configure FooterCtrl');
-    // Declare user
-    $scope.user = securityService.getUser();
-
-    // Logout method
-    $scope.logout = securityService.logout;
-
-    // for ng-show
-    $scope.isShowing = function() {
-      return securityService.isLoggedIn();
-    }
-
-  } ]);
 
 // Confirm dialog conroller and directive
 tsApp.controller('ConfirmModalController', function($scope, $uibModalInstance, data) {
