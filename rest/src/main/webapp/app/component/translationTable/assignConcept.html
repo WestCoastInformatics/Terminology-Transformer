@@ -1,0 +1,56 @@
+<div class="modal-header">
+  <h4>
+    {{action}} Concept
+    <span ng-show="action == 'REASSIGN'"> to Author</span>
+  </h4>
+</div>
+
+<div class="modal-body">
+  <table class="table">
+    <tr>
+      <td>
+        <b>Concept Id</b>
+      </td>
+      <td>{{concept.terminologyId}}</td>
+    </tr>
+    <tr>
+      <td>
+        <b>Name</b>
+      </td>
+      <td>{{concept.name}}</td>
+    </tr>
+    <!-- dont show username for reassign, it simply goes back to the author(s) -->
+    <tr ng-show="action == 'ASSIGN'">
+      <td>
+        <b>Select user</b>
+      </td>
+      <td>
+        <select ng-model="userName"
+          ng-options="item for item in assignedUserNames"></select>
+      </td>
+    </tr>
+    <!-- Show notes if we know the concept id -->
+    <tr ng-show="concept.id">
+      <td>
+        <b>Note</b>
+      </td>
+      <td>
+        <textarea rows="4" cols="40" ng-model="note" ui-tinymce="tinymceOptions"></textarea>
+      </td>
+    </tr>
+    <tr ng-show="errors.length > 0">
+      <td>&nbsp;</td>
+      <td>
+        <div class="alert alert-danger alert-error" ng-repeat="error in errors">{{error}}</div>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<div class="modal-footer">
+  <button ng-show="action == 'ASSIGN'" class="btn btn-primary"
+    ng-click="assignConcept();">Assign</button>
+  <button ng-show="action == 'REASSIGN'" class="btn btn-primary"
+    ng-click="assignConcept();">Reassign</button>
+  <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+</div>

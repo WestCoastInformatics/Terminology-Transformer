@@ -1,0 +1,204 @@
+<div class="modal-header">
+  <h4>Edit Concept</h4>
+
+</div>
+
+<div class="modal-body">
+
+  <!-- R1 -->
+  <div class="row">
+
+    <!-- R1C1 -->
+    <div class="col-md-5 col-xs-12">
+      <!-- Concept display -->
+      <div ng-show="data.concept" concept-info data="data"></div>
+      <!-- End R1C1 -->
+    </div>
+
+    <!-- R1C2 -->
+    <div class="col-md-7 col-xs-12">
+
+      <!-- Descriptions -->
+      <h5>Translation Descriptions
+        ({{conceptTranslated.descriptions.length}})</h5>
+      <div style="min-height: 200px;">
+        <!-- Existing descriptions -->
+
+        <!-- paging/sorting parameters -->
+        <span style="display: block;">
+          <uib-pagination items-per-page="pageSize" max-size="5"
+            boundary-links="true" class="pagination-sm" previous-text="&lsaquo;"
+            next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"
+            ng-show="pagedDescriptions.totalCount > pageSize"
+            total-items="conceptTranslated.descriptions.length"
+            ng-model="paging['descriptions'].page"
+            ng-change="getPagedDescriptions()"></uib-pagination>
+
+          <input class="input-filter" placeholder="Enter filter text"
+            ng-show="pagedDescriptions.totalCount > pageSize || paging['descriptions'].filter"
+            type="text" ng-model="paging['descriptions'].filter"
+            ng-model-options="{ debounce: 300 }"
+            ng-change="paging['descriptions'].page = 1; getPagedDescriptions()">
+
+          <button class="btn btn-xs btn-warning"
+            ng-show="paging['descriptions'].filter"
+            ng-click="paging['descriptions'].filter = ''; getPagedDescriptions()"
+            title="Click to clear filter text">Clear</button>
+
+          <div style="float: right;">
+            <i ng-click="addDescription()" title="Add description"
+              class="noul material-icons md-18">add</i>
+          </div>
+        </span>
+
+
+        <table class="table">
+          <thead>
+            <tr>
+              <th ng-click="setSortField('term', null)">Name<span
+                  ng-bind="getSortIndicator('term')"></span></th>
+              <th><span ng-click="setSortField('typeId', null)">Type</span>
+                <span ng-bind="getSortIndicator('typeId')"></span> /<span
+                  ng-click="setSortField('caseSignificanceId', null)">Case</span>
+                <span ng-bind="getSortIndicator('caseSignificanceId')"></span></th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="description in pagedDescriptions">
+              <td>
+                <div ng-class="{redborder: hasSuggestions(description)}">
+                  <textarea title="Description term" spellcheck="false"
+                    ng-model="description.term" ui-tinymce="tinymceOptions"
+                    ng-model-options="{ debounce: 300 }"
+                    ng-change="getSuggestions()"></textarea>
+                </div>
+              </td>
+              <td>
+                <select ng-model="description.type"
+                  ng-options="type.name for type in getDescriptionTypes()">
+                </select> <br /> <select style="margin-top: 5px;"
+                  ng-model="description.caseSignificanceId">
+                  <option
+                    ng-repeat="item in caseSensitiveTypes | orderBy:'item.key'"
+                    value="{{item.key}}">{{item.value}}</option>
+                </select>
+              </td>
+              <td>
+                <!-- remove description -->
+                <i ng-click="removeDescription($index)"
+                  title="Remove description" class="noul material-icons md-18">delete</i>
+                <!-- Add all words -->
+                <i ng-show="hasSuggestions(description)"
+                  ng-click="addAllSpellingEntries(description)"
+                  title="Add all words" class="noul-red material-icons md-18">add</i>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+      </div>
+
+
+      <h5>Spelling and Memory Controls</h5>
+      <div class="col-md-12 col-xs-12">
+        <table class="table">
+          <tbody>
+            <tr>
+              <td>
+                <input type="checkbox" ng-change="saveUserPreferences()"
+                  ng-model="user.userPreferences.spellingEnabled">
+                <span ng-show="user.userPreferences.spellingEnabled">Spelling
+                  Correction (ENABLED)</span>
+                <span ng-show="!user.userPreferences.spellingEnabled">Spelling
+                  Correction (DISABLED)</span>
+              </td>
+            </tr>
+            <tr ng-show="user.userPreferences.spellingEnabled">
+              <td>
+                <!-- Remove -->
+                <select title="Spelling dictionary entries that can be removed"
+                  style="width: 250px;" ng-model="selectedWord"
+                  ng-options="word for word in allUniqueWordsNoSuggestions">
+                </select>
+                <button ng-disabled="!selectedWord"
+                  class="btn btn-xs btn-primary"
+                  ng-click="removeSpellingEntry(selectedWord)"
+                  uib-tooltip="Remove entry from spelling dictionary">Remove</button>
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                <input type="checkbox" ng-change="saveUserPreferences()"
+                  ng-model="user.userPreferences.memoryEnabled">
+                <span ng-show="user.userPreferences.memoryEnabled">Phrase
+                  Memory (ENABLED)</span>
+                <span ng-show="!user.userPreferences.memoryEnabled">Memory
+                  Memory (DISABLED)</span>
+              </td>
+            </tr>
+            <tr ng-show="user.userPreferences.memoryEnabled">
+              <td>
+                <!-- Remove entries -->
+                <div>
+                  <select title="Memory entries that can be removed"
+                    style="width: 250px;" ng-model="selectedEntry"
+                    ng-options="getEntryInfo(entry) for entry in memoryEntries">
+                  </select>
+                  <button ng-disabled="!selectedEntry"
+                    class="btn btn-xs btn-primary"
+                    ng-click="removeMemoryEntry(selectedEntry.name, selectedEntry.translatedName)"
+                    uib-tooltip="Remove phrase memory entry">Remove</button>
+                  <button ng-disabled="!selectedEntry"
+                    class="btn btn-xs btn-primary"
+                    ng-click="applyMemoryEntry(selectedEntry.translatedName)"
+                    uib-tooltip="Use this phrase memory entry">Use</button>
+                </div>
+                <br />
+                <!-- Add entries -->
+                <div>
+                  <select title="Phrases without suggestions"
+                    style="width: 150px;" ng-model="selectedName"
+                    ng-options="phrase for phrase in allUniquePhrasesNoSuggestions">
+                  </select> <input ng-change="saveUserPreferences()" size="20"
+                    ng-model="translatedName">
+                  <button ng-disabled="!translatedName || !selectedName"
+                    class="btn btn-xs btn-primary"
+                    ng-click="addMemoryEntry(selectedName, translatedName)"
+                    uib-tooltip="Add phrase memory entry">Add</button>
+                </div>
+              </td>
+            </tr>
+
+          </tbody>
+        </table>
+
+      </div>
+
+      <div ng-show="errors.length > 0 || warnings.length> 0"
+        class="col-md-10 col-xs-12">
+        <!-- Errors -->
+        <div class="alert alert-danger alert-error" ng-repeat="error in errors">
+          {{error}}
+          <div
+            style="cursor: pointer; display: inline; float: right; width: 3%;">
+            <i class="glyphicon glyphicon-remove" ng-click="clearError()"></i>
+          </div>
+        </div>
+        <!-- Warnings -->
+        <span ng-show="warnings.length > 0">Click "Save" again to
+          override warnings</span>
+        <div class="alert alert-warning" ng-repeat="warning in warnings">{{warning}}</div>
+      </div>
+      <!-- end R1C2 -->
+    </div>
+    <!-- end R1 -->
+  </div>
+</div>
+
+<div class="modal-footer">
+  <button class="btn btn-primary" ng-click="submitConcept(conceptTranslated);"
+    title="Save work">Save</button>
+  <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+</div>
