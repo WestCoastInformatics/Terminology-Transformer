@@ -1,5 +1,5 @@
 // Refset Table directive
-// e.g. <div refset-table value='PUBLISHED' />
+// e.g. <div tt-table value='PUBLISHED' />
 tsApp
   .directive(
     'refsetTable',

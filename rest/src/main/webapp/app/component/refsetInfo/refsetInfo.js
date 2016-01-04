@@ -1,5 +1,5 @@
 // Refset Info directive
-// e.g. <div refset-info refset='refset' form='long' ></div>
+// e.g. <div tt-info refset='refset' form='long' ></div>
 tsApp.directive('refsetInfo', [ '$uibModal', 'utilService', function($uibModal, utilService) {
   console.debug('configure conceptInfo directive');
   return {
