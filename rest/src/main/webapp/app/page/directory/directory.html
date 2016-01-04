@@ -2,38 +2,45 @@
 
 <div class="row">
 
-  <div class="col-md-12 col-xs-12">
+	<div class="col-md-12 col-xs-12">
 
-    <h4>Refsets</h4>
+		<h4>Refsets</h4>
 
-    <uib-accordion> <uib-accordion-group is-open="accordionState['PUBLISHED']">
-    <uib-accordion-heading ng-click="setAccordion('PUBLISHED');">
-    <h5 class="section-header" ng-click="setAccordion('PUBLISHED');">Published</h5>
-    </uib-accordion-heading>
-    <div tt-table value="PUBLISHED" projects="projects" metadata="metadata"></div>
-    </uib-accordion-group> <uib-accordion-group is-open="accordionState['BETA']"> <uib-accordion-heading>
-    <h5 class="section-header" ng-click="setAccordion('BETA');">Beta</h5>
-    </uib-accordion-heading>
-    <div tt-table value="BETA" projects="projects" metadata="metadata"></div>
-    </uib-accordion-group> </uib-accordion>
+		<uib-accordion> <uib-accordion-group
+			is-open="accordionState['PUBLISHED']"> <uib-accordion-heading
+			ng-click="setAccordion('PUBLISHED');">
+		<h5 class="section-header" ng-click="setAccordion('PUBLISHED');">Published</h5>
+		</uib-accordion-heading>
+		<div tt-table value="PUBLISHED" projects="projects"
+			metadata="metadata"></div>
+		</uib-accordion-group> <uib-accordion-group is-open="accordionState['BETA']">
+		<uib-accordion-heading>
+		<h5 class="section-header" ng-click="setAccordion('BETA');">Beta</h5>
+		</uib-accordion-heading>
+		<div tt-table value="BETA" projects="projects" metadata="metadata"></div>
+		</uib-accordion-group> </uib-accordion>
 
-    <h4>Translations</h4>
+		<h4>Translations</h4>
 
-    <uib-accordion> <uib-accordion-group is-open="accordionState['TRANSLATION_PUBLISHED']">
-    <uib-accordion-heading>
-    <h5 class="section-header" ng-click="setAccordion('TRANSLATION_PUBLISHED');">Published</h5>
-    </uib-accordion-heading>
-    <div translation-table value="PUBLISHED" projects="projects"
-      metadata="metadata"></div>
-    </uib-accordion-group> <uib-accordion-group is-open="accordionState['TRANSLATION_BETA']"> <uib-accordion-heading>
-    <h5 class="section-header" ng-click="setAccordion('TRANSLATION_BETA');">Beta</h5>
-    </uib-accordion-heading>
-    <div translation-table value="BETA" projects="projects"
-      metadata="metadata"></div>
-    </uib-accordion-group> </uib-accordion>
+		<uib-accordion> <uib-accordion-group
+			is-open="accordionState['TRANSLATION_PUBLISHED']">
+		<uib-accordion-heading>
+		<h5 class="section-header"
+			ng-click="setAccordion('TRANSLATION_PUBLISHED');">Published</h5>
+		</uib-accordion-heading>
+		<div translation-table value="PUBLISHED" projects="projects"
+			metadata="metadata"></div>
+		</uib-accordion-group> <uib-accordion-group is-open="accordionState['TRANSLATION_BETA']">
+		<uib-accordion-heading>
+		<h5 class="section-header"
+			ng-click="setAccordion('TRANSLATION_BETA');">Beta</h5>
+		</uib-accordion-heading>
+		<div translation-table value="BETA" projects="projects"
+			metadata="metadata"></div>
+		</uib-accordion-group> </uib-accordion>
 
 
-  </div>
+	</div>
 </div>
 
 

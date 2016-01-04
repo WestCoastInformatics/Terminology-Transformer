@@ -40,49 +40,47 @@
 </script>
 
 <div class="row">
-  <div class="col-sm-12">
-    <h3>Connected Trees</h3>
-  </div>
+	<div class="col-sm-12">
+		<h3>Connected Trees</h3>
+	</div>
 </div>
 
 <div class="row">
-  <div class="col-sm-6">
-    <h3>Tree 1</h3>
-    <div ui-tree id="tree1-root">
-      <ol ui-tree-nodes="" ng-model="tree1">
-        <li ng-repeat="node in tree1" ui-tree-node ng-include="'nodes_renderer1.html'"></li>
-      </ol>
-    </div>
-  </div>
+	<div class="col-sm-6">
+		<h3>Tree 1</h3>
+		<div ui-tree id="tree1-root">
+			<ol ui-tree-nodes="" ng-model="tree1">
+				<li ng-repeat="node in tree1" ui-tree-node
+					ng-include="'nodes_renderer1.html'"></li>
+			</ol>
+		</div>
+	</div>
 
-  <div class="col-sm-6">
-    <h3>Tree 2</h3>
-    <div ui-tree id="tree2-root">
-      <ol ui-tree-nodes="" ng-model="tree2">
-        <li ng-repeat="node in tree2" ui-tree-node ng-include="'nodes_renderer2.html'"></li>
-      </ol>
-    </div>
-  </div>
+	<div class="col-sm-6">
+		<h3>Tree 2</h3>
+		<div ui-tree id="tree2-root">
+			<ol ui-tree-nodes="" ng-model="tree2">
+				<li ng-repeat="node in tree2" ui-tree-node
+					ng-include="'nodes_renderer2.html'"></li>
+			</ol>
+		</div>
+	</div>
 </div>
 
 <h3>Connected lists</h3>
 <div class="row">
-  <div class="col-sm-6">
+	<div class="col-sm-6"></div>
 
-  </div>
-
-  <div class="col-sm-6">
-
-  </div>
+	<div class="col-sm-6"></div>
 </div>
 
 <h3>Data binding</h3>
 <div class="row">
-  <div class="col-sm-6">
-    <pre class="code">{{ tree1 | json }}</pre>
-  </div>
+	<div class="col-sm-6">
+		<pre class="code">{{ tree1 | json }}</pre>
+	</div>
 
-  <div class="col-sm-6">
-    <pre class="code">{{ tree2 | json }}</pre>
-  </div>
+	<div class="col-sm-6">
+		<pre class="code">{{ tree2 | json }}</pre>
+	</div>
 </div>
