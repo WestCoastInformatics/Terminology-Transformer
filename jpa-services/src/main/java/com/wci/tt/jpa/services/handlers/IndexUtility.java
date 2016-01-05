@@ -33,15 +33,7 @@ import org.hibernate.search.jpa.FullTextQuery;
 import org.hibernate.search.jpa.Search;
 
 import com.wci.tt.helpers.PfsParameter;
-import com.wci.tt.jpa.PhraseMemoryJpa;
-import com.wci.tt.jpa.ProjectJpa;
-import com.wci.tt.jpa.RefsetJpa;
-import com.wci.tt.jpa.ReleaseInfoJpa;
-import com.wci.tt.jpa.TranslationJpa;
 import com.wci.tt.jpa.UserJpa;
-import com.wci.tt.rf2.jpa.ConceptJpa;
-import com.wci.tt.rf2.jpa.ConceptRefsetMemberJpa;
-import com.wci.tt.workflow.TrackingRecordJpa;
 
 /**
  * Performs utility functions relating to Lucene indexes and Hibernate Search.
@@ -63,9 +55,7 @@ public class IndexUtility {
     try {
       Class<?>[] classes =
           new Class<?>[] {
-              RefsetJpa.class, ProjectJpa.class, TranslationJpa.class,
-              ReleaseInfoJpa.class, TrackingRecordJpa.class, UserJpa.class,
-              ConceptRefsetMemberJpa.class, ConceptJpa.class, PhraseMemoryJpa.class
+             UserJpa.class
           };
       for (Class<?> clazz : classes) {
         stringFieldNames.put(clazz,

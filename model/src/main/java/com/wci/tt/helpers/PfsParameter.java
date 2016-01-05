@@ -3,9 +3,6 @@
  */
 package com.wci.tt.helpers;
 
-import com.wci.tt.rf2.Concept;
-
-
 /**
  * Represents a parameter container for paging, filtering and sorting. NOTE:
  * filtering is not currently imported or supported.

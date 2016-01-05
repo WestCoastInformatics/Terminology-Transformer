@@ -629,14 +629,11 @@ ttApp.service('tabService', [ '$location', 'utilService', 'gpService', 'security
 
     // Available tabs
     this.tabs = [ {
-      link : '#/directory',
-      label : 'Directory'
+      link : '#/transform',
+      label : 'Transform'
     }, {
-      link : '#/refset',
-      label : 'Refset'
-    }, {
-      link : '#/translation',
-      label : 'Translation'
+      link : '#/upload',
+      label : 'Upload'
     }, {
       link : '#/admin',
       label : 'Admin'

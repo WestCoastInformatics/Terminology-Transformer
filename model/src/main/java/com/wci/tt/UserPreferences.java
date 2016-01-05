@@ -3,10 +3,6 @@
  */
 package com.wci.tt;
 
-import java.util.List;
-
-import com.wci.tt.rf2.LanguageDescriptionType;
-
 /**
  * Represents a user.
  */
@@ -39,21 +35,6 @@ public interface UserPreferences {
    * @param user the user
    */
   public void setUser(User user);
-
-  /**
-   * Returns the language description types.
-   *
-   * @return the language description types
-   */
-  public List<LanguageDescriptionType> getLanguageDescriptionTypes();
-
-  /**
-   * Sets the language description types.
-   *
-   * @param languageDescriptionTypes the language description types
-   */
-  public void setLanguageDescriptionTypes(
-    List<LanguageDescriptionType> languageDescriptionTypes);
 
   /**
    * Returns the last tab accessed.

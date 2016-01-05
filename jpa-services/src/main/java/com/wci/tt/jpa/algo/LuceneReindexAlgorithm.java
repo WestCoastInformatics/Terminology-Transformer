@@ -14,18 +14,10 @@ import org.hibernate.search.jpa.FullTextEntityManager;
 import org.hibernate.search.jpa.Search;
 
 import com.wci.tt.algo.Algorithm;
-import com.wci.tt.jpa.PhraseMemoryJpa;
-import com.wci.tt.jpa.ProjectJpa;
-import com.wci.tt.jpa.RefsetJpa;
-import com.wci.tt.jpa.ReleaseInfoJpa;
-import com.wci.tt.jpa.TranslationJpa;
 import com.wci.tt.jpa.UserJpa;
 import com.wci.tt.jpa.services.RootServiceJpa;
-import com.wci.tt.rf2.jpa.ConceptJpa;
-import com.wci.tt.rf2.jpa.ConceptRefsetMemberJpa;
 import com.wci.tt.services.helpers.ProgressEvent;
 import com.wci.tt.services.helpers.ProgressListener;
-import com.wci.tt.workflow.TrackingRecordJpa;
 
 /**
  * Implementation of an algorithm to regenerate indexes.
@@ -125,74 +117,6 @@ public class LuceneReindexAlgorithm extends RootServiceJpa implements Algorithm 
     FullTextEntityManager fullTextEntityManager =
         Search.getFullTextEntityManager(manager);
 
-    if (objectsToReindex.contains("ProjectJpa")) {
-      Logger.getLogger(getClass()).info("  Creating indexes for ProjectJpa");
-      fullTextEntityManager.purgeAll(ProjectJpa.class);
-      fullTextEntityManager.flushToIndexes();
-      fullTextEntityManager.createIndexer(ProjectJpa.class)
-          .batchSizeToLoadObjects(100).cacheMode(CacheMode.NORMAL)
-          .threadsToLoadObjects(4).startAndWait();
-
-      objectsToReindex.remove("ProjectJpa");
-    }
-
-    if (objectsToReindex.contains("PhraseMemoryJpa")) {
-      Logger.getLogger(getClass()).info("  Creating indexes for PhraseMemoryJpa");
-      fullTextEntityManager.purgeAll(PhraseMemoryJpa.class);
-      fullTextEntityManager.flushToIndexes();
-      fullTextEntityManager.createIndexer(PhraseMemoryJpa.class)
-          .batchSizeToLoadObjects(100).cacheMode(CacheMode.NORMAL)
-          .threadsToLoadObjects(4).startAndWait();
-
-      objectsToReindex.remove("PhraseMemoryJpa");
-    }
-
-    if (objectsToReindex.contains("ReleaseInfoJpa")) {
-      Logger.getLogger(getClass())
-          .info("  Creating indexes for ReleaseInfoJpa");
-      fullTextEntityManager.purgeAll(ReleaseInfoJpa.class);
-      fullTextEntityManager.flushToIndexes();
-      fullTextEntityManager.createIndexer(ReleaseInfoJpa.class)
-          .batchSizeToLoadObjects(100).cacheMode(CacheMode.NORMAL)
-          .threadsToLoadObjects(4).startAndWait();
-
-      objectsToReindex.remove("ReleaseInfoJpa");
-    }
-
-    if (objectsToReindex.contains("TranslationJpa")) {
-      Logger.getLogger(getClass())
-          .info("  Creating indexes for TranslationJpa");
-      fullTextEntityManager.purgeAll(TranslationJpa.class);
-      fullTextEntityManager.flushToIndexes();
-      fullTextEntityManager.createIndexer(TranslationJpa.class)
-          .batchSizeToLoadObjects(100).cacheMode(CacheMode.NORMAL)
-          .threadsToLoadObjects(4).startAndWait();
-
-      objectsToReindex.remove("TranslationJpa");
-    }
-
-    if (objectsToReindex.contains("RefsetJpa")) {
-      Logger.getLogger(getClass()).info("  Creating indexes for RefsetJpa");
-      fullTextEntityManager.purgeAll(RefsetJpa.class);
-      fullTextEntityManager.flushToIndexes();
-      fullTextEntityManager.createIndexer(RefsetJpa.class)
-          .batchSizeToLoadObjects(100).cacheMode(CacheMode.NORMAL)
-          .threadsToLoadObjects(4).startAndWait();
-
-      objectsToReindex.remove("RefsetJpa");
-    }
-
-    if (objectsToReindex.contains("TrackingRecordJpa")) {
-      Logger.getLogger(getClass()).info(
-          "  Creating indexes for TrackingRecordJpa");
-      fullTextEntityManager.purgeAll(TrackingRecordJpa.class);
-      fullTextEntityManager.flushToIndexes();
-      fullTextEntityManager.createIndexer(TrackingRecordJpa.class)
-          .batchSizeToLoadObjects(100).cacheMode(CacheMode.NORMAL)
-          .threadsToLoadObjects(4).startAndWait();
-
-      objectsToReindex.remove("TrackingRecordJpa");
-    }
 
     if (objectsToReindex.contains("UserJpa")) {
       Logger.getLogger(getClass()).info("  Creating indexes for UserJpa");
@@ -205,28 +129,6 @@ public class LuceneReindexAlgorithm extends RootServiceJpa implements Algorithm 
       objectsToReindex.remove("UserJpa");
     }
 
-    if (objectsToReindex.contains("ConceptRefsetMemberJpa")) {
-      Logger.getLogger(getClass()).info(
-          "  Creating indexes for ConceptRefsetMemberJpa");
-      fullTextEntityManager.purgeAll(ConceptRefsetMemberJpa.class);
-      fullTextEntityManager.flushToIndexes();
-      fullTextEntityManager.createIndexer(ConceptRefsetMemberJpa.class)
-          .batchSizeToLoadObjects(100).cacheMode(CacheMode.NORMAL)
-          .threadsToLoadObjects(4).startAndWait();
-
-      objectsToReindex.remove("ConceptRefsetMemberJpa");
-    }
-
-    if (objectsToReindex.contains("ConceptJpa")) {
-      Logger.getLogger(getClass()).info("  Creating indexes for ConceptJpa");
-      fullTextEntityManager.purgeAll(ConceptJpa.class);
-      fullTextEntityManager.flushToIndexes();
-      fullTextEntityManager.createIndexer(ConceptJpa.class)
-          .batchSizeToLoadObjects(100).cacheMode(CacheMode.NORMAL)
-          .threadsToLoadObjects(4).startAndWait();
-
-      objectsToReindex.remove("ConceptJpa");
-    }
 
     if (objectsToReindex.size() != 0) {
       throw new Exception(
@@ -244,15 +146,7 @@ public class LuceneReindexAlgorithm extends RootServiceJpa implements Algorithm 
    * @throws Exception the exception
    */
   private void clearLuceneIndexes() throws Exception {
-    fullTextEntityManager.purgeAll(ProjectJpa.class);
-    fullTextEntityManager.purgeAll(PhraseMemoryJpa.class);
-    fullTextEntityManager.purgeAll(ReleaseInfoJpa.class);
-    fullTextEntityManager.purgeAll(TranslationJpa.class);
-    fullTextEntityManager.purgeAll(RefsetJpa.class);
-    fullTextEntityManager.purgeAll(TrackingRecordJpa.class);
     fullTextEntityManager.purgeAll(UserJpa.class);
-    fullTextEntityManager.purgeAll(ConceptRefsetMemberJpa.class);
-    fullTextEntityManager.purgeAll(ConceptJpa.class);
   }
 
   /**

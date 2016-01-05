@@ -13,6 +13,7 @@ import java.util.Properties;
 import javax.persistence.NoResultException;
 
 import org.apache.log4j.Logger;
+
 import com.wci.tt.User;
 import com.wci.tt.UserPreferences;
 import com.wci.tt.UserRole;
@@ -23,7 +24,6 @@ import com.wci.tt.helpers.UserList;
 import com.wci.tt.jpa.UserJpa;
 import com.wci.tt.jpa.UserPreferencesJpa;
 import com.wci.tt.jpa.helpers.UserListJpa;
-import com.wci.tt.services.ProjectService;
 import com.wci.tt.services.SecurityService;
 import com.wci.tt.services.handlers.SecurityServiceHandler;
 
@@ -227,14 +227,8 @@ public class SecurityServiceJpa extends RootServiceJpa implements
       throw new Exception("Unexpected null project id");
     }
 
-    String userName = getUsernameForToken(authToken);
-    ProjectService service = new ProjectServiceJpa();
-    UserRole result =
-        service.getProject(projectId).getUserRoleMap().get(getUser(userName));
-    service.close();
-    if (result == null) {
-      result = UserRole.VIEWER;
-    }
+      UserRole result =UserRole.VIEWER;
+     
     return result;
   }
 
@@ -455,11 +449,6 @@ public class SecurityServiceJpa extends RootServiceJpa implements
    */
   @Override
   public void handleLazyInit(User user) {
-    if (user.getUserPreferences() != null
-        && user.getUserPreferences().getLanguageDescriptionTypes() != null
-        && user.getUserPreferences().getLanguageDescriptionTypes().size() > 0) {
-      user.getUserPreferences().getLanguageDescriptionTypes().get(0)
-          .getDescriptionType().getName();
-    }
+    
   }
 }

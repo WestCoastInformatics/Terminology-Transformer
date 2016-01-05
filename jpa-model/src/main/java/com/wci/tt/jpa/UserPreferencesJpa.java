@@ -3,17 +3,11 @@
  */
 package com.wci.tt.jpa;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.persistence.CascadeType;
-import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
@@ -22,11 +16,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 import org.hibernate.envers.Audited;
+
 import com.wci.tt.User;
 import com.wci.tt.UserPreferences;
 import com.wci.tt.UserRole;
-import com.wci.tt.rf2.LanguageDescriptionType;
-import com.wci.tt.rf2.jpa.LanguageDescriptionTypeJpa;
 
 /**
  * JPA enabled implementation of {@link UserPreferences}.
@@ -46,12 +39,6 @@ public class UserPreferencesJpa implements UserPreferences {
   /** The user name. */
   @OneToOne(targetEntity = UserJpa.class)
   private User user;
-
-  /** The language Refset members. */
-  @OneToMany(cascade = CascadeType.ALL, targetEntity = LanguageDescriptionTypeJpa.class, orphanRemoval = true)
-  @CollectionTable(name = "user_pref_language_desc_types")
-  private List<LanguageDescriptionType> languageDescriptionTypes =
-      new ArrayList<>();
 
   /** The lastTab. */
   @Column(nullable = true)
@@ -98,10 +85,8 @@ public class UserPreferencesJpa implements UserPreferences {
     id = prefs.getId();
     user = prefs.getUser();
     lastTab = prefs.getLastTab();
-    languageDescriptionTypes = prefs.getLanguageDescriptionTypes();
     spellingEnabled = prefs.isSpellingEnabled();
     memoryEnabled = prefs.isMemoryEnabled();
-    languageDescriptionTypes = prefs.getLanguageDescriptionTypes();
     lastRefsetAccordion = prefs.getLastRefsetAccordion();
     lastTranslationAccordion = prefs.getLastTranslationAccordion();
     lastDirectoryAccordion = prefs.getLastDirectoryAccordion();
@@ -314,23 +299,6 @@ public class UserPreferencesJpa implements UserPreferences {
   }
 
   /* see superclass */
-  @XmlElement(type = LanguageDescriptionTypeJpa.class)
-  @Override
-  public List<LanguageDescriptionType> getLanguageDescriptionTypes() {
-    if (languageDescriptionTypes == null) {
-      languageDescriptionTypes = new ArrayList<>();
-    }
-    return languageDescriptionTypes;
-  }
-
-  /* see superclass */
-  @Override
-  public void setLanguageDescriptionTypes(
-    List<LanguageDescriptionType> languageDescriptionTypes) {
-    this.languageDescriptionTypes = languageDescriptionTypes;
-  }
-
-  /* see superclass */
   @Override
   public boolean isSpellingEnabled() {
     return spellingEnabled;
@@ -358,11 +326,7 @@ public class UserPreferencesJpa implements UserPreferences {
   public int hashCode() {
     final int prime = 31;
     int result = 1;
-    result =
-        prime
-            * result
-            + ((languageDescriptionTypes == null) ? 0
-                : languageDescriptionTypes.hashCode());
+
     result =
         prime
             * result
@@ -403,11 +367,7 @@ public class UserPreferencesJpa implements UserPreferences {
     if (getClass() != obj.getClass())
       return false;
     UserPreferencesJpa other = (UserPreferencesJpa) obj;
-    if (languageDescriptionTypes == null) {
-      if (other.languageDescriptionTypes != null)
-        return false;
-    } else if (!languageDescriptionTypes.equals(other.languageDescriptionTypes))
-      return false;
+
     if (lastDirectoryAccordion == null) {
       if (other.lastDirectoryAccordion != null)
         return false;
@@ -455,7 +415,6 @@ public class UserPreferencesJpa implements UserPreferences {
   @Override
   public String toString() {
     return "UserPreferencesJpa [id=" + id + ", user=" + user
-        + ", languageDescriptionTypes=" + languageDescriptionTypes
         + ", lastTab=" + lastTab + ", lastRefsetAccordion="
         + lastRefsetAccordion + ", spellingEnabled=" + spellingEnabled
         + ", memoryEnabled=" + memoryEnabled + ", lastTranslationAccordion="

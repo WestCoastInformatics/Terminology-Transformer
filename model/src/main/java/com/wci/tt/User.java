@@ -3,8 +3,6 @@
  */
 package com.wci.tt;
 
-import java.util.Map;
-
 /**
  * Represents a user.
  */
@@ -80,7 +78,7 @@ public interface User {
    */
   public void setApplicationRole(UserRole role);
 
-  /**
+  /**   
    * Returns the user preferences.
    *
    * @return the user preferences
@@ -107,19 +105,5 @@ public interface User {
    * @param authToken the auth token
    */
   public void setAuthToken(String authToken);
-
-  /**
-   * Returns the project role map.
-   *
-   * @return the project role map
-   */
-  public Map<Project,UserRole> getProjectRoleMap();
-  
-  /**
-   * Sets the project role map.
-   *
-   * @param projectRoleMap the project role map
-   */
-  public void setProjectRoleMap(Map<Project,UserRole>projectRoleMap);
 
 }

@@ -4,7 +4,7 @@
 	xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
             http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
 	<url>
-		<loc>https://refset.ihtsdotools.org/index.html</loc>
+		<loc>https://transform.terminology.tools</loc>
 		<lastmod>2015-08-19T00:08:42+00:00</lastmod>
 	</url>
 </urlset>

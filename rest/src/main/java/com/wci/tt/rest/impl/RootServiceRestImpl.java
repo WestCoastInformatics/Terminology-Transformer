@@ -6,11 +6,8 @@ package com.wci.tt.rest.impl;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 
-import com.wci.tt.Refset;
 import com.wci.tt.UserRole;
 import com.wci.tt.helpers.LocalException;
-import com.wci.tt.services.ProjectService;
-import com.wci.tt.services.RefsetService;
 import com.wci.tt.services.SecurityService;
 import com.wci.tt.services.handlers.ExceptionHandler;
 
@@ -20,7 +17,7 @@ import com.wci.tt.services.handlers.ExceptionHandler;
 public class RootServiceRestImpl {
 
   /** The websocket. */
-  private static NotificationWebsocket websocket = null;
+  private static NotificationWebsocket websocket     = null;
 
   /**
    * Instantiates an empty {@link RootServiceRestImpl}.
@@ -92,97 +89,6 @@ public class RootServiceRestImpl {
     return securityService.getUsernameForToken(authToken);
   }
 
-  /**
-   * Authorize the users project role or accept application ADMIN.
-   *
-   * @param projectService the project service
-   * @param projectId the project id
-   * @param securityService the security service
-   * @param authToken the auth token
-   * @param perform the perform
-   * @param requiredProjectRole the required project role
-   * @return the username
-   * @throws Exception the exception
-   */
-  public static String authorizeProject(ProjectService projectService,
-    Long projectId, SecurityService securityService, String authToken,
-    String perform, UserRole requiredProjectRole) throws Exception {
-
-    // Get userName
-    final String userName = securityService.getUsernameForToken(authToken);
-
-    // Allow application admin to do anything
-    UserRole appRole = securityService.getApplicationRoleForToken(authToken);
-    if (appRole == UserRole.USER || appRole == UserRole.ADMIN) {
-      return userName;
-    }
-
-    // Verify that user project role has privileges of required role
-    UserRole role =
-        projectService.getProject(projectId).getUserRoleMap()
-            .get(securityService.getUser(userName));
-    UserRole projectRole = (role == null) ? UserRole.VIEWER : role;
-    if (!projectRole.hasPrivilegesOf(requiredProjectRole))
-      throw new WebApplicationException(Response.status(401)
-          .entity("User does not have permissions to " + perform + ".").build());
-
-    // return username
-    return userName;
-  }
-
-  /**
-   * Authorize private project.
-   *
-   * @param refsetService the refset service
-   * @param refsetId the refset id
-   * @param securityService the security service
-   * @param authToken the auth token
-   * @param perform the perform
-   * @param requiredProjectRole the required project role
-   * @param requiredAppRole the required app role
-   * @return the string
-   * @throws Exception the exception
-   */
-  public static String authorizePrivateRefset(RefsetService refsetService,
-    Long refsetId, SecurityService securityService, String authToken,
-    String perform, UserRole requiredProjectRole, UserRole requiredAppRole)
-    throws Exception {
-
-    // Get userName
-    final String userName = securityService.getUsernameForToken(authToken);
-    UserRole userAppRole =
-        securityService.getApplicationRoleForToken(authToken);
-
-    // Allow application admin to do anything
-    if (userAppRole == UserRole.ADMIN) {
-      return userName;
-    }
-
-    Refset refset = refsetService.getRefset(refsetId);
-    // For public projects, verify user has required application role
-    if (refset.isPublic()) {
-      if (!userAppRole.hasPrivilegesOf(requiredAppRole)) {
-        throw new WebApplicationException(Response.status(401)
-            .entity("User does not have permissions to " + perform + ".")
-            .build());
-      }
-    }
-
-    // For private projects, verify user has required project role
-    else {
-      UserRole role =
-          refset.getProject().getUserRoleMap()
-              .get(securityService.getUser(userName));
-      UserRole projectRole = (role == null) ? UserRole.VIEWER : role;
-      if (!projectRole.hasPrivilegesOf(requiredProjectRole))
-        throw new WebApplicationException(Response.status(401)
-            .entity("User does not have permissions to " + perform + ".")
-            .build());
-    }
-
-    // REturn username
-    return userName;
-  }
 
   /**
    * Returns the total elapsed time str.

@@ -3,10 +3,6 @@
  */
 package com.wci.tt.helpers;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import com.wci.tt.Project;
 import com.wci.tt.User;
 import com.wci.tt.UserPreferences;
 import com.wci.tt.UserRole;
@@ -37,8 +33,6 @@ public class UserImpl implements User {
   /** The auth token. */
   private String authToken;
 
-  /** The projects. */
-  private Map<Project,UserRole> projectRoleMap;
 
   /**
    * Instantiates an empty {@link UserImpl}.
@@ -59,7 +53,6 @@ public class UserImpl implements User {
     applicationRole = user.getApplicationRole();
     authToken = user.getAuthToken();
     userPreferences = user.getUserPreferences();
-    projectRoleMap = new HashMap<>(user.getProjectRoleMap());
   }
 
   /* see superclass */
@@ -144,19 +137,6 @@ public class UserImpl implements User {
   @Override
   public void setUserPreferences(UserPreferences preferences) {
     this.userPreferences = preferences;
-  }
-
-  @Override
-  public Map<Project, UserRole> getProjectRoleMap() {
-    if (projectRoleMap == null) {
-      projectRoleMap = new HashMap<>();
-    }
-    return projectRoleMap;
-  }
-
-  @Override
-  public void setProjectRoleMap(Map<Project, UserRole> projectRoleMap) {
-    this.projectRoleMap = projectRoleMap;
   }
 
   /* see superclass */
