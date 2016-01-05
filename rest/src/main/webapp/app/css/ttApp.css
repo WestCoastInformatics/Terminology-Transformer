@@ -1,0 +1,12 @@
+/*
+  Terminology Transformer, West Coast Informatics, LLC.
+  Application styling and overrides
+*/
+
+/* Override ng-table highlighting of sorted columns */
+th.sortable.sort-asc {
+    background-color: transparent !important;
+}
+th.sortable.sort-desc {
+    background-color: transparent !important;
+}

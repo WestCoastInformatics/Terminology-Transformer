@@ -1,7 +1,7 @@
 'use strict'
 
 var ttApp = angular
-  .module('ttApp', [ 'ngRoute', 'ui.bootstrap', 'ngCookies', 'angularFileUpload' ]).config(
+  .module('ttApp', [ 'ngRoute', 'ui.bootstrap', 'ngCookies', 'ngTable', 'angularFileUpload' ]).config(
     function($rootScopeProvider) {
 
       // Set recursive digest limit higher to handle very deep trees.
@@ -10,6 +10,7 @@ var ttApp = angular
 
 // Declare top level URL vars
 var securityUrl = 'security/';
+var fileUrl = 'file/';
 
 // Initialization of ttApp
 ttApp.run([ '$rootScope', '$http', '$window', 'securityService',

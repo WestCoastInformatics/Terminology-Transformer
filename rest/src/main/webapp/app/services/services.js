@@ -1,3 +1,36 @@
+ttApp.service('fileService', [ '$http', '$location', '$q', '$cookieStore', 'utilService', 'gpService',
+  function($http, $location, $q, $cookieStore, utilService, gpService) {
+    console.debug('configure fileService');
+    
+    /**
+     * Retrieves details for all currently uploaded files
+     */
+    this.getUploadedFileDetails = function() {
+      var deferred = $q.defer();
+      $http.get(fileUrl + 'list').then(function(response) {
+        deferred.resolve(response.data);
+      }, function(error) {
+        utilService.handleError(error);
+        deferred.reject(error);
+      });
+      return deferred.promise;
+    }
+    
+    /**
+     * Deletes a file from the server (by filename)
+     */
+    this.deleteFile = function(fileName) {
+      var deferred = $q.defer();
+      $http['delete'](fileUrl + 'delete/' + fileName).then(function(response) {
+        deferred.resolve();
+      }, function(error) {
+        utilService.handleError(error);
+        deferred.reject(error);
+      });
+      return deferred.promise;
+    }
+  }]);
+
 // Error service
 ttApp
   .service(
