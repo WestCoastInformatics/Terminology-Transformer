@@ -41,8 +41,8 @@ ttApp.controller('SourceDataUploadCtrl',
     /**
      * Function to delete file from server
      */
-    $scope.deleteFile = function(fileName) {
-      fileService.deleteFile(fileName).then(function(response) {
+    $scope.deleteFile = function(file) {
+      fileService.deleteFile(file.name).then(function(response) {
         getUploadedFileDetails();
       }, function(error) {
         // do nothing

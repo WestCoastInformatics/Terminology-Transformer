@@ -164,6 +164,10 @@ public class SecurityServiceJpa extends RootServiceJpa implements
       throw new LocalException(
           "Attempt to access a service without an AuthToken, the user is likely not logged in.");
 
+    if (!"true".equals(ConfigUtility.getConfigProperties().getProperty("security.enabled"))) {
+      return ConfigUtility.getConfigProperties().getProperty("security.disabled.userName");
+    }
+    
     // Replace double quotes in auth token.
     String parsedToken = authToken.replace("\"", "");
 
@@ -198,8 +202,14 @@ public class SecurityServiceJpa extends RootServiceJpa implements
       throw new LocalException(
           "Attempt to access a service without an AuthToken, the user is likely not logged in.");
     }
+    if (!"true".equals(ConfigUtility.getConfigProperties().getProperty("security.enabled"))) {
+      return UserRole.valueOf(ConfigUtility.getConfigProperties().getProperty("security.disabled.role"));
+    }
+    
     String parsedToken = authToken.replace("\"", "");
     String userName = getUsernameForToken(parsedToken);
+    
+  
 
     // check for null userName
     if (userName == null) {

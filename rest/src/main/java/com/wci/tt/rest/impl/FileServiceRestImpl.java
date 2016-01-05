@@ -17,6 +17,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 
 import org.apache.log4j.Logger;
@@ -59,6 +60,7 @@ public class FileServiceRestImpl extends RootServiceRestImpl
         .info("RESTful call (Authentication): /file/upload "
             + (contentDispositionHeader != null
                 ? contentDispositionHeader.getFileName() : "UNKNOWN FILE"));
+    
     try {
 
       String uploadDir =
@@ -87,15 +89,17 @@ public class FileServiceRestImpl extends RootServiceRestImpl
   @DELETE
   @Path("delete/{fileName}")
   public void deleteFile(
-    @ApiParam(value = "Name of file to delete, e.g. filename.txt", required = true) @PathParam("fileName") String fileName, 
+    @ApiParam(value = "Name of file to delete, e.g. filename.txt", required = true) @PathParam("fileName") String fileName,
     @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
-  throws Exception {
+      throws Exception {
     String uploadDir =
         ConfigUtility.getConfigProperties().getProperty("upload.dir");
-    
+
+    Logger.getLogger(getClass())
+        .info("RESTful call (Authentication): /file/delete " + fileName);
+
     try {
       File dir = new File(uploadDir);
-
       File[] files = dir.listFiles();
       for (File f : files) {
         if (f.getName().equals(fileName)) {
@@ -114,7 +118,7 @@ public class FileServiceRestImpl extends RootServiceRestImpl
   public StringList getUploadedFilesDetails(
     @ApiParam(value = "Paging/filtering/sorting object", required = false) PfsParameter pfsParameter,
     @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
-    throws Exception {
+      throws Exception {
 
     String uploadDir =
         ConfigUtility.getConfigProperties().getProperty("upload.dir");
@@ -133,7 +137,6 @@ public class FileServiceRestImpl extends RootServiceRestImpl
       handleException(e, "retrieving uploaded file list");
       return fileNames;
     }
-    
 
   }
 

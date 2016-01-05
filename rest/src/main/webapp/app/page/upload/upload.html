@@ -17,17 +17,17 @@
 
 <div class="row">
 	<!-- padding -->
-	<div class="col-md-1 col-xs-0"></div>
+	<div class="col-md-1 col-sm-0 col-xs-0"></div>
 
 
-	<div class="col-md-10 col-xs-12" nv-file-drop="" uploader="uploader"
-		filters="queueLimit, customFilter">
+	<div class="col-md-10 col-sm-12 col-xs-12" nv-file-drop=""
+		uploader="uploader" filters="queueLimit, customFilter">
 
 		<div class="container">
 
 			<div class="row">
 
-				<div class="col-md-3">
+				<div class="col-md-3 col-xs-12">
 
 					<h3>Upload files</h3>
 
@@ -42,7 +42,7 @@
 						uploader="uploader" multiple /><br />
 				</div>
 
-				<div class="col-md-9" style="margin-bottom: 40px">
+				<div class="col-md-9 col-xs-12" style="margin-bottom: 100px">
 					<div class="row">
 
 						<h3>Upload queue</h3>
@@ -79,7 +79,7 @@
 										<button type="button" class="btn btn-success btn-xs"
 											ng-click="item.upload()"
 											ng-disabled="item.isReady || item.isUploading || item.isSuccess">
-											<span class="glyphicon glyphicon-upload"></span> Upload
+											<span class="glyphicon glyphicon-upload"></span> {{ item.isError || item.isCancel ? 'Retry' : 'Upload'}}
 										</button>
 										<button type="button" class="btn btn-warning btn-xs"
 											ng-click="item.cancel()" ng-disabled="!item.isUploading">
@@ -127,7 +127,8 @@
 
 						<table ng-table="tpUploaded" class="table">
 							<tr ng-repeat="item in $data">
-								<td data-title="'Name'" sortable="'name'">{{item.name}}</td>
+								<td data-title="'Name'" sortable="'name'"
+									stye="word-break: break-all;">{{item.name}}</td>
 								<td data-title="'Size'" sortable="'size'">{{item.size/1024/1024|number:2
 									}} MB</td>
 								<td data-title="'Uploaded'" sortable="'date'">{{item.date |
@@ -139,7 +140,7 @@
 
 							</tr>
 						</table>
-<!-- 
+						<!-- 
 						<table class="table">
 							<thead>
 								<tr>
@@ -174,7 +175,7 @@
 						</button> -->
 							<button type="button" class="btn btn-danger btn-s"
 								ng-click="deleteAllFiles()"
-								ng-disabled="!uploadedFiles.strings.length">
+								ng-disabled="!tpUploaded.count">
 								<span class="glyphicon glyphicon-trash"></span> Delete all
 							</button>
 						</div>
@@ -186,7 +187,7 @@
 	</div>
 
 	<!-- padding -->
-	<div class="col-md-1 col-xs-0"></div>
+	<div class="col-md-1 col-sm-0 col-xs-0"></div>
 </div>
 
 <!-- Done Upload view -->
