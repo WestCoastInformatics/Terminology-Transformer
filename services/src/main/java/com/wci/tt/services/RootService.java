@@ -7,6 +7,7 @@ import java.util.List;
 
 import com.wci.tt.helpers.PfsParameter;
 
+// TODO: Auto-generated Javadoc
 /**
  * Generically represents a service.
  */
@@ -87,8 +88,8 @@ public interface RootService {
 
   /**
    * Apply pfs to list.
-   * @param <T>
    *
+   * @param <T> the generic type
    * @param list the list
    * @param clazz the clazz
    * @param pfs the pfs
@@ -97,4 +98,18 @@ public interface RootService {
    */
   public <T> List<T> applyPfsToList(List<T> list, Class<T> clazz,
     PfsParameter pfs) throws Exception;
+
+  /**
+   * Checks if is last modified flag.
+   *
+   * @return true, if is last modified flag
+   */
+  public boolean isLastModifiedFlag();
+
+  /**
+   * Sets the last modified flag.
+   *
+   * @param lastModifiedFlag the new last modified flag
+   */
+  public void setLastModifiedFlag(boolean lastModifiedFlag);
 }
