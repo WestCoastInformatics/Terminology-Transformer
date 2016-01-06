@@ -218,3 +218,11 @@ pip-log.txt
 
 #Mr Developer
 .mr.developer.cfg
+
+################
+## Eclipse IDE
+################
+
+# Project files
+*.iml
+*.ipr
