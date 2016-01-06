@@ -226,3 +226,4 @@ pip-log.txt
 # Project files
 *.iml
 *.ipr
+.idea
