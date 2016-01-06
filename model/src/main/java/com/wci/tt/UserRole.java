@@ -48,14 +48,8 @@ public enum UserRole {
   public boolean hasPrivilegesOf(UserRole role) {
     if (this == UserRole.VIEWER && role == UserRole.VIEWER)
       return true;
-    else if (this == UserRole.AUTHOR
-        && (role == UserRole.VIEWER || role == UserRole.AUTHOR))
-      return true;
-    else if (this == UserRole.REVIEWER
-        && (role == UserRole.VIEWER || role == UserRole.USER || role == UserRole.AUTHOR || role == UserRole.REVIEWER))
-      return true;
     else if (this == UserRole.USER
-        && (role == UserRole.VIEWER || role == UserRole.USER || role == UserRole.AUTHOR))
+        && (role == UserRole.VIEWER || role == UserRole.USER))
       return true;
     else if (this == UserRole.ADMIN)
       return true;
