@@ -51,15 +51,21 @@
 						<table class="table">
 							<thead>
 								<tr>
+									<th ng-show="hasZippedFiles">Unzip</th>
 									<th width="50%">Name</th>
 									<th ng-show="uploader.isHTML5">Size</th>
 									<th ng-show="uploader.isHTML5">Progress</th>
 									<th>Status</th>
 									<th>Actions</th>
+
 								</tr>
 							</thead>
 							<tbody>
 								<tr ng-repeat="item in uploader.queue">
+									<td ng-show="hasZippedFiles"><input
+										type="checkbox" ng-show="item.isZipped" ng-model="item.unzip">
+									</td>
+
 									<td><strong>{{ item.file.name }}</strong></td>
 									<td ng-show="uploader.isHTML5" nowrap>{{
 										item.file.size/1024/1024|number:2 }} MB</td>
@@ -76,10 +82,12 @@
 										ng-show="item.isError"><i
 											class="glyphicon glyphicon-remove"></i></span></td>
 									<td nowrap>
+
 										<button type="button" class="btn btn-success btn-xs"
 											ng-click="item.upload()"
 											ng-disabled="item.isReady || item.isUploading || item.isSuccess">
-											<span class="glyphicon glyphicon-upload"></span> {{ item.isError || item.isCancel ? 'Retry' : 'Upload'}}
+											<span class="glyphicon glyphicon-upload"></span> {{
+											item.isError || item.isCancel ? 'Retry' : 'Upload'}}
 										</button>
 										<button type="button" class="btn btn-warning btn-xs"
 											ng-click="item.cancel()" ng-disabled="!item.isUploading">
@@ -90,6 +98,7 @@
 											<span class="glyphicon glyphicon-trash"></span> Remove
 										</button>
 									</td>
+
 								</tr>
 							</tbody>
 						</table>
@@ -103,7 +112,7 @@
 								</div>
 							</div>
 							<button type="button" class="btn btn-success btn-s"
-								ng-click="uploader.uploadAll()"
+								ng-click="uploadAll()"
 								ng-disabled="!uploader.getNotUploadedItems().length">
 								<span class="glyphicon glyphicon-upload"></span> Upload all
 							</button>
@@ -174,8 +183,7 @@
 							<span class="glyphicon glyphicon-download"></span> Download all as zip
 						</button> -->
 							<button type="button" class="btn btn-danger btn-s"
-								ng-click="deleteAllFiles()"
-								ng-disabled="!tpUploaded.count">
+								ng-click="deleteAllFiles()" ng-disabled="!tpUploaded.count">
 								<span class="glyphicon glyphicon-trash"></span> Delete all
 							</button>
 						</div>

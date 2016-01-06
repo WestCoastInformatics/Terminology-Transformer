@@ -4,10 +4,7 @@
 package com.wci.tt.rest.impl;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -17,7 +14,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import org.apache.log4j.Logger;
@@ -26,14 +23,15 @@ import org.glassfish.jersey.media.multipart.FormDataParam;
 
 import com.wci.tt.helpers.ConfigUtility;
 import com.wci.tt.helpers.PfsParameter;
+import com.wci.tt.helpers.SourceDataUtil;
 import com.wci.tt.helpers.StringList;
-import com.wci.tt.jpa.services.rest.FileServiceRest;
+import com.wci.tt.jpa.services.rest.SourceDataServiceRest;
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
 import com.wordnik.swagger.annotations.ApiParam;
 
 /**
- * REST implementation for {@link FileServiceRest}.
+ * REST implementation for {@link SourceDataServiceRest}.
  */
 @Path("/file")
 @Api(value = "/file", description = "Operations supporting file")
@@ -43,8 +41,8 @@ import com.wordnik.swagger.annotations.ApiParam;
 @Produces({
     MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML
 })
-public class FileServiceRestImpl extends RootServiceRestImpl
-    implements FileServiceRest {
+public class SourceDataServiceRestImpl extends RootServiceRestImpl
+    implements SourceDataServiceRest {
 
   /* see superclass */
   @Override
@@ -53,33 +51,33 @@ public class FileServiceRestImpl extends RootServiceRestImpl
   @Consumes(MediaType.MULTIPART_FORM_DATA)
   @Produces(MediaType.TEXT_XML)
   public String saveFile(@FormDataParam("file") InputStream fileInputStream,
-    @FormDataParam("file") FormDataContentDisposition contentDispositionHeader)
+    @FormDataParam("file") FormDataContentDisposition contentDispositionHeader,
+    @QueryParam("unzip") boolean unzip)
       throws Exception {
 
     Logger.getLogger(getClass())
         .info("RESTful call (Authentication): /file/upload "
             + (contentDispositionHeader != null
-                ? contentDispositionHeader.getFileName() : "UNKNOWN FILE"));
-    
+                ? contentDispositionHeader.getFileName() : "UNKNOWN FILE")
+            + " unzip=" + unzip);
+
+    String destinationFolder =
+        ConfigUtility.getConfigProperties().getProperty("upload.dir");
+
     try {
-
-      String uploadDir =
-          ConfigUtility.getConfigProperties().getProperty("upload.dir");
-
-      int read = 0;
-      byte[] bytes = new byte[1024];
-
-      OutputStream outputStream = new FileOutputStream(new File(uploadDir
-          + (uploadDir.charAt(uploadDir.length() - 1) == '/' ? "" : "/")
-          + contentDispositionHeader.getFileName()));
-      while ((read = fileInputStream.read(bytes)) != -1) {
-        outputStream.write(bytes, 0, read);
+      // if unzipping requested and file is valid, extract compressed file to destination folder
+      if (unzip == true) {
+        SourceDataUtil.extractCompressedSourceDataFile(fileInputStream, destinationFolder);
+      } 
+      
+      // otherwise, simply write the input stream
+      else {
+        SourceDataUtil.writeSourceDataFile(fileInputStream, destinationFolder, contentDispositionHeader.getFileName());
+        
       }
-      outputStream.flush();
-      outputStream.close();
-    } catch (IOException e) {
+    } catch (Exception e) {
+      System.out.println("caught");
       handleException(e, "uploading a file");
-
     }
     return null;
 

@@ -55,8 +55,16 @@ Needed for issue collector to work.. unexpected, I know.  -->
 
 <!-- Terminology Transformer Angular application -->
 <script src="app/app.js"></script>
-<script src="app/component/sidebar/sidebar.js"></script>
+
+<!-- Terminology Transformer Page Views -->
+<script src="app/page/admin/admin.js"></script>
+<script src="app/page/edit/edit.js"></script>
+<script src="app/page/login/login.js"></script>
+<script src="app/page/source/source.js"></script>
+<script src="app/page/transform/transform.js"></script>
 <script src="app/page/upload/upload.js"></script>
+
+<!-- Terminology Trasnformer Services and Utilities -->
 <script src="app/services/services.js"></script>
 
 </head>
@@ -73,12 +81,33 @@ Needed for issue collector to work.. unexpected, I know.  -->
 
 	<div class="container-fluid" style="margin-top: 75px;">
 
+		<!-- Show global error message -->
+		<div ng-include src="'app/page/general/error.html'"></div>
+
+		<!-- Tab Controls -->
+		<ul ng-show="isShowing()" class="nav nav-tabs" ng-controller="TabCtrl">
+			<li ng-class="tabClass(tab)" ng-repeat="tab in tabs"><a
+				href="{{tab.link}}" ng-click="setSelectedTab(tab)">
+				{{tab.label}} </a></li>
+		</ul>
+
 		<!-- Body -->
 		<div ng-view=""></div>
 	</div>
 
 	<!-- Footer -->
 	<div ng-include src="'app/page/general/footer.html'"></div>
+
+	<!-- Glass Pane -->
+	<div ng-controller="GlassPaneCtrl" ng-show="glassPane.counter > 0"
+			 class="top-layer">
+		<div class="v-wrap">
+			<div class="v-box top-layer-message">
+				<h5 ng-repeat="message in glassPane.messages"
+						class="alert alert-success">{{message}}</h5>
+			</div>
+		</div>
+	</div>
 
 </body>
 </html>

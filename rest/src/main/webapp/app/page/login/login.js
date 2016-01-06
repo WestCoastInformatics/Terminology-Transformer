@@ -1,5 +1,13 @@
-// Login controller
-tsApp.controller('LoginCtrl', [
+// Route
+ttApp.config(function config($routeProvider) {
+  $routeProvider.when('/login', {
+    controller : 'LoginCtrl',
+    templateUrl : 'app/page/login/login.html'
+  });
+})
+
+// Controller
+ttApp.controller('LoginCtrl', [
   '$scope',
   '$http',
   '$location',

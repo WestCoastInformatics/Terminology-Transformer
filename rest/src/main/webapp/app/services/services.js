@@ -1,7 +1,7 @@
-ttApp.service('fileService', [ '$http', '$location', '$q', '$cookieStore', 'utilService', 'gpService',
-  function($http, $location, $q, $cookieStore, utilService, gpService) {
+ttApp.service('fileService', [ '$http', '$location', '$q', '$cookieStore', 'utilService',
+  'gpService', function($http, $location, $q, $cookieStore, utilService, gpService) {
     console.debug('configure fileService');
-    
+
     /**
      * Retrieves details for all currently uploaded files
      */
@@ -15,7 +15,7 @@ ttApp.service('fileService', [ '$http', '$location', '$q', '$cookieStore', 'util
       });
       return deferred.promise;
     }
-    
+
     /**
      * Deletes a file from the server (by filename)
      */
@@ -29,7 +29,7 @@ ttApp.service('fileService', [ '$http', '$location', '$q', '$cookieStore', 'util
       });
       return deferred.promise;
     }
-  }]);
+  } ]);
 
 // Error service
 ttApp
@@ -662,11 +662,17 @@ ttApp.service('tabService', [ '$location', 'utilService', 'gpService', 'security
 
     // Available tabs
     this.tabs = [ {
+      link : '#/upload',
+      label : 'Files'
+    }, {
+      link : '#/source',
+      label : 'Source Data'
+    }, {
       link : '#/transform',
       label : 'Transform'
     }, {
-      link : '#/upload',
-      label : 'Upload'
+      link : '#/edit',
+      label : 'Review'
     }, {
       link : '#/admin',
       label : 'Admin'

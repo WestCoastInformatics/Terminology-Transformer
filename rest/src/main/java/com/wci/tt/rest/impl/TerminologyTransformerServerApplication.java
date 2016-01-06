@@ -70,7 +70,7 @@ public class TerminologyTransformerServerApplication extends Application {
   public Set<Class<?>> getClasses() {
     final Set<Class<?>> classes = new HashSet<Class<?>>();
     classes.add(SecurityServiceRestImpl.class);
-    classes.add(FileServiceRestImpl.class);
+    classes.add(SourceDataServiceRestImpl.class);
     classes
         .add(com.wordnik.swagger.jersey.listing.ApiListingResourceJSON.class);
     classes
