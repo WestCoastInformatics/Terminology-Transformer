@@ -11,12 +11,6 @@ public enum UserRole {
 
   /** The viewer. */
   VIEWER("Viewer"),
-
-  /** The author. */
-  AUTHOR("Author"),
-  
-  /** The lead. */
-  REVIEWER("Reviewer"),
   
   /**  The user. */
   USER("User"),
