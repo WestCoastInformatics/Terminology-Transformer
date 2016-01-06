@@ -354,6 +354,8 @@ tsApp.service('securityService', [ '$http', '$location', '$q', '$cookieStore', '
       user.password = null;
       user.applicationRole = null;
       user.userPreferences = null;
+      
+      $cookieStore.remove('user');
     }
 
     var httpClearUser = this.clearUser;
