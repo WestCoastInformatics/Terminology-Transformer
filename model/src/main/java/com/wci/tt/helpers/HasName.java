@@ -3,6 +3,10 @@
  */
 package com.wci.tt.helpers;
 
+import java.util.List;
+
+import com.wci.tt.SourceDataFile;
+
 /**
  * Represents a thing that has a name.
  */
@@ -21,5 +25,7 @@ public interface HasName {
    * @param name the name
    */
   public void setName(String name);
+
+
 
 }

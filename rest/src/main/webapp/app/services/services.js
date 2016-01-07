@@ -360,7 +360,11 @@ ttApp.service('securityService', [ '$http', '$location', '$q', '$cookieStore', '
       page : 1,
       query : null
     }
-
+    
+    this.getCurrentAuthToken = function() {
+      return user.authToken;
+    }
+ 
     // Gets the user
     this.getUser = function() {
 

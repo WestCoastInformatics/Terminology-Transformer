@@ -178,6 +178,7 @@ ttApp.controller('SourceDataUploadCtrl',
       if (item.isZipped) {
         item.url = fileUrl + 'upload?unzip=' + (item.unzip ? 'true' : 'false')
       }
+      item.headers = { 'Authorization' : 'OHAI' };
     };
     uploader.onProgressItem = function(fileItem, progress) {
       console.info('onProgressItem', fileItem, progress);

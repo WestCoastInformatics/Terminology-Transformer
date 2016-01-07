@@ -5,6 +5,8 @@ package com.wci.tt.rest.impl;
 
 import java.io.File;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -21,11 +23,15 @@ import org.apache.log4j.Logger;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 
+import com.wci.tt.SourceDataFile;
 import com.wci.tt.helpers.ConfigUtility;
 import com.wci.tt.helpers.PfsParameter;
-import com.wci.tt.helpers.SourceDataUtil;
 import com.wci.tt.helpers.StringList;
+import com.wci.tt.jpa.SourceDataFileJpa;
+import com.wci.tt.jpa.services.SourceDataServiceJpa;
+import com.wci.tt.jpa.services.helpers.SourceDataFileUtil;
 import com.wci.tt.jpa.services.rest.SourceDataServiceRest;
+import com.wci.tt.services.SourceDataService;
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
 import com.wordnik.swagger.annotations.ApiParam;
@@ -52,33 +58,49 @@ public class SourceDataServiceRestImpl extends RootServiceRestImpl
   @Produces(MediaType.TEXT_XML)
   public String saveFile(@FormDataParam("file") InputStream fileInputStream,
     @FormDataParam("file") FormDataContentDisposition contentDispositionHeader,
-    @QueryParam("unzip") boolean unzip)
+    @QueryParam("unzip") boolean unzip,
+    @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
       throws Exception {
 
     Logger.getLogger(getClass())
-        .info("RESTful call (Authentication): /file/upload "
+        .info("RESTful call (SourceDataService): /file/upload "
             + (contentDispositionHeader != null
                 ? contentDispositionHeader.getFileName() : "UNKNOWN FILE")
-            + " unzip=" + unzip);
+            + " unzip=" + unzip + " authToken=" + authToken);
 
     String destinationFolder =
         ConfigUtility.getConfigProperties().getProperty("upload.dir");
+    
+    List<File> files = new ArrayList<>();
 
     try {
       // if unzipping requested and file is valid, extract compressed file to destination folder
       if (unzip == true) {
-        SourceDataUtil.extractCompressedSourceDataFile(fileInputStream, destinationFolder);
+         files.addAll(SourceDataFileUtil.extractCompressedSourceDataFile(fileInputStream, destinationFolder, contentDispositionHeader.getFileName()));
       } 
       
       // otherwise, simply write the input stream
       else {
-        SourceDataUtil.writeSourceDataFile(fileInputStream, destinationFolder, contentDispositionHeader.getFileName());
+        files.add(SourceDataFileUtil.writeSourceDataFile(fileInputStream, destinationFolder, contentDispositionHeader.getFileName()));
         
       }
     } catch (Exception e) {
       System.out.println("caught");
       handleException(e, "uploading a file");
     }
+    
+    SourceDataService sourceDataService = new SourceDataServiceJpa();
+    
+    for (File file : files) {
+      SourceDataFile sdf = new SourceDataFileJpa();
+      sdf.setName(file.getName());
+      sdf.setPath(file.getAbsolutePath());
+      sdf.setSize(file.length());
+      sdf.setLastModifiedBy(authToken);
+      
+      sourceDataService.addSourceDataFile(sdf);
+    }
+
     return null;
 
   }

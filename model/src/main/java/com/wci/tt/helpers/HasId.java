@@ -22,4 +22,5 @@ public interface HasId {
    */
   public void setId(Long id);
 
+
 }
