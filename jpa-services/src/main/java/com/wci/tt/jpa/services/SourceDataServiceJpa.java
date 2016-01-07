@@ -5,6 +5,8 @@ package com.wci.tt.jpa.services;
 
 import java.util.List;
 
+import javax.persistence.NoResultException;
+
 import org.apache.log4j.Logger;
 
 import com.wci.tt.SourceData;
@@ -86,6 +88,27 @@ public class SourceDataServiceJpa extends RootServiceJpa
       handleLazyInitialization(searchData);
     }
     return result;
+  }
+  
+  /* see superclass */
+  @Override
+  @SuppressWarnings("unchecked")
+  public SourceDataFileList getSourceDataFiles() {
+    Logger.getLogger(getClass()).debug("SourceData Service - get sourceDataFiles");
+    javax.persistence.Query query =
+        manager.createQuery("select a from SourceDataFileJpa a");
+    try {
+      List<SourceDataFile> sourceDataFiles = query.getResultList();
+      SourceDataFileList sourceDataFileList = new SourceDataFileListJpa();
+      sourceDataFileList.setObjects(sourceDataFiles);
+      sourceDataFileList.setTotalCount(sourceDataFileList.getCount());
+      for (SourceDataFile sourceDataFile : sourceDataFileList.getObjects()) {
+        handleLazyInitialization(sourceDataFile);
+      }
+      return sourceDataFileList;
+    } catch (NoResultException e) {
+      return null;
+    }
   }
 
   /* see superclass */

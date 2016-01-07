@@ -75,6 +75,7 @@ public class SourceDataFileJpaTest{
     tester.include("name");
     tester.include("size");
     tester.include("path");
+    tester.include("dateUploaded");
     tester.include("lastModified");
     tester.include("lastModifiedBy");
     tester.include("sourceDataName");
@@ -123,6 +124,7 @@ public class SourceDataFileJpaTest{
     tester.include("name");
     tester.include("size");
     tester.include("path");
+    tester.include("dateUploaded");
     tester.include("lastModified");
     tester.include("lastModifiedBy");
 

@@ -1,13 +1,13 @@
-ttApp.service('fileService', [ '$http', '$location', '$q', '$cookieStore', 'utilService',
+ttApp.service('sourceDataService', [ '$http', '$location', '$q', '$cookieStore', 'utilService',
   'gpService', function($http, $location, $q, $cookieStore, utilService, gpService) {
-    console.debug('configure fileService');
+    console.debug('configure sourceDataService');
 
     /**
      * Retrieves details for all currently uploaded files
      */
-    this.getUploadedFileDetails = function() {
+    this.getSourceDataFiles = function() {
       var deferred = $q.defer();
-      $http.get(fileUrl + 'list').then(function(response) {
+      $http.get(fileUrl + 'sourceDataFile/sourceDataFiles').then(function(response) {
         deferred.resolve(response.data);
       }, function(error) {
         utilService.handleError(error);
@@ -19,9 +19,9 @@ ttApp.service('fileService', [ '$http', '$location', '$q', '$cookieStore', 'util
     /**
      * Deletes a file from the server (by filename)
      */
-    this.deleteFile = function(fileName) {
+    this.deleteFile = function(fileId) {
       var deferred = $q.defer();
-      $http['delete'](fileUrl + 'delete/' + fileName).then(function(response) {
+      $http['delete'](fileUrl + 'sourceDataFile/delete/' + fileId).then(function(response) {
         deferred.resolve();
       }, function(error) {
         utilService.handleError(error);

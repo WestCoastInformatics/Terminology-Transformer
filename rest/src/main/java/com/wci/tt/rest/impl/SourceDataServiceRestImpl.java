@@ -6,6 +6,7 @@ package com.wci.tt.rest.impl;
 import java.io.File;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -25,7 +26,6 @@ import org.glassfish.jersey.media.multipart.FormDataParam;
 
 import com.wci.tt.SourceDataFile;
 import com.wci.tt.helpers.ConfigUtility;
-import com.wci.tt.helpers.LocalException;
 import com.wci.tt.helpers.PfsParameter;
 import com.wci.tt.helpers.SourceDataFileList;
 import com.wci.tt.helpers.StringList;
@@ -54,55 +54,66 @@ public class SourceDataServiceRestImpl extends RootServiceRestImpl
 
   /* see superclass */
   @Override
-  @Path("/upload")
+  @Path("/sourceDataFile/add")
   @POST
   @Consumes(MediaType.MULTIPART_FORM_DATA)
   @Produces(MediaType.TEXT_XML)
-  public String saveFile(@FormDataParam("file") InputStream fileInputStream,
+  public String addSourceDataFile(
+    @FormDataParam("file") InputStream fileInputStream,
     @FormDataParam("file") FormDataContentDisposition contentDispositionHeader,
     @QueryParam("unzip") boolean unzip,
     @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
       throws Exception {
 
     Logger.getLogger(getClass())
-        .info("RESTful call (SourceDataService): /file/upload "
+        .info("RESTful call (SourceDataService): /sourceDataFile/add "
             + (contentDispositionHeader != null
                 ? contentDispositionHeader.getFileName() : "UNKNOWN FILE")
             + " unzip=" + unzip + " authToken=" + authToken);
 
     String destinationFolder =
         ConfigUtility.getConfigProperties().getProperty("upload.dir");
-    
+
     List<File> files = new ArrayList<>();
 
     try {
-      // if unzipping requested and file is valid, extract compressed file to destination folder
+      // if unzipping requested and file is valid, extract compressed file to
+      // destination folder
       if (unzip == true) {
-         files.addAll(SourceDataFileUtil.extractCompressedSourceDataFile(fileInputStream, destinationFolder, contentDispositionHeader.getFileName()));
-      } 
-      
+        files.addAll(
+            SourceDataFileUtil.extractCompressedSourceDataFile(fileInputStream,
+                destinationFolder, contentDispositionHeader.getFileName()));
+      }
+
       // otherwise, simply write the input stream
       else {
-        files.add(SourceDataFileUtil.writeSourceDataFile(fileInputStream, destinationFolder, contentDispositionHeader.getFileName()));
-        
+        files.add(SourceDataFileUtil.writeSourceDataFile(fileInputStream,
+            destinationFolder, contentDispositionHeader.getFileName()));
+
       }
     } catch (Exception e) {
       System.out.println("caught");
       handleException(e, "uploading a file");
     }
-    
+
     SourceDataService sourceDataService = new SourceDataServiceJpa();
-    
+
     for (File file : files) {
       SourceDataFile sdf = new SourceDataFileJpa();
       sdf.setName(file.getName());
       sdf.setPath(file.getAbsolutePath());
       sdf.setSize(file.length());
+      sdf.setDateUploaded(new Date());
       sdf.setLastModifiedBy(authToken);
-      
-      sourceDataService.addSourceDataFile(sdf);
+
+      try {
+        sourceDataService.addSourceDataFile(sdf);
+      } catch (Exception e) {
+        handleException(e, " uploading a file");
+        return null;
+      }
     }
-    
+
     sourceDataService.close();
 
     return null;
@@ -111,43 +122,39 @@ public class SourceDataServiceRestImpl extends RootServiceRestImpl
 
   @Override
   @DELETE
-  @Path("delete/{fileName}")
-  public void deleteFile(
-    @ApiParam(value = "Name of file to delete, e.g. filename.txt", required = true) @PathParam("fileName") String fileName,
+  @Path("sourceDataFile/delete/{sourceDataFileId}")
+  public void deleteSourceDataFile(
+    @ApiParam(value = "Id of sourceDataFile to delete, e.g. 5", required = true) @PathParam("sourceDataFileId") Long sourceDataFileId,
     @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
       throws Exception {
     String uploadDir =
         ConfigUtility.getConfigProperties().getProperty("upload.dir");
 
     Logger.getLogger(getClass())
-        .info("RESTful call (Authentication): /file/delete " + fileName);
+        .info("RESTful call (Source Data Service): /sourceData/delete/"
+            + sourceDataFileId);
 
     try {
-   
+
       SourceDataService service = new SourceDataServiceJpa();
       
-      SourceDataFileList sourceDataFile = service.findSourceDataFilesForQuery(fileName, null);
-      
-      // expect only one result, name should be unique
-      if (sourceDataFile.getCount() == 0) {
-        throw new LocalException("Could not find Source Data File in database");
-      } else if (sourceDataFile.getCount() != 1) {
-        throw new LocalException("Source Data File is not unique in database; critical error");
-      } else {
-        service.removeSourceDataFile(sourceDataFile.getObjects().get(0).getId());
-      }
-      
+      SourceDataFile sourceDataFile =
+          service.getSourceDataFile(sourceDataFileId);
+
+      // physically remove the file
       File dir = new File(uploadDir);
       File[] files = dir.listFiles();
       for (File f : files) {
-        if (f.getName().equals(fileName)) {
+        if (f.getName().equals(sourceDataFile.getName())) {
           f.delete();
         }
       }
-      
-      
+
+      // remove the database entry
+      service.removeSourceDataFile(sourceDataFile.getId());
+
       service.close();
-      
+
     } catch (Exception e) {
       handleException(e, "retrieving uploaded file list");
     }
@@ -155,29 +162,55 @@ public class SourceDataServiceRestImpl extends RootServiceRestImpl
 
   @Override
   @GET
-  @Path("/list")
+  @Path("/sourceDataFile/sourceDataFiles")
   @ApiOperation(value = "Get uploaded file details", notes = "Returns list of details for uploaded files", response = StringList.class)
-  public StringList getUploadedFilesDetails(
+  public SourceDataFileList getSourceDataFiles(
+    @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
+      throws Exception {
+
+    Logger.getLogger(getClass())
+        .info("RESTful call (Source Data Service): /sourceData/get");
+
+    try {
+
+      SourceDataService service = new SourceDataServiceJpa();
+      SourceDataFileList sourceDataFiles = service.getSourceDataFiles();
+      service.close();
+
+      return sourceDataFiles;
+
+    } catch (Exception e) {
+      handleException(e, "retrieving uploaded file list");
+      return null;
+    }
+
+  }
+
+  @Override
+  @GET
+  @Path("/sourceDataFile/query/{query}")
+  @ApiOperation(value = "Query source data files", notes = "Returns list of details for uploaded files returned by query", response = StringList.class)
+  public SourceDataFileList findSourceDataFilesForQuery(
+    @ApiParam(value = "String query, e.g. SNOMEDCT", required = true) @PathParam("query") String query,
     @ApiParam(value = "Paging/filtering/sorting object", required = false) PfsParameter pfsParameter,
     @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
       throws Exception {
 
-    String uploadDir =
-        ConfigUtility.getConfigProperties().getProperty("upload.dir");
-
-    StringList fileNames = new StringList();
+    Logger.getLogger(getClass()).info(
+        "RESTful call (Source Data Service): /sourceDataFile/query/" + query);
 
     try {
-      File dir = new File(uploadDir);
 
-      File[] files = dir.listFiles();
-      for (File f : files) {
-        fileNames.addObject(f.getName());
-      }
-      return fileNames;
+      SourceDataService service = new SourceDataServiceJpa();
+      SourceDataFileList sourceDataFiles =
+          service.findSourceDataFilesForQuery(query, pfsParameter);
+      service.close();
+
+      return sourceDataFiles;
+
     } catch (Exception e) {
       handleException(e, "retrieving uploaded file list");
-      return fileNames;
+      return null;
     }
 
   }

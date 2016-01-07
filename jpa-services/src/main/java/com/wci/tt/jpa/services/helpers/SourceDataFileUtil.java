@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
 import com.wci.tt.helpers.LocalException;
@@ -90,10 +91,9 @@ public class SourceDataFileUtil {
       Logger.getLogger(SourceDataFileUtil.class).info("  Extracting " + entry.getName());
       
       // only extract top-level elements
-      if (!entry.isDirectory()) {
-        
-        Logger.getLogger(SourceDataFileUtil.class).info("    Not a directory.");
-        
+      // TEST:  is a directory OR contains more than one file separator (file passes, dir/file fails)
+      if (!entry.isDirectory() && StringUtils.countMatches(entry.getName(), File.separator) == 0) {
+         
         if (fileExists(destinationFolder, entry.getName())) {
           throw new LocalException("Unzipped file " + entry.getName() + " already exists. Write aborted.");
         }
@@ -105,6 +105,14 @@ public class SourceDataFileUtil {
             + entry.getName().replace("/", "_"));
         
         files.add(f);
+      } 
+      
+      // if not a valid directory, delete previously added files and throw exception
+      else {
+        for (File f : files) {
+          f.delete();
+        }
+        throw new LocalException("Compressed file " + fileName + " contains subdirectories. Upload aborted");
       }
       zipIn.closeEntry();
       entry = zipIn.getNextEntry();

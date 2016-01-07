@@ -52,6 +52,10 @@ public class SourceDataFileJpa implements SourceDataFile {
   /** The file path. */
   @Column(nullable = false, unique = true, length = 250)
   private String path;
+  
+  /** Time uploaded. */
+  @Column(nullable = false, unique = false)
+  private Date dateUploaded;
 
   /** The last modified. */
   @Column(nullable = false, unique = false)
@@ -220,12 +224,24 @@ public class SourceDataFileJpa implements SourceDataFile {
   public void setSourceDataName(String sourceDataName) {
     this.sourceDataName = sourceDataName;
   }
+  
+  @Override
+  public Date getDateUploaded() {
+    return this.dateUploaded;
+  }
 
-  /* see superclass */
+  @Override
+  public void setDateUploaded(Date dateUploaded) {
+    this.dateUploaded = dateUploaded;
+  }
+  
+
   @Override
   public int hashCode() {
     final int prime = 31;
     int result = 1;
+    result =
+        prime * result + ((dateUploaded == null) ? 0 : dateUploaded.hashCode());
     result = prime * result + ((id == null) ? 0 : id.hashCode());
     result =
         prime * result + ((lastModified == null) ? 0 : lastModified.hashCode());
@@ -239,7 +255,6 @@ public class SourceDataFileJpa implements SourceDataFile {
     return result;
   }
 
-  /* see superclass */
   @Override
   public boolean equals(Object obj) {
     if (this == obj)
@@ -249,6 +264,11 @@ public class SourceDataFileJpa implements SourceDataFile {
     if (getClass() != obj.getClass())
       return false;
     SourceDataFileJpa other = (SourceDataFileJpa) obj;
+    if (dateUploaded == null) {
+      if (other.dateUploaded != null)
+        return false;
+    } else if (!dateUploaded.equals(other.dateUploaded))
+      return false;
     if (id == null) {
       if (other.id != null)
         return false;
@@ -295,5 +315,7 @@ public class SourceDataFileJpa implements SourceDataFile {
         + ", lastModifiedBy=" + lastModifiedBy + ", sourceDataName="
         + sourceDataName + ", isConnected()=" + isConnected() + "]";
   }
+
+
 
 }
