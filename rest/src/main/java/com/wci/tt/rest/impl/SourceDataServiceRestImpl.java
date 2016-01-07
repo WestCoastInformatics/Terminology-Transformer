@@ -25,7 +25,9 @@ import org.glassfish.jersey.media.multipart.FormDataParam;
 
 import com.wci.tt.SourceDataFile;
 import com.wci.tt.helpers.ConfigUtility;
+import com.wci.tt.helpers.LocalException;
 import com.wci.tt.helpers.PfsParameter;
+import com.wci.tt.helpers.SourceDataFileList;
 import com.wci.tt.helpers.StringList;
 import com.wci.tt.jpa.SourceDataFileJpa;
 import com.wci.tt.jpa.services.SourceDataServiceJpa;
@@ -100,6 +102,8 @@ public class SourceDataServiceRestImpl extends RootServiceRestImpl
       
       sourceDataService.addSourceDataFile(sdf);
     }
+    
+    sourceDataService.close();
 
     return null;
 
@@ -119,6 +123,20 @@ public class SourceDataServiceRestImpl extends RootServiceRestImpl
         .info("RESTful call (Authentication): /file/delete " + fileName);
 
     try {
+   
+      SourceDataService service = new SourceDataServiceJpa();
+      
+      SourceDataFileList sourceDataFile = service.findSourceDataFilesForQuery(fileName, null);
+      
+      // expect only one result, name should be unique
+      if (sourceDataFile.getCount() == 0) {
+        throw new LocalException("Could not find Source Data File in database");
+      } else if (sourceDataFile.getCount() != 1) {
+        throw new LocalException("Source Data File is not unique in database; critical error");
+      } else {
+        service.removeSourceDataFile(sourceDataFile.getObjects().get(0).getId());
+      }
+      
       File dir = new File(uploadDir);
       File[] files = dir.listFiles();
       for (File f : files) {
@@ -126,6 +144,10 @@ public class SourceDataServiceRestImpl extends RootServiceRestImpl
           f.delete();
         }
       }
+      
+      
+      service.close();
+      
     } catch (Exception e) {
       handleException(e, "retrieving uploaded file list");
     }

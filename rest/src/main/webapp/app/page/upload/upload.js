@@ -175,10 +175,15 @@ ttApp.controller('SourceDataUploadCtrl',
       //checkForZippedFiles();
     };
     uploader.onBeforeUploadItem = function(item) {
+      
+      // dynamically set the upload url with the unzip flag
       if (item.isZipped) {
         item.url = fileUrl + 'upload?unzip=' + (item.unzip ? 'true' : 'false')
       }
-      item.headers = { 'Authorization' : 'OHAI' };
+      
+      // manually set the headers on the item's request (does not inherit from $http, apparently)
+      // TODO Wire this to security service, current cookie
+      item.headers = { 'Authorization' : 'guest' };
     };
     uploader.onProgressItem = function(fileItem, progress) {
       console.info('onProgressItem', fileItem, progress);
