@@ -56,6 +56,10 @@ public class SourceDataFileJpa implements SourceDataFile {
   /** Time uploaded. */
   @Column(nullable = false, unique = false)
   private Date dateUploaded;
+  
+  /** The timestamp. */
+  @Column(nullable = false, unique = false)
+  private Date timestamp;
 
   /** The last modified. */
   @Column(nullable = false, unique = false)
@@ -79,12 +83,8 @@ public class SourceDataFileJpa implements SourceDataFile {
   /**
    * Instantiates a new source data file jpa.
    *
-   * @param name the name
-   * @param size the size
-   * @param path the path
-   * @param lastModified the last modified
-   * @param lastModifiedBy the last modified by
-   * @param sourceDataName the source data name
+   * @param sourceDataFile the source data file
+   * @param deepCopy the deep copy
    */
   public SourceDataFileJpa(SourceDataFile sourceDataFile, boolean deepCopy) {
     super();
@@ -177,24 +177,44 @@ public class SourceDataFileJpa implements SourceDataFile {
     this.name = name;
   }
 
+  /**
+   * Gets the size.
+   *
+   * @return the size
+   */
   /* see superclass */
   @Override
   public Long getSize() {
     return size;
   }
 
+  /**
+   * Sets the size.
+   *
+   * @param size the new size
+   */
   /* see superclass */
   @Override
   public void setSize(Long size) {
     this.size = size;
   }
 
+  /**
+   * Gets the path.
+   *
+   * @return the path
+   */
   /* see superclass */
   @Override
   public String getPath() {
     return path;
   }
 
+  /**
+   * Sets the path.
+   *
+   * @param path the new path
+   */
   /* see superclass */
   @Override
   public void setPath(String path) {
@@ -212,6 +232,11 @@ public class SourceDataFileJpa implements SourceDataFile {
     return this.sourceDataName != null;
   }
 
+  /**
+   * Gets the source data name.
+   *
+   * @return the source data name
+   */
   /* see superclass */
   @Override
   @Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
@@ -219,23 +244,43 @@ public class SourceDataFileJpa implements SourceDataFile {
     return this.sourceDataName;
   }
 
+  /**
+   * Sets the source data name.
+   *
+   * @param sourceDataName the new source data name
+   */
   /* see superclass */
   @Override
   public void setSourceDataName(String sourceDataName) {
     this.sourceDataName = sourceDataName;
   }
   
+  /**
+   * Gets the date uploaded.
+   *
+   * @return the date uploaded
+   */
   @Override
   public Date getDateUploaded() {
     return this.dateUploaded;
   }
 
+  /**
+   * Sets the date uploaded.
+   *
+   * @param dateUploaded the new date uploaded
+   */
   @Override
   public void setDateUploaded(Date dateUploaded) {
     this.dateUploaded = dateUploaded;
   }
   
 
+  /**
+   * Hash code.
+   *
+   * @return the int
+   */
   @Override
   public int hashCode() {
     final int prime = 31;
@@ -255,6 +300,12 @@ public class SourceDataFileJpa implements SourceDataFile {
     return result;
   }
 
+  /**
+   * Equals.
+   *
+   * @param obj the obj
+   * @return true, if successful
+   */
   @Override
   public boolean equals(Object obj) {
     if (this == obj)
@@ -307,6 +358,11 @@ public class SourceDataFileJpa implements SourceDataFile {
     return true;
   }
 
+  /**
+   * To string.
+   *
+   * @return the string
+   */
   /* see superclass */
   @Override
   public String toString() {
@@ -314,6 +370,27 @@ public class SourceDataFileJpa implements SourceDataFile {
         + ", path=" + path + ", lastModified=" + lastModified
         + ", lastModifiedBy=" + lastModifiedBy + ", sourceDataName="
         + sourceDataName + ", isConnected()=" + isConnected() + "]";
+  }
+
+  /**
+   * Gets the timestamp.
+   *
+   * @return the timestamp
+   */
+  @Override
+  public Date getTimestamp() {
+    return this.timestamp;
+  }
+
+  /**
+   * Sets the timestamp.
+   *
+   * @param timestamp the new timestamp
+   */
+  @Override
+  public void setTimestamp(Date timestamp) {
+    this.timestamp = timestamp;
+   
   }
 
 

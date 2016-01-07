@@ -27,6 +27,7 @@ import org.hibernate.search.annotations.Store;
 import com.wci.tt.SourceData;
 import com.wci.tt.SourceDataFile;
 
+// TODO: Auto-generated Javadoc
 /**
  * JPA enabled implementation of {@link SourceDataFile}.
  */
@@ -48,6 +49,10 @@ public class SourceDataJpa implements SourceData {
   /** The file name. */
   @Column(nullable = false, unique = true, length = 250)
   private String name;
+
+  /** The timestamp. */
+  @Column(nullable = false, unique = true, length = 250)
+  private Date timestamp;
 
   /** The last modified. */
   @Column(nullable = false, unique = true, length = 250)
@@ -71,10 +76,8 @@ public class SourceDataJpa implements SourceData {
   /**
    * Instantiates a new source data jpa.
    *
-   * @param name the name
-   * @param lastModified the last modified
-   * @param lastModifiedBy the last modified by
-   * @param sourceDataFiles the source data files
+   * @param sourceData the source data
+   * @param deepCopy the deep copy
    */
   public SourceDataJpa(SourceData sourceData, boolean deepCopy) {
     super();
@@ -84,6 +87,18 @@ public class SourceDataJpa implements SourceData {
     for (SourceDataFile s : sourceData.getSourceDataFiles()) {
       this.sourceDataFiles.add(new SourceDataFileJpa(s, deepCopy));
     }
+  }
+
+  /* see superclass */
+  @Override
+  public Date getTimestamp() {
+    return timestamp;
+  }
+
+  /* see superclass */
+  @Override
+  public void setTimestamp(Date timestamp) {
+    this.timestamp = timestamp;
   }
 
   /**
@@ -169,7 +184,7 @@ public class SourceDataJpa implements SourceData {
 
   /* see superclass */
   @Override
-  @XmlElement(type=SourceDataFileJpa.class)
+  @XmlElement(type = SourceDataFileJpa.class)
   public List<SourceDataFile> getSourceDataFiles() {
     return this.sourceDataFiles;
   }
@@ -180,6 +195,7 @@ public class SourceDataJpa implements SourceData {
     this.sourceDataFiles = sourceDataFiles;
   }
 
+  /* see superclass */
   @Override
   public int hashCode() {
     final int prime = 31;
@@ -194,6 +210,7 @@ public class SourceDataJpa implements SourceData {
     return result;
   }
 
+  /* see superclass */
   @Override
   public boolean equals(Object obj) {
     if (this == obj)

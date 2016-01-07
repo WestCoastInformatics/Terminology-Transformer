@@ -10,8 +10,6 @@ import java.util.List;
 
 import javax.xml.bind.annotation.XmlTransient;
 
-import com.wci.tt.SourceDataFile;
-
 /**
  * Abstract implementation of {@link ResultList}.
  *

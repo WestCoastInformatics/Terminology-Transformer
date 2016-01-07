@@ -3,7 +3,7 @@
  */
 package com.wci.tt.helpers;
 
-import com.wci.tt.Terminology;
+import com.wci.tt.model.meta.Terminology;
 
 /**
  * Represents a sortable list of {@link Terminology}

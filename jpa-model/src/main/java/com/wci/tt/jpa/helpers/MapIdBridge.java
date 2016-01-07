@@ -6,6 +6,7 @@ package com.wci.tt.jpa.helpers;
 import java.util.Map;
 
 import org.hibernate.search.bridge.StringBridge;
+
 import com.wci.tt.helpers.HasId;
 
 /**

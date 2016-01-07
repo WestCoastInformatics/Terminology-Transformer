@@ -9,6 +9,7 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.hibernate.search.annotations.Analyze;
+
 import com.wci.tt.helpers.ProxyTester;
 
 /**

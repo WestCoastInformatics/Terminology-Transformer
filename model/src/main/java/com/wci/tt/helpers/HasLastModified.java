@@ -38,4 +38,8 @@ public interface HasLastModified extends HasId {
    */
   public void setLastModifiedBy(String lastModifiedBy);
 
+  public Date getTimestamp();
+
+  public void setTimestamp(Date timestamp);
+
 }

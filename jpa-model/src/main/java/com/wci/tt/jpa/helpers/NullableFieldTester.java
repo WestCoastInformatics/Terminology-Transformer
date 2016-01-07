@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 
 import org.apache.commons.lang3.reflect.FieldUtils;
 import org.apache.log4j.Logger;
+
 import com.wci.tt.helpers.ProxyTester;
 
 /**

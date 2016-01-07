@@ -36,9 +36,6 @@ public class PfsParameterJpa implements PfsParameter {
 
   /** The inactive only. */
   private boolean inactiveOnly;
-  
-  /**  The latest only. */
-  private boolean latestOnly;
 
   /**
    * The default constructor.
@@ -61,7 +58,6 @@ public class PfsParameterJpa implements PfsParameter {
     ascending = pfs.isAscending();
     activeOnly = pfs.getActiveOnly();
     inactiveOnly = pfs.getInactiveOnly();
-    latestOnly = pfs.getLatestOnly();
   }
 
   @Override
@@ -151,7 +147,6 @@ public class PfsParameterJpa implements PfsParameter {
     result = prime * result + (ascending ? 1231 : 1237);
     result = prime * result + (activeOnly ? 1231 : 1237);
     result = prime * result + (inactiveOnly ? 1231 : 1237);
-    result = prime * result + (latestOnly ? 1231 : 1237);
     result = prime * result + ((branch == null) ? 0 : branch.hashCode());
     result = prime * result + maxResults;
     result =
@@ -174,8 +169,6 @@ public class PfsParameterJpa implements PfsParameter {
     if (ascending != other.ascending)
       return false;
     if (activeOnly != other.activeOnly)
-      return false;
-    if (latestOnly != other.latestOnly)
       return false;
     if (inactiveOnly != other.inactiveOnly)
       return false;
@@ -212,18 +205,7 @@ public class PfsParameterJpa implements PfsParameter {
     return "PfsParameterJpa [maxResults=" + maxResults + ", startIndex="
         + startIndex + ", queryRestriction=" + queryRestriction + ", branch="
         + branch + ", sortField=" + sortField + ", ascending=" + ascending
-        + ", activeOnly=" + activeOnly + ", inactiveOnly=" + inactiveOnly
-        + ", latestOnly=" + latestOnly + "]";
-  }
-
-  @Override
-  public boolean getLatestOnly() {
-    return latestOnly;
-  }
-
-  @Override
-  public void setLatestOnly(boolean latestOnly) {
-    this.latestOnly = latestOnly;
+        + ", activeOnly=" + activeOnly + ", inactiveOnly=" + inactiveOnly + "]";
   }
 
 }
