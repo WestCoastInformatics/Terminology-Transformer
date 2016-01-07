@@ -8,7 +8,7 @@ ttApp.config(function config($routeProvider) {
 
 // Controller
 ttApp.controller('TransformCtrl',
-  function($scope, $filter, fileService, FileUploader, NgTableParams) {
+  function($scope, $filter, sourceDataService, FileUploader, NgTableParams) {
     console.debug('configure TransformCtrl');
     
     var uploadedFiles = [];
@@ -17,7 +17,7 @@ ttApp.controller('TransformCtrl',
      * Function to retrieve the list of currently uploaded files
      */
     function getUploadedFileDetails() {
-      fileService.getUploadedFileDetails().then(function(response) {
+      sourceDataService.getUploadedFileDetails().then(function(response) {
         // TODO Update this once file details format worked out
         uploadedFiles = response.strings.map(function(item) {
           console.debug(item);
@@ -50,7 +50,7 @@ ttApp.controller('TransformCtrl',
      * Function to delete file from server
      */
     $scope.deleteFile = function(file) {
-      fileService.deleteFile(file.name).then(function(response) {
+      sourceDataService.deleteFile(file.name).then(function(response) {
         getUploadedFileDetails();
       }, function(error) {
         // do nothing

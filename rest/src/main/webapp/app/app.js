@@ -13,24 +13,32 @@ var securityUrl = 'security/';
 var fileUrl = 'file/';
 
 // Initialization of ttApp
-ttApp.run([ '$rootScope', '$http', '$window', 'securityService',
-  function($rootScope, $http, $window, securityService) {
-
-    // TODO Re-enable formal login
-    $http({
-      url : securityUrl + 'authenticate/guest',
-      method : 'POST',
-      data : 'guest',
-      headers : {
-        'Content-Type' : 'text/plain'
-      }
-    }).then(function(response) {
-      securityService.setUser(response.data);
-      // set request header authorization and reroute
-      console.debug('authToken = ' + response.data.authToken);
-      $http.defaults.headers.common.Authorization = response.data.authToken;
-    });
-
+ttApp.run([ '$rootScope', '$http', '$location', '$window', 'securityService', 'tabService',
+  function($rootScope, $http, $location, $window, securityService, tabService) {
+  
+  // on load check for authToken
+  console.log("Checking authentication credentials...");
+  
+  var user = securityService.getUser();
+  
+  console.debug(user);
+  
+  // if authentication token found
+  if (user.authToken) {
+    
+    // make test retrieval call witih this auth token
+    securityService.getUserForAuthToken().then(function() {
+      console.log("Authentication credentials found and valid.");
+      tabService.setTabsForUser(user);
+      console.log("Authentication credentials found but invalid, routing to login page");
+      $location.url('/');
+    })
+   
+  } else {
+    console.log("Not logged in, routing to login page");
+    $location.url('/');
+  }
+ 
   } ]);
 
 // Route provider configuration
@@ -45,7 +53,7 @@ ttApp.config([ '$routeProvider', '$logProvider', function($routeProvider, $logPr
 
   .when('/', {
     templateUrl : 'app/page/login/login.html',
-    controller : 'SourceDataUploadCtrl',
+    controller : 'LoginCtrl',
     reloadOnSearch : false
   })
 
@@ -107,11 +115,11 @@ ttApp.controller('TabCtrl', [ '$scope', '$interval', '$timeout', 'securityServic
     console.debug('configure TabCtrl');
 
     // Setup tabs
-    $scope.tabs = tabService.tabs;
+    // $scope.tabsViewed = tabService.getTabsForUser(securityService.getUser());
 
     // Set selected tab (change the view)
     $scope.setSelectedTab = function(tab) {
-      tabService.setSelectedTab(tab);
+     tabService.setSelectedTab(tab);
     };
 
     // sets the selected tab by label

@@ -170,7 +170,7 @@ public class SecurityServiceRestImpl extends RootServiceRestImpl implements
     @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
     throws Exception {
     Logger.getLogger(getClass()).info(
-        "RESTful call (Security): /user/name" + authToken);
+        "RESTful call (Security): /user/name/" + authToken);
     final SecurityService securityService = new SecurityServiceJpa();
     try {
       final String userName = authorizeApp(securityService, authToken, "retrieve the user by auth token",

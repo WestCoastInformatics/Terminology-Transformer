@@ -7,7 +7,7 @@ ttApp.config(function config($routeProvider) {
 })
 
 // Controller
-ttApp.controller('SourceDataCtrl', function($scope, $filter, fileService, FileUploader,
+ttApp.controller('SourceDataCtrl', function($scope, $filter, sourceDataService, FileUploader,
   NgTableParams) {
   console.debug('configure SourceDataCtrl');
 

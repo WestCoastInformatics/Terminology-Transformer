@@ -15,20 +15,12 @@ ttApp.controller('LoginCtrl', [
   'gpService',
   'utilService',
   'tabService',
-  'projectService',
-  function($scope, $http, $location, securityService, gpService, utilService, tabService,
-    projectService) {
+  function($scope, $http, $location, securityService, gpService, utilService, tabService) {
     console.debug('configure LoginCtrl');
-
-    // Clear user info
-    securityService.clearUser();
-
-    // Declare the user
-    $scope.user = securityService.getUser();
     
-    // TODO if user defined, make call to see if cookie stale or security disabled
-    // route path accordingly
-
+    // clear any cached user information
+    securityService.clearUser();
+ 
     // Login function
     $scope.login = function(name, password) {
       if (!name) {
@@ -51,18 +43,12 @@ ttApp.controller('LoginCtrl', [
       }).then(
       // success
       function(response) {
-        
         utilService.clearError();
         console.debug('user = ', response.data);
         securityService.setUser(response.data);
-
-        // set request header authorization and reroute
-        $http.defaults.headers.common.Authorization = response.data.authToken;
-        if (response.data.userPreferences && response.data.userPreferences.lastTab) {
-          $location.path(response.data.userPreferences.lastTab);
-        } else {
-          $location.path('/');
-        }
+        $location.url('upload');
+        //tabService.setTabsForUser(response.applicationRole);
+        //tabService.goToLastTab();
         gpService.decrement();
       },
 

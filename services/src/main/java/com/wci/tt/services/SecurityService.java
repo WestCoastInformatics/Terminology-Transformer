@@ -55,17 +55,6 @@ public interface SecurityService extends RootService {
   public UserRole getApplicationRoleForToken(String authToken) throws Exception;
 
   /**
-   * Returns the application role for token.
-   *
-   * @param authToken the auth token
-   * @param projectId the project id
-   * @return the application role
-   * @throws Exception the exception
-   */
-  public UserRole getUserRoleForToken(String authToken, Long projectId)
-    throws Exception;
-
-  /**
    * Get user by id.
    * @param id the id
    *

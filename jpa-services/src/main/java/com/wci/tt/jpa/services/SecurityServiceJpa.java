@@ -202,6 +202,7 @@ public class SecurityServiceJpa extends RootServiceJpa implements
       throw new LocalException(
           "Attempt to access a service without an AuthToken, the user is likely not logged in.");
     }
+ 
     if (!"true".equals(ConfigUtility.getConfigProperties().getProperty("security.enabled"))) {
       return UserRole.valueOf(ConfigUtility.getConfigProperties().getProperty("security.disabled.role"));
     }
@@ -223,23 +224,6 @@ public class SecurityServiceJpa extends RootServiceJpa implements
       // userName);
     }
     return user.getApplicationRole();
-  }
-
-  /* see superclass */
-  @Override
-  public UserRole getUserRoleForToken(String authToken, Long projectId)
-    throws Exception {
-    if (authToken == null) {
-      throw new LocalException(
-          "Attempt to access a service without an AuthToken, the user is likely not logged in.");
-    }
-    if (projectId == null) {
-      throw new Exception("Unexpected null project id");
-    }
-
-      UserRole result =UserRole.VIEWER;
-     
-    return result;
   }
 
   /* see superclass */

@@ -1,5 +1,5 @@
-ttApp.service('sourceDataService', [ '$http', '$location', '$q', '$cookieStore', 'utilService',
-  'gpService', function($http, $location, $q, $cookieStore, utilService, gpService) {
+ttApp.service('sourceDataService', [ '$http', '$location', '$q', '$cookies', 'utilService',
+  'gpService', function($http, $location, $q, ngCookies, utilService, gpService) {
     console.debug('configure sourceDataService');
 
     /**
@@ -341,8 +341,8 @@ ttApp.service('gpService', function() {
 });
 
 // Security service
-ttApp.service('securityService', [ '$http', '$location', '$q', '$cookieStore', 'utilService',
-  'gpService', function($http, $location, $q, $cookieStore, utilService, gpService) {
+ttApp.service('securityService', [ '$http', '$location', '$q', '$cookies', 'utilService',
+  'gpService', function($http, $location, $q, $cookies, utilService, gpService) {
     console.debug('configure securityService');
 
     // Declare the user
@@ -360,21 +360,21 @@ ttApp.service('securityService', [ '$http', '$location', '$q', '$cookieStore', '
       page : 1,
       query : null
     }
-    
+
     this.getCurrentAuthToken = function() {
       return user.authToken;
     }
- 
+
     // Gets the user
     this.getUser = function() {
 
       // Determine if page has been reloaded
       if (!$http.defaults.headers.common.Authorization) {
 
-        if ($cookieStore.get('user')) {
-          console.debug('no header', $cookieStore.get('user'));
+        if ($cookies.get('user')) {
+          console.debug('no header', $cookies.get('user'));
           // Retrieve cookie
-          var cookieUser = JSON.parse($cookieStore.get('user'));
+          var cookieUser = JSON.parse($cookies.get('user'));
           // If there is a user cookie, load it
           if (cookieUser) {
             this.setUser(cookieUser);
@@ -396,7 +396,7 @@ ttApp.service('securityService', [ '$http', '$location', '$q', '$cookieStore', '
 
       // Whenver set user is called, we should save a
       // cookie
-      $cookieStore.put('user', JSON.stringify(user));
+      $cookies.put('user', JSON.stringify(user));
 
     }
 
@@ -408,9 +408,24 @@ ttApp.service('securityService', [ '$http', '$location', '$q', '$cookieStore', '
       user.password = null;
       user.applicationRole = null;
       user.userPreferences = null;
+      $http.defaults.headers.common.Authorization = null;
+      $cookies.remove('user');
     }
 
     var httpClearUser = this.clearUser;
+
+    /**
+     * Retrieves user details for specified auth token
+     */
+    this.getUserForAuthToken = function(authToken) {
+      $http.get(securityUrl + 'user').then(function(user) {
+        // re-append auth token
+        user.authToken = authToken;
+        return response;
+      }, function(error) {
+        return null;
+      })
+    }
 
     // isLoggedIn function
     this.isLoggedIn = function() {
@@ -425,6 +440,21 @@ ttApp.service('securityService', [ '$http', '$location', '$q', '$cookieStore', '
     // isUser function
     this.isUser = function() {
       return user.applicationRole == 'ADMIN' || user.applicationRole == 'USER';
+    }
+
+    // checks if current user has privileges of specified role
+    this.hasPrivilegesOfRole = function(role) {
+      switch (role) {
+      case 'VIEWER':
+        return true;
+      case 'USER':
+        return user.applicationRole === 'USER' || user.applicationRole == 'ADMIN';
+      case 'ADMIN':
+        return user.applicationRole === 'ADMIN';
+      default:
+        return false;
+      }
+
     }
 
     // Logout
@@ -636,7 +666,7 @@ ttApp.service('securityService', [ '$http', '$location', '$q', '$cookieStore', '
 
       // Whenever we update user preferences, we need
       // to update the cookie
-      $cookieStore.put('user', JSON.stringify(user));
+      $cookies.put('user', JSON.stringify(user));
 
       var deferred = $q.defer();
 
@@ -665,30 +695,51 @@ ttApp.service('tabService', [ '$location', 'utilService', 'gpService', 'security
     console.debug('configure tabService');
 
     // Available tabs
-    this.tabs = [ {
+    var tabsAvailable = [ {
       link : '#/upload',
-      label : 'Files'
+      label : 'Files',
+      minRole : 'USER'
     }, {
       link : '#/source',
-      label : 'Source Data'
+      label : 'Source Data',
+      minRole : 'USER'
     }, {
       link : '#/transform',
-      label : 'Transform'
+      label : 'Transform',
+      minRole : 'VIEWER'
     }, {
       link : '#/edit',
-      label : 'Review'
+      label : 'Review',
+      minRole : 'USER'
     }, {
       link : '#/admin',
-      label : 'Admin'
+      label : 'Admin',
+      minRole : 'ADMIN'
     } ];
 
-    this.selectedTab = this.tabs[0];
+    this.getTabsForUser = function(user) {
+      
+      console.debug('get tabs for user', user);
+      var tabs = [];
+      angular.forEach(tabsAvailable, function(tab) {
+        if (securityService.hasPrivilegesOfRole(tab.minRole)) {
+          tabs.push(tab);
+        }
+      });
 
-    // Show admin tab for admins only
-    this.showTab = function(tab) {
-      console.debug('tab label', tab.label);
-      return tab.label != 'Admin' || securityService.getUser().applicationRole == 'ADMIN';
-    }
+      if (tabs.length === 0) {
+        handleError("Could not set available tab content from user information");
+      } else {
+
+        if (user.userPreferences.lastTab) {
+          setSelectedTabByLabel(user.userPreferences.lastTab);
+        } else {
+          setSelectedTab(tabsViewed[0]);
+        }
+      }
+      
+      return tabs;
+    };
 
     // Sets the selected tab
     this.setSelectedTab = function(tab) {

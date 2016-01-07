@@ -7,7 +7,7 @@ ttApp.config(function config($routeProvider) {
 })
 
 ttApp.controller('EditCtrl',
-  function($scope, $filter, fileService, FileUploader, NgTableParams) {
+  function($scope, $filter, sourceDataService, FileUploader, NgTableParams) {
     console.debug('configure EditCtrl');
     
   });
