@@ -341,8 +341,8 @@ ttApp.service('gpService', function() {
 });
 
 // Security service
-ttApp.service('securityService', [ '$http', '$location', '$q', '$cookies', 'utilService',
-  'gpService', function($http, $location, $q, $cookies, utilService, gpService) {
+ttApp.service('securityService', [ '$rootScope', '$http', '$location', '$q', '$cookies', 'utilService',
+  'gpService', function($rootScope, $http, $location, $q, $cookies, utilService, gpService) {
     console.debug('configure securityService');
 
     // Declare the user
@@ -409,6 +409,7 @@ ttApp.service('securityService', [ '$http', '$location', '$q', '$cookies', 'util
       user.applicationRole = null;
       user.userPreferences = null;
       $http.defaults.headers.common.Authorization = null;
+      $rootScope.tabs = [];
       $cookies.remove('user');
     }
 
@@ -477,7 +478,7 @@ ttApp.service('securityService', [ '$http', '$location', '$q', '$cookies', 'util
         // header
         $http.defaults.headers.common.Authorization = null;
         gpService.decrement();
-        window.location.href = '${logout.url}';
+        $location.url('login');
       },
       // error
       function(response) {
@@ -690,55 +691,58 @@ ttApp.service('securityService', [ '$http', '$location', '$q', '$cookies', 'util
   } ]);
 
 // Tab service
-ttApp.service('tabService', [ '$location', 'utilService', 'gpService', 'securityService',
-  function($location, utilService, gpService, securityService) {
+ttApp.service('tabService', [ '$rootScope', '$location', 'utilService', 'gpService', 'securityService',
+  function($rootScope, $location, utilService, gpService, securityService) {
     console.debug('configure tabService');
 
     // Available tabs
     var tabsAvailable = [ {
-      link : '#/upload',
+      link : 'upload',
       label : 'Files',
       minRole : 'USER'
     }, {
-      link : '#/source',
+      link : 'source',
       label : 'Source Data',
       minRole : 'USER'
     }, {
-      link : '#/transform',
+      link : 'transform',
       label : 'Transform',
       minRole : 'VIEWER'
     }, {
-      link : '#/edit',
+      link : 'edit',
       label : 'Review',
       minRole : 'USER'
     }, {
-      link : '#/admin',
+      link : 'admin',
       label : 'Admin',
       minRole : 'ADMIN'
     } ];
 
-    this.getTabsForUser = function(user) {
+    this.initializeTabsForUser = function(user) {
       
       console.debug('get tabs for user', user);
       var tabs = [];
       angular.forEach(tabsAvailable, function(tab) {
+        console.debug('checking tab', tab, tab.minRole);
         if (securityService.hasPrivilegesOfRole(tab.minRole)) {
           tabs.push(tab);
         }
       });
+      
+      console.debug('tabs', tabs);
 
       if (tabs.length === 0) {
         handleError("Could not set available tab content from user information");
       } else {
 
-        if (user.userPreferences.lastTab) {
-          setSelectedTabByLabel(user.userPreferences.lastTab);
+        if (user && user.userPreferences && user.userPreferences.lastTab) {
+          $location.url(user.userPreferences.lastTab.link);
         } else {
-          setSelectedTab(tabsViewed[0]);
+          $location.url(tabs[0].link);
         }
       }
       
-      return tabs;
+      $rootScope.tabs = tabs;
     };
 
     // Sets the selected tab

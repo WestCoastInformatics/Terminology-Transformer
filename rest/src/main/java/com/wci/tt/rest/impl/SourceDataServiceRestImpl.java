@@ -102,6 +102,7 @@ public class SourceDataServiceRestImpl extends RootServiceRestImpl
       SourceDataFile sdf = new SourceDataFileJpa();
       sdf.setName(file.getName());
       sdf.setPath(file.getAbsolutePath());
+      sdf.setDirectory(file.isDirectory());
       sdf.setSize(file.length());
       sdf.setDateUploaded(new Date());
       sdf.setLastModifiedBy(authToken);

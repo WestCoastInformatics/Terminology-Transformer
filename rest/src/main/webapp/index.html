@@ -44,7 +44,8 @@ Needed for issue collector to work.. unexpected, I know.  -->
 	src="https://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.14.3.js"></script>
 
 <!-- Library : Angular File Upload -->
-<script type="text/javascript" src="app/lib/angular-file-upload/angular-file-upload.min.js"></script>
+<script type="text/javascript"
+	src="app/lib/angular-file-upload/angular-file-upload.min.js"></script>
 
 <!-- Library: ngTable -->
 <script type="text/javascript" src="app/lib/ng-table/ng-table.min.js"></script>
@@ -84,13 +85,21 @@ Needed for issue collector to work.. unexpected, I know.  -->
 		<!-- Show global error message -->
 		<div ng-include src="'app/page/general/error.html'"></div>
 
-		<!-- Tab Controls -->
-		<ul ng-show="tabsViewed.length > 1" class="nav nav-tabs" ng-controller="TabCtrl">
-			<li ng-class="tabClass(tab)" ng-repeat="tab in tabsViewed"><a
-				href="{{tab.link}}" ng-click="setSelectedTab(tab)">
-				{{tab.label}} </a></li>
-		</ul>
-		
+		<div class="row">
+
+			<div class="col-md-1 col-xs-0"></div>
+			<div class="col-md-11 col-xs-12">
+				<!-- Tab Controls -- tabs set in login.js (after successful login) and app.js (after reload) -->
+				<ul ng-show="tabs.length > 1" class="nav nav-tabs">
+					<li ng-class="tabClass(tab)" ng-repeat="tab in tabs"><a
+						href="{{tab.link}}" ng-click="setSelectedTab(tab)">
+							{{tab.label}} </a></li>
+				</ul>
+			</div>
+			<div class="col-md-1 col-xs-0"></div>
+
+		</div>
+
 		<!-- Body -->
 		<div ng-view=""></div>
 	</div>
@@ -100,11 +109,11 @@ Needed for issue collector to work.. unexpected, I know.  -->
 
 	<!-- Glass Pane -->
 	<div ng-controller="GlassPaneCtrl" ng-show="glassPane.counter > 0"
-			 class="top-layer">
+		class="top-layer">
 		<div class="v-wrap">
 			<div class="v-box top-layer-message">
 				<h5 ng-repeat="message in glassPane.messages"
-						class="alert alert-success">{{message}}</h5>
+					class="alert alert-success">{{message}}</h5>
 			</div>
 		</div>
 	</div>

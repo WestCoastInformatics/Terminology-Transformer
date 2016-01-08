@@ -46,9 +46,7 @@ ttApp.controller('LoginCtrl', [
         utilService.clearError();
         console.debug('user = ', response.data);
         securityService.setUser(response.data);
-        $location.url('upload');
-        //tabService.setTabsForUser(response.applicationRole);
-        //tabService.goToLastTab();
+        tabService.initializeTabsForUser(response);
         gpService.decrement();
       },
 

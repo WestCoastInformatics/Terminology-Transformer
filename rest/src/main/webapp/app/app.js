@@ -29,14 +29,15 @@ ttApp.run([ '$rootScope', '$http', '$location', '$window', 'securityService', 't
     // make test retrieval call witih this auth token
     securityService.getUserForAuthToken().then(function() {
       console.log("Authentication credentials found and valid.");
-      tabService.setTabsForUser(user);
+      tabService.initializeTabsForUser(user);
+    }, function(error) {
       console.log("Authentication credentials found but invalid, routing to login page");
-      $location.url('/');
+      $location.url('login');
     })
    
   } else {
     console.log("Not logged in, routing to login page");
-    $location.url('/');
+    $location.url('login');
   }
  
   } ]);

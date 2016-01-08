@@ -408,6 +408,8 @@ public abstract class RootServiceJpa implements RootService {
     if (lastModifiedFlag) {
       hasLastModified.setLastModified(new Date());
     }
+    // set the timestamp to date of creation
+    hasLastModified.setTimestamp(new Date());
     return addObject(hasLastModified);
 
   }

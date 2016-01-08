@@ -44,6 +44,9 @@ public class SourceDataFileJpa implements SourceDataFile {
   /** The file name. */
   @Column(nullable = false, unique = true, length = 250)
   private String name;
+  
+  @Column(nullable = false)
+  private boolean directory;
 
   /** The file size. */
   @Column(nullable = false, unique = false)
@@ -90,11 +93,14 @@ public class SourceDataFileJpa implements SourceDataFile {
     super();
     this.name = sourceDataFile.getName();
     this.size = sourceDataFile.getSize();
+    this.directory = sourceDataFile.isDirectory();
     this.path = sourceDataFile.getPath();
     this.lastModified = sourceDataFile.getLastModified();
     this.lastModifiedBy = sourceDataFile.getLastModifiedBy();
     this.sourceDataName = sourceDataFile.getSourceDataName();
   }
+  
+  
 
   /**
    * Gets the last modified.
@@ -276,18 +282,13 @@ public class SourceDataFileJpa implements SourceDataFile {
   }
   
 
-  /**
-   * Hash code.
-   *
-   * @return the int
-   */
   @Override
   public int hashCode() {
     final int prime = 31;
     int result = 1;
     result =
         prime * result + ((dateUploaded == null) ? 0 : dateUploaded.hashCode());
-    result = prime * result + ((id == null) ? 0 : id.hashCode());
+    result = prime * result + (directory ? 1231 : 1237);
     result =
         prime * result + ((lastModified == null) ? 0 : lastModified.hashCode());
     result = prime * result
@@ -297,15 +298,10 @@ public class SourceDataFileJpa implements SourceDataFile {
     result = prime * result + ((size == null) ? 0 : size.hashCode());
     result = prime * result
         + ((sourceDataName == null) ? 0 : sourceDataName.hashCode());
+    result = prime * result + ((timestamp == null) ? 0 : timestamp.hashCode());
     return result;
   }
 
-  /**
-   * Equals.
-   *
-   * @param obj the obj
-   * @return true, if successful
-   */
   @Override
   public boolean equals(Object obj) {
     if (this == obj)
@@ -320,10 +316,7 @@ public class SourceDataFileJpa implements SourceDataFile {
         return false;
     } else if (!dateUploaded.equals(other.dateUploaded))
       return false;
-    if (id == null) {
-      if (other.id != null)
-        return false;
-    } else if (!id.equals(other.id))
+    if (directory != other.directory)
       return false;
     if (lastModified == null) {
       if (other.lastModified != null)
@@ -355,21 +348,21 @@ public class SourceDataFileJpa implements SourceDataFile {
         return false;
     } else if (!sourceDataName.equals(other.sourceDataName))
       return false;
+    if (timestamp == null) {
+      if (other.timestamp != null)
+        return false;
+    } else if (!timestamp.equals(other.timestamp))
+      return false;
     return true;
   }
 
-  /**
-   * To string.
-   *
-   * @return the string
-   */
-  /* see superclass */
   @Override
   public String toString() {
-    return "SourceDataFileJpa [id=" + id + ", name=" + name + ", size=" + size
-        + ", path=" + path + ", lastModified=" + lastModified
-        + ", lastModifiedBy=" + lastModifiedBy + ", sourceDataName="
-        + sourceDataName + ", isConnected()=" + isConnected() + "]";
+    return "SourceDataFileJpa [id=" + id + ", name=" + name + ", directory="
+        + directory + ", size=" + size + ", path=" + path + ", dateUploaded="
+        + dateUploaded + ", timestamp=" + timestamp + ", lastModified="
+        + lastModified + ", lastModifiedBy=" + lastModifiedBy
+        + ", sourceDataName=" + sourceDataName + "]";
   }
 
   /**
@@ -391,6 +384,16 @@ public class SourceDataFileJpa implements SourceDataFile {
   public void setTimestamp(Date timestamp) {
     this.timestamp = timestamp;
    
+  }
+
+  @Override
+  public boolean isDirectory() {
+    return directory;
+  }
+
+  @Override
+  public void setDirectory(boolean directory) {
+    this.directory = directory;
   }
 
 

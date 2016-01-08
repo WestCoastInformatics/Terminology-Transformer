@@ -68,4 +68,18 @@ public interface SourceDataFile extends HasId, HasLastModified, HasName {
    */
   public void setDateUploaded(Date dateUploaded);
 
+  /**
+   * Checks if is directory.
+   *
+   * @return true, if is directory
+   */
+  public boolean isDirectory();
+
+  /**
+   * Sets the directory.
+   *
+   * @param directory the new directory
+   */
+  public void setDirectory(boolean directory);
+
 }

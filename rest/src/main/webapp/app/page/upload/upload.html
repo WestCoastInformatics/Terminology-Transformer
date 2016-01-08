@@ -136,6 +136,8 @@
 
 						<table ng-table="tpUploaded" class="table">
 							<tr ng-repeat="item in $data">
+								<td data-title="''" sortable="'directory'">
+									<span class="md md-folder" ng-if="item.directory"></span>
 								<td data-title="'Name'" sortable="'name'"
 									stye="word-break: break-all;">{{item.name}}</td>
 								<td data-title="'Size'" sortable="'size'">{{item.size/1024/1024|number:2
