@@ -23,7 +23,7 @@ public class RrfReaders {
   private Map<Keys, PushBackReader> readers = new HashMap<>();
 
   /**
-   * The Enum Keys.
+   * The Enum Keys, MR or RN format
    */
   public enum Keys {
 
@@ -34,7 +34,7 @@ public class RrfReaders {
     MRDEF,
 
     /** The mrdoc. */
-    MRDOC,
+    MRDOC, RXNDOC,
 
     /** The mrmap. */
     MRMAP,
@@ -43,16 +43,18 @@ public class RrfReaders {
     MRRANK,
 
     /** The mrrel. */
-    MRREL,
+    MRREL, RXNREL,
 
     /** The mrsab. */
-    MRSAB,
+    MRSAB, RXNSAB,
+
 
     /** The mrsat. */
-    MRSAT,
+    MRSAT, RXNSAT,
+
 
     /** The mrsty. */
-    MRSTY,
+    MRSTY, RXNSTY,
 
     /** The srdef. */
     SRDEF;
