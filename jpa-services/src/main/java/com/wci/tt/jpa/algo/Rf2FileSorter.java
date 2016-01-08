@@ -11,9 +11,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.log4j.Logger;
-import com.wci.tt.helpers.ConfigUtility;
 
 import com.google.common.io.Files;
+import com.wci.tt.helpers.ConfigUtility;
 
 /**
  * File sorter for RF2 files. This creates files with standard file names in the

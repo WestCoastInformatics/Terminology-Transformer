@@ -27,7 +27,7 @@ import com.wci.tt.User;
 import com.wci.tt.helpers.ConfigUtility;
 import com.wci.tt.helpers.HasLastModified;
 import com.wci.tt.helpers.PfsParameter;
-import com.wci.tt.jpa.services.handlers.IndexUtility;
+import com.wci.tt.jpa.services.helper.IndexUtility;
 import com.wci.tt.services.RootService;
 
 /**
@@ -630,6 +630,27 @@ public abstract class RootServiceJpa implements RootService {
       return (T) query.getSingleResult();
     } catch (NoResultException e) {
       return null;
+    }
+  }
+  
+  /* see superclass */
+  @Override
+  public void commitClearBegin() throws Exception {
+    commit();
+    clear();
+    beginTransaction();
+  }
+
+  /* see superclass */
+  @Override
+  public void logAndCommit(int objectCt, int logCt, int commitCt)
+    throws Exception {
+    // log at regular intervals
+    if (objectCt % logCt == 0) {
+      Logger.getLogger(getClass()).info("    count = " + objectCt);
+    }
+    if (objectCt % commitCt == 0) {
+      commitClearBegin();
     }
   }
 

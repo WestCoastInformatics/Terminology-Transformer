@@ -7,13 +7,14 @@ import java.util.Properties;
 
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoFailureException;
+
 import com.wci.tt.helpers.ConfigUtility;
 import com.wci.tt.jpa.services.RootServiceJpa;
 
 /**
  * Goal which updates the db to sync it with the model via JPA.
  * 
- * See admin/pom.xml for sample usage
+ * See admin/updatedb/pom.xml for sample usage
  * 
  * @goal updatedb
  * 
@@ -48,12 +49,7 @@ public class UpdateDbMojo extends AbstractMojo {
       config.setProperty("hibernate.hbm2ddl.auto", mode);
 
       // Trigger a JPA event
-      new RootServiceJpa() {
-        @Override
-        public void refreshCaches() throws Exception {
-          // n/a
-        }
-      }.close();
+      new RootServiceJpa(){}.close();
       getLog().info("done ...");
     } catch (Exception e) {
       e.printStackTrace();

@@ -13,6 +13,12 @@ import com.wci.tt.helpers.PfsParameter;
  */
 public interface RootService {
 
+  /** The logging object ct threshold. */
+  public final static int logCt = 2000;
+
+  /** The commit count. */
+  public final static int commitCt = 2000;
+
   /**
    * Open the factory.
    *
@@ -112,4 +118,22 @@ public interface RootService {
    * @param lastModifiedFlag the new last modified flag
    */
   public void setLastModifiedFlag(boolean lastModifiedFlag);
+  
+  /**
+   * Commit clear begin transaction.
+   *
+   * @throws Exception the exception
+   */
+  public void commitClearBegin() throws Exception;
+
+  /**
+   * Log and commit.
+   *
+   * @param objectCt the object ct
+   * @param logCt the log ct
+   * @param commitCt the commit ct
+   * @throws Exception the exception
+   */
+  public void logAndCommit(int objectCt, int logCt, int commitCt)
+    throws Exception;
 }

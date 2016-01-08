@@ -7,13 +7,13 @@ import java.util.Iterator;
 import java.util.Properties;
 
 import org.apache.log4j.Logger;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wci.tt.User;
 import com.wci.tt.UserRole;
 import com.wci.tt.jpa.UserJpa;
 import com.wci.tt.services.handlers.SecurityServiceHandler;
-
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * Implements a security handler that authorizes via IHTSDO authentication.

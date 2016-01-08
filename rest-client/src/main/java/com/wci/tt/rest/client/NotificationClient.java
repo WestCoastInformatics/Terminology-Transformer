@@ -20,7 +20,7 @@ import org.apache.log4j.Logger;
  * 
  * <pre>
  * WebSocketContainer container = ContainerProvider.getWebSocketContainer();
- * String uri = &quot;ws://localhost:8080/tt-rest/websocket&quot;;
+ * String uri = &quot;ws://localhost:8080/umls-server-rest/websocket&quot;;
  * container.connectToServer(NotificationClient.class, URI.create(uri));
  * </pre>
  */

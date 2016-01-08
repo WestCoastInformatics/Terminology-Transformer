@@ -1,7 +1,7 @@
 /**
  * Copyright 2015 West Coast Informatics, LLC
  */
-package com.wci.tt.jpa.services.handlers;
+package com.wci.tt.jpa.services.helper;
 
 import java.lang.reflect.Method;
 import java.util.HashMap;
@@ -19,6 +19,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.queryparser.classic.MultiFieldQueryParser;
+import org.apache.lucene.queryparser.classic.ParseException;
 import org.apache.lucene.queryparser.classic.QueryParser;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.Sort;
@@ -33,7 +34,12 @@ import org.hibernate.search.jpa.FullTextQuery;
 import org.hibernate.search.jpa.Search;
 
 import com.wci.tt.helpers.PfsParameter;
-import com.wci.tt.jpa.UserJpa;
+import com.wci.tt.jpa.content.CodeJpa;
+import com.wci.tt.jpa.content.ConceptJpa;
+import com.wci.tt.jpa.content.ConceptRelationshipJpa;
+import com.wci.tt.jpa.content.ConceptSubsetMemberJpa;
+import com.wci.tt.jpa.content.ConceptTreePositionJpa;
+import com.wci.tt.jpa.content.DescriptorJpa;
 
 /**
  * Performs utility functions relating to Lucene indexes and Hibernate Search.
@@ -55,7 +61,9 @@ public class IndexUtility {
     try {
       Class<?>[] classes =
           new Class<?>[] {
-             UserJpa.class
+              ConceptJpa.class, DescriptorJpa.class, CodeJpa.class,
+              ConceptRelationshipJpa.class, ConceptSubsetMemberJpa.class,
+              ConceptTreePositionJpa.class
           };
       for (Class<?> clazz : classes) {
         stringFieldNames.put(clazz,
@@ -351,8 +359,7 @@ public class IndexUtility {
 
     // Build up the query
     StringBuilder pfsQuery = new StringBuilder();
-    if (query != null)
-      pfsQuery.append(query);
+    pfsQuery.append(query);
     if (pfs != null) {
       if (pfs.getActiveOnly()) {
         pfsQuery.append(" AND obsolete:false");
@@ -376,8 +383,12 @@ public class IndexUtility {
         new MultiFieldQueryParser(IndexUtility.getIndexedFieldNames(
             fieldNamesKey, true).toArray(new String[] {}),
             searchFactory.getAnalyzer(clazz));
-    Logger.getLogger(IndexUtility.class).debug("  query = " + pfsQuery);
-    luceneQuery = queryParser.parse(pfsQuery.toString());
+    String finalQuery = pfsQuery.toString();
+    if (pfsQuery.toString().startsWith(" AND ")) {
+      finalQuery = finalQuery.substring(5);
+    }
+    Logger.getLogger(IndexUtility.class).debug("  query = " + finalQuery);
+    luceneQuery = queryParser.parse(finalQuery);
 
     // Validate query terms
     luceneQuery =
@@ -390,7 +401,7 @@ public class IndexUtility {
           && !t.field().isEmpty()
           && !IndexUtility.getIndexedFieldNames(fieldNamesKey, false).contains(
               t.field())) {
-        throw new Exception("Query references invalid field name " + t.field()
+        throw new ParseException("Query references invalid field name " + t.field()
             + ", " + IndexUtility.getIndexedFieldNames(fieldNamesKey, false));
       }
     }

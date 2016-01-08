@@ -3,7 +3,6 @@
  */
 package com.wci.tt.rest.client;
 
-import java.net.URLEncoder;
 import java.util.Properties;
 
 import javax.ws.rs.client.Client;
@@ -15,6 +14,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status.Family;
 
 import org.apache.log4j.Logger;
+
 import com.wci.tt.User;
 import com.wci.tt.UserPreferences;
 import com.wci.tt.helpers.ConfigUtility;
@@ -36,7 +36,7 @@ public class SecurityClientRest extends RootClientRest implements
   private Properties config = null;
 
   /**
-   * Instantiates a {@link SecurityServiceRest} from the specified parameters.
+   * Instantiates a {@link ContentClientRest} from the specified parameters.
    *
    * @param config the config
    */
@@ -46,18 +46,18 @@ public class SecurityClientRest extends RootClientRest implements
 
   /* see superclass */
   @Override
-  public User authenticate(String userName, String password) throws Exception {
+  public User authenticate(String username, String password) throws Exception {
     Logger.getLogger(getClass()).debug(
-        "Security Client - authenticate " + userName);
-    validateNotEmpty(userName, "userName");
+        "Security Client - authenticate " + username);
+    validateNotEmpty(username, "username");
     validateNotEmpty(password, "password");
     Client client = ClientBuilder.newClient();
     WebTarget target =
         client.target(config.getProperty("base.url")
-            + "/security/authenticate/" + userName);
+            + "/security/authenticate/" + username);
 
     Response response =
-        target.request(MediaType.APPLICATION_XML).post(Entity.text(password));
+        target.request(MediaType.APPLICATION_JSON).post(Entity.text(password));
     String resultString = response.readEntity(String.class);
     if (response.getStatusInfo().getFamily() == Family.SUCCESSFUL) {
       // n/a
@@ -118,44 +118,14 @@ public class SecurityClientRest extends RootClientRest implements
 
   /* see superclass */
   @Override
-  public User getUserForAuthToken(String authToken) throws Exception {
-    Logger.getLogger(getClass()).debug(
-        "Security Client - get user for auth token " + authToken);
-    validateNotEmpty(authToken, "authToken");
-    Client client = ClientBuilder.newClient();
-    WebTarget target =
-        client.target(config.getProperty("base.url") + "/security/user"
-            + authToken);
-    Response response =
-        target.request(MediaType.APPLICATION_XML)
-            .header("Authorization", authToken).get();
-
-    if (response.getStatus() == 204)
-      return null;
-
-    String resultString = response.readEntity(String.class);
-    if (response.getStatusInfo().getFamily() == Family.SUCCESSFUL) {
-      // n/a
-    } else {
-      throw new Exception(response.toString());
-    }
-
-    // converting to object
-    UserJpa user =
-        (UserJpa) ConfigUtility.getGraphForString(resultString, UserJpa.class);
-    return user;
-  }
-
-  /* see superclass */
-  @Override
-  public User getUser(String userName, String authToken) throws Exception {
+  public User getUser(String username, String authToken) throws Exception {
     Logger.getLogger(getClass())
-        .debug("Security Client - get user " + userName);
-    validateNotEmpty(userName, "userName");
+        .debug("Security Client - get user " + username);
+    validateNotEmpty(username, "username");
     Client client = ClientBuilder.newClient();
     WebTarget target =
         client.target(config.getProperty("base.url") + "/security/user/name/"
-            + userName);
+            + username);
     Response response =
         target.request(MediaType.APPLICATION_XML)
             .header("Authorization", authToken).get();
@@ -271,149 +241,43 @@ public class SecurityClientRest extends RootClientRest implements
   }
 
   @Override
+  public User getUserForAuthToken(String authToken) throws Exception {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+  @Override
   public StringList getApplicationRoles(String authToken) throws Exception {
-    Logger.getLogger(getClass()).debug("Security Client - getApplicationRoles");
-
-    Client client = ClientBuilder.newClient();
-    WebTarget target =
-        client.target(config.getProperty("base.url") + "/security/roles");
-    Response response =
-        target.request(MediaType.APPLICATION_XML)
-            .header("Authorization", authToken).get();
-
-    String resultString = response.readEntity(String.class);
-    if (response.getStatusInfo().getFamily() == Family.SUCCESSFUL) {
-      // n/a
-    } else {
-      throw new Exception(response.toString());
-    }
-
-    // converting to object
-    StringList list =
-        (StringList) ConfigUtility.getGraphForString(resultString,
-            StringList.class);
-    return list;
+    // TODO Auto-generated method stub
+    return null;
   }
 
   @Override
   public UserList findUsersForQuery(String query, PfsParameterJpa pfs,
     String authToken) throws Exception {
-    Logger.getLogger(getClass()).debug(
-        "Security Client - find users " + query + ", " + pfs);
-    validateNotEmpty(query, "query");
-
-    Client client = ClientBuilder.newClient();
-    WebTarget target =
-        client.target(config.getProperty("base.url")
-            + "/security/user/find"
-            + "?query="
-            + URLEncoder.encode(query == null ? "" : query, "UTF-8")
-                .replaceAll("\\+", "%20"));
-    String pfsString =
-        ConfigUtility.getStringForGraph(pfs == null ? new PfsParameterJpa()
-            : pfs);
-    Response response =
-        target.request(MediaType.APPLICATION_XML)
-            .header("Authorization", authToken).post(Entity.xml(pfsString));
-
-    String resultString = response.readEntity(String.class);
-    if (response.getStatusInfo().getFamily() == Family.SUCCESSFUL) {
-      // n/a
-    } else {
-      throw new Exception(response.toString());
-    }
-
-    // converting to object
-    UserListJpa list =
-        (UserListJpa) ConfigUtility.getGraphForString(resultString,
-            UserListJpa.class);
-    return list;
-
+    // TODO Auto-generated method stub
+    return null;
   }
 
-  /* see superclass */
   @Override
   public UserPreferences addUserPreferences(UserPreferencesJpa userPreferences,
     String authToken) throws Exception {
-    Logger.getLogger(getClass()).debug(
-        "Security Client - add user preferences " + userPreferences);
-    Client client = ClientBuilder.newClient();
-    WebTarget target =
-        client.target(config.getProperty("base.url")
-            + "/security/user/preferences/add");
-
-    String userPreferencesString =
-        (userPreferences != null ? ConfigUtility
-            .getStringForGraph(userPreferences) : "");
-    Response response =
-        target.request(MediaType.APPLICATION_XML)
-            .header("Authorization", authToken)
-            .put(Entity.xml(userPreferencesString));
-
-    String resultString = response.readEntity(String.class);
-    if (response.getStatusInfo().getFamily() == Family.SUCCESSFUL) {
-      // n/a
-    } else {
-      throw new Exception(response.toString());
-    }
-
-    // converting to object
-    UserPreferencesJpa result =
-        (UserPreferencesJpa) ConfigUtility.getGraphForString(resultString,
-            UserPreferencesJpa.class);
-
-    return result;
+    // TODO Auto-generated method stub
+    return null;
   }
 
-  /* see superclass */
   @Override
-  public void removeUserPreferences(Long id, String authToken) throws Exception {
-    Logger.getLogger(getClass()).debug(
-        "Security Client - remove user preferences " + id);
-    validateNotEmpty(id, "id");
-    Client client = ClientBuilder.newClient();
-    WebTarget target =
-        client.target(config.getProperty("base.url")
-            + "/security/user/preferences/remove/" + id);
-    Response response =
-        target.request(MediaType.APPLICATION_XML)
-            .header("Authorization", authToken).delete();
-
-    if (response.getStatusInfo().getFamily() == Family.SUCCESSFUL) {
-      // do nothing
-    } else {
-      throw new Exception(response.toString());
-    }
+  public void removeUserPreferences(Long id, String authToken)
+    throws Exception {
+    // TODO Auto-generated method stub
+    
   }
 
-  /* see superclass */
   @Override
   public UserPreferences updateUserPreferences(
     UserPreferencesJpa userPreferences, String authToken) throws Exception {
-    Logger.getLogger(getClass()).debug(
-        "Security Client - update user preferences " + userPreferences);
-    Client client = ClientBuilder.newClient();
-    WebTarget target =
-        client.target(config.getProperty("base.url")
-            + "/security/user/preferences/update");
-
-    String userPreferencesString =
-        (userPreferences != null ? ConfigUtility
-            .getStringForGraph(userPreferences) : "");
-    Response response =
-        target.request(MediaType.APPLICATION_XML)
-            .header("Authorization", authToken)
-            .post(Entity.xml(userPreferencesString));
-
-    String resultString = response.readEntity(String.class);
-    if (response.getStatusInfo().getFamily() == Family.SUCCESSFUL) {
-      // n/a
-    } else {
-      throw new Exception(response.toString());
-    }
-
-    // converting to object
-    return (UserPreferencesJpa) ConfigUtility.getGraphForString(resultString,
-        UserPreferencesJpa.class);
+    // TODO Auto-generated method stub
+    return null;
   }
+
 }

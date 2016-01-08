@@ -14,6 +14,7 @@ import javax.ws.rs.WebApplicationException;
 
 import org.apache.commons.lang3.time.FastDateFormat;
 import org.apache.log4j.Logger;
+
 import com.wci.tt.helpers.ConfigUtility;
 import com.wci.tt.helpers.LocalException;
 
@@ -62,7 +63,7 @@ public class ExceptionHandler {
 
     try {
       Properties config = ConfigUtility.getConfigProperties();
-      String subject = "Refset Error Report";
+      String subject = "Terminology Server Error Report";
       String from = config.getProperty("mail.smtp.user");
       String recipients = config.getProperty("mail.smtp.to");
 

@@ -31,7 +31,7 @@ import com.wci.tt.helpers.SourceDataFileList;
 import com.wci.tt.helpers.StringList;
 import com.wci.tt.jpa.SourceDataFileJpa;
 import com.wci.tt.jpa.services.SourceDataServiceJpa;
-import com.wci.tt.jpa.services.helpers.SourceDataFileUtil;
+import com.wci.tt.jpa.services.helper.SourceDataFileUtil;
 import com.wci.tt.jpa.services.rest.SourceDataServiceRest;
 import com.wci.tt.services.SourceDataService;
 import com.wordnik.swagger.annotations.Api;

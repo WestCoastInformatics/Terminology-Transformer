@@ -1,4 +1,4 @@
-package com.wci.tt.jpa.services.helpers;
+package com.wci.tt.jpa.services.helper;
 
 import java.io.BufferedOutputStream;
 import java.io.File;

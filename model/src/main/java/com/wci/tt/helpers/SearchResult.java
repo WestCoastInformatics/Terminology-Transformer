@@ -51,14 +51,14 @@ public interface SearchResult {
   public void setTerminology(String terminology);
 
   /**
-   * Returns the version.
+   * Returns the terminology version.
    *
    * @return the version
    */
   public String getVersion();
 
   /**
-   * Sets the version.
+   * Sets the terminology version.
    *
    * @param version the version to set
    */
@@ -78,4 +78,17 @@ public interface SearchResult {
    */
   public void setValue(String value);
 
+  /**
+   * Indicates whether or not obsolete is the case.
+   *
+   * @return <code>true</code> if so, <code>false</code> otherwise
+   */
+  public boolean isObsolete();
+
+  /**
+   * Sets the obsolete.
+   *
+   * @param obsolete the obsolete
+   */
+  public void setObsolete(boolean obsolete);
 }
