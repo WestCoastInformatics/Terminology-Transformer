@@ -13,7 +13,7 @@ var securityUrl = 'security/';
 var fileUrl = 'file/';
 
 // Initialization of ttApp
-ttApp.run([ '$rootScope', '$http', '$location', '$window', 'securityService', 'tabService',
+ttApp.run([ '$rootScope', '$http', '$location', '$window', 'securityService', 'tabService', 
   function($rootScope, $http, $location, $window, securityService, tabService) {
   
   // on load check for authToken
@@ -39,6 +39,8 @@ ttApp.run([ '$rootScope', '$http', '$location', '$window', 'securityService', 't
     console.log("Not logged in, routing to login page");
     $location.url('login');
   }
+  
+  
  
   } ]);
 

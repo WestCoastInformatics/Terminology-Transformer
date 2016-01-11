@@ -92,14 +92,15 @@ Needed for issue collector to work.. unexpected, I know.  -->
 				<!-- Tab Controls -- tabs set in login.js (after successful login) and app.js (after reload) -->
 				<ul ng-show="tabs.length > 1" class="nav nav-tabs">
 					<li ng-class="tabClass(tab)" ng-repeat="tab in tabs"><a
-						href="{{tab.link}}" ng-click="setSelectedTab(tab)">
+						href="#/{{tab.link}}">
 							{{tab.label}} </a></li>
 				</ul>
 			</div>
 			<div class="col-md-1 col-xs-0"></div>
 
 		</div>
-
+		
+		
 		<!-- Body -->
 		<div ng-view=""></div>
 	</div>

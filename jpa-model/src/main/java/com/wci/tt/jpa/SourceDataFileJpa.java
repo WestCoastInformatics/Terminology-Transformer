@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 import javax.persistence.UniqueConstraint;
@@ -20,6 +22,7 @@ import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.Store;
 
+import com.wci.tt.SourceData;
 import com.wci.tt.SourceDataFile;
 
 // TODO: Auto-generated Javadoc
@@ -40,6 +43,10 @@ public class SourceDataFileJpa implements SourceDataFile {
   @Id
   @GeneratedValue(strategy = GenerationType.TABLE, generator = "EntityIdGenUser")
   private Long id;
+  
+  @ManyToOne(targetEntity = SourceDataJpa.class, optional = true)
+  @JoinColumn(nullable = true)
+  private SourceData sourceData;
 
   /** The file name. */
   @Column(nullable = false, unique = true, length = 250)

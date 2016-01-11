@@ -7,6 +7,8 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -26,6 +28,7 @@ import org.hibernate.search.annotations.Store;
 
 import com.wci.tt.SourceData;
 import com.wci.tt.SourceDataFile;
+import com.wci.tt.helpers.ConverterStatus;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -49,22 +52,34 @@ public class SourceDataJpa implements SourceData {
   /** The file name. */
   @Column(nullable = false, unique = true, length = 250)
   private String name;
+  
+  /** The source data description */
+  @Column(nullable = true, unique = false, length = 4000)
+  private String description;
 
   /** The timestamp. */
-  @Column(nullable = false, unique = true, length = 250)
-  private Date timestamp;
+  @Column(nullable = false, unique = false, length = 250)
+  private Date timestamp = new Date();
 
   /** The last modified. */
-  @Column(nullable = false, unique = true, length = 250)
-  private Date lastModified;
+  @Column(nullable = false, unique = false, length = 250)
+  private Date lastModified = new Date();
 
   /** The last modified by. */
-  @Column(nullable = false, unique = true, length = 250)
+  @Column(nullable = false, unique = false, length = 250)
   private String lastModifiedBy;
 
   /** The data files. */
-  @OneToMany(cascade = CascadeType.ALL, targetEntity = SourceDataFileJpa.class)
+  @OneToMany(targetEntity = SourceDataFileJpa.class)
   private List<SourceDataFile> sourceDataFiles = new ArrayList<>();
+
+  /**  The converter used to process the source data files. */
+  @Column(nullable = true, unique = false, length = 4000)
+  private String converterName;
+
+  /** The converter status. */
+  @Enumerated(EnumType.STRING)
+  private ConverterStatus converterStatus = ConverterStatus.NOT_CONVERTED;
 
   /**
    * Instantiates a new source data file jpa.
@@ -100,6 +115,8 @@ public class SourceDataJpa implements SourceData {
   public void setTimestamp(Date timestamp) {
     this.timestamp = timestamp;
   }
+  
+  
 
   /**
    * Gets the last modified.
@@ -249,6 +266,40 @@ public class SourceDataJpa implements SourceData {
     return "SourceDataJpa [id=" + id + ", name=" + name + ", lastModified="
         + lastModified + ", lastModifiedBy=" + lastModifiedBy
         + ", sourceDataFiles=" + sourceDataFiles + "]";
+  }
+
+  /* see superclass */
+  @Override
+  public void setConverterName(String converterName) {
+    this.converterName = converterName;
+  }
+
+  /* see superclass */
+  @Override
+  public String getConverterName() {
+    return this.converterName;
+  }
+
+  /* see superclass */
+  @Override
+  public ConverterStatus getConverterStatus() {
+    return this.converterStatus;
+  }
+
+  /* see superclass */
+  @Override
+  public void setConverterStatus(ConverterStatus converterStatus) {
+    this.converterStatus = converterStatus;
+  }
+
+  @Override
+  public String getDescription() {
+    return description;
+  }
+
+  @Override
+  public void setDescription(String description) {
+    this.description = description;
   }
 
 }

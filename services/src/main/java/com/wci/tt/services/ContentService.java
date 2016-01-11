@@ -1565,4 +1565,7 @@ public interface ContentService extends MetadataService {
   public GeneralConceptAxiomList getGeneralConceptAxioms(String terminology,
     String version, String branch) throws Exception;
 
+  public void loadRrfTerminology(String terminology, String version,
+    boolean singleMode, String inputDir) throws Exception;
+
 }

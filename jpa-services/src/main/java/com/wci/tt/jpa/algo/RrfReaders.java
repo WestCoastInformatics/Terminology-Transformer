@@ -23,38 +23,42 @@ public class RrfReaders {
   private Map<Keys, PushBackReader> readers = new HashMap<>();
 
   /**
-   * The Enum Keys, MR or RN format
+   * The Enum Keys, RXN or RN format
    */
   public enum Keys {
+    
+    /**
+     * NOTE: Ad-hoc modified to use RXN values where available to match RXNORM data
+     */
 
     /** The mrconso. */
-    MRCONSO,
+    RXNCONSO,
 
     /** The mrdef. */
-    MRDEF,
+    RXNDEF,
 
     /** The mrdoc. */
-    MRDOC, RXNDOC,
+    RXNDOC,
 
     /** The mrmap. */
-    MRMAP,
+    RXNMAP,
 
     /** The mrrank. */
-    MRRANK,
+    RXNRANK,
 
     /** The mrrel. */
-    MRREL, RXNREL,
+    RXNREL,
 
     /** The mrsab. */
-    MRSAB, RXNSAB,
+    RXNSAB,
 
 
     /** The mrsat. */
-    MRSAT, RXNSAT,
+    RXNSAT,
 
 
     /** The mrsty. */
-    MRSTY, RXNSTY,
+    RXNSTY,
 
     /** The srdef. */
     SRDEF;
@@ -78,18 +82,19 @@ public class RrfReaders {
    */
   public void openReaders() throws Exception {
 
-    readers.put(Keys.MRCONSO, getReader("consoByConcept.sort"));
-    readers.put(Keys.MRDEF, getReader("defByConcept.sort"));
-    readers.put(Keys.MRDOC, getReader("docByKey.sort"));
-    readers.put(Keys.MRMAP, getReader("mapByConcept.sort"));
-    readers.put(Keys.MRRANK, getReader("rankByRank.sort"));
-    readers.put(Keys.MRREL, getReader("relByConcept.sort"));
-    readers.put(Keys.MRSAB, getReader("sabBySab.sort"));
-    readers.put(Keys.MRSAT, getReader("satByConcept.sort"));
-    readers.put(Keys.MRSTY, getReader("styByConcept.sort"));
+    readers.put(Keys.RXNCONSO, getReader("consoByConcept.sort"));
+    readers.put(Keys.RXNDEF, getReader("defByConcept.sort"));
+    readers.put(Keys.RXNDOC, getReader("docByKey.sort"));
+    readers.put(Keys.RXNMAP, getReader("mapByConcept.sort"));
+    readers.put(Keys.RXNRANK, getReader("rankByRank.sort"));
+    readers.put(Keys.RXNREL, getReader("relByConcept.sort"));
+    readers.put(Keys.RXNSAB, getReader("sabBySab.sort"));
+    readers.put(Keys.RXNSAT, getReader("satByConcept.sort"));
+    readers.put(Keys.RXNSTY, getReader("styByConcept.sort"));
     readers.put(Keys.SRDEF, getReader("srdef.sort"));
 
   }
+  
 
   /**
    * Open original readers.
@@ -128,11 +133,21 @@ public class RrfReaders {
    */
   private PushBackReader getReader(String filename) throws Exception {
     File file = new File(inputDir, filename);
-    if (file != null && file.exists()) {
-      return new PushBackReader(new BufferedReader(new FileReader(file)));
-    } else {
-      return null;
+    
+    // if file does not exist, create an empty one
+    if (!file.exists()) {
+      file.createNewFile();
     }
+    
+    return new PushBackReader(new BufferedReader(new FileReader(file)));
+   /* 
+    
+      if (file != null && file.exists()) {
+        return new PushBackReader(new BufferedReader(new FileReader(file)));
+  
+    } else {
+      return new PushBackReader(null);
+    }*/
   }
 
   /**

@@ -10,7 +10,7 @@ ttApp.service('sourceDataService', [ '$http', '$location', '$q', '$cookies', 'ut
       $http.get(fileUrl + 'sourceDataFile/sourceDataFiles').then(function(response) {
         deferred.resolve(response.data);
       }, function(error) {
-        utilService.handleError(error);
+
         deferred.reject(error);
       });
       return deferred.promise;
@@ -19,16 +19,98 @@ ttApp.service('sourceDataService', [ '$http', '$location', '$q', '$cookies', 'ut
     /**
      * Deletes a file from the server (by filename)
      */
-    this.deleteFile = function(fileId) {
+    this.deleteSourceDataFile = function(fileId) {
       var deferred = $q.defer();
       $http['delete'](fileUrl + 'sourceDataFile/delete/' + fileId).then(function(response) {
         deferred.resolve();
       }, function(error) {
-        utilService.handleError(error);
+
         deferred.reject(error);
       });
       return deferred.promise;
     }
+
+    this.saveSourceDataFile = function(sourceDataFile) {
+      var deferred = $q.defer();
+      if (sourceDataFile.id) {
+        $http.post(fileUrl + 'sourceDataFile/update', sourceDataFile).then(function(response) {
+          deferred.resolve(sourceDataFile);
+        }, function(error) {
+
+          deferred.reject(sourceDataFile);
+        });
+      } else {
+        $http.put(fileUrl + 'sourceDataFile/add', sourceDataFile).then(function(response) {
+          deferred.resolve(response);
+        }, function(error) {
+
+          deferred.reject();
+        });
+      }
+      return deferred.promise;
+    }
+
+    this.saveSourceData = function(sourceData) {
+      var deferred = $q.defer();
+      if (sourceData.id) {
+        $http.post(fileUrl + 'sourceData/update', sourceData).then(function(response) {
+          deferred.resolve(sourceData);
+        }, function(error) {
+
+          deferred.reject(sourceData);
+        });
+      } else {
+        $http.put(fileUrl + 'sourceData/add', sourceData).then(function(response) {
+          deferred.resolve(response);
+        }, function(error) {
+
+          deferred.reject();
+        });
+      }
+      return deferred.promise;
+    }
+
+    this.deleteSourceData = function(sourceData) {
+      var deferred = $q.defer()
+      $http['delete'](fileUrl + 'sourceData/delete/' + sourceData.id).then(function(response) {
+        deferred.resolve();
+      }, function(error) {
+        deferred.reject(error);
+      });
+      return deferred.promise;
+    }
+
+    this.getSourceDatas = function() {
+      var deferred = $q.defer();
+      $http.get(fileUrl + 'sourceData/sourceDatas').then(function(response) {
+        deferred.resolve(response.data);
+      }, function(error) {
+        deferred.reject([]);
+      });
+      return deferred.promise;
+    };
+
+    // cached converter names
+    var converterNames = null;
+
+    // get converter names
+    this.getConverterNames = function() {
+      var deferred = $q.defer();
+
+      if (converterNames) {
+        deferred.resolve(converterNames);
+      } else {
+
+        $http.get(fileUrl + 'converter/converters').then(function(response) {
+          console.debug('converter names', response);
+          converterNames = response.data.strings;
+          deferred.resolve(response.data.strings);
+        }, function(error) {
+          deferred.reject([]);
+        });
+      }
+      return deferred.promise;
+    };
   } ]);
 
 // Error service
@@ -341,8 +423,9 @@ ttApp.service('gpService', function() {
 });
 
 // Security service
-ttApp.service('securityService', [ '$rootScope', '$http', '$location', '$q', '$cookies', 'utilService',
-  'gpService', function($rootScope, $http, $location, $q, $cookies, utilService, gpService) {
+ttApp.service('securityService', [ '$rootScope', '$http', '$location', '$q', '$cookies',
+  'utilService', 'gpService',
+  function($rootScope, $http, $location, $q, $cookies, utilService, gpService) {
     console.debug('configure securityService');
 
     // Declare the user
@@ -393,6 +476,8 @@ ttApp.service('securityService', [ '$rootScope', '$http', '$location', '$q', '$c
       user.password = '';
       user.applicationRole = data.applicationRole;
       user.userPreferences = data.userPreferences;
+
+      $http.defaults.headers.common.Authorization = user.authToken;
 
       // Whenver set user is called, we should save a
       // cookie
@@ -691,8 +776,8 @@ ttApp.service('securityService', [ '$rootScope', '$http', '$location', '$q', '$c
   } ]);
 
 // Tab service
-ttApp.service('tabService', [ '$rootScope', '$location', 'utilService', 'gpService', 'securityService',
-  function($rootScope, $location, utilService, gpService, securityService) {
+ttApp.service('tabService', [ '$rootScope', '$location', 'utilService', 'gpService',
+  'securityService', function($rootScope, $location, utilService, gpService, securityService) {
     console.debug('configure tabService');
 
     // Available tabs
@@ -719,7 +804,7 @@ ttApp.service('tabService', [ '$rootScope', '$location', 'utilService', 'gpServi
     } ];
 
     this.initializeTabsForUser = function(user) {
-      
+
       console.debug('get tabs for user', user);
       var tabs = [];
       angular.forEach(tabsAvailable, function(tab) {
@@ -728,7 +813,7 @@ ttApp.service('tabService', [ '$rootScope', '$location', 'utilService', 'gpServi
           tabs.push(tab);
         }
       });
-      
+
       console.debug('tabs', tabs);
 
       if (tabs.length === 0) {
@@ -736,18 +821,22 @@ ttApp.service('tabService', [ '$rootScope', '$location', 'utilService', 'gpServi
       } else {
 
         if (user && user.userPreferences && user.userPreferences.lastTab) {
+          console.debug('location set to ' + user.userPreferences.lastTab.link);
           $location.url(user.userPreferences.lastTab.link);
         } else {
+          console.debug('location set to ' + tabs[0].link);
           $location.url(tabs[0].link);
         }
       }
-      
+
       $rootScope.tabs = tabs;
     };
 
     // Sets the selected tab
     this.setSelectedTab = function(tab) {
       this.selectedTab = tab;
+      console.debug('location set to ' + tab.link);
+      $location.url(tab.link);
     }
 
     // sets the selected tab by label

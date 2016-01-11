@@ -8,6 +8,7 @@ import com.wci.tt.SourceDataFile;
 import com.wci.tt.helpers.PfsParameter;
 import com.wci.tt.helpers.SourceDataFileList;
 import com.wci.tt.helpers.SourceDataList;
+import com.wci.tt.helpers.StringList;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -115,5 +116,19 @@ public interface SourceDataService extends RootService {
    */
   public SourceDataList findSourceDatasForQuery(String query, PfsParameter pfs)
     throws Exception;
+
+  /**
+   * Gets the source datas.
+   *
+   * @return the source datas
+   */
+  public SourceDataList getSourceDatas();
+
+  /**
+   * Gets the converter names.
+   *
+   * @return the converter names
+   */
+  public StringList getConverterNames();
 
 }

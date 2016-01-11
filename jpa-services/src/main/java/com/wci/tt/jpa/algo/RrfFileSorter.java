@@ -84,9 +84,10 @@ public class RrfFileSorter {
    *
    * @param inputDir the input dir
    * @param outputDir the output dir
+   * @param filePrefix the file prefix structure, e.g. RXN, MR
    * @throws Exception the exception
    */
-  public void sortFiles(File inputDir, File outputDir) throws Exception {
+  public void sortFiles(File inputDir, File outputDir, String filePrefix) throws Exception {
     Logger.getLogger(getClass()).info("Start sorting files");
 
     // Remove and remake output dir
@@ -102,40 +103,43 @@ public class RrfFileSorter {
     }
 
     Map<String, String> dirMap = new HashMap<>();
-    dirMap.put("MRCONSO.RRF", "/");
-    dirMap.put("MRDEF.RRF", "/");
-    dirMap.put("MRDOC.RRF", "/");
-    dirMap.put("MRMAP.RRF", "/");
-    dirMap.put("MRRANK.RRF", "/");
-    dirMap.put("MRREL.RRF", "/");
-    dirMap.put("MRSAB.RRF", "/");
-    dirMap.put("MRSAT.RRF", "/");
-    dirMap.put("MRSTY.RRF", "/");
+    dirMap.put(filePrefix + "CONSO.RRF", "/");
+    dirMap.put(filePrefix + "DEF.RRF", "/");
+    dirMap.put(filePrefix + "DOC.RRF", "/");
+    dirMap.put(filePrefix + "MAP.RRF", "/");
+    dirMap.put(filePrefix + "RANK.RRF", "/");
+    dirMap.put(filePrefix + "REL.RRF", "/");
+    dirMap.put(filePrefix + "SAB.RRF", "/");
+    dirMap.put(filePrefix + "SAT.RRF", "/");
+    dirMap.put(filePrefix + "STY.RRF", "/");
     dirMap.put("SRDEF", "/");
 
+
     Map<String, Integer> sortByMap = new HashMap<>();
-    sortByMap.put("MRCONSO.RRF", 0);
-    sortByMap.put("MRDEF.RRF", 0);
-    sortByMap.put("MRDOC.RRF", 0);
-    sortByMap.put("MRMAP.RRF", 0);
-    sortByMap.put("MRRANK.RRF", 0);
-    sortByMap.put("MRREL.RRF", 0);
-    sortByMap.put("MRSAB.RRF", 0);
-    sortByMap.put("MRSAT.RRF", 0);
-    sortByMap.put("MRSTY.RRF", 0);
+    sortByMap.put(filePrefix + "CONSO.RRF", 0);
+    sortByMap.put(filePrefix + "DEF.RRF", 0);
+    sortByMap.put(filePrefix + "DOC.RRF", 0);
+    sortByMap.put(filePrefix + "MAP.RRF", 0);
+    sortByMap.put(filePrefix + "RANK.RRF", 0);
+    sortByMap.put(filePrefix + "REL.RRF", 0);
+    sortByMap.put(filePrefix + "SAB.RRF", 0);
+    sortByMap.put(filePrefix + "SAT.RRF", 0);
+    sortByMap.put(filePrefix + "STY.RRF", 0);
     sortByMap.put("SRDEF", 0);
 
+
     Map<String, String> fileMap = new HashMap<>();
-    fileMap.put("MRCONSO.RRF", "consoByConcept.sort");
-    fileMap.put("MRDEF.RRF", "defByConcept.sort");
-    fileMap.put("MRDOC.RRF", "docByKey.sort");
-    fileMap.put("MRMAP.RRF", "mapByConcept.sort");
-    fileMap.put("MRRANK.RRF", "rankByRank.sort");
-    fileMap.put("MRREL.RRF", "relByConcept.sort");
-    fileMap.put("MRSAB.RRF", "sabBySab.sort");
-    fileMap.put("MRSAT.RRF", "satByConcept.sort");
-    fileMap.put("MRSTY.RRF", "styByConcept.sort");
+    fileMap.put(filePrefix + "CONSO.RRF", "consoByConcept.sort");
+    fileMap.put(filePrefix + "DEF.RRF", "defByConcept.sort");
+    fileMap.put(filePrefix + "DOC.RRF", "docByKey.sort");
+    fileMap.put(filePrefix + "MAP.RRF", "mapByConcept.sort");
+    fileMap.put(filePrefix + "RANK.RRF", "rankByRank.sort");
+    fileMap.put(filePrefix + "REL.RRF", "relByConcept.sort");
+    fileMap.put(filePrefix + "SAB.RRF", "sabBySab.sort");
+    fileMap.put(filePrefix + "SAT.RRF", "satByConcept.sort");
+    fileMap.put(filePrefix + "STY.RRF", "styByConcept.sort");
     fileMap.put("SRDEF", "srdef.sort");
+    
 
     // Sort files
     int[] fields = null;

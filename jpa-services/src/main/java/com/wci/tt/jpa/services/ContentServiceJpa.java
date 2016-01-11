@@ -3,6 +3,7 @@
  */
 package com.wci.tt.jpa.services;
 
+import java.io.File;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -54,6 +55,9 @@ import com.wci.tt.helpers.content.SubsetList;
 import com.wci.tt.helpers.content.SubsetMemberList;
 import com.wci.tt.helpers.content.Tree;
 import com.wci.tt.helpers.content.TreePositionList;
+import com.wci.tt.jpa.algo.RrfFileSorter;
+import com.wci.tt.jpa.algo.RrfLoaderAlgorithm;
+import com.wci.tt.jpa.algo.RrfReaders;
 import com.wci.tt.jpa.content.AbstractComponent;
 import com.wci.tt.jpa.content.AtomJpa;
 import com.wci.tt.jpa.content.AtomRelationshipJpa;
@@ -4305,5 +4309,49 @@ public class ContentServiceJpa extends MetadataServiceJpa implements
       return searchHandlerMap.get(terminology);
     }
     return searchHandlerMap.get(ConfigUtility.DEFAULT);
+  }
+  
+  @Override
+  public void loadRrfTerminology(String terminology, String version, boolean singleMode, String inputDir) throws Exception {
+    
+    Logger.getLogger(getClass()).info("ContentService - Load RRF Terminology");
+    Logger.getLogger(getClass()).info("  terminology   : " + terminology);
+    Logger.getLogger(getClass()).info("  version       : " + version);
+    Logger.getLogger(getClass()).info("  singleMode    : " + singleMode);
+    Logger.getLogger(getClass()).info("  input.dir     : " + inputDir);
+    
+ // Check the input directory
+    File inputDirFile = new File(inputDir);
+    if (!inputDirFile.exists()) {
+      throw new Exception("Specified input directory does not exist");
+    }
+
+    // Sort files - not really needed because files are already sorted
+    Logger.getLogger(getClass()).info("  Sort RRF Files");
+    RrfFileSorter sorter = new RrfFileSorter();
+    sorter.setRequireAllFiles(false);
+    
+    // File outputDir = new File(inputDirFile, "/RRF-sorted-temp/");
+    // sorter.sortFiles(inputDirFile, outputDir);
+  /*  String releaseVersion = sorter.getFileVersion(inputDirFile);*/
+    String releaseVersion = version;
+    Logger.getLogger(getClass()).info("  releaseVersion = " + releaseVersion);
+
+    // Open readers - just open original RRF
+    RrfReaders readers = new RrfReaders(inputDirFile);
+    readers.openOriginalReaders();
+
+    // Load RRF
+    RrfLoaderAlgorithm algorithm = new RrfLoaderAlgorithm();
+    algorithm.setTerminology(terminology);
+    algorithm.setVersion(version);
+    algorithm.setSingleMode(singleMode);
+    algorithm.setReleaseVersion(releaseVersion);
+    algorithm.setReaders(readers);
+    algorithm.compute();
+    algorithm.close();
+    algorithm = null;
+
+    
   }
 }

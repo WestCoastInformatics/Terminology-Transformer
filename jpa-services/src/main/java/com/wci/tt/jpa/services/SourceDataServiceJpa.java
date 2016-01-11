@@ -4,18 +4,22 @@
 package com.wci.tt.jpa.services;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.NoResultException;
 
 import org.apache.log4j.Logger;
+import org.reflections.Reflections;
 
 import com.wci.tt.SourceData;
 import com.wci.tt.SourceDataFile;
 import com.wci.tt.helpers.PfsParameter;
 import com.wci.tt.helpers.SourceDataFileList;
 import com.wci.tt.helpers.SourceDataList;
+import com.wci.tt.helpers.StringList;
 import com.wci.tt.jpa.SourceDataFileJpa;
 import com.wci.tt.jpa.SourceDataJpa;
+import com.wci.tt.jpa.converters.RxNormConverter;
 import com.wci.tt.jpa.helpers.SourceDataFileListJpa;
 import com.wci.tt.jpa.helpers.SourceDataListJpa;
 import com.wci.tt.services.SecurityService;
@@ -36,6 +40,27 @@ public class SourceDataServiceJpa extends RootServiceJpa
   public SourceDataServiceJpa() throws Exception {
     super();
   }
+  
+  /* see superclass */
+  @Override
+  @SuppressWarnings("unchecked")
+  public SourceDataList getSourceDatas() {
+    Logger.getLogger(getClass()).debug("SourceData Service - get sourceDats");
+    javax.persistence.Query query =
+        manager.createQuery("select a from SourceDataJpa a");
+    try {
+      List<SourceData> sourceDatas = query.getResultList();
+      SourceDataList sourceDataList = new SourceDataListJpa();
+      sourceDataList.setObjects(sourceDatas);
+      sourceDataList.setTotalCount(sourceDataList.getCount());
+      for (SourceData sourceData : sourceDataList.getObjects()) {
+        handleLazyInitialization(sourceData);
+      }
+      return sourceDataList;
+    } catch (NoResultException e) {
+      return null;
+    }
+  }
 
   /* see superclass */
   @Override
@@ -50,7 +75,9 @@ public class SourceDataServiceJpa extends RootServiceJpa
   public SourceData addSourceData(SourceData sourceData) throws Exception {
     Logger.getLogger(getClass())
         .debug("Source Data Service - add source data " + sourceData.getName());
-    return addHasLastModified(sourceData);
+   addHasLastModified(sourceData);
+   
+   return sourceData;
   }
 
   /* see superclass */
@@ -136,6 +163,7 @@ public class SourceDataServiceJpa extends RootServiceJpa
     Logger.getLogger(getClass()).debug(
         "Source Data Service - update source data file " + sourceDataFile.getName());
     updateHasLastModified(sourceDataFile);
+
   }
 
   /* see superclass */
@@ -173,6 +201,16 @@ public class SourceDataServiceJpa extends RootServiceJpa
       handleLazyInitialization(searchDataFile);
     }
     return result;
+  }
+  
+  @Override
+  public StringList getConverterNames() {
+    StringList stringList = new StringList();
+    
+    // TODO Discover via reflection
+    stringList.addObject("com.wci.tt.jpa.converters.RxNormConverter");
+    
+    return stringList;
   }
 
   /**

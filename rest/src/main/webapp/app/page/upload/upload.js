@@ -168,7 +168,7 @@ ttApp.controller('SourceDataUploadCtrl', function($scope, $filter, $timeout, sou
     // manually set the headers on the item's request (does not inherit from $http, apparently)
     // TODO Wire this to security service, current cookie
     item.headers = {
-      'Authorization' : 'guest'
+      'Authorization' : 'admin'
     };
   };
   uploader.onProgressItem = function(fileItem, progress) {

@@ -191,6 +191,7 @@ public class SecurityServiceJpa extends RootServiceJpa implements
       }
       return userName;
     } else {
+      Logger.getLogger(getClass()).error("Invalid authToken: " + authToken);
       throw new LocalException("AuthToken does not have a valid userName.");
     }
   }

@@ -305,14 +305,18 @@ public class RrfLoaderAlgorithm extends ContentServiceJpa implements Algorithm {
       // Load the metadata
       //
 
+      /**
+       * 
+       * TODO Remove commenting once identifying failed relationship
+       */
       // Load semantic types
       if (!singleMode)
         loadSrdef();
 
-      // Load MRDOC data
+      // Load RXNDOC data
       loadMrdoc();
 
-      // Load MRSAB data
+      // Load RXNSAB data
       loadMrsab();
 
       // Load precedence info
@@ -338,7 +342,7 @@ public class RrfLoaderAlgorithm extends ContentServiceJpa implements Algorithm {
       // Attributes
       loadMrsat();
 
-      // Need to reset MRSAT reader
+      // Need to reset RXNSAT reader
       readers.closeReaders();
       readers.openOriginalReaders();
 
@@ -436,12 +440,12 @@ public class RrfLoaderAlgorithm extends ContentServiceJpa implements Algorithm {
   }
 
   /**
-   * Load MRDOC. This is responsible for loading much of the metadata.
+   * Load RXNDOC. This is responsible for loading much of the metadata.
    *
    * @throws Exception the exception
    */
   private void loadMrdoc() throws Exception {
-    Logger.getLogger(getClass()).info("  Load MRDOC abbreviation types");
+    Logger.getLogger(getClass()).info("  Load RXNDOC abbreviation types");
     String line = null;
     Set<String> atnSeen = new HashSet<>();
     Map<String, RelationshipType> relMap = new HashMap<>();
@@ -449,7 +453,7 @@ public class RrfLoaderAlgorithm extends ContentServiceJpa implements Algorithm {
     Map<String, AdditionalRelationshipType> relaMap = new HashMap<>();
     Map<String, String> inverseRelaMap = new HashMap<>();
     Map<String, TermType> ttyMap = new HashMap<>();
-    PushBackReader reader = readers.getReader(RrfReaders.Keys.MRDOC);
+    PushBackReader reader = readers.getReader(RrfReaders.Keys.RXNDOC);
     int objectCt = 0;
     final String fields[] = new String[4];
     while ((line = reader.readLine()) != null) {
@@ -662,15 +666,15 @@ public class RrfLoaderAlgorithm extends ContentServiceJpa implements Algorithm {
   }
 
   /**
-   * Load MRSAB. This is responsible for loading {@link Terminology} and
+   * Load RXNSAB. This is responsible for loading {@link Terminology} and
    * {@link RootTerminology} info.
    *
    * @throws Exception the exception
    */
   private void loadMrsab() throws Exception {
-    Logger.getLogger(getClass()).info("  Load MRSAB data");
+    Logger.getLogger(getClass()).info("  Load RXNSAB data");
     String line = null;
-    PushBackReader reader = readers.getReader(RrfReaders.Keys.MRSAB);
+    PushBackReader reader = readers.getReader(RrfReaders.Keys.RXNSAB);
     final String fields[] = new String[25];
     while ((line = reader.readLine()) != null) {
 
@@ -753,7 +757,7 @@ public class RrfLoaderAlgorithm extends ContentServiceJpa implements Algorithm {
 
       if (!loadedRootTerminologies.containsKey(fields[3])) {
         RootTerminology root = new RootTerminologyJpa();
-        root.setAcquisitionContact(null); // no data for this in MRSAB
+        root.setAcquisitionContact(null); // no data for this in RXNSAB
         root.setContentContact(new ContactInfoJpa(fields[12]));
         root.setFamily(fields[5]);
         root.setLicenseContact(new ContactInfoJpa(fields[11]));
@@ -815,7 +819,7 @@ public class RrfLoaderAlgorithm extends ContentServiceJpa implements Algorithm {
   }
 
   /**
-   * Load MRRANK. This is responsible for loading the default
+   * Load RXNRANK. This is responsible for loading the default
    * {@link PrecedenceList}s.
    *
    * @throws Exception the exception
@@ -829,9 +833,9 @@ public class RrfLoaderAlgorithm extends ContentServiceJpa implements Algorithm {
 
     List<KeyValuePair> lkvp = new ArrayList<>();
 
-    Logger.getLogger(getClass()).info("  Load MRRANK data");
+    Logger.getLogger(getClass()).info("  Load RXNRANK data");
     String line = null;
-    PushBackReader reader = readers.getReader(RrfReaders.Keys.MRRANK);
+    PushBackReader reader = readers.getReader(RrfReaders.Keys.RXNRANK);
     final String fields[] = new String[4];
     while ((line = reader.readLine()) != null) {
 
@@ -871,15 +875,15 @@ public class RrfLoaderAlgorithm extends ContentServiceJpa implements Algorithm {
   }
 
   /**
-   * Load MRDEF. This is responsible for loading {@link Definition}s.
+   * Load RXNDEF. This is responsible for loading {@link Definition}s.
    *
    * @throws Exception the exception
    */
   private void loadMrdef() throws Exception {
-    Logger.getLogger(getClass()).info("  Load MRDEF data");
+    Logger.getLogger(getClass()).info("  Load RXNDEF data");
     String line = null;
     int objectCt = 0;
-    PushBackReader reader = readers.getReader(RrfReaders.Keys.MRDEF);
+    PushBackReader reader = readers.getReader(RrfReaders.Keys.RXNDEF);
     // make set of all atoms that got an additional definition
     Set<Atom> modifiedAtoms = new HashSet<>();
     final String fields[] = new String[8];
@@ -967,16 +971,16 @@ public class RrfLoaderAlgorithm extends ContentServiceJpa implements Algorithm {
   }
 
   /**
-   * Load MRSAT. This is responsible for loading {@link Attribute}s.
+   * Load RXNSAT. This is responsible for loading {@link Attribute}s.
    *
    * @throws Exception the exception
    */
   private void loadMrsat() throws Exception {
-    Logger.getLogger(getClass()).info("  Load MRSAT data");
+    Logger.getLogger(getClass()).info("  Load RXNSAT data");
     String line = null;
 
     int objectCt = 0;
-    PushBackReader reader = readers.getReader(RrfReaders.Keys.MRSAT);
+    PushBackReader reader = readers.getReader(RrfReaders.Keys.RXNSAT);
     // make set of all atoms that got an additional attribute
     Set<Atom> modifiedAtoms = new HashSet<>();
     Set<Relationship<? extends ComponentHasAttributes, ? extends ComponentHasAttributes>> modifiedRelationships =
@@ -1183,17 +1187,17 @@ public class RrfLoaderAlgorithm extends ContentServiceJpa implements Algorithm {
   }
 
   /**
-   * Load subset data from MRSAT. This is responsible for loading {@link Subset}
-   * s and {@link SubsetMember}s.
+   * Load subset data from RXNSAT. This is responsible for loading
+   * {@link Subset} s and {@link SubsetMember}s.
    *
    * @throws Exception the exception
    */
   private void loadMrsatSubsets() throws Exception {
-    Logger.getLogger(getClass()).info("  Load MRSAT Subset data");
+    Logger.getLogger(getClass()).info("  Load RXNSAT Subset data");
     String line = null;
 
     int objectCt = 0;
-    PushBackReader reader = readers.getReader(RrfReaders.Keys.MRSAT);
+    PushBackReader reader = readers.getReader(RrfReaders.Keys.RXNSAT);
     Map<String, SubsetMember<? extends ComponentHasAttributesAndName, ? extends Subset>> addedSubsetMembers =
         new HashMap<>();
     String prevMetaUi = null;
@@ -1432,152 +1436,201 @@ public class RrfLoaderAlgorithm extends ContentServiceJpa implements Algorithm {
   }
 
   /**
-   * Load MRREL.This is responsible for loading {@link Relationship}s.
+   * Load RXNREL.This is responsible for loading {@link Relationship}s.
    *
    * @throws Exception the exception
    */
   private void loadMrrel() throws Exception {
-    Logger.getLogger(getClass()).info("  Load MRREL data");
+    Logger.getLogger(getClass()).info("  Load RXNREL data");
     String line = null;
 
     int objectCt = 0;
-    PushBackReader reader = readers.getReader(RrfReaders.Keys.MRREL);
+    PushBackReader reader = readers.getReader(RrfReaders.Keys.RXNREL);
     final String fields[] = new String[16];
     while ((line = reader.readLine()) != null) {
 
-      line = line.replace("\r", "");
-      FieldedStringTokenizer.split(line, "|", 16, fields);
+      try {
 
-      // Skip non-matching in single mode
-      if (singleMode && !fields[10].equals(terminology)
-          && !fields[10].equals("SAB")) {
+        line = line.replace("\r", "");
+        FieldedStringTokenizer.split(line, "|", 16, fields);
+
+        // Skip non-matching in single mode
+        if (singleMode && !fields[10].equals(terminology)
+            && !fields[10].equals("SAB")) {
+          continue;
+        }
+
+        // Field description
+        // 0 CUI1
+        // 1 AUI1
+        // 2 STYPE1
+        // 3 REL
+        // 4 CUI2
+        // 5 AUI2
+        // 6 STYPE2
+        // 7 RELA
+        // 8 RUI
+        // 9 SRUI
+        // 10 SAB
+        // 11 SL
+        // 12 RG
+        // 13 DIR
+        // 14 SUPPRESS
+        // 15 CVF
+        //
+        // e.g. C0002372|A0021548|AUI|SY|C0002372|A16796726|AUI||R112184262||
+        // RXNORM|RXNORM|||N|| C0002372|A0022283|AUI|RO|C2241537|A14211642|AUI
+        // |has_ingredient|R91984327||MMSL|MMSL|||N||
+
+        // No need to update things rels are connected to because setting "from"
+        // handles this in the DB. This also means, all we really need is an
+        // empty
+        // container for the object with the id set.
+
+        // Skip SIB rels
+        if (fields[3].equals("SIB")) {
+          continue;
+        }
+
+        else if (fields[2].equals("AUI") && fields[6].equals("AUI")) {
+          final AtomRelationship aRel = new AtomRelationshipJpa();
+
+          final Atom fromAtom = getAtom(atomIdMap.get(fields[5]));
+          aRel.setFrom(fromAtom);
+
+          final Atom toAtom = getAtom(atomIdMap.get(fields[1]));
+          aRel.setTo(toAtom);
+
+          setRelationshipFields(fields, aRel);
+          addRelationship(aRel);
+          relationshipMap.put(fields[8], aRel.getId());
+
+        } else if (fields[2].equals("CUI") && fields[6].equals("CUI")) {
+          final ConceptRelationship conceptRel = new ConceptRelationshipJpa();
+
+          // if both source and target conceps non-empty, use oncept map
+          if (!fields[4].isEmpty() && !fields[0].isEmpty()) {
+            final Concept fromConcept =
+                getConcept(conceptIdMap.get(terminology + fields[4]));
+            conceptRel.setFrom(fromConcept);
+
+            final Concept toConcept =
+                getConcept(conceptIdMap.get(terminology + fields[0]));
+            conceptRel.setTo(toConcept);
+          } else if (fields[4].isEmpty() && fields[0].isEmpty()) {
+            final Concept fromConcept =
+                getConcept(conceptIdMap.get(atomTerminologyMap.get(fields[5])
+                    + atomConceptIdMap.get(fields[5])));
+            conceptRel.setFrom(fromConcept);
+
+            final Concept toConcept =
+                getConcept(conceptIdMap.get(atomTerminologyMap.get(fields[1])
+                    + atomConceptIdMap.get(fields[1])));
+            conceptRel.setTo(toConcept);
+
+          } else {
+            Logger.getLogger(getClass())
+                .warn("Relationship has neither CUI or Atom pairs: ");
+            continue;
+          }
+
+          final Concept fromConcept =
+              getConcept(conceptIdMap.get(terminology + fields[4]));
+          conceptRel.setFrom(fromConcept);
+
+          final Concept toConcept =
+              getConcept(conceptIdMap.get(terminology + fields[0]));
+          conceptRel.setTo(toConcept);
+
+          setRelationshipFields(fields, conceptRel);
+          conceptRel.setTerminology(terminology);
+          conceptRel.setVersion(version);
+          addRelationship(conceptRel);
+          relationshipMap.put(fields[8], conceptRel.getId());
+
+        } else if (fields[2].equals("SCUI") && fields[6].equals("SCUI")) {
+          final ConceptRelationship conceptRel = new ConceptRelationshipJpa();
+
+          final Concept fromConcept =
+              getConcept(conceptIdMap.get(atomTerminologyMap.get(fields[5])
+                  + atomConceptIdMap.get(fields[5])));
+          conceptRel.setFrom(fromConcept);
+
+          final Concept toConcept =
+              getConcept(conceptIdMap.get(atomTerminologyMap.get(fields[1])
+                  + atomConceptIdMap.get(fields[1])));
+          conceptRel.setTo(toConcept);
+
+          setRelationshipFields(fields, conceptRel);
+          addRelationship(conceptRel);
+          relationshipMap.put(fields[8], conceptRel.getId());
+
+        } else if (fields[2].equals("SDUI") && fields[6].equals("SDUI")) {
+          final DescriptorRelationship descriptorRel =
+              new DescriptorRelationshipJpa();
+
+          final Descriptor fromDescriptor = getDescriptor(
+              descriptorIdMap.get(atomTerminologyMap.get(fields[5])
+                  + atomDescriptorIdMap.get(fields[5])));
+          descriptorRel.setFrom(fromDescriptor);
+
+          final Descriptor toDescriptor = getDescriptor(
+              descriptorIdMap.get(atomTerminologyMap.get(fields[1])
+                  + atomDescriptorIdMap.get(fields[1])));
+          descriptorRel.setTo(toDescriptor);
+
+          setRelationshipFields(fields, descriptorRel);
+          addRelationship(descriptorRel);
+          relationshipMap.put(fields[8], descriptorRel.getId());
+
+        } else if (fields[2].equals("CODE") && fields[6].equals("CODE")) {
+          final CodeRelationship codeRel = new CodeRelationshipJpa();
+
+          final Code fromCode =
+              getCode(codeIdMap.get(atomTerminologyMap.get(fields[5])
+                  + atomCodeIdMap.get(fields[5])));
+          codeRel.setFrom(fromCode);
+
+          final Code toCode =
+              getCode(codeIdMap.get(atomTerminologyMap.get(fields[1])
+                  + atomCodeIdMap.get(fields[1])));
+          codeRel.setTo(toCode);
+
+          setRelationshipFields(fields, codeRel);
+          addRelationship(codeRel);
+          relationshipMap.put(fields[8], codeRel.getId());
+
+        } else {
+          Logger.getLogger(getClass())
+              .debug("  SKIPPING relationship STYPE1!=STYPE2 - " + line);
+          continue;
+        }
+
+        logAndCommit(++objectCt, RootService.logCt, RootService.commitCt);
+      } catch (Exception e) {
+        Logger.getLogger(getClass()).info("ERROR: " + e.getMessage());
+        Logger.getLogger(getClass()).info("Line                    : " + line);
+        Logger.getLogger(getClass()).info("AtomTerminologyMap[1]   :"  + atomTerminologyMap.get(fields[1]));
+        Logger.getLogger(getClass()).info("AtomConceptIdMap[1]     :" + atomConceptIdMap.get(fields[1]));
+        Logger.getLogger(getClass()).info("AtomDescriptorIdMap[1]  :" + atomDescriptorIdMap.get(fields[1]));
+        Logger.getLogger(getClass()).info("AtomCodeIdMap[1]        :" + atomCodeIdMap.get(fields[1]));
+        Logger.getLogger(getClass()).info("AtomTerminologyMap[5]   :"  + atomTerminologyMap.get(fields[5]));
+        Logger.getLogger(getClass()).info("AtomConceptidMap[5]     :" + atomConceptIdMap.get(fields[5]));
+        Logger.getLogger(getClass()).info("AtomDescriptorIdMap[5]  :" + atomDescriptorIdMap.get(fields[5]));
+        Logger.getLogger(getClass()).info("AtomCodeIdMap[5]        :" + atomCodeIdMap.get(fields[5]));
+        
+    
+        //throw new Exception(e.getMessage());
+        
         continue;
       }
-
-      // Field description
-      // 0 CUI1
-      // 1 AUI1
-      // 2 STYPE1
-      // 3 REL
-      // 4 CUI2
-      // 5 AUI2
-      // 6 STYPE2
-      // 7 RELA
-      // 8 RUI
-      // 9 SRUI
-      // 10 SAB
-      // 11 SL
-      // 12 RG
-      // 13 DIR
-      // 14 SUPPRESS
-      // 15 CVF
-      //
-      // e.g. C0002372|A0021548|AUI|SY|C0002372|A16796726|AUI||R112184262||
-      // RXNORM|RXNORM|||N|| C0002372|A0022283|AUI|RO|C2241537|A14211642|AUI
-      // |has_ingredient|R91984327||MMSL|MMSL|||N||
-
-      // No need to update things rels are connected to because setting "from"
-      // handles this in the DB. This also means, all we really need is an empty
-      // container for the object with the id set.
-
-      // Skip SIB rels
-      if (fields[3].equals("SIB")) {
-        continue;
-      }
-
-      else if (fields[2].equals("AUI") && fields[6].equals("AUI")) {
-        final AtomRelationship aRel = new AtomRelationshipJpa();
-
-        final Atom fromAtom = getAtom(atomIdMap.get(fields[5]));
-        aRel.setFrom(fromAtom);
-
-        final Atom toAtom = getAtom(atomIdMap.get(fields[1]));
-        aRel.setTo(toAtom);
-
-        setRelationshipFields(fields, aRel);
-        addRelationship(aRel);
-        relationshipMap.put(fields[8], aRel.getId());
-
-      } else if (fields[2].equals("CUI") && fields[6].equals("CUI")) {
-        final ConceptRelationship conceptRel = new ConceptRelationshipJpa();
-
-        final Concept fromConcept =
-            getConcept(conceptIdMap.get(terminology + fields[4]));
-        conceptRel.setFrom(fromConcept);
-
-        final Concept toConcept =
-            getConcept(conceptIdMap.get(terminology + fields[0]));
-        conceptRel.setTo(toConcept);
-
-        setRelationshipFields(fields, conceptRel);
-        conceptRel.setTerminology(terminology);
-        conceptRel.setVersion(version);
-        addRelationship(conceptRel);
-        relationshipMap.put(fields[8], conceptRel.getId());
-
-      } else if (fields[2].equals("SCUI") && fields[6].equals("SCUI")) {
-        final ConceptRelationship conceptRel = new ConceptRelationshipJpa();
-
-        final Concept fromConcept =
-            getConcept(conceptIdMap.get(atomTerminologyMap.get(fields[5])
-                + atomConceptIdMap.get(fields[5])));
-        conceptRel.setFrom(fromConcept);
-
-        final Concept toConcept =
-            getConcept(conceptIdMap.get(atomTerminologyMap.get(fields[1])
-                + atomConceptIdMap.get(fields[1])));
-        conceptRel.setTo(toConcept);
-
-        setRelationshipFields(fields, conceptRel);
-        addRelationship(conceptRel);
-        relationshipMap.put(fields[8], conceptRel.getId());
-
-      } else if (fields[2].equals("SDUI") && fields[6].equals("SDUI")) {
-        final DescriptorRelationship descriptorRel =
-            new DescriptorRelationshipJpa();
-
-        final Descriptor fromDescriptor =
-            getDescriptor(descriptorIdMap.get(atomTerminologyMap.get(fields[5])
-                + atomDescriptorIdMap.get(fields[5])));
-        descriptorRel.setFrom(fromDescriptor);
-
-        final Descriptor toDescriptor =
-            getDescriptor(descriptorIdMap.get(atomTerminologyMap.get(fields[1])
-                + atomDescriptorIdMap.get(fields[1])));
-        descriptorRel.setTo(toDescriptor);
-
-        setRelationshipFields(fields, descriptorRel);
-        addRelationship(descriptorRel);
-        relationshipMap.put(fields[8], descriptorRel.getId());
-
-      } else if (fields[2].equals("CODE") && fields[6].equals("CODE")) {
-        final CodeRelationship codeRel = new CodeRelationshipJpa();
-
-        final Code fromCode = getCode(codeIdMap.get(
-            atomTerminologyMap.get(fields[5]) + atomCodeIdMap.get(fields[5])));
-        codeRel.setFrom(fromCode);
-
-        final Code toCode = getCode(codeIdMap.get(
-            atomTerminologyMap.get(fields[1]) + atomCodeIdMap.get(fields[1])));
-        codeRel.setTo(toCode);
-
-        setRelationshipFields(fields, codeRel);
-        addRelationship(codeRel);
-        relationshipMap.put(fields[8], codeRel.getId());
-
-      } else {
-        Logger.getLogger(getClass())
-            .debug("  SKIPPING relationship STYPE1!=STYPE2 - " + line);
-        continue;
-      }
-
-      logAndCommit(++objectCt, RootService.logCt, RootService.commitCt);
     }
 
     // update terminologies after setting the rel directionality flag
     for (final Terminology terminology : loadedTerminologies.values()) {
       updateTerminology(terminology);
     }
+
   }
 
   /**
@@ -1627,14 +1680,15 @@ public class RrfLoaderAlgorithm extends ContentServiceJpa implements Algorithm {
   }
 
   /**
-   * Load MRSTY. This is responsible for loading {@link SemanticTypeComponent}s.
+   * Load RXNSTY. This is responsible for loading {@link SemanticTypeComponent}
+   * s.
    *
    * @throws Exception the exception
    */
   private void loadMrsty() throws Exception {
-    Logger.getLogger(getClass()).info("  Load MRSTY data");
+    Logger.getLogger(getClass()).info("  Load RXNSTY data");
     String line = null;
-    PushBackReader reader = readers.getReader(RrfReaders.Keys.MRSTY);
+    PushBackReader reader = readers.getReader(RrfReaders.Keys.RXNSTY);
     // make set of all concepts that got an additional sty
     int objectCt = 0;
     Set<Concept> modifiedConcepts = new HashSet<>();
@@ -1698,20 +1752,20 @@ public class RrfLoaderAlgorithm extends ContentServiceJpa implements Algorithm {
   }
 
   /**
-   * Load MRCONSO.RRF. This is responsible for loading {@link Atom}s and
+   * Load RXNCONSO.RRF. This is responsible for loading {@link Atom}s and
    * {@link AtomClass}es.
    *
    * @throws Exception the exception
    */
   private void loadMrconso() throws Exception {
-    Logger.getLogger(getClass()).info("  Load MRCONSO");
+    Logger.getLogger(getClass()).info("  Load RXNCONSO");
     Logger.getLogger(getClass()).info("  Insert atoms and concepts ");
 
     // Set up maps
     String line = null;
 
     int objectCt = 0;
-    PushBackReader reader = readers.getReader(RrfReaders.Keys.MRCONSO);
+    PushBackReader reader = readers.getReader(RrfReaders.Keys.RXNCONSO);
     final String fields[] = new String[18];
     String prevCui = null;
     Concept cui = null;

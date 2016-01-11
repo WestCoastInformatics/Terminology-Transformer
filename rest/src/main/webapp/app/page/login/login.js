@@ -18,6 +18,27 @@ ttApp.controller('LoginCtrl', [
   function($scope, $http, $location, securityService, gpService, utilService, tabService) {
     console.debug('configure LoginCtrl');
     
+
+
+    $scope.loadRxnorm = function() {
+      console.log('testing loadRxnorm');
+      $http.post(fileUrl + 'sourceDataFile/loadRxnorm').then(function() {
+        
+      }, function(error) {
+        utilService.handleError(error);
+      })
+    }
+    
+    $scope.removeRxnorm = function() {
+      console.log('testing removeRxnorm');
+      $http.post(fileUrl + 'sourceDataFile/removeRxnorm').then(function() {
+        
+      }, function(error) {
+        utilService.handleError(error);
+      })
+    }
+
+    
     // clear any cached user information
     securityService.clearUser();
  

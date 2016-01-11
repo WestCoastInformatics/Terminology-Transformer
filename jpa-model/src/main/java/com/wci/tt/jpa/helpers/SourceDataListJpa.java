@@ -22,7 +22,7 @@ public class SourceDataListJpa extends AbstractResultList<SourceData>
 
   /* see superclass */
   @Override
-  @XmlElement(type = SourceDataJpa.class, name = "results")
+  @XmlElement(type = SourceDataJpa.class, name = "sourceDatas")
   public List<SourceData> getObjects() {
     return super.getObjectsTransient();
   }

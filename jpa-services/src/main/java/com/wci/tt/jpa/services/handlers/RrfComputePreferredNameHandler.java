@@ -57,6 +57,12 @@ public class RrfComputePreferredNameHandler implements
   /* see superclass */
   @Override
   public String computePreferredName(Collection<Atom> atoms) throws Exception {
+    
+    // Ignore computation, simply get name
+    // TODO FIgure out how we want to rank things
+    return atoms.iterator().next().getName();
+    
+    /**
     // Use ranking algorithm from MetamorphoSys
     // [termgroupRank][lrr][inverse SUI][inverse AUI]
     // LRR isn't available here so just don't worry about it.
@@ -77,6 +83,8 @@ public class RrfComputePreferredNameHandler implements
       return maxAtom.getName();
     }
     return null;
+    
+    */
   }
 
   /* see superclass */
