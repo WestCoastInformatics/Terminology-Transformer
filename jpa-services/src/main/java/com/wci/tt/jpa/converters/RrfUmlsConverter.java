@@ -1,10 +1,13 @@
 package com.wci.tt.jpa.converters;
 
+import java.io.File;
+
 import org.apache.log4j.Logger;
 
 import com.wci.tt.SourceData;
 import com.wci.tt.SourceDataConverter;
 import com.wci.tt.helpers.ConverterStatus;
+import com.wci.tt.helpers.LocalException;
 import com.wci.tt.jpa.services.ContentServiceJpa;
 import com.wci.tt.jpa.services.SourceDataServiceJpa;
 import com.wci.tt.services.ContentService;
@@ -43,7 +46,7 @@ public class RrfUmlsConverter implements SourceDataConverter {
    * @throws Exception
    */
   @Override
-  public void convert(SourceData sourceData, String terminologyAndVersion)
+  public void convert(SourceData sourceData)
     throws Exception {
 
     // check pre-requisites
@@ -57,10 +60,14 @@ public class RrfUmlsConverter implements SourceDataConverter {
           "No source data converter specified for source data object "
               + sourceData.getName());
     }
-    Class clazz = Class.forName(sourceData.getConverterName());
  
     
     // find the data directory from the first sourceDataFile
+    String inputDir = sourceData.getSourceDataFiles().get(0).getPath();
+    
+    if (new File(inputDir).isDirectory()) {
+      throw new LocalException("Source data directory is not a directory: " + inputDir);
+    }
 
     SourceDataService sourceDataService = new SourceDataServiceJpa();
     sourceData.setConverterStatus(ConverterStatus.CONVERTING);
@@ -72,8 +79,8 @@ public class RrfUmlsConverter implements SourceDataConverter {
       // files as terminology, source data name as version
       // goal is to allow easy searching of content based on source files, as
       // well as terminology/version
-      contentService.loadRrfTerminology(terminology + "_" + version,
-          sourceData.getName(), false, inputDir);
+      contentService.loadRrfTerminology(sourceData.getName(),
+          "latest", false, inputDir);
       sourceData.setConverterStatus(ConverterStatus.CONVERTED);
     } catch (Exception e) {
       Logger.getLogger(this.getClass())
@@ -86,11 +93,5 @@ public class RrfUmlsConverter implements SourceDataConverter {
       contentService.close();
       sourceDataService.close();
     }
-  }
-
-  @Override
-  public void convert(String terminology, String version) throws Exception {
-    // TODO Auto-generated method stub
-
   }
 }

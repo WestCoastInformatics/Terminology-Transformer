@@ -3,7 +3,7 @@ package com.wci.tt.helpers;
 /**
  * The Enum DataTypes.
  */
-public enum DataType {
+public enum DataContextType {
   
   /** The code. */
   CODE,

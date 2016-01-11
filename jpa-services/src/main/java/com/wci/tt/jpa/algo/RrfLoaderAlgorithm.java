@@ -1930,7 +1930,6 @@ public class RrfLoaderAlgorithm extends ContentServiceJpa implements Algorithm {
           cui.setTerminology(terminology);
           cui.setTerminologyId(fields[0]);
           cui.setVersion(version);
-          cui.setWorkflowStatus(published);
         }
         cui.addAtom(atom);
         prevCui = fields[0];
@@ -2009,7 +2008,6 @@ public class RrfLoaderAlgorithm extends ContentServiceJpa implements Algorithm {
         cui.setTerminology(atom.getTerminology());
         cui.setTerminologyId(atom.getConceptId());
         cui.setVersion(atom.getVersion());
-        cui.setWorkflowStatus(published);
       }
       cui.addAtom(atom);
       prevCui = atom.getConceptId();
@@ -2056,7 +2054,6 @@ public class RrfLoaderAlgorithm extends ContentServiceJpa implements Algorithm {
         dui.setTerminology(atom.getTerminology());
         dui.setTerminologyId(atom.getDescriptorId());
         dui.setVersion(atom.getVersion());
-        dui.setWorkflowStatus(published);
       }
       dui.addAtom(atom);
       prevDui = atom.getDescriptorId();
@@ -2113,7 +2110,6 @@ public class RrfLoaderAlgorithm extends ContentServiceJpa implements Algorithm {
         code.setTerminology(atom.getTerminology());
         code.setTerminologyId(atom.getCodeId());
         code.setVersion(atom.getVersion());
-        code.setWorkflowStatus(published);
       }
       code.addAtom(atom);
       prevCode = atom.getCodeId();
