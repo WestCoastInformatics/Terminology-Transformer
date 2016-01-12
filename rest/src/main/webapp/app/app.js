@@ -11,6 +11,7 @@ var ttApp = angular.module('ttApp',
 // Declare top level URL vars
 var securityUrl = 'security/';
 var fileUrl = 'file/';
+var transformUrl = 'transform/';
 
 // Initialization of ttApp
 ttApp.run([ '$rootScope', '$http', '$location', '$window', 'securityService', 'tabService', 

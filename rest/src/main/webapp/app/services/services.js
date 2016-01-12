@@ -1,3 +1,18 @@
+ttApp.service('transformService', [ '$http', '$q', 'utilService', 'gpService',
+  function($http, $q, utilService, gpService) {
+    console.debug('configure transformService');
+    
+    this.transform = function(inputStr, dataContext) {
+      var deferred = $q.defer();
+      $http.post(transformUrl + 'process/' + encodeURI(inputStr), dataContext).then(function(response) {
+        deferred.resolve(response.data);
+      }, function(error) {
+        deferred.reject(error);
+      })
+      return deferred.promise;
+    }
+  } ]);
+
 ttApp.service('sourceDataService', [ '$http', '$location', '$q', '$cookies', 'utilService',
   'gpService', function($http, $location, $q, ngCookies, utilService, gpService) {
     console.debug('configure sourceDataService');

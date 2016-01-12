@@ -1,8 +1,5 @@
 package com.wci.tt.helpers;
 
-public interface Trustable {
+public interface Trustable extends HasQuality {
 
-  public void setQuality(float quality);
-  
-  public float getQuality();
 }

@@ -1608,20 +1608,25 @@ public class RrfLoaderAlgorithm extends ContentServiceJpa implements Algorithm {
 
         logAndCommit(++objectCt, RootService.logCt, RootService.commitCt);
       } catch (Exception e) {
-        Logger.getLogger(getClass()).info("ERROR: " + e.getMessage());
-        Logger.getLogger(getClass()).info("Line                    : " + line);
-        Logger.getLogger(getClass()).info("AtomTerminologyMap[1]   :"  + atomTerminologyMap.get(fields[1]));
-        Logger.getLogger(getClass()).info("AtomConceptIdMap[1]     :" + atomConceptIdMap.get(fields[1]));
-        Logger.getLogger(getClass()).info("AtomDescriptorIdMap[1]  :" + atomDescriptorIdMap.get(fields[1]));
-        Logger.getLogger(getClass()).info("AtomCodeIdMap[1]        :" + atomCodeIdMap.get(fields[1]));
-        Logger.getLogger(getClass()).info("AtomTerminologyMap[5]   :"  + atomTerminologyMap.get(fields[5]));
-        Logger.getLogger(getClass()).info("AtomConceptidMap[5]     :" + atomConceptIdMap.get(fields[5]));
-        Logger.getLogger(getClass()).info("AtomDescriptorIdMap[5]  :" + atomDescriptorIdMap.get(fields[5]));
-        Logger.getLogger(getClass()).info("AtomCodeIdMap[5]        :" + atomCodeIdMap.get(fields[5]));
-        
-    
-        //throw new Exception(e.getMessage());
-        
+        Logger.getLogger(getClass())
+            .info("ERROR: " + e.getMessage());
+        Logger.getLogger(getClass())
+            .info("Line : " + line);
+        Logger.getLogger(getClass())
+            .info("Terminology/Concept/Descriptor/Code (from) :"
+                + atomTerminologyMap.get(fields[1]) + ", "
+                + atomConceptIdMap.get(fields[1]) + ", "
+                + atomDescriptorIdMap.get(fields[1]) + ", "
+                + atomCodeIdMap.get(fields[1]) + ", ");
+        Logger.getLogger(getClass())
+            .info("Terminology/Concept/Descriptor/Code (to)   :"
+                + atomTerminologyMap.get(fields[5]) + ", "
+                + atomConceptIdMap.get(fields[5]) + ", "
+                + atomDescriptorIdMap.get(fields[5]) + ", "
+                + atomCodeIdMap.get(fields[5]) + ", ");
+
+        // throw new Exception(e.getMessage());
+
         continue;
       }
     }

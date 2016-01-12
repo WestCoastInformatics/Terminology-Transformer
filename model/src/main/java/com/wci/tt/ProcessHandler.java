@@ -1,23 +1,9 @@
 package com.wci.tt;
 
-import com.wci.tt.helpers.Trustable;
+import com.wci.tt.helpers.QualityResult;
+import com.wci.tt.helpers.QualityResultList;
 
-public class ProcessHandler implements Trustable {
+public interface  ProcessHandler {
 
-  public ProcessHandler() {
-    // TODO Auto-generated constructor stub
-  }
-
-  @Override
-  public void setQuality(float quality) {
-    // TODO Auto-generated method stub
-
-  }
-
-  @Override
-  public float getQuality() {
-    // TODO Auto-generated method stub
-    return 0;
-  }
-
+  public QualityResultList process(QualityResult qr, DataContext dataContext);
 }

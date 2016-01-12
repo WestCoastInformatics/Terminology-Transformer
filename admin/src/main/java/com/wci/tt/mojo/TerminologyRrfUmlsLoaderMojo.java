@@ -6,8 +6,8 @@ package com.wci.tt.mojo;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoFailureException;
 
-import com.wci.tt.jpa.services.rest.SourceDataServiceRest;
-import com.wci.tt.rest.impl.SourceDataServiceRestImpl;
+import com.wci.tt.jpa.services.ContentServiceJpa;
+import com.wci.tt.services.ContentService;
 
 /**
  * Goal which loads a set of RRF into a database.
@@ -69,17 +69,16 @@ public class TerminologyRrfUmlsLoaderMojo extends AbstractMojo {
     
 
     try {
-      getLog().info("RRF UMLS Terminology Loader called via mojo.");
-      getLog().info("WARN: Mojo changed for testing use of RXNORM/RRF loader. Not applicable to other RRF terminologies");
-     /* getLog().info("  Terminology        : " + terminology);
+      //getLog().info("RRF UMLS Terminology Loader called via mojo.");
+      //getLog().info("WARN: Mojo changed for testing use of RXNORM/RRF loader. Not applicable to other RRF terminologies");
+      getLog().info("  Terminology        : " + terminology);
       getLog().info("  Terminology Version: " + version);
       getLog().info("  Input directory    : " + inputDir);
       getLog().info("  Config file        : " + System.getProperties().getProperty("tt.config"));
-*/
-      SourceDataServiceRest service = new SourceDataServiceRestImpl();
       
-      service.removeRxnormTestFn();
-      service.loadRxnormTestFn();
+      ContentService contentService = new ContentServiceJpa();
+      contentService.loadRrfTerminology(terminology, version, false, inputDir);
+      contentService.close();
       
     } catch (Exception e) {
       e.printStackTrace();
