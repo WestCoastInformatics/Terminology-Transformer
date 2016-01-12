@@ -12,12 +12,9 @@ import com.wci.tt.IdentifyHandler;
 import com.wci.tt.NormalizeHandler;
 import com.wci.tt.ProcessHandler;
 import com.wci.tt.Provider;
-import com.wci.tt.helpers.QualityResult;
-import com.wci.tt.helpers.QualityResultList;
-import com.wci.tt.jpa.helpers.QualityResultListJpa;
-import com.wci.tt.jpa.identifiers.DefaultIdentifyHandler;
-import com.wci.tt.jpa.normalizers.DefaultNormalizeHandler;
-import com.wci.tt.jpa.processors.DefaultProcessHandler;
+import com.wci.tt.helpers.ScoredResult;
+import com.wci.tt.helpers.ScoredResultList;
+import com.wci.tt.jpa.helpers.ScoredResultListJpa;
 
 public class DefaultProvider implements Provider {
 
@@ -27,26 +24,25 @@ public class DefaultProvider implements Provider {
 
   private List<ProcessHandler> processHandlers = new ArrayList<>();
 
-  public DefaultProvider() {
-    this.addNormalizeHandler(new DefaultNormalizeHandler());
-    this.addIdentifyHandler(new DefaultIdentifyHandler());
-    this.addProcessHandler(new DefaultProcessHandler());
+  public DefaultProvider() throws Exception {
+    super();
   }
 
   @Override
-  public QualityResultList processInput(String inputStr,
+  public ScoredResultList processInput(String inputStr,
     DataContext dataContext) throws Exception {
 
     Logger.getLogger(this.getClass()).info("Processing input: " + inputStr);
+    Logger.getLogger(this.getClass()).info("  # of normalizers/identifiers/processors: " + normalizeHandlers.size() + "/" + identifyHandlers.size() + "/" + processHandlers.size());;
 
-    Set<QualityResult> normalizedQRs = new HashSet<>();
-    Set<QualityResult> identifiedQRs = new HashSet<>();
-    Set<QualityResult> processedQRs = new HashSet<>();
+    Set<ScoredResult> normalizedQRs = new HashSet<>();
+    Set<ScoredResult> identifiedQRs = new HashSet<>();
+    Set<ScoredResult> processedQRs = new HashSet<>();
 
 
     // normalize
     for (NormalizeHandler handler : normalizeHandlers) {
-      for (QualityResult qr : handler.normalize(inputStr, dataContext)
+      for (ScoredResult qr : handler.normalize(inputStr, dataContext)
           .getObjects()) {
         normalizedQRs.add(qr);
         Logger.getLogger(this.getClass())
@@ -56,8 +52,8 @@ public class DefaultProvider implements Provider {
 
     // identify
     for (IdentifyHandler handler : identifyHandlers) {
-      for (QualityResult qrNorm : normalizedQRs) {
-        for (QualityResult qrId : handler.identify(qrNorm, dataContext)
+      for (ScoredResult qrNorm : normalizedQRs) {
+        for (ScoredResult qrId : handler.identify(qrNorm, dataContext)
             .getObjects()) {
           identifiedQRs.add(qrId);
           Logger.getLogger(this.getClass())
@@ -68,8 +64,8 @@ public class DefaultProvider implements Provider {
 
     // process
     for (ProcessHandler handler : processHandlers) {
-      for (QualityResult qrId : identifiedQRs) {
-        for (QualityResult qrProc : handler.process(qrId, dataContext)
+      for (ScoredResult qrId : identifiedQRs) {
+        for (ScoredResult qrProc : handler.process(qrId, dataContext)
             .getObjects()) {
           processedQRs.add(qrProc);
           Logger.getLogger(this.getClass())
@@ -79,8 +75,8 @@ public class DefaultProvider implements Provider {
       }
     }
 
-    QualityResultList results = new QualityResultListJpa();
-    for (QualityResult qrProc : processedQRs) {
+    ScoredResultList results = new ScoredResultListJpa();
+    for (ScoredResult qrProc : processedQRs) {
       results.addObject(qrProc);
     }
     return results;
@@ -139,4 +135,5 @@ public class DefaultProvider implements Provider {
     }
     normalizeHandlers.add(normalizeHandler);
   }
+
 }

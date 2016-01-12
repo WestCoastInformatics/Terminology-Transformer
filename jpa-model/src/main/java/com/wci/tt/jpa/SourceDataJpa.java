@@ -72,7 +72,7 @@ public class SourceDataJpa implements SourceData {
   @OneToMany(targetEntity = SourceDataFileJpa.class)
   private List<SourceDataFile> sourceDataFiles = new ArrayList<>();
 
-  /**  The converter used to process the source data files. */
+  /**  The converter (as fully specified class name) used to process the source data files. */
   @Column(nullable = true, unique = false, length = 4000)
   private String converterName;
 

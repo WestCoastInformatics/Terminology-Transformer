@@ -19,7 +19,7 @@ import com.wci.tt.helpers.LocalException;
 /**
  * Utility class for handling source data files.
  */
-public class SourceDataFileUtil {
+public class SourceDataFileUtility {
 
   /** Size of the buffer to read/write data. */
   private static final int BUFFER_SIZE = 4096;
@@ -36,7 +36,7 @@ public class SourceDataFileUtil {
   public static File writeSourceDataFile(InputStream fileInputStream,
     String destinationFolder, String fileName) throws IOException, LocalException {
 
-   Logger.getLogger(SourceDataFileUtil.class).info("Writing file " + destinationFolder + File.separator + fileName);
+   Logger.getLogger(SourceDataFileUtility.class).info("Writing file " + destinationFolder + File.separator + fileName);
     
     if (fileExists(destinationFolder, fileName)) {
       throw new LocalException("File " + fileName + " already exists. Write aborted.");
@@ -65,7 +65,7 @@ public class SourceDataFileUtil {
   public static List<File> extractCompressedSourceDataFile(InputStream fileInputStream,
     String destinationFolder, String fileName) throws Exception {
     
-    Logger.getLogger(SourceDataFileUtil.class).info("Extracting zip file to " + destinationFolder);
+    Logger.getLogger(SourceDataFileUtility.class).info("Extracting zip file to " + destinationFolder);
     
     File destDir = new File(destinationFolder);
     if (!destDir.exists()) {
@@ -82,13 +82,13 @@ public class SourceDataFileUtil {
       throw new LocalException("Could not unzip file " + fileName + ": not a ZIP file");
     }
     
-    Logger.getLogger(SourceDataFileUtil.class).info("  Cycling over entries");
+    Logger.getLogger(SourceDataFileUtility.class).info("  Cycling over entries");
     
 
     // iterates over entries in the zip file
     while (entry != null) {
       
-      Logger.getLogger(SourceDataFileUtil.class).info("  Extracting " + entry.getName());
+      Logger.getLogger(SourceDataFileUtility.class).info("  Extracting " + entry.getName());
       
       // only extract top-level elements
       // TEST:  is a directory OR contains more than one file separator (file passes, dir/file fails)
@@ -98,7 +98,7 @@ public class SourceDataFileUtil {
           throw new LocalException("Unzipped file " + entry.getName() + " already exists. Write aborted.");
         }
         
-        Logger.getLogger(SourceDataFileUtil.class).info("    File does not exist");
+        Logger.getLogger(SourceDataFileUtility.class).info("    File does not exist");
 
         // preserve archive name by replacing file separator with underscore
         File f = extractZipEntry(zipIn, destinationFolder + File.separator
@@ -132,7 +132,7 @@ public class SourceDataFileUtil {
   private static File extractZipEntry(ZipInputStream zipIn, String filePath)
     throws IOException {
     
-    Logger.getLogger(SourceDataFileUtil.class).info("Extracting file " + filePath);
+    Logger.getLogger(SourceDataFileUtility.class).info("Extracting file " + filePath);
     
     BufferedOutputStream bos =
         new BufferedOutputStream(new FileOutputStream(filePath));

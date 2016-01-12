@@ -1,6 +1,8 @@
-package com.wci.tt.jpa.converters;
+package com.wci.tt.jpa.loaders;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import org.apache.log4j.Logger;
 
@@ -16,7 +18,7 @@ import com.wci.tt.services.SourceDataService;
 /**
  * Converter for RxNorm files
  */
-public class RrfUmlsConverter implements SourceDataConverter {
+public class CustomLoaderRrfUmls implements SourceDataConverter {
 
   /** The name. */
   private String name;
@@ -79,8 +81,10 @@ public class RrfUmlsConverter implements SourceDataConverter {
       // files as terminology, source data name as version
       // goal is to allow easy searching of content based on source files, as
       // well as terminology/version
+      SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+      
       contentService.loadRrfTerminology(sourceData.getName(),
-          "latest", false, inputDir);
+          sdf.format(new Date()), false, inputDir);
       sourceData.setConverterStatus(ConverterStatus.CONVERTED);
     } catch (Exception e) {
       Logger.getLogger(this.getClass())

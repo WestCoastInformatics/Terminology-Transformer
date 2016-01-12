@@ -74,4 +74,6 @@ public interface ResultList<T> {
    * @return the objects
    */
   public List<T> getObjects();
+
+  void addAll(ResultList<T> secondList);
 }

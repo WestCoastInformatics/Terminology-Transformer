@@ -6,14 +6,14 @@ import java.util.Set;
 import com.wci.tt.DataContext;
 import com.wci.tt.IdentifyHandler;
 import com.wci.tt.helpers.PfscParameter;
-import com.wci.tt.helpers.QualityResult;
-import com.wci.tt.helpers.QualityResultList;
+import com.wci.tt.helpers.ScoredResult;
+import com.wci.tt.helpers.ScoredResultList;
 import com.wci.tt.helpers.SearchResult;
 import com.wci.tt.helpers.SearchResultList;
 import com.wci.tt.helpers.TerminologyList;
 import com.wci.tt.jpa.helpers.PfscParameterJpa;
-import com.wci.tt.jpa.helpers.QualityResultJpa;
-import com.wci.tt.jpa.helpers.QualityResultListJpa;
+import com.wci.tt.jpa.helpers.ScoredResultJpa;
+import com.wci.tt.jpa.helpers.ScoredResultListJpa;
 import com.wci.tt.jpa.helpers.meta.TerminologyListJpa;
 import com.wci.tt.jpa.services.ContentServiceJpa;
 import com.wci.tt.model.meta.Terminology;
@@ -26,8 +26,8 @@ public class DefaultIdentifyHandler implements IdentifyHandler {
 
   /* see superclass */
   @Override
-  public QualityResultList identify(String string, DataContext dataContext) throws Exception {
-    QualityResult qr = new QualityResultJpa();
+  public ScoredResultList identify(String string, DataContext dataContext) throws Exception {
+    ScoredResult qr = new ScoredResultJpa();
     qr.setTerminology(dataContext.getTerminology());
     qr.setVersion(dataContext.getVersion());
     qr.setQuality(1.0f);
@@ -37,10 +37,10 @@ public class DefaultIdentifyHandler implements IdentifyHandler {
   
   /* see superclass */
   @Override
-  public QualityResultList identify(QualityResult qr, DataContext dataContext)
+  public ScoredResultList identify(ScoredResult qr, DataContext dataContext)
     throws Exception {
 
-    Set<QualityResult> qrSet = new HashSet<>();
+    Set<ScoredResult> qrSet = new HashSet<>();
 
     ContentService contentService = new ContentServiceJpa();
 
@@ -72,15 +72,15 @@ public class DefaultIdentifyHandler implements IdentifyHandler {
               terminology.getVersion(), "$", qr.getValue(), pfsc);
 
       for (SearchResult sr : results.getObjects()) {
-        QualityResult qualityResult = new QualityResultJpa(sr);
+        ScoredResult qualityResult = new ScoredResultJpa(sr);
         qualityResult.setQuality(1.0f * qr.getQuality());
         qrSet.add(qualityResult);
       }
 
     }
     
-    QualityResultList results = new QualityResultListJpa();
-    for (QualityResult result : qrSet) {
+    ScoredResultList results = new ScoredResultListJpa();
+    for (ScoredResult result : qrSet) {
       results.addObject(result);
     }
     results.setTotalCount(qrSet.size());

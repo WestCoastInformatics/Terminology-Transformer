@@ -59,6 +59,13 @@ public abstract class AbstractResultList<T> implements ResultList<T> {
   public void addObject(T object) {
     objects.add(object);
   }
+  
+  @Override
+  public void addAll(ResultList<T> secondList) {
+    List<T> list = this.getObjects();
+    list.addAll(secondList.getObjects());
+    this.setObjects(list);
+  }
 
   /* see superclass */
   @Override

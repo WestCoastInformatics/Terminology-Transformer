@@ -40,7 +40,7 @@ import com.wci.tt.jpa.helpers.SourceDataFileListJpa;
 import com.wci.tt.jpa.services.ContentServiceJpa;
 import com.wci.tt.jpa.services.SecurityServiceJpa;
 import com.wci.tt.jpa.services.SourceDataServiceJpa;
-import com.wci.tt.jpa.services.helper.SourceDataFileUtil;
+import com.wci.tt.jpa.services.helper.SourceDataFileUtility;
 import com.wci.tt.jpa.services.rest.SourceDataServiceRest;
 import com.wci.tt.model.meta.Terminology;
 import com.wci.tt.services.ContentService;
@@ -104,13 +104,13 @@ public class SourceDataServiceRestImpl extends RootServiceRestImpl
       // destination folder
       if (unzip == true) {
         files.addAll(
-            SourceDataFileUtil.extractCompressedSourceDataFile(fileInputStream,
+            SourceDataFileUtility.extractCompressedSourceDataFile(fileInputStream,
                 destinationFolder, contentDispositionHeader.getFileName()));
       }
 
       // otherwise, simply write the input stream
       else {
-        files.add(SourceDataFileUtil.writeSourceDataFile(fileInputStream,
+        files.add(SourceDataFileUtility.writeSourceDataFile(fileInputStream,
             destinationFolder, contentDispositionHeader.getFileName()));
 
       }

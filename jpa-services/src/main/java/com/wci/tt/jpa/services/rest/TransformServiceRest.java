@@ -3,10 +3,7 @@
  */
 package com.wci.tt.jpa.services.rest;
 
-import com.wci.tt.DataContext;
-import com.wci.tt.helpers.QualityResultList;
-import com.wci.tt.helpers.StringList;
-import com.wci.tt.helpers.content.ConceptList;
+import com.wci.tt.helpers.ScoredResultList;
 import com.wci.tt.jpa.DataContextJpa;
 
 // TODO: Auto-generated Javadoc
@@ -23,7 +20,7 @@ public interface TransformServiceRest {
    * @param authToken the auth token
    * @throws Exception
    */
-  public QualityResultList process(String inputStr, DataContextJpa dataContext,
+  public ScoredResultList process(String inputStr, DataContextJpa dataContext,
     String authToken) throws Exception;
 
 }

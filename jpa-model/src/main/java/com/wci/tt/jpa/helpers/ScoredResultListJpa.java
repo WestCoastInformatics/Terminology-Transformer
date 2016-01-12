@@ -9,22 +9,23 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import com.wci.tt.helpers.AbstractResultList;
-import com.wci.tt.helpers.QualityResult;
-import com.wci.tt.helpers.QualityResultList;
+import com.wci.tt.helpers.ScoredResult;
+import com.wci.tt.helpers.ScoredResultList;
 
 /**
- * JAXB-enabled implementation of {@link QualityResultList}.
+ * JAXB-enabled implementation of {@link ScoredResultList}.
  */
 @XmlRootElement(name = "qualityResultList")
-public class QualityResultListJpa extends AbstractResultList<QualityResult>
-    implements QualityResultList {
+public class ScoredResultListJpa extends AbstractResultList<ScoredResult>
+    implements ScoredResultList {
 
   /* see superclass */
   @Override
-  @XmlElement(type = QualityResultJpa.class, name = "results")
-  public List<QualityResult> getObjects() {
+  @XmlElement(type = ScoredResultJpa.class, name = "results")
+  public List<ScoredResult> getObjects() {
     return super.getObjectsTransient();
   }
+  
 
   /* see superclass */
   @Override

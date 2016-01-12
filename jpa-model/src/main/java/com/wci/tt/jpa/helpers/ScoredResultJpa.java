@@ -6,7 +6,7 @@ import com.wci.tt.helpers.SearchResult;
 /**
  * The Class QualityResult.
  */
-public class QualityResultJpa implements com.wci.tt.helpers.QualityResult {
+public class ScoredResultJpa implements com.wci.tt.helpers.ScoredResult {
 
   /** The id. */
   private Long id;
@@ -29,9 +29,9 @@ public class QualityResultJpa implements com.wci.tt.helpers.QualityResult {
   /** The obsolete. */
   private boolean obsolete;
   
-  public QualityResultJpa() { }
+  public ScoredResultJpa() { }
   
-  public QualityResultJpa(SearchResult sr) {
+  public ScoredResultJpa(SearchResult sr) {
     this.id = sr.getId();
     this.obsolete = sr.isObsolete();
     this.terminology = sr.getTerminology();
@@ -204,7 +204,7 @@ public class QualityResultJpa implements com.wci.tt.helpers.QualityResult {
       return false;
     if (getClass() != obj.getClass())
       return false;
-    QualityResultJpa other = (QualityResultJpa) obj;
+    ScoredResultJpa other = (ScoredResultJpa) obj;
     if (obsolete != other.obsolete)
       return false;
     if (Float.floatToIntBits(quality) != Float.floatToIntBits(other.quality))

@@ -2,15 +2,15 @@ package com.wci.tt.jpa.processors;
 
 import com.wci.tt.DataContext;
 import com.wci.tt.ProcessHandler;
-import com.wci.tt.helpers.QualityResult;
-import com.wci.tt.helpers.QualityResultList;
-import com.wci.tt.jpa.helpers.QualityResultListJpa;
+import com.wci.tt.helpers.ScoredResult;
+import com.wci.tt.helpers.ScoredResultList;
+import com.wci.tt.jpa.helpers.ScoredResultListJpa;
 
 public class DefaultProcessHandler implements ProcessHandler {
 
   @Override
-  public QualityResultList process(QualityResult qualityResult, DataContext dataContext) {
-    QualityResultList qualityResultList = new QualityResultListJpa();
+  public ScoredResultList process(ScoredResult qualityResult, DataContext dataContext) {
+    ScoredResultList qualityResultList = new ScoredResultListJpa();
     qualityResultList.addObject(qualityResult);
     return qualityResultList;
   }

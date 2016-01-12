@@ -6,6 +6,6 @@ package com.wci.tt.helpers;
 /**
  * Represents a sortable list of {@link SearchResult} objects.
  */
-public interface QualityResultList extends ResultList<QualityResult> {
+public interface ScoredResultList extends ResultList<ScoredResult> {
   // nothing extra, a simple wrapper for easy serialization
 }

@@ -2,10 +2,10 @@ package com.wci.tt.jpa.normalizers;
 
 import com.wci.tt.DataContext;
 import com.wci.tt.NormalizeHandler;
-import com.wci.tt.helpers.QualityResult;
-import com.wci.tt.helpers.QualityResultList;
-import com.wci.tt.jpa.helpers.QualityResultJpa;
-import com.wci.tt.jpa.helpers.QualityResultListJpa;
+import com.wci.tt.helpers.ScoredResult;
+import com.wci.tt.helpers.ScoredResultList;
+import com.wci.tt.jpa.helpers.ScoredResultJpa;
+import com.wci.tt.jpa.helpers.ScoredResultListJpa;
 
 /**
  * Default normalizer: Passes unchanged input
@@ -15,11 +15,11 @@ public class DefaultNormalizeHandler implements NormalizeHandler {
 
 
   @Override
-  public QualityResultList normalize(String inputStr, DataContext dataContext) {
+  public ScoredResultList normalize(String inputStr, DataContext dataContext) {
 
-    QualityResultList qrl = new QualityResultListJpa();
+    ScoredResultList qrl = new ScoredResultListJpa();
 
-    QualityResult qr = new QualityResultJpa();
+    ScoredResult qr = new ScoredResultJpa();
     qr.setQuality(1.0f);
     qr.setValue(inputStr);
 

@@ -1,9 +1,9 @@
 package com.wci.tt;
 
-import com.wci.tt.helpers.QualityResult;
-import com.wci.tt.helpers.QualityResultList;
+import com.wci.tt.helpers.ScoredResult;
+import com.wci.tt.helpers.ScoredResultList;
 
 public interface  ProcessHandler {
 
-  public QualityResultList process(QualityResult qr, DataContext dataContext);
+  public ScoredResultList process(ScoredResult qr, DataContext dataContext);
 }

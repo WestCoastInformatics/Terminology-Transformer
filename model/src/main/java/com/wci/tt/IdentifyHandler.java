@@ -1,7 +1,7 @@
 package com.wci.tt;
 
-import com.wci.tt.helpers.QualityResult;
-import com.wci.tt.helpers.QualityResultList;
+import com.wci.tt.helpers.ScoredResult;
+import com.wci.tt.helpers.ScoredResultList;
 
 /**
  * The Interface IdentifyHandler.
@@ -16,7 +16,7 @@ public interface IdentifyHandler {
    * @return the quality result list
    * @throws Exception the exception
    */
-  QualityResultList identify(String string, DataContext dataContext)
+  ScoredResultList identify(String string, DataContext dataContext)
     throws Exception;
 
   /**
@@ -27,6 +27,6 @@ public interface IdentifyHandler {
    * @return the quality result list
    * @throws Exception the exception
    */
-  QualityResultList identify(QualityResult qr, DataContext dataContext)
+  ScoredResultList identify(ScoredResult qr, DataContext dataContext)
     throws Exception;
 }

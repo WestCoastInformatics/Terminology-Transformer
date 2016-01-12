@@ -1,9 +1,8 @@
 package com.wci.tt;
 
-import com.wci.tt.helpers.QualityResult;
-import com.wci.tt.helpers.QualityResultList;
+import com.wci.tt.helpers.ScoredResultList;
 
 public interface NormalizeHandler {
 
-  public QualityResultList normalize(String inputStr, DataContext dataContext);
+  public ScoredResultList normalize(String inputStr, DataContext dataContext);
 }

@@ -2,7 +2,7 @@ package com.wci.tt;
 
 import java.util.List;
 
-import com.wci.tt.helpers.QualityResultList;
+import com.wci.tt.helpers.ScoredResultList;
 
 public interface Provider {
   
@@ -18,7 +18,7 @@ public interface Provider {
   
   public void setNormalizeHandlers(List<NormalizeHandler> normalizeHandlers);
   
-  public QualityResultList processInput(String inputStr, DataContext dataContext) throws Exception;
+  public ScoredResultList processInput(String inputStr, DataContext dataContext) throws Exception;
 
   void addNormalizeHandler(NormalizeHandler normalizeHandler);
 
