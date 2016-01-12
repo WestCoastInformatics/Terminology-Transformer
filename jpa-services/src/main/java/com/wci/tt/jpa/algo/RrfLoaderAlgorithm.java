@@ -337,7 +337,7 @@ public class RrfLoaderAlgorithm extends ContentServiceJpa implements Algorithm {
       }
 
       // Relationships
-      loadMrrel();
+      // loadMrrel();
 
       // Attributes
       loadMrsat();
@@ -1508,7 +1508,7 @@ public class RrfLoaderAlgorithm extends ContentServiceJpa implements Algorithm {
         } else if (fields[2].equals("CUI") && fields[6].equals("CUI")) {
           final ConceptRelationship conceptRel = new ConceptRelationshipJpa();
 
-          // if both source and target conceps non-empty, use oncept map
+          // if both source and target conceps non-empty, use concept map
           if (!fields[4].isEmpty() && !fields[0].isEmpty()) {
             final Concept fromConcept =
                 getConcept(conceptIdMap.get(terminology + fields[4]));
