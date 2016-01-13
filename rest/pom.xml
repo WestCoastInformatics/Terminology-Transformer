@@ -23,7 +23,7 @@
     <config.version>${project.version}</config.version>
 
     <!-- Defaults for Eclipse dev -->
-    <deploy.title>WCI Terminology Transmogrifier</deploy.title>
+    <deploy.title>WCI Terminology Transformer</deploy.title>
     <site.tracking.code></site.tracking.code>
     <deploy.footer.copyright>(c) Copyright WCI, LLC 2016</deploy.footer.copyright>
     <deploy.presented.by></deploy.presented.by>

@@ -18,7 +18,7 @@ import com.wci.tt.helpers.UserImpl;
 import com.wci.tt.services.handlers.SecurityServiceHandler;
 
 /**
- * Implements a security handler that authorizes via IHTSDO authentication.
+ * Implements a security handler that authorizes via WCI authentication.
  */
 public class UtsSecurityServiceHandler implements SecurityServiceHandler {
 
