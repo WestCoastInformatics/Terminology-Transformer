@@ -16,7 +16,7 @@ import com.wci.tt.jpa.UserJpa;
 import com.wci.tt.services.handlers.SecurityServiceHandler;
 
 /**
- * Implements a security handler that authorizes via IHTSDO authentication.
+ * Implements a security handler that authorizes via WCI authentication.
  */
 public class DefaultSecurityServiceHandler implements SecurityServiceHandler {
 
