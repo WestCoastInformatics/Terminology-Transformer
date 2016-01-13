@@ -19,8 +19,8 @@ import org.hibernate.envers.Audited;
 
 import com.wci.tt.User;
 import com.wci.tt.UserPreferences;
-import com.wci.tt.UserRole;
 
+// TODO: Auto-generated Javadoc
 /**
  * JPA enabled implementation of {@link UserPreferences}.
  */
@@ -43,30 +43,6 @@ public class UserPreferencesJpa implements UserPreferences {
   /** The lastTab. */
   @Column(nullable = true)
   private String lastTab;
-
-  /** The lastRefsetAccordion. */
-  @Column(nullable = true)
-  private String lastRefsetAccordion;
-
-  /** The spelling enabled. */
-  @Column(nullable = false)
-  private boolean spellingEnabled = true;
-
-  /** The memory enabled. */
-  @Column(nullable = false)
-  private boolean memoryEnabled = true;
-
-  /** The lastTranslationAccordion. */
-  private String lastTranslationAccordion;
-
-  /** The lastDirectoryAccordion. */
-  private String lastDirectoryAccordion;
-
-  /** The lastProjectRole. */
-  private UserRole lastProjectRole;
-
-  /** The lastProjectId. */
-  private Long lastProjectId;
 
   /**
    * The default constructor.
@@ -191,36 +167,17 @@ public class UserPreferencesJpa implements UserPreferences {
     this.lastTab = lastTab;
   }
 
-
+  /*
+   * (non-Javadoc)
+   * 
+   * @see java.lang.Object#hashCode()
+   */
   @Override
   public int hashCode() {
     final int prime = 31;
     int result = 1;
 
-    result =
-        prime
-            * result
-            + ((lastDirectoryAccordion == null) ? 0 : lastDirectoryAccordion
-                .hashCode());
-    result =
-        prime * result
-            + ((lastProjectId == null) ? 0 : lastProjectId.hashCode());
-    result =
-        prime * result
-            + ((lastProjectRole == null) ? 0 : lastProjectRole.hashCode());
-    result =
-        prime
-            * result
-            + ((lastRefsetAccordion == null) ? 0 : lastRefsetAccordion
-                .hashCode());
     result = prime * result + ((lastTab == null) ? 0 : lastTab.hashCode());
-    result =
-        prime
-            * result
-            + ((lastTranslationAccordion == null) ? 0
-                : lastTranslationAccordion.hashCode());
-    result = prime * result + (memoryEnabled ? 1231 : 1237);
-    result = prime * result + (spellingEnabled ? 1231 : 1237);
     final String userName =
         user == null || user.getUserName() == null ? null : user.getUserName();
     result = prime * result + ((userName == null) ? 0 : userName.hashCode());
@@ -228,6 +185,11 @@ public class UserPreferencesJpa implements UserPreferences {
     return result;
   }
 
+  /*
+   * (non-Javadoc)
+   * 
+   * @see java.lang.Object#equals(java.lang.Object)
+   */
   @Override
   public boolean equals(Object obj) {
     if (this == obj)
@@ -238,37 +200,12 @@ public class UserPreferencesJpa implements UserPreferences {
       return false;
     UserPreferencesJpa other = (UserPreferencesJpa) obj;
 
-    if (lastDirectoryAccordion == null) {
-      if (other.lastDirectoryAccordion != null)
-        return false;
-    } else if (!lastDirectoryAccordion.equals(other.lastDirectoryAccordion))
-      return false;
-    if (lastProjectId == null) {
-      if (other.lastProjectId != null)
-        return false;
-    } else if (!lastProjectId.equals(other.lastProjectId))
-      return false;
-    if (lastProjectRole != other.lastProjectRole)
-      return false;
-    if (lastRefsetAccordion == null) {
-      if (other.lastRefsetAccordion != null)
-        return false;
-    } else if (!lastRefsetAccordion.equals(other.lastRefsetAccordion))
-      return false;
     if (lastTab == null) {
       if (other.lastTab != null)
         return false;
     } else if (!lastTab.equals(other.lastTab))
       return false;
-    if (lastTranslationAccordion == null) {
-      if (other.lastTranslationAccordion != null)
-        return false;
-    } else if (!lastTranslationAccordion.equals(other.lastTranslationAccordion))
-      return false;
-    if (memoryEnabled != other.memoryEnabled)
-      return false;
-    if (spellingEnabled != other.spellingEnabled)
-      return false;
+
     final String userName =
         user == null || user.getUserName() == null ? null : user.getUserName();
     final String otherUserName =
@@ -280,17 +217,6 @@ public class UserPreferencesJpa implements UserPreferences {
     } else if (!userName.equals(otherUserName))
       return false;
     return true;
-  }
-
-  @Override
-  public String toString() {
-    return "UserPreferencesJpa [id=" + id + ", user=" + user
-        + ", lastTab=" + lastTab + ", lastRefsetAccordion="
-        + lastRefsetAccordion + ", spellingEnabled=" + spellingEnabled
-        + ", memoryEnabled=" + memoryEnabled + ", lastTranslationAccordion="
-        + lastTranslationAccordion + ", lastDirectoryAccordion="
-        + lastDirectoryAccordion + ", lastProjectRole=" + lastProjectRole
-        + ", lastProjectId=" + lastProjectId + "]";
   }
 
 }

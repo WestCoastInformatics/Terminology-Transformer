@@ -74,17 +74,8 @@
             <artifactId>maven-surefire-plugin</artifactId>
             <configuration>
               <includes>
-<!--                
- <include>**/org/ihtsdo/otf/refset/test/rest/TranslationTest.java</include>
- 
-                    <include>**/org/ihtsdo/otf/refset/test/rest/RefsetReleaseTest.java</include> 
-
-<include>**/org/ihtsdo/otf/refset/test/rest/TranslationReleaseTest.java</include>
-
--->               
-                    <include>**/org/ihtsdo/otf/refset/test/rest/RefsetTest.java</include>
-
-           </includes>
+                <include>**/com/wci/tt/test/rest/*Test.java</include>
+              </includes>
               <additionalClasspathElements>
                 <additionalClasspathElement>src/main/resources</additionalClasspathElement>
               </additionalClasspathElements>
@@ -106,7 +97,7 @@
             <artifactId>maven-surefire-plugin</artifactId>
             <configuration>
               <includes>
-                <include>**/org/ihtsdo/otf/refset/test/jpa/DefaultSpelling*Test.java</include>
+                <include>**/com/wci/tt/test/jpa/DefaultSpelling*Test.java</include>
               </includes>
               <additionalClasspathElements>
                 <additionalClasspathElement>src/main/resources</additionalClasspathElement>
@@ -129,10 +120,10 @@
             <artifactId>maven-surefire-plugin</artifactId>
             <configuration>
               <includes>
-                <include>**/org/ihtsdo/otf/refset/test/mojo/*Test.java</include>
+                <include>**/com/wci/tt/test/mojo/*Test.java</include>
               </includes>
               <excludes>
-                <exclude>**/org/ihtsdo/otf/refset/test/mojo/ResetDevDatabase.java
+                <exclude>**/com/wci/tt/test/mojo/ResetDevDatabase.java
                 </exclude>
               </excludes>
               <additionalClasspathElements>
@@ -156,7 +147,7 @@
             <artifactId>maven-surefire-plugin</artifactId>
             <configuration>
               <includes>
-                <include>**/org/ihtsdo/otf/refset/test/mojo/ResetDevDatabase.java</include>
+                <include>**/com/wci/tt/test/mojo/ResetDevDatabase.java</include>
               </includes>
               <additionalClasspathElements>
                 <additionalClasspathElement>src/main/resources</additionalClasspathElement>

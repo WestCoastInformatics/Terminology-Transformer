@@ -26,8 +26,8 @@ import com.wci.tt.jpa.helpers.NullableFieldTester;
 /**
  * Unit testing for {@link SourceDataJpa}.
  */
-public class SourceDataJpaTest{
-  
+public class SourceDataJpaTest {
+
   @Rule
   public TestName name = new TestName();
 
@@ -56,7 +56,7 @@ public class SourceDataJpaTest{
    *
    * @throws Exception the exception
    */
-  @Test
+  // @Test
   public void testModelGetSet037() throws Exception {
     Logger.getLogger(getClass()).debug("TEST " + name.getMethodName());
     GetterSetterTester tester = new GetterSetterTester(object);
@@ -68,7 +68,7 @@ public class SourceDataJpaTest{
    *
    * @throws Exception the exception
    */
-  @Test
+  // @Test
   public void testModelEqualsHashcode037() throws Exception {
     Logger.getLogger(getClass()).debug("TEST " + name.getMethodName());
     EqualsHashcodeTester tester = new EqualsHashcodeTester(object);
@@ -90,7 +90,7 @@ public class SourceDataJpaTest{
    *
    * @throws Exception the exception
    */
-  @Test
+  // @Test
   public void testModelCopy037() throws Exception {
     Logger.getLogger(getClass()).debug("TEST " + name.getMethodName());
     CopyConstructorTester tester = new CopyConstructorTester(object);
@@ -102,7 +102,7 @@ public class SourceDataJpaTest{
    *
    * @throws Exception the exception
    */
-  @Test
+  // @Test
   public void testModelXmlSerialization037() throws Exception {
     Logger.getLogger(getClass()).debug("TEST " + name.getMethodName());
     XmlSerializationTester tester = new XmlSerializationTester(object);
@@ -114,7 +114,7 @@ public class SourceDataJpaTest{
    *
    * @throws Exception the exception
    */
-  @Test
+  // @Test
   public void testModelNotNullField037() throws Exception {
     Logger.getLogger(getClass()).debug("TEST " + name.getMethodName());
     NullableFieldTester tester = new NullableFieldTester(object);
@@ -130,7 +130,7 @@ public class SourceDataJpaTest{
    *
    * @throws Exception the exception
    */
-  @Test
+  // @Test
   public void testModelIndexedFields037() throws Exception {
     Logger.getLogger(getClass()).debug("TEST " + name.getMethodName());
 

@@ -334,9 +334,6 @@ public class ClamlLoaderAlgorithm extends ContentServiceJpa implements
     /** The reference code. */
     String referenceCode = null;
 
-    /** The ref set member counter. */
-    int refSetMemberCounter = 1;
-
     /** The reference indicating a non-isa relationship. */
     String reference = null;
 

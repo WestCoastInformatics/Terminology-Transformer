@@ -46,12 +46,14 @@ public class TerminologyRrfUmlsLoaderMojo extends AbstractMojo {
    *
    * @parameter
    */
+  @SuppressWarnings("unused")
   private boolean server = false;
 
   /**
    * Mode - for recreating db
    * @parameter
    */
+  @SuppressWarnings("unused")
   private String mode = null;
 
   /**
@@ -66,20 +68,21 @@ public class TerminologyRrfUmlsLoaderMojo extends AbstractMojo {
   /* see superclass */
   @Override
   public void execute() throws MojoFailureException {
-    
 
     try {
-      //getLog().info("RRF UMLS Terminology Loader called via mojo.");
-      //getLog().info("WARN: Mojo changed for testing use of RXNORM/RRF loader. Not applicable to other RRF terminologies");
+      // getLog().info("RRF UMLS Terminology Loader called via mojo.");
+      // getLog().info("WARN: Mojo changed for testing use of RXNORM/RRF loader.
+      // Not applicable to other RRF terminologies");
       getLog().info("  Terminology        : " + terminology);
       getLog().info("  Terminology Version: " + version);
       getLog().info("  Input directory    : " + inputDir);
-      getLog().info("  Config file        : " + System.getProperties().getProperty("tt.config"));
-      
+      getLog().info("  Config file        : "
+          + System.getProperties().getProperty("tt.config"));
+
       ContentService contentService = new ContentServiceJpa();
       contentService.loadRrfTerminology(terminology, version, false, inputDir);
       contentService.close();
-      
+
     } catch (Exception e) {
       e.printStackTrace();
     }
