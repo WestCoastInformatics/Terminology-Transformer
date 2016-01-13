@@ -509,7 +509,6 @@ public abstract class RootServiceJpa implements RootService {
 
       // Remove
       if (getTransactionPerOperation()) {
-        // remove refset member
         tx.begin();
         if (manager.contains(hasLastModified)) {
           manager.remove(hasLastModified);
@@ -549,7 +548,6 @@ public abstract class RootServiceJpa implements RootService {
       tx = manager.getTransaction();
       // Remove
       if (getTransactionPerOperation()) {
-        // remove refset member
         tx.begin();
         if (manager.contains(object)) {
           manager.remove(object);
