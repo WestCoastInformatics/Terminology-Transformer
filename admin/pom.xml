@@ -286,7 +286,7 @@
 										of other objects and perform referential integrity tests here. -->
 									<queries>
 										<property>
-											<name>Translation concept moduleId check</name>
+											<name>Sample name concept moduleId check</name>
 											<value>
 												sample query;
 											</value>
