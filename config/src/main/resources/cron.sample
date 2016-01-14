@@ -7,4 +7,4 @@
 MAILTO=""
 
 # Run every day except thursday
-0 0 * * 0,1,2,3,5,6 csh /home/ihtsdo/config/bin/qaCron.csh > /home/ihtsdo/logs/qaCron.log 2>&1
+0 0 * * 0,1,2,3,5,6 csh /home/<user>/config/bin/qaCron.csh > /home/ihtsdo/<user>/qaCron.log 2>&1
