@@ -19,16 +19,9 @@ import com.wci.tt.helpers.SearchResult;
 /**
  * JPA enabled scored implementation of {@link SearchResult}.
  */
-@Entity
-@Table(name = "scored_result")
-@Indexed
-@XmlRootElement(name = "scoredResult")
 public class ScoredResultJpa implements ScoredResult {
 
   /** The id. */
-  @TableGenerator(name = "EntityIdGen", table = "table_generator", pkColumnValue = "Entity")
-  @Id
-  @GeneratedValue(strategy = GenerationType.TABLE, generator = "EntityIdGen")
   private Long id;
 
   /** The terminology. */
