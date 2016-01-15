@@ -3,34 +3,21 @@
  */
 package com.wci.tt.jpa.helpers;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.TableGenerator;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.hibernate.search.annotations.Indexed;
-
 import com.wci.tt.DataContext;
-import com.wci.tt.helpers.DataContextTuple;
+import com.wci.tt.helpers.ScoredDataContextTuple;
 import com.wci.tt.jpa.DataContextJpa;
 
 /**
  * JPA enabled implementation of {@link DataContextJpa} and an associated Data
  * string.
  */
-@Entity
-@Table(name = "data_context_type")
-@Indexed
-@XmlRootElement(name = "dataContextTuple")
-public class DataContextTupleJpa implements DataContextTuple {
+@XmlRootElement(name = "scoredDataContextTuple")
+public class ScoredDataContextTupleJpa implements ScoredDataContextTuple,
+    Comparable<ScoredDataContextTuple> {
 
   /** The id. */
-  @TableGenerator(name = "EntityIdGen", table = "table_generator", pkColumnValue = "Entity")
-  @Id
-  @GeneratedValue(strategy = GenerationType.TABLE, generator = "EntityIdGen")
   private Long id;
 
   /** The data being analyzed. */
@@ -39,21 +26,27 @@ public class DataContextTupleJpa implements DataContextTuple {
   /** The context associated with the data. */
   private DataContext context;
 
+  /** The context associated with the data. */
+  private Float score;
+
   /**
-   * Instantiates an empty {@link DataContextTupleJpa}.
+   * Instantiates an empty {@link ScoredDataContextTupleJpa}.
    */
-  public DataContextTupleJpa() {
+  public ScoredDataContextTupleJpa() {
     // do nothing
   }
 
   /**
-   * Instantiates a {@link DataContextTupleJpa} from the specified parameters.
+   * Instantiates a {@link ScoredDataContextTupleJpa} from the specified
+   * parameters.
    *
    * @param tuple the data context tuple
    */
-  public DataContextTupleJpa(DataContextTuple tuple) {
+  public ScoredDataContextTupleJpa(ScoredDataContextTuple tuple) {
+    this.id = tuple.getId();
     this.data = tuple.getData();
     this.context = tuple.getDataContext();
+    this.score = tuple.getScore();
   }
 
   /* see superclass */
@@ -94,11 +87,28 @@ public class DataContextTupleJpa implements DataContextTuple {
 
   /* see superclass */
   @Override
+  public float getScore() {
+    return score;
+  }
+
+  /* see superclass */
+  @Override
+  public void setScore(float score) throws Exception {
+    if (score < 0 || score > 1) {
+      throw new Exception("Score must be between 0-1 inclusive");
+    }
+
+    this.score = score;
+  }
+
+  /* see superclass */
+  @Override
   public int hashCode() {
     final int prime = 31;
     int result = 1;
     result = prime * result + ((data == null) ? 0 : data.hashCode());
     result = prime * result + ((context == null) ? 0 : context.hashCode());
+    result = prime * result + Float.floatToIntBits(score);
     return result;
   }
 
@@ -111,7 +121,7 @@ public class DataContextTupleJpa implements DataContextTuple {
       return false;
     if (getClass() != obj.getClass())
       return false;
-    DataContextTupleJpa other = (DataContextTupleJpa) obj;
+    ScoredDataContextTupleJpa other = (ScoredDataContextTupleJpa) obj;
     if (data == null) {
       if (other.data != null)
         return false;
@@ -122,6 +132,11 @@ public class DataContextTupleJpa implements DataContextTuple {
         return false;
     } else if (!context.equals(other.context))
       return false;
+    if (score == null) {
+      if (other.score != null)
+        return false;
+    } else if (!score.equals(other.score))
+      return false;
     return true;
   }
 
@@ -129,6 +144,15 @@ public class DataContextTupleJpa implements DataContextTuple {
   @Override
   public String toString() {
     return "ScoredResultJpa [id=" + id + ", data=" + data + ", context="
-        + context + "]";
+        + context + ", score=" + score + "]";
+  }
+
+  /* see superclass */
+  @Override
+  public int compareTo(ScoredDataContextTuple o) {
+    Float score1 = new Float(this.getScore());
+    Float score2 = new Float(o.getScore());
+
+    return score2.compareTo(score1);
   }
 }

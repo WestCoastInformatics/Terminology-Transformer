@@ -3,15 +3,7 @@
  */
 package com.wci.tt.jpa;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.TableGenerator;
 import javax.xml.bind.annotation.XmlRootElement;
-
-import org.hibernate.search.annotations.Indexed;
 
 import com.wci.tt.DataContext;
 import com.wci.tt.helpers.DataContextType;
@@ -19,16 +11,10 @@ import com.wci.tt.helpers.DataContextType;
 /**
  * JPA enabled implementation of {@link DataContextJpa}.
  */
-@Entity
-@Table(name = "data_context")
-@Indexed
 @XmlRootElement(name = "dataContext")
 public class DataContextJpa implements DataContext {
 
   /** The id. */
-  @TableGenerator(name = "EntityIdGen", table = "table_generator", pkColumnValue = "Entity")
-  @Id
-  @GeneratedValue(strategy = GenerationType.TABLE, generator = "EntityIdGen")
   Long id;
 
   /** The terminology. */
@@ -63,6 +49,7 @@ public class DataContextJpa implements DataContext {
    */
   public DataContextJpa(DataContext context) {
     super();
+    this.id = context.getId();
     this.terminology = context.getTerminology();
     this.version = context.getVersion();
     this.type = context.getType();

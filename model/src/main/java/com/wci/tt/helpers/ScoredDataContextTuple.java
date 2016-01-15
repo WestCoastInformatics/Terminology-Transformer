@@ -6,10 +6,10 @@ package com.wci.tt.helpers;
 import com.wci.tt.DataContext;
 
 /**
- * Interface representing the data queried along with its associated
- * DataContext.
+ * Interface representing the data queried along with its associated DataContext
+ * and probability.
  */
-public interface DataContextTuple extends HasId {
+public interface ScoredDataContextTuple extends HasId, HasScore {
 
   /**
    * Returns the data.
@@ -26,16 +26,16 @@ public interface DataContextTuple extends HasId {
   public void setData(String data);
 
   /**
-   * Returns the dataContext.
+   * Returns the data context.
    *
-   * @return the dataContext
+   * @return the data context
    */
   public DataContext getDataContext();
 
   /**
-   * Sets the dataContext.
+   * Sets the data context.
    *
-   * @param context the context to set
+   * @param context the data context
    */
   public void setDataContext(DataContext context);
 }

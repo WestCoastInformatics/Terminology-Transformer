@@ -3,23 +3,16 @@
  */
 package com.wci.tt.jpa;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
-
-import org.hibernate.search.annotations.Indexed;
 
 import com.wci.tt.ScoredDataContext;
 
 /**
  * JPA enabled implementation of {@link ScoredDataContextJpa}.
  */
-@Entity
-@Table(name = "scored_data_context")
-@Indexed
 @XmlRootElement(name = "scoredDataContext")
 public class ScoredDataContextJpa extends DataContextJpa implements
-    ScoredDataContext {
+    ScoredDataContext, Comparable<ScoredDataContext> {
 
   /** The score. */
   private float score = 0;
@@ -37,7 +30,7 @@ public class ScoredDataContextJpa extends DataContextJpa implements
    * @param result the scored result
    */
   public ScoredDataContextJpa(ScoredDataContext result) {
-    super();
+    super(result);
     this.score = result.getScore();
   }
 
@@ -89,5 +82,13 @@ public class ScoredDataContextJpa extends DataContextJpa implements
   public String toString() {
     return "ScoredDataContextJpa [" + super.toString() + "]" + ", score="
         + score + "]";
+  }
+
+  @Override
+  public int compareTo(ScoredDataContext o) {
+    Float score1 = new Float(this.getScore());
+    Float score2 = new Float(o.getScore());
+
+    return score2.compareTo(score1);
   }
 }
