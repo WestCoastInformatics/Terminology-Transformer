@@ -13,18 +13,18 @@ import com.wci.tt.helpers.HasTerminology;
 public interface DataContext extends HasTerminology, HasId {
 
   /**
-   * Returns the data type.
+   * Returns the data context type.
    *
-   * @return the data type
+   * @return the data context type
    */
-  public DataContextType getDataType();
+  public DataContextType getType();
 
   /**
-   * Sets the data type.
+   * Sets the data context type.
    *
-   * @param dataType the data type
+   * @param type the data type
    */
-  public void setDataType(DataContextType dataType);
+  public void setType(DataContextType type);
 
   /**
    * Returns the customer.

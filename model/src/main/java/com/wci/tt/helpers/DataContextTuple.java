@@ -37,5 +37,5 @@ public interface DataContextTuple extends HasId {
    *
    * @param context the context to set
    */
-  public void setDataContext(String context);
+  public void setDataContext(DataContext context);
 }

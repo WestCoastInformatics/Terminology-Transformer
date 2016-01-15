@@ -1,5 +1,5 @@
 package com.wci.tt.helpers;
 
-public interface Trustable extends HasQuality {
+public interface Trustable extends HasScore {
 
 }

@@ -1,14 +1,34 @@
+/*
+ *    Copyright 2016 West Coast Informatics, LLC
+ */
 package com.wci.tt.jpa.helpers;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.TableGenerator;
+import javax.xml.bind.annotation.XmlRootElement;
+
+import org.hibernate.search.annotations.Indexed;
+
+import com.wci.tt.helpers.ScoredResult;
 import com.wci.tt.helpers.SearchResult;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class QualityResult.
+ * JPA enabled scored implementation of {@link SearchResult}.
  */
-public class ScoredResultJpa implements com.wci.tt.helpers.ScoredResult {
+@Entity
+@Table(name = "scored_result")
+@Indexed
+@XmlRootElement(name = "scoredResult")
+public class ScoredResultJpa implements ScoredResult {
 
   /** The id. */
+  @TableGenerator(name = "EntityIdGen", table = "table_generator", pkColumnValue = "Entity")
+  @Id
+  @GeneratedValue(strategy = GenerationType.TABLE, generator = "EntityIdGen")
   private Long id;
 
   /** The terminology. */
@@ -20,182 +40,138 @@ public class ScoredResultJpa implements com.wci.tt.helpers.ScoredResult {
   /** The terminology id. */
   private String terminologyId;
 
-  /** The quality. */
-  private float quality;
+  /** The score. */
+  private float score;
 
   /** The value. */
   private String value;
 
   /** The obsolete. */
   private boolean obsolete;
-  
-  public ScoredResultJpa() { }
-  
-  public ScoredResultJpa(SearchResult sr) {
-    this.id = sr.getId();
-    this.obsolete = sr.isObsolete();
-    this.terminology = sr.getTerminology();
-    this.version = sr.getVersion();
-    this.terminologyId = sr.getTerminologyId();
-    this.value = sr.getValue();
-    
+
+  /**
+   * Instantiates an empty {@link ScoredResultJpa}.
+   */
+  public ScoredResultJpa() {
+    // do nothing
   }
 
   /**
-   * Gets the id.
+   * Instantiates a {@link ScoredResultJpa} from the specified parameters.
    *
-   * @return the id
+   * @param result the scored result
    */
+  public ScoredResultJpa(ScoredResult result) {
+    this.obsolete = result.isObsolete();
+    this.terminology = result.getTerminology();
+    this.version = result.getVersion();
+    this.terminologyId = result.getTerminologyId();
+    this.value = result.getValue();
+    this.score = result.getScore();
+  }
+
+  /* see superclass */
   @Override
   public Long getId() {
     return id;
   }
 
-  /**
-   * Sets the id.
-   *
-   * @param id the new id
-   */
+  /* see superclass */
   @Override
   public void setId(Long id) {
     this.id = id;
   }
 
-  /**
-   * Gets the terminology.
-   *
-   * @return the terminology
-   */
+  /* see superclass */
   @Override
   public String getTerminology() {
     return terminology;
   }
 
-  /**
-   * Sets the terminology.
-   *
-   * @param terminology the new terminology
-   */
+  /* see superclass */
   @Override
   public void setTerminology(String terminology) {
     this.terminology = terminology;
   }
 
-  /**
-   * Gets the version.
-   *
-   * @return the version
-   */
+  /* see superclass */
   @Override
   public String getVersion() {
     return version;
   }
 
-  /**
-   * Sets the version.
-   *
-   * @param version the new version
-   */
+  /* see superclass */
   @Override
   public void setVersion(String version) {
     this.version = version;
   }
 
-  /**
-   * Gets the terminology id.
-   *
-   * @return the terminology id
-   */
+  /* see superclass */
   @Override
   public String getTerminologyId() {
     return terminologyId;
   }
 
-  /**
-   * Sets the terminology id.
-   *
-   * @param terminologyId the new terminology id
-   */
+  /* see superclass */
   @Override
   public void setTerminologyId(String terminologyId) {
     this.terminologyId = terminologyId;
   }
 
-  /**
-   * Gets the quality.
-   *
-   * @return the quality
-   */
+  /* see superclass */
   @Override
-  public float getQuality() {
-    return quality;
+  public float getScore() {
+    return score;
   }
 
-  /**
-   * Sets the quality.
-   *
-   * @param quality the new quality
-   */
+  /* see superclass */
   @Override
-  public void setQuality(float quality) {
-    this.quality = quality;
+  public void setScore(float score) {
+    this.score = score;
   }
 
-  /**
-   * Gets the value.
-   *
-   * @return the value
-   */
+  /* see superclass */
   @Override
   public String getValue() {
     return value;
   }
 
-  /**
-   * Sets the value.
-   *
-   * @param value the new value
-   */
+  /* see superclass */
   @Override
   public void setValue(String value) {
     this.value = value;
   }
 
-  /**
-   * Checks if is obsolete.
-   *
-   * @return true, if is obsolete
-   */
+  /* see superclass */
   @Override
   public boolean isObsolete() {
     return obsolete;
   }
 
-  /**
-   * Sets the obsolete.
-   *
-   * @param obsolete the new obsolete
-   */
+  /* see superclass */
   @Override
   public void setObsolete(boolean obsolete) {
     this.obsolete = obsolete;
   }
 
+  /* see superclass */
   @Override
   public int hashCode() {
     final int prime = 31;
     int result = 1;
     result = prime * result + (obsolete ? 1231 : 1237);
-    result = prime * result + Float.floatToIntBits(quality);
+    result = prime * result + Float.floatToIntBits(score);
     result =
         prime * result + ((terminology == null) ? 0 : terminology.hashCode());
-    result = prime * result
-        + ((terminologyId == null) ? 0 : terminologyId.hashCode());
+    result =
+        prime * result
+            + ((terminologyId == null) ? 0 : terminologyId.hashCode());
     result = prime * result + ((value == null) ? 0 : value.hashCode());
     result = prime * result + ((version == null) ? 0 : version.hashCode());
     return result;
   }
 
+  /* see superclass */
   @Override
   public boolean equals(Object obj) {
     if (this == obj)
@@ -207,7 +183,7 @@ public class ScoredResultJpa implements com.wci.tt.helpers.ScoredResult {
     ScoredResultJpa other = (ScoredResultJpa) obj;
     if (obsolete != other.obsolete)
       return false;
-    if (Float.floatToIntBits(quality) != Float.floatToIntBits(other.quality))
+    if (Float.floatToIntBits(score) != Float.floatToIntBits(other.score))
       return false;
     if (terminology == null) {
       if (other.terminology != null)
@@ -232,12 +208,12 @@ public class ScoredResultJpa implements com.wci.tt.helpers.ScoredResult {
     return true;
   }
 
+  /* see superclass */
   @Override
   public String toString() {
-    return "QualityResultJpa [id=" + id + ", terminology=" + terminology
+    return "ScoredResultJpa [id=" + id + ", terminology=" + terminology
         + ", version=" + version + ", terminologyId=" + terminologyId
-        + ", quality=" + quality + ", value=" + value + ", obsolete=" + obsolete
+        + ", score=" + score + ", value=" + value + ", obsolete=" + obsolete
         + "]";
   }
-
 }
