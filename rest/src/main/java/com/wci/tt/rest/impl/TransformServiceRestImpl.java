@@ -18,7 +18,7 @@ import org.apache.log4j.Logger;
 import com.wci.tt.Provider;
 import com.wci.tt.UserRole;
 import com.wci.tt.helpers.ScoredResultList;
-import com.wci.tt.jpa.DataContextJpa;
+import com.wci.tt.jpa.helpers.DataContextJpa;
 import com.wci.tt.jpa.helpers.ScoredResultListJpa;
 import com.wci.tt.jpa.services.SecurityServiceJpa;
 import com.wci.tt.jpa.services.helper.ProviderUtility;

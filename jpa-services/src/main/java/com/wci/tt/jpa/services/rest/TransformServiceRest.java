@@ -4,7 +4,7 @@
 package com.wci.tt.jpa.services.rest;
 
 import com.wci.tt.helpers.ScoredResultList;
-import com.wci.tt.jpa.DataContextJpa;
+import com.wci.tt.jpa.helpers.DataContextJpa;
 
 // TODO: Auto-generated Javadoc
 /**
