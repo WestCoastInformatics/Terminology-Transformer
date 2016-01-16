@@ -6,10 +6,9 @@ package com.wci.tt.jpa.helpers;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import com.wci.tt.helpers.ScoredResult;
-import com.wci.tt.helpers.SearchResult;
 
 /**
- * JPA enabled scored implementation of {@link SearchResult}.
+ * JPA enabled scored implementation of {@link ScoredResult}.
  */
 @XmlRootElement(name = "scoredResult")
 public class ScoredResultJpa implements ScoredResult, Comparable<ScoredResult> {
@@ -18,13 +17,13 @@ public class ScoredResultJpa implements ScoredResult, Comparable<ScoredResult> {
   private Long id;
 
   /** The score. */
-  private float score;
+  private float score = 0;
 
   /** The value. */
   private String value;
 
   /** The obsolete. */
-  private boolean obsolete;
+  private boolean obsolete = false;
 
   /**
    * Instantiates an empty {@link ScoredResultJpa}.
@@ -120,7 +119,7 @@ public class ScoredResultJpa implements ScoredResult, Comparable<ScoredResult> {
     ScoredResultJpa other = (ScoredResultJpa) obj;
     if (obsolete != other.obsolete)
       return false;
-    if (Float.floatToIntBits(score) != Float.floatToIntBits(other.score))
+    if (score != other.score)
       return false;
     if (value == null) {
       if (other.value != null)
@@ -137,6 +136,7 @@ public class ScoredResultJpa implements ScoredResult, Comparable<ScoredResult> {
         + value + ", obsolete=" + obsolete + "]";
   }
 
+  /* see superclass */
   @Override
   public int compareTo(ScoredResult o) {
     Float score1 = new Float(this.getScore());

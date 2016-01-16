@@ -1,7 +1,7 @@
 /*
  *    Copyright 2016 West Coast Informatics, LLC
  */
-package com.wci.tt.jpa;
+package com.wci.tt.jpa.helpers;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -9,7 +9,7 @@ import com.wci.tt.DataContext;
 import com.wci.tt.helpers.DataContextType;
 
 /**
- * JPA enabled implementation of {@link DataContextJpa}.
+ * JPA enabled implementation of {@link DataContext}.
  */
 @XmlRootElement(name = "dataContext")
 public class DataContextJpa implements DataContext {

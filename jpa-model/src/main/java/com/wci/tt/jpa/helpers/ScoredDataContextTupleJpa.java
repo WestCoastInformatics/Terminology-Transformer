@@ -5,29 +5,17 @@ package com.wci.tt.jpa.helpers;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
-import com.wci.tt.DataContext;
 import com.wci.tt.helpers.ScoredDataContextTuple;
-import com.wci.tt.jpa.DataContextJpa;
 
 /**
- * JPA enabled implementation of {@link DataContextJpa} and an associated Data
- * string.
+ * JPA enabled implementation of {@link ScoredDataContextTuple}.
  */
 @XmlRootElement(name = "scoredDataContextTuple")
-public class ScoredDataContextTupleJpa implements ScoredDataContextTuple,
-    Comparable<ScoredDataContextTuple> {
-
-  /** The id. */
-  private Long id;
-
-  /** The data being analyzed. */
-  private String data;
+public class ScoredDataContextTupleJpa extends DataContextTupleJpa implements
+    ScoredDataContextTuple, Comparable<ScoredDataContextTuple> {
 
   /** The context associated with the data. */
-  private DataContext context;
-
-  /** The context associated with the data. */
-  private Float score;
+  private float score = 0;
 
   /**
    * Instantiates an empty {@link ScoredDataContextTupleJpa}.
@@ -43,46 +31,8 @@ public class ScoredDataContextTupleJpa implements ScoredDataContextTuple,
    * @param tuple the data context tuple
    */
   public ScoredDataContextTupleJpa(ScoredDataContextTuple tuple) {
-    this.id = tuple.getId();
-    this.data = tuple.getData();
-    this.context = tuple.getDataContext();
+    super(tuple);
     this.score = tuple.getScore();
-  }
-
-  /* see superclass */
-  @Override
-  public Long getId() {
-    return id;
-  }
-
-  /* see superclass */
-  @Override
-  public void setId(Long id) {
-    this.id = id;
-  }
-
-  /* see superclass */
-  @Override
-  public String getData() {
-    return data;
-  }
-
-  /* see superclass */
-  @Override
-  public void setData(String data) {
-    this.data = data;
-  }
-
-  /* see superclass */
-  @Override
-  public DataContext getDataContext() {
-    return context;
-  }
-
-  /* see superclass */
-  @Override
-  public void setDataContext(DataContext context) {
-    this.context = context;
   }
 
   /* see superclass */
@@ -105,9 +55,7 @@ public class ScoredDataContextTupleJpa implements ScoredDataContextTuple,
   @Override
   public int hashCode() {
     final int prime = 31;
-    int result = 1;
-    result = prime * result + ((data == null) ? 0 : data.hashCode());
-    result = prime * result + ((context == null) ? 0 : context.hashCode());
+    int result = super.hashCode();
     result = prime * result + Float.floatToIntBits(score);
     return result;
   }
@@ -122,29 +70,19 @@ public class ScoredDataContextTupleJpa implements ScoredDataContextTuple,
     if (getClass() != obj.getClass())
       return false;
     ScoredDataContextTupleJpa other = (ScoredDataContextTupleJpa) obj;
-    if (data == null) {
-      if (other.data != null)
-        return false;
-    } else if (!data.equals(other.data))
+    if (score != other.score)
       return false;
-    if (context == null) {
-      if (other.context != null)
-        return false;
-    } else if (!context.equals(other.context))
+    if (!super.equals(other))
       return false;
-    if (score == null) {
-      if (other.score != null)
-        return false;
-    } else if (!score.equals(other.score))
-      return false;
+
     return true;
   }
 
   /* see superclass */
   @Override
   public String toString() {
-    return "ScoredResultJpa [id=" + id + ", data=" + data + ", context="
-        + context + ", score=" + score + "]";
+    return "ScoredDataContextTupleJpa [" + super.toString() + "]" + ", score="
+        + score + "]";
   }
 
   /* see superclass */

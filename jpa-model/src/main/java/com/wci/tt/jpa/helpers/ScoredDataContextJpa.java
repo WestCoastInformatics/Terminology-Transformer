@@ -1,14 +1,14 @@
 /*
  *    Copyright 2016 West Coast Informatics, LLC
  */
-package com.wci.tt.jpa;
+package com.wci.tt.jpa.helpers;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
 import com.wci.tt.ScoredDataContext;
 
 /**
- * JPA enabled implementation of {@link ScoredDataContextJpa}.
+ * JPA enabled implementation of {@link ScoredDataContext}.
  */
 @XmlRootElement(name = "scoredDataContext")
 public class ScoredDataContextJpa extends DataContextJpa implements
@@ -69,7 +69,7 @@ public class ScoredDataContextJpa extends DataContextJpa implements
     if (getClass() != obj.getClass())
       return false;
     ScoredDataContextJpa other = (ScoredDataContextJpa) obj;
-    if (Float.floatToIntBits(score) != Float.floatToIntBits(other.score))
+    if (score != other.score)
       return false;
     if (!super.equals(other))
       return false;
@@ -84,6 +84,7 @@ public class ScoredDataContextJpa extends DataContextJpa implements
         + score + "]";
   }
 
+  /* see superclass */
   @Override
   public int compareTo(ScoredDataContext o) {
     Float score1 = new Float(this.getScore());
