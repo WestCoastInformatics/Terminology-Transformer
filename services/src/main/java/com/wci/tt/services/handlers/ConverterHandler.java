@@ -32,7 +32,7 @@ public interface ConverterHandler extends Configurable {
   public List<DataContext> accepts(DataContext inputContext) throws Exception;
 
   /**
-   * /** Changes the representation of the inputStr defined by the specified
+   * Changes the representation of the inputStr defined by the specified
    * input context into output in the form as defined by the output context.
    * 
    * Four convert possibilities exist:
