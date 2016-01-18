@@ -39,7 +39,7 @@ public class DataContextJpa implements DataContext {
    * Instantiates an empty {@link DataContextJpa}.
    */
   public DataContextJpa() {
-    // do nothing
+    type = DataContextType.UNKNOWN;
   }
 
   /**
@@ -141,6 +141,16 @@ public class DataContextJpa implements DataContext {
   @Override
   public void setSpecialty(String specialty) {
     this.specialty = specialty;
+  }
+
+  /* see superclass */
+  @Override
+  public boolean isEmpty() {
+    return !((terminology != null && !terminology.isEmpty())
+        || (version != null && !version.isEmpty())
+        || (customer != null && !customer.isEmpty())
+        || (semanticType != null && !semanticType.isEmpty())
+        || (specialty != null && !specialty.isEmpty()) || (type != DataContextType.UNKNOWN));
   }
 
   /* see superclass */

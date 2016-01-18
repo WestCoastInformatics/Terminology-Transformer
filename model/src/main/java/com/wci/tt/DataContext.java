@@ -67,4 +67,11 @@ public interface DataContext extends HasTerminology, HasId {
    * @param specialty the specialty
    */
   public void setSpecialty(String specialty);
+
+  /**
+   * Investigates whether at least one aspect of dataContext defined
+   *
+   * @return <code>true</code> if so, <code>false</code> otherwise
+   */
+  public boolean isEmpty();
 }
