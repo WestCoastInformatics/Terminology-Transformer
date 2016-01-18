@@ -6,6 +6,7 @@ import java.util.Properties;
 
 import com.wci.tt.DataContext;
 import com.wci.tt.helpers.DataContextTuple;
+import com.wci.tt.jpa.helpers.DataContextJpa;
 import com.wci.tt.jpa.helpers.DataContextTupleJpa;
 import com.wci.tt.services.handlers.ConverterHandler;
 
@@ -49,7 +50,13 @@ public class DefaultConverterHandler extends AbstractContextHandler implements
     // DefaultHandler supports any context passed in
     List<DataContext> contexts = new ArrayList<DataContext>();
 
-    contexts.add(context);
+    // Ensure that input is valid although calling method with empty/null
+    // context is permissible
+    if (context != null) {
+      contexts.add(context);
+    } else {
+      contexts.add(new DataContextJpa());
+    }
 
     return contexts;
   }
@@ -60,8 +67,12 @@ public class DefaultConverterHandler extends AbstractContextHandler implements
     // DefaultHandler returns "converted form" of input as-is
     DataContextTuple tuple = new DataContextTupleJpa();
 
-    tuple.setDataContext(outputContext);
-    tuple.setData(inputStr);
+    // Ensure that input is valid.
+    if (inputStr != null && !inputStr.isEmpty() && inputContext != null
+        && outputContext != null) {
+      tuple.setDataContext(outputContext);
+      tuple.setData(inputStr);
+    }
 
     return tuple;
   }

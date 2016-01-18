@@ -10,6 +10,7 @@ import java.util.Properties;
 import com.wci.tt.DataContext;
 import com.wci.tt.ScoredDataContext;
 import com.wci.tt.helpers.ScoredResult;
+import com.wci.tt.jpa.helpers.DataContextJpa;
 import com.wci.tt.jpa.helpers.ScoredDataContextJpa;
 import com.wci.tt.jpa.helpers.ScoredResultJpa;
 import com.wci.tt.services.handlers.ProviderHandler;
@@ -53,7 +54,13 @@ public class DefaultProviderHandler extends AbstractContextHandler implements
     // DefaultHandler supports any context passed in
     List<DataContext> contexts = new ArrayList<DataContext>();
 
-    contexts.add(context);
+    // Ensure that input is valid although calling method with empty/null
+    // context is permissible
+    if (context != null) {
+      contexts.add(context);
+    } else {
+      contexts.add(new DataContextJpa());
+    }
 
     return contexts;
   }
@@ -66,17 +73,28 @@ public class DefaultProviderHandler extends AbstractContextHandler implements
     // is set to '1'.
     List<ScoredDataContext> scoredContexts = new ArrayList<ScoredDataContext>();
 
-    ScoredDataContext scoredContext = new ScoredDataContextJpa();
+    // Ensure that input is valid although calling method with empty/null
+    // context is permissible
+    if (inputStr != null && !inputStr.isEmpty()) {
+      if (context != null) {
+        ScoredDataContext scoredContext = new ScoredDataContextJpa();
 
-    scoredContext.setCustomer(context.getCustomer());
-    scoredContext.setSemanticType(context.getSemanticType());
-    scoredContext.setSpecialty(context.getSpecialty());
-    scoredContext.setTerminology(context.getTerminology());
-    scoredContext.setType(context.getType());
-    scoredContext.setVersion(context.getVersion());
-    scoredContext.setScore(1);
+        scoredContext.setCustomer(context.getCustomer());
+        scoredContext.setSemanticType(context.getSemanticType());
+        scoredContext.setSpecialty(context.getSpecialty());
+        scoredContext.setTerminology(context.getTerminology());
+        scoredContext.setType(context.getType());
+        scoredContext.setVersion(context.getVersion());
+        scoredContext.setScore(1);
 
-    scoredContexts.add(scoredContext);
+        scoredContexts.add(scoredContext);
+      } else {
+        ScoredDataContext scoredContext = new ScoredDataContextJpa();
+        scoredContext.setScore(0);
+
+        scoredContexts.add(scoredContext);
+      }
+    }
 
     return scoredContexts;
   }
@@ -88,10 +106,16 @@ public class DefaultProviderHandler extends AbstractContextHandler implements
     // set to '1'.
     List<ScoredResult> results = new ArrayList<ScoredResult>();
 
-    ScoredResult result = new ScoredResultJpa();
+    // Ensure that input is valid.
+    if (inputStr != null && !inputStr.isEmpty() && inputContext != null
+        && outputContext != null) {
+      ScoredResult result = new ScoredResultJpa();
 
-    result.setValue(inputStr);
-    result.setScore(1);
+      result.setValue(inputStr);
+      result.setScore(1);
+
+      results.add(result);
+    }
 
     return results;
   }

@@ -46,12 +46,16 @@ public class DefaultNormalizerHandler implements NormalizerHandler {
     // set to '1'.
     List<ScoredResult> results = new ArrayList<ScoredResult>();
 
-    ScoredResult r = new ScoredResultJpa();
+    // Ensure that input is valid.
+    if (inputStr != null && !inputStr.isEmpty() && context != null) {
 
-    r.setValue(inputStr);
-    r.setScore(1);
+      ScoredResult r = new ScoredResultJpa();
 
-    results.add(r);
+      r.setValue(inputStr);
+      r.setScore(1);
+
+      results.add(r);
+    }
 
     return results;
   }
