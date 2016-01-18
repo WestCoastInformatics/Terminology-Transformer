@@ -206,8 +206,9 @@ public class DataContextJpa implements DataContext {
   @Override
   public String toString() {
     return "DataContextJpa [id=" + id + ", terminology=" + terminology
-        + ", version=" + version + ", type=" + type.toString() + ", customer="
-        + customer + ", semanticType=" + semanticType + ", specialty="
-        + specialty + "]";
-  }
+        + ", version=" + version + 
+        ", type=" + ((type == null) ? "null" : type.toString()) + 
+        ", customer=" + customer + ", semanticType=" + semanticType + ", specialty="
+        + specialty + "]";  
+    }
 }
