@@ -59,6 +59,14 @@ public interface CoordinatorService extends RootService {
   public List<String> getSemanticTypes() throws Exception;
 
   /**
+   * Returns the information models.
+   *
+   * @return the information models
+   * @throws Exception the exception
+   */
+  public List<String> getInformationModels() throws Exception;
+
+  /**
    * Finds which data contexts are legible across all providers.
    * 
    * To do so, the method takes the input string and input data context and

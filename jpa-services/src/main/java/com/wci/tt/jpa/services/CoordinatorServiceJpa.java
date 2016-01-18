@@ -44,11 +44,14 @@ public class CoordinatorServiceJpa extends RootServiceJpa implements
   /** The converter handler . */
   static List<ConverterHandler> converterHandlerMap = new ArrayList<>();
 
-  /** The converter handler . */
+  /** The config-specified specialties available. */
   static List<String> availableSpecialties = new ArrayList<>();
 
-  /** The converter handler . */
+  /** The config-specified semantic types available. */
   static List<String> availableSemanticTypes = new ArrayList<>();
+
+  /** The config-specified information models available. */
+  static List<String> availableInformationModels = new ArrayList<>();
 
   static {
     /** Add normalizers found in Config to Map. */
@@ -195,6 +198,26 @@ public class CoordinatorServiceJpa extends RootServiceJpa implements
       e.printStackTrace();
       availableSemanticTypes = null;
     }
+
+    /** Add informationModels found in Config to List. */
+    try {
+      if (config == null) {
+        config = ConfigUtility.getConfigProperties();
+      }
+
+      String key = "informationModels.available";
+
+      for (String informationModel : config.getProperty(key).split(",")) {
+        if (informationModel.isEmpty()) {
+          continue;
+        }
+
+        availableInformationModels.add(informationModel);
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+      availableInformationModels = null;
+    }
   }
 
   /**
@@ -233,6 +256,12 @@ public class CoordinatorServiceJpa extends RootServiceJpa implements
   @Override
   public List<String> getSemanticTypes() throws Exception {
     return availableSemanticTypes;
+  }
+
+  /* see superclass */
+  @Override
+  public List<String> getInformationModels() throws Exception {
+    return availableInformationModels;
   }
 
   /* see superclass */
