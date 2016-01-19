@@ -15,8 +15,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.wci.tt.ScoredDataContext;
 import com.wci.tt.helpers.DataContextType;
+import com.wci.tt.helpers.ScoredDataContext;
 import com.wci.tt.helpers.ScoredDataContextTuple;
 import com.wci.tt.jpa.helpers.DataContextJpa;
 import com.wci.tt.jpa.services.CoordinatorServiceJpa;

@@ -13,9 +13,9 @@ import java.util.Properties;
 import java.util.Set;
 
 import com.wci.tt.DataContext;
-import com.wci.tt.ScoredDataContext;
 import com.wci.tt.helpers.ConfigUtility;
 import com.wci.tt.helpers.DataContextTuple;
+import com.wci.tt.helpers.ScoredDataContext;
 import com.wci.tt.helpers.ScoredDataContextTuple;
 import com.wci.tt.helpers.ScoredResult;
 import com.wci.tt.jpa.helpers.DataContextTupleJpa;
