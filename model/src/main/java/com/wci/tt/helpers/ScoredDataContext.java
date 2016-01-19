@@ -1,9 +1,9 @@
 /*
  *    Copyright 2016 West Coast Informatics, LLC
  */
-package com.wci.tt;
+package com.wci.tt.helpers;
 
-import com.wci.tt.helpers.HasScore;
+import com.wci.tt.DataContext;
 
 /**
  * Interface representing a DataContext along with its associated probability
