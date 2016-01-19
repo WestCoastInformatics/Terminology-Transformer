@@ -25,11 +25,11 @@ public interface ConverterHandler extends Configurable {
    * Returns a list because some input contexts may be blank yet converter may
    * handle multiple data context options simultaneously.
    *
-   * @param inputContext the input context
+   * @param context the context
    * @return the list
    * @throws Exception the exception
    */
-  public List<DataContext> accepts(DataContext inputContext) throws Exception;
+  public List<DataContext> accepts(DataContext context) throws Exception;
 
   /**
    * Changes the representation of the inputStr defined by the specified
