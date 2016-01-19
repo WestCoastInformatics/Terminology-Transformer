@@ -8,13 +8,7 @@ import java.util.Properties;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
-
-import com.wci.umls.server.User;
-import com.wci.umls.server.UserRole;
-import com.wci.umls.server.helpers.ConfigUtility;
-import com.wci.umls.server.helpers.UserImpl;
-import com.wci.umls.server.jpa.services.handlers.DefaultSecurityServiceHandler;
-import com.wci.umls.server.services.handlers.SecurityServiceHandler;
+import org.hsqldb.rights.User;
 
 /**
  * A sample security service handler that is basically the same as
