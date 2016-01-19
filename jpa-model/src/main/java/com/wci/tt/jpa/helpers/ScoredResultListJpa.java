@@ -1,5 +1,5 @@
-/**
- * Copyright 2015 West Coast Informatics, LLC
+/*
+ *    Copyright 2016 West Coast Informatics, LLC
  */
 package com.wci.tt.jpa.helpers;
 
@@ -25,7 +25,6 @@ public class ScoredResultListJpa extends AbstractResultList<ScoredResult>
   public List<ScoredResult> getObjects() {
     return super.getObjectsTransient();
   }
-  
 
   /* see superclass */
   @Override
