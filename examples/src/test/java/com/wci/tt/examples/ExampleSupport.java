@@ -5,12 +5,13 @@ package com.wci.tt.examples;
 
 import java.util.Properties;
 
-import com.wci.tt.helpers.ConfigUtility;
-import com.wci.tt.rest.client.SecurityClientRest;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
+
+import com.wci.umls.server.helpers.ConfigUtility;
+import com.wci.umls.server.rest.client.SecurityClientRest;
 
 /**
  * Integration test for REST content service.

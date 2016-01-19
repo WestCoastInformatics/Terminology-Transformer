@@ -4,6 +4,8 @@
 package com.wci.tt.helpers;
 
 import com.wci.tt.SourceData;
+import com.wci.umls.server.helpers.ResultList;
+import com.wci.umls.server.helpers.SearchResult;
 
 /**
  * Represents a sortable list of {@link SearchResult} objects.

@@ -13,7 +13,7 @@ import java.util.zip.ZipInputStream;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
-import com.wci.tt.helpers.LocalException;
+import com.wci.umls.server.helpers.LocalException;
 
 // TODO: Auto-generated Javadoc
 /**

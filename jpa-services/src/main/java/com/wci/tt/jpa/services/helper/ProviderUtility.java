@@ -10,7 +10,7 @@ import com.wci.tt.IdentifyHandler;
 import com.wci.tt.NormalizeHandler;
 import com.wci.tt.ProcessHandler;
 import com.wci.tt.Provider;
-import com.wci.tt.helpers.ConfigUtility;
+import com.wci.umls.server.helpers.ConfigUtility;
 
 public class ProviderUtility {
 

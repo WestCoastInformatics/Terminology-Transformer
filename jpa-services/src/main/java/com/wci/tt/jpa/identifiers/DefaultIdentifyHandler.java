@@ -5,19 +5,19 @@ import java.util.Set;
 
 import com.wci.tt.DataContext;
 import com.wci.tt.IdentifyHandler;
-import com.wci.tt.helpers.PfscParameter;
 import com.wci.tt.helpers.ScoredResult;
 import com.wci.tt.helpers.ScoredResultList;
-import com.wci.tt.helpers.SearchResult;
-import com.wci.tt.helpers.SearchResultList;
-import com.wci.tt.helpers.TerminologyList;
-import com.wci.tt.jpa.helpers.PfscParameterJpa;
 import com.wci.tt.jpa.helpers.ScoredResultJpa;
 import com.wci.tt.jpa.helpers.ScoredResultListJpa;
-import com.wci.tt.jpa.helpers.meta.TerminologyListJpa;
-import com.wci.tt.jpa.services.ContentServiceJpa;
-import com.wci.tt.model.meta.Terminology;
-import com.wci.tt.services.ContentService;
+import com.wci.umls.server.helpers.PfscParameter;
+import com.wci.umls.server.helpers.SearchResult;
+import com.wci.umls.server.helpers.SearchResultList;
+import com.wci.umls.server.helpers.meta.TerminologyList;
+import com.wci.umls.server.jpa.helpers.PfscParameterJpa;
+import com.wci.umls.server.jpa.helpers.meta.TerminologyListJpa;
+import com.wci.umls.server.jpa.services.ContentServiceJpa;
+import com.wci.umls.server.model.meta.Terminology;
+import com.wci.umls.server.services.ContentService;
 
 /**
  * The Class DefaultIdentifyHandler.

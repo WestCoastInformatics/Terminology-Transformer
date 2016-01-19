@@ -10,26 +10,20 @@ import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TestName;
 
 import com.wci.tt.SourceDataFile;
-import com.wci.tt.helpers.CopyConstructorTester;
-import com.wci.tt.helpers.EqualsHashcodeTester;
-import com.wci.tt.helpers.GetterSetterTester;
-import com.wci.tt.helpers.XmlSerializationTester;
 import com.wci.tt.jpa.SourceDataFileJpa;
-import com.wci.tt.jpa.helpers.IndexedFieldTester;
-import com.wci.tt.jpa.helpers.NullableFieldTester;
+import com.wci.umls.server.helpers.CopyConstructorTester;
+import com.wci.umls.server.helpers.EqualsHashcodeTester;
+import com.wci.umls.server.helpers.GetterSetterTester;
+import com.wci.umls.server.helpers.XmlSerializationTester;
+import com.wci.umls.server.jpa.helpers.IndexedFieldTester;
+import com.wci.umls.server.jpa.helpers.NullableFieldTester;
 
 /**
  * Unit testing for {@link SourceDataFileJpa}.
  */
-public class SourceDataFileJpaTest{
-  
-  @Rule
-  public TestName name = new TestName();
+public class SourceDataFileJpaTest extends SourceDataSupport {
 
   /** The model object to test. */
   private SourceDataFileJpa object;
@@ -56,7 +50,7 @@ public class SourceDataFileJpaTest{
    *
    * @throws Exception the exception
    */
-  //@Test
+  // @Test
   public void testModelGetSet037() throws Exception {
     Logger.getLogger(getClass()).debug("TEST " + name.getMethodName());
     GetterSetterTester tester = new GetterSetterTester(object);
@@ -68,7 +62,7 @@ public class SourceDataFileJpaTest{
    *
    * @throws Exception the exception
    */
- // @Test
+  // @Test
   public void testModelEqualsHashcode037() throws Exception {
     Logger.getLogger(getClass()).debug("TEST " + name.getMethodName());
     EqualsHashcodeTester tester = new EqualsHashcodeTester(object);
@@ -93,7 +87,7 @@ public class SourceDataFileJpaTest{
    *
    * @throws Exception the exception
    */
-  //@Test
+  // @Test
   public void testModelCopy037() throws Exception {
     Logger.getLogger(getClass()).debug("TEST " + name.getMethodName());
     CopyConstructorTester tester = new CopyConstructorTester(object);
@@ -105,7 +99,7 @@ public class SourceDataFileJpaTest{
    *
    * @throws Exception the exception
    */
-  //@Test
+  // @Test
   public void testModelXmlSerialization037() throws Exception {
     Logger.getLogger(getClass()).debug("TEST " + name.getMethodName());
     XmlSerializationTester tester = new XmlSerializationTester(object);
@@ -117,7 +111,7 @@ public class SourceDataFileJpaTest{
    *
    * @throws Exception the exception
    */
-  //@Test
+  // @Test
   public void testModelNotNullField037() throws Exception {
     Logger.getLogger(getClass()).debug("TEST " + name.getMethodName());
     NullableFieldTester tester = new NullableFieldTester(object);
@@ -136,7 +130,7 @@ public class SourceDataFileJpaTest{
    *
    * @throws Exception the exception
    */
-  //@Test
+  // @Test
   public void testModelIndexedFields037() throws Exception {
     Logger.getLogger(getClass()).debug("TEST " + name.getMethodName());
 

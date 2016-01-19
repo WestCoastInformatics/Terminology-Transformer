@@ -14,8 +14,9 @@ import org.apache.log4j.Logger;
 import org.glassfish.jersey.jackson.JacksonFeature;
 import org.glassfish.jersey.jsonp.JsonProcessingFeature;
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
-import com.wci.tt.helpers.ConfigUtility;
 
+import com.wci.umls.server.helpers.ConfigUtility;
+import com.wci.umls.server.rest.impl.SecurityServiceRestImpl;
 import com.wordnik.swagger.jaxrs.config.BeanConfig;
 
 /**

@@ -9,9 +9,9 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import com.wci.tt.SourceDataFile;
-import com.wci.tt.helpers.AbstractResultList;
 import com.wci.tt.helpers.SourceDataFileList;
 import com.wci.tt.jpa.SourceDataFileJpa;
+import com.wci.umls.server.helpers.AbstractResultList;
 /**
 * JAXB enabled implementation of {@link SourceDataFileList}.
 */

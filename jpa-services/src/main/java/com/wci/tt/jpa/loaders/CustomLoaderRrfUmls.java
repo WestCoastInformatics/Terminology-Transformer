@@ -2,18 +2,16 @@ package com.wci.tt.jpa.loaders;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import org.apache.log4j.Logger;
 
 import com.wci.tt.SourceData;
 import com.wci.tt.SourceDataConverter;
-import com.wci.tt.helpers.ConverterStatus;
-import com.wci.tt.helpers.LocalException;
-import com.wci.tt.jpa.services.ContentServiceJpa;
 import com.wci.tt.jpa.services.SourceDataServiceJpa;
-import com.wci.tt.services.ContentService;
 import com.wci.tt.services.SourceDataService;
+import com.wci.umls.server.helpers.LocalException;
+import com.wci.umls.server.jpa.services.ContentServiceJpa;
+import com.wci.umls.server.services.ContentService;
 
 /**
  * Converter for RxNorm files
@@ -48,8 +46,7 @@ public class CustomLoaderRrfUmls implements SourceDataConverter {
    * @throws Exception
    */
   @Override
-  public void convert(SourceData sourceData)
-    throws Exception {
+  public void convert(SourceData sourceData) throws Exception {
 
     // check pre-requisites
     if (sourceData.getSourceDataFiles().size() == 0) {
@@ -62,17 +59,16 @@ public class CustomLoaderRrfUmls implements SourceDataConverter {
           "No source data converter specified for source data object "
               + sourceData.getName());
     }
- 
-    
+
     // find the data directory from the first sourceDataFile
     String inputDir = sourceData.getSourceDataFiles().get(0).getPath();
-    
+
     if (new File(inputDir).isDirectory()) {
-      throw new LocalException("Source data directory is not a directory: " + inputDir);
+      throw new LocalException(
+          "Source data directory is not a directory: " + inputDir);
     }
 
     SourceDataService sourceDataService = new SourceDataServiceJpa();
-    sourceData.setConverterStatus(ConverterStatus.CONVERTING);
     sourceDataService.updateSourceData(sourceData);
 
     ContentService contentService = new ContentServiceJpa();
@@ -82,16 +78,15 @@ public class CustomLoaderRrfUmls implements SourceDataConverter {
       // goal is to allow easy searching of content based on source files, as
       // well as terminology/version
       SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-      
-      contentService.loadRrfTerminology(sourceData.getName(),
-          sdf.format(new Date()), false, inputDir);
-      sourceData.setConverterStatus(ConverterStatus.CONVERTED);
+      // TODO
+      // contentService.loadRrfTerminology(sourceData.getName(),
+      // sdf.format(new Date()), false, inputDir);
     } catch (Exception e) {
       Logger.getLogger(this.getClass())
           .error("Error converting source data for " + sourceData.getName()
               + " using converter " + this.getName());
-
-      sourceData.setConverterStatus(ConverterStatus.FAILED);
+      // TODO:
+      // sourceData.setConverterStatus(ConverterStatus.FAILED);
     } finally {
       sourceDataService.updateSourceData(sourceData);
       contentService.close();

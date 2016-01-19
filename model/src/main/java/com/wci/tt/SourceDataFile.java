@@ -2,9 +2,9 @@ package com.wci.tt;
 
 import java.util.Date;
 
-import com.wci.tt.helpers.HasId;
-import com.wci.tt.helpers.HasLastModified;
-import com.wci.tt.helpers.HasName;
+import com.wci.umls.server.helpers.HasId;
+import com.wci.umls.server.helpers.HasLastModified;
+import com.wci.umls.server.helpers.HasName;
 
 // TODO: Auto-generated Javadoc
 /**

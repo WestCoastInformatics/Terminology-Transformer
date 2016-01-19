@@ -23,6 +23,12 @@
   <!-- Declare Project Dependency Versions -->
   <dependencies>
 
+    <!-- Term server dependencies. -->
+    <dependency>
+      <groupId>com.wci.umls.server</groupId>
+      <artifactId>term-server-rest-client</artifactId>
+    </dependency>
+
     <!-- Dependencies -->
     <dependency>
       <groupId>com.wci.tt</groupId>

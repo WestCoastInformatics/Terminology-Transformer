@@ -22,6 +22,12 @@
       <artifactId>tt-model</artifactId>
     </dependency>
 
+    <!-- Term server code -->
+    <dependency>
+      <groupId>com.wci.umls.server</groupId>
+      <artifactId>term-server-rest</artifactId>
+    </dependency>
+
     <!-- JPA dependencies -->
     <dependency>
       <groupId>javax.transaction</groupId>

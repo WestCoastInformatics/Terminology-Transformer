@@ -1,5 +1,5 @@
-/**
- * Copyright 2015 West Coast Informatics, LLC
+/*
+ *    Copyright 2016 West Coast Informatics, LLC
  */
 package com.wci.tt.rest.impl;
 
@@ -16,15 +16,16 @@ import javax.ws.rs.core.MediaType;
 import org.apache.log4j.Logger;
 
 import com.wci.tt.Provider;
-import com.wci.tt.UserRole;
 import com.wci.tt.helpers.ScoredResultList;
 import com.wci.tt.jpa.DataContextJpa;
 import com.wci.tt.jpa.helpers.ScoredResultListJpa;
-import com.wci.tt.jpa.services.SecurityServiceJpa;
 import com.wci.tt.jpa.services.helper.ProviderUtility;
 import com.wci.tt.jpa.services.rest.SourceDataServiceRest;
 import com.wci.tt.jpa.services.rest.TransformServiceRest;
-import com.wci.tt.services.SecurityService;
+import com.wci.umls.server.UserRole;
+import com.wci.umls.server.jpa.services.SecurityServiceJpa;
+import com.wci.umls.server.rest.impl.RootServiceRestImpl;
+import com.wci.umls.server.services.SecurityService;
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiParam;
 
@@ -45,6 +46,11 @@ public class TransformServiceRestImpl extends RootServiceRestImpl
   /** The security service. */
   private SecurityService securityService;
 
+  /**
+   * Instantiates an empty {@link TransformServiceRestImpl}.
+   *
+   * @throws Exception the exception
+   */
   public TransformServiceRestImpl() throws Exception {
     securityService = new SecurityServiceJpa();
   }
@@ -63,17 +69,17 @@ public class TransformServiceRestImpl extends RootServiceRestImpl
 
     try {
       authorizeApp(securityService, authToken, "transform input string",
-          UserRole.ADMIN);
+          UserRole.ADMINISTRATOR);
 
       List<Provider> providers = ProviderUtility.getProviders();
-      
+
       ScoredResultList results = new ScoredResultListJpa();
-      
+
       for (Provider provider : providers) {
         ScoredResultList providerResults = provider.processInput(inputStr,
             dataContext == null ? new DataContextJpa() : dataContext);
-        
-        results.addAll(providerResults);
+
+        results.getObjects().addAll(providerResults.getObjects());
       }
 
       return results;

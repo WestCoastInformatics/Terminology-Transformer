@@ -67,6 +67,20 @@
         <version>${releaseVersion}</version>
       </dependency>
 
+      <!-- Term server dependencies. -->
+      <dependency>
+        <groupId>com.wci.umls.server</groupId>
+        <artifactId>term-server-rest</artifactId>
+        <version>1.1.0-SNAPSHOT</version>
+        <classifier>classes</classifier>
+      </dependency>
+
+      <dependency>
+        <groupId>com.wci.umls.server</groupId>
+        <artifactId>term-server-rest-client</artifactId>
+        <version>1.1.0-SNAPSHOT</version>
+      </dependency>
+
       <!-- JPA dependencies -->
       <dependency>
         <groupId>javax.transaction</groupId>
@@ -290,11 +304,11 @@
         <version>3.3.2</version>
       </dependency>
 
-	<dependency>
-		<groupId>com.google.guava</groupId>
-		<artifactId>guava</artifactId>
-		<version>18.0</version>
-	</dependency>
+      <dependency>
+        <groupId>com.google.guava</groupId>
+        <artifactId>guava</artifactId>
+        <version>18.0</version>
+      </dependency>
 
     </dependencies>
   </dependencyManagement>
@@ -305,6 +319,12 @@
     <!-- Declare Project Plugin Versions -->
     <pluginManagement>
       <plugins>
+        <!-- Term server plugins -->
+        <plugin>
+          <groupId>com.wci.umls.server</groupId>
+          <artifactId>term-server-admin-mojo</artifactId>
+          <version>1.1.0-SNAPSHOT</version>
+        </plugin>
 
         <!-- Maven plugins -->
         <plugin>
@@ -330,8 +350,8 @@
           <artifactId>maven-compiler-plugin</artifactId>
           <version>3.2</version>
           <configuration>
-            <source>1.7</source>
-            <target>1.7</target>
+            <source>1.8</source>
+            <target>1.8</target>
           </configuration>
         </plugin>
 

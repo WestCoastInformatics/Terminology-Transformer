@@ -1,6 +1,6 @@
 package com.wci.tt;
 
-import com.wci.tt.helpers.HasName;
+import com.wci.umls.server.helpers.HasName;
 
 public interface SourceDataConverter extends HasName {
 

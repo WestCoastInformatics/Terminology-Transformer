@@ -8,9 +8,9 @@ import java.util.List;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import com.wci.tt.helpers.AbstractResultList;
 import com.wci.tt.helpers.ScoredResult;
 import com.wci.tt.helpers.ScoredResultList;
+import com.wci.umls.server.helpers.AbstractResultList;
 
 /**
  * JAXB-enabled implementation of {@link ScoredResultList}.

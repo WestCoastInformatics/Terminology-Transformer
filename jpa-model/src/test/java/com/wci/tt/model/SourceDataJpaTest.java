@@ -10,26 +10,20 @@ import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TestName;
 
 import com.wci.tt.SourceData;
-import com.wci.tt.helpers.CopyConstructorTester;
-import com.wci.tt.helpers.EqualsHashcodeTester;
-import com.wci.tt.helpers.GetterSetterTester;
-import com.wci.tt.helpers.XmlSerializationTester;
 import com.wci.tt.jpa.SourceDataJpa;
-import com.wci.tt.jpa.helpers.IndexedFieldTester;
-import com.wci.tt.jpa.helpers.NullableFieldTester;
+import com.wci.umls.server.helpers.CopyConstructorTester;
+import com.wci.umls.server.helpers.EqualsHashcodeTester;
+import com.wci.umls.server.helpers.GetterSetterTester;
+import com.wci.umls.server.helpers.XmlSerializationTester;
+import com.wci.umls.server.jpa.helpers.IndexedFieldTester;
+import com.wci.umls.server.jpa.helpers.NullableFieldTester;
 
 /**
  * Unit testing for {@link SourceDataJpa}.
  */
-public class SourceDataJpaTest {
-
-  @Rule
-  public TestName name = new TestName();
+public class SourceDataJpaTest extends SourceDataSupport {
 
   /** The model object to test. */
   private SourceDataJpa object;

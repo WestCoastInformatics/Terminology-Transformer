@@ -1,6 +1,6 @@
 package com.wci.tt.jpa.helpers;
 
-import com.wci.tt.helpers.SearchResult;
+import com.wci.umls.server.helpers.SearchResult;
 
 // TODO: Auto-generated Javadoc
 /**

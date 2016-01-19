@@ -4,6 +4,7 @@
 package com.wci.tt.helpers;
 
 import com.wci.tt.SourceDataFile;
+import com.wci.umls.server.helpers.ResultList;
 
 /**
  * Represents a sortable list of {@link SourceDataFile} objects.

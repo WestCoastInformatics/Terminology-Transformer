@@ -1,7 +1,7 @@
 package com.wci.tt;
 
 import com.wci.tt.helpers.DataContextType;
-import com.wci.tt.helpers.HasTerminology;
+import com.wci.umls.server.helpers.HasTerminology;
 
 public interface DataContext extends HasTerminology {
 

@@ -1,5 +1,5 @@
-/**
- * Copyright 2015 West Coast Informatics, LLC
+/*
+ *    Copyright 2016 West Coast Informatics, LLC
  */
 package com.wci.tt.rest.impl;
 
@@ -27,25 +27,22 @@ import org.glassfish.jersey.media.multipart.FormDataParam;
 
 import com.wci.tt.SourceData;
 import com.wci.tt.SourceDataFile;
-import com.wci.tt.UserRole;
-import com.wci.tt.helpers.ConfigUtility;
-import com.wci.tt.helpers.PfsParameter;
 import com.wci.tt.helpers.SourceDataFileList;
 import com.wci.tt.helpers.SourceDataList;
-import com.wci.tt.helpers.StringList;
 import com.wci.tt.jpa.SourceDataFileJpa;
 import com.wci.tt.jpa.SourceDataJpa;
-import com.wci.tt.jpa.algo.RemoveTerminologyAlgorithm;
 import com.wci.tt.jpa.helpers.SourceDataFileListJpa;
-import com.wci.tt.jpa.services.ContentServiceJpa;
-import com.wci.tt.jpa.services.SecurityServiceJpa;
 import com.wci.tt.jpa.services.SourceDataServiceJpa;
 import com.wci.tt.jpa.services.helper.SourceDataFileUtility;
 import com.wci.tt.jpa.services.rest.SourceDataServiceRest;
-import com.wci.tt.model.meta.Terminology;
-import com.wci.tt.services.ContentService;
-import com.wci.tt.services.SecurityService;
 import com.wci.tt.services.SourceDataService;
+import com.wci.umls.server.UserRole;
+import com.wci.umls.server.helpers.ConfigUtility;
+import com.wci.umls.server.helpers.PfsParameter;
+import com.wci.umls.server.helpers.StringList;
+import com.wci.umls.server.jpa.services.SecurityServiceJpa;
+import com.wci.umls.server.rest.impl.RootServiceRestImpl;
+import com.wci.umls.server.services.SecurityService;
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
 import com.wordnik.swagger.annotations.ApiParam;
@@ -67,6 +64,11 @@ public class SourceDataServiceRestImpl extends RootServiceRestImpl
   /** The security service. */
   private SecurityService securityService;
 
+  /**
+   * Instantiates an empty {@link SourceDataServiceRestImpl}.
+   *
+   * @throws Exception the exception
+   */
   public SourceDataServiceRestImpl() throws Exception {
     securityService = new SecurityServiceJpa();
   }
@@ -98,14 +100,14 @@ public class SourceDataServiceRestImpl extends RootServiceRestImpl
     try {
 
       authorizeApp(securityService, authToken, "upload source data files",
-          UserRole.ADMIN);
+          UserRole.ADMINISTRATOR);
 
       // if unzipping requested and file is valid, extract compressed file to
       // destination folder
       if (unzip == true) {
-        files.addAll(
-            SourceDataFileUtility.extractCompressedSourceDataFile(fileInputStream,
-                destinationFolder, contentDispositionHeader.getFileName()));
+        files.addAll(SourceDataFileUtility.extractCompressedSourceDataFile(
+            fileInputStream, destinationFolder,
+            contentDispositionHeader.getFileName()));
       }
 
       // otherwise, simply write the input stream
@@ -164,7 +166,7 @@ public class SourceDataServiceRestImpl extends RootServiceRestImpl
     try {
 
       authorizeApp(securityService, authToken, "add source data file",
-          UserRole.ADMIN);
+          UserRole.ADMINISTRATOR);
 
       service.addSourceDataFile(sourceDataFile);
 
@@ -194,7 +196,7 @@ public class SourceDataServiceRestImpl extends RootServiceRestImpl
     try {
 
       authorizeApp(securityService, authToken, "add source data file",
-          UserRole.ADMIN);
+          UserRole.ADMINISTRATOR);
 
       service.updateSourceDataFile(sourceDataFile);
 
@@ -224,7 +226,7 @@ public class SourceDataServiceRestImpl extends RootServiceRestImpl
     try {
 
       authorizeApp(securityService, authToken, "delete source data file",
-          UserRole.ADMIN);
+          UserRole.ADMINISTRATOR);
 
       SourceDataFile sourceDataFile =
           service.getSourceDataFile(sourceDataFileId);
@@ -264,7 +266,7 @@ public class SourceDataServiceRestImpl extends RootServiceRestImpl
     try {
 
       authorizeApp(securityService, authToken, "retrieve source data files",
-          UserRole.ADMIN);
+          UserRole.ADMINISTRATOR);
 
       SourceDataFileList sourceDataFiles = service.getSourceDataFiles();
 
@@ -297,7 +299,7 @@ public class SourceDataServiceRestImpl extends RootServiceRestImpl
     try {
 
       authorizeApp(securityService, authToken, "search for source data files",
-          UserRole.ADMIN);
+          UserRole.ADMINISTRATOR);
 
       SourceDataFileList sourceDataFiles =
           service.findSourceDataFilesForQuery(query, pfsParameter);
@@ -330,7 +332,7 @@ public class SourceDataServiceRestImpl extends RootServiceRestImpl
     try {
 
       authorizeApp(securityService, authToken, "add new source data",
-          UserRole.ADMIN);
+          UserRole.ADMINISTRATOR);
 
       service.addSourceData(sourceData);
 
@@ -362,7 +364,7 @@ public class SourceDataServiceRestImpl extends RootServiceRestImpl
     try {
 
       authorizeApp(securityService, authToken, "add new source data",
-          UserRole.ADMIN);
+          UserRole.ADMINISTRATOR);
 
       service.updateSourceData(sourceData);
 
@@ -391,7 +393,7 @@ public class SourceDataServiceRestImpl extends RootServiceRestImpl
     try {
 
       authorizeApp(securityService, authToken, "delete source data",
-          UserRole.ADMIN);
+          UserRole.ADMINISTRATOR);
 
       service.removeSourceData(sourceDataId);
 
@@ -418,7 +420,7 @@ public class SourceDataServiceRestImpl extends RootServiceRestImpl
     try {
 
       authorizeApp(securityService, authToken, "get source datas",
-          UserRole.ADMIN);
+          UserRole.ADMINISTRATOR);
 
       SourceDataList sourceDatas = service.getSourceDatas();
 
@@ -451,7 +453,7 @@ public class SourceDataServiceRestImpl extends RootServiceRestImpl
     try {
 
       authorizeApp(securityService, authToken, "get source datas",
-          UserRole.ADMIN);
+          UserRole.ADMINISTRATOR);
 
       SourceDataList sourceDatas =
           service.findSourceDatasForQuery(query, pfsParameter);
@@ -463,74 +465,6 @@ public class SourceDataServiceRestImpl extends RootServiceRestImpl
       return null;
     } finally {
       service.close();
-    }
-
-  }
-
-  @Override
-  @POST
-  @Path("/loadRxnorm")
-  @ApiOperation(value = "Test function for loading rxnorm", notes = "Loads Rxnorm", response = StringList.class)
-  public void loadRxnormTestFn() throws Exception {
-    Logger.getLogger(getClass())
-        .info("SourceDataFile Service - load test RXNORM data (temp fn)");
-
-    ContentService contentService = new ContentServiceJpa();
-
-    final SourceDataService service = new SourceDataServiceJpa();
-
-    try {
-
-      contentService.loadRrfTerminology("RXNORMTEST", "20160101", false,
-          "D:/Terminology-Transformer/data/RXNORM/rrf");
-
-    } catch (Exception e) {
-      e.printStackTrace();
-      handleException(e, "loading test RXNORM terminology");
-    } finally {
-      service.close();
-    }
-
-  }
-
-  @Override
-  @POST
-  @Path("/sourceDataFile/removeRxnorm")
-  @ApiOperation(value = "Test function for removing rxnorm", notes = "Removes Rxnorm", response = StringList.class)
-  public void removeRxnormTestFn() throws Exception {
-    Logger.getLogger(getClass())
-        .info("SourceDataFile Service - remove test RXNORM data (temp fn)");
-
-    ContentService contentService = new ContentServiceJpa();
-    RemoveTerminologyAlgorithm algo = new RemoveTerminologyAlgorithm();
-
-    try {
-
-      for (Terminology terminology : contentService.getTerminologies()
-          .getObjects()) {
-
-        Logger.getLogger(getClass()).info("Removing terminology "
-            + terminology.getTerminology() + "/" + terminology.getVersion());
-
-        // Remove terminology
-        algo.setTerminology(terminology.getTerminology());
-        algo.setVersion(terminology.getVersion());
-        algo.compute();
-
-      }
-
-      // remove root terminology
-      algo.setTerminology("RXNORMTEST");
-      algo.setVersion("20160101");
-      algo.compute();
-
-    } catch (Exception e) {
-      e.printStackTrace();
-      handleException(e, "loading test RXNORM data");
-    } finally {
-      contentService.close();
-      algo.close();
-
     }
 
   }
@@ -549,7 +483,7 @@ public class SourceDataServiceRestImpl extends RootServiceRestImpl
 
     try {
       authorizeApp(securityService, authToken, "get source datas",
-          UserRole.ADMIN);
+          UserRole.ADMINISTRATOR);
 
       StringList converterNameList = service.getConverterNames();
 

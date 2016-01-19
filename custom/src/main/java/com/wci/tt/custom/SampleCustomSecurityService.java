@@ -8,12 +8,13 @@ import java.util.Properties;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
-import com.wci.tt.User;
-import com.wci.tt.UserRole;
-import com.wci.tt.helpers.ConfigUtility;
-import com.wci.tt.helpers.UserImpl;
-import com.wci.tt.jpa.services.handlers.DefaultSecurityServiceHandler;
-import com.wci.tt.services.handlers.SecurityServiceHandler;
+
+import com.wci.umls.server.User;
+import com.wci.umls.server.UserRole;
+import com.wci.umls.server.helpers.ConfigUtility;
+import com.wci.umls.server.helpers.UserImpl;
+import com.wci.umls.server.jpa.services.handlers.DefaultSecurityServiceHandler;
+import com.wci.umls.server.services.handlers.SecurityServiceHandler;
 
 /**
  * A sample security service handler that is basically the same as
@@ -50,7 +51,7 @@ public class SampleCustomSecurityService implements SecurityServiceHandler {
 
     // check specified admin users list from config file
     if (getAdminUsersFromConfigFile().contains(userName)) {
-      user.setApplicationRole(UserRole.ADMIN);
+      user.setApplicationRole(UserRole.ADMINISTRATOR);
       user.setUserName(userName);
       user.setName(userName.substring(0, 1).toUpperCase()
           + userName.substring(1));
