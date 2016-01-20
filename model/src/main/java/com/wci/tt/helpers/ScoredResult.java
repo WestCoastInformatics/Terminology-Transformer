@@ -3,6 +3,7 @@
  */
 package com.wci.tt.helpers;
 
+import com.wci.umls.server.helpers.HasId;
 
 /**
  * Interface representing a search result along with its associated probability

@@ -7,10 +7,11 @@ ttApp.config(function config($routeProvider) {
 })
 
 // Controller
-ttApp.controller('TransformCtrl', function($scope, $filter, NgTableParams, transformService,
-  utilService, gpService) {
+ttApp.controller('TransformCtrl', function($scope, $filter, NgTableParams,
+  transformService, utilService, gpService) {
   console.debug('configure TransformCtrl');
 
+  // Scope variables
   $scope.terminologyObj = {
     value : {
       name : 'RXNORM',
@@ -24,7 +25,10 @@ ttApp.controller('TransformCtrl', function($scope, $filter, NgTableParams, trans
       version : '15AB_160104F'
     } ]
   }
+
+  // Transform
   $scope.transform = function(inputStr, selectedTerminology) {
+    // Setup data context
     var dataContext = {
       terminology : null,
       version : null,
@@ -32,25 +36,20 @@ ttApp.controller('TransformCtrl', function($scope, $filter, NgTableParams, trans
       customer : null,
       semanticType : null,
       specialty : null
-
     }
     if ($scope.terminologyObj.value.name !== 'All') {
       dataContext.terminology = $scope.terminologyObj.value.name;
       dataContext.version = $scope.terminologyObj.value.version;
     }
 
-    gpService.increment();
+    // Transform
     transformService.transform(inputStr, dataContext).then(function(response) {
-      console.log('transform response', response);
-      gpService.decrement();
-      $scope.tpResults = new NgTableParams({
-
-      }, {
+      $scope.tpResults = new NgTableParams({}, {
         dataset : response.results
       });
-    }, function(error) {
-      utilService.handleError(error);
-      gpService.decrement();
-    })
+    });
   }
+
+  // end
+
 });

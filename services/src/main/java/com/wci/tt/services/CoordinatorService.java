@@ -11,6 +11,7 @@ import com.wci.tt.helpers.ScoredDataContextTuple;
 import com.wci.tt.services.handlers.ConverterHandler;
 import com.wci.tt.services.handlers.NormalizerHandler;
 import com.wci.tt.services.handlers.ProviderHandler;
+import com.wci.umls.server.services.RootService;
 
 /**
  * Generically represents a service for handling top-level

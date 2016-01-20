@@ -30,7 +30,8 @@
 
     <dependency>
       <groupId>com.wci.tt</groupId>
-      <artifactId>tt-model</artifactId>
+      <artifactId>tt-rest</artifactId>
+      <classifier>classes</classifier>
     </dependency>
 
     <dependency>

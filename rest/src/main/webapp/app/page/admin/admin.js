@@ -10,4 +10,6 @@ ttApp.controller('AdminCtrl',
   function($scope, $filter, sourceDataService, FileUploader, NgTableParams) {
     console.debug('configure AdminCtrl');
     
+    // n/a
+    
   });

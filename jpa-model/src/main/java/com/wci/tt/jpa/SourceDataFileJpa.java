@@ -1,3 +1,6 @@
+/*
+ *    Copyright 2016 West Coast Informatics, LLC
+ */
 package com.wci.tt.jpa;
 
 import java.util.Date;
@@ -18,6 +21,7 @@ import javax.xml.bind.annotation.XmlTransient;
 import org.hibernate.envers.Audited;
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Fields;
 import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.Store;
@@ -25,25 +29,25 @@ import org.hibernate.search.annotations.Store;
 import com.wci.tt.SourceData;
 import com.wci.tt.SourceDataFile;
 
-// TODO: Auto-generated Javadoc
 /**
  * JPA enabled implementation of {@link SourceDataFile}.
  */
 @Entity
 @Table(name = "source_data_files", uniqueConstraints = @UniqueConstraint(columnNames = {
-    "name"
+    "name", "directory"
 }) )
 @Audited
 @Indexed
-@XmlRootElement(name = "sourceDataFile")
+@XmlRootElement(name = "file")
 public class SourceDataFileJpa implements SourceDataFile {
 
   /** The id. Set initial value to 5 to bypass entries in import.sql */
-  @TableGenerator(name = "EntityIdGenUser", table = "table_generator_source_data_files", pkColumnValue = "Entity", initialValue = 50)
+  @TableGenerator(name = "EntityIdGenUser", table = "table_generator", pkColumnValue = "Entity")
   @Id
   @GeneratedValue(strategy = GenerationType.TABLE, generator = "EntityIdGenUser")
   private Long id;
-  
+
+  /** The source data. */
   @ManyToOne(targetEntity = SourceDataJpa.class, optional = true)
   @JoinColumn(nullable = true)
   private SourceData sourceData;
@@ -51,7 +55,8 @@ public class SourceDataFileJpa implements SourceDataFile {
   /** The file name. */
   @Column(nullable = false, unique = true, length = 250)
   private String name;
-  
+
+  /** The directory. */
   @Column(nullable = false)
   private boolean directory;
 
@@ -62,14 +67,10 @@ public class SourceDataFileJpa implements SourceDataFile {
   /** The file path. */
   @Column(nullable = false, unique = true, length = 250)
   private String path;
-  
-  /** Time uploaded. */
-  @Column(nullable = false, unique = false)
-  private Date dateUploaded;
-  
+
   /** The timestamp. */
   @Column(nullable = false, unique = false)
-  private Date timestamp;
+  private Date timestamp = new Date();
 
   /** The last modified. */
   @Column(nullable = false, unique = false)
@@ -87,7 +88,7 @@ public class SourceDataFileJpa implements SourceDataFile {
    * Instantiates a new source data file jpa.
    */
   public SourceDataFileJpa() {
-
+    // n/a
   }
 
   /**
@@ -98,6 +99,7 @@ public class SourceDataFileJpa implements SourceDataFile {
    */
   public SourceDataFileJpa(SourceDataFile sourceDataFile, boolean deepCopy) {
     super();
+    this.id = sourceDataFile.getId();
     this.name = sourceDataFile.getName();
     this.size = sourceDataFile.getSize();
     this.directory = sourceDataFile.isDirectory();
@@ -106,128 +108,78 @@ public class SourceDataFileJpa implements SourceDataFile {
     this.lastModifiedBy = sourceDataFile.getLastModifiedBy();
     this.sourceDataName = sourceDataFile.getSourceDataName();
   }
-  
-  
 
-  /**
-   * Gets the last modified.
-   *
-   * @return the last modified
-   */
+  /* see superclass */
   @Override
   public Date getLastModified() {
     return this.lastModified;
   }
 
-  /**
-   * Sets the last modified.
-   *
-   * @param lastModified the new last modified
-   */
+  /* see superclass */
   @Override
   public void setLastModified(Date lastModified) {
     this.lastModified = lastModified;
   }
 
-  /**
-   * Gets the last modified by.
-   *
-   * @return the last modified by
-   */
+  /* see superclass */
   @Override
   public String getLastModifiedBy() {
     return this.lastModifiedBy;
   }
 
-  /**
-   * Sets the last modified by.
-   *
-   * @param lastModifiedBy the new last modified by
-   */
+  /* see superclass */
   @Override
   public void setLastModifiedBy(String lastModifiedBy) {
     this.lastModifiedBy = lastModifiedBy;
   }
 
-  /**
-   * Gets the id.
-   *
-   * @return the id
-   */
+  /* see superclass */
+  @Field(index = Index.YES, analyze = Analyze.NO, store = Store.NO)
   @Override
   public Long getId() {
     return this.id;
   }
 
-  /**
-   * Sets the id.
-   *
-   * @param id the new id
-   */
+  /* see superclass */
   @Override
   public void setId(Long id) {
     this.id = id;
   }
 
-  /**
-   * Gets the name.
-   *
-   * @return the name
-   */
+  /* see superclass */
   @Override
-  @Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
+  @Fields({
+    @Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO),
+    @Field(name = "nameSort", index = Index.YES, analyze = Analyze.NO, store = Store.NO)
+})
   public String getName() {
     return this.name;
   }
 
-  /**
-   * Sets the name.
-   *
-   * @param name the new name
-   */
+  /* see superclass */
   @Override
   public void setName(String name) {
     this.name = name;
   }
 
-  /**
-   * Gets the size.
-   *
-   * @return the size
-   */
   /* see superclass */
   @Override
   public Long getSize() {
     return size;
   }
 
-  /**
-   * Sets the size.
-   *
-   * @param size the new size
-   */
   /* see superclass */
   @Override
   public void setSize(Long size) {
     this.size = size;
   }
 
-  /**
-   * Gets the path.
-   *
-   * @return the path
-   */
   /* see superclass */
   @Override
   public String getPath() {
     return path;
   }
 
-  /**
-   * Sets the path.
-   *
-   * @param path the new path
-   */
   /* see superclass */
   @Override
   public void setPath(String path) {
@@ -235,9 +187,9 @@ public class SourceDataFileJpa implements SourceDataFile {
   }
 
   /**
-   * Checks if is connected.
+   * Indicates whether or not connected is the case.
    *
-   * @return true, if is connected
+   * @return <code>true</code> if so, <code>false</code> otherwise
    */
   @Field(index = Index.YES, analyze = Analyze.NO, store = Store.NO)
   @XmlTransient
@@ -245,70 +197,62 @@ public class SourceDataFileJpa implements SourceDataFile {
     return this.sourceDataName != null;
   }
 
-  /**
-   * Gets the source data name.
-   *
-   * @return the source data name
-   */
   /* see superclass */
   @Override
-  @Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
+  @Fields({
+      @Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO),
+      @Field(name = "sourceDataNameSort", index = Index.YES, analyze = Analyze.NO, store = Store.NO)
+  })
   public String getSourceDataName() {
     return this.sourceDataName;
   }
 
-  /**
-   * Sets the source data name.
-   *
-   * @param sourceDataName the new source data name
-   */
+  /* see superclass */
+  @Override
+  public Date getTimestamp() {
+    return this.timestamp;
+  }
+
+  /* see superclass */
+  @Override
+  public void setTimestamp(Date timestamp) {
+    this.timestamp = timestamp;
+
+  }
+
+  /* see superclass */
+  @Override
+  public boolean isDirectory() {
+    return directory;
+  }
+
+  /* see superclass */
+  @Override
+  public void setDirectory(boolean directory) {
+    this.directory = directory;
+  }
+
   /* see superclass */
   @Override
   public void setSourceDataName(String sourceDataName) {
     this.sourceDataName = sourceDataName;
   }
-  
-  /**
-   * Gets the date uploaded.
-   *
-   * @return the date uploaded
-   */
-  @Override
-  public Date getDateUploaded() {
-    return this.dateUploaded;
-  }
 
-  /**
-   * Sets the date uploaded.
-   *
-   * @param dateUploaded the new date uploaded
-   */
-  @Override
-  public void setDateUploaded(Date dateUploaded) {
-    this.dateUploaded = dateUploaded;
-  }
-  
-
+  /* see superclass */
   @Override
   public int hashCode() {
     final int prime = 31;
     int result = 1;
-    result =
-        prime * result + ((dateUploaded == null) ? 0 : dateUploaded.hashCode());
     result = prime * result + (directory ? 1231 : 1237);
-    result =
-        prime * result + ((lastModified == null) ? 0 : lastModified.hashCode());
-    result = prime * result
-        + ((lastModifiedBy == null) ? 0 : lastModifiedBy.hashCode());
     result = prime * result + ((name == null) ? 0 : name.hashCode());
     result = prime * result + ((path == null) ? 0 : path.hashCode());
     result = prime * result + ((size == null) ? 0 : size.hashCode());
     result = prime * result
         + ((sourceDataName == null) ? 0 : sourceDataName.hashCode());
-    result = prime * result + ((timestamp == null) ? 0 : timestamp.hashCode());
     return result;
   }
 
+  /* see superclass */
   @Override
   public boolean equals(Object obj) {
     if (this == obj)
@@ -318,22 +262,7 @@ public class SourceDataFileJpa implements SourceDataFile {
     if (getClass() != obj.getClass())
       return false;
     SourceDataFileJpa other = (SourceDataFileJpa) obj;
-    if (dateUploaded == null) {
-      if (other.dateUploaded != null)
-        return false;
-    } else if (!dateUploaded.equals(other.dateUploaded))
-      return false;
     if (directory != other.directory)
-      return false;
-    if (lastModified == null) {
-      if (other.lastModified != null)
-        return false;
-    } else if (!lastModified.equals(other.lastModified))
-      return false;
-    if (lastModifiedBy == null) {
-      if (other.lastModifiedBy != null)
-        return false;
-    } else if (!lastModifiedBy.equals(other.lastModifiedBy))
       return false;
     if (name == null) {
       if (other.name != null)
@@ -355,54 +284,16 @@ public class SourceDataFileJpa implements SourceDataFile {
         return false;
     } else if (!sourceDataName.equals(other.sourceDataName))
       return false;
-    if (timestamp == null) {
-      if (other.timestamp != null)
-        return false;
-    } else if (!timestamp.equals(other.timestamp))
-      return false;
     return true;
   }
 
+  /* see superclass */
   @Override
   public String toString() {
     return "SourceDataFileJpa [id=" + id + ", name=" + name + ", directory="
-        + directory + ", size=" + size + ", path=" + path + ", dateUploaded="
-        + dateUploaded + ", timestamp=" + timestamp + ", lastModified="
-        + lastModified + ", lastModifiedBy=" + lastModifiedBy
-        + ", sourceDataName=" + sourceDataName + "]";
+        + directory + ", size=" + size + ", path=" + path + ", timestamp="
+        + timestamp + ", lastModified=" + lastModified + ", lastModifiedBy="
+        + lastModifiedBy + ", sourceDataName=" + sourceDataName + "]";
   }
-
-  /**
-   * Gets the timestamp.
-   *
-   * @return the timestamp
-   */
-  @Override
-  public Date getTimestamp() {
-    return this.timestamp;
-  }
-
-  /**
-   * Sets the timestamp.
-   *
-   * @param timestamp the new timestamp
-   */
-  @Override
-  public void setTimestamp(Date timestamp) {
-    this.timestamp = timestamp;
-   
-  }
-
-  @Override
-  public boolean isDirectory() {
-    return directory;
-  }
-
-  @Override
-  public void setDirectory(boolean directory) {
-    this.directory = directory;
-  }
-
-
 
 }

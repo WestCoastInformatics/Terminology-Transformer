@@ -54,6 +54,7 @@
       <classifier>classes</classifier>
     </dependency>
 
+
     <!-- Maven Plugin API -->
     <dependency>
       <groupId>org.apache.maven</groupId>
@@ -131,10 +132,7 @@
     </dependency>
   </dependencies>
 
-
-
   <profiles>
-
     <!-- Create DB, specify -Drun.config.tt=... -->
     <profile>
       <id>Createdb</id>
@@ -143,8 +141,9 @@
 
           <!-- Create the database schema (or create it) -->
           <plugin>
-            <groupId>com.wci.umls.server</groupId>
-            <artifactId>term-server-admin-mojo</artifactId>
+            <groupId>com.wci.tt</groupId>
+            <artifactId>tt-admin</artifactId>
+            <version>${project.version}</version>
             <executions>
               <execution>
                 <id>createdb</id>
@@ -170,8 +169,9 @@
 
           <!-- Update the database schema (or create it) -->
           <plugin>
-            <groupId>com.wci.umls.server</groupId>
-            <artifactId>term-server-admin-mojo</artifactId>
+            <groupId>com.wci.tt</groupId>
+            <artifactId>tt-admin</artifactId>
+            <version>${project.version}</version>
             <executions>
               <execution>
                 <id>updatedb</id>
@@ -238,41 +238,12 @@
                     of other objects and perform referential integrity tests here. -->
                   <queries>
                     <property>
-											<name>Sample name concept moduleId check</name>
+                      <name>Sample name concept moduleId check</name>
                       <value>
                         sample query;
                       </value>
                     </property>
                   </queries>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-
-    <!-- Load RRF UMLS, specify -Drun.config.tt=... -Dterminology=... -->
-    <profile>
-      <id>RRF-umls</id>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>com.wci.umls.server</groupId>
-            <artifactId>term-server-admin-mojo</artifactId>
-            <executions>
-              <execution>
-                <id>load-rrf-umls</id>
-                <phase>package</phase>
-                <goals>
-                  <goal>load-rrf-umls</goal>
-                </goals>
-                <configuration>
-                  <terminology>${terminology}</terminology>
-                  <version>${version}</version>
-                  <inputDir>${input.dir}</inputDir>
-                  <server>${server}</server>
-                  <mode>${mode}</mode>
                 </configuration>
               </execution>
             </executions>
@@ -300,6 +271,35 @@
                   <terminology>${terminology}</terminology>
                   <version>${version}</version>
                   <server>${server}</server>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+
+    <!-- Load sample data, specify -Drun.config.tt=... -Dterminology=... -->
+    <profile>
+      <id>Sample</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>com.wci.tt</groupId>
+            <artifactId>tt-admin</artifactId>
+            <version>${project.version}</version>
+            <executions>
+              <execution>
+                <id>load-rxnorm-source-data</id>
+                <phase>package</phase>
+                <goals>
+                  <goal>sample</goal>
+                </goals>
+                <configuration>
+                  <terminology>${terminology}</terminology>
+                  <version>${version}</version>
+                  <inputDir>${input.dir}</inputDir>
+                  <mode>${mode}</mode>
                 </configuration>
               </execution>
             </executions>

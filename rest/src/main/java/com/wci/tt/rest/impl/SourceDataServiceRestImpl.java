@@ -75,10 +75,9 @@ public class SourceDataServiceRestImpl extends RootServiceRestImpl
 
   /* see superclass */
   @Override
-  @Path("/sourceDataFile/add")
+  @Path("/upload")
   @POST
   @Consumes(MediaType.MULTIPART_FORM_DATA)
-  @Produces(MediaType.TEXT_XML)
   public SourceDataFileList uploadSourceDataFile(
     @FormDataParam("file") InputStream fileInputStream,
     @FormDataParam("file") FormDataContentDisposition contentDispositionHeader,
@@ -87,7 +86,7 @@ public class SourceDataServiceRestImpl extends RootServiceRestImpl
       throws Exception {
 
     Logger.getLogger(getClass())
-        .info("RESTful call (SourceDataService): /sourceDataFile/add "
+        .info("RESTful call (Source Data): /upload "
             + (contentDispositionHeader != null
                 ? contentDispositionHeader.getFileName() : "UNKNOWN FILE")
             + " unzip=" + unzip + " authToken=" + authToken);
@@ -95,13 +94,12 @@ public class SourceDataServiceRestImpl extends RootServiceRestImpl
     String destinationFolder =
         ConfigUtility.getConfigProperties().getProperty("upload.dir");
 
-    List<File> files = new ArrayList<>();
-
+    final SourceDataService service = new SourceDataServiceJpa();
     try {
+      final String userName = authorizeApp(securityService, authToken,
+          "upload source data files", UserRole.ADMINISTRATOR);
 
-      authorizeApp(securityService, authToken, "upload source data files",
-          UserRole.ADMINISTRATOR);
-
+      final List<File> files = new ArrayList<>();
       // if unzipping requested and file is valid, extract compressed file to
       // destination folder
       if (unzip == true) {
@@ -109,34 +107,23 @@ public class SourceDataServiceRestImpl extends RootServiceRestImpl
             fileInputStream, destinationFolder,
             contentDispositionHeader.getFileName()));
       }
-
       // otherwise, simply write the input stream
       else {
         files.add(SourceDataFileUtility.writeSourceDataFile(fileInputStream,
             destinationFolder, contentDispositionHeader.getFileName()));
 
       }
-    } catch (Exception e) {
-      System.out.println("caught");
-      handleException(e, "uploading a source data sfile");
-    } finally {
-      // do nothing
-    }
 
-    final SourceDataService service = new SourceDataServiceJpa();
-
-    try {
-
-      SourceDataFileList fileList = new SourceDataFileListJpa();
-
-      for (File file : files) {
-        SourceDataFile sdf = new SourceDataFileJpa();
+      // Iterate through file list and add source data files.
+      final SourceDataFileList fileList = new SourceDataFileListJpa();
+      for (final File file : files) {
+        final SourceDataFile sdf = new SourceDataFileJpa();
         sdf.setName(file.getName());
         sdf.setPath(file.getAbsolutePath());
         sdf.setDirectory(file.isDirectory());
         sdf.setSize(file.length());
-        sdf.setDateUploaded(new Date());
-        sdf.setLastModifiedBy(authToken);
+        sdf.setTimestamp(new Date());
+        sdf.setLastModifiedBy(userName);
 
         service.addSourceDataFile(sdf);
         fileList.addObject(sdf);
@@ -145,59 +132,56 @@ public class SourceDataServiceRestImpl extends RootServiceRestImpl
       return fileList;
 
     } catch (Exception e) {
-      handleException(e, " uploading a file");
+      handleException(e, "uploading a source data file");
       return null;
     } finally {
       service.close();
     }
   }
 
+  /* see superclass */
   @Override
   @PUT
-  @Path("sourceDataFile/add")
+  @Path("/add")
   public SourceDataFile addSourceDataFile(
     @ApiParam(value = "SourceDataFile to add", required = true) SourceDataFileJpa sourceDataFile,
     @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
       throws Exception {
 
-    Logger.getLogger(getClass())
-        .info("RESTful call (Source Data Service): /sourceData/update");
+    Logger.getLogger(getClass()).info("RESTful call (Source Data): /add");
     final SourceDataService service = new SourceDataServiceJpa();
     try {
+      final String userName = authorizeApp(securityService, authToken,
+          "add source data file", UserRole.ADMINISTRATOR);
 
-      authorizeApp(securityService, authToken, "add source data file",
-          UserRole.ADMINISTRATOR);
-
-      service.addSourceDataFile(sourceDataFile);
-
-      return sourceDataFile;
+      sourceDataFile.setLastModifiedBy(userName);
+      return service.addSourceDataFile(sourceDataFile);
 
     } catch (Exception e) {
       handleException(e, "update source data files");
-      return null;
     } finally {
       service.close();
     }
+    return null;
   }
 
+  /* see superclass */
   @Override
   @POST
-  @Path("sourceDataFile/update")
+  @Path("/update")
   public void updateSourceDataFile(
     @ApiParam(value = "SourceDataFile to update", required = true) SourceDataFileJpa sourceDataFile,
     @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
       throws Exception {
-
     Logger.getLogger(getClass())
-        .info("RESTful call (Source Data Service): /sourceData/update");
+        .info("RESTful call (Source Data): /update");
 
     final SourceDataService service = new SourceDataServiceJpa();
-
     try {
+      final String userName = authorizeApp(securityService, authToken,
+          "add source data file", UserRole.ADMINISTRATOR);
 
-      authorizeApp(securityService, authToken, "add source data file",
-          UserRole.ADMINISTRATOR);
-
+      sourceDataFile.setLastModifiedBy(userName);
       service.updateSourceDataFile(sourceDataFile);
 
     } catch (Exception e) {
@@ -207,34 +191,30 @@ public class SourceDataServiceRestImpl extends RootServiceRestImpl
     }
   }
 
+  /* see superclass */
   @Override
   @DELETE
-  @Path("sourceDataFile/delete/{sourceDataFileId}")
-  public void deleteSourceDataFile(
-    @ApiParam(value = "Id of sourceDataFile to delete, e.g. 5", required = true) @PathParam("sourceDataFileId") Long sourceDataFileId,
+  @Path("/remove/{id}")
+  public void removeSourceDataFile(
+    @ApiParam(value = "SourceDataFile id, e.g. 5", required = true) @PathParam("id") Long id,
     @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
       throws Exception {
     String uploadDir =
         ConfigUtility.getConfigProperties().getProperty("upload.dir");
-
     Logger.getLogger(getClass())
-        .info("RESTful call (Source Data Service): /sourceData/delete/"
-            + sourceDataFileId);
+        .info("RESTful call (Source Data): /remove/" + id);
 
     final SourceDataService service = new SourceDataServiceJpa();
-
     try {
-
       authorizeApp(securityService, authToken, "delete source data file",
           UserRole.ADMINISTRATOR);
 
-      SourceDataFile sourceDataFile =
-          service.getSourceDataFile(sourceDataFileId);
+      final SourceDataFile sourceDataFile = service.getSourceDataFile(id);
 
       // physically remove the file
-      File dir = new File(uploadDir);
-      File[] files = dir.listFiles();
-      for (File f : files) {
+      final File dir = new File(uploadDir);
+      final File[] files = dir.listFiles();
+      for (final File f : files) {
         if (f.getName().equals(sourceDataFile.getName())) {
           f.delete();
         }
@@ -250,61 +230,25 @@ public class SourceDataServiceRestImpl extends RootServiceRestImpl
     }
   }
 
+  /* see superclass */
   @Override
   @GET
-  @Path("/sourceDataFile/sourceDataFiles")
-  @ApiOperation(value = "Get uploaded file details", notes = "Returns list of details for uploaded files", response = StringList.class)
-  public SourceDataFileList getSourceDataFiles(
-    @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
-      throws Exception {
-
-    Logger.getLogger(getClass()).info(
-        "RESTful call (Source Data Service): /sourceDataFile/sourceDataFiles");
-
-    final SourceDataService service = new SourceDataServiceJpa();
-
-    try {
-
-      authorizeApp(securityService, authToken, "retrieve source data files",
-          UserRole.ADMINISTRATOR);
-
-      SourceDataFileList sourceDataFiles = service.getSourceDataFiles();
-
-      return sourceDataFiles;
-
-    } catch (Exception e) {
-      handleException(e, "retrieving source data files");
-      return null;
-    } finally {
-      service.close();
-    }
-
-  }
-
-  @Override
-  @GET
-  @Path("/sourceDataFile/query/{query}")
+  @Path("/find")
   @ApiOperation(value = "Query source data files", notes = "Returns list of details for uploaded files returned by query", response = StringList.class)
   public SourceDataFileList findSourceDataFilesForQuery(
-    @ApiParam(value = "String query, e.g. SNOMEDCT", required = true) @PathParam("query") String query,
+    @ApiParam(value = "String query, e.g. SNOMEDCT", required = true) @QueryParam("query") String query,
     @ApiParam(value = "Paging/filtering/sorting object", required = false) PfsParameter pfsParameter,
     @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
       throws Exception {
-
-    Logger.getLogger(getClass()).info(
-        "RESTful call (Source Data Service): /sourceDataFile/query/" + query);
+    Logger.getLogger(getClass())
+        .info("RESTful call (Source Data): /find - " + query);
 
     final SourceDataService service = new SourceDataServiceJpa();
-
     try {
-
       authorizeApp(securityService, authToken, "search for source data files",
           UserRole.ADMINISTRATOR);
 
-      SourceDataFileList sourceDataFiles =
-          service.findSourceDataFilesForQuery(query, pfsParameter);
-
-      return sourceDataFiles;
+      return service.findSourceDataFilesForQuery(query, pfsParameter);
 
     } catch (Exception e) {
       handleException(e, "search for source data files");
@@ -317,26 +261,21 @@ public class SourceDataServiceRestImpl extends RootServiceRestImpl
 
   /* see superclass */
   @Override
-  @Path("/sourceData/add")
+  @Path("/data/add")
   @PUT
   public SourceData addSourceData(
     @ApiParam(value = "Source data to add", required = true) SourceDataJpa sourceData,
     @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
       throws Exception {
-
-    Logger.getLogger(getClass())
-        .info("RESTful call (SourceDataService): /sourceData/add");
+    Logger.getLogger(getClass()).info("RESTful call (Source Data): /data/add");
 
     final SourceDataService service = new SourceDataServiceJpa();
-
     try {
+      final String userName = authorizeApp(securityService, authToken,
+          "add new source data", UserRole.ADMINISTRATOR);
 
-      authorizeApp(securityService, authToken, "add new source data",
-          UserRole.ADMINISTRATOR);
-
-      service.addSourceData(sourceData);
-
-      return sourceData;
+      sourceData.setLastModifiedBy(userName);
+      return service.addSourceData(sourceData);
 
     } catch (Exception e) {
       handleException(e, "adding new source data");
@@ -349,23 +288,21 @@ public class SourceDataServiceRestImpl extends RootServiceRestImpl
 
   /* see superclass */
   @Override
-  @Path("/sourceData/update")
+  @Path("/data/update")
   @POST
   public void updateSourceData(
     @ApiParam(value = "Source data to update", required = true) SourceDataJpa sourceData,
     @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
       throws Exception {
-
     Logger.getLogger(getClass())
-        .info("RESTful call (SourceDataService): /sourceData/add");
+        .info("RESTful call (Source Data): /data/update");
 
     final SourceDataService service = new SourceDataServiceJpa();
-
     try {
+      final String userName = authorizeApp(securityService, authToken,
+          "add new source data", UserRole.ADMINISTRATOR);
 
-      authorizeApp(securityService, authToken, "add new source data",
-          UserRole.ADMINISTRATOR);
-
+      sourceData.setLastModifiedBy(userName);
       service.updateSourceData(sourceData);
 
     } catch (Exception e) {
@@ -376,26 +313,23 @@ public class SourceDataServiceRestImpl extends RootServiceRestImpl
 
   }
 
+  /* see superclass */
   @Override
   @DELETE
-  @Path("sourceData/delete/{sourceDataId}")
-  public void deleteSourceData(
-    @ApiParam(value = "Id of sourceData to delete, e.g. 5", required = true) @PathParam("sourceDataId") Long sourceDataId,
+  @Path("data/remove/{id}")
+  public void removeSourceData(
+    @ApiParam(value = "SourceData id, e.g. 5", required = true) @PathParam("id") Long id,
     @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
       throws Exception {
-
     Logger.getLogger(getClass())
-        .info("RESTful call (Source Data Service): /sourceData/delete/"
-            + sourceDataId);
+        .info("RESTful call (Source Data): /data/remove/" + id);
 
     final SourceDataService service = new SourceDataServiceJpa();
-
     try {
-
       authorizeApp(securityService, authToken, "delete source data",
           UserRole.ADMINISTRATOR);
 
-      service.removeSourceData(sourceDataId);
+      service.removeSourceData(id);
 
     } catch (Exception e) {
       handleException(e, "delete source data");
@@ -404,61 +338,25 @@ public class SourceDataServiceRestImpl extends RootServiceRestImpl
     }
   }
 
+  /* see superclass */
   @Override
   @GET
-  @Path("/sourceData/sourceDatas")
-  @ApiOperation(value = "Get uploaded file details", notes = "Returns list of details for uploaded files", response = StringList.class)
-  public SourceDataList getSourceDatas(
-    @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
-      throws Exception {
-
-    Logger.getLogger(getClass())
-        .info("RESTful call (Source Data Service): /sourceData/get");
-
-    final SourceDataService service = new SourceDataServiceJpa();
-
-    try {
-
-      authorizeApp(securityService, authToken, "get source datas",
-          UserRole.ADMINISTRATOR);
-
-      SourceDataList sourceDatas = service.getSourceDatas();
-
-      return sourceDatas;
-
-    } catch (Exception e) {
-      handleException(e, "retrieving uploaded file list");
-      return null;
-    } finally {
-      service.close();
-    }
-
-  }
-
-  @Override
-  @GET
-  @Path("/sourceData/query/{query}")
+  @Path("/data/find")
   @ApiOperation(value = "Query source data files", notes = "Returns list of details for uploaded files returned by query", response = StringList.class)
-  public SourceDataList findSourceDatasForQuery(
-    @ApiParam(value = "String query, e.g. SNOMEDCT", required = true) @PathParam("query") String query,
+  public SourceDataList findSourceDataForQuery(
+    @ApiParam(value = "String query, e.g. SNOMEDCT", required = true) @QueryParam("query") String query,
     @ApiParam(value = "Paging/filtering/sorting object", required = false) PfsParameter pfsParameter,
     @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
       throws Exception {
-
     Logger.getLogger(getClass())
-        .info("RESTful call (Source Data Service): /sourceData/query/" + query);
+        .info("RESTful call (Source Data): /data/find" + query);
 
     final SourceDataService service = new SourceDataServiceJpa();
-
     try {
-
       authorizeApp(securityService, authToken, "get source datas",
           UserRole.ADMINISTRATOR);
 
-      SourceDataList sourceDatas =
-          service.findSourceDatasForQuery(query, pfsParameter);
-
-      return sourceDatas;
+      return service.findSourceDatasForQuery(query, pfsParameter);
 
     } catch (Exception e) {
       handleException(e, "retrieving uploaded file list");
@@ -469,25 +367,23 @@ public class SourceDataServiceRestImpl extends RootServiceRestImpl
 
   }
 
+  /* see superclass */
   @Override
   @GET
-  @Path("/converter/converters")
-  @ApiOperation(value = "Test function for removing rxnorm", notes = "Removes Rxnorm", response = StringList.class)
-  public StringList getConverterNames(
+  @Path("/data/loaders")
+  @ApiOperation(value = "Get loader names", notes = "Gets all loader names.", response = StringList.class)
+  public StringList getLoaderNames(
     @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
       throws Exception {
     Logger.getLogger(getClass())
-        .info("RESTful call (Source Data Service): /converter/converters");
+        .info("RESTful call (Source Data): /data/loadres");
 
     final SourceDataService service = new SourceDataServiceJpa();
-
     try {
       authorizeApp(securityService, authToken, "get source datas",
           UserRole.ADMINISTRATOR);
 
-      StringList converterNameList = service.getConverterNames();
-
-      return converterNameList;
+      return service.getLoaderNames();
 
     } catch (Exception e) {
       handleException(e, "retrieving uploaded file list");

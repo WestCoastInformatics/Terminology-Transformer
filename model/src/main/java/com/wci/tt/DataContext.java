@@ -4,8 +4,8 @@
 package com.wci.tt;
 
 import com.wci.tt.helpers.DataContextType;
-import com.wci.tt.helpers.HasId;
-import com.wci.tt.helpers.HasTerminology;
+import com.wci.umls.server.helpers.HasId;
+import com.wci.umls.server.helpers.HasTerminology;
 
 /**
  * Interface representing the context known about the data being processed.

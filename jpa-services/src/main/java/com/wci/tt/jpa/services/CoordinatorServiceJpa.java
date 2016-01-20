@@ -14,7 +14,6 @@ import java.util.Set;
 
 import com.wci.tt.DataContext;
 import com.wci.tt.ScoredDataContext;
-import com.wci.tt.helpers.ConfigUtility;
 import com.wci.tt.helpers.DataContextTuple;
 import com.wci.tt.helpers.ScoredDataContextTuple;
 import com.wci.tt.helpers.ScoredResult;
@@ -25,6 +24,8 @@ import com.wci.tt.services.CoordinatorService;
 import com.wci.tt.services.handlers.ConverterHandler;
 import com.wci.tt.services.handlers.NormalizerHandler;
 import com.wci.tt.services.handlers.ProviderHandler;
+import com.wci.umls.server.helpers.ConfigUtility;
+import com.wci.umls.server.jpa.services.RootServiceJpa;
 
 /**
  * The Class CoordinatorServiceJpa.

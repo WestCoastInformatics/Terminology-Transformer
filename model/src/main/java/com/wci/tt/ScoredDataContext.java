@@ -10,4 +10,5 @@ import com.wci.tt.helpers.HasScore;
  * score.
  */
 public interface ScoredDataContext extends DataContext, HasScore {
+  // n/a
 }

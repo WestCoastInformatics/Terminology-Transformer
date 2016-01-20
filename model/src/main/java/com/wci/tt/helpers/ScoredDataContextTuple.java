@@ -8,4 +8,6 @@ package com.wci.tt.helpers;
  * probability.
  */
 public interface ScoredDataContextTuple extends DataContextTuple, HasScore {
+  // n/a
 }
+

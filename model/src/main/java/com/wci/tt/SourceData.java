@@ -1,3 +1,6 @@
+/*
+ *    Copyright 2016 West Coast Informatics, LLC
+ */
 package com.wci.tt;
 
 import java.util.List;
@@ -7,15 +10,29 @@ import com.wci.umls.server.helpers.HasLastModified;
 import com.wci.umls.server.helpers.HasName;
 
 /**
- * The Interface SourceData.
+ * Generically represents a collection of source data files and a loader used
+ * for those files.
  */
 public interface SourceData extends HasId, HasLastModified, HasName {
+
+  /**
+   * Load status for a {@link SourceData}
+   */
+  public enum Status {
+    /** The unknown. */
+    UNKNOWN,
+    /** The loading. */
+    LOADING,
+    /** The finished. */
+    FINISHED,
+    /** The failed. */
+    FAILED
+  }
 
   /**
    * Sets the source data files.
    *
    * @param sourceDataFiles the source data files
-   * @return the publicvoid
    */
   public void setSourceDataFiles(List<SourceDataFile> sourceDataFiles);
 
@@ -27,19 +44,38 @@ public interface SourceData extends HasId, HasLastModified, HasName {
   public List<SourceDataFile> getSourceDataFiles();
 
   /**
-   * Sets the converter name.
+   * Sets the config file key for the loader.
    *
-   * @param converter the new converter name
+   * @param loader the loader
    */
-  public void setConverterName(String converter);
+  public void setLoader(String loader);
 
   /**
-   * Gets the converter name.
+   * Gets the config file key for the loader
    *
-   * @return the converter name
+   * @return the loader
    */
-  public String getConverterName();
+  public String getLoader();
 
+  /**
+   * Returns the loader status.
+   *
+   * @return the loader status
+   */
+  public SourceData.Status getLoaderStatus();
+
+  /**
+   * Sets the loader status.
+   *
+   * @param loaderStatus the loader status
+   */
+  public void setLoaderStatus(SourceData.Status loaderStatus);
+
+  /**
+   * Returns the description.
+   *
+   * @return the description
+   */
   /* see superclass */
   public String getDescription();
 

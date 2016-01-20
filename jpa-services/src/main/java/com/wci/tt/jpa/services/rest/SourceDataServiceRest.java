@@ -23,14 +23,13 @@ import com.wci.umls.server.helpers.StringList;
 public interface SourceDataServiceRest {
 
   /**
-   * Delete file.
+   * Removes the source data file.
    *
-   * @param sourceDataFileId the source data file id
+   * @param id the id
    * @param authToken the auth token
    * @throws Exception the exception
    */
-  public void deleteSourceDataFile(Long sourceDataFileId, String authToken)
-    throws Exception;
+  public void removeSourceDataFile(Long id, String authToken) throws Exception;
 
   /**
    * Find source data files for query.
@@ -43,16 +42,6 @@ public interface SourceDataServiceRest {
    */
   public SourceDataFileList findSourceDataFilesForQuery(String query,
     PfsParameter pfsParameter, String authToken) throws Exception;
-
-  /**
-   * Gets all source data files.
-   *
-   * @param authToken the auth token
-   * @return the uploaded files details
-   * @throws Exception the exception
-   */
-  public SourceDataFileList getSourceDataFiles(String authToken)
-    throws Exception;
 
   /**
    * Save file.
@@ -90,17 +79,16 @@ public interface SourceDataServiceRest {
     String authToken) throws Exception;
 
   /**
-   * Delete source data.
+   * Removes the source data.
    *
-   * @param sourceDataId the source data id
+   * @param id the id
    * @param authToken the auth token
    * @throws Exception the exception
    */
-  public void deleteSourceData(Long sourceDataId, String authToken)
-    throws Exception;
+  public void removeSourceData(Long id, String authToken) throws Exception;
 
   /**
-   * Find source data source datas for query.
+   * Find source data source data objects for query.
    *
    * @param query the query
    * @param pfsParameter the pfs parameter
@@ -108,17 +96,8 @@ public interface SourceDataServiceRest {
    * @return the source data source data list
    * @throws Exception the exception
    */
-  public SourceDataList findSourceDatasForQuery(String query,
+  public SourceDataList findSourceDataForQuery(String query,
     PfsParameter pfsParameter, String authToken) throws Exception;
-
-  /**
-   * Gets all source data source datas.
-   *
-   * @param authToken the auth token
-   * @return the uploaded source datas details
-   * @throws Exception the exception
-   */
-  public SourceDataList getSourceDatas(String authToken) throws Exception;
 
   /**
    * Save source data.
@@ -142,11 +121,11 @@ public interface SourceDataServiceRest {
     throws Exception;
 
   /**
-   * Gets the converter names.
+   * Gets the loader names.
    *
    * @param authToken the auth token
-   * @return the converter names
+   * @return the loader names
    * @throws Exception the exception
    */
-  public StringList getConverterNames(String authToken) throws Exception;
+  public StringList getLoaderNames(String authToken) throws Exception;
 }

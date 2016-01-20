@@ -119,17 +119,10 @@ public interface SourceDataService extends RootService {
     throws Exception;
 
   /**
-   * Gets the source datas.
+   * Gets the loader names.
    *
-   * @return the source datas
+   * @return the loader names
    */
-  public SourceDataList getSourceDatas();
-
-  /**
-   * Gets the converter names.
-   *
-   * @return the converter names
-   */
-  public StringList getConverterNames();
+  public StringList getLoaderNames();
 
 }

@@ -4,6 +4,7 @@
 package com.wci.tt.helpers;
 
 import com.wci.tt.DataContext;
+import com.wci.umls.server.helpers.HasId;
 
 /**
  * Interface representing data along with its associated DataContext

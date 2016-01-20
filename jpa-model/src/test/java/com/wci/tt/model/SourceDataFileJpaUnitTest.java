@@ -10,6 +10,7 @@ import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Test;
 
 import com.wci.tt.SourceDataFile;
 import com.wci.tt.jpa.SourceDataFileJpa;
@@ -23,7 +24,7 @@ import com.wci.umls.server.jpa.helpers.NullableFieldTester;
 /**
  * Unit testing for {@link SourceDataFileJpa}.
  */
-public class SourceDataFileJpaTest extends SourceDataSupport {
+public class SourceDataFileJpaUnitTest extends SourceDataSupport {
 
   /** The model object to test. */
   private SourceDataFileJpa object;
@@ -50,8 +51,8 @@ public class SourceDataFileJpaTest extends SourceDataSupport {
    *
    * @throws Exception the exception
    */
-  // @Test
-  public void testModelGetSet037() throws Exception {
+  @Test
+  public void testModelGetSet() throws Exception {
     Logger.getLogger(getClass()).debug("TEST " + name.getMethodName());
     GetterSetterTester tester = new GetterSetterTester(object);
     tester.test();
@@ -62,16 +63,14 @@ public class SourceDataFileJpaTest extends SourceDataSupport {
    *
    * @throws Exception the exception
    */
-  // @Test
-  public void testModelEqualsHashcode037() throws Exception {
+  @Test
+  public void testModelEqualsHashcode() throws Exception {
     Logger.getLogger(getClass()).debug("TEST " + name.getMethodName());
     EqualsHashcodeTester tester = new EqualsHashcodeTester(object);
+    tester.include("directory");
     tester.include("name");
     tester.include("size");
     tester.include("path");
-    tester.include("dateUploaded");
-    tester.include("lastModified");
-    tester.include("lastModifiedBy");
     tester.include("sourceDataName");
 
     assertTrue(tester.testIdentityFieldEquals());
@@ -87,8 +86,8 @@ public class SourceDataFileJpaTest extends SourceDataSupport {
    *
    * @throws Exception the exception
    */
-  // @Test
-  public void testModelCopy037() throws Exception {
+  @Test
+  public void testModelCopy() throws Exception {
     Logger.getLogger(getClass()).debug("TEST " + name.getMethodName());
     CopyConstructorTester tester = new CopyConstructorTester(object);
     assertTrue(tester.testCopyConstructorDeep(SourceDataFile.class));
@@ -99,8 +98,8 @@ public class SourceDataFileJpaTest extends SourceDataSupport {
    *
    * @throws Exception the exception
    */
-  // @Test
-  public void testModelXmlSerialization037() throws Exception {
+  @Test
+  public void testModelXmlSerialization() throws Exception {
     Logger.getLogger(getClass()).debug("TEST " + name.getMethodName());
     XmlSerializationTester tester = new XmlSerializationTester(object);
     assertTrue(tester.testXmlSerialization());
@@ -111,14 +110,15 @@ public class SourceDataFileJpaTest extends SourceDataSupport {
    *
    * @throws Exception the exception
    */
-  // @Test
-  public void testModelNotNullField037() throws Exception {
+  @Test
+  public void testModelNotNullField() throws Exception {
     Logger.getLogger(getClass()).debug("TEST " + name.getMethodName());
     NullableFieldTester tester = new NullableFieldTester(object);
     tester.include("name");
     tester.include("size");
     tester.include("path");
-    tester.include("dateUploaded");
+    tester.include("directory");
+    tester.include("timestamp");
     tester.include("lastModified");
     tester.include("lastModifiedBy");
 
@@ -130,8 +130,8 @@ public class SourceDataFileJpaTest extends SourceDataSupport {
    *
    * @throws Exception the exception
    */
-  // @Test
-  public void testModelIndexedFields037() throws Exception {
+  @Test
+  public void testModelIndexedFields() throws Exception {
     Logger.getLogger(getClass()).debug("TEST " + name.getMethodName());
 
     // Test analyzed fields
@@ -141,10 +141,12 @@ public class SourceDataFileJpaTest extends SourceDataSupport {
     assertTrue(tester.testAnalyzedIndexedFields());
 
     // Test non analyzed fields
-    assertTrue(tester.testAnalyzedIndexedFields());
     tester = new IndexedFieldTester(object);
-    // NOTE: No non-analyzed fields
-    // assertTrue(tester.testNotAnalyzedIndexedFields());
+    tester.include("id");
+    tester.include("connected");
+    tester.include("nameSort");
+    tester.include("sourceDataNameSort");
+    assertTrue(tester.testNotAnalyzedIndexedFields());
 
   }
 

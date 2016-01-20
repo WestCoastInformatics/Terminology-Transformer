@@ -7,8 +7,8 @@ import java.util.List;
 
 import com.wci.tt.DataContext;
 import com.wci.tt.ScoredDataContext;
-import com.wci.tt.helpers.Configurable;
 import com.wci.tt.helpers.ScoredResult;
+import com.wci.umls.server.helpers.Configurable;
 
 /**
  * Interface responsible for functionality associated with a given

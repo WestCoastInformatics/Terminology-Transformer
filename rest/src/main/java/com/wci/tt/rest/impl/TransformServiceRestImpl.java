@@ -3,8 +3,6 @@
  */
 package com.wci.tt.rest.impl;
 
-import java.util.List;
-
 import javax.ws.rs.Consumes;
 import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
@@ -15,11 +13,8 @@ import javax.ws.rs.core.MediaType;
 
 import org.apache.log4j.Logger;
 
-import com.wci.tt.Provider;
 import com.wci.tt.helpers.ScoredResultList;
 import com.wci.tt.jpa.helpers.DataContextJpa;
-import com.wci.tt.jpa.helpers.ScoredResultListJpa;
-import com.wci.tt.jpa.services.helper.ProviderUtility;
 import com.wci.tt.jpa.services.rest.SourceDataServiceRest;
 import com.wci.tt.jpa.services.rest.TransformServiceRest;
 import com.wci.umls.server.UserRole;
@@ -71,18 +66,9 @@ public class TransformServiceRestImpl extends RootServiceRestImpl
       authorizeApp(securityService, authToken, "transform input string",
           UserRole.ADMINISTRATOR);
 
-      List<Provider> providers = ProviderUtility.getProviders();
 
-      ScoredResultList results = new ScoredResultListJpa();
 
-      for (Provider provider : providers) {
-        ScoredResultList providerResults = provider.processInput(inputStr,
-            dataContext == null ? new DataContextJpa() : dataContext);
-
-        results.getObjects().addAll(providerResults.getObjects());
-      }
-
-      return results;
+      return null;
     } catch (Exception e) {
       handleException(e, "trying to transform input string");
       return null;

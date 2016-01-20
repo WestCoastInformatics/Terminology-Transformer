@@ -22,11 +22,10 @@
       <artifactId>tt-model</artifactId>
     </dependency>
 
-    <!-- Term server code -->
+    <!-- term server dependencies -->
     <dependency>
       <groupId>com.wci.umls.server</groupId>
-      <artifactId>term-server-rest</artifactId>
-      <classifier>classes</classifier>
+      <artifactId>term-server-jpa-model</artifactId>
     </dependency>
 
     <!-- JPA dependencies -->
@@ -91,4 +90,5 @@
     </dependency>
 
   </dependencies>
+
 </project>

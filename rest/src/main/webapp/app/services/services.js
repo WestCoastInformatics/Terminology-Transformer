@@ -1,131 +1,230 @@
-ttApp.service('transformService', [ '$http', '$q', 'utilService', 'gpService',
+// Transform service
+ttApp.service('transformService', [
+  '$http',
+  '$q',
+  'utilService',
+  'gpService',
   function($http, $q, utilService, gpService) {
     console.debug('configure transformService');
-    
+
+    // Perform the transform operation on the input stream and data context
     this.transform = function(inputStr, dataContext) {
+      console.debug('transform', inputStr, dataContext);
       var deferred = $q.defer();
-      $http.post(transformUrl + 'process/' + encodeURI(inputStr), dataContext).then(function(response) {
-        deferred.resolve(response.data);
-      }, function(error) {
-        deferred.reject(error);
-      })
+      gpService.increment();
+      $http.post(transformUrl + '/process/' + encodeURI(inputStr), dataContext)
+        .then(
+        // Success
+        function(response) {
+          console.debug('  data =', resonse.data);
+          gpService.decrement();
+          deferred.resolve(response.data);
+        },
+        // error
+        function(response) {
+          gpService.decrement();
+          utilService.handleError(response);
+          deferred.reject(response);
+        })
       return deferred.promise;
     }
+
+    // end
+
   } ]);
 
-ttApp.service('sourceDataService', [ '$http', '$location', '$q', '$cookies', 'utilService',
-  'gpService', function($http, $location, $q, ngCookies, utilService, gpService) {
+// Source data service
+ttApp.service('sourceDataService', [ '$http', '$location', '$q', '$cookies',
+  'utilService', 'gpService',
+  function($http, $location, $q, ngCookies, utilService, gpService) {
     console.debug('configure sourceDataService');
 
-    /**
-     * Retrieves details for all currently uploaded files
-     */
-    this.getSourceDataFiles = function() {
+    // cached loader names
+    var loaders = [];
+
+    // Get details for all currently uploaded files
+    this.findSourceDataFiles = function(query) {
+      console.debug('find source data files', query);
       var deferred = $q.defer();
-      $http.get(fileUrl + 'sourceDataFile/sourceDataFiles').then(function(response) {
+      gpService.increment();
+      $http.post(fileUrl + '/find?query=' + encodeURI(query), {}).then(
+      // Success
+      function(response) {
+        console.debug('  data = ', response.data);
+        gpService.decrement();
         deferred.resolve(response.data);
-      }, function(error) {
-
-        deferred.reject(error);
+      },
+      // error
+      function(response) {
+        gpService.decrement();
+        utilService.handleError(response);
+        deferred.reject(response);
       });
       return deferred.promise;
     }
 
-    /**
-     * Deletes a file from the server (by filename)
-     */
-    this.deleteSourceDataFile = function(fileId) {
+    // Removes soure data file
+    this.removeSourceDataFile = function(id) {
+      console.debug('remove source data file', id);
       var deferred = $q.defer();
-      $http['delete'](fileUrl + 'sourceDataFile/delete/' + fileId).then(function(response) {
+      gpService.increment();
+      $http['delete'](fileUrl + '/remove/' + id).then(
+      // Success
+      function(response) {
+        console.debug('  data = ', response.data);
+        gpService.decrement();
         deferred.resolve();
-      }, function(error) {
-
-        deferred.reject(error);
+      },
+      // Error
+      function(response) {
+        gpService.decrement();
+        utilService.handleError(response);
+        deferred.reject(response);
       });
       return deferred.promise;
     }
 
-    this.saveSourceDataFile = function(sourceDataFile) {
+    // Save or add the source data file
+    this.updateSourceDataFile = function(file) {
+      console.debug('update source data file', file);
       var deferred = $q.defer();
-      if (sourceDataFile.id) {
-        $http.post(fileUrl + 'sourceDataFile/update', sourceDataFile).then(function(response) {
+      if (file.id) {
+        gpService.increment();
+        $http.post(fileUrl + '/update', file).then(
+        // Success
+        function(response) {
+          gpService.decrement();
           deferred.resolve(sourceDataFile);
-        }, function(error) {
-
-          deferred.reject(sourceDataFile);
+        },
+        // Error
+        function(response) {
+          utilService.handleError(response);
+          gpService.decrement();
+          deferred.reject(response);
         });
       } else {
-        $http.put(fileUrl + 'sourceDataFile/add', sourceDataFile).then(function(response) {
+        gpService.increment();
+        $http.put(fileUrl + '/add', file).then(
+        // Success
+        function(response) {
+          gpService.decrement();
           deferred.resolve(response);
-        }, function(error) {
-
-          deferred.reject();
+        },
+        // Error
+        function(response) {
+          utilService.handleError(response);
+          gpService.decrement();
+          deferred.reject(response);
         });
       }
       return deferred.promise;
     }
 
-    this.saveSourceData = function(sourceData) {
+    // update or add the source data
+    this.updateSourceData = function(data) {
+      console.debug('update source data', data);
       var deferred = $q.defer();
       if (sourceData.id) {
-        $http.post(fileUrl + 'sourceData/update', sourceData).then(function(response) {
+        gpService.increment();
+        $http.post(fileUrl + '/data/update', data).then(
+        // Success
+        function(response) {
+          gpService.decrement();
           deferred.resolve(sourceData);
-        }, function(error) {
-
-          deferred.reject(sourceData);
+        },
+        // Error
+        function(response) {
+          gpService.decrement();
+          utilService.handleError(response);
+          deferred.reject(response);
         });
       } else {
-        $http.put(fileUrl + 'sourceData/add', sourceData).then(function(response) {
+        gpService.increment();
+        $http.put(fileUrl + '/data/add', data).then(
+        // Success
+        function(response) {
+          gpService.decrement();
           deferred.resolve(response);
-        }, function(error) {
-
-          deferred.reject();
+        },
+        // Error
+        function(response) {
+          gpService.decrement();
+          utilService.handleError(response);
+          deferred.reject(response);
         });
       }
       return deferred.promise;
     }
 
-    this.deleteSourceData = function(sourceData) {
+    // Remove the source data
+    this.removeSourceData = function(data) {
+      console.debug('remove source data', data);
       var deferred = $q.defer()
-      $http['delete'](fileUrl + 'sourceData/delete/' + sourceData.id).then(function(response) {
+      gpService.increment();
+      $http['delete'](fileUrl + '/data/delete/' + data.id).then(
+      // Success
+      function(response) {
+        gpService.decrement();
         deferred.resolve();
-      }, function(error) {
-        deferred.reject(error);
+      },
+      // Error
+      function(response) {
+        utilService.handleError(response);
+        gpService.decrement();
+        deferred.reject(response);
       });
       return deferred.promise;
     }
 
-    this.getSourceDatas = function() {
+    // find source data
+    this.findSourceData = function(query) {
+      console.debug('find source data', query);
       var deferred = $q.defer();
-      $http.get(fileUrl + 'sourceData/sourceDatas').then(function(response) {
+      gpService.increment();
+      $http.post(fileUrl + '/data/find?query=' + encodeURI(query), {}).then(
+      // Success
+      function(response) {
+        console.debug("  data =", response.data);
+        gpService.decrement();
         deferred.resolve(response.data);
-      }, function(error) {
-        deferred.reject([]);
+      }, // Error
+      function(response) {
+        utilService.handleError(response);
+        gpService.decrement();
+        deferred.reject(response);
       });
       return deferred.promise;
     };
 
-    // cached converter names
-    var converterNames = null;
-
-    // get converter names
-    this.getConverterNames = function() {
+    // get loaders
+    this.getLoaders = function() {
+      console.debut('get loaders');
       var deferred = $q.defer();
 
-      if (converterNames) {
-        deferred.resolve(converterNames);
+      if (loaders) {
+        deferred.resolve(loaders);
       } else {
-
-        $http.get(fileUrl + 'converter/converters').then(function(response) {
-          console.debug('converter names', response);
-          converterNames = response.data.strings;
+        gpService.increment();
+        $http.get(fileUrl + '/data/loaders').then(
+        // Success
+        function(response) {
+          console.debug("  data =", response.data);
+          loaders = response.data.strings;
+          gpService.decrement();
           deferred.resolve(response.data.strings);
-        }, function(error) {
-          deferred.reject([]);
+        },
+        // Error
+        function(response) {
+          utilService.handleError(response);
+          gpService.decrement();
+          deferred.reject(response);
         });
       }
       return deferred.promise;
     };
+
+    // end.
+
   } ]);
 
 // Error service
@@ -164,7 +263,8 @@ ttApp
           console.debug('Handle error: ', response);
           this.error.message = response.data;
           // If authtoken expired, relogin
-          if (this.error.message && this.error.message.indexOf('AuthToken') != -1) {
+          if (this.error.message
+            && this.error.message.indexOf('AuthToken') != -1) {
             // Reroute back to login page with 'auth
             // token has
             // expired' message
@@ -196,7 +296,8 @@ ttApp
           if (second.length == 1) {
             second = '0' + second;
           }
-          return year + '-' + month + '-' + day + ' ' + hour + ':' + minute + ':' + second;
+          return year + '-' + month + '-' + day + ' ' + hour + ':' + minute
+            + ':' + second;
         }
 
         // Convert date to a short string
@@ -239,7 +340,8 @@ ttApp
           cleanQuery = queryStr.replace(new RegExp('[/\\\\]', 'g'), ' ');
           // Remove brackets if not using a fielded query
           if (queryStr.indexOf(':') == -1) {
-            cleanQuery = queryStr.replace(new RegExp('[^a-zA-Z0-9:\\.\\-\'\\*]', 'g'), ' ');
+            cleanQuery = queryStr.replace(new RegExp(
+              '[^a-zA-Z0-9:\\.\\-\'\\*]', 'g'), ' ');
           }
 
           return cleanQuery;
@@ -361,7 +463,8 @@ ttApp
             var value = object[prop];
             // check property for string, note this will
             // cover child elements
-            if (value && value.toString().toLowerCase().indexOf(filter.toLowerCase()) != -1) {
+            if (value
+              && value.toString().toLowerCase().indexOf(filter.toLowerCase()) != -1) {
               return true;
             }
           }
@@ -438,8 +541,14 @@ ttApp.service('gpService', function() {
 });
 
 // Security service
-ttApp.service('securityService', [ '$rootScope', '$http', '$location', '$q', '$cookies',
-  'utilService', 'gpService',
+ttApp.service('securityService', [
+  '$rootScope',
+  '$http',
+  '$location',
+  '$q',
+  '$cookies',
+  'utilService',
+  'gpService',
   function($rootScope, $http, $location, $q, $cookies, utilService, gpService) {
     console.debug('configure securityService');
 
@@ -549,7 +658,8 @@ ttApp.service('securityService', [ '$rootScope', '$http', '$location', '$q', '$c
       case 'VIEWER':
         return true;
       case 'USER':
-        return user.applicationRole === 'USER' || user.applicationRole == 'ADMIN';
+        return user.applicationRole === 'USER'
+          || user.applicationRole == 'ADMIN';
       case 'ADMIN':
         return user.applicationRole === 'ADMIN';
       default:
@@ -567,7 +677,7 @@ ttApp.service('securityService', [ '$rootScope', '$http', '$location', '$q', '$c
       gpService.increment();
 
       // logout
-      $http.get(securityUrl + 'logout/' + user.authToken).then(
+      $http.get(securityUrl + '/logout/' + user.authToken).then(
       // success
       function(response) {
 
@@ -599,7 +709,7 @@ ttApp.service('securityService', [ '$rootScope', '$http', '$location', '$q', '$c
 
       // Get users
       gpService.increment()
-      $http.get(securityUrl + 'user/users').then(
+      $http.get(securityUrl + '/user/users').then(
       // success
       function(response) {
         console.debug('  users = ', response.data);
@@ -622,7 +732,7 @@ ttApp.service('securityService', [ '$rootScope', '$http', '$location', '$q', '$c
 
       // Get users
       gpService.increment()
-      $http.get(securityUrl + 'user').then(
+      $http.get(securityUrl + '/user').then(
       // success
       function(response) {
         gpService.decrement();
@@ -643,7 +753,7 @@ ttApp.service('securityService', [ '$rootScope', '$http', '$location', '$q', '$c
 
       // Add user
       gpService.increment()
-      $http.put(securityUrl + 'user/add', user).then(
+      $http.put(securityUrl + '/user/add', user).then(
       // success
       function(response) {
         console.debug('  user = ', response.data);
@@ -666,7 +776,7 @@ ttApp.service('securityService', [ '$rootScope', '$http', '$location', '$q', '$c
 
       // Add user
       gpService.increment()
-      $http.post(securityUrl + 'user/update', user).then(
+      $http.post(securityUrl + '/user/update', user).then(
       // success
       function(response) {
         console.debug('  user = ', response.data);
@@ -689,7 +799,7 @@ ttApp.service('securityService', [ '$rootScope', '$http', '$location', '$q', '$c
 
       // Add user
       gpService.increment();
-      $http['delete'](securityUrl + 'user/remove' + '/' + user.id).then(
+      $http['delete'](securityUrl + '/user/remove' + '/' + user.id).then(
       // success
       function(response) {
         console.debug('  user = ', response.data);
@@ -712,7 +822,7 @@ ttApp.service('securityService', [ '$rootScope', '$http', '$location', '$q', '$c
 
       // Get application roles
       gpService.increment()
-      $http.get(securityUrl + 'roles').then(
+      $http.get(securityUrl + '/roles').then(
       // success
       function(response) {
         console.debug('  roles = ', response.data);
@@ -736,7 +846,7 @@ ttApp.service('securityService', [ '$rootScope', '$http', '$location', '$q', '$c
 
       // Make POST call
       gpService.increment();
-      $http.post(securityUrl + 'user/find' + '?query=' + queryStr, pfs)
+      $http.post(securityUrl + '/user/find' + '?query=' + queryStr, pfs)
       // +
       // encodeURIComponent(utilService.cleanQuery(queryStr)),
       // pfs)
@@ -772,101 +882,111 @@ ttApp.service('securityService', [ '$rootScope', '$http', '$location', '$q', '$c
       var deferred = $q.defer();
 
       gpService.increment()
-      $http.post(securityUrl + 'user/preferences/update', userPreferences).then(
-      // success
-      function(response) {
-        console.debug('  userPreferences = ', response.data);
-        gpService.decrement();
-        deferred.resolve(response.data);
-      },
-      // error
-      function(response) {
-        utilService.handleError(response);
-        gpService.decrement();
-        deferred.reject(response.data);
-      });
+      $http.post(securityUrl + '/user/preferences/update', userPreferences)
+        .then(
+        // success
+        function(response) {
+          console.debug('  userPreferences = ', response.data);
+          gpService.decrement();
+          deferred.resolve(response.data);
+        },
+        // error
+        function(response) {
+          utilService.handleError(response);
+          gpService.decrement();
+          deferred.reject(response.data);
+        });
       return deferred.promise;
     }
 
   } ]);
 
 // Tab service
-ttApp.service('tabService', [ '$rootScope', '$location', 'utilService', 'gpService',
-  'securityService', function($rootScope, $location, utilService, gpService, securityService) {
-    console.debug('configure tabService');
+ttApp
+  .service(
+    'tabService',
+    [
+      '$rootScope',
+      '$location',
+      'utilService',
+      'gpService',
+      'securityService',
+      function($rootScope, $location, utilService, gpService, securityService) {
+        console.debug('configure tabService');
 
-    // Available tabs
-    var tabsAvailable = [ {
-      link : 'upload',
-      label : 'Files',
-      minRole : 'USER'
-    }, {
-      link : 'source',
-      label : 'Source Data',
-      minRole : 'USER'
-    }, {
-      link : 'transform',
-      label : 'Transform',
-      minRole : 'VIEWER'
-    }, {
-      link : 'edit',
-      label : 'Review',
-      minRole : 'USER'
-    }, {
-      link : 'admin',
-      label : 'Admin',
-      minRole : 'ADMIN'
-    } ];
+        // Available tabs
+        var tabsAvailable = [ {
+          link : 'upload',
+          label : 'Files',
+          minRole : 'USER'
+        }, {
+          link : 'source',
+          label : 'Source Data',
+          minRole : 'USER'
+        }, {
+          link : 'transform',
+          label : 'Transform',
+          minRole : 'VIEWER'
+        }, {
+          link : 'edit',
+          label : 'Review',
+          minRole : 'USER'
+        }, {
+          link : 'admin',
+          label : 'Admin',
+          minRole : 'ADMIN'
+        } ];
 
-    this.initializeTabsForUser = function(user) {
+        this.initializeTabsForUser = function(user) {
 
-      console.debug('get tabs for user', user);
-      var tabs = [];
-      angular.forEach(tabsAvailable, function(tab) {
-        console.debug('checking tab', tab, tab.minRole);
-        if (securityService.hasPrivilegesOfRole(tab.minRole)) {
-          tabs.push(tab);
+          console.debug('get tabs for user', user);
+          var tabs = [];
+          angular.forEach(tabsAvailable, function(tab) {
+            console.debug('checking tab', tab, tab.minRole);
+            if (securityService.hasPrivilegesOfRole(tab.minRole)) {
+              tabs.push(tab);
+            }
+          });
+
+          console.debug('tabs', tabs);
+
+          if (tabs.length === 0) {
+            handleError('Could not set available tab content from user information');
+          } else {
+
+            if (user && user.userPreferences && user.userPreferences.lastTab) {
+              console.debug('location set to '
+                + user.userPreferences.lastTab.link);
+              $location.url(user.userPreferences.lastTab.link);
+            } else {
+              console.debug('location set to ' + tabs[0].link);
+              $location.url(tabs[0].link);
+            }
+          }
+
+          $rootScope.tabs = tabs;
+        };
+
+        // Sets the selected tab
+        this.setSelectedTab = function(tab) {
+          this.selectedTab = tab;
+          console.debug('location set to ' + tab.link);
+          $location.url(tab.link);
         }
-      });
 
-      console.debug('tabs', tabs);
-
-      if (tabs.length === 0) {
-        handleError("Could not set available tab content from user information");
-      } else {
-
-        if (user && user.userPreferences && user.userPreferences.lastTab) {
-          console.debug('location set to ' + user.userPreferences.lastTab.link);
-          $location.url(user.userPreferences.lastTab.link);
-        } else {
-          console.debug('location set to ' + tabs[0].link);
-          $location.url(tabs[0].link);
+        // sets the selected tab by label
+        // to be called by controllers when their
+        // respective tab is selected
+        this.setSelectedTabByLabel = function(label) {
+          for (var i = 0; i < this.tabs.length; i++) {
+            if (this.tabs[i].label === label) {
+              this.selectedTab = this.tabs[i];
+              break;
+            }
+          }
         }
-      }
 
-      $rootScope.tabs = tabs;
-    };
-
-    // Sets the selected tab
-    this.setSelectedTab = function(tab) {
-      this.selectedTab = tab;
-      console.debug('location set to ' + tab.link);
-      $location.url(tab.link);
-    }
-
-    // sets the selected tab by label
-    // to be called by controllers when their
-    // respective tab is selected
-    this.setSelectedTabByLabel = function(label) {
-      for (var i = 0; i < this.tabs.length; i++) {
-        if (this.tabs[i].label === label) {
-          this.selectedTab = this.tabs[i];
-          break;
-        }
-      }
-    }
-
-  } ]);
+      } ]);
 
 // Websocket service
 

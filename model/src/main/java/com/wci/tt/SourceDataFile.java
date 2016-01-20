@@ -1,7 +1,5 @@
 package com.wci.tt;
 
-import java.util.Date;
-
 import com.wci.umls.server.helpers.HasId;
 import com.wci.umls.server.helpers.HasLastModified;
 import com.wci.umls.server.helpers.HasName;
@@ -53,20 +51,6 @@ public interface SourceDataFile extends HasId, HasLastModified, HasName {
    * @param size the new size
    */
   public void setSize(Long size);
-
-  /**
-   * Gets the date uploaded.
-   *
-   * @return the date uploaded
-   */
-  public Date getDateUploaded();
-
-  /**
-   * Sets the date uploaded.
-   *
-   * @param dateUploaded the new date uploaded
-   */
-  public void setDateUploaded(Date dateUploaded);
 
   /**
    * Checks if is directory.

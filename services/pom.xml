@@ -18,12 +18,6 @@
   <!-- Declare Project Dependency Versions -->
   <dependencies>
 
-    <!-- Term server rest -->
-    <dependency>
-      <groupId>com.wci.umls.server</groupId>
-      <artifactId>term-server-rest</artifactId>
-    </dependency>
-
     <!-- Required for Jersey and JSON -->
     <dependency>
       <groupId>org.glassfish.jersey.core</groupId>

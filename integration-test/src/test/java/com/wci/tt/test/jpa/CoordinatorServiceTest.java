@@ -48,6 +48,11 @@ public class CoordinatorServiceTest extends JpaSupport {
     // n/a
   }
 
+  /**
+   * Test all identify call no result analysis.
+   *
+   * @throws Exception the exception
+   */
   @Test
   public void testAllIdentifyCallNoResultAnalysis() throws Exception {
     Logger.getLogger(getClass()).info("TEST " + name.getMethodName());
@@ -116,6 +121,11 @@ public class CoordinatorServiceTest extends JpaSupport {
     assertEquals(1, results.size());
   }
 
+  /**
+   * Test all process calls no result analysis.
+   *
+   * @throws Exception the exception
+   */
   @Test
   public void testAllProcessCallsNoResultAnalysis() throws Exception {
     Logger.getLogger(getClass()).info("TEST " + name.getMethodName());
@@ -255,9 +265,8 @@ public class CoordinatorServiceTest extends JpaSupport {
     assertEquals(0, results.size());
 
     // Empty Contexts
-    results =
-        service
-            .process(inputString, new DataContextJpa(), new DataContextJpa());
+    results = service.process(inputString, new DataContextJpa(),
+        new DataContextJpa());
     Logger.getLogger(getClass()).info("  results = " + results);
     assertEquals(0, results.size());
 
@@ -282,6 +291,11 @@ public class CoordinatorServiceTest extends JpaSupport {
     assertEquals(1, results.size());
   }
 
+  /**
+   * Test all identify call analyze results.
+   *
+   * @throws Exception the exception
+   */
   @Test
   public void testAllIdentifyCallAnalyzeResults() throws Exception {
     Logger.getLogger(getClass()).info("TEST " + name.getMethodName());
@@ -339,6 +353,11 @@ public class CoordinatorServiceTest extends JpaSupport {
     assertTrue(result.getScore() == 1f);
   }
 
+  /**
+   * Test all process calls analyze results.
+   *
+   * @throws Exception the exception
+   */
   @Test
   public void testAllProcessCallsAnalyzeResults() throws Exception {
     Logger.getLogger(getClass()).info("TEST " + name.getMethodName());

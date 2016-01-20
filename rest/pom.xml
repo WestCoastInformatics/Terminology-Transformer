@@ -32,11 +32,6 @@
   </properties>
 
   <dependencies>
-    <!-- Term server dependencies. -->
-    <dependency>
-      <groupId>com.wci.umls.server</groupId>
-      <artifactId>term-server-rest</artifactId>
-    </dependency>
 
     <dependency>
       <groupId>javax.servlet</groupId>

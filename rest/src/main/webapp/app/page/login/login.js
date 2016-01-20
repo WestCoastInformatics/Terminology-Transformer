@@ -15,33 +15,13 @@ ttApp.controller('LoginCtrl', [
   'gpService',
   'utilService',
   'tabService',
-  function($scope, $http, $location, securityService, gpService, utilService, tabService) {
+  function($scope, $http, $location, securityService, gpService, utilService,
+    tabService) {
     console.debug('configure LoginCtrl');
-    
 
-
-    $scope.loadRxnorm = function() {
-      console.log('testing loadRxnorm');
-      $http.post(fileUrl + 'sourceDataFile/loadRxnorm').then(function() {
-        
-      }, function(error) {
-        utilService.handleError(error);
-      })
-    }
-    
-    $scope.removeRxnorm = function() {
-      console.log('testing removeRxnorm');
-      $http.post(fileUrl + 'sourceDataFile/removeRxnorm').then(function() {
-        
-      }, function(error) {
-        utilService.handleError(error);
-      })
-    }
-
-    
     // clear any cached user information
     securityService.clearUser();
- 
+
     // Login function
     $scope.login = function(name, password) {
       if (!name) {
@@ -55,7 +35,7 @@ ttApp.controller('LoginCtrl', [
       // login
       gpService.increment();
       return $http({
-        url : securityUrl + 'authenticate/' + name,
+        url : securityUrl + '/authenticate/' + name,
         method : 'POST',
         data : password,
         headers : {
