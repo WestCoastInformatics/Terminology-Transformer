@@ -265,9 +265,8 @@ public class CoordinatorServiceTest extends JpaSupport {
     assertEquals(0, results.size());
 
     // Empty Contexts
-    results =
-        service
-            .process(inputString, new DataContextJpa(), new DataContextJpa());
+    results = service.process(inputString, new DataContextJpa(),
+        new DataContextJpa());
     Logger.getLogger(getClass()).info("  results = " + results);
     assertEquals(0, results.size());
 

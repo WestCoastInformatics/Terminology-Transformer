@@ -141,9 +141,8 @@ public class TransformTest extends RestIntegrationSupport {
     assertTrue(result.getScore() == 1f);
 
     // TEST 2: Filled Data with Empty Context
-    results =
-        transformService.identify(inputString, new DataContextJpa(),
-            adminAuthToken);
+    results = transformService.identify(inputString, new DataContextJpa(),
+        adminAuthToken);
     Logger.getLogger(getClass()).info("  results = " + results);
     assertEquals(1, results.getCount());
     result = results.getObjects().get(0);
@@ -202,9 +201,8 @@ public class TransformTest extends RestIntegrationSupport {
     DataContextListJpa inputOutputContextsList =
         createContextObject(null, outputContext);
 
-    ScoredDataContextTupleList results =
-        transformService.process(inputString, inputOutputContextsList,
-            adminAuthToken);
+    ScoredDataContextTupleList results = transformService.process(inputString,
+        inputOutputContextsList, adminAuthToken);
 
     Logger.getLogger(getClass()).info("  results = " + results);
     assertEquals(1, results.getCount());
@@ -218,9 +216,8 @@ public class TransformTest extends RestIntegrationSupport {
     inputOutputContextsList =
         createContextObject(new DataContextJpa(), outputContext);
 
-    results =
-        transformService.process(inputString, inputOutputContextsList,
-            adminAuthToken);
+    results = transformService.process(inputString, inputOutputContextsList,
+        adminAuthToken);
 
     Logger.getLogger(getClass()).info("  results = " + results);
     assertEquals(1, results.getCount());
@@ -233,9 +230,8 @@ public class TransformTest extends RestIntegrationSupport {
     // TEST 3: Valid Contexts
     inputOutputContextsList = createContextObject(inputContext, outputContext);
 
-    results =
-        transformService.process(inputString, inputOutputContextsList,
-            adminAuthToken);
+    results = transformService.process(inputString, inputOutputContextsList,
+        adminAuthToken);
 
     Logger.getLogger(getClass()).info("  results = " + results);
     assertEquals(1, results.getCount());

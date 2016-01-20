@@ -3,7 +3,6 @@
  */
 package com.wci.tt.test.jpa;
 
-
 import org.junit.Rule;
 import org.junit.rules.TestName;
 
@@ -12,8 +11,8 @@ import org.junit.rules.TestName;
  */
 public class JpaSupport {
 
-  /**  The name. */
+  /** The name. */
   @Rule
   public TestName name = new TestName();
-  
+
 }
