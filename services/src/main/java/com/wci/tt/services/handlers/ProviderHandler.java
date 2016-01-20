@@ -6,7 +6,7 @@ package com.wci.tt.services.handlers;
 import java.util.List;
 
 import com.wci.tt.DataContext;
-import com.wci.tt.ScoredDataContext;
+import com.wci.tt.helpers.ScoredDataContext;
 import com.wci.tt.helpers.ScoredResult;
 import com.wci.umls.server.helpers.Configurable;
 

@@ -6,7 +6,7 @@ package com.wci.tt.services;
 import java.util.List;
 
 import com.wci.tt.DataContext;
-import com.wci.tt.ScoredDataContext;
+import com.wci.tt.helpers.ScoredDataContext;
 import com.wci.tt.helpers.ScoredDataContextTuple;
 import com.wci.tt.services.handlers.ConverterHandler;
 import com.wci.tt.services.handlers.NormalizerHandler;

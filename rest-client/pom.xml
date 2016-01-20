@@ -28,6 +28,12 @@
       <artifactId>tt-services</artifactId>
     </dependency>
 
+    <!-- term server dependencies -->
+    <dependency>
+      <groupId>com.wci.umls.server</groupId>
+      <artifactId>term-server-rest-client</artifactId>
+    </dependency>
+
     <!-- Logger -->
     <dependency>
       <groupId>org.slf4j</groupId>

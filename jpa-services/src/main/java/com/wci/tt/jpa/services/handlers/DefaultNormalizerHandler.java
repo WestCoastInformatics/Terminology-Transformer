@@ -20,10 +20,9 @@ import com.wci.tt.services.handlers.NormalizerHandler;
 public class DefaultNormalizerHandler implements NormalizerHandler {
   /**
    * Instantiates an empty {@link DefaultNormalizerHandler}.
-   *
-   * @throws Exception the exception
    */
   public DefaultNormalizerHandler() {
+    // n/a
   }
 
   /* see superclass */

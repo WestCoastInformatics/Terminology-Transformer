@@ -15,8 +15,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.wci.tt.ScoredDataContext;
 import com.wci.tt.helpers.DataContextType;
+import com.wci.tt.helpers.ScoredDataContext;
 import com.wci.tt.helpers.ScoredDataContextTuple;
 import com.wci.tt.jpa.helpers.DataContextJpa;
 import com.wci.tt.jpa.services.CoordinatorServiceJpa;
@@ -49,7 +49,7 @@ public class CoordinatorServiceTest extends JpaSupport {
   }
 
   /**
-   * Test all identify call no result analysis.
+   * Test cases where call to identify expected not to return results.
    *
    * @throws Exception the exception
    */
@@ -122,7 +122,7 @@ public class CoordinatorServiceTest extends JpaSupport {
   }
 
   /**
-   * Test all process calls no result analysis.
+   * Test cases where call to process expected not to return results.
    *
    * @throws Exception the exception
    */
@@ -265,8 +265,9 @@ public class CoordinatorServiceTest extends JpaSupport {
     assertEquals(0, results.size());
 
     // Empty Contexts
-    results = service.process(inputString, new DataContextJpa(),
-        new DataContextJpa());
+    results =
+        service
+            .process(inputString, new DataContextJpa(), new DataContextJpa());
     Logger.getLogger(getClass()).info("  results = " + results);
     assertEquals(0, results.size());
 
@@ -292,7 +293,7 @@ public class CoordinatorServiceTest extends JpaSupport {
   }
 
   /**
-   * Test all identify call analyze results.
+   * Test cases where call to identify expected to return proper results.
    *
    * @throws Exception the exception
    */
@@ -354,7 +355,7 @@ public class CoordinatorServiceTest extends JpaSupport {
   }
 
   /**
-   * Test all process calls analyze results.
+   * Test cases where call to process expected to return proper results.
    *
    * @throws Exception the exception
    */
@@ -412,38 +413,6 @@ public class CoordinatorServiceTest extends JpaSupport {
     assertTrue(result.getScore() == 1f);
   }
 
-  /*
-   * @Test public void testProcess() throws Exception {
-   * Logger.getLogger(getClass()).info("TEST " + name.getMethodName());
-   * 
-   * CoordinatorService service = new CoordinatorServiceJpa(); List<DataContext>
-   * results = service.process(new DataContextJpa());
-   * 
-   * Logger.getLogger(getClass()).info("  results = " + results);
-   * 
-   * assertEquals(1, results.size()); }
-   * 
-   * @Test public void testFullIntegration() throws Exception {
-   * Logger.getLogger(getClass()).info("TEST " + name.getMethodName());
-   * 
-   * CoordinatorService service = new CoordinatorServiceJpa();
-   * 
-   * DataContextJpa inputContext = new DataContextJpa();
-   * inputContext.setCustomer("Test Input Customer");
-   * inputContext.setSemanticType("Test Input Semantic Type");
-   * inputContext.setSpecialty("Test Input Specialty");
-   * inputContext.setTerminology("Test Input Terminology");
-   * inputContext.setVersion("Test Input Version");
-   * inputContext.setType(DataContextType.CODE);
-   * 
-   * List<DataContext> results = service.accepts(inputContext);
-   * 
-   * Logger.getLogger(getClass()).info("  results = " + results);
-   * 
-   * assertNotNull(results); assertEquals(1, results.size());
-   * 
-   * DataContext result = results.get(0); assertEquals(inputContext, result); }
-   */
   /**
    * Teardown.
    *

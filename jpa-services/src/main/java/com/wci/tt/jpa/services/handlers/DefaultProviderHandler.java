@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Properties;
 
 import com.wci.tt.DataContext;
-import com.wci.tt.ScoredDataContext;
+import com.wci.tt.helpers.ScoredDataContext;
 import com.wci.tt.helpers.ScoredResult;
 import com.wci.tt.jpa.helpers.DataContextJpa;
 import com.wci.tt.jpa.helpers.ScoredDataContextJpa;

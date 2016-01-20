@@ -22,14 +22,13 @@ import com.wci.tt.services.handlers.ConverterHandler;
  * contexts. Thus, the setter methods of AbstractContextHandler should not be
  * called.
  */
-public class DefaultConverterHandler extends AbstractContextHandler implements
-    ConverterHandler {
+public class DefaultConverterHandler extends AbstractContextHandler
+    implements ConverterHandler {
   /**
    * Instantiates an empty {@link DefaultConverterHandler}.
-   *
-   * @throws Exception the exception
    */
   public DefaultConverterHandler() {
+    // n/a
   }
 
   /* see superclass */

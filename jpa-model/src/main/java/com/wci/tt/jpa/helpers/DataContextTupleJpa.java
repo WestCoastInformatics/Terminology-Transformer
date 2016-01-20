@@ -3,6 +3,7 @@
  */
 package com.wci.tt.jpa.helpers;
 
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import com.wci.tt.DataContext;
@@ -67,6 +68,7 @@ public class DataContextTupleJpa implements DataContextTuple {
   }
 
   /* see superclass */
+  @XmlElement(type = DataContextJpa.class, name = "dataContext")
   @Override
   public DataContext getDataContext() {
     return context;
