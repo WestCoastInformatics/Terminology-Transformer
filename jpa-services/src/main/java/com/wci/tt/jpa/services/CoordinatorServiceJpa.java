@@ -17,6 +17,7 @@ import com.wci.tt.helpers.DataContextTuple;
 import com.wci.tt.helpers.ScoredDataContext;
 import com.wci.tt.helpers.ScoredDataContextTuple;
 import com.wci.tt.helpers.ScoredResult;
+import com.wci.tt.infomodels.InfoModel;
 import com.wci.tt.jpa.helpers.DataContextTupleJpa;
 import com.wci.tt.jpa.helpers.ScoredDataContextJpa;
 import com.wci.tt.jpa.helpers.ScoredDataContextTupleJpa;

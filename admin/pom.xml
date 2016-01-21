@@ -290,7 +290,7 @@
             <version>${project.version}</version>
             <executions>
               <execution>
-                <id>load-rxnorm-source-data</id>
+                <id>load-source-data</id>
                 <phase>package</phase>
                 <goals>
                   <goal>sample</goal>
