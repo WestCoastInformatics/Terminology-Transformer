@@ -51,10 +51,6 @@
       <groupId>com.wci.tt</groupId>
       <artifactId>tt-model</artifactId>
     </dependency>
-    <dependency>
-      <groupId>com.wci.tt</groupId>
-      <artifactId>tt-custom</artifactId>
-    </dependency>
 
     <!-- JPA dependencies -->
     <dependency>

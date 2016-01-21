@@ -279,35 +279,6 @@
       </build>
     </profile>
 
-    <!-- Load sample data, specify -Drun.config.tt=... -Dterminology=... -->
-    <profile>
-      <id>Sample</id>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>com.wci.tt</groupId>
-            <artifactId>tt-admin</artifactId>
-            <version>${project.version}</version>
-            <executions>
-              <execution>
-                <id>load-rxnorm-source-data</id>
-                <phase>package</phase>
-                <goals>
-                  <goal>sample</goal>
-                </goals>
-                <configuration>
-                  <terminology>${terminology}</terminology>
-                  <version>${version}</version>
-                  <inputDir>${input.dir}</inputDir>
-                  <mode>${mode}</mode>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-
   </profiles>
 
 </project>
