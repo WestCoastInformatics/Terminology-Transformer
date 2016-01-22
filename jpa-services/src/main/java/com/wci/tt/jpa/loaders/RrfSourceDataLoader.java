@@ -1,5 +1,5 @@
 /*
- *    Copyright 2016 West Coast Informatics, LLC
+ *    Copyright 2015 West Coast Informatics, LLC
  */
 package com.wci.tt.jpa.loaders;
 
@@ -37,7 +37,8 @@ public class RrfSourceDataLoader implements SourceDataLoader {
   /** The terminology. */
   private String terminology;
 
-  private String version;
+  /**  The version. */
+  private String version; 
 
   /** The prefix. */
   private String prefix;
