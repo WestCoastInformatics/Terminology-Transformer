@@ -49,6 +49,20 @@ public class CoordinatorServiceTest extends JpaSupport {
   }
 
   /**
+   * Test that information models are loaded as expected.
+   *
+   * @throws Exception the exception
+   */
+  @Test
+  public void testAcccessInformationModels() throws Exception {
+    Logger.getLogger(getClass()).info("TEST " + name.getMethodName());
+
+    CoordinatorService service = new CoordinatorServiceJpa();
+    List<String> models = service.getInformationModels();
+    assertEquals(1, models.size());
+  }
+
+  /**
    * Test cases where call to identify expected not to return results.
    *
    * @throws Exception the exception
@@ -265,8 +279,9 @@ public class CoordinatorServiceTest extends JpaSupport {
     assertEquals(0, results.size());
 
     // Empty Contexts
-    results = service.process(inputString, new DataContextJpa(),
-        new DataContextJpa());
+    results =
+        service
+            .process(inputString, new DataContextJpa(), new DataContextJpa());
     Logger.getLogger(getClass()).info("  results = " + results);
     assertEquals(0, results.size());
 
