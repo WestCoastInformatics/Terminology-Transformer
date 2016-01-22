@@ -96,6 +96,7 @@ public class DefaultConverterTest extends JpaSupport {
 
     DataContextJpa inputContext = new DataContextJpa();
     inputContext.setCustomer("Test Input Customer");
+    inputContext.setInfoModelName("Test Input Information Model Name");
     inputContext.setSemanticType("Test Input Semantic Type");
     inputContext.setSpecialty("Test Input Specialty");
     inputContext.setTerminology("Test Input Terminology");
@@ -167,6 +168,7 @@ public class DefaultConverterTest extends JpaSupport {
 
     DataContextJpa inputContext = new DataContextJpa();
     inputContext.setCustomer("Test Input Customer");
+    inputContext.setInfoModelName("Test Input Information Model Name");
     inputContext.setSemanticType("Test Input Semantic Type");
     inputContext.setSpecialty("Test Input Specialty");
     inputContext.setTerminology("Test Input Terminology");
@@ -175,6 +177,7 @@ public class DefaultConverterTest extends JpaSupport {
 
     DataContextJpa outputContext = new DataContextJpa();
     outputContext.setCustomer("Test Output Customer");
+    outputContext.setInfoModelName("Test Output Information Model Name");
     outputContext.setSemanticType("Test Output Semantic Type");
     outputContext.setSpecialty("Test Output Specialty");
     outputContext.setTerminology("Test Output Terminology");

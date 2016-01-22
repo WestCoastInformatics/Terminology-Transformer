@@ -776,6 +776,8 @@ public class CoordinatorServiceJpa extends RootServiceJpa implements
           && currentResult.getSemanticType()
               .equals(newResult.getSemanticType())
           && currentResult.getSpecialty().equals(newResult.getSpecialty())
+          && currentResult.getInfoModelName().equals(
+              newResult.getInfoModelName())
           && currentResult.getTerminology().equals(newResult.getTerminology())
           && currentResult.getType() == newResult.getType()
           && currentResult.getVersion().equals(newResult.getVersion())) {
@@ -794,6 +796,7 @@ public class CoordinatorServiceJpa extends RootServiceJpa implements
       ScoredDataContext newScoredContext = new ScoredDataContextJpa();
 
       newScoredContext.setCustomer(newResult.getCustomer());
+      newScoredContext.setInfoModelName(newResult.getInfoModelName());
       newScoredContext.setSemanticType(newResult.getSemanticType());
       newScoredContext.setSpecialty(newResult.getSpecialty());
       newScoredContext.setTerminology(newResult.getTerminology());

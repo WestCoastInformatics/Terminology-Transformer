@@ -97,6 +97,7 @@ public class DefaultProviderTest extends JpaSupport {
 
     DataContextJpa inputContext = new DataContextJpa();
     inputContext.setCustomer("Test Input Customer");
+    inputContext.setInfoModelName("Test Input Information Model Name");
     inputContext.setSemanticType("Test Input Semantic Type");
     inputContext.setSpecialty("Test Input Specialty");
     inputContext.setTerminology("Test Input Terminology");
@@ -238,6 +239,7 @@ public class DefaultProviderTest extends JpaSupport {
 
     DataContextJpa inputContext = new DataContextJpa();
     inputContext.setCustomer("Test Input Customer");
+    inputContext.setInfoModelName("Test Input Information Model Name");
     inputContext.setSemanticType("Test Input Semantic Type");
     inputContext.setSpecialty("Test Input Specialty");
     inputContext.setTerminology("Test Input Terminology");
@@ -253,6 +255,7 @@ public class DefaultProviderTest extends JpaSupport {
 
     ScoredDataContext result = results.get(0);
     assertEquals(inputContext.getCustomer(), result.getCustomer());
+    assertEquals(inputContext.getInfoModelName(), result.getInfoModelName());
     assertEquals(inputContext.getSemanticType(), result.getSemanticType());
     assertEquals(inputContext.getSpecialty(), result.getSpecialty());
     assertEquals(inputContext.getTerminology(), result.getTerminology());
@@ -312,6 +315,7 @@ public class DefaultProviderTest extends JpaSupport {
 
     DataContextJpa inputContext = new DataContextJpa();
     inputContext.setCustomer("Test Input Customer");
+    inputContext.setInfoModelName("Test Input Information Model Name");
     inputContext.setSemanticType("Test Input Semantic Type");
     inputContext.setSpecialty("Test Input Specialty");
     inputContext.setTerminology("Test Input Terminology");
@@ -320,6 +324,7 @@ public class DefaultProviderTest extends JpaSupport {
 
     DataContextJpa outputContext = new DataContextJpa();
     outputContext.setCustomer("Test Output Customer");
+    outputContext.setInfoModelName("Test Output Information Model Name");
     outputContext.setSemanticType("Test Output Semantic Type");
     outputContext.setSpecialty("Test Output Specialty");
     outputContext.setTerminology("Test Output Terminology");

@@ -3,6 +3,7 @@
  */
 package com.wci.tt.jpa.services.handlers;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import com.wci.tt.helpers.DataContextType;
@@ -15,29 +16,32 @@ import com.wci.tt.helpers.DataContextType;
 public abstract class AbstractContextHandler {
 
   /** The provider type. */
-  private Set<DataContextType> providerType = null;
+  protected DataContextType providerType = DataContextType.UNKNOWN;
 
-  /** The provider customer. */
-  private Set<String> providerCustomer = null;
+  /** The provider customers. */
+  protected Set<String> providerCustomers = new HashSet<>();
 
-  /** The provider semantic type. */
-  private Set<String> providerSemanticType = null;
+  /** The provider semantic types. */
+  protected Set<String> providerSemanticTypes = new HashSet<>();
 
-  /** The provider specialty. */
-  private Set<String> providerSpecialty = null;
+  /** The provider specialties. */
+  protected Set<String> providerSpecialties = new HashSet<>();
 
-  /** The provider terminology. */
-  private Set<String> providerTerminology = null;
+  /** The provider terminologies. */
+  protected Set<String> providerTerminologies = new HashSet<>();
 
-  /** The provider version. */
-  private Set<String> providerVersion = null;
+  /** The provider versions. */
+  protected Set<String> providerVersions = new HashSet<>();
+
+  /** The information model name. */
+  protected String informationModelName = null;
 
   /**
    * Returns the provider type.
    *
    * @return the provider type
    */
-  public final Set<DataContextType> getProviderType() {
+  public final DataContextType getProviderType() {
     return providerType;
   }
 
@@ -46,97 +50,115 @@ public abstract class AbstractContextHandler {
    *
    * @param providerType the provider type
    */
-  public final void setProviderType(Set<DataContextType> providerType) {
+  public final void setProviderType(DataContextType providerType) {
     this.providerType = providerType;
   }
 
   /**
-   * Returns the provider customer.
+   * Returns the provider customers.
    *
-   * @return the provider customer
+   * @return the provider customers
    */
-  public final Set<String> getProviderCustomer() {
-    return providerCustomer;
+  public final Set<String> getProviderCustomers() {
+    return providerCustomers;
   }
 
   /**
-   * Sets the provider customer.
+   * Sets the provider customers.
    *
-   * @param providerCustomer the provider customer
+   * @param providerCustomers the provider customers
    */
-  public final void setProviderCustomer(Set<String> providerCustomer) {
-    this.providerCustomer = providerCustomer;
+  public final void setProviderCustomers(Set<String> providerCustomers) {
+    this.providerCustomers = providerCustomers;
   }
 
   /**
-   * Returns the provider semantic type.
+   * Returns the provider semantic types.
    *
-   * @return the provider semantic type
+   * @return the provider semantic types
    */
-  public final Set<String> getProviderSemanticType() {
-    return providerSemanticType;
+  public final Set<String> getProviderSemanticTypes() {
+    return providerSemanticTypes;
   }
 
   /**
-   * Sets the provider semantic type.
+   * Sets the provider semantic types.
    *
-   * @param providerSemanticType the provider semantic type
+   * @param providerSemanticTypes the provider semantic types
    */
-  public final void setProviderSemanticType(Set<String> providerSemanticType) {
-    this.providerSemanticType = providerSemanticType;
+  public final void setProviderSemanticTypes(Set<String> providerSemanticTypes) {
+    this.providerSemanticTypes = providerSemanticTypes;
   }
 
   /**
-   * Returns the provider specialty.
+   * Returns the provider specialties.
    *
-   * @return the provider specialty
+   * @return the provider specialties
    */
-  public final Set<String> getProviderSpecialty() {
-    return providerSpecialty;
+  public final Set<String> getProviderSpecialties() {
+    return providerSpecialties;
   }
 
   /**
-   * Sets the provider specialty.
+   * Sets the provider specialties.
    *
-   * @param providerSpecialty the provider specialty
+   * @param providerSpecialties the provider specialties
    */
-  public final void setProviderSpecialty(Set<String> providerSpecialty) {
-    this.providerSpecialty = providerSpecialty;
+  public final void setProviderSpecialties(Set<String> providerSpecialties) {
+    this.providerSpecialties = providerSpecialties;
   }
 
   /**
-   * Returns the provider terminology.
+   * Returns the provider terminologies.
    *
-   * @return the provider terminology
+   * @return the provider terminologies
    */
-  public final Set<String> getProviderTerminology() {
-    return providerTerminology;
+  public final Set<String> getProviderTerminologies() {
+    return providerTerminologies;
   }
 
   /**
-   * Sets the provider terminology.
+   * Sets the provider terminologies.
    *
-   * @param providerTerminology the provider terminology
+   * @param providerTerminologies the provider terminologies
    */
-  public final void setProviderTerminology(Set<String> providerTerminology) {
-    this.providerTerminology = providerTerminology;
+  public final void setProviderTerminologies(Set<String> providerTerminologies) {
+    this.providerTerminologies = providerTerminologies;
   }
 
   /**
-   * Returns the provider version.
+   * Returns the provider versions.
    *
-   * @return the provider version
+   * @return the provider versions
    */
-  public final Set<String> getProviderVersion() {
-    return providerVersion;
+  public final Set<String> getProviderVersions() {
+    return providerVersions;
   }
 
   /**
-   * Sets the provider version.
+   * Sets the provider versions.
    *
-   * @param providerVersion the provider version
+   * @param providerVersions the provider versions
    */
-  public final void setProviderVersion(Set<String> providerVersion) {
-    this.providerVersion = providerVersion;
+  public final void setProviderVersions(Set<String> providerVersions) {
+    this.providerVersions = providerVersions;
+  }
+
+  /**
+   * Returns the information model name.
+   *
+   * @return the information model name
+   */
+  public final String getInformationModelName() {
+    return informationModelName;
+  }
+
+  /**
+   * Sets the information model name.
+   *
+   * @param informationModelName the information model name
+   */
+  public final void setInformationModelName(String informationModelName) {
+    this.informationModelName = informationModelName;
   }
 }
