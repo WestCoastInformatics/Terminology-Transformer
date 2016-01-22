@@ -120,6 +120,7 @@ public class TransformTest extends RestIntegrationSupport {
 
     DataContextJpa inputContext = new DataContextJpa();
     inputContext.setCustomer("Test Input Customer");
+    inputContext.setInfoModelName("Test Input Information Model Name");
     inputContext.setSemanticType("Test Input Semantic Type");
     inputContext.setSpecialty("Test Input Specialty");
     inputContext.setTerminology("Test Input Terminology");
@@ -133,6 +134,7 @@ public class TransformTest extends RestIntegrationSupport {
     assertEquals(1, results.getCount());
     ScoredDataContext result = results.getObjects().get(0);
     assertEquals(null, result.getCustomer());
+    assertEquals(null, result.getInfoModelName());
     assertEquals(null, result.getSemanticType());
     assertEquals(null, result.getSpecialty());
     assertEquals(null, result.getTerminology());
@@ -141,12 +143,14 @@ public class TransformTest extends RestIntegrationSupport {
     assertTrue(result.getScore() == 1f);
 
     // TEST 2: Filled Data with Empty Context
-    results = transformService.identify(inputString, new DataContextJpa(),
-        adminAuthToken);
+    results =
+        transformService.identify(inputString, new DataContextJpa(),
+            adminAuthToken);
     Logger.getLogger(getClass()).info("  results = " + results);
     assertEquals(1, results.getCount());
     result = results.getObjects().get(0);
     assertEquals(null, result.getCustomer());
+    assertEquals(null, result.getInfoModelName());
     assertEquals(null, result.getSemanticType());
     assertEquals(null, result.getSpecialty());
     assertEquals(null, result.getTerminology());
@@ -161,6 +165,7 @@ public class TransformTest extends RestIntegrationSupport {
     assertEquals(1, results.getCount());
     result = results.getObjects().get(0);
     assertEquals(inputContext.getCustomer(), result.getCustomer());
+    assertEquals(inputContext.getInfoModelName(), result.getInfoModelName());
     assertEquals(inputContext.getSemanticType(), result.getSemanticType());
     assertEquals(inputContext.getSpecialty(), result.getSpecialty());
     assertEquals(inputContext.getTerminology(), result.getTerminology());
@@ -183,6 +188,7 @@ public class TransformTest extends RestIntegrationSupport {
 
     DataContextJpa inputContext = new DataContextJpa();
     inputContext.setCustomer("Test Input Customer");
+    inputContext.setInfoModelName("Test Input Information Model Name");
     inputContext.setSemanticType("Test Input Semantic Type");
     inputContext.setSpecialty("Test Input Specialty");
     inputContext.setTerminology("Test Input Terminology");
@@ -191,6 +197,7 @@ public class TransformTest extends RestIntegrationSupport {
 
     DataContextJpa outputContext = new DataContextJpa();
     outputContext.setCustomer("Test Output Customer");
+    outputContext.setInfoModelName("Test Output Information Model Name");
     outputContext.setSemanticType("Test Output Semantic Type");
     outputContext.setSpecialty("Test Output Specialty");
     outputContext.setTerminology("Test Output Terminology");
@@ -201,8 +208,9 @@ public class TransformTest extends RestIntegrationSupport {
     DataContextListJpa inputOutputContextsList =
         createContextObject(null, outputContext);
 
-    ScoredDataContextTupleList results = transformService.process(inputString,
-        inputOutputContextsList, adminAuthToken);
+    ScoredDataContextTupleList results =
+        transformService.process(inputString, inputOutputContextsList,
+            adminAuthToken);
 
     Logger.getLogger(getClass()).info("  results = " + results);
     assertEquals(1, results.getCount());
@@ -216,8 +224,9 @@ public class TransformTest extends RestIntegrationSupport {
     inputOutputContextsList =
         createContextObject(new DataContextJpa(), outputContext);
 
-    results = transformService.process(inputString, inputOutputContextsList,
-        adminAuthToken);
+    results =
+        transformService.process(inputString, inputOutputContextsList,
+            adminAuthToken);
 
     Logger.getLogger(getClass()).info("  results = " + results);
     assertEquals(1, results.getCount());
@@ -230,8 +239,9 @@ public class TransformTest extends RestIntegrationSupport {
     // TEST 3: Valid Contexts
     inputOutputContextsList = createContextObject(inputContext, outputContext);
 
-    results = transformService.process(inputString, inputOutputContextsList,
-        adminAuthToken);
+    results =
+        transformService.process(inputString, inputOutputContextsList,
+            adminAuthToken);
 
     Logger.getLogger(getClass()).info("  results = " + results);
     assertEquals(1, results.getCount());
