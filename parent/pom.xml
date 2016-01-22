@@ -61,11 +61,6 @@
         <artifactId>tt-rest-client</artifactId>
         <version>${releaseVersion}</version>
       </dependency>
-      <dependency>
-        <groupId>com.wci.tt</groupId>
-        <artifactId>tt-custom</artifactId>
-        <version>${releaseVersion}</version>
-      </dependency>
 
       <!-- Term server dependencies. -->
       <dependency>

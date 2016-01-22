@@ -29,7 +29,7 @@ import com.wci.umls.server.services.handlers.ExceptionHandler;
  * 
  * See admin/pom.xml for a sample execution.
  * 
- * @goal sample
+ * @goal RRF-umls
  * @phase package
  */
 public class RrfSourceDataLoaderMojo extends AbstractMojo {
@@ -79,6 +79,7 @@ public class RrfSourceDataLoaderMojo extends AbstractMojo {
     getLog().info("  terminology = " + terminology);
     getLog().info("  version = " + version);
     getLog().info("  prefix = " + prefix);
+    getLog().info("  mode = " + mode);
     getLog().info("  inputDir = " + inputDir);
 
     SourceDataService service = null;
@@ -100,7 +101,7 @@ public class RrfSourceDataLoaderMojo extends AbstractMojo {
         reindex.compute();
       }
 
-      // SEtup sample data
+      // setup sample data
 
       service = new SourceDataServiceJpa();
       // As this is a sample loader and not an integration test,
@@ -131,7 +132,7 @@ public class RrfSourceDataLoaderMojo extends AbstractMojo {
 
       // Create and add the source data
       final SourceData sourceData = new SourceDataJpa();
-      sourceData.setName("RXNORM source data");
+      sourceData.setName(terminology + " source data");
       sourceData.setDescription("Set of RRF files loaded from " + dir);
       sourceData.setLastModifiedBy("loader");
       sourceData.setLoader(loader.getName());

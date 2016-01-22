@@ -80,6 +80,7 @@ public class DefaultProviderHandler extends AbstractContextHandler implements
         ScoredDataContext scoredContext = new ScoredDataContextJpa();
 
         scoredContext.setCustomer(context.getCustomer());
+        scoredContext.setInfoModelName(context.getInfoModelName());
         scoredContext.setSemanticType(context.getSemanticType());
         scoredContext.setSpecialty(context.getSpecialty());
         scoredContext.setTerminology(context.getTerminology());
@@ -99,6 +100,7 @@ public class DefaultProviderHandler extends AbstractContextHandler implements
     return scoredContexts;
   }
 
+  /* see superclass */
   @Override
   public List<ScoredResult> process(String inputStr, DataContext inputContext,
     DataContext outputContext) throws Exception {

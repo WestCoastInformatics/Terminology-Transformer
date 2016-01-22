@@ -3,140 +3,162 @@
  */
 package com.wci.tt.jpa.services.handlers;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import com.wci.tt.helpers.DataContextType;
 
 /**
- * The Class AbstractProviderHandler.
+ * The Class AbstractContextHandler.
  * 
  * To be extended by handlers that support specific contexts.
  */
 public abstract class AbstractContextHandler {
 
-  /** The provider type. */
-  private Set<DataContextType> providerType = null;
+  /** The supported type. */
+  protected DataContextType supportedType = DataContextType.UNKNOWN;
 
-  /** The provider customer. */
-  private Set<String> providerCustomer = null;
+  /** The supported customers. */
+  protected Set<String> supportedCustomers = new HashSet<>();
 
-  /** The provider semantic type. */
-  private Set<String> providerSemanticType = null;
+  /** The supported semantic types. */
+  protected Set<String> supportedSemanticTypes = new HashSet<>();
 
-  /** The provider specialty. */
-  private Set<String> providerSpecialty = null;
+  /** The supported specialties. */
+  protected Set<String> supportedSpecialties = new HashSet<>();
 
-  /** The provider terminology. */
-  private Set<String> providerTerminology = null;
+  /** The supported terminologies. */
+  protected Set<String> supportedTerminologies = new HashSet<>();
 
-  /** The provider version. */
-  private Set<String> providerVersion = null;
+  /** The supported versions. */
+  protected Set<String> supportedVersions = new HashSet<>();
+
+  /** The supported info model name. */
+  protected String supportedInfoModelName = null;
 
   /**
-   * Returns the provider type.
+   * Returns the supported type.
    *
-   * @return the provider type
+   * @return the supported type
    */
-  public final Set<DataContextType> getProviderType() {
-    return providerType;
+  public final DataContextType getSupportedType() {
+    return supportedType;
   }
 
   /**
-   * Sets the provider type.
+   * Sets the supported type.
    *
-   * @param providerType the provider type
+   * @param supportedType the supported type
    */
-  public final void setProviderType(Set<DataContextType> providerType) {
-    this.providerType = providerType;
+  public final void setSupportedType(DataContextType supportedType) {
+    this.supportedType = supportedType;
   }
 
   /**
-   * Returns the provider customer.
+   * Returns the supported customers.
    *
-   * @return the provider customer
+   * @return the supported customers
    */
-  public final Set<String> getProviderCustomer() {
-    return providerCustomer;
+  public final Set<String> getSupportedCustomers() {
+    return supportedCustomers;
   }
 
   /**
-   * Sets the provider customer.
+   * Sets the supported customers.
    *
-   * @param providerCustomer the provider customer
+   * @param supportedCustomers the supported customers
    */
-  public final void setProviderCustomer(Set<String> providerCustomer) {
-    this.providerCustomer = providerCustomer;
+  public final void setSupportedCustomers(Set<String> supportedCustomers) {
+    this.supportedCustomers = supportedCustomers;
   }
 
   /**
-   * Returns the provider semantic type.
+   * Returns the supported semantic types.
    *
-   * @return the provider semantic type
+   * @return the supported semantic types
    */
-  public final Set<String> getProviderSemanticType() {
-    return providerSemanticType;
+  public final Set<String> getSupportedSemanticTypes() {
+    return supportedSemanticTypes;
   }
 
   /**
-   * Sets the provider semantic type.
+   * Sets the supported semantic types.
    *
-   * @param providerSemanticType the provider semantic type
+   * @param supportedSemanticTypes the supported semantic types
    */
-  public final void setProviderSemanticType(Set<String> providerSemanticType) {
-    this.providerSemanticType = providerSemanticType;
+  public final void setSupportedSemanticTypes(Set<String> supportedSemanticTypes) {
+    this.supportedSemanticTypes = supportedSemanticTypes;
   }
 
   /**
-   * Returns the provider specialty.
+   * Returns the supported specialties.
    *
-   * @return the provider specialty
+   * @return the supported specialties
    */
-  public final Set<String> getProviderSpecialty() {
-    return providerSpecialty;
+  public final Set<String> getSupportedSpecialties() {
+    return supportedSpecialties;
   }
 
   /**
-   * Sets the provider specialty.
+   * Sets the supported specialties.
    *
-   * @param providerSpecialty the provider specialty
+   * @param supportedSpecialties the supported specialties
    */
-  public final void setProviderSpecialty(Set<String> providerSpecialty) {
-    this.providerSpecialty = providerSpecialty;
+  public final void setSupportedSpecialties(Set<String> supportedSpecialties) {
+    this.supportedSpecialties = supportedSpecialties;
   }
 
   /**
-   * Returns the provider terminology.
+   * Returns the supported terminologies.
    *
-   * @return the provider terminology
+   * @return the supported terminologies
    */
-  public final Set<String> getProviderTerminology() {
-    return providerTerminology;
+  public final Set<String> getSupportedTerminologies() {
+    return supportedTerminologies;
   }
 
   /**
-   * Sets the provider terminology.
+   * Sets the supported terminologies.
    *
-   * @param providerTerminology the provider terminology
+   * @param supportedTerminologies the supported terminologies
    */
-  public final void setProviderTerminology(Set<String> providerTerminology) {
-    this.providerTerminology = providerTerminology;
+  public final void setSupportedTerminologies(Set<String> supportedTerminologies) {
+    this.supportedTerminologies = supportedTerminologies;
   }
 
   /**
-   * Returns the provider version.
+   * Returns the supported versions.
    *
-   * @return the provider version
+   * @return the supported versions
    */
-  public final Set<String> getProviderVersion() {
-    return providerVersion;
+  public final Set<String> getSupportedVersions() {
+    return supportedVersions;
   }
 
   /**
-   * Sets the provider version.
+   * Sets the supported versions.
    *
-   * @param providerVersion the provider version
+   * @param supportedVersions the supported versions
    */
-  public final void setProviderVersion(Set<String> providerVersion) {
-    this.providerVersion = providerVersion;
+  public final void setSupportedVersions(Set<String> supportedVersions) {
+    this.supportedVersions = supportedVersions;
+  }
+
+  /**
+   * Returns the supported info model name.
+   *
+   * @return the supported info model name
+   */
+  public final String getSupportedInfoModelName() {
+    return supportedInfoModelName;
+  }
+
+  /**
+   * Sets the supported info model name.
+   *
+   * @param supportedInfoModelName the supported info model name
+   */
+  public final void setSupportedInfoModelName(String supportedInfoModelName) {
+    this.supportedInfoModelName = supportedInfoModelName;
   }
 }

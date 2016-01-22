@@ -35,6 +35,9 @@ public class DataContextJpa implements DataContext {
   /** The specialty. */
   String specialty;
 
+  /** The info model name. */
+  String infoModelName;
+
   /**
    * Instantiates an empty {@link DataContextJpa}.
    */
@@ -56,6 +59,7 @@ public class DataContextJpa implements DataContext {
     this.customer = context.getCustomer();
     this.semanticType = context.getSemanticType();
     this.specialty = context.getSpecialty();
+    this.infoModelName = context.getInfoModelName();
   }
 
   /* see superclass */
@@ -145,12 +149,25 @@ public class DataContextJpa implements DataContext {
 
   /* see superclass */
   @Override
+  public String getInfoModelName() {
+    return infoModelName;
+  }
+
+  /* see superclass */
+  @Override
+  public void setInfoModelName(String infoModelName) {
+    this.infoModelName = infoModelName;
+  }
+
+  /* see superclass */
+  @Override
   public boolean isEmpty() {
     return !((terminology != null && !terminology.isEmpty())
         || (version != null && !version.isEmpty())
         || (customer != null && !customer.isEmpty())
         || (semanticType != null && !semanticType.isEmpty())
-        || (specialty != null && !specialty.isEmpty()) || (type != DataContextType.UNKNOWN));
+        || (specialty != null && !specialty.isEmpty())
+        || (infoModelName != null && !infoModelName.isEmpty()) || (type != DataContextType.UNKNOWN));
   }
 
   /* see superclass */
@@ -166,6 +183,9 @@ public class DataContextJpa implements DataContext {
     result =
         prime * result + ((semanticType == null) ? 0 : semanticType.hashCode());
     result = prime * result + ((specialty == null) ? 0 : specialty.hashCode());
+    result =
+        prime * result
+            + ((infoModelName == null) ? 0 : infoModelName.hashCode());
     return result;
   }
 
@@ -209,6 +229,11 @@ public class DataContextJpa implements DataContext {
         return false;
     } else if (!specialty.equals(other.specialty))
       return false;
+    if (infoModelName == null) {
+      if (other.infoModelName != null)
+        return false;
+    } else if (!infoModelName.equals(other.infoModelName))
+      return false;
     return true;
   }
 
@@ -216,9 +241,9 @@ public class DataContextJpa implements DataContext {
   @Override
   public String toString() {
     return "DataContextJpa [id=" + id + ", terminology=" + terminology
-        + ", version=" + version + 
-        ", type=" + ((type == null) ? "null" : type.toString()) + 
-        ", customer=" + customer + ", semanticType=" + semanticType + ", specialty="
-        + specialty + "]";  
-    }
+        + ", version=" + version + ", type="
+        + ((type == null) ? "null" : type.toString()) + ", customer="
+        + customer + ", semanticType=" + semanticType + ", specialty="
+        + specialty + ", infoModelName=" + infoModelName + "]";
+  }
 }

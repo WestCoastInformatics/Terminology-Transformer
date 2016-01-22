@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import com.wci.tt.DataContext;
 import com.wci.tt.helpers.DataContextTuple;
@@ -38,13 +39,16 @@ public class CoordinatorServiceJpa extends RootServiceJpa implements
   protected static Properties config = null;
 
   /** The normalizer handler . */
-  static List<NormalizerHandler> normalizerHandlerMap = new ArrayList<>();
+  static List<NormalizerHandler> normalizerHandlerList = new ArrayList<>();
 
   /** The provider handler . */
-  static List<ProviderHandler> providerHandlerMap = new ArrayList<>();
+  static List<ProviderHandler> providerHandlerList = new ArrayList<>();
 
   /** The converter handler . */
-  static List<ConverterHandler> converterHandlerMap = new ArrayList<>();
+  static List<ConverterHandler> converterHandlerList = new ArrayList<>();
+
+  /** The information models. */
+  static List<InfoModel<?>> informationModelList = new ArrayList<>();
 
   /** The config-specified specialties available. */
   static List<String> availableSpecialties = new ArrayList<>();
@@ -52,11 +56,8 @@ public class CoordinatorServiceJpa extends RootServiceJpa implements
   /** The config-specified semantic types available. */
   static List<String> availableSemanticTypes = new ArrayList<>();
 
-  /** The config-specified information models available. */
-  static List<String> availableInformationModels = new ArrayList<>();
-
   static {
-    /** Add normalizers found in Config to Map. */
+    /** Add normalizers found in Config to List. */
     try {
       if (config == null) {
         config = ConfigUtility.getConfigProperties();
@@ -70,12 +71,12 @@ public class CoordinatorServiceJpa extends RootServiceJpa implements
           continue;
         }
 
-        // Add handlers to map
+        // Add handlers to List
         NormalizerHandler handlerService =
             ConfigUtility.newStandardHandlerInstanceWithConfiguration(key,
                 handlerName, NormalizerHandler.class);
 
-        normalizerHandlerMap.add(handlerService);
+        normalizerHandlerList.add(handlerService);
 
         if (handlerName.equals(ConfigUtility.DEFAULT)) {
           defaultHandlerFound = true;
@@ -88,10 +89,10 @@ public class CoordinatorServiceJpa extends RootServiceJpa implements
       }
     } catch (Exception e) {
       e.printStackTrace();
-      normalizerHandlerMap = null;
+      normalizerHandlerList = null;
     }
 
-    /** Add providers found in Config to Map. */
+    /** Add providers found in Config to List. */
     try {
       if (config == null) {
         config = ConfigUtility.getConfigProperties();
@@ -105,12 +106,12 @@ public class CoordinatorServiceJpa extends RootServiceJpa implements
           continue;
         }
 
-        // Add handlers to map
+        // Add handlers to List
         ProviderHandler handlerService =
             ConfigUtility.newStandardHandlerInstanceWithConfiguration(key,
                 handlerName, ProviderHandler.class);
 
-        providerHandlerMap.add(handlerService);
+        providerHandlerList.add(handlerService);
 
         if (handlerName.equals(ConfigUtility.DEFAULT)) {
           defaultHandlerFound = true;
@@ -123,10 +124,10 @@ public class CoordinatorServiceJpa extends RootServiceJpa implements
       }
     } catch (Exception e) {
       e.printStackTrace();
-      providerHandlerMap = null;
+      providerHandlerList = null;
     }
 
-    /** Add converters found in Config to Map. */
+    /** Add converters found in Config to List. */
     try {
       if (config == null) {
         config = ConfigUtility.getConfigProperties();
@@ -140,12 +141,12 @@ public class CoordinatorServiceJpa extends RootServiceJpa implements
           continue;
         }
 
-        // Add handlers to map
+        // Add handlers to List
         ConverterHandler handlerService =
             ConfigUtility.newStandardHandlerInstanceWithConfiguration(key,
                 handlerName, ConverterHandler.class);
 
-        converterHandlerMap.add(handlerService);
+        converterHandlerList.add(handlerService);
 
         if (handlerName.equals(ConfigUtility.DEFAULT)) {
           defaultHandlerFound = true;
@@ -158,7 +159,31 @@ public class CoordinatorServiceJpa extends RootServiceJpa implements
       }
     } catch (Exception e) {
       e.printStackTrace();
-      converterHandlerMap = null;
+      converterHandlerList = null;
+    }
+
+    /** Add information Models found in Config to List. */
+    try {
+      if (config == null) {
+        config = ConfigUtility.getConfigProperties();
+      }
+
+      String key = "info.model.models";
+
+      for (String informationModel : config.getProperty(key).split(",")) {
+        if (informationModel.isEmpty()) {
+          continue;
+        }
+        // Add handlers to List
+        InfoModel<?> model =
+            ConfigUtility.newStandardHandlerInstanceWithConfiguration(key,
+                informationModel, InfoModel.class);
+
+        informationModelList.add(model);
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+      informationModelList = null;
     }
 
     /** Add specialties found in Config to List. */
@@ -200,26 +225,6 @@ public class CoordinatorServiceJpa extends RootServiceJpa implements
       e.printStackTrace();
       availableSemanticTypes = null;
     }
-
-    /** Add informationModels found in Config to List. */
-    try {
-      if (config == null) {
-        config = ConfigUtility.getConfigProperties();
-      }
-
-      String key = "informationModels.available";
-
-      for (String informationModel : config.getProperty(key).split(",")) {
-        if (informationModel.isEmpty()) {
-          continue;
-        }
-
-        availableInformationModels.add(informationModel);
-      }
-    } catch (Exception e) {
-      e.printStackTrace();
-      availableInformationModels = null;
-    }
   }
 
   /**
@@ -228,24 +233,55 @@ public class CoordinatorServiceJpa extends RootServiceJpa implements
    * @throws Exception the exception
    */
   public CoordinatorServiceJpa() throws Exception {
+    super();
+
+    if (normalizerHandlerList == null) {
+      throw new Exception(
+          "Normalizer Handlers did not properly initialize, serious error.");
+    }
+
+    if (providerHandlerList == null) {
+      throw new Exception(
+          "Provider Handlers did not properly initialize, serious error.");
+    }
+
+    if (converterHandlerList == null) {
+      throw new Exception(
+          "Converter Handlers did not properly initialize, serious error.");
+    }
+
+    if (informationModelList == null) {
+      throw new Exception(
+          "The Information Models did not properly initialize, serious error.");
+    }
+
+    if (availableSpecialties == null) {
+      throw new Exception(
+          "The Available Specialties list did not properly initialize, serious error.");
+    }
+
+    if (availableSemanticTypes == null) {
+      throw new Exception(
+          "The Available Semantic Types list did not properly initialize, serious error.");
+    }
   }
 
   /* see superclass */
   @Override
   public List<NormalizerHandler> getNormalizers() throws Exception {
-    return normalizerHandlerMap;
+    return normalizerHandlerList;
   }
 
   /* see superclass */
   @Override
   public List<ProviderHandler> getProviders() throws Exception {
-    return providerHandlerMap;
+    return providerHandlerList;
   }
 
   /* see superclass */
   @Override
   public List<ConverterHandler> getConverters() throws Exception {
-    return converterHandlerMap;
+    return converterHandlerList;
   }
 
   /* see superclass */
@@ -263,7 +299,8 @@ public class CoordinatorServiceJpa extends RootServiceJpa implements
   /* see superclass */
   @Override
   public List<String> getInformationModels() throws Exception {
-    return availableInformationModels;
+    return informationModelList.stream().map(model -> model.getName())
+        .collect(Collectors.toList());
   }
 
   /* see superclass */
@@ -360,6 +397,17 @@ public class CoordinatorServiceJpa extends RootServiceJpa implements
     return returnTuples;
   }
 
+  /**
+   * Process and convert input data context.
+   *
+   * @param inputContext the input context
+   * @param inputProviderMap the input provider map
+   * @param normalizedTuple the normalized tuple
+   * @param outputTriplets the output triplets
+   * @param returnTuples the return tuples
+   * @return the list
+   * @throws Exception the exception
+   */
   private List<ScoredDataContextTuple> processAndConvertInputDataContext(
     DataContext inputContext,
     Map<ProviderHandler, Set<ConverterHandler>> inputProviderMap,
@@ -403,13 +451,19 @@ public class CoordinatorServiceJpa extends RootServiceJpa implements
             returnTuples = handleDuplicateContexts(returnTuples, tuple, result);
           }
         }
-
       }
     }
 
     return conductProcessAndConvertThresholdAnalysis(returnTuples);
   }
 
+  /**
+   * Identify output triplets to process.
+   *
+   * @param outputContext the output context
+   * @return the map
+   * @throws Exception the exception
+   */
   private Map<ProviderHandler, Map<ConverterHandler, Set<DataContext>>> identifyOutputTripletsToProcess(
     DataContext outputContext) throws Exception {
     Map<ProviderHandler, Map<ConverterHandler, Set<DataContext>>> triplets =
@@ -456,7 +510,7 @@ public class CoordinatorServiceJpa extends RootServiceJpa implements
    * Identify triplets to process.
    *
    * @param inputContext the input context
-   * @param outputTriplets
+   * @param outputTriplets the output triplets
    * @return the map
    * @throws Exception the exception
    */
@@ -497,6 +551,15 @@ public class CoordinatorServiceJpa extends RootServiceJpa implements
     return triplets;
   }
 
+  /**
+   * Adds the input triplet.
+   *
+   * @param triplets the triplets
+   * @param pHandler the handler
+   * @param cHandler the c handler
+   * @param cContext the c context
+   * @return the map
+   */
   private Map<DataContext, Map<ProviderHandler, Set<ConverterHandler>>> addInputTriplet(
     Map<DataContext, Map<ProviderHandler, Set<ConverterHandler>>> triplets,
     ProviderHandler pHandler, ConverterHandler cHandler, DataContext cContext) {
@@ -517,6 +580,14 @@ public class CoordinatorServiceJpa extends RootServiceJpa implements
     return triplets;
   }
 
+  /**
+   * Input triplet allowed.
+   *
+   * @param pHandler the handler
+   * @param cHandler the c handler
+   * @param outputTriplets the output triplets
+   * @return true, if successful
+   */
   private boolean inputTripletAllowed(ProviderHandler pHandler,
     ConverterHandler cHandler,
     Map<ProviderHandler, Map<ConverterHandler, Set<DataContext>>> outputTriplets) {
@@ -664,6 +735,12 @@ public class CoordinatorServiceJpa extends RootServiceJpa implements
     return (returnedResults);
   }
 
+  /**
+   * Conduct process and convert threshold analysis.
+   *
+   * @param initialTuples the initial tuples
+   * @return the list
+   */
   private List<ScoredDataContextTuple> conductProcessAndConvertThresholdAnalysis(
     List<ScoredDataContextTuple> initialTuples) {
     List<ScoredDataContextTuple> returnedResults = new ArrayList<>();
@@ -679,6 +756,14 @@ public class CoordinatorServiceJpa extends RootServiceJpa implements
     return (returnedResults);
   }
 
+  /**
+   * Handle duplicate contexts.
+   *
+   * @param currentResults the current results
+   * @param newResult the new result
+   * @return the list
+   * @throws Exception the exception
+   */
   private List<ScoredDataContext> handleDuplicateContexts(
     List<ScoredDataContext> currentResults, ScoredDataContext newResult)
     throws Exception {
@@ -691,6 +776,8 @@ public class CoordinatorServiceJpa extends RootServiceJpa implements
           && currentResult.getSemanticType()
               .equals(newResult.getSemanticType())
           && currentResult.getSpecialty().equals(newResult.getSpecialty())
+          && currentResult.getInfoModelName().equals(
+              newResult.getInfoModelName())
           && currentResult.getTerminology().equals(newResult.getTerminology())
           && currentResult.getType() == newResult.getType()
           && currentResult.getVersion().equals(newResult.getVersion())) {
@@ -709,6 +796,7 @@ public class CoordinatorServiceJpa extends RootServiceJpa implements
       ScoredDataContext newScoredContext = new ScoredDataContextJpa();
 
       newScoredContext.setCustomer(newResult.getCustomer());
+      newScoredContext.setInfoModelName(newResult.getInfoModelName());
       newScoredContext.setSemanticType(newResult.getSemanticType());
       newScoredContext.setSpecialty(newResult.getSpecialty());
       newScoredContext.setTerminology(newResult.getTerminology());
@@ -722,6 +810,15 @@ public class CoordinatorServiceJpa extends RootServiceJpa implements
     return returnContexts;
   }
 
+  /**
+   * Handle duplicate contexts.
+   *
+   * @param currentTuples the current tuples
+   * @param newTuple the new tuple
+   * @param result the result
+   * @return the list
+   * @throws Exception the exception
+   */
   private List<ScoredDataContextTuple> handleDuplicateContexts(
     List<ScoredDataContextTuple> currentTuples, DataContextTuple newTuple,
     ScoredResult result) throws Exception {
