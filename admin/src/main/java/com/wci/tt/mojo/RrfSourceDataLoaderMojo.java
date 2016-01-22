@@ -146,7 +146,7 @@ public class RrfSourceDataLoaderMojo extends AbstractMojo {
 
       // Now, invoke the loader
       final Properties p = new Properties();
-      p.setProperty("prefix", "RXN");
+      p.setProperty("prefix", prefix);
       loader.setSourceData(sourceData);
       loader.setTerminology(terminology);
       loader.setVersion(version);
