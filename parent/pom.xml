@@ -83,6 +83,24 @@
       </dependency>
 
       <dependency>
+        <groupId>com.wci.umls.server</groupId>
+        <artifactId>term-server-services</artifactId>
+        <version>1.1.0-SNAPSHOT</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.wci.umls.server</groupId>
+        <artifactId>term-server-jpa-model</artifactId>
+        <version>1.1.0-SNAPSHOT</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.wci.umls.server</groupId>
+        <artifactId>term-server-jpa-services</artifactId>
+        <version>1.1.0-SNAPSHOT</version>
+      </dependency>
+
+      <dependency>
         <groupId>org.apache.maven</groupId>
         <artifactId>maven-plugin-api</artifactId>
         <version>3.2.5</version>

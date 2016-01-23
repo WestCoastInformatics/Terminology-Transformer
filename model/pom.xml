@@ -16,12 +16,28 @@
 
   <dependencies>
 
-    <!-- Term server rest -->
+    <!-- Term server jpa server -->
     <dependency>
       <groupId>com.wci.umls.server</groupId>
-      <artifactId>term-server-rest</artifactId>
-      <classifier>classes</classifier>
+      <artifactId>term-server-jpa-services</artifactId>
     </dependency>
 
+    <dependency>
+      <groupId>com.wci.umls.server</groupId>
+      <artifactId>term-server-model</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.wci.umls.server</groupId>
+      <artifactId>term-server-services</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.wci.umls.server</groupId>
+      <artifactId>term-server-jpa-model</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.wci.umls.server</groupId>
+      <artifactId>term-server-jpa-services</artifactId>
+    </dependency>
+    
   </dependencies>
 </project>
