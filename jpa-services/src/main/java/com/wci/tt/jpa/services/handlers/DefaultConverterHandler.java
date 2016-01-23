@@ -1,3 +1,6 @@
+/*
+ *    Copyright 2016 West Coast Informatics, LLC
+ */
 package com.wci.tt.jpa.services.handlers;
 
 import java.util.ArrayList;
@@ -18,12 +21,9 @@ import com.wci.tt.services.handlers.ConverterHandler;
  * Class created to prove that supporting functionality works, not to provide
  * meaningful results.
  * 
- * Default Converter doesn't handle specific contexts, but rather supports all
- * contexts. Thus, the setter methods of AbstractContextHandler should not be
- * called.
+ * Thus, {@link AbstractAcceptsHandler} not extended.
  */
-public class DefaultConverterHandler extends AbstractContextHandler
-    implements ConverterHandler {
+public class DefaultConverterHandler implements ConverterHandler {
   /**
    * Instantiates an empty {@link DefaultConverterHandler}.
    */
@@ -60,6 +60,7 @@ public class DefaultConverterHandler extends AbstractContextHandler
     return contexts;
   }
 
+  /* see superclass */
   @Override
   public DataContextTuple convert(String inputStr, DataContext inputContext,
     DataContext outputContext) throws Exception {

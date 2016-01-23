@@ -19,11 +19,12 @@ import com.wci.umls.server.helpers.Configurable;
 public interface ConverterHandler extends Configurable {
 
   /**
-   * Reports what Data Contexts a converter is setup to handle based on an input
-   * context.
-   *
-   * Returns a list because some input contexts may be blank yet converter may
-   * handle multiple data context options simultaneously.
+   * Ensures input context is supported. If it is, returns all output contexts
+   * the converter method supports.
+   * 
+   * Returns a list because converter may handle multiple output data contexts.
+   * 
+   * Note: Often overridden by {@link AbstractAcceptsHandler}.
    *
    * @param context the context
    * @return the list
@@ -32,14 +33,17 @@ public interface ConverterHandler extends Configurable {
   public List<DataContext> accepts(DataContext context) throws Exception;
 
   /**
-   * Changes the representation of the inputStr defined by the specified
-   * input context into output in the form as defined by the output context.
+   * Changes the representation of the inputStr defined by the specified input
+   * context into output in the form as defined by the output context.
    * 
    * Four convert possibilities exist:
+   * 
+   * <pre>
    *    1) A code to an Information Model 
    *    2) A code to a code 
    *    3) A Information Model to a code 
    *    4) A Information Model to a Information Model
+   * </pre>
    *
    * @param inputStr the input string
    * @param inputContext the input context

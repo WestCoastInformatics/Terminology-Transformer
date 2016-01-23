@@ -22,11 +22,12 @@ import com.wci.umls.server.helpers.Configurable;
 public interface ProviderHandler extends Configurable {
 
   /**
-   * Reports what Data Contexts a converter can handle based on an input
-   * context.
+   * Ensures input context is supported. If it is, returns all output contexts
+   * the identify & process methods support.
    * 
-   * Returns a list because some input contexts may be blank yet provider may
-   * handle multiple data context options simultaneously.
+   * Returns a list because provider may handle multiple output data contexts.
+   * 
+   * Note: Often overridden by {@link AbstractAcceptsHandler}.
    *
    * @param inputContext the input context
    * @return the list

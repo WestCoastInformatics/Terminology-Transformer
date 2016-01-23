@@ -120,9 +120,16 @@ public class DefaultInfoModel implements InfoModel<DefaultInfoModel> {
     }
   }
 
+  /* see superclass */
   @Override
   public String getVersion() {
     return "1.0";
+  }
+
+  /* see superclass */
+  @Override
+  public String getModelValue() throws Exception {
+    return code;
   }
 
 }

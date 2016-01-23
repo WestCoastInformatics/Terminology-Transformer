@@ -23,12 +23,9 @@ import com.wci.tt.services.handlers.ProviderHandler;
  * Class created to prove that supporting functionality works, not to provide
  * meaningful results.
  * 
- * Default Provider doesn't handle specific contexts, but rather supports all
- * contexts. Thus, the setter methods of AbstractContextHandler should not be
- * called.
+ * Thus, {@link AbstractAcceptsHandler} not extended.
  */
-public class DefaultProviderHandler extends AbstractContextHandler implements
-    ProviderHandler {
+public class DefaultProviderHandler implements ProviderHandler {
 
   /**
    * Instantiates an empty {@link DefaultProviderHandler}.
