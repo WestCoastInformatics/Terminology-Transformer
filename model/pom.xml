@@ -11,7 +11,7 @@
   </parent>
 
   <artifactId>tt-model</artifactId>
-  <name>WCI Terminology Transformer Proect. domain model</name>
+  <name>WCI Terminology Transformer Project. domain model</name>
   <description>Conceptual domain model objects.</description>
 
   <dependencies>

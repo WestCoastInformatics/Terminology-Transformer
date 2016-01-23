@@ -53,6 +53,11 @@
       <classifier>classes</classifier>
     </dependency>
 
+    <dependency>
+      <groupId>com.wci.umls.server</groupId>
+      <artifactId>term-server-model</artifactId>
+    </dependency>
+
   </dependencies>
 
   <!-- Always build, use dev configuration by default -->
@@ -111,7 +116,7 @@
         <artifactId>maven-war-plugin</artifactId>
         <configuration>
           <warName>tt-rest</warName>
-          <attachClasses>true</attachClasses>
+          <attachClasses>false</attachClasses>
           <filteringDeploymentDescriptors>true</filteringDeploymentDescriptors>
           <webResources>
             <resource>
@@ -173,6 +178,27 @@
           </webResources>
 
         </configuration>
+      </plugin>
+
+      <!-- Assemble resources into tt-rest*-classes.jar -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>zip-filter-properties</id>
+            <configuration>
+              <appendAssemblyId>true</appendAssemblyId>
+              <descriptors>
+                <descriptor>src/main/assembly/config.xml</descriptor>
+              </descriptors>
+            </configuration>
+            <goals>
+              <goal>single</goal>
+            </goals>
+            <phase>package</phase>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
 

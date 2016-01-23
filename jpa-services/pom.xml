@@ -32,6 +32,11 @@
       <artifactId>tt-services</artifactId>
     </dependency>
 
+    <dependency>
+      <groupId>com.wci.umls.server</groupId>
+      <artifactId>term-server-rest</artifactId>
+      <classifier>classes</classifier>
+    </dependency>
   </dependencies>
 
 
