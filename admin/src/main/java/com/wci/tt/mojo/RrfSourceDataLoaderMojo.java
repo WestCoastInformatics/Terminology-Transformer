@@ -153,7 +153,7 @@ public class RrfSourceDataLoaderMojo extends AbstractMojo {
       loader.setProperties(p);
 
       loader.compute();
-
+      loader.close();
       getLog().info("Done ...");
 
     } catch (Exception e) {

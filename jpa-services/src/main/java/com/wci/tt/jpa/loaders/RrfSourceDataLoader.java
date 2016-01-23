@@ -37,8 +37,8 @@ public class RrfSourceDataLoader implements SourceDataLoader {
   /** The terminology. */
   private String terminology;
 
-  /**  The version. */
-  private String version; 
+  /** The version. */
+  private String version;
 
   /** The prefix. */
   private String prefix;
@@ -103,16 +103,17 @@ public class RrfSourceDataLoader implements SourceDataLoader {
     final ContentServiceRest contentService = new ContentServiceRestImpl();
     try {
       sourceData.setLoaderStatus(SourceData.Status.LOADING);
+      sourceDataService.updateSourceData(sourceData);
       contentService.loadTerminologyRrf(terminology, version, false, prefix,
           inputDir, adminAuthToken);
       sourceData.setLoaderStatus(SourceData.Status.FINISHED);
+      sourceDataService.updateSourceData(sourceData);
 
     } catch (Exception e) {
       sourceData.setLoaderStatus(SourceData.Status.FAILED);
+      sourceDataService.updateSourceData(sourceData);
       throw new Exception("Loading source data failed - " + sourceData, e);
     } finally {
-      // Make sure source data gets updated with status
-      sourceDataService.updateSourceData(sourceData);
       sourceDataService.close();
     }
   }
