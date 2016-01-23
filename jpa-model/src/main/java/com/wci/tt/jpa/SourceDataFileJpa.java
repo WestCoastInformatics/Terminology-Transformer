@@ -34,7 +34,7 @@ import com.wci.tt.SourceDataFile;
  */
 @Entity
 @Table(name = "source_data_files", uniqueConstraints = @UniqueConstraint(columnNames = {
-    "name", "directory"
+    "path", "name", "directory"
 }) )
 @Audited
 @Indexed
@@ -149,9 +149,9 @@ public class SourceDataFileJpa implements SourceDataFile {
   /* see superclass */
   @Override
   @Fields({
-    @Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO),
-    @Field(name = "nameSort", index = Index.YES, analyze = Analyze.NO, store = Store.NO)
-})
+      @Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO),
+      @Field(name = "nameSort", index = Index.YES, analyze = Analyze.NO, store = Store.NO)
+  })
   public String getName() {
     return this.name;
   }
