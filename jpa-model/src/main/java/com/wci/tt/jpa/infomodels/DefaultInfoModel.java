@@ -11,8 +11,8 @@ import com.wci.tt.infomodels.InfoModel;
 import com.wci.umls.server.helpers.ConfigUtility;
 
 /**
- * Default implementation of an information model.
- * NOTE: the information model type parameter must match the class.
+ * Default implementation of an information model. NOTE: the information model
+ * type parameter must match the class.
  */
 @XmlRootElement(name = "codeString")
 public class DefaultInfoModel implements InfoModel<DefaultInfoModel> {
@@ -114,11 +114,15 @@ public class DefaultInfoModel implements InfoModel<DefaultInfoModel> {
   public DefaultInfoModel getModel(String model) throws Exception {
     // Only accept json in correct format
     try {
-      return (DefaultInfoModel) ConfigUtility.getGraphForJson(model,
-          DefaultInfoModel.class);
+      return ConfigUtility.getGraphForJson(model, DefaultInfoModel.class);
     } catch (Exception e) {
       throw new Exception("Malformed model - " + model);
     }
+  }
+
+  @Override
+  public String getVersion() {
+    return "1.0";
   }
 
 }

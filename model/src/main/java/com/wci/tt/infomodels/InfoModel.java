@@ -20,7 +20,7 @@ public interface InfoModel<T extends InfoModel<?>> extends Configurable {
    * @return true, if successful
    * @throws Exception the exception
    */
-  public boolean verify(String model) throws Exception;
+  public boolean verify(String models) throws Exception;
 
   /**
    * Returns an object representing the model.
@@ -30,4 +30,19 @@ public interface InfoModel<T extends InfoModel<?>> extends Configurable {
    * @throws Exception the exception
    */
   public T getModel(String model) throws Exception;
+
+  /**
+   * Returns the model value, the JSON or XML string representing the model.
+   *
+   * @return the model value
+   * @throws Exception the exception
+   */
+  public String getModelValue() throws Exception;
+  
+  /**
+   * Returns the version  of the model.
+   *
+   * @return the version 
+   */
+  public String getVersion();
 }
