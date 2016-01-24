@@ -64,7 +64,6 @@ public class CoordinatorServiceJpa extends RootServiceJpa implements
       }
 
       String key = "normalizer.handlers";
-      boolean defaultHandlerFound = false;
 
       for (String handlerName : config.getProperty(key).split(",")) {
         if (handlerName.isEmpty()) {
@@ -77,15 +76,11 @@ public class CoordinatorServiceJpa extends RootServiceJpa implements
                 handlerName, NormalizerHandler.class);
 
         normalizerHandlerList.add(handlerService);
-
-        if (handlerName.equals(ConfigUtility.DEFAULT)) {
-          defaultHandlerFound = true;
-        }
       }
 
-      if (!defaultHandlerFound) {
-        throw new Exception("normalizer.handlers." + ConfigUtility.DEFAULT
-            + " expected and does not exist.");
+      if (normalizerHandlerList.isEmpty()) {
+        throw new Exception(
+            "normalizer.handlers must have one value but none exist");
       }
     } catch (Exception e) {
       e.printStackTrace();
@@ -99,7 +94,6 @@ public class CoordinatorServiceJpa extends RootServiceJpa implements
       }
 
       String key = "provider.handlers";
-      boolean defaultHandlerFound = false;
 
       for (String handlerName : config.getProperty(key).split(",")) {
         if (handlerName.isEmpty()) {
@@ -112,15 +106,11 @@ public class CoordinatorServiceJpa extends RootServiceJpa implements
                 handlerName, ProviderHandler.class);
 
         providerHandlerList.add(handlerService);
-
-        if (handlerName.equals(ConfigUtility.DEFAULT)) {
-          defaultHandlerFound = true;
-        }
       }
 
-      if (!defaultHandlerFound) {
-        throw new Exception("provider.handlers." + ConfigUtility.DEFAULT
-            + " expected and does not exist.");
+      if (providerHandlerList.isEmpty()) {
+        throw new Exception(
+            "provider.handlers must have one value but none exist");
       }
     } catch (Exception e) {
       e.printStackTrace();
@@ -134,7 +124,6 @@ public class CoordinatorServiceJpa extends RootServiceJpa implements
       }
 
       String key = "converter.handlers";
-      boolean defaultHandlerFound = false;
 
       for (String handlerName : config.getProperty(key).split(",")) {
         if (handlerName.isEmpty()) {
@@ -147,15 +136,11 @@ public class CoordinatorServiceJpa extends RootServiceJpa implements
                 handlerName, ConverterHandler.class);
 
         converterHandlerList.add(handlerService);
-
-        if (handlerName.equals(ConfigUtility.DEFAULT)) {
-          defaultHandlerFound = true;
-        }
       }
 
-      if (!defaultHandlerFound) {
-        throw new Exception("converter.handlers." + ConfigUtility.DEFAULT
-            + " expected and does not exist.");
+      if (converterHandlerList.isEmpty()) {
+        throw new Exception(
+            "converter.handlers must have one value but none exist");
       }
     } catch (Exception e) {
       e.printStackTrace();
