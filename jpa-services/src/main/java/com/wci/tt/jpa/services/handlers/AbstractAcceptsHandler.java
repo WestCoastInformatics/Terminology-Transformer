@@ -131,16 +131,27 @@ public abstract class AbstractAcceptsHandler {
 
     // Having created every context, populate them with the output type (if
     // defined)
-    if (outputType != DataContextType.UNKNOWN) {
-      for (DataContext c : acceptedContexts) {
-        c.setType(outputType);
 
-        if (outputType == DataContextType.INFO_MODEL) {
-          c.setInfoModelName(outputInfoModelName);
+    if (!acceptedContexts.isEmpty()) {
+      if (outputType != DataContextType.UNKNOWN) {
+        for (DataContext c : acceptedContexts) {
+          c.setType(outputType);
+
+          if (outputType == DataContextType.INFO_MODEL) {
+            c.setInfoModelName(outputInfoModelName);
+          }
         }
       }
-    }
+    } else {
+      DataContext c = new DataContextJpa();
 
+      c.setType(outputType);
+      if (outputType == DataContextType.INFO_MODEL) {
+        c.setInfoModelName(outputInfoModelName);
+      }
+
+      acceptedContexts.add(c);
+    }
     return acceptedContexts;
   }
 
@@ -157,7 +168,9 @@ public abstract class AbstractAcceptsHandler {
     List<DataContext> newContexts = new ArrayList<>();
 
     // Handle values. Nothing to do if they are empty
-    if (!values.isEmpty()) {
+    if (values.isEmpty()) {
+      return currentContexts;
+    } else {
       // Can't presume currentContexts has been populated yet
       if (currentContexts.isEmpty()) {
         // Current contexts not yet populated, thus populate newContexts
@@ -177,9 +190,9 @@ public abstract class AbstractAcceptsHandler {
           }
         }
       }
-    }
 
-    return newContexts;
+      return newContexts;
+    }
   }
 
   /**
@@ -238,10 +251,10 @@ public abstract class AbstractAcceptsHandler {
     }
 
     if (!checkFieldSupported(context.getCustomer(), inputCustomers)
-        || !checkFieldSupported(context.getCustomer(), inputCustomers)
-        || !checkFieldSupported(context.getCustomer(), inputCustomers)
-        || !checkFieldSupported(context.getCustomer(), inputCustomers)
-        || !checkFieldSupported(context.getCustomer(), inputCustomers)) {
+        || !checkFieldSupported(context.getSemanticType(), inputSemanticTypes)
+        || !checkFieldSupported(context.getSpecialty(), inputSpecialties)
+        || !checkFieldSupported(context.getTerminology(), inputTerminologies)
+        || !checkFieldSupported(context.getVersion(), inputVersions)) {
       return false;
     }
 

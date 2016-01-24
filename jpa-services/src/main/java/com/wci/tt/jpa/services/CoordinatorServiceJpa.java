@@ -4,17 +4,15 @@
 package com.wci.tt.jpa.services;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.wci.tt.DataContext;
 import com.wci.tt.helpers.DataContextTuple;
+import com.wci.tt.helpers.DataContextType;
 import com.wci.tt.helpers.ScoredDataContext;
 import com.wci.tt.helpers.ScoredDataContextTuple;
 import com.wci.tt.helpers.ScoredResult;
@@ -291,14 +289,14 @@ public class CoordinatorServiceJpa extends RootServiceJpa implements
   /* see superclass */
   @Override
   public List<ScoredDataContext> identify(String inputStr,
-    DataContext inputContext) throws Exception {
+    DataContext requiredInputContext) throws Exception {
     List<ScoredDataContext> allIdentifiedResults = new ArrayList<>();
 
     if (inputStr != null && !inputStr.isEmpty()) {
       // STEP 1: Call accept per provider: Generates map of provider to list of
       // supported data contexts
       Map<ProviderHandler, List<DataContext>> supportedProviderContexts =
-          getSupportedProviderContexts(inputContext);
+          getSupportedProviders(requiredInputContext);
 
       // Get list of all Data Contexts
       List<DataContext> supportedContexts = new ArrayList<>();
@@ -308,7 +306,7 @@ public class CoordinatorServiceJpa extends RootServiceJpa implements
 
       // STEPS 2: Generate normalized content per accepted data contexts
       List<DataContextTuple> normalizedInputTuples =
-          getNormalizedContent(inputStr, supportedContexts);
+          getNormalizedContent(inputStr, requiredInputContext);
 
       // STEP 3: Call identify per each provider's accepted data contexts on
       // data
@@ -341,191 +339,106 @@ public class CoordinatorServiceJpa extends RootServiceJpa implements
   /* see superclass */
   @Override
   public List<ScoredDataContextTuple> process(String inputStr,
-    DataContext inputContext, DataContext outputContext) throws Exception {
-    List<ScoredDataContextTuple> returnTuples = new ArrayList<>();
-
+    DataContext requiredInputContext, DataContext requiredOutputContext)
+    throws Exception {
     // Ensure valid data to work with
-    if (inputStr != null && !inputStr.isEmpty() && outputContext != null
-        && !outputContext.isEmpty()) {
+    if (inputStr != null && !inputStr.isEmpty()
+        && requiredOutputContext != null && !requiredOutputContext.isEmpty()) {
 
-      // Step 1: Identify output contexts supported by Provider/Converter pairs
-      Map<ProviderHandler, Map<ConverterHandler, Set<DataContext>>> outputTriplets =
-          identifyOutputTripletsToProcess(outputContext);
+      // Step 1: Identify the output contexts supported by Providers that
+      // accepts() the inputContext
+      Map<ProviderHandler, List<DataContext>> supportedProviders =
+          getSupportedProviders(requiredInputContext);
 
-      // Step 2: Identify input contexts supported by Provider/Converter pairs
-      Map<DataContext, Map<ProviderHandler, Set<ConverterHandler>>> inputTriplets =
-          identifyInputTripletsToProcess(inputContext, outputTriplets);
+      // Grab provider output contexts
+      List<DataContext> outputContexts = new ArrayList<>();
+      for (List<DataContext> outputs : supportedProviders.values()) {
+        outputContexts.addAll(outputs);
+      }
+
+      // Step 2: Identify the Converters that handle the provider output
+      // contexts (as inputs)
+      // && whose output context contains the requested outputContext
+      Map<DataContext, List<ConverterHandler>> supportedConverters =
+          getSupportedConverters(outputContexts, requiredOutputContext);
 
       // Step 3: Generate normalized content per accepted data contexts
       List<DataContextTuple> normalizedInputTuples =
-          getNormalizedContent(inputStr, inputTriplets.keySet());
+          getNormalizedContent(inputStr, requiredInputContext);
 
       // Step 4: Call process and convert for each accepted context on data
       // context's associated normalized results
-      for (DataContext inputTripletContext : inputTriplets.keySet()) {
-        Map<ProviderHandler, Set<ConverterHandler>> inputProviderMap =
-            inputTriplets.get(inputTripletContext);
-
-        for (DataContextTuple normalizedTuple : normalizedInputTuples) {
-          if (inputTripletContext.equals(normalizedTuple.getDataContext())) {
-            // Found input data context valid for triplet. Now have
-            // normalizedTuple &
-            // valid input triplet
-            returnTuples.addAll(processAndConvertInputDataContext(
-                inputTripletContext, inputProviderMap, normalizedTuple,
-                outputTriplets, returnTuples));
-          }
-        }
-      }
+      return processAndConvert(normalizedInputTuples, requiredInputContext,
+          requiredOutputContext, supportedProviders, supportedConverters);
     }
 
-    return returnTuples;
+    return new ArrayList<ScoredDataContextTuple>();
   }
 
   /**
-   * Process and convert input data context.
+   * Process and convert.
    *
-   * @param inputContext the input context
-   * @param inputProviderMap the input provider map
-   * @param normalizedTuple the normalized tuple
-   * @param outputTriplets the output triplets
-   * @param returnTuples the return tuples
+   * @param normalizedInputTuples the normalized input tuples
+   * @param requiredInputContext the required input context
+   * @param requiredOutputContext the required output context
+   * @param supportedProviders the supported providers
+   * @param supportedConverters the supported converters
    * @return the list
    * @throws Exception the exception
    */
-  private List<ScoredDataContextTuple> processAndConvertInputDataContext(
-    DataContext inputContext,
-    Map<ProviderHandler, Set<ConverterHandler>> inputProviderMap,
-    DataContextTuple normalizedTuple,
-    Map<ProviderHandler, Map<ConverterHandler, Set<DataContext>>> outputTriplets,
-    List<ScoredDataContextTuple> returnTuples) throws Exception {
-    // For all Providers that support the input Data Context
-    for (ProviderHandler inputProvider : inputProviderMap.keySet()) {
-      // Obtain the Map of converter to Set of Output Contexts
-      Map<ConverterHandler, Set<DataContext>> outputConverterMap =
-          outputTriplets.get(inputProvider);
-
-      // For all Converters paired with the Provider supported by the the input
-      // context
-      for (ConverterHandler inputConverter : inputProviderMap
-          .get(inputProvider)) {
-        // For all output contexts supported by the Provider/Converter pair
-        for (DataContext outputContext : outputConverterMap.get(inputConverter)) {
-          // Have the input context and an output context supported by the
-          // Provider/Converter Pair
-          // Get list of Provider.process() results associated with context
-          List<ScoredResult> allProcessedResults =
-              inputProvider.process(normalizedTuple.getData(), inputContext,
-                  outputContext);
-
-          List<ScoredResult> processedResults =
-              conductProcessThresholdAnalysis(allProcessedResults);
-
-          for (ScoredResult result : processedResults) {
-            DataContextTuple tuple =
-                inputConverter.convert(result.getValue(), inputContext,
-                    outputContext);
-
-            ScoredDataContextTuple scoredTuple =
-                new ScoredDataContextTupleJpa();
-
-            scoredTuple.setDataContext(tuple.getDataContext());
-            scoredTuple.setData(tuple.getData());
-            scoredTuple.setScore(result.getScore());
-
-            returnTuples = handleDuplicateContexts(returnTuples, tuple, result);
-          }
-        }
-      }
-    }
-
-    return conductProcessAndConvertThresholdAnalysis(returnTuples);
-  }
-
-  /**
-   * Identify output triplets to process.
-   *
-   * @param outputContext the output context
-   * @return the map
-   * @throws Exception the exception
-   */
-  private Map<ProviderHandler, Map<ConverterHandler, Set<DataContext>>> identifyOutputTripletsToProcess(
-    DataContext outputContext) throws Exception {
-    Map<ProviderHandler, Map<ConverterHandler, Set<DataContext>>> triplets =
-        new HashMap<>();
-    Map<ProviderHandler, List<DataContext>> supportedProviderContexts =
-        new HashMap<>();
-    Map<ConverterHandler, List<DataContext>> supportedConverterContexts =
-        new HashMap<>();
-
-    // Call accept per provider and converter on input Context
-    supportedProviderContexts = getSupportedProviderContexts(outputContext);
-    supportedConverterContexts = getSupportedConverterContexts(outputContext);
-
-    // Identify valid triplets of context/provider/converter
-    for (ProviderHandler pHandler : supportedProviderContexts.keySet()) {
-      for (DataContext pContext : supportedProviderContexts.get(pHandler)) {
-        for (ConverterHandler cHandler : supportedConverterContexts.keySet()) {
-          for (DataContext cContext : supportedConverterContexts.get(cHandler)) {
-            if (pContext.equals(cContext)) {
-              // Have pair of Provider & Converter that handles DataContext
-              if (!triplets.containsKey(pHandler)) {
-                Map<ConverterHandler, Set<DataContext>> pair = new HashMap<>();
-                triplets.put(pHandler, pair);
-              }
-
-              if (!triplets.get(pHandler).containsKey(cHandler)) {
-                Set<DataContext> contexts = new HashSet<>();
-                triplets.get(pHandler).put(cHandler, contexts);
-              }
-
-              // Add pair of Provider & Converter that handles Context to
-              // triplet collection
-              triplets.get(pHandler).get(cHandler).add(cContext);
-            }
-          }
-        }
-      }
-    }
-
-    return triplets;
-  }
-
-  /**
-   * Identify triplets to process.
-   *
-   * @param inputContext the input context
-   * @param outputTriplets the output triplets
-   * @return the map
-   * @throws Exception the exception
-   */
-  private Map<DataContext, Map<ProviderHandler, Set<ConverterHandler>>> identifyInputTripletsToProcess(
-    DataContext inputContext,
-    Map<ProviderHandler, Map<ConverterHandler, Set<DataContext>>> outputTriplets)
+  private List<ScoredDataContextTuple> processAndConvert(
+    List<DataContextTuple> normalizedInputTuples,
+    DataContext requiredInputContext, DataContext requiredOutputContext,
+    Map<ProviderHandler, List<DataContext>> supportedProviders,
+    Map<DataContext, List<ConverterHandler>> supportedConverters)
     throws Exception {
-    Map<DataContext, Map<ProviderHandler, Set<ConverterHandler>>> triplets =
-        new HashMap<>();
-    Map<ProviderHandler, List<DataContext>> supportedProviderContexts =
-        new HashMap<>();
-    Map<ConverterHandler, List<DataContext>> supportedConverterContexts =
-        new HashMap<>();
+    List<ScoredDataContextTuple> results = new ArrayList<>();
 
-    // Call accept per provider and converter on input Context
-    supportedProviderContexts = getSupportedProviderContexts(inputContext);
-    supportedConverterContexts = getSupportedConverterContexts(inputContext);
+    for (ProviderHandler pHandler : supportedProviders.keySet()) {
 
-    // Identify valid triplets of context/provider/converter
-    for (ProviderHandler pHandler : supportedProviderContexts.keySet()) {
-      for (DataContext pContext : supportedProviderContexts.get(pHandler)) {
-        for (ConverterHandler cHandler : supportedConverterContexts.keySet()) {
-          for (DataContext cContext : supportedConverterContexts.get(cHandler)) {
-            if (pContext.equals(cContext)) {
-              // Have pair of Provider & Converter that handles DataContext
-              if (inputTripletAllowed(pHandler, cHandler, outputTriplets)) {
-                // input provider & converter pair able to handler an output
-                // context
-                triplets =
-                    addInputTriplet(triplets, pHandler, cHandler, cContext);
+      if (supportedProviders.containsKey(pHandler)) {
+        for (DataContext intermediateContext : supportedProviders.get(pHandler)) {
+
+          if (supportedConverters.containsKey(intermediateContext)) {
+            for (ConverterHandler cHandler : supportedConverters
+                .get(intermediateContext)) {
+              // <pre>
+              // Have a Provider/Converter pair that:
+              // 1) Has proper intermediateContext such that:
+              // the output of provider is the input to the converter
+              // 2) the Provider supports the requiredInputContext
+              // 3) The Converter supports the requiredOutputContext
+              // </pre>
+
+              List<ScoredResult> processedResults = new ArrayList<>();
+              for (DataContextTuple inputTuple : normalizedInputTuples) {
+                // TODO: Handle Dups (b/c of scoring)
+                processedResults.addAll(pHandler.process(inputTuple.getData(),
+                    requiredInputContext, intermediateContext));
+              }
+
+              // TODO: Analyze contents to identify threshold
+
+              List<DataContextTuple> convertedResults = new ArrayList<>();
+              for (ScoredResult pResult : processedResults) {
+                // TODO: Handle Dups (b/c of scoring)
+                convertedResults.add(cHandler.convert(pResult.getValue(),
+                    intermediateContext, requiredOutputContext));
+
+                // TODO: Analyze contents to identify threshold
+
+                for (DataContextTuple cResult : convertedResults) {
+                  ScoredDataContextTuple finalResult =
+                      new ScoredDataContextTupleJpa();
+
+                  finalResult.setDataContext(cResult.getDataContext());
+                  finalResult.setData(cResult.getData());
+                  finalResult.setScore(pResult.getScore());
+
+                  // TODO: Handle Dups (b/c of scoring)
+
+                  results.add(finalResult);
+                }
               }
             }
           }
@@ -533,78 +446,34 @@ public class CoordinatorServiceJpa extends RootServiceJpa implements
       }
     }
 
-    return triplets;
-  }
+    // TODO: Analyze contents to identify threshold
 
-  /**
-   * Adds the input triplet.
-   *
-   * @param triplets the triplets
-   * @param pHandler the handler
-   * @param cHandler the c handler
-   * @param cContext the c context
-   * @return the map
-   */
-  private Map<DataContext, Map<ProviderHandler, Set<ConverterHandler>>> addInputTriplet(
-    Map<DataContext, Map<ProviderHandler, Set<ConverterHandler>>> triplets,
-    ProviderHandler pHandler, ConverterHandler cHandler, DataContext cContext) {
-    if (!triplets.containsKey(cContext)) {
-      Map<ProviderHandler, Set<ConverterHandler>> pair = new HashMap<>();
-      triplets.put(cContext, pair);
-    }
-
-    if (!triplets.get(cContext).containsKey(pHandler)) {
-      Set<ConverterHandler> converters = new HashSet<>();
-      triplets.get(cContext).put(pHandler, converters);
-    }
-
-    // Add pair of Provider & Converter that handles Context to
-    // triplet collection
-    triplets.get(cContext).get(pHandler).add(cHandler);
-
-    return triplets;
-  }
-
-  /**
-   * Input triplet allowed.
-   *
-   * @param pHandler the handler
-   * @param cHandler the c handler
-   * @param outputTriplets the output triplets
-   * @return true, if successful
-   */
-  private boolean inputTripletAllowed(ProviderHandler pHandler,
-    ConverterHandler cHandler,
-    Map<ProviderHandler, Map<ConverterHandler, Set<DataContext>>> outputTriplets) {
-    return (outputTriplets.containsKey(pHandler) && outputTriplets
-        .get(pHandler).containsKey(cHandler));
+    return results;
   }
 
   /**
    * Returns the normalized content.
    *
    * @param inputStr the input str
-   * @param contexts the contexts
+   * @param requiredInputContext the contexts
    * @return the normalized content
    * @throws Exception the exception
    */
   private List<DataContextTuple> getNormalizedContent(String inputStr,
-    Collection<DataContext> contexts) throws Exception {
+    DataContext requiredInputContext) throws Exception {
     List<ScoredDataContextTuple> normalizedResults = new ArrayList<>();
 
     // STEP 1: Normalize input per normalizer
     for (NormalizerHandler handler : getNormalizers()) {
-      for (DataContext context : contexts) {
-        for (ScoredResult r : handler.normalize(inputStr, context)) {
-          // Create Tuple
-          ScoredDataContextTuple tuple = new ScoredDataContextTupleJpa();
+      for (ScoredResult r : handler.normalize(inputStr, requiredInputContext)) {
+        // Create Tuple
+        ScoredDataContextTuple tuple = new ScoredDataContextTupleJpa();
 
-          tuple.setData(r.getValue());
-          tuple.setScore(r.getScore());
-          tuple.setDataContext(context);
+        tuple.setData(r.getValue());
+        tuple.setScore(r.getScore());
+        tuple.setDataContext(requiredInputContext);
 
-          normalizedResults.add(tuple);
-        }
+        normalizedResults.add(tuple);
       }
     }
 
@@ -615,17 +484,22 @@ public class CoordinatorServiceJpa extends RootServiceJpa implements
   /**
    * Returns the supported provider contexts.
    *
-   * @param inputContext the input context
+   * @param requiredInputContext the input context
    * @return the supported provider contexts
    * @throws Exception the exception
    */
-  private Map<ProviderHandler, List<DataContext>> getSupportedProviderContexts(
-    DataContext inputContext) throws Exception {
+  private Map<ProviderHandler, List<DataContext>> getSupportedProviders(
+    DataContext requiredInputContext) throws Exception {
     Map<ProviderHandler, List<DataContext>> supportedHandlerContexts =
         new HashMap<>();
 
     for (ProviderHandler handler : getProviders()) {
-      supportedHandlerContexts.put(handler, handler.accepts(inputContext));
+      List<DataContext> supportedContexts =
+          handler.accepts(requiredInputContext);
+
+      if (!supportedContexts.isEmpty()) {
+        supportedHandlerContexts.put(handler, supportedContexts);
+      }
     }
 
     return supportedHandlerContexts;
@@ -634,20 +508,93 @@ public class CoordinatorServiceJpa extends RootServiceJpa implements
   /**
    * Returns the supported converter contexts.
    *
-   * @param inputContext the input context
+   * @param possibleInputContexts the possible input contexts
+   * @param requiredOutputContext the required output context
    * @return the supported converter contexts
    * @throws Exception the exception
    */
-  private Map<ConverterHandler, List<DataContext>> getSupportedConverterContexts(
-    DataContext inputContext) throws Exception {
-    Map<ConverterHandler, List<DataContext>> supportedHandlerContexts =
+  private Map<DataContext, List<ConverterHandler>> getSupportedConverters(
+    List<DataContext> possibleInputContexts, DataContext requiredOutputContext)
+    throws Exception {
+    Map<DataContext, List<ConverterHandler>> supportedHandlerContexts =
         new HashMap<>();
 
-    for (ConverterHandler handler : getConverters()) {
-      supportedHandlerContexts.put(handler, handler.accepts(inputContext));
+    for (DataContext inputContext : possibleInputContexts) {
+      for (ConverterHandler handler : getConverters()) {
+        List<DataContext> supportedContexts = handler.accepts(inputContext);
+
+        for (DataContext c : supportedContexts) {
+          // Only add those contexts which match the requiredOutputContext
+          if (isAcceptableOutputContext(c, requiredOutputContext)) {
+            if (!supportedHandlerContexts.keySet().contains(inputContext)) {
+              // First time seeing Key, so create new map entry
+              List<ConverterHandler> cHandlers = new ArrayList<>();
+              supportedHandlerContexts.put(inputContext, cHandlers);
+            }
+
+            // Add to Map
+            supportedHandlerContexts.get(inputContext).add(handler);
+          }
+        }
+      }
     }
 
     return supportedHandlerContexts;
+  }
+
+  /**
+   * Indicates whether or not acceptable output context is the case.
+   *
+   * @param testContext the test context
+   * @param requiredOutputContext the required output context
+   * @return <code>true</code> if so, <code>false</code> otherwise
+   */
+  private boolean isAcceptableOutputContext(DataContext testContext,
+    DataContext requiredOutputContext) {
+    if (testContext.getType() != DataContextType.UNKNOWN) {
+      if (testContext.getType() != requiredOutputContext.getType()) {
+        return false;
+      }
+
+      if (testContext.getType() == DataContextType.INFO_MODEL) {
+        if (!testContext.getInfoModelName().equalsIgnoreCase(
+            requiredOutputContext.getInfoModelName())) {
+          return false;
+        }
+      }
+    }
+
+    if (!testContextValue(testContext.getCustomer(),
+        requiredOutputContext.getCustomer())
+        || !testContextValue(testContext.getCustomer(),
+            requiredOutputContext.getCustomer())
+        || !testContextValue(testContext.getCustomer(),
+            requiredOutputContext.getCustomer())
+        || !testContextValue(testContext.getCustomer(),
+            requiredOutputContext.getCustomer())
+        || !testContextValue(testContext.getCustomer(),
+            requiredOutputContext.getCustomer())) {
+      return false;
+    }
+
+    return true;
+  }
+
+  /**
+   * Test context value.
+   *
+   * @param testStr the test str
+   * @param requiredStr the required str
+   * @return true, if successful
+   */
+  private boolean testContextValue(String testStr, String requiredStr) {
+    if (requiredStr != null && !requiredStr.isEmpty()) {
+      if (!testStr.equalsIgnoreCase(requiredStr)) {
+        return false;
+      }
+    }
+
+    return true;
   }
 
   /**
