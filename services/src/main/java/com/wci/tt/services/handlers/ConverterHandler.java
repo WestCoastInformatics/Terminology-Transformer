@@ -24,7 +24,7 @@ public interface ConverterHandler extends Configurable {
    * 
    * Returns a list because converter may handle multiple output data contexts.
    * 
-   * Note: Often overridden by {@link AbstractAcceptsHandler}.
+   * Note: Often overridden by AbstractAcceptsHandler.
    *
    * @param context the context
    * @return the list

@@ -20,7 +20,7 @@ public interface InfoModel<T extends InfoModel<?>> extends Configurable {
    * @return true, if successful
    * @throws Exception the exception
    */
-  public boolean verify(String models) throws Exception;
+  public boolean verify(String model) throws Exception;
 
   /**
    * Returns an object representing the model.

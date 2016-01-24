@@ -27,7 +27,7 @@ public interface ProviderHandler extends Configurable {
    * 
    * Returns a list because provider may handle multiple output data contexts.
    * 
-   * Note: Often overridden by {@link AbstractAcceptsHandler}.
+   * Note: Often overridden by AbstractAcceptsHandler.
    *
    * @param inputContext the input context
    * @return the list
