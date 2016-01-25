@@ -21,11 +21,11 @@ import com.wci.tt.helpers.DataContextType;
 import com.wci.tt.helpers.ScoredDataContext;
 import com.wci.tt.helpers.ScoredResult;
 import com.wci.tt.jpa.helpers.DataContextJpa;
-import com.wci.tt.jpa.services.handlers.DefaultProviderHandler;
+import com.wci.tt.jpa.services.handlers.DefaultProvider;
 import com.wci.tt.services.handlers.ProviderHandler;
 
 /**
- * Some initial testing for {@link DefaultProviderHandler}. Assumes stock dev
+ * Some initial testing for {@link DefaultProvider}. Assumes stock dev
  * load.
  */
 public class DefaultProviderTest extends JpaSupport {
@@ -59,7 +59,7 @@ public class DefaultProviderTest extends JpaSupport {
   public void testAcceptNullInputs() throws Exception {
     Logger.getLogger(getClass()).info("TEST " + name.getMethodName());
 
-    ProviderHandler handler = new DefaultProviderHandler();
+    ProviderHandler handler = new DefaultProvider();
     List<DataContext> results = handler.accepts(null);
 
     Logger.getLogger(getClass()).info("  results = " + results);
@@ -76,7 +76,7 @@ public class DefaultProviderTest extends JpaSupport {
   public void testAcceptEmptyContent() throws Exception {
     Logger.getLogger(getClass()).info("TEST " + name.getMethodName());
 
-    ProviderHandler handler = new DefaultProviderHandler();
+    ProviderHandler handler = new DefaultProvider();
     List<DataContext> results = handler.accepts(new DataContextJpa());
 
     Logger.getLogger(getClass()).info("  results = " + results);
@@ -93,7 +93,7 @@ public class DefaultProviderTest extends JpaSupport {
   public void testAcceptFullInput() throws Exception {
     Logger.getLogger(getClass()).info("TEST " + name.getMethodName());
 
-    ProviderHandler handler = new DefaultProviderHandler();
+    ProviderHandler handler = new DefaultProvider();
 
     DataContextJpa inputContext = new DataContextJpa();
     inputContext.setCustomer("Test Input Customer");
@@ -124,7 +124,7 @@ public class DefaultProviderTest extends JpaSupport {
   public void testIdentifyNullInputs() throws Exception {
     Logger.getLogger(getClass()).info("TEST " + name.getMethodName());
 
-    ProviderHandler handler = new DefaultProviderHandler();
+    ProviderHandler handler = new DefaultProvider();
     List<ScoredDataContext> results = handler.identify(null, null);
 
     Logger.getLogger(getClass()).info("  results = " + results);
@@ -141,7 +141,7 @@ public class DefaultProviderTest extends JpaSupport {
   public void testIdentifyNullData() throws Exception {
     Logger.getLogger(getClass()).info("TEST " + name.getMethodName());
 
-    ProviderHandler handler = new DefaultProviderHandler();
+    ProviderHandler handler = new DefaultProvider();
     List<ScoredDataContext> results =
         handler.identify(null, new DataContextJpa());
 
@@ -159,7 +159,7 @@ public class DefaultProviderTest extends JpaSupport {
   public void testIdentifyEmptyDataNullContext() throws Exception {
     Logger.getLogger(getClass()).info("TEST " + name.getMethodName());
 
-    ProviderHandler handler = new DefaultProviderHandler();
+    ProviderHandler handler = new DefaultProvider();
     List<ScoredDataContext> results = handler.identify("", null);
 
     Logger.getLogger(getClass()).info("  results = " + results);
@@ -176,7 +176,7 @@ public class DefaultProviderTest extends JpaSupport {
   public void testIdentifyEmptyInput() throws Exception {
     Logger.getLogger(getClass()).info("TEST " + name.getMethodName());
 
-    ProviderHandler handler = new DefaultProviderHandler();
+    ProviderHandler handler = new DefaultProvider();
     List<ScoredDataContext> results =
         handler.identify("", new DataContextJpa());
 
@@ -196,7 +196,7 @@ public class DefaultProviderTest extends JpaSupport {
 
     String inputString = "test string";
 
-    ProviderHandler handler = new DefaultProviderHandler();
+    ProviderHandler handler = new DefaultProvider();
     List<ScoredDataContext> results = handler.identify(inputString, null);
 
     Logger.getLogger(getClass()).info("  results = " + results);
@@ -215,7 +215,7 @@ public class DefaultProviderTest extends JpaSupport {
 
     String inputString = "test string";
 
-    ProviderHandler handler = new DefaultProviderHandler();
+    ProviderHandler handler = new DefaultProvider();
     List<ScoredDataContext> results =
         handler.identify(inputString, new DataContextJpa());
 
@@ -233,7 +233,7 @@ public class DefaultProviderTest extends JpaSupport {
   public void testIdentifyFullInput() throws Exception {
     Logger.getLogger(getClass()).info("TEST " + name.getMethodName());
 
-    ProviderHandler handler = new DefaultProviderHandler();
+    ProviderHandler handler = new DefaultProvider();
 
     String inputString = "test string";
 
@@ -273,7 +273,7 @@ public class DefaultProviderTest extends JpaSupport {
   public void testProcessNullInputs() throws Exception {
     Logger.getLogger(getClass()).info("TEST " + name.getMethodName());
 
-    ProviderHandler handler = new DefaultProviderHandler();
+    ProviderHandler handler = new DefaultProvider();
     List<ScoredResult> results = handler.process(null, null, null);
 
     Logger.getLogger(getClass()).info("  results = " + results);
@@ -290,7 +290,7 @@ public class DefaultProviderTest extends JpaSupport {
   public void testProcessEmptyContent() throws Exception {
     Logger.getLogger(getClass()).info("TEST " + name.getMethodName());
 
-    ProviderHandler handler = new DefaultProviderHandler();
+    ProviderHandler handler = new DefaultProvider();
 
     List<ScoredResult> results =
         handler.process("", new DataContextJpa(), new DataContextJpa());
@@ -309,7 +309,7 @@ public class DefaultProviderTest extends JpaSupport {
   public void testProcessFullInput() throws Exception {
     Logger.getLogger(getClass()).info("TEST " + name.getMethodName());
 
-    ProviderHandler handler = new DefaultProviderHandler();
+    ProviderHandler handler = new DefaultProvider();
 
     String inputString = "test string";
 

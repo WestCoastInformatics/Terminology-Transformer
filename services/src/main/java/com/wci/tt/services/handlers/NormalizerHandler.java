@@ -24,7 +24,7 @@ public interface NormalizerHandler extends Configurable {
 
   /**
    * Returns normalized form of input string with a probability-score based on
-   * context
+   * context. Returns an empty list if there are no normalizations.
    * 
    * Results placed in list based in ordered fashion with top score first
    * because there may be multiple way to interpret the inputStr.
@@ -36,4 +36,12 @@ public interface NormalizerHandler extends Configurable {
    */
   public List<ScoredResult> normalize(String inputStr, DataContext context)
     throws Exception;
+
+  /**
+   * Returns the quality factor (0-1) for this normalizer.
+   *
+   * @return the quality
+   */
+  public float getQuality();
+
 }

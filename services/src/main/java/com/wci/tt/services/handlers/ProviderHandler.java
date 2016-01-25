@@ -23,7 +23,9 @@ public interface ProviderHandler extends Configurable {
 
   /**
    * Ensures input context is supported. If it is, returns all output contexts
-   * the identify & process methods support.
+   * the identify & process methods support. Returns an empty list if the input
+   * context is not supported.
+   * 
    * 
    * Returns a list because provider may handle multiple output data contexts.
    * 
@@ -37,7 +39,7 @@ public interface ProviderHandler extends Configurable {
 
   /**
    * Identifies probability of the input string being of the type defined by the
-   * provider.
+   * provider. an empty list if identify finds nothing.
    * 
    * Returns a list of ranked possible dataContexts within the provider with an
    * associated probability score.
@@ -55,7 +57,7 @@ public interface ProviderHandler extends Configurable {
   /**
    * Produces list of scored (by probability) results of as specified by the
    * output context for the (likely normalized) input string based on known
-   * input context
+   * input context. Returns an empty list if there are no processing results.
    * 
    * Returns empty list for any DataContext for which accepts returns an empty
    * list.
@@ -68,4 +70,12 @@ public interface ProviderHandler extends Configurable {
    */
   public List<ScoredResult> process(String inputStr, DataContext inputContext,
     DataContext outputContext) throws Exception;
+
+  /**
+   * Returns the quality factor (0-1) for this provider.
+   *
+   * @return the quality
+   */
+  public float getQuality();
+
 }

@@ -141,7 +141,6 @@ public class ScoredResultJpa implements ScoredResult, Comparable<ScoredResult> {
   public int compareTo(ScoredResult o) {
     Float score1 = new Float(this.getScore());
     Float score2 = new Float(o.getScore());
-
     return score2.compareTo(score1);
   }
 }

@@ -1,3 +1,6 @@
+/*
+ *    Copyright 2016 West Coast Informatics, LLC
+ */
 package com.wci.tt.jpa.services.handlers;
 
 import java.util.ArrayList;
@@ -17,18 +20,16 @@ import com.wci.tt.services.handlers.NormalizerHandler;
  * Class created to prove that supporting functionality works, not to provide
  * meaningful results.
  */
-public class DefaultNormalizerHandler implements NormalizerHandler {
-  /**
-   * Instantiates an empty {@link DefaultNormalizerHandler}.
-   */
-  public DefaultNormalizerHandler() {
-    // n/a
-  }
+public class DefaultNormalizer implements NormalizerHandler {
 
-  /* see superclass */
-  @Override
-  public void setProperties(Properties p) throws Exception {
-    // N/A
+  /** The quality. */
+  private float quality;
+
+  /**
+   * Instantiates an empty {@link DefaultNormalizer}.
+   */
+  public DefaultNormalizer() {
+    // n/a
   }
 
   /* see superclass */
@@ -47,15 +48,38 @@ public class DefaultNormalizerHandler implements NormalizerHandler {
 
     // Ensure that input is valid.
     if (inputStr != null && !inputStr.isEmpty() && context != null) {
-
       ScoredResult r = new ScoredResultJpa();
-
       r.setValue(inputStr);
       r.setScore(1);
-
       results.add(r);
     }
 
     return results;
+  }
+
+  /* see superclass */
+  public void setProperties(Properties p) throws Exception {
+    if (p == null) {
+      throw new Exception("A quality property is required");
+    }
+    if (!p.containsKey("quality")) {
+      throw new Exception("A quality property is required");
+    }
+
+    try {
+      quality = Float.parseFloat(p.getProperty("quality"));
+      if (quality < 0 || quality > 1) {
+        throw new Exception();
+      }
+    } catch (Exception e) {
+      throw new Exception(
+          "quality property must be a float value between 0 and 1");
+    }
+  }
+
+  /* see superclass */
+  @Override
+  public float getQuality() {
+    return quality;
   }
 }

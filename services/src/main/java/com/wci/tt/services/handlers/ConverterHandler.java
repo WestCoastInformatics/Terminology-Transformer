@@ -20,7 +20,8 @@ public interface ConverterHandler extends Configurable {
 
   /**
    * Ensures input context is supported. If it is, returns all output contexts
-   * the converter method supports.
+   * the converter method supports. Returns an empty list if the input context
+   * is not supported.
    * 
    * Returns a list because converter may handle multiple output data contexts.
    * 
@@ -49,7 +50,8 @@ public interface ConverterHandler extends Configurable {
    * @param inputContext the input context
    * @param outputContext the output context
    * @return the data context tuple
-   * @throws Exception the exception
+   * @throws Exception the exception if the input/output context combination is
+   *           not supported
    */
   public DataContextTuple convert(String inputStr, DataContext inputContext,
     DataContext outputContext) throws Exception;

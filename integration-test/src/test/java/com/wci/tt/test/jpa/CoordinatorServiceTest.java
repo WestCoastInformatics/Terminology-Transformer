@@ -7,6 +7,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.junit.After;
@@ -17,7 +18,8 @@ import org.junit.Test;
 
 import com.wci.tt.helpers.DataContextType;
 import com.wci.tt.helpers.ScoredDataContext;
-import com.wci.tt.helpers.ScoredDataContextTuple;
+import com.wci.tt.helpers.ScoredResult;
+import com.wci.tt.infomodels.InfoModel;
 import com.wci.tt.jpa.helpers.DataContextJpa;
 import com.wci.tt.jpa.services.CoordinatorServiceJpa;
 import com.wci.tt.services.CoordinatorService;
@@ -58,7 +60,7 @@ public class CoordinatorServiceTest extends JpaSupport {
     Logger.getLogger(getClass()).info("TEST " + name.getMethodName());
 
     CoordinatorService service = new CoordinatorServiceJpa();
-    List<String> models = service.getInformationModels();
+    Map<String, InfoModel<?>> models = service.getInformationModels();
     assertEquals(1, models.size());
   }
 
@@ -170,7 +172,7 @@ public class CoordinatorServiceTest extends JpaSupport {
 
     // PART 1: Null Input String (9 combinations)
     // Null Contexts
-    List<ScoredDataContextTuple> results = service.process(null, null, null);
+    List<ScoredResult> results = service.process(null, null, null);
     Logger.getLogger(getClass()).info("  results = " + results);
     assertEquals(0, results.size());
 
@@ -282,9 +284,8 @@ public class CoordinatorServiceTest extends JpaSupport {
     assertEquals(0, results.size());
 
     // Empty Contexts
-    results =
-        service
-            .process(inputString, new DataContextJpa(), new DataContextJpa());
+    results = service.process(inputString, new DataContextJpa(),
+        new DataContextJpa());
     Logger.getLogger(getClass()).info("  results = " + results);
     assertEquals(0, results.size());
 
@@ -408,13 +409,12 @@ public class CoordinatorServiceTest extends JpaSupport {
     outputContext.setType(DataContextType.CODE);
 
     // Null Input Context and Valid Output Context
-    List<ScoredDataContextTuple> results =
+    List<ScoredResult> results =
         service.process(inputString, null, outputContext);
     Logger.getLogger(getClass()).info("  results = " + results);
     assertEquals(1, results.size());
-    ScoredDataContextTuple result = results.get(0);
-    assertEquals(inputString, result.getData());
-    assertEquals(outputContext, result.getDataContext());
+    ScoredResult result = results.get(0);
+    assertEquals(inputString, result.getValue());
     assertTrue(result.getScore() == 1f);
 
     // Empty Input Context and Valid Output Context
@@ -422,8 +422,7 @@ public class CoordinatorServiceTest extends JpaSupport {
     Logger.getLogger(getClass()).info("  results = " + results);
     assertEquals(1, results.size());
     result = results.get(0);
-    assertEquals(inputString, result.getData());
-    assertEquals(outputContext, result.getDataContext());
+    assertEquals(inputString, result.getValue());
     assertTrue(result.getScore() == 1f);
 
     // Valid Contexts
@@ -431,8 +430,7 @@ public class CoordinatorServiceTest extends JpaSupport {
     Logger.getLogger(getClass()).info("  results = " + results);
     assertEquals(1, results.size());
     result = results.get(0);
-    assertEquals(inputString, result.getData());
-    assertEquals(outputContext, result.getDataContext());
+    assertEquals(inputString, result.getValue());
     assertTrue(result.getScore() == 1f);
   }
 

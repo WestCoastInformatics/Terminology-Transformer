@@ -5,14 +5,15 @@ package com.wci.tt.jpa.helpers;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
+import com.wci.tt.DataContext;
 import com.wci.tt.helpers.ScoredDataContext;
 
 /**
  * JPA enabled implementation of {@link ScoredDataContext}.
  */
 @XmlRootElement(name = "scoredDataContext")
-public class ScoredDataContextJpa extends DataContextJpa implements
-    ScoredDataContext, Comparable<ScoredDataContext> {
+public class ScoredDataContextJpa extends DataContextJpa
+    implements ScoredDataContext, Comparable<ScoredDataContext> {
 
   /** The score. */
   private float score = 0;
@@ -32,6 +33,15 @@ public class ScoredDataContextJpa extends DataContextJpa implements
   public ScoredDataContextJpa(ScoredDataContext result) {
     super(result);
     this.score = result.getScore();
+  }
+
+  /**
+   * Instantiates a {@link ScoredDataContextJpa} from the specified parameters.
+   *
+   * @param result the result
+   */
+  public ScoredDataContextJpa(DataContext result) {
+    super(result);
   }
 
   /* see superclass */
