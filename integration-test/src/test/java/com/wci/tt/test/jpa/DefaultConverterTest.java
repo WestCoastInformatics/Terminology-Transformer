@@ -20,11 +20,11 @@ import com.wci.tt.DataContext;
 import com.wci.tt.helpers.DataContextTuple;
 import com.wci.tt.helpers.DataContextType;
 import com.wci.tt.jpa.helpers.DataContextJpa;
-import com.wci.tt.jpa.services.handlers.DefaultConverterHandler;
+import com.wci.tt.jpa.services.handlers.DefaultConverter;
 import com.wci.tt.services.handlers.ConverterHandler;
 
 /**
- * Some initial testing for {@link DefaultConverterHandler}. Assumes stock dev
+ * Some initial testing for {@link DefaultConverter}. Assumes stock dev
  * load.
  */
 public class DefaultConverterTest extends JpaSupport {
@@ -58,7 +58,7 @@ public class DefaultConverterTest extends JpaSupport {
   public void testAcceptNullInputs() throws Exception {
     Logger.getLogger(getClass()).info("TEST " + name.getMethodName());
 
-    ConverterHandler handler = new DefaultConverterHandler();
+    ConverterHandler handler = new DefaultConverter();
     List<DataContext> results = handler.accepts(null);
 
     Logger.getLogger(getClass()).info("  results = " + results);
@@ -75,7 +75,7 @@ public class DefaultConverterTest extends JpaSupport {
   public void testAcceptEmptyContent() throws Exception {
     Logger.getLogger(getClass()).info("TEST " + name.getMethodName());
 
-    ConverterHandler handler = new DefaultConverterHandler();
+    ConverterHandler handler = new DefaultConverter();
     List<DataContext> results = handler.accepts(new DataContextJpa());
 
     Logger.getLogger(getClass()).info("  results = " + results);
@@ -92,7 +92,7 @@ public class DefaultConverterTest extends JpaSupport {
   public void testAcceptFullInput() throws Exception {
     Logger.getLogger(getClass()).info("TEST " + name.getMethodName());
 
-    ConverterHandler handler = new DefaultConverterHandler();
+    ConverterHandler handler = new DefaultConverter();
 
     DataContextJpa inputContext = new DataContextJpa();
     inputContext.setCustomer("Test Input Customer");
@@ -123,7 +123,7 @@ public class DefaultConverterTest extends JpaSupport {
   public void testConvertNullInputs() throws Exception {
     Logger.getLogger(getClass()).info("TEST " + name.getMethodName());
 
-    ConverterHandler handler = new DefaultConverterHandler();
+    ConverterHandler handler = new DefaultConverter();
     DataContextTuple results = handler.convert(null, null, null);
 
     Logger.getLogger(getClass()).info("  results = " + results);
@@ -142,7 +142,7 @@ public class DefaultConverterTest extends JpaSupport {
   public void testConvertEmptyContent() throws Exception {
     Logger.getLogger(getClass()).info("TEST " + name.getMethodName());
 
-    ConverterHandler handler = new DefaultConverterHandler();
+    ConverterHandler handler = new DefaultConverter();
     DataContextTuple results =
         handler.convert("", new DataContextJpa(), new DataContextJpa());
 
@@ -162,7 +162,7 @@ public class DefaultConverterTest extends JpaSupport {
   public void testConvertFullInput() throws Exception {
     Logger.getLogger(getClass()).info("TEST " + name.getMethodName());
 
-    ConverterHandler handler = new DefaultConverterHandler();
+    ConverterHandler handler = new DefaultConverter();
 
     String inputString = "test string";
 

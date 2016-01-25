@@ -4,85 +4,40 @@
 package com.wci.tt.jpa.services.handlers;
 
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
+import java.util.Properties;
+
+import org.apache.log4j.Logger;
 
 import com.wci.tt.DataContext;
-import com.wci.tt.helpers.DataContextType;
-import com.wci.tt.jpa.helpers.DataContextJpa;
+import com.wci.tt.jpa.services.helper.DataContextMatcher;
+import com.wci.tt.services.handlers.ProviderHandler;
 
 /**
- * The Class AbstractContextHandler.
- * 
- * To be extended by handlers that support specific contexts.
+ * Abstract handler for the "accepts" method - used for {@ConverterHandler} and
+ * {@link ProviderHandler} implementations;.
  */
 public abstract class AbstractAcceptsHandler {
 
+  /** The io matchers. */
+  private Map<DataContextMatcher, DataContextMatcher> ioMatchers =
+      new HashMap<>();
+
+  /** The quality. */
+  private float quality;
+
   /**
-   * The Enum FIELD.
+   * Adds the matcher.
+   *
+   * @param inputMatcher the input matcher
+   * @param outputMatcher the output matcher
    */
-  private enum FIELD {
-
-    /** The customer. */
-    CUSTOMER,
-    /** The semantic type. */
-    SEMANTIC_TYPE,
-    /** The specialty. */
-    SPECIALTY,
-    /** The terminology. */
-    TERMINOLOGY,
-    /** The version. */
-    VERSION;
+  public void addMatcher(DataContextMatcher inputMatcher,
+    DataContextMatcher outputMatcher) {
+    ioMatchers.put(inputMatcher, outputMatcher);
   }
-
-  /** The input type. */
-  /*
-   * Supported Input Context values
-   */
-  protected DataContextType inputType = null;
-
-  /** The input info model name. */
-  protected String inputInfoModelName = null;
-
-  /** The input customers. */
-  protected Set<String> inputCustomers = new HashSet<>();
-
-  /** The input semantic types. */
-  protected Set<String> inputSemanticTypes = new HashSet<>();
-
-  /** The input specialties. */
-  protected Set<String> inputSpecialties = new HashSet<>();
-
-  /** The input terminologies. */
-  protected Set<String> inputTerminologies = new HashSet<>();
-
-  /** The input versions. */
-  protected Set<String> inputVersions = new HashSet<>();
-
-  /** The output type. */
-  /*
-   * Supported Output Context values
-   */
-  protected DataContextType outputType = DataContextType.UNKNOWN;
-
-  /** The output info model name. */
-  protected String outputInfoModelName = null;
-
-  /** The output customers. */
-  protected Set<String> outputCustomers = new HashSet<>();
-
-  /** The output semantic types. */
-  protected Set<String> outputSemanticTypes = new HashSet<>();
-
-  /** The output specialties. */
-  protected Set<String> outputSpecialties = new HashSet<>();
-
-  /** The output terminologies. */
-  protected Set<String> outputTerminologies = new HashSet<>();
-
-  /** The output versions. */
-  protected Set<String> outputVersions = new HashSet<>();
 
   /**
    * Ensures input context is supported. If it is, returns all output contexts
@@ -95,196 +50,66 @@ public abstract class AbstractAcceptsHandler {
    * @throws Exception the exception
    */
   public List<DataContext> accepts(DataContext inputContext) throws Exception {
-    if (!inputContextSupported(inputContext)) {
-      // Input context is not supported by the AcceptHandler
-      return new ArrayList<DataContext>();
-    } else {
-      // Input context is supported, so identify the available output contexts
-      return (createSupportedContexts());
-    }
-  }
-
-  /**
-   * Created accepted contexts.
-   *
-   * @return the list
-   */
-  private List<DataContext> createSupportedContexts() {
-    List<DataContext> acceptedContexts = new ArrayList<>();
-
-    acceptedContexts =
-        populateContexts(outputCustomers, acceptedContexts, FIELD.CUSTOMER);
-
-    acceptedContexts =
-        populateContexts(outputSemanticTypes, acceptedContexts,
-            FIELD.SEMANTIC_TYPE);
-
-    acceptedContexts =
-        populateContexts(outputSpecialties, acceptedContexts, FIELD.SPECIALTY);
-
-    acceptedContexts =
-        populateContexts(outputTerminologies, acceptedContexts,
-            FIELD.TERMINOLOGY);
-
-    acceptedContexts =
-        populateContexts(outputVersions, acceptedContexts, FIELD.VERSION);
-
-    // Having created every context, populate them with the output type (if
-    // defined)
-
-    if (!acceptedContexts.isEmpty()) {
-      if (outputType != DataContextType.UNKNOWN) {
-        for (DataContext c : acceptedContexts) {
-          c.setType(outputType);
-
-          if (outputType == DataContextType.INFO_MODEL) {
-            c.setInfoModelName(outputInfoModelName);
-          }
-        }
+    for (final DataContextMatcher inputMatcher : ioMatchers.keySet()) {
+      if (inputMatcher.matches(inputContext)) {
+        return ioMatchers.get(inputMatcher).getDataContexts();
       }
-    } else {
-      DataContext c = new DataContextJpa();
-
-      c.setType(outputType);
-      if (outputType == DataContextType.INFO_MODEL) {
-        c.setInfoModelName(outputInfoModelName);
-      }
-
-      acceptedContexts.add(c);
     }
-    return acceptedContexts;
+    return new ArrayList<>();
   }
 
   /**
-   * Populate context with specified FIELD.
+   * Validates the input/output combination with the matcher. This is a utility
+   * method for use by subclasses.
    *
-   * @param values the values
-   * @param currentContexts the current contexts
-   * @param fieldType the field type
-   * @return the list
+   * @param inputContext the input context
+   * @param outputContext the output context
+   * @throws Exception
    */
-  private List<DataContext> populateContexts(Set<String> values,
-    List<DataContext> currentContexts, FIELD fieldType) {
-    List<DataContext> newContexts = new ArrayList<>();
-
-    // Handle values. Nothing to do if they are empty
-    if (values.isEmpty()) {
-      return currentContexts;
-    } else {
-      // Can't presume currentContexts has been populated yet
-      if (currentContexts.isEmpty()) {
-        // Current contexts not yet populated, thus populate newContexts
-        // directly
-        for (String s : values) {
-          DataContext c = new DataContextJpa();
-          setField(c, s, fieldType);
-          newContexts.add(c);
-        }
-      } else {
-        // Create N*M new contexts where N = existing contexts and M = values
-        for (DataContext oldContext : currentContexts) {
-          for (String s : values) {
-            DataContext c = new DataContextJpa(oldContext);
-            setField(c, s, fieldType);
-            newContexts.add(c);
-          }
-        }
+  public void validate(DataContext inputContext, DataContext outputContext)
+    throws Exception {
+    for (final DataContext matchContext : accepts(inputContext)) {
+      if (DataContextMatcher.matches(outputContext, matchContext)) {
+        return;
       }
-
-      return newContexts;
     }
+    Logger.getLogger(getClass()).error("  inputContext = " + inputContext);
+    Logger.getLogger(getClass()).error("  outputContext = " + outputContext);
+    throw new Exception("Invalid combination of input and output context");
   }
 
   /**
-   * Sets the specified field in the context.
+   * Sets the quality - this should be called via super() if other local
+   * properties are needed.
    *
-   * @param c the c
-   * @param s the s
-   * @param fieldType the field type
-   */
-  private void setField(DataContext c, String s, FIELD fieldType) {
-    if (fieldType == FIELD.CUSTOMER) {
-      c.setCustomer(s);
-    } else if (fieldType == FIELD.SEMANTIC_TYPE) {
-      c.setSemanticType(s);
-    } else if (fieldType == FIELD.SPECIALTY) {
-      c.setSpecialty(s);
-    } else if (fieldType == FIELD.TERMINOLOGY) {
-      c.setTerminology(s);
-    } else if (fieldType == FIELD.VERSION) {
-      c.setVersion(s);
-    }
-
-  }
-
-  /**
-   * Initial context output check.
-   *
-   * @param context the queried context
-   * @return true, if successful
+   * @param p the properties
    * @throws Exception the exception
    */
-  private boolean inputContextSupported(DataContext context) throws Exception {
-    // DataContextType checks
-    if (context.getType() != DataContextType.UNKNOWN) {
-      // First ensure that if context is of info model type, a name is specified
-      if (context.getType() == DataContextType.INFO_MODEL
-          && stringHasValue(context.getInfoModelName())) {
-        throw new Exception(
-            "If context is of type info model, the input context must specify an info model name");
-      }
-
-      // if input type is defined, then verify matches context's values
-      if (inputType != DataContextType.UNKNOWN) {
-        // Verify types match up
-        if (inputType != context.getType()) {
-          return false;
-        }
-
-        // If type is Info_MODEL, verify info model names match up
-        if (inputType == DataContextType.INFO_MODEL) {
-          if (!inputInfoModelName.equalsIgnoreCase(context.getInfoModelName())) {
-            return false;
-          }
-        }
-      }
+  public void setProperties(Properties p) throws Exception {
+    if (p == null) {
+      throw new Exception("A quality property is required");
+    }
+    if (!p.containsKey("quality")) {
+      throw new Exception("A quality property is required");
     }
 
-    if (!checkFieldSupported(context.getCustomer(), inputCustomers)
-        || !checkFieldSupported(context.getSemanticType(), inputSemanticTypes)
-        || !checkFieldSupported(context.getSpecialty(), inputSpecialties)
-        || !checkFieldSupported(context.getTerminology(), inputTerminologies)
-        || !checkFieldSupported(context.getVersion(), inputVersions)) {
-      return false;
+    try {
+      quality = Float.parseFloat(p.getProperty("quality"));
+      if (quality < 0 || quality > 1) {
+        throw new Exception();
+      }
+    } catch (Exception e) {
+      throw new Exception(
+          "quality property must be a float value between 0 and 1");
     }
-
-    return true;
   }
 
   /**
-   * Check field supported.
+   * Returns the quality.
    *
-   * @param str the str
-   * @param vals the vals
-   * @return true, if successful
+   * @return the quality
    */
-  private boolean checkFieldSupported(String str, Set<String> vals) {
-    if (stringHasValue(str) && !vals.isEmpty()) {
-      if (!vals.contains(str)) {
-        return false;
-      }
-    }
-
-    return true;
-  }
-
-  /**
-   * String has value.
-   *
-   * @param str the str
-   * @return true, if successful
-   */
-  private boolean stringHasValue(String str) {
-    return (str != null && !str.isEmpty());
+  public float getQuality() {
+    return quality;
   }
 }

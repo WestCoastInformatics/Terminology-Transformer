@@ -8,11 +8,12 @@ import java.util.List;
 import java.util.Properties;
 
 import com.wci.tt.DataContext;
+import com.wci.tt.helpers.DataContextType;
 import com.wci.tt.helpers.ScoredDataContext;
 import com.wci.tt.helpers.ScoredResult;
-import com.wci.tt.jpa.helpers.DataContextJpa;
 import com.wci.tt.jpa.helpers.ScoredDataContextJpa;
 import com.wci.tt.jpa.helpers.ScoredResultJpa;
+import com.wci.tt.jpa.services.helper.DataContextMatcher;
 import com.wci.tt.services.handlers.ProviderHandler;
 
 /**
@@ -22,44 +23,33 @@ import com.wci.tt.services.handlers.ProviderHandler;
  * 
  * Class created to prove that supporting functionality works, not to provide
  * meaningful results.
- * 
- * Thus, {@link AbstractAcceptsHandler} not extended.
  */
-public class DefaultProviderHandler implements ProviderHandler {
+public class DefaultProvider extends AbstractAcceptsHandler
+    implements ProviderHandler {
 
   /**
-   * Instantiates an empty {@link DefaultProviderHandler}.
+   * Instantiates an empty {@link DefaultProvider}.
+   *
+   * @throws Exception the exception
    */
-  public DefaultProviderHandler() {
-  }
+  public DefaultProvider() throws Exception {
 
-  /* see superclass */
-  @Override
-  public void setProperties(Properties p) throws Exception {
-    // N/A
+    // Configure input/output matchers
+    // Takes any name, returns a code
+    DataContextMatcher inputMatcher = new DataContextMatcher();
+    inputMatcher.configureContext(DataContextType.NAME, null, null, null, null,
+        null, null);
+    DataContextMatcher outputMatcher = new DataContextMatcher();
+    outputMatcher.configureContext(DataContextType.NAME, null, null, null, null,
+        null, null);
+    addMatcher(inputMatcher, outputMatcher);
+
   }
 
   /* see superclass */
   @Override
   public String getName() {
     return "Default Provider handler";
-  }
-
-  /* see superclass */
-  @Override
-  public List<DataContext> accepts(DataContext context) throws Exception {
-    // DefaultHandler supports any context passed in
-    List<DataContext> contexts = new ArrayList<DataContext>();
-
-    // Ensure that input is valid although calling method with empty/null
-    // context is permissible
-    if (context != null) {
-      contexts.add(context);
-    } else {
-      contexts.add(new DataContextJpa());
-    }
-
-    return contexts;
   }
 
   /* see superclass */
@@ -74,26 +64,13 @@ public class DefaultProviderHandler implements ProviderHandler {
     // context is permissible
     if (inputStr != null && !inputStr.isEmpty()) {
       if (context != null) {
-        ScoredDataContext scoredContext = new ScoredDataContextJpa();
-
-        scoredContext.setCustomer(context.getCustomer());
-        scoredContext.setInfoModelName(context.getInfoModelName());
-        scoredContext.setSemanticType(context.getSemanticType());
-        scoredContext.setSpecialty(context.getSpecialty());
-        scoredContext.setTerminology(context.getTerminology());
-        scoredContext.setType(context.getType());
-        scoredContext.setVersion(context.getVersion());
+        ScoredDataContext scoredContext = new ScoredDataContextJpa(context);
         scoredContext.setScore(1);
-
         scoredContexts.add(scoredContext);
       } else {
-        ScoredDataContext scoredContext = new ScoredDataContextJpa();
-        scoredContext.setScore(0);
-
-        scoredContexts.add(scoredContext);
+        return null;
       }
     }
-
     return scoredContexts;
   }
 
@@ -101,21 +78,30 @@ public class DefaultProviderHandler implements ProviderHandler {
   @Override
   public List<ScoredResult> process(String inputStr, DataContext inputContext,
     DataContext outputContext) throws Exception {
+
+    // Validate input/output context
+    validate(inputContext, outputContext);
+
     // Simply return data passed in for this "naive" case. As such, the score is
     // set to '1'.
-    List<ScoredResult> results = new ArrayList<ScoredResult>();
+    final List<ScoredResult> results = new ArrayList<ScoredResult>();
 
     // Ensure that input is valid.
     if (inputStr != null && !inputStr.isEmpty() && inputContext != null
         && outputContext != null) {
-      ScoredResult result = new ScoredResultJpa();
-
+      final ScoredResult result = new ScoredResultJpa();
       result.setValue(inputStr);
       result.setScore(1);
-
       results.add(result);
     }
 
     return results;
   }
+
+  /* see superclass */
+  @Override
+  public void setProperties(Properties p) throws Exception {
+    super.setProperties(p);
+  }
+
 }

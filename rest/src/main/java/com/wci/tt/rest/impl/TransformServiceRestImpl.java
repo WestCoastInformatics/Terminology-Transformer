@@ -4,8 +4,10 @@
 package com.wci.tt.rest.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -20,14 +22,23 @@ import com.wci.tt.helpers.ScoredDataContext;
 import com.wci.tt.helpers.ScoredDataContextList;
 import com.wci.tt.helpers.ScoredDataContextTuple;
 import com.wci.tt.helpers.ScoredDataContextTupleList;
+import com.wci.tt.helpers.ScoredResult;
 import com.wci.tt.jpa.helpers.DataContextJpa;
 import com.wci.tt.jpa.helpers.DataContextListJpa;
 import com.wci.tt.jpa.helpers.ScoredDataContextListJpa;
+import com.wci.tt.jpa.helpers.ScoredDataContextTupleJpa;
 import com.wci.tt.jpa.helpers.ScoredDataContextTupleListJpa;
 import com.wci.tt.jpa.services.CoordinatorServiceJpa;
 import com.wci.tt.jpa.services.rest.TransformServiceRest;
 import com.wci.tt.services.CoordinatorService;
+import com.wci.tt.services.handlers.ConverterHandler;
+import com.wci.tt.services.handlers.NormalizerHandler;
+import com.wci.tt.services.handlers.ProviderHandler;
+import com.wci.tt.services.handlers.SourceDataLoader;
 import com.wci.umls.server.UserRole;
+import com.wci.umls.server.helpers.KeyValuePair;
+import com.wci.umls.server.helpers.KeyValuePairList;
+import com.wci.umls.server.helpers.StringList;
 import com.wci.umls.server.jpa.services.SecurityServiceJpa;
 import com.wci.umls.server.rest.impl.RootServiceRestImpl;
 import com.wci.umls.server.services.SecurityService;
@@ -37,7 +48,7 @@ import com.wordnik.swagger.annotations.ApiParam;
 
 /**
  * Class implementation the REST Service for Transform routines for
- * {@link TransformServiceRest}. 
+ * {@link TransformServiceRest}.
  * 
  * Includes hibernate tags for MEME database.
  */
@@ -49,8 +60,8 @@ import com.wordnik.swagger.annotations.ApiParam;
 @Produces({
     MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML
 })
-public class TransformServiceRestImpl extends RootServiceRestImpl implements
-    TransformServiceRest {
+public class TransformServiceRestImpl extends RootServiceRestImpl
+    implements TransformServiceRest {
 
   /** The security service. */
   private SecurityService securityService;
@@ -73,22 +84,22 @@ public class TransformServiceRestImpl extends RootServiceRestImpl implements
     @ApiParam(value = "Input text, e.g. 'oral tablet'", required = true) @PathParam("inputStr") String inputStr,
     @ApiParam(value = "Data context, e.g. Defined Customer and/or Terminology, ...", required = true) DataContextJpa context,
     @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
-    throws Exception {
+      throws Exception {
 
-    Logger.getLogger(getClass()).info(
-        "RESTful POST call (Content): /identify inputStr=" + inputStr
+    Logger.getLogger(getClass())
+        .info("RESTful POST call (Content): /identify inputStr=" + inputStr
             + ", context=" + context);
 
+    final CoordinatorService service = new CoordinatorServiceJpa();
     try {
       authorizeApp(securityService, authToken, "transform input string",
-          UserRole.ADMINISTRATOR);
+          UserRole.VIEWER);
 
-      CoordinatorService service = new CoordinatorServiceJpa();
-      List<ScoredDataContext> contexts = service.identify(inputStr, context);
+      final List<ScoredDataContext> contexts =
+          service.identify(inputStr, context);
 
       // Translate contexts into JPA object
-      ScoredDataContextList result = new ScoredDataContextListJpa();
-
+      final ScoredDataContextList result = new ScoredDataContextListJpa();
       result.setObjects(contexts);
       result.setTotalCount(contexts.size());
 
@@ -97,6 +108,7 @@ public class TransformServiceRestImpl extends RootServiceRestImpl implements
       handleException(e, "trying to transform input string");
       return null;
     } finally {
+      service.close();
       securityService.close();
     }
 
@@ -111,36 +123,232 @@ public class TransformServiceRestImpl extends RootServiceRestImpl implements
     @ApiParam(value = "Input text, e.g. 'oral tablet'", required = true) @PathParam("inputStr") String inputStr,
     @ApiParam(value = "Input and Output Data context, e.g. List of Defined Customer and/or Terminology", required = true) DataContextListJpa inputOutputContexts,
     @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
-    throws Exception {
+      throws Exception {
 
-    Logger.getLogger(getClass()).info(
-        "RESTful POST call (Content): /process inputStr=" + inputStr
+    Logger.getLogger(getClass())
+        .info("RESTful POST call (Content): /process inputStr=" + inputStr
             + ", inputOutputContexts=" + inputOutputContexts);
 
+    final CoordinatorService service = new CoordinatorServiceJpa();
     try {
       authorizeApp(securityService, authToken, "transform input string",
           UserRole.ADMINISTRATOR);
 
       // Get input/output contexts from JPA
-      DataContext inputContext = inputOutputContexts.getObjects().get(0);
-      DataContext outputContext = inputOutputContexts.getObjects().get(1);
+      final DataContext inputContext = inputOutputContexts.getObjects().get(0);
+      final DataContext outputContext = inputOutputContexts.getObjects().get(1);
 
-      CoordinatorService service = new CoordinatorServiceJpa();
-      List<ScoredDataContextTuple> tuples =
+      final List<ScoredResult> results =
           service.process(inputStr, inputContext, outputContext);
 
       // Translate tuples into JPA object
-      ScoredDataContextTupleList result = new ScoredDataContextTupleListJpa();
+      final ScoredDataContextTupleList tuples =
+          new ScoredDataContextTupleListJpa();
 
-      result.setObjects(tuples);
-      result.setTotalCount(tuples.size());
+      for (final ScoredResult result : results) {
+        final ScoredDataContextTuple tuple = new ScoredDataContextTupleJpa();
+        tuple.setData(result.getValue());
+        tuple.setScore(result.getScore());
+        tuple.setDataContext(outputContext);
+        tuples.getObjects().add(tuple);
+      }
+      tuples.setTotalCount(tuples.getCount());
 
-      return result;
+      return tuples;
     } catch (Exception e) {
       handleException(e, "trying to transform input string");
       return null;
     } finally {
+      service.close();
       securityService.close();
     }
   }
+
+  /* see superclass */
+  @Override
+  @Path("/specialties")
+  @GET
+  @ApiOperation(value = "Get specialties", notes = "Gets all specialty values", response = StringList.class)
+  public StringList getSpecialties(
+    @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
+      throws Exception {
+    Logger.getLogger(getClass())
+        .info("RESTful POST call (Transform): /specialties");
+
+    final CoordinatorService service = new CoordinatorServiceJpa();
+    try {
+      authorizeApp(securityService, authToken, "get specialties",
+          UserRole.VIEWER);
+
+      final StringList list = new StringList();
+      list.setObjects(service.getSpecialties());
+      list.setTotalCount(list.getCount());
+      return list;
+    } catch (Exception e) {
+      handleException(e, "get specialties");
+    } finally {
+      service.close();
+      securityService.close();
+    }
+    return null;
+  }
+
+  /* see superclass */
+  @Override
+  @Path("/stys")
+  @GET
+  @ApiOperation(value = "Get semantic types", notes = "Gets all semantic type values", response = StringList.class)
+  public StringList getSemanticTypes(
+    @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
+      throws Exception {
+    Logger.getLogger(getClass()).info("RESTful POST call (Transform): /stys");
+
+    final CoordinatorService service = new CoordinatorServiceJpa();
+    try {
+      authorizeApp(securityService, authToken, "get stys", UserRole.VIEWER);
+
+      final StringList list = new StringList();
+      list.setObjects(service.getSemanticTypes());
+      list.setTotalCount(list.getCount());
+      return list;
+    } catch (Exception e) {
+      handleException(e, "get stys");
+    } finally {
+      service.close();
+      securityService.close();
+    }
+    return null;
+  }
+
+  /* see superclass */
+  @Override
+  @Path("/data/loaders")
+  @GET
+  @ApiOperation(value = "Get source data loaders", notes = "Gets all source data loader key/name combinations", response = KeyValuePairList.class)
+  public KeyValuePairList getSourceDataLoaders(
+    @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
+      throws Exception {
+    Logger.getLogger(getClass())
+        .info("RESTful POST call (Transform): /data/loaders");
+
+    final CoordinatorService service = new CoordinatorServiceJpa();
+    try {
+      authorizeApp(securityService, authToken, "get loaders", UserRole.VIEWER);
+
+      final KeyValuePairList list = new KeyValuePairList();
+      for (final Map.Entry<String, SourceDataLoader> entry : service
+          .getSourceDataLoaders().entrySet()) {
+        final KeyValuePair pair = new KeyValuePair();
+        pair.setKey(entry.getKey());
+        pair.setValue(entry.getValue().getName());
+      }
+      return list;
+    } catch (Exception e) {
+      handleException(e, "get loaders");
+    } finally {
+      service.close();
+      securityService.close();
+    }
+    return null;
+  }
+
+  /* see superclass */
+  @Override
+  @Path("/normalizers")
+  @GET
+  @ApiOperation(value = "Get normalizers", notes = "Gets all normalizer key/name combinations", response = KeyValuePairList.class)
+  public KeyValuePairList getNormalizers(
+    @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
+      throws Exception {
+    Logger.getLogger(getClass())
+        .info("RESTful POST call (Transform): /normalizers");
+
+    final CoordinatorService service = new CoordinatorServiceJpa();
+    try {
+      authorizeApp(securityService, authToken, "get normalizers",
+          UserRole.VIEWER);
+
+      final KeyValuePairList list = new KeyValuePairList();
+      for (final Map.Entry<String, NormalizerHandler> entry : service
+          .getNormalizers().entrySet()) {
+        final KeyValuePair pair = new KeyValuePair();
+        pair.setKey(entry.getKey());
+        pair.setValue(entry.getValue().getName());
+      }
+      return list;
+    } catch (Exception e) {
+      handleException(e, "get normalziers");
+    } finally {
+      service.close();
+      securityService.close();
+    }
+    return null;
+  }
+
+  /* see superclass */
+  @Override
+  @Path("/providers")
+  @GET
+  @ApiOperation(value = "Get providers", notes = "Gets all provider key/name combinations", response = KeyValuePairList.class)
+  public KeyValuePairList getProviders(
+    @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
+      throws Exception {
+    Logger.getLogger(getClass())
+        .info("RESTful POST call (Transform): /providers");
+
+    final CoordinatorService service = new CoordinatorServiceJpa();
+    try {
+      authorizeApp(securityService, authToken, "get providers",
+          UserRole.VIEWER);
+
+      final KeyValuePairList list = new KeyValuePairList();
+      for (final Map.Entry<String, ProviderHandler> entry : service
+          .getProviders().entrySet()) {
+        final KeyValuePair pair = new KeyValuePair();
+        pair.setKey(entry.getKey());
+        pair.setValue(entry.getValue().getName());
+      }
+      return list;
+    } catch (Exception e) {
+      handleException(e, "get provider");
+    } finally {
+      service.close();
+      securityService.close();
+    }
+    return null;
+  }
+
+  /* see superclass */
+  @Override
+  @Path("/converters")
+  @GET
+  @ApiOperation(value = "Get converters", notes = "Gets all converter key/name combinations", response = KeyValuePairList.class)
+  public KeyValuePairList getConverters(
+    @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
+      throws Exception {
+    Logger.getLogger(getClass())
+        .info("RESTful POST call (Transform): /converters");
+
+    final CoordinatorService service = new CoordinatorServiceJpa();
+    try {
+      authorizeApp(securityService, authToken, "get converters",
+          UserRole.VIEWER);
+
+      final KeyValuePairList list = new KeyValuePairList();
+      for (final Map.Entry<String, ConverterHandler> entry : service
+          .getConverters().entrySet()) {
+        final KeyValuePair pair = new KeyValuePair();
+        pair.setKey(entry.getKey());
+        pair.setValue(entry.getValue().getName());
+      }
+      return list;
+    } catch (Exception e) {
+      handleException(e, "get converter");
+    } finally {
+      service.close();
+      securityService.close();
+    }
+    return null;
+  }
+
 }

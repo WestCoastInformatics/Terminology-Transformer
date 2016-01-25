@@ -19,11 +19,11 @@ import org.junit.Test;
 import com.wci.tt.helpers.DataContextType;
 import com.wci.tt.helpers.ScoredResult;
 import com.wci.tt.jpa.helpers.DataContextJpa;
-import com.wci.tt.jpa.services.handlers.DefaultNormalizerHandler;
+import com.wci.tt.jpa.services.handlers.DefaultNormalizer;
 import com.wci.tt.services.handlers.NormalizerHandler;
 
 /**
- * Some initial testing for {@link DefaultNormalizerHandler}. Assumes stock dev
+ * Some initial testing for {@link DefaultNormalizer}. Assumes stock dev
  * load.
  */
 public class DefaultNormalizerTest extends JpaSupport {
@@ -57,7 +57,7 @@ public class DefaultNormalizerTest extends JpaSupport {
   public void testNormalizeNullInputs() throws Exception {
     Logger.getLogger(getClass()).info("TEST " + name.getMethodName());
 
-    NormalizerHandler handler = new DefaultNormalizerHandler();
+    NormalizerHandler handler = new DefaultNormalizer();
     List<ScoredResult> results = handler.normalize(null, null);
 
     Logger.getLogger(getClass()).info("  results = " + results);
@@ -74,7 +74,7 @@ public class DefaultNormalizerTest extends JpaSupport {
   public void testNormalizeEmptyContent() throws Exception {
     Logger.getLogger(getClass()).info("TEST " + name.getMethodName());
 
-    NormalizerHandler handler = new DefaultNormalizerHandler();
+    NormalizerHandler handler = new DefaultNormalizer();
     List<ScoredResult> results = handler.normalize("", new DataContextJpa());
 
     Logger.getLogger(getClass()).info("  results = " + results);
@@ -91,7 +91,7 @@ public class DefaultNormalizerTest extends JpaSupport {
   public void testNormalizeFullInput() throws Exception {
     Logger.getLogger(getClass()).info("TEST " + name.getMethodName());
 
-    NormalizerHandler handler = new DefaultNormalizerHandler();
+    NormalizerHandler handler = new DefaultNormalizer();
 
     String inputString = "test string";
 

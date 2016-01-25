@@ -9,7 +9,8 @@ import com.wci.umls.server.helpers.HasId;
  * Interface representing a search result along with its associated probability
  * score.
  */
-public interface ScoredResult extends HasScore, HasId {
+public interface ScoredResult
+    extends HasScore, HasId, Comparable<ScoredResult> {
 
   /**
    * Returns the value.

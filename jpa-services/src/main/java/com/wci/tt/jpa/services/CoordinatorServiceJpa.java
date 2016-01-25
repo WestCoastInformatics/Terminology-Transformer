@@ -4,155 +4,218 @@
 package com.wci.tt.jpa.services;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-import java.util.stream.Collectors;
+import java.util.Set;
+
+import org.apache.log4j.Logger;
 
 import com.wci.tt.DataContext;
 import com.wci.tt.helpers.DataContextTuple;
-import com.wci.tt.helpers.DataContextType;
 import com.wci.tt.helpers.ScoredDataContext;
-import com.wci.tt.helpers.ScoredDataContextTuple;
 import com.wci.tt.helpers.ScoredResult;
 import com.wci.tt.infomodels.InfoModel;
-import com.wci.tt.jpa.helpers.DataContextTupleJpa;
-import com.wci.tt.jpa.helpers.ScoredDataContextJpa;
-import com.wci.tt.jpa.helpers.ScoredDataContextTupleJpa;
+import com.wci.tt.jpa.helpers.ScoredResultJpa;
+import com.wci.tt.jpa.services.helper.DataContextMatcher;
 import com.wci.tt.services.CoordinatorService;
 import com.wci.tt.services.handlers.ConverterHandler;
 import com.wci.tt.services.handlers.NormalizerHandler;
 import com.wci.tt.services.handlers.ProviderHandler;
+import com.wci.tt.services.handlers.SourceDataLoader;
+import com.wci.tt.services.handlers.ThresholdHandler;
 import com.wci.umls.server.helpers.ConfigUtility;
 import com.wci.umls.server.jpa.services.RootServiceJpa;
 
 /**
- * The Class CoordinatorServiceJpa.
+ * JPA and JAXB-enabled implementation of {@link CoordinatorService}.
  */
-public class CoordinatorServiceJpa extends RootServiceJpa implements
-    CoordinatorService {
+public class CoordinatorServiceJpa extends RootServiceJpa
+    implements CoordinatorService {
 
   /** The config properties. */
   protected static Properties config = null;
 
+  /** The threshold. */
+  static ThresholdHandler threshold = null;
+
+  /** The source data loaders. */
+  static Map<String, SourceDataLoader> loaders = new HashMap<>();
+
   /** The normalizer handler . */
-  static List<NormalizerHandler> normalizerHandlerList = new ArrayList<>();
+  static Map<String, NormalizerHandler> normalizers = new HashMap<>();
 
   /** The provider handler . */
-  static List<ProviderHandler> providerHandlerList = new ArrayList<>();
+  static Map<String, ProviderHandler> providers = new HashMap<>();
 
   /** The converter handler . */
-  static List<ConverterHandler> converterHandlerList = new ArrayList<>();
+  static Map<String, ConverterHandler> converters = new HashMap<>();
 
   /** The information models. */
-  static List<InfoModel<?>> informationModelList = new ArrayList<>();
+  static Map<String, InfoModel<?>> infoModels = new HashMap<>();
 
   /** The config-specified specialties available. */
-  static List<String> availableSpecialties = new ArrayList<>();
+  static List<String> specialties = new ArrayList<>();
 
   /** The config-specified semantic types available. */
-  static List<String> availableSemanticTypes = new ArrayList<>();
+  static List<String> semanticTypes = new ArrayList<>();
 
   static {
-    /** Add normalizers found in Config to List. */
+
+    /** threshold handler - only one */
     try {
       if (config == null) {
         config = ConfigUtility.getConfigProperties();
       }
+      String key = "threshold.handler";
+      String handlerName = config.getProperty(key);
+      // Add handlers to List
+      threshold = ConfigUtility.newStandardHandlerInstanceWithConfiguration(key,
+          handlerName, ThresholdHandler.class);
 
-      String key = "normalizer.handlers";
+      if (threshold == null)
+        throw new Exception(
+            "threshold.handler must have exactly one value but none exists");
+    } catch (Exception e) {
+      e.printStackTrace();
+      threshold = null;
+    }
 
+    /** Configure loaders */
+    try
+
+    {
+      if (config == null) {
+        config = ConfigUtility.getConfigProperties();
+      }
+      String key = "source.data.loader.handler";
       for (String handlerName : config.getProperty(key).split(",")) {
         if (handlerName.isEmpty()) {
           continue;
         }
+        // Add handlers to List
+        SourceDataLoader handler =
+            ConfigUtility.newStandardHandlerInstanceWithConfiguration(key,
+                handlerName, SourceDataLoader.class);
+        loaders.put(handlerName, handler);
+      }
+      if (normalizers.isEmpty()) {
+        throw new Exception(
+            "source.data.loader.handler must have one value but none exist");
+      }
+    } catch (
 
+    Exception e)
+
+    {
+      e.printStackTrace();
+      normalizers = null;
+    }
+
+    /** Add normalizers found in Config to List. */
+    try
+
+    {
+      if (config == null) {
+        config = ConfigUtility.getConfigProperties();
+      }
+      String key = "normalizer.handler";
+      for (String handlerName : config.getProperty(key).split(",")) {
+        if (handlerName.isEmpty()) {
+          continue;
+        }
         // Add handlers to List
         NormalizerHandler handlerService =
             ConfigUtility.newStandardHandlerInstanceWithConfiguration(key,
                 handlerName, NormalizerHandler.class);
-
-        normalizerHandlerList.add(handlerService);
+        normalizers.put(handlerName, handlerService);
       }
-
-      if (normalizerHandlerList.isEmpty()) {
+      if (normalizers.isEmpty()) {
         throw new Exception(
-            "normalizer.handlers must have one value but none exist");
+            "normalizer.handler must have one value but none exist");
       }
-    } catch (Exception e) {
+    } catch (
+
+    Exception e)
+
+    {
       e.printStackTrace();
-      normalizerHandlerList = null;
+      normalizers = null;
     }
 
     /** Add providers found in Config to List. */
-    try {
+    try
+
+    {
       if (config == null) {
         config = ConfigUtility.getConfigProperties();
       }
-
-      String key = "provider.handlers";
-
+      String key = "provider.handler";
       for (String handlerName : config.getProperty(key).split(",")) {
         if (handlerName.isEmpty()) {
           continue;
         }
-
         // Add handlers to List
         ProviderHandler handlerService =
             ConfigUtility.newStandardHandlerInstanceWithConfiguration(key,
                 handlerName, ProviderHandler.class);
-
-        providerHandlerList.add(handlerService);
+        providers.put(handlerName, handlerService);
       }
-
-      if (providerHandlerList.isEmpty()) {
+      if (providers.isEmpty()) {
         throw new Exception(
-            "provider.handlers must have one value but none exist");
+            "provider.handler must have one value but none exist");
       }
-    } catch (Exception e) {
+    } catch (
+
+    Exception e)
+
+    {
       e.printStackTrace();
-      providerHandlerList = null;
+      providers = null;
     }
 
     /** Add converters found in Config to List. */
-    try {
+    try
+
+    {
       if (config == null) {
         config = ConfigUtility.getConfigProperties();
       }
-
-      String key = "converter.handlers";
-
+      String key = "converter.handler";
       for (String handlerName : config.getProperty(key).split(",")) {
         if (handlerName.isEmpty()) {
           continue;
         }
-
         // Add handlers to List
         ConverterHandler handlerService =
             ConfigUtility.newStandardHandlerInstanceWithConfiguration(key,
                 handlerName, ConverterHandler.class);
-
-        converterHandlerList.add(handlerService);
+        converters.put(handlerName, handlerService);
       }
-
-      if (converterHandlerList.isEmpty()) {
+      if (converters.isEmpty()) {
         throw new Exception(
-            "converter.handlers must have one value but none exist");
+            "converter.handler must have one value but none exist");
       }
-    } catch (Exception e) {
+    } catch (
+
+    Exception e)
+
+    {
       e.printStackTrace();
-      converterHandlerList = null;
+      converters = null;
     }
 
     /** Add information Models found in Config to List. */
-    try {
+    try
+
+    {
       if (config == null) {
         config = ConfigUtility.getConfigProperties();
       }
-
-      String key = "info.model.models";
-
+      String key = "info.model";
       for (String informationModel : config.getProperty(key).split(",")) {
         if (informationModel.isEmpty()) {
           continue;
@@ -162,52 +225,63 @@ public class CoordinatorServiceJpa extends RootServiceJpa implements
             ConfigUtility.newStandardHandlerInstanceWithConfiguration(key,
                 informationModel, InfoModel.class);
 
-        informationModelList.add(model);
+        infoModels.put(informationModel, model);
       }
-    } catch (Exception e) {
+    } catch (
+
+    Exception e)
+
+    {
       e.printStackTrace();
-      informationModelList = null;
+      infoModels = null;
     }
 
     /** Add specialties found in Config to List. */
-    try {
+    try
+
+    {
       if (config == null) {
         config = ConfigUtility.getConfigProperties();
       }
-
       String key = "specialties.available";
-
-      for (String specialty : config.getProperty(key).split(",")) {
+      for (String specialty : config.getProperty(key).split(";")) {
         if (specialty.isEmpty()) {
           continue;
         }
-
-        availableSpecialties.add(specialty);
+        specialties.add(specialty);
       }
-    } catch (Exception e) {
+    } catch (
+
+    Exception e)
+
+    {
       e.printStackTrace();
-      availableSpecialties = null;
+      specialties = null;
     }
 
     /** Add semanticTypes found in Config to List. */
-    try {
+    try
+
+    {
       if (config == null) {
         config = ConfigUtility.getConfigProperties();
       }
-
       String key = "semanticTypes.available";
-
-      for (String semanticType : config.getProperty(key).split(",")) {
+      for (String semanticType : config.getProperty(key).split(";")) {
         if (semanticType.isEmpty()) {
           continue;
         }
-
-        availableSemanticTypes.add(semanticType);
+        semanticTypes.add(semanticType);
       }
-    } catch (Exception e) {
+    } catch (
+
+    Exception e)
+
+    {
       e.printStackTrace();
-      availableSemanticTypes = null;
+      semanticTypes = null;
     }
+
   }
 
   /**
@@ -218,32 +292,32 @@ public class CoordinatorServiceJpa extends RootServiceJpa implements
   public CoordinatorServiceJpa() throws Exception {
     super();
 
-    if (normalizerHandlerList == null) {
+    if (normalizers == null) {
       throw new Exception(
           "Normalizer Handlers did not properly initialize, serious error.");
     }
 
-    if (providerHandlerList == null) {
+    if (providers == null) {
       throw new Exception(
           "Provider Handlers did not properly initialize, serious error.");
     }
 
-    if (converterHandlerList == null) {
+    if (converters == null) {
       throw new Exception(
           "Converter Handlers did not properly initialize, serious error.");
     }
 
-    if (informationModelList == null) {
+    if (infoModels == null) {
       throw new Exception(
           "The Information Models did not properly initialize, serious error.");
     }
 
-    if (availableSpecialties == null) {
+    if (specialties == null) {
       throw new Exception(
           "The Available Specialties list did not properly initialize, serious error.");
     }
 
-    if (availableSemanticTypes == null) {
+    if (semanticTypes == null) {
       throw new Exception(
           "The Available Semantic Types list did not properly initialize, serious error.");
     }
@@ -251,538 +325,349 @@ public class CoordinatorServiceJpa extends RootServiceJpa implements
 
   /* see superclass */
   @Override
-  public List<NormalizerHandler> getNormalizers() throws Exception {
-    return normalizerHandlerList;
+  public Map<String, NormalizerHandler> getNormalizers() throws Exception {
+    return normalizers;
   }
 
   /* see superclass */
   @Override
-  public List<ProviderHandler> getProviders() throws Exception {
-    return providerHandlerList;
+  public Map<String, ProviderHandler> getProviders() throws Exception {
+    return providers;
   }
 
   /* see superclass */
   @Override
-  public List<ConverterHandler> getConverters() throws Exception {
-    return converterHandlerList;
+  public Map<String, ConverterHandler> getConverters() throws Exception {
+    return converters;
   }
 
   /* see superclass */
   @Override
   public List<String> getSpecialties() throws Exception {
-    return availableSpecialties;
+    return specialties;
   }
 
   /* see superclass */
   @Override
   public List<String> getSemanticTypes() throws Exception {
-    return availableSemanticTypes;
+    return semanticTypes;
   }
 
   /* see superclass */
   @Override
-  public List<String> getInformationModels() throws Exception {
-    return informationModelList.stream().map(model -> model.getName())
-        .collect(Collectors.toList());
+  public Map<String, InfoModel<?>> getInformationModels() throws Exception {
+    return infoModels;
   }
 
   /* see superclass */
   @Override
   public List<ScoredDataContext> identify(String inputStr,
     DataContext requiredInputContext) throws Exception {
-    List<ScoredDataContext> allIdentifiedResults = new ArrayList<>();
+    Logger.getLogger(getClass())
+        .info("Identify - " + inputStr + ", " + requiredInputContext);
+    final List<ScoredDataContext> allIdentifiedResults = new ArrayList<>();
 
-    if (inputStr != null && !inputStr.isEmpty()) {
-      // STEP 1: Call accept per provider: Generates map of provider to list of
-      // supported data contexts
-      Map<ProviderHandler, List<DataContext>> supportedProviderContexts =
-          getSupportedProviders(requiredInputContext);
+    // Nothing identified
+    if (inputStr == null || inputStr.isEmpty()) {
+      return null;
+    }
 
-      // Get list of all Data Contexts
-      List<DataContext> supportedContexts = new ArrayList<>();
-      for (ProviderHandler key : supportedProviderContexts.keySet()) {
-        supportedContexts.addAll(supportedProviderContexts.get(key));
-      }
+    // STEP 1: Call accept per provider: Generates map of provider to list of
+    // supported data contexts
+    final List<ProviderHandler> providers =
+        getIdentifyProviders(requiredInputContext);
+    Logger.getLogger(getClass()).debug("  providers = " + providers);
 
-      // STEPS 2: Generate normalized content per accepted data contexts
-      List<DataContextTuple> normalizedInputTuples =
-          getNormalizedContent(inputStr, requiredInputContext);
+    // STEPS 2: Generate normalized content per accepted data contexts
+    // All output data context tuples should be compatible with providers list
+    final List<ScoredResult> normalizedResults =
+        normalize(inputStr, requiredInputContext, true);
 
-      // STEP 3: Call identify per each provider's accepted data contexts on
-      // data
-      // context's associated normalized results
-      for (ProviderHandler handler : supportedProviderContexts.keySet()) {
-        List<DataContext> providerContext =
-            supportedProviderContexts.get(handler);
+    // STEP 3: Call identify per each provider's accepted data contexts on
+    // data context's associated normalized results
+    final Set<ScoredDataContext> identifiedResults = new HashSet<>();
+    for (final ProviderHandler provider : providers) {
+      for (final ScoredResult result : normalizedResults) {
+        final List<ScoredDataContext> identifiedResult =
+            provider.identify(result.getValue(), requiredInputContext);
 
-        for (DataContextTuple normalizedTuple : normalizedInputTuples) {
-          if (providerContext.contains(normalizedTuple.getDataContext())) {
-            // Provider has Data Context. Identify with normalized string
-            // associated with Data Context
-            List<ScoredDataContext> identifiedResults =
-                handler.identify(normalizedTuple.getData(),
-                    normalizedTuple.getDataContext());
-
-            for (ScoredDataContext identifiedResult : identifiedResults) {
-              allIdentifiedResults =
-                  handleDuplicateContexts(allIdentifiedResults,
-                      identifiedResult);
-            }
-          }
+        if (identifiedResult == null) {
+          throw new Exception("Provider returned null results from identify - "
+              + provider.getName());
+        } else {
+          // this should unique the results because use of a set
+          identifiedResults.addAll(identifiedResult);
         }
       }
     }
 
-    return conductIdentifiedThresholdAnalysis(allIdentifiedResults);
+    // Apply threshold and return the results
+    Logger.getLogger(getClass())
+        .debug("  all results = " + allIdentifiedResults);
+    final List<ScoredDataContext> list =
+        threshold.applyThreshold(allIdentifiedResults);
+    Logger.getLogger(getClass()).debug("  threshold results = " + list);
+    return list;
   }
 
   /* see superclass */
   @Override
-  public List<ScoredDataContextTuple> process(String inputStr,
+  public List<ScoredResult> process(String inputStr,
     DataContext requiredInputContext, DataContext requiredOutputContext)
-    throws Exception {
-    // Ensure valid data to work with
-    if (inputStr != null && !inputStr.isEmpty()
-        && requiredOutputContext != null && !requiredOutputContext.isEmpty()) {
+      throws Exception {
+    Logger.getLogger(getClass()).info("Process - " + inputStr);
+    Logger.getLogger(getClass())
+        .debug("  input context = " + requiredInputContext);
+    Logger.getLogger(getClass())
+        .debug("  output context = " + requiredOutputContext);
 
-      // Step 1: Identify the output contexts supported by Providers that
-      // accepts() the inputContext
-      Map<ProviderHandler, List<DataContext>> supportedProviders =
-          getSupportedProviders(requiredInputContext);
-
-      // Grab provider output contexts
-      List<DataContext> outputContexts = new ArrayList<>();
-      for (List<DataContext> outputs : supportedProviders.values()) {
-        outputContexts.addAll(outputs);
-      }
-
-      // Step 2: Identify the Converters that handle the provider output
-      // contexts (as inputs)
-      // && whose output context contains the requested outputContext
-      Map<DataContext, List<ConverterHandler>> supportedConverters =
-          getSupportedConverters(outputContexts, requiredOutputContext);
-
-      // Step 3: Generate normalized content per accepted data contexts
-      List<DataContextTuple> normalizedInputTuples =
-          getNormalizedContent(inputStr, requiredInputContext);
-
-      // Step 4: Call process and convert for each accepted context on data
-      // context's associated normalized results
-      return processAndConvert(normalizedInputTuples, requiredInputContext,
-          requiredOutputContext, supportedProviders, supportedConverters);
+    // no processors
+    if (inputStr == null || inputStr.isEmpty() || requiredOutputContext == null
+        || requiredOutputContext == null || requiredOutputContext.isEmpty()) {
+      return null;
     }
 
-    return new ArrayList<ScoredDataContextTuple>();
+    // STEP 1: Identify providers/converters from input context to output
+    // context.
+    final Map<ProviderHandler, List<DataContext>> providerMap =
+        getProcessProviders(requiredInputContext, requiredOutputContext);
+    Logger.getLogger(getClass()).debug("  providers = " + providerMap);
+
+    // Collect provider output contexts from the provider map
+    final Set<DataContext> providerOutputContexts = new HashSet<>();
+    for (final ProviderHandler provider : providerMap.keySet()) {
+      providerOutputContexts.addAll(providerMap.get(provider));
+    }
+    Logger.getLogger(getClass())
+        .debug("  provider output contexts = " + providerOutputContexts);
+
+    // Step 2: Identify the Converters that handle the provider output
+    // contexts (as inputs)
+    // && whose output context contains the requested outputContext
+    final Map<DataContext, List<ConverterHandler>> converterMap =
+        new HashMap<>();
+    for (final DataContext converterInputContext : providerOutputContexts) {
+      final List<ConverterHandler> converters =
+          getConverters(converterInputContext, requiredOutputContext);
+      converterMap.put(converterInputContext, converters);
+    }
+    Logger.getLogger(getClass()).debug("  converters = " + converterMap);
+
+    // Step 3: Generate normalized content per accepted data contexts
+    List<ScoredResult> normalizedResults =
+        normalize(inputStr, requiredInputContext, true);
+
+    // Step 4: Process and collate the results
+    final Map<ProviderHandler, List<ScoredResult>> allEvidenceMap =
+        new HashMap<>();
+    // for each provider
+    for (final ProviderHandler provider : providerMap.keySet()) {
+
+      // Evidence from ths provider
+      final Map<String, Float> providerEvidenceMap = new HashMap<>();
+      // for each output context it generates
+      for (final DataContext outputContext : providerMap.get(provider)) {
+        // for each supported converter
+        for (final ConverterHandler converter : converterMap
+            .get(outputContext)) {
+          // for each normalized result
+          for (final ScoredResult normalizedInputStr : normalizedResults) {
+
+            // Obtain the processed results
+            for (final ScoredResult result : provider.process(
+                normalizedInputStr.getValue(), requiredInputContext,
+                outputContext)) {
+
+              // Obtain the final product
+              final DataContextTuple tuple = converter.convert(
+                  result.getValue(), outputContext, requiredOutputContext);
+
+              // Compute the score for this piece of evidence
+              // Weight by provider quality
+              // Weight by normalized input score
+              // TODO: this weighting algorithm can be abstracted
+              final float score = threshold.weightResult(result.getScore(),
+                  normalizedInputStr.getScore(), provider.getQuality());
+
+              // Put in providerEvidenceMap if we don't have an entry yet
+              // or this one has a higher score.
+              Logger.getLogger(getClass())
+                  .debug("  evidence = " + provider.getName() + ", "
+                      + converter.getName() + ", "
+                      + normalizedInputStr.getValue() + " = " + score + ", "
+                      + tuple.getData());
+
+              if (!providerEvidenceMap.containsKey(tuple.getData())
+                  || providerEvidenceMap.get(tuple.getData()) < score) {
+                providerEvidenceMap.put(tuple.getData(), score);
+              }
+
+            } // end process
+          } // end normalized results
+        } // end converter map
+      } // end intermediate output context
+
+      // Add evidence from this provider to the overall list
+      final List<ScoredResult> providerResults = new ArrayList<>();
+      for (final String key : providerEvidenceMap.keySet()) {
+        final ScoredResult providerResult = new ScoredResultJpa();
+        providerResult.setValue(key);
+        providerResult.setScore(providerEvidenceMap.get(key));
+      }
+      allEvidenceMap.put(provider, providerResults);
+
+    }
+
+    // Now aggregate the evidence across all providers and sort
+    final List<ScoredResult> aggregatedResults =
+        threshold.aggregate(allEvidenceMap);
+    Collections.sort(aggregatedResults);
+    Logger.getLogger(getClass())
+        .debug("  final evidence = " + aggregatedResults);
+    return aggregatedResults;
   }
 
-  /**
-   * Process and convert.
-   *
-   * @param normalizedInputTuples the normalized input tuples
-   * @param requiredInputContext the required input context
-   * @param requiredOutputContext the required output context
-   * @param supportedProviders the supported providers
-   * @param supportedConverters the supported converters
-   * @return the list
-   * @throws Exception the exception
-   */
-  private List<ScoredDataContextTuple> processAndConvert(
-    List<DataContextTuple> normalizedInputTuples,
-    DataContext requiredInputContext, DataContext requiredOutputContext,
-    Map<ProviderHandler, List<DataContext>> supportedProviders,
-    Map<DataContext, List<ConverterHandler>> supportedConverters)
-    throws Exception {
-    List<ScoredDataContextTuple> results = new ArrayList<>();
+  /* see superclass */
+  @Override
+  public List<ScoredResult> normalize(String inputStr,
+    DataContext requiredInputContext, boolean includeOrig) throws Exception {
+    Logger.getLogger(getClass())
+        .info("Normalize - " + inputStr + ", " + requiredInputContext);
+    List<ScoredResult> normalizedResults = new ArrayList<>();
 
-    for (ProviderHandler pHandler : supportedProviders.keySet()) {
+    // STEP 1: Normalize input per normalizer
+    final Map<String, Float> scoreMap = new HashMap<>();
+    for (final NormalizerHandler normalizer : getNormalizers().values()) {
 
-      if (supportedProviders.containsKey(pHandler)) {
-        for (DataContext intermediateContext : supportedProviders.get(pHandler)) {
-
-          if (supportedConverters.containsKey(intermediateContext)) {
-            for (ConverterHandler cHandler : supportedConverters
-                .get(intermediateContext)) {
-              // <pre>
-              // Have a Provider/Converter pair that:
-              // 1) Has proper intermediateContext such that:
-              // the output of provider is the input to the converter
-              // 2) the Provider supports the requiredInputContext
-              // 3) The Converter supports the requiredOutputContext
-              // </pre>
-
-              List<ScoredResult> processedResults = new ArrayList<>();
-              for (DataContextTuple inputTuple : normalizedInputTuples) {
-                // TODO: Handle Dups (b/c of scoring)
-                processedResults.addAll(pHandler.process(inputTuple.getData(),
-                    requiredInputContext, intermediateContext));
-              }
-
-              // TODO: Analyze contents to identify threshold
-
-              List<DataContextTuple> convertedResults = new ArrayList<>();
-              for (ScoredResult pResult : processedResults) {
-                // TODO: Handle Dups (b/c of scoring)
-                convertedResults.add(cHandler.convert(pResult.getValue(),
-                    intermediateContext, requiredOutputContext));
-
-                // TODO: Analyze contents to identify threshold
-
-                for (DataContextTuple cResult : convertedResults) {
-                  ScoredDataContextTuple finalResult =
-                      new ScoredDataContextTupleJpa();
-
-                  finalResult.setDataContext(cResult.getDataContext());
-                  finalResult.setData(cResult.getData());
-                  finalResult.setScore(pResult.getScore());
-
-                  // TODO: Handle Dups (b/c of scoring)
-
-                  results.add(finalResult);
-                }
-              }
-            }
-          }
+      // Get the max score for each value of the various normalizers
+      for (final ScoredResult result : normalizer.normalize(inputStr,
+          requiredInputContext)) {
+        // Retain highest score per value
+        if (!scoreMap.containsKey(result.getValue())
+            || scoreMap.get(result.getValue()) < result.getScore()) {
+          // Weight score by normalizer quality
+          scoreMap.put(result.getValue(),
+              result.getScore() * normalizer.getQuality());
         }
       }
     }
 
-    // TODO: Analyze contents to identify threshold
-
-    return results;
-  }
-
-  /**
-   * Returns the normalized content.
-   *
-   * @param inputStr the input str
-   * @param requiredInputContext the contexts
-   * @return the normalized content
-   * @throws Exception the exception
-   */
-  private List<DataContextTuple> getNormalizedContent(String inputStr,
-    DataContext requiredInputContext) throws Exception {
-    List<ScoredDataContextTuple> normalizedResults = new ArrayList<>();
-
-    // STEP 1: Normalize input per normalizer
-    for (NormalizerHandler handler : getNormalizers()) {
-      for (ScoredResult r : handler.normalize(inputStr, requiredInputContext)) {
-        // Create Tuple
-        ScoredDataContextTuple tuple = new ScoredDataContextTupleJpa();
-
-        tuple.setData(r.getValue());
-        tuple.setScore(r.getScore());
-        tuple.setDataContext(requiredInputContext);
-
-        normalizedResults.add(tuple);
-      }
+    // Add original data if desired
+    if (includeOrig) {
+      Logger.getLogger(getClass()).debug("  include orig = true");
+      scoreMap.put(inputStr, 1.0f);
+    } else {
+      Logger.getLogger(getClass()).debug("  include orig = false");
     }
 
-    // STEP 2: Collate results with an optional threshold constraint
-    return conductNormalizedThresholdAnalysis(normalizedResults);
+    // Put scoreMap into normalizedResults
+    for (final String key : scoreMap.keySet()) {
+      final ScoredResult result = new ScoredResultJpa();
+      result.setValue(key);
+      result.setScore(scoreMap.get(key));
+    }
+
+    // Apply threshold to scores and return
+    normalizedResults = threshold.applyThreshold(normalizedResults);
+    Logger.getLogger(getClass())
+        .debug("  normalized results = " + normalizedResults);
+    return normalizedResults;
+  }
+
+  @Override
+  public Map<String, SourceDataLoader> getSourceDataLoaders() throws Exception {
+    return loaders;
   }
 
   /**
-   * Returns the supported provider contexts.
+   * Returns the supported provider contexts. Returns an empty list if there are
+   * no supported providers.
    *
    * @param requiredInputContext the input context
    * @return the supported provider contexts
    * @throws Exception the exception
    */
-  private Map<ProviderHandler, List<DataContext>> getSupportedProviders(
-    DataContext requiredInputContext) throws Exception {
-    Map<ProviderHandler, List<DataContext>> supportedHandlerContexts =
-        new HashMap<>();
+  private List<ProviderHandler> getIdentifyProviders(DataContext inputContext)
+    throws Exception {
+    final List<ProviderHandler> providers = new ArrayList<>();
 
-    for (ProviderHandler handler : getProviders()) {
-      List<DataContext> supportedContexts =
-          handler.accepts(requiredInputContext);
-
+    // Ask each provider if it accepts
+    for (final ProviderHandler provider : getProviders().values()) {
+      final List<DataContext> supportedContexts =
+          provider.accepts(inputContext);
+      if (supportedContexts == null) {
+        throw new Exception("Provider unexpectedly returned null for accepts - "
+            + provider.getName());
+      }
       if (!supportedContexts.isEmpty()) {
-        supportedHandlerContexts.put(handler, supportedContexts);
+        providers.add(provider);
       }
     }
-
-    return supportedHandlerContexts;
+    return providers;
   }
 
   /**
-   * Returns the supported converter contexts.
+   * Returns the process providers mapped to the output contexts supported for
+   * the specified input context.
    *
-   * @param possibleInputContexts the possible input contexts
-   * @param requiredOutputContext the required output context
-   * @return the supported converter contexts
+   * @param inputContext the input context
+   * @param outputContext the output context
+   * @return the process providers
    * @throws Exception the exception
    */
-  private Map<DataContext, List<ConverterHandler>> getSupportedConverters(
-    List<DataContext> possibleInputContexts, DataContext requiredOutputContext)
-    throws Exception {
-    Map<DataContext, List<ConverterHandler>> supportedHandlerContexts =
-        new HashMap<>();
+  private Map<ProviderHandler, List<DataContext>> getProcessProviders(
+    DataContext inputContext, DataContext outputContext) throws Exception {
 
-    for (DataContext inputContext : possibleInputContexts) {
-      for (ConverterHandler handler : getConverters()) {
-        List<DataContext> supportedContexts = handler.accepts(inputContext);
+    final Map<ProviderHandler, List<DataContext>> providerMap = new HashMap<>();
 
-        for (DataContext c : supportedContexts) {
-          // Only add those contexts which match the requiredOutputContext
-          if (isAcceptableOutputContext(c, requiredOutputContext)) {
-            if (!supportedHandlerContexts.keySet().contains(inputContext)) {
-              // First time seeing Key, so create new map entry
-              List<ConverterHandler> cHandlers = new ArrayList<>();
-              supportedHandlerContexts.put(inputContext, cHandlers);
-            }
+    // Ask each provider if it accepts
+    for (final ProviderHandler provider : getProviders().values()) {
+      final List<DataContext> supportedContexts =
+          provider.accepts(inputContext);
+      if (supportedContexts == null) {
+        throw new Exception("Provider unexpectedly returned null for accepts - "
+            + provider.getName());
+      }
+      if (!supportedContexts.isEmpty()) {
+        providerMap.put(provider, supportedContexts);
 
-            // Add to Map
-            supportedHandlerContexts.get(inputContext).add(handler);
+      }
+    }
+    return providerMap;
+  }
+
+  /**
+   * Returns the converters.
+   *
+   * @param inputContext the input context
+   * @param outputContext the output context
+   * @return the converters
+   * @throws Exception the exception
+   */
+  private List<ConverterHandler> getConverters(DataContext inputContext,
+    DataContext outputContext) throws Exception {
+    final List<ConverterHandler> converters = new ArrayList<>();
+
+    // Ask each converter if it accepts
+    for (final ConverterHandler converter : getConverters().values()) {
+      final List<DataContext> supportedContexts =
+          converter.accepts(inputContext);
+      if (supportedContexts == null) {
+        throw new Exception(
+            "Converter unexpectedly returned null for accepts - "
+                + converter.getName());
+      }
+      if (!supportedContexts.isEmpty()) {
+        // See if output matches any supported Contexts
+        for (final DataContext matchContext : supportedContexts) {
+          if (DataContextMatcher.matches(outputContext, matchContext)) {
+            converters.add(converter);
+            break;
           }
         }
       }
     }
-
-    return supportedHandlerContexts;
-  }
-
-  /**
-   * Indicates whether or not acceptable output context is the case.
-   *
-   * @param testContext the test context
-   * @param requiredOutputContext the required output context
-   * @return <code>true</code> if so, <code>false</code> otherwise
-   */
-  private boolean isAcceptableOutputContext(DataContext testContext,
-    DataContext requiredOutputContext) {
-    if (testContext.getType() != DataContextType.UNKNOWN) {
-      if (testContext.getType() != requiredOutputContext.getType()) {
-        return false;
-      }
-
-      if (testContext.getType() == DataContextType.INFO_MODEL) {
-        if (!testContext.getInfoModelName().equalsIgnoreCase(
-            requiredOutputContext.getInfoModelName())) {
-          return false;
-        }
-      }
-    }
-
-    if (!testContextValue(testContext.getCustomer(),
-        requiredOutputContext.getCustomer())
-        || !testContextValue(testContext.getCustomer(),
-            requiredOutputContext.getCustomer())
-        || !testContextValue(testContext.getCustomer(),
-            requiredOutputContext.getCustomer())
-        || !testContextValue(testContext.getCustomer(),
-            requiredOutputContext.getCustomer())
-        || !testContextValue(testContext.getCustomer(),
-            requiredOutputContext.getCustomer())) {
-      return false;
-    }
-
-    return true;
-  }
-
-  /**
-   * Test context value.
-   *
-   * @param testStr the test str
-   * @param requiredStr the required str
-   * @return true, if successful
-   */
-  private boolean testContextValue(String testStr, String requiredStr) {
-    if (requiredStr != null && !requiredStr.isEmpty()) {
-      if (!testStr.equalsIgnoreCase(requiredStr)) {
-        return false;
-      }
-    }
-
-    return true;
-  }
-
-  /**
-   * Conduct threshold analysis across all ScoredDataContext created via
-   * identify().
-   *
-   * @param identifiedResults the identified results
-   * @return the list
-   */
-  private List<ScoredDataContext> conductIdentifiedThresholdAnalysis(
-    List<ScoredDataContext> identifiedResults) {
-    List<ScoredDataContext> returnedResults = new ArrayList<>();
-
-    // For now, very basic routine of returning any result whose score is
-    // greater than 0
-    for (ScoredDataContext r : identifiedResults) {
-      if (r.getScore() > 0) {
-        returnedResults.add(r);
-      }
-    }
-
-    return (returnedResults);
-  }
-
-  /**
-   * Conduct threshold analysis across all ScoredResult created via process().
-   *
-   * @param processedResults the processed results
-   * @return the list
-   */
-  private List<ScoredResult> conductProcessThresholdAnalysis(
-    List<ScoredResult> processedResults) {
-    List<ScoredResult> returnedResults = new ArrayList<>();
-
-    // For now, very basic routine of returning any result whose score is
-    // greater than 0
-    for (ScoredResult r : processedResults) {
-      if (r.getScore() > 0) {
-        returnedResults.add(r);
-      }
-    }
-
-    return (returnedResults);
-  }
-
-  /**
-   * Conduct threshold analysis across all ScoredDataContextTuples created via
-   * normalize().
-   *
-   * @param results the results
-   * @return the list
-   */
-  private List<DataContextTuple> conductNormalizedThresholdAnalysis(
-    List<ScoredDataContextTuple> results) {
-    List<DataContextTuple> returnedResults = new ArrayList<>();
-
-    // For now, very basic routine of returning any result whose score is
-    // greater than 0
-    for (ScoredDataContextTuple r : results) {
-      if (r.getScore() > 0) {
-        DataContextTuple tuple = new DataContextTupleJpa();
-
-        tuple.setData(r.getData());
-        tuple.setDataContext(r.getDataContext());
-
-        returnedResults.add(tuple);
-      }
-    }
-
-    return (returnedResults);
-  }
-
-  /**
-   * Conduct process and convert threshold analysis.
-   *
-   * @param initialTuples the initial tuples
-   * @return the list
-   */
-  private List<ScoredDataContextTuple> conductProcessAndConvertThresholdAnalysis(
-    List<ScoredDataContextTuple> initialTuples) {
-    List<ScoredDataContextTuple> returnedResults = new ArrayList<>();
-
-    // For now, very basic routine of returning any result whose score is
-    // greater than 0
-    for (ScoredDataContextTuple r : initialTuples) {
-      if (r.getScore() > 0) {
-        returnedResults.add(r);
-      }
-    }
-
-    return (returnedResults);
-  }
-
-  /**
-   * Handle duplicate contexts.
-   *
-   * @param currentResults the current results
-   * @param newResult the new result
-   * @return the list
-   * @throws Exception the exception
-   */
-  private List<ScoredDataContext> handleDuplicateContexts(
-    List<ScoredDataContext> currentResults, ScoredDataContext newResult)
-    throws Exception {
-    List<ScoredDataContext> returnContexts = new ArrayList<>();
-
-    boolean matchFound = false;
-    // For now, sum scores if another data context/data pair match the tuple's
-    for (ScoredDataContext currentResult : currentResults) {
-      if (currentResult.getCustomer().equals(newResult.getCustomer())
-          && currentResult.getSemanticType()
-              .equals(newResult.getSemanticType())
-          && currentResult.getSpecialty().equals(newResult.getSpecialty())
-          && currentResult.getInfoModelName().equals(
-              newResult.getInfoModelName())
-          && currentResult.getTerminology().equals(newResult.getTerminology())
-          && currentResult.getType() == newResult.getType()
-          && currentResult.getVersion().equals(newResult.getVersion())) {
-        matchFound = true;
-
-        // For now, sum scores if another data context matches the tuple's
-        // TODO: Add more than just this basic Naive Solution (create
-        // interface?)
-        currentResult.setScore(currentResult.getScore() + newResult.getScore());
-      }
-
-      returnContexts.add(currentResult);
-    }
-
-    if (!matchFound) {
-      ScoredDataContext newScoredContext = new ScoredDataContextJpa();
-
-      newScoredContext.setCustomer(newResult.getCustomer());
-      newScoredContext.setInfoModelName(newResult.getInfoModelName());
-      newScoredContext.setSemanticType(newResult.getSemanticType());
-      newScoredContext.setSpecialty(newResult.getSpecialty());
-      newScoredContext.setTerminology(newResult.getTerminology());
-      newScoredContext.setType(newResult.getType());
-      newScoredContext.setVersion(newResult.getVersion());
-      newScoredContext.setScore(newResult.getScore());
-
-      returnContexts.add(newScoredContext);
-    }
-
-    return returnContexts;
-  }
-
-  /**
-   * Handle duplicate contexts.
-   *
-   * @param currentTuples the current tuples
-   * @param newTuple the new tuple
-   * @param result the result
-   * @return the list
-   * @throws Exception the exception
-   */
-  private List<ScoredDataContextTuple> handleDuplicateContexts(
-    List<ScoredDataContextTuple> currentTuples, DataContextTuple newTuple,
-    ScoredResult result) throws Exception {
-    List<ScoredDataContextTuple> returnTuples = new ArrayList<>();
-
-    boolean pairFound = false;
-    for (ScoredDataContextTuple currentTuple : currentTuples) {
-      if (currentTuple.getDataContext().equals(newTuple.getDataContext())
-          && (currentTuple.getData().equals(newTuple.getData()))) {
-        pairFound = true;
-
-        // For now, sum scores if another data context/data pair match the
-        // tuple's
-        // TODO: Add more than just this basic Naive Solution (create
-        // interface?)
-        currentTuple.setScore(currentTuple.getScore() + result.getScore());
-      }
-
-      returnTuples.add(currentTuple);
-    }
-
-    if (!pairFound) {
-      ScoredDataContextTuple newScoredTuple = new ScoredDataContextTupleJpa();
-
-      newScoredTuple.setDataContext(newTuple.getDataContext());
-      newScoredTuple.setData(newTuple.getData());
-      newScoredTuple.setScore(result.getScore());
-
-      returnTuples.add(newScoredTuple);
-    }
-
-    return returnTuples;
+    return converters;
   }
 
 }

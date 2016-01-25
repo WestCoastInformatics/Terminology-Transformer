@@ -88,4 +88,6 @@ public interface DataContext extends HasTerminology, HasId {
    * @return <code>true</code> if so, <code>false</code> otherwise
    */
   public boolean isEmpty();
+  
+
 }
