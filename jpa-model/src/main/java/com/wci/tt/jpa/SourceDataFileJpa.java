@@ -42,7 +42,7 @@ import com.wci.tt.SourceDataFile;
 public class SourceDataFileJpa implements SourceDataFile {
 
   /** The id. Set initial value to 5 to bypass entries in import.sql */
-  @TableGenerator(name = "EntityIdGenUser", table = "table_generator", pkColumnValue = "Entity")
+  @TableGenerator(name = "EntityIdGen", table = "table_generator", pkColumnValue = "Entity")
   @Id
   @GeneratedValue(strategy = GenerationType.TABLE, generator = "EntityIdGenUser")
   private Long id;

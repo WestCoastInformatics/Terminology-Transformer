@@ -132,4 +132,20 @@ public class DefaultInfoModel implements InfoModel<DefaultInfoModel> {
     return "{ code : \"" + code + "\", term : \"" + term + "\"}";
   }
 
+  @Override
+  public DefaultInfoModel getModelInCommon(DefaultInfoModel model)
+    throws Exception {
+    if (model == null) {
+      return null;
+    }
+    DefaultInfoModel common = new DefaultInfoModel();
+    if (model.getCode() != null && model.getCode().equals(code)) {
+      common.setCode(code);
+    }
+    if (model.getTerm() != null && model.getTerm().equals(term)) {
+      common.setTerm(term);
+    }
+    return common;
+  }
+
 }
