@@ -69,18 +69,18 @@ public interface DataContext extends HasTerminology, HasId {
   public void setSpecialty(String specialty);
 
   /**
-   * Returns the info model name.
+   * Returns the info model class name.
    *
-   * @return the info model name
+   * @return the info model class name
    */
-  public String getInfoModelName();
+  public String getInfoModelClass();
 
   /**
-   * Sets the info model name.
+   * Sets the info model class name.
    *
-   * @param name the info model name
+   * @param className the info model class
    */
-  public void setInfoModelName(String name);
+  public void setInfoModelClass(String className);
 
   /**
    * Investigates whether at least one aspect of dataContext defined.
@@ -88,6 +88,5 @@ public interface DataContext extends HasTerminology, HasId {
    * @return <code>true</code> if so, <code>false</code> otherwise
    */
   public boolean isEmpty();
-  
 
 }

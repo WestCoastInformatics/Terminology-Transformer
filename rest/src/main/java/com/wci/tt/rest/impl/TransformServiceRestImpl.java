@@ -3,6 +3,7 @@
  */
 package com.wci.tt.rest.impl;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -100,6 +101,7 @@ public class TransformServiceRestImpl extends RootServiceRestImpl
 
       // Translate contexts into JPA object
       final ScoredDataContextList result = new ScoredDataContextListJpa();
+      Collections.sort(contexts);
       result.setObjects(contexts);
       result.setTotalCount(contexts.size());
 
@@ -152,6 +154,7 @@ public class TransformServiceRestImpl extends RootServiceRestImpl
         tuple.setDataContext(outputContext);
         tuples.getObjects().add(tuple);
       }
+      Collections.sort(tuples.getObjects());
       tuples.setTotalCount(tuples.getCount());
 
       return tuples;

@@ -97,7 +97,7 @@ public class DefaultNormalizerTest extends JpaSupport {
 
     DataContextJpa context = new DataContextJpa();
     context.setCustomer("Test Customer");
-    context.setInfoModelName("Test Information Model Name");
+    context.setInfoModelClass("test.model.class.name");
     context.setSemanticType("Test Semantic Type");
     context.setSpecialty("Test Specialty");
     context.setTerminology("Test Terminology");

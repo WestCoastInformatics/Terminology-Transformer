@@ -1,9 +1,5 @@
 // Transform service
-ttApp.service('transformService', [
-  '$http',
-  '$q',
-  'utilService',
-  'gpService',
+ttApp.service('transformService', [ '$http', '$q', 'utilService', 'gpService',
   function($http, $q, utilService, gpService) {
     console.debug('configure transformService');
 
@@ -12,31 +8,29 @@ ttApp.service('transformService', [
       console.debug('transform', inputStr, dataContext);
       var deferred = $q.defer();
       gpService.increment();
-      $http.post(transformUrl + '/process/' + encodeURI(inputStr), dataContext)
-        .then(
-        // Success
-        function(response) {
-          console.debug('  data =', resonse.data);
-          gpService.decrement();
-          deferred.resolve(response.data);
-        },
-        // error
-        function(response) {
-          gpService.decrement();
-          utilService.handleError(response);
-          deferred.reject(response);
-        })
+      $http.post(transformUrl + '/process/' + encodeURI(inputStr), dataContext).then(
+      // Success
+      function(response) {
+        console.debug('  data =', resonse.data);
+        gpService.decrement();
+        deferred.resolve(response.data);
+      },
+      // error
+      function(response) {
+        gpService.decrement();
+        utilService.handleError(response);
+        deferred.reject(response);
+      });
       return deferred.promise;
-    }
+    };
 
     // end
 
   } ]);
 
 // Source data service
-ttApp.service('sourceDataService', [ '$http', '$location', '$q', '$cookies',
-  'utilService', 'gpService',
-  function($http, $location, $q, ngCookies, utilService, gpService) {
+ttApp.service('sourceDataService', [ '$http', '$location', '$q', '$cookies', 'utilService',
+  'gpService', function($http, $location, $q, ngCookies, utilService, gpService) {
     console.debug('configure sourceDataService');
 
     // cached loader names
@@ -61,7 +55,7 @@ ttApp.service('sourceDataService', [ '$http', '$location', '$q', '$cookies',
         deferred.reject(response);
       });
       return deferred.promise;
-    }
+    };
 
     // Removes soure data file
     this.removeSourceDataFile = function(id) {
@@ -82,7 +76,7 @@ ttApp.service('sourceDataService', [ '$http', '$location', '$q', '$cookies',
         deferred.reject(response);
       });
       return deferred.promise;
-    }
+    };
 
     // Save or add the source data file
     this.updateSourceDataFile = function(file) {
@@ -118,7 +112,7 @@ ttApp.service('sourceDataService', [ '$http', '$location', '$q', '$cookies',
         });
       }
       return deferred.promise;
-    }
+    };
 
     // update or add the source data
     this.updateSourceData = function(data) {
@@ -154,12 +148,12 @@ ttApp.service('sourceDataService', [ '$http', '$location', '$q', '$cookies',
         });
       }
       return deferred.promise;
-    }
+    };
 
     // Remove the source data
     this.removeSourceData = function(data) {
       console.debug('remove source data', data);
-      var deferred = $q.defer()
+      var deferred = $q.defer();
       gpService.increment();
       $http['delete'](fileUrl + '/data/delete/' + data.id).then(
       // Success
@@ -174,7 +168,7 @@ ttApp.service('sourceDataService', [ '$http', '$location', '$q', '$cookies',
         deferred.reject(response);
       });
       return deferred.promise;
-    }
+    };
 
     // find source data
     this.findSourceData = function(query) {
@@ -247,30 +241,29 @@ ttApp
           plugins : 'autolink autoresize link image charmap searchreplace lists paste',
           toolbar : 'undo redo | styleselect lists | bold italic underline strikethrough | charmap link image',
           forced_root_block : ''
-        }
+        };
 
         // Sets the error
         this.setError = function(message) {
           this.error.message = message;
-        }
+        };
 
         // Clears the error
         this.clearError = function() {
           this.error.message = null;
-        }
+        };
         // Handle error message
         this.handleError = function(response) {
           console.debug('Handle error: ', response);
           this.error.message = response.data;
           // If authtoken expired, relogin
-          if (this.error.message
-            && this.error.message.indexOf('AuthToken') != -1) {
+          if (this.error.message && this.error.message.indexOf('AuthToken') != -1) {
             // Reroute back to login page with 'auth
             // token has
             // expired' message
             $location.path('/');
           }
-        }
+        };
 
         // Convert date to a string
         this.toDate = function(lastModified) {
@@ -296,9 +289,8 @@ ttApp
           if (second.length == 1) {
             second = '0' + second;
           }
-          return year + '-' + month + '-' + day + ' ' + hour + ':' + minute
-            + ':' + second;
-        }
+          return year + '-' + month + '-' + day + ' ' + hour + ':' + minute + ':' + second;
+        };
 
         // Convert date to a short string
         this.toShortDate = function(lastModified) {
@@ -313,7 +305,7 @@ ttApp
             day = '0' + day;
           }
           return year + '-' + month + '-' + day;
-        }
+        };
 
         // Convert date to a simple string
         this.toSimpleDate = function(lastModified) {
@@ -328,7 +320,7 @@ ttApp
             day = '0' + day;
           }
           return year + month + day;
-        }
+        };
 
         // Utility for cleaning a query
         this.cleanQuery = function(queryStr) {
@@ -340,12 +332,11 @@ ttApp
           cleanQuery = queryStr.replace(new RegExp('[/\\\\]', 'g'), ' ');
           // Remove brackets if not using a fielded query
           if (queryStr.indexOf(':') == -1) {
-            cleanQuery = queryStr.replace(new RegExp(
-              '[^a-zA-Z0-9:\\.\\-\'\\*]', 'g'), ' ');
+            cleanQuery = queryStr.replace(new RegExp('[^a-zA-Z0-9:\\.\\-\'\\*]', 'g'), ' ');
           }
 
           return cleanQuery;
-        }
+        };
 
         // Table sorting mechanism
         this.setSortField = function(table, field, paging) {
@@ -397,7 +388,7 @@ ttApp
           if (paging.sortField) {
             // if ascending specified, use that value,
             // otherwise use false
-            newArray.sort(this.sort_by(paging.sortField, paging.ascending))
+            newArray.sort(this.sort_by(paging.sortField, paging.ascending));
           }
 
           // apply filter
@@ -416,7 +407,7 @@ ttApp
           results.totalCount = newArray.length;
 
           return results;
-        }
+        };
 
         // function for sorting an array by (string) field
         // and direction
@@ -425,7 +416,7 @@ ttApp
           // key: function to return field value from
           // object
           var key = function(x) {
-            return x[field]
+            return x[field];
           };
 
           // convert reverse to integer (1 = ascending, -1
@@ -435,8 +426,8 @@ ttApp
 
           return function(a, b) {
             return a = key(a), b = key(b), reverse * ((a > b) - (b > a));
-          }
-        }
+          };
+        };
 
         // Get array by filter text matching terminologyId
         // or name
@@ -450,7 +441,7 @@ ttApp
             }
           }
           return newArray;
-        }
+        };
 
         // Returns true if any field on object contains
         // filter text
@@ -463,20 +454,19 @@ ttApp
             var value = object[prop];
             // check property for string, note this will
             // cover child elements
-            if (value
-              && value.toString().toLowerCase().indexOf(filter.toLowerCase()) != -1) {
+            if (value && value.toString().toLowerCase().indexOf(filter.toLowerCase()) != -1) {
               return true;
             }
           }
 
           return false;
-        }
+        };
 
         // Get words of a string
         this.getWords = function(str) {
           // Same as in tinymce options
           return str.match(/[^\s,\.]+/g);
-        }
+        };
 
         // Single and multiple-word ordered phrases
         this.getPhrases = function(str) {
@@ -496,7 +486,7 @@ ttApp
             }
           }
           return phrases;
-        }
+        };
 
       } ]);
 
@@ -511,11 +501,11 @@ ttApp.service('gpService', function() {
 
   this.isGlassPaneSet = function() {
     return this.glassPane.counter;
-  }
+  };
 
   this.isGlassPaneNegative = function() {
     return this.glassPane.counter < 0;
-  }
+  };
 
   // Increments glass pane counter
   this.increment = function(message) {
@@ -523,7 +513,7 @@ ttApp.service('gpService', function() {
       this.glassPane.messages.push(message);
     }
     this.glassPane.counter++;
-  }
+  };
 
   // Decrements glass pane counter
   this.decrement = function(message) {
@@ -536,19 +526,13 @@ ttApp.service('gpService', function() {
       }
     }
     this.glassPane.counter--;
-  }
+  };
 
 });
 
 // Security service
-ttApp.service('securityService', [
-  '$rootScope',
-  '$http',
-  '$location',
-  '$q',
-  '$cookies',
-  'utilService',
-  'gpService',
+ttApp.service('securityService', [ '$rootScope', '$http', '$location', '$q', '$cookies',
+  'utilService', 'gpService',
   function($rootScope, $http, $location, $q, $cookies, utilService, gpService) {
     console.debug('configure securityService');
 
@@ -566,11 +550,11 @@ ttApp.service('securityService', [
     var searchParams = {
       page : 1,
       query : null
-    }
+    };
 
     this.getCurrentAuthToken = function() {
       return user.authToken;
-    }
+    };
 
     // Gets the user
     this.getUser = function() {
@@ -590,7 +574,7 @@ ttApp.service('securityService', [
         }
       }
       return user;
-    }
+    };
 
     // Sets the user
     this.setUser = function(data) {
@@ -607,7 +591,7 @@ ttApp.service('securityService', [
       // cookie
       $cookies.put('user', JSON.stringify(user));
 
-    }
+    };
 
     // Clears the user
     this.clearUser = function() {
@@ -620,7 +604,7 @@ ttApp.service('securityService', [
       $http.defaults.headers.common.Authorization = null;
       $rootScope.tabs = [];
       $cookies.remove('user');
-    }
+    };
 
     var httpClearUser = this.clearUser;
 
@@ -634,23 +618,23 @@ ttApp.service('securityService', [
         return response;
       }, function(error) {
         return null;
-      })
-    }
+      });
+    };
 
     // isLoggedIn function
     this.isLoggedIn = function() {
       return user.authToken;
-    }
+    };
 
     // isAdmin function
     this.isAdmin = function() {
       return user.applicationRole == 'ADMIN';
-    }
+    };
 
     // isUser function
     this.isUser = function() {
       return user.applicationRole == 'ADMIN' || user.applicationRole == 'USER';
-    }
+    };
 
     // checks if current user has privileges of specified role
     this.hasPrivilegesOfRole = function(role) {
@@ -658,15 +642,14 @@ ttApp.service('securityService', [
       case 'VIEWER':
         return true;
       case 'USER':
-        return user.applicationRole === 'USER'
-          || user.applicationRole == 'ADMIN';
+        return user.applicationRole === 'USER' || user.applicationRole == 'ADMIN';
       case 'ADMIN':
         return user.applicationRole === 'ADMIN';
       default:
         return false;
       }
 
-    }
+    };
 
     // Logout
     this.logout = function() {
@@ -695,12 +678,12 @@ ttApp.service('securityService', [
         utilService.handleError(response);
         gpService.decrement();
       });
-    }
+    };
 
     // Accessor for search params
     this.getSearchParams = function() {
       return searchParams;
-    }
+    };
 
     // get all users
     this.getUsers = function() {
@@ -708,7 +691,7 @@ ttApp.service('securityService', [
       var deferred = $q.defer();
 
       // Get users
-      gpService.increment()
+      gpService.increment();
       $http.get(securityUrl + '/user/users').then(
       // success
       function(response) {
@@ -723,7 +706,7 @@ ttApp.service('securityService', [
         deferred.reject(response.data);
       });
       return deferred.promise;
-    }
+    };
 
     // get user for auth token
     this.getUserForAuthToken = function() {
@@ -731,7 +714,7 @@ ttApp.service('securityService', [
       var deferred = $q.defer();
 
       // Get users
-      gpService.increment()
+      gpService.increment();
       $http.get(securityUrl + '/user').then(
       // success
       function(response) {
@@ -745,14 +728,14 @@ ttApp.service('securityService', [
         deferred.reject(response.data);
       });
       return deferred.promise;
-    }
+    };
     // add user
     this.addUser = function(user) {
       console.debug('addUser');
       var deferred = $q.defer();
 
       // Add user
-      gpService.increment()
+      gpService.increment();
       $http.put(securityUrl + '/user/add', user).then(
       // success
       function(response) {
@@ -767,7 +750,7 @@ ttApp.service('securityService', [
         deferred.reject(response.data);
       });
       return deferred.promise;
-    }
+    };
 
     // update user
     this.updateUser = function(user) {
@@ -775,7 +758,7 @@ ttApp.service('securityService', [
       var deferred = $q.defer();
 
       // Add user
-      gpService.increment()
+      gpService.increment();
       $http.post(securityUrl + '/user/update', user).then(
       // success
       function(response) {
@@ -790,7 +773,7 @@ ttApp.service('securityService', [
         deferred.reject(response.data);
       });
       return deferred.promise;
-    }
+    };
 
     // remove user
     this.removeUser = function(user) {
@@ -813,7 +796,7 @@ ttApp.service('securityService', [
         deferred.reject(response.data);
       });
       return deferred.promise;
-    }
+    };
 
     // get application roles
     this.getApplicationRoles = function() {
@@ -821,7 +804,7 @@ ttApp.service('securityService', [
       var deferred = $q.defer();
 
       // Get application roles
-      gpService.increment()
+      gpService.increment();
       $http.get(securityUrl + '/roles').then(
       // success
       function(response) {
@@ -836,7 +819,7 @@ ttApp.service('securityService', [
         deferred.reject(response.data);
       });
       return deferred.promise;
-    }
+    };
 
     // Finds users as a list
     this.findUsersAsList = function(queryStr, pfs) {
@@ -865,7 +848,7 @@ ttApp.service('securityService', [
       });
 
       return deferred.promise;
-    }
+    };
 
     // update user preferences
     this.updateUserPreferences = function(userPreferences) {
@@ -881,112 +864,102 @@ ttApp.service('securityService', [
 
       var deferred = $q.defer();
 
-      gpService.increment()
-      $http.post(securityUrl + '/user/preferences/update', userPreferences)
-        .then(
-        // success
-        function(response) {
-          console.debug('  userPreferences = ', response.data);
-          gpService.decrement();
-          deferred.resolve(response.data);
-        },
-        // error
-        function(response) {
-          utilService.handleError(response);
-          gpService.decrement();
-          deferred.reject(response.data);
-        });
+      gpService.increment();
+      $http.post(securityUrl + '/user/preferences/update', userPreferences).then(
+      // success
+      function(response) {
+        console.debug('  userPreferences = ', response.data);
+        gpService.decrement();
+        deferred.resolve(response.data);
+      },
+      // error
+      function(response) {
+        utilService.handleError(response);
+        gpService.decrement();
+        deferred.reject(response.data);
+      });
       return deferred.promise;
-    }
+    };
 
   } ]);
 
 // Tab service
-ttApp
-  .service(
-    'tabService',
-    [
-      '$rootScope',
-      '$location',
-      'utilService',
-      'gpService',
-      'securityService',
-      function($rootScope, $location, utilService, gpService, securityService) {
-        console.debug('configure tabService');
+ttApp.service('tabService', [ '$rootScope', '$location', 'utilService', 'gpService',
+  'securityService', function($rootScope, $location, utilService, gpService, securityService) {
+    console.debug('configure tabService');
 
-        // Available tabs
-        var tabsAvailable = [ {
-          link : 'upload',
-          label : 'Files',
-          minRole : 'USER'
-        }, {
-          link : 'source',
-          label : 'Source Data',
-          minRole : 'USER'
-        }, {
-          link : 'transform',
-          label : 'Transform',
-          minRole : 'VIEWER'
-        }, {
-          link : 'edit',
-          label : 'Review',
-          minRole : 'USER'
-        }, {
-          link : 'admin',
-          label : 'Admin',
-          minRole : 'ADMIN'
-        } ];
+    // Available tabs
+    var tabsAvailable = [ {
+      link : 'upload',
+      label : 'Files',
+      minRole : 'USER'
+    }, {
+      link : 'source',
+      label : 'Source Data',
+      minRole : 'USER'
+    }, {
+      link : 'transform',
+      label : 'Transform',
+      minRole : 'VIEWER'
+    }, {
+      link : 'edit',
+      label : 'Review',
+      minRole : 'USER'
+    }, {
+      link : 'admin',
+      label : 'Admin',
+      minRole : 'ADMIN'
+    } ];
 
-        this.initializeTabsForUser = function(user) {
+    this.initializeTabsForUser = function(user) {
 
-          console.debug('get tabs for user', user);
-          var tabs = [];
-          angular.forEach(tabsAvailable, function(tab) {
-            console.debug('checking tab', tab, tab.minRole);
-            if (securityService.hasPrivilegesOfRole(tab.minRole)) {
-              tabs.push(tab);
-            }
-          });
-
-          console.debug('tabs', tabs);
-
-          if (tabs.length === 0) {
-            handleError('Could not set available tab content from user information');
-          } else {
-
-            if (user && user.userPreferences && user.userPreferences.lastTab) {
-              console.debug('location set to '
-                + user.userPreferences.lastTab.link);
-              $location.url(user.userPreferences.lastTab.link);
-            } else {
-              console.debug('location set to ' + tabs[0].link);
-              $location.url(tabs[0].link);
-            }
-          }
-
-          $rootScope.tabs = tabs;
-        };
-
-        // Sets the selected tab
-        this.setSelectedTab = function(tab) {
-          this.selectedTab = tab;
-          console.debug('location set to ' + tab.link);
-          $location.url(tab.link);
+      console.debug('get tabs for user', user);
+      var tabs = [];
+      angular.forEach(tabsAvailable, function(tab) {
+        console.debug('checking tab', tab, tab.minRole);
+        if (securityService.hasPrivilegesOfRole(tab.minRole)) {
+          tabs.push(tab);
         }
+      });
 
-        // sets the selected tab by label
-        // to be called by controllers when their
-        // respective tab is selected
-        this.setSelectedTabByLabel = function(label) {
-          for (var i = 0; i < this.tabs.length; i++) {
-            if (this.tabs[i].label === label) {
-              this.selectedTab = this.tabs[i];
-              break;
-            }
-          }
+      console.debug('tabs', tabs);
+
+      if (tabs.length === 0) {
+        handleError('Could not set available tab content from user information');
+      } else {
+
+        if (user && user.userPreferences && user.userPreferences.lastTab) {
+          console.debug('location set to ' + user.userPreferences.lastTab.link);
+          $location.url(user.userPreferences.lastTab.link);
+        } else {
+          console.debug('location set to ' + tabs[0].link);
+          $location.url(tabs[0].link);
         }
+      }
 
-      } ]);
+      $rootScope.tabs = tabs;
+    };
+
+    // Sets the selected tab
+    this.setSelectedTab = function(tab) {
+      this.selectedTab = tab;
+      console.debug('location set to ' + tab.link);
+      $location.url(tab.link);
+    };
+
+    // sets the selected tab by label
+    // to be called by controllers when their
+    // respective tab is selected
+    this.setSelectedTabByLabel = function(label) {
+      for (var i = 0; i < this.tabs.length; i++) {
+        if (this.tabs[i].label === label) {
+          this.selectedTab = this.tabs[i];
+          break;
+        }
+      }
+    };
+
+  } ]);
 
 // Websocket service
 
@@ -1009,35 +982,35 @@ ttApp.service('websocketService', [ '$location', 'utilService', 'gpService',
       console.debug('url = ' + url);
       return url;
 
-    }
+    };
 
     this.connection = new WebSocket(this.getUrl());
 
     this.connection.onopen = function() {
       // Log so we know it is happening
       console.log('Connection open');
-    }
+    };
 
     this.connection.onclose = function() {
       // Log so we know it is happening
       console.log('Connection closed');
-    }
+    };
 
     // error handler
     this.connection.onerror = function(error) {
       utilService.handleError(error, null, null, null);
-    }
+    };
 
     // handle receipt of a message
     this.connection.onmessage = function(e) {
       var message = e.data;
       console.log('MESSAGE: ' + message);
       // TODO: what else to do?
-    }
+    };
 
     // Send a message to the websocket server endpoint
     this.send = function(message) {
       this.connection.send(JSON.stringify(message));
-    }
+    };
 
   } ]);

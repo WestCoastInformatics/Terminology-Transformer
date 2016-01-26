@@ -24,8 +24,7 @@ import com.wci.tt.jpa.services.handlers.DefaultConverter;
 import com.wci.tt.services.handlers.ConverterHandler;
 
 /**
- * Some initial testing for {@link DefaultConverter}. Assumes stock dev
- * load.
+ * Some initial testing for {@link DefaultConverter}. Assumes stock dev load.
  */
 public class DefaultConverterTest extends JpaSupport {
 
@@ -96,7 +95,7 @@ public class DefaultConverterTest extends JpaSupport {
 
     DataContextJpa inputContext = new DataContextJpa();
     inputContext.setCustomer("Test Input Customer");
-    inputContext.setInfoModelName("Test Input Information Model Name");
+    inputContext.setInfoModelClass("test.input.class.name");
     inputContext.setSemanticType("Test Input Semantic Type");
     inputContext.setSpecialty("Test Input Specialty");
     inputContext.setTerminology("Test Input Terminology");
@@ -168,7 +167,7 @@ public class DefaultConverterTest extends JpaSupport {
 
     DataContextJpa inputContext = new DataContextJpa();
     inputContext.setCustomer("Test Input Customer");
-    inputContext.setInfoModelName("Test Input Information Model Name");
+    inputContext.setInfoModelClass("test.input.class.name");
     inputContext.setSemanticType("Test Input Semantic Type");
     inputContext.setSpecialty("Test Input Specialty");
     inputContext.setTerminology("Test Input Terminology");
@@ -177,7 +176,7 @@ public class DefaultConverterTest extends JpaSupport {
 
     DataContextJpa outputContext = new DataContextJpa();
     outputContext.setCustomer("Test Output Customer");
-    outputContext.setInfoModelName("Test Output Information Model Name");
+    outputContext.setInfoModelClass("test.output.class.name");
     outputContext.setSemanticType("Test Output Semantic Type");
     outputContext.setSpecialty("Test Output Specialty");
     outputContext.setTerminology("Test Output Terminology");

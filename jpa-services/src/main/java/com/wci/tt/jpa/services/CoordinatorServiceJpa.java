@@ -369,7 +369,7 @@ public class CoordinatorServiceJpa extends RootServiceJpa
 
     // Nothing identified
     if (inputStr == null || inputStr.isEmpty()) {
-      return null;
+      return new ArrayList<>();
     }
 
     // STEP 1: Call accept per provider: Generates map of provider to list of
@@ -401,6 +401,8 @@ public class CoordinatorServiceJpa extends RootServiceJpa
       }
     }
 
+    // TODO: aggregate, like in process
+    
     // Apply threshold and return the results
     Logger.getLogger(getClass())
         .debug("  all results = " + allIdentifiedResults);
@@ -424,13 +426,13 @@ public class CoordinatorServiceJpa extends RootServiceJpa
     // no processors
     if (inputStr == null || inputStr.isEmpty() || requiredOutputContext == null
         || requiredOutputContext == null || requiredOutputContext.isEmpty()) {
-      return null;
+      return new ArrayList<>();
     }
 
     // STEP 1: Identify providers/converters from input context to output
     // context.
     final Map<ProviderHandler, List<DataContext>> providerMap =
-        getProcessProviders(requiredInputContext, requiredOutputContext);
+        getProcessProviders(requiredInputContext);
     Logger.getLogger(getClass()).debug("  providers = " + providerMap);
 
     // Collect provider output contexts from the provider map
@@ -543,11 +545,11 @@ public class CoordinatorServiceJpa extends RootServiceJpa
       for (final ScoredResult result : normalizer.normalize(inputStr,
           requiredInputContext)) {
         // Retain highest score per value
+        final float score = result.getScore() * normalizer.getQuality();
         if (!scoreMap.containsKey(result.getValue())
-            || scoreMap.get(result.getValue()) < result.getScore()) {
+            || scoreMap.get(result.getValue()) < score) {
           // Weight score by normalizer quality
-          scoreMap.put(result.getValue(),
-              result.getScore() * normalizer.getQuality());
+          scoreMap.put(result.getValue(), score);
         }
       }
     }
@@ -616,7 +618,7 @@ public class CoordinatorServiceJpa extends RootServiceJpa
    * @throws Exception the exception
    */
   private Map<ProviderHandler, List<DataContext>> getProcessProviders(
-    DataContext inputContext, DataContext outputContext) throws Exception {
+    DataContext inputContext) throws Exception {
 
     final Map<ProviderHandler, List<DataContext>> providerMap = new HashMap<>();
 

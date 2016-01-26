@@ -4,14 +4,14 @@ ttApp.config(function config($routeProvider) {
     controller : 'SourceDataUploadCtrl',
     templateUrl : 'app/page/upload/upload.html'
   });
-})
+});
 
 // Controller
 ttApp
   .controller(
     'SourceDataUploadCtrl',
-    function($scope, $filter, $timeout, sourceDataService, gpService,
-      utilService, FileUploader, NgTableParams) {
+    function($scope, $filter, $timeout, sourceDataService, gpService, utilService, FileUploader,
+      NgTableParams) {
       console.debug('configure SourceDataUploadCtrl');
 
       // VARIABLES
@@ -24,7 +24,7 @@ ttApp
       // NOTE: Only updated on add events, as angular-file-upload does not have
       // a _remove event
       $scope.hasZippedFiles = false;
-      
+
       // Get uploaded file details
       function getUploadedFileDetails() {
         sourceDataService.findSourceDataFiles("").then(
@@ -42,13 +42,13 @@ ttApp
       $scope.downloadFile = function() {
         // TODO
         window.alert('Not yet functional');
-      }
+      };
 
       // Download all files
       $scope.downloadAllFiles = function() {
         // TODO
         window.alert('Not yet functional');
-      }
+      };
 
       // Remove file from the server
       $scope.removeFile = function(file) {
@@ -57,12 +57,11 @@ ttApp
         function(response) {
           getUploadedFileDetails();
         });
-      }
+      };
 
       // Remove all files
       $scope.removeAllFiles = function() {
-        if (!window
-          .confirm('Are you sure you want to delete all uploaded files?')) {
+        if (!window.confirm('Are you sure you want to delete all uploaded files?')) {
           return;
         }
 
@@ -71,14 +70,16 @@ ttApp
         // used to prevent enormous number of getUploadedFileDetails for large
         // lists
         // while still allowing for visual update of removed items
-        var refreshTimeout;
+        var refreshTimeout = null;
         angular.forEach(uploadedFiles, function(file) {
           gpService.increment();
           sourceDataService.removeFile(file.id).then(function() {
             gpService.decrement();
 
             // cancel existing timeout
-            $timeout.cancel(refreshTimeout);
+            if (refreshTimeout) {
+              $timeout.cancel(refreshTimeout);
+            }
 
             // set the new timeout
             refreshTimeout = $timeout(function() {
@@ -86,7 +87,7 @@ ttApp
             }, 500);
           });
         });
-      }
+      };
 
       // ///////////////////////
       // Table Parameters
@@ -131,8 +132,7 @@ ttApp
       });
 
       // CALLBACKS
-      uploader.onWhenAddingFileFailed = function(
-        item /* {File|FileLikeObject} */, filter, options) {
+      uploader.onWhenAddingFileFailed = function(item /* {File|FileLikeObject} */, filter, options) {
         console.info('onWhenAddingFileFailed', item, filter, options);
       };
       uploader.onAfterAddingFile = function(fileItem) {
@@ -156,8 +156,7 @@ ttApp
       uploader.onBeforeUploadItem = function(item) {
 
         // dynamically set the upload url with the unzip flag
-        item.url = fileUrl + '/upload?unzip='
-          + (item.unzip ? 'true' : 'false')
+        item.url = fileUrl + '/upload?unzip=' + (item.unzip ? 'true' : 'false');
 
         // manually set the headers on the item's request (does not inherit from
         // $http, apparently)
@@ -195,14 +194,12 @@ ttApp
       uploader.onCompleteAll = function() {
         console.info('onCompleteAll');
       };
-      
+
       // 
       // Initialize
       //
-      
+
       // on load, get the uploaded file details
       getUploadedFileDetails();
-
-
 
     });

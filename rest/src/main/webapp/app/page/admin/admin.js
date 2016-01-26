@@ -4,7 +4,7 @@ ttApp.config(function config($routeProvider) {
     controller : 'AdminCtrl',
     templateUrl : 'app/page/admin/admin.html'
   });
-})
+});
 
 ttApp.controller('AdminCtrl',
   function($scope, $filter, sourceDataService, FileUploader, NgTableParams) {

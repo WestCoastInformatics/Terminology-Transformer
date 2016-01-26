@@ -4,19 +4,12 @@ ttApp.config(function config($routeProvider) {
     controller : 'LoginCtrl',
     templateUrl : 'app/page/login/login.html'
   });
-})
+});
 
 // Controller
-ttApp.controller('LoginCtrl', [
-  '$scope',
-  '$http',
-  '$location',
-  'securityService',
-  'gpService',
-  'utilService',
-  'tabService',
-  function($scope, $http, $location, securityService, gpService, utilService,
-    tabService) {
+ttApp.controller('LoginCtrl', [ '$scope', '$http', '$location', 'securityService', 'gpService',
+  'utilService', 'tabService',
+  function($scope, $http, $location, securityService, gpService, utilService, tabService) {
     console.debug('configure LoginCtrl');
 
     // clear any cached user information
@@ -56,10 +49,12 @@ ttApp.controller('LoginCtrl', [
         utilService.handleError(response);
         gpService.decrement();
       });
-    }
+    };
 
     // Logout function
     $scope.logout = function() {
       securityService.logout();
-    }
+    };
+
+    // end
   } ]);
