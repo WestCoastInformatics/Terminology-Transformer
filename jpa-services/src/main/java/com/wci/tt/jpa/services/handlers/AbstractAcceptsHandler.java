@@ -64,13 +64,14 @@ public abstract class AbstractAcceptsHandler {
    *
    * @param inputContext the input context
    * @param outputContext the output context
-   * @throws Exception
+   * @return true, if successful
+   * @throws Exception the exception
    */
-  public void validate(DataContext inputContext, DataContext outputContext)
+  public boolean validate(DataContext inputContext, DataContext outputContext)
     throws Exception {
     for (final DataContext matchContext : accepts(inputContext)) {
       if (DataContextMatcher.matches(outputContext, matchContext)) {
-        return;
+        return true;
       }
     }
     Logger.getLogger(getClass()).error("  inputContext = " + inputContext);
