@@ -4,7 +4,7 @@ ttApp.config(function config($routeProvider) {
     controller : 'EditCtrl',
     templateUrl : 'app/page/edit/edit.html'
   });
-})
+});
 
 ttApp.controller('EditCtrl',
   function($scope, $filter, sourceDataService, FileUploader, NgTableParams) {

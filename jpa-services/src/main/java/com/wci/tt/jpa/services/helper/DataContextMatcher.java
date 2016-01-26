@@ -86,7 +86,7 @@ public class DataContextMatcher {
     if (!wildcardMatch(actual.getSpecialty(), match.getSpecialty())) {
       return false;
     }
-    if (!wildcardMatch(actual.getInfoModelName(), match.getInfoModelName())) {
+    if (!wildcardMatch(actual.getInfoModelClass(), match.getInfoModelClass())) {
       return false;
     }
     if (!wildcardMatch(actual.getTerminology(), match.getTerminology())) {
@@ -128,7 +128,7 @@ public class DataContextMatcher {
   public void configureContext(DataContext context) throws Exception {
     configureContext(context.getType(), context.getCustomer(),
         context.getSemanticType(), context.getSpecialty(),
-        context.getInfoModelName(), context.getTerminology(),
+        context.getInfoModelClass(), context.getTerminology(),
         context.getVersion());
   }
 
@@ -140,13 +140,13 @@ public class DataContextMatcher {
    * @param customer the customer
    * @param semanticType the semantic type
    * @param specialty the specialty
-   * @param infoModelName the info model name
+   * @param infoModelClass the info model name
    * @param terminology the terminology
    * @param version the version
    * @throws Exception the exception
    */
   public void configureContext(DataContextType type, String customer,
-    String semanticType, String specialty, String infoModelName,
+    String semanticType, String specialty, String infoModelClass,
     String terminology, String version) throws Exception {
 
     if (type == null) {
@@ -158,7 +158,7 @@ public class DataContextMatcher {
     context.setCustomer(customer);
     context.setSemanticType(semanticType);
     context.setSpecialty(specialty);
-    context.setInfoModelName(infoModelName);
+    context.setInfoModelClass(infoModelClass);
     context.setTerminology(terminology);
     context.setVersion(version);
     Logger.getLogger(getClass())
@@ -175,14 +175,14 @@ public class DataContextMatcher {
    * @param customers the customers
    * @param semanticTypes the semantic types
    * @param specialties the specialties
-   * @param infoModelNames the info model names
+   * @param infoModelClasses the info model classes
    * @param terminologies the terminologies
    * @param versions the versions
    * @throws Exception the exception
    */
   public void configureContext(EnumSet<DataContextType> types,
     List<String> customers, List<String> semanticTypes,
-    List<String> specialties, List<String> infoModelNames,
+    List<String> specialties, List<String> infoModelClasses,
     List<String> terminologies, List<String> versions) throws Exception {
 
     // Here, compose every possible combination of the attached parameters.
@@ -216,10 +216,10 @@ public class DataContextMatcher {
           "Empty specialty list is not allowed, pass null for wildcard.");
     }
 
-    if (infoModelNames == null) {
-      infoModelNames = new ArrayList<>();
-      infoModelNames.add("*");
-    } else if (infoModelNames.isEmpty()) {
+    if (infoModelClasses == null) {
+      infoModelClasses = new ArrayList<>();
+      infoModelClasses.add("*");
+    } else if (infoModelClasses.isEmpty()) {
       throw new Exception(
           "Empty info model name list is not allowed, pass null for wildcard.");
     }
@@ -246,7 +246,7 @@ public class DataContextMatcher {
       for (final String customer : customers) {
         for (final String semanticType : semanticTypes) {
           for (final String specialty : specialties) {
-            for (final String infoModelName : infoModelNames) {
+            for (final String infoModelClass : infoModelClasses) {
               for (final String terminology : terminologies) {
                 for (final String version : versions) {
                   final DataContext context = new DataContextJpa();
@@ -256,8 +256,8 @@ public class DataContextMatcher {
                       semanticType.equals("*") ? null : semanticType);
                   context
                       .setSpecialty(specialty.equals("*") ? null : specialty);
-                  context.setInfoModelName(
-                      infoModelName.equals("*") ? null : infoModelName);
+                  context.setInfoModelClass(
+                      infoModelClass.equals("*") ? null : infoModelClass);
                   context.setTerminology(
                       terminology.equals("*") ? null : terminology);
                   context.setVersion(version.equals("*") ? null : version);

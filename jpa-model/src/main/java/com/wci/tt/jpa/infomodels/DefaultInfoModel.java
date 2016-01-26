@@ -129,7 +129,7 @@ public class DefaultInfoModel implements InfoModel<DefaultInfoModel> {
   /* see superclass */
   @Override
   public String getModelValue() throws Exception {
-    return code;
+    return "{ code : \"" + code + "\", term : \"" + term + "\"}";
   }
 
 }
