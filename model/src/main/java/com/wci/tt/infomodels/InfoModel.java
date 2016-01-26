@@ -38,11 +38,20 @@ public interface InfoModel<T extends InfoModel<?>> extends Configurable {
    * @throws Exception the exception
    */
   public String getModelValue() throws Exception;
-  
+
   /**
-   * Returns the version  of the model.
+   * Returns the model in common.
    *
-   * @return the version 
+   * @param model the model
+   * @return the model in common
+   * @throws Exception the exception
+   */
+  public T getModelInCommon(T model) throws Exception;
+
+  /**
+   * Returns the version of the model.
+   *
+   * @return the version
    */
   public String getVersion();
 }
