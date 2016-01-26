@@ -525,6 +525,8 @@ public class CoordinatorServiceJpa extends RootServiceJpa
       final ScoredResult result = new ScoredResultJpa();
       result.setValue(key);
       result.setScore(scoreMap.get(key));
+      
+      normalizedResults.add(result);
     }
 
     // Apply threshold to scores and return
