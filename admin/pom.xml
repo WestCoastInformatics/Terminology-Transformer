@@ -62,7 +62,7 @@
   </dependencies>
 
   <profiles>
-    <!-- Create DB, specify -Drun.config.tt=... -->
+  <!-- Create DB, specify -Drun.config.umls=... -->
     <profile>
       <id>Createdb</id>
       <build>
@@ -90,7 +90,7 @@
       </build>
     </profile>
 
-    <!-- Update DB, specify -Drun.config=... -->
+    <!-- Update DB, specify -Drun.config.umls=... -->
     <profile>
       <id>Updatedb</id>
       <build>
@@ -118,7 +118,7 @@
       </build>
     </profile>
 
-    <!-- Rebuild indexes, specify -Drun.config.tt=... and -Dindexed.objects=... -->
+    <!-- Rebuild indexes, specify -Drun.config.umls=... and -Dindexed.objects=... -->
     <profile>
       <id>Reindex</id>
       <build>
@@ -147,7 +147,7 @@
     </profile>
 
 
-    <!-- Database QA, specify -Drun.config.tt=... -->
+    <!-- Database QA, specify -Drun.config.umls=... -->
     <profile>
       <id>Database</id>
       <build>
@@ -181,7 +181,7 @@
       </build>
     </profile>
 
-    <!-- Remove terminology, specify -Drun.config.tt=... -Dterminology=... -->
+    <!-- Remove terminology, specify -Drun.config.umls=... -Dterminology=... -->
     <profile>
       <id>RemoveTerminology</id>
       <build>
