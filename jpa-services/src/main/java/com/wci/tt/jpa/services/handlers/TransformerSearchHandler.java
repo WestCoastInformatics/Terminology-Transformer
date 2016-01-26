@@ -16,6 +16,7 @@ import org.apache.lucene.queryparser.classic.ParseException;
 import org.apache.lucene.queryparser.classic.QueryParserBase;
 import org.hibernate.search.jpa.FullTextQuery;
 
+import com.wci.umls.server.helpers.FieldedStringTokenizer;
 import com.wci.umls.server.helpers.HasLastModified;
 import com.wci.umls.server.helpers.PfsParameter;
 import com.wci.umls.server.helpers.PfscParameter;
@@ -53,28 +54,30 @@ public class TransformerSearchHandler implements SearchHandler {
     }
     escapedQuery = "\"" + QueryParserBase.escape(escapedQuery) + "\"";
 
+    final String fixedQuery = query == null ? "" : query.replaceAll("\\/", " ");
     // Build a combined query with an OR between query typed and exact match
     String combinedQuery = null;
     // For a fielded query search, simply perform the search as written
     // no need for modifications. Also if no literal search field is supplied
-    if (query.isEmpty() || query.contains(":") || literalField == null) {
-      combinedQuery = query;
+    if (fixedQuery.isEmpty() || fixedQuery.contains(":") || literalField == null) {
+      combinedQuery = fixedQuery;
     } else {
-      combinedQuery = (query.isEmpty() ? "" : query + " OR ") + literalField
+      combinedQuery = (fixedQuery.isEmpty() ? "" : fixedQuery + " OR ") + literalField
           + ":" + escapedQuery + "^20.0";
     }
 
     // Add terminology conditions
     StringBuilder terminologyClause = new StringBuilder();
-    if (terminology != null && !terminology.equals("") && version != null
-        && !version.equals("")) {
-      terminologyClause.append(
-          " AND terminology:" + terminology + " AND version:" + version);
+    if (terminology != null && !terminology.equals("")) {
+      terminologyClause.append(" AND terminology:" + terminology);
+    }
+    if (version != null && !version.equals("")) {
+      terminologyClause.append(" AND version:" + version);
     }
 
     // Assemble query
     StringBuilder finalQuery = new StringBuilder();
-    if (query.isEmpty()) {
+    if (fixedQuery.isEmpty()) {
       // Just use PFS and skip the leading "AND"
       finalQuery.append(terminologyClause.substring(5));
     } else if (combinedQuery.contains(" OR ")) {
@@ -91,7 +94,7 @@ public class TransformerSearchHandler implements SearchHandler {
       Logger.getLogger(getClass()).debug("query = " + finalQuery);
       fullTextQuery = IndexUtility.applyPfsToLuceneQuery(clazz, fieldNamesKey,
           finalQuery.toString(), pfs, manager);
-    } catch (ParseException e) {
+    } catch (ParseException | IllegalArgumentException e) {
       // If there's a parse exception, try the literal query
       Logger.getLogger(getClass()).debug("query = " + finalQuery);
       fullTextQuery = IndexUtility.applyPfsToLuceneQuery(clazz, fieldNamesKey,
