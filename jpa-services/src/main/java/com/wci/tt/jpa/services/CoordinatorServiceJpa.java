@@ -85,9 +85,7 @@ public class CoordinatorServiceJpa extends RootServiceJpa
     }
 
     /** Configure loaders */
-    try
-
-    {
+    try {
       if (config == null) {
         config = ConfigUtility.getConfigProperties();
       }
@@ -102,23 +100,17 @@ public class CoordinatorServiceJpa extends RootServiceJpa
                 handlerName, SourceDataLoader.class);
         loaders.put(handlerName, handler);
       }
-      if (normalizers.isEmpty()) {
+      if (loaders.isEmpty()) {
         throw new Exception(
             "source.data.loader.handler must have one value but none exist");
       }
-    } catch (
-
-    Exception e)
-
-    {
+    } catch (Exception e) {
       e.printStackTrace();
-      normalizers = null;
+      loaders = null;
     }
 
     /** Add normalizers found in Config to List. */
-    try
-
-    {
+    try {
       if (config == null) {
         config = ConfigUtility.getConfigProperties();
       }
@@ -137,19 +129,13 @@ public class CoordinatorServiceJpa extends RootServiceJpa
         throw new Exception(
             "normalizer.handler must have one value but none exist");
       }
-    } catch (
-
-    Exception e)
-
-    {
+    } catch (Exception e) {
       e.printStackTrace();
       normalizers = null;
     }
 
     /** Add providers found in Config to List. */
-    try
-
-    {
+    try {
       if (config == null) {
         config = ConfigUtility.getConfigProperties();
       }
@@ -168,19 +154,13 @@ public class CoordinatorServiceJpa extends RootServiceJpa
         throw new Exception(
             "provider.handler must have one value but none exist");
       }
-    } catch (
-
-    Exception e)
-
-    {
+    } catch (Exception e) {
       e.printStackTrace();
       providers = null;
     }
 
     /** Add converters found in Config to List. */
-    try
-
-    {
+    try {
       if (config == null) {
         config = ConfigUtility.getConfigProperties();
       }
@@ -199,19 +179,13 @@ public class CoordinatorServiceJpa extends RootServiceJpa
         throw new Exception(
             "converter.handler must have one value but none exist");
       }
-    } catch (
-
-    Exception e)
-
-    {
+    } catch (Exception e) {
       e.printStackTrace();
       converters = null;
     }
 
     /** Add information Models found in Config to List. */
-    try
-
-    {
+    try {
       if (config == null) {
         config = ConfigUtility.getConfigProperties();
       }
@@ -227,19 +201,13 @@ public class CoordinatorServiceJpa extends RootServiceJpa
 
         infoModels.put(informationModel, model);
       }
-    } catch (
-
-    Exception e)
-
-    {
+    } catch (Exception e) {
       e.printStackTrace();
       infoModels = null;
     }
 
     /** Add specialties found in Config to List. */
-    try
-
-    {
+    try {
       if (config == null) {
         config = ConfigUtility.getConfigProperties();
       }
@@ -250,19 +218,13 @@ public class CoordinatorServiceJpa extends RootServiceJpa
         }
         specialties.add(specialty);
       }
-    } catch (
-
-    Exception e)
-
-    {
+    } catch (Exception e) {
       e.printStackTrace();
       specialties = null;
     }
 
     /** Add semanticTypes found in Config to List. */
-    try
-
-    {
+    try {
       if (config == null) {
         config = ConfigUtility.getConfigProperties();
       }
@@ -273,11 +235,7 @@ public class CoordinatorServiceJpa extends RootServiceJpa
         }
         semanticTypes.add(semanticType);
       }
-    } catch (
-
-    Exception e)
-
-    {
+    } catch (Exception e) {
       e.printStackTrace();
       semanticTypes = null;
     }
@@ -402,7 +360,7 @@ public class CoordinatorServiceJpa extends RootServiceJpa
     }
 
     // TODO: aggregate, like in process
-    
+
     // Apply threshold and return the results
     Logger.getLogger(getClass())
         .debug("  all results = " + allIdentifiedResults);
@@ -576,6 +534,7 @@ public class CoordinatorServiceJpa extends RootServiceJpa
     return normalizedResults;
   }
 
+  /* see superclass */
   @Override
   public Map<String, SourceDataLoader> getSourceDataLoaders() throws Exception {
     return loaders;
@@ -585,7 +544,7 @@ public class CoordinatorServiceJpa extends RootServiceJpa
    * Returns the supported provider contexts. Returns an empty list if there are
    * no supported providers.
    *
-   * @param requiredInputContext the input context
+   * @param inputContext the input context
    * @return the supported provider contexts
    * @throws Exception the exception
    */
@@ -613,7 +572,6 @@ public class CoordinatorServiceJpa extends RootServiceJpa
    * the specified input context.
    *
    * @param inputContext the input context
-   * @param outputContext the output context
    * @return the process providers
    * @throws Exception the exception
    */

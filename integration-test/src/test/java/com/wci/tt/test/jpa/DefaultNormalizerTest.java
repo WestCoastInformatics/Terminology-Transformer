@@ -102,8 +102,9 @@ public class DefaultNormalizerTest extends JpaSupport {
     context.setSpecialty("Test Specialty");
     context.setTerminology("Test Terminology");
     context.setVersion("Test Version");
-    context.setType(DataContextType.CODE);
 
+    // Test works for TEXT DataContextType 
+    context.setType(DataContextType.CODE);
     List<ScoredResult> results = handler.normalize(inputString, context);
 
     Logger.getLogger(getClass()).info("  results = " + results);
@@ -114,6 +115,20 @@ public class DefaultNormalizerTest extends JpaSupport {
     assertTrue(result.getScore() == 1f);
     assertEquals(inputString, result.getValue());
     assertFalse(result.isObsolete());
+    
+    // Test works for TEXT DataContextType 
+    context.setType(DataContextType.TEXT);
+    results = handler.normalize(inputString, context);
+
+    Logger.getLogger(getClass()).info("  results = " + results);
+
+    assertEquals(1, results.size());
+    result = results.get(0);
+
+    assertTrue(result.getScore() == 1f);
+    assertEquals(inputString, result.getValue());
+    assertFalse(result.isObsolete());
+
   }
 
   /**
