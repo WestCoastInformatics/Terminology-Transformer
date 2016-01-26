@@ -9,8 +9,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-import org.apache.log4j.Logger;
-
 import com.wci.tt.DataContext;
 import com.wci.tt.jpa.services.helper.DataContextMatcher;
 import com.wci.tt.services.handlers.ProviderHandler;
@@ -70,15 +68,12 @@ public abstract class AbstractAcceptsHandler {
   public boolean validate(DataContext inputContext, DataContext outputContext)
     throws Exception {
     if (inputContext != null && outputContext != null) {
-    for (final DataContext matchContext : accepts(inputContext)) {
-      if (DataContextMatcher.matches(outputContext, matchContext)) {
-        return true;
+      for (final DataContext matchContext : accepts(inputContext)) {
+        if (DataContextMatcher.matches(outputContext, matchContext)) {
+          return true;
+        }
       }
     }
-    }
-
-    Logger.getLogger(getClass()).error("  inputContext = " + inputContext);
-    Logger.getLogger(getClass()).error("  outputContext = " + outputContext);
 
     return false;
   }
