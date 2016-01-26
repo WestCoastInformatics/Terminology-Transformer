@@ -64,18 +64,23 @@ public abstract class AbstractAcceptsHandler {
    *
    * @param inputContext the input context
    * @param outputContext the output context
-   * @throws Exception
+   * @return true, if successful
+   * @throws Exception the exception
    */
-  public void validate(DataContext inputContext, DataContext outputContext)
+  public boolean validate(DataContext inputContext, DataContext outputContext)
     throws Exception {
-    for (final DataContext matchContext : accepts(inputContext)) {
-      if (DataContextMatcher.matches(outputContext, matchContext)) {
-        return;
+    if (inputContext != null && outputContext != null) {
+      for (final DataContext matchContext : accepts(inputContext)) {
+        if (DataContextMatcher.matches(outputContext, matchContext)) {
+          return true;
+        }
       }
     }
+
     Logger.getLogger(getClass()).error("  inputContext = " + inputContext);
     Logger.getLogger(getClass()).error("  outputContext = " + outputContext);
-    throw new Exception("Invalid combination of input and output context");
+
+    return false;
   }
 
   /**

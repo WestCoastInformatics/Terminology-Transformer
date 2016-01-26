@@ -65,10 +65,6 @@ public class ScoredResultJpa implements ScoredResult, Comparable<ScoredResult> {
   /* see superclass */
   @Override
   public void setScore(float score) throws Exception {
-    if (score < 0 || score > 1) {
-      throw new Exception("Score must be between 0-1 inclusive");
-    }
-
     this.score = score;
   }
 
@@ -132,8 +128,8 @@ public class ScoredResultJpa implements ScoredResult, Comparable<ScoredResult> {
   /* see superclass */
   @Override
   public String toString() {
-    return "ScoredResultJpa [id=" + id + ", score=" + score + ", value="
-        + value + ", obsolete=" + obsolete + "]";
+    return "ScoredResultJpa [id=" + id + ", score=" + score + ", value=" + value
+        + ", obsolete=" + obsolete + "]";
   }
 
   /* see superclass */
