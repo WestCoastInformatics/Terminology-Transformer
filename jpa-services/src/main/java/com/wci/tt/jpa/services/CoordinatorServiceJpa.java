@@ -473,6 +473,7 @@ public class CoordinatorServiceJpa extends RootServiceJpa
         final ScoredResult providerResult = new ScoredResultJpa();
         providerResult.setValue(key);
         providerResult.setScore(providerEvidenceMap.get(key));
+        providerResults.add(providerResult);
       }
       allEvidenceMap.put(provider, providerResults);
 
