@@ -442,26 +442,27 @@ public class CoordinatorServiceJpa extends RootServiceJpa
               final DataContextTuple tuple = converter.convert(
                   result.getValue(), outputContext, requiredOutputContext);
 
-              // Compute the score for this piece of evidence
-              // Weight by provider quality
-              // Weight by normalized input score
-              // TODO: this weighting algorithm can be abstracted
-              final float score = threshold.weightResult(result.getScore(),
-                  normalizedInputStr.getScore(), provider.getQuality());
+              if (tuple != null) {
+                // Compute the score for this piece of evidence
+                // Weight by provider quality
+                // Weight by normalized input score
+                // TODO: this weighting algorithm can be abstracted
+                final float score = threshold.weightResult(result.getScore(),
+                    normalizedInputStr.getScore(), provider.getQuality());
 
-              // Put in providerEvidenceMap if we don't have an entry yet
-              // or this one has a higher score.
-              Logger.getLogger(getClass())
-                  .debug("  evidence = " + provider.getName() + ", "
-                      + converter.getName() + ", "
-                      + normalizedInputStr.getValue() + " = " + score + ", "
-                      + tuple.getData());
+                // Put in providerEvidenceMap if we don't have an entry yet
+                // or this one has a higher score.
+                Logger.getLogger(getClass())
+                    .debug("  evidence = " + provider.getName() + ", "
+                        + converter.getName() + ", "
+                        + normalizedInputStr.getValue() + " = " + score + ", "
+                        + tuple.getData());
 
-              if (!providerEvidenceMap.containsKey(tuple.getData())
-                  || providerEvidenceMap.get(tuple.getData()) < score) {
-                providerEvidenceMap.put(tuple.getData(), score);
+                if (!providerEvidenceMap.containsKey(tuple.getData())
+                    || providerEvidenceMap.get(tuple.getData()) < score) {
+                  providerEvidenceMap.put(tuple.getData(), score);
+                }
               }
-
             } // end process
           } // end normalized results
         } // end converter map
@@ -526,7 +527,7 @@ public class CoordinatorServiceJpa extends RootServiceJpa
       final ScoredResult result = new ScoredResultJpa();
       result.setValue(key);
       result.setScore(scoreMap.get(key));
-      
+
       normalizedResults.add(result);
     }
 
