@@ -59,11 +59,20 @@ public class TransformerSearchHandler implements SearchHandler {
     String combinedQuery = null;
     // For a fielded query search, simply perform the search as written
     // no need for modifications. Also if no literal search field is supplied
-    if (fixedQuery.isEmpty() || fixedQuery.contains(":") || literalField == null) {
+    if (fixedQuery.isEmpty() || fixedQuery.contains(":")
+        || literalField == null) {
       combinedQuery = fixedQuery;
     } else {
-      combinedQuery = (fixedQuery.isEmpty() ? "" : fixedQuery + " OR ") + literalField
-          + ":" + escapedQuery + "^20.0";
+      if (literalField.contains("Sort")) {
+        String nameField = literalField.replace("Sort", "");
+        combinedQuery =
+            "(" + fixedQuery + ") OR " + nameField + ":\"" + fixedQuery
+                + "\"^2.0 OR " + literalField + ":" + escapedQuery + "^4.0";
+      } else {
+        combinedQuery = "(" + fixedQuery + ") OR " + literalField + ":"
+            + escapedQuery + "^4.0";
+
+      }
     }
 
     // Add terminology conditions
