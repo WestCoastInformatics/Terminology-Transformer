@@ -49,10 +49,13 @@ public interface ConverterHandler extends Configurable {
    * @param inputStr the input string
    * @param inputContext the input context
    * @param outputContext the output context
+   * @param origInputString the orig input string
+   * @param origInputContext the orig input context
    * @return the data context tuple
    * @throws Exception the exception if the input/output context combination is
    *           not supported
    */
   public DataContextTuple convert(String inputStr, DataContext inputContext,
-    DataContext outputContext) throws Exception;
+    DataContext outputContext, String origInputString,
+    DataContext origInputContext) throws Exception;
 }

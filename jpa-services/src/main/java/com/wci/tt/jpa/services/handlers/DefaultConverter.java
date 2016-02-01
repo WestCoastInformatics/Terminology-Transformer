@@ -50,7 +50,8 @@ public class DefaultConverter extends AbstractAcceptsHandler
   /* see superclass */
   @Override
   public DataContextTuple convert(String inputStr, DataContext inputContext,
-    DataContext outputContext) throws Exception {
+    DataContext outputContext, String origInputString,
+    DataContext origInputContext) throws Exception {
 
     // Validate input/output context
     validate(inputContext, outputContext);

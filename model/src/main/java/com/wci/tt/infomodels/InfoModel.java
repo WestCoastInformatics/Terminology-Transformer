@@ -12,6 +12,8 @@ import com.wci.umls.server.helpers.Configurable;
  */
 public interface InfoModel<T extends InfoModel<?>> extends Configurable {
 
+
+
   /**
    * Verifies that the model expressed in the parameter is an example of this
    * type of model.
@@ -54,4 +56,30 @@ public interface InfoModel<T extends InfoModel<?>> extends Configurable {
    * @return the version
    */
   public String getVersion();
+
+  /**
+   * Algorithm to identify if the model in question has a score within a given
+   * range of the model with the maximum score.
+   *
+   * @param score the score
+   * @param maxScore the max score
+   * @param minCommonScore the min common score
+   * @return <code>true</code> if so, <code>false</code> otherwise
+   */
+  public static boolean isCommonModel(float score, float maxScore,
+    float minCommonScore) {
+    return (maxScore * minCommonScore) + score >= maxScore;
+  }
+
+  /**
+   * Indicates whether or not the score of a model is acceptable.
+   *
+   * @param score the score
+   * @param floorModelScore the floor model score
+   * @return <code>true</code> if so, <code>false</code> otherwise
+   */
+  public static boolean isValidValue(float score, float floorModelScore) {
+    return score >= floorModelScore;
+  }
+
 }

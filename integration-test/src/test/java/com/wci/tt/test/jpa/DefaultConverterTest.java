@@ -123,7 +123,7 @@ public class DefaultConverterTest extends JpaSupport {
     Logger.getLogger(getClass()).info("TEST " + name.getMethodName());
 
     ConverterHandler handler = new DefaultConverter();
-    DataContextTuple results = handler.convert(null, null, null);
+    DataContextTuple results = handler.convert(null, null, null, null, null);
 
     Logger.getLogger(getClass()).info("  results = " + results);
 
@@ -142,8 +142,8 @@ public class DefaultConverterTest extends JpaSupport {
     Logger.getLogger(getClass()).info("TEST " + name.getMethodName());
 
     ConverterHandler handler = new DefaultConverter();
-    DataContextTuple results =
-        handler.convert("", new DataContextJpa(), new DataContextJpa());
+    DataContextTuple results = handler.convert("", new DataContextJpa(),
+        new DataContextJpa(), "", new DataContextJpa());
 
     Logger.getLogger(getClass()).info("  results = " + results);
 
@@ -183,8 +183,8 @@ public class DefaultConverterTest extends JpaSupport {
     outputContext.setVersion("Test Output Version");
     outputContext.setType(DataContextType.CODE);
 
-    DataContextTuple results =
-        handler.convert(inputString, inputContext, outputContext);
+    DataContextTuple results = handler.convert(inputString, inputContext,
+        outputContext, inputString, inputContext);
 
     Logger.getLogger(getClass()).info("  results = " + results);
 

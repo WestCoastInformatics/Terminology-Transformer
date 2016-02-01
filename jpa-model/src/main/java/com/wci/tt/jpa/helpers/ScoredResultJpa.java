@@ -44,6 +44,17 @@ public class ScoredResultJpa implements ScoredResult, Comparable<ScoredResult> {
     this.score = result.getScore();
   }
 
+  /**
+   * Instantiates a {@link ScoredResultJpa} from the specified parameters.
+   *
+   * @param value the value
+   * @param score the score
+   */
+  public ScoredResultJpa(String value, float score) {
+    this.value = value;
+    this.score = score;
+  }
+
   /* see superclass */
   @Override
   public Long getId() {

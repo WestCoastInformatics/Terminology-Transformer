@@ -343,23 +343,45 @@ public class CoordinatorServiceJpa extends RootServiceJpa
 
     // STEP 3: Call identify per each provider's accepted data contexts on
     // data context's associated normalized results
-    final Set<ScoredDataContext> identifiedResults = new HashSet<>();
+    final Map<ProviderHandler, List<ScoredDataContext>> allEvidenceMap =
+        new HashMap<>();
     for (final ProviderHandler provider : providers) {
-      for (final ScoredResult result : normalizedResults) {
-        final List<ScoredDataContext> identifiedResult =
-            provider.identify(result.getValue(), requiredInputContext);
+      // Evidence from this provider
+      final Map<ScoredDataContext, Float> providerEvidenceMap = new HashMap<>();
+      // normalize input
+      for (final ScoredResult normalizedInput : normalizedResults) {
+        // identify normalized input
+        for (final ScoredDataContext identifiedResult : provider
+            .identify(normalizedInput.getValue(), requiredInputContext)) {
 
-        if (identifiedResult == null) {
-          throw new Exception("Provider returned null results from identify - "
-              + provider.getName());
-        } else {
-          // this should unique the results because use of a set
-          identifiedResults.addAll(identifiedResult);
+          if (identifiedResult != null) {
+            // Compute the score for this piece of evidence
+            // Weight by provider quality
+            // Weight by normalized input score
+            final float score =
+                threshold.weightResult(identifiedResult.getScore(),
+                    normalizedInput.getScore(), provider.getQuality());
+
+            // Put in providerEvidenceMap if we don't have an entry yet
+            // or this one has a higher score.
+            Logger.getLogger(getClass())
+                .debug("  evidence = " + provider.getName() + ", "
+                    + normalizedInput.getValue() + " = " + score + ", "
+                    + identifiedResult);
+
+            if (!providerEvidenceMap.containsKey(identifiedResult)
+                || providerEvidenceMap.get(identifiedResult) < score) {
+              providerEvidenceMap.put(identifiedResult, score);
+            }
+          }
         }
-      }
-    }
 
-    // TODO: aggregate, like in process
+      }
+
+      // Add evidence from this provider to the overall list
+      allEvidenceMap.put(provider,
+          new ArrayList<>(providerEvidenceMap.keySet()));
+    }
 
     // Apply threshold and return the results
     Logger.getLogger(getClass())
@@ -372,34 +394,28 @@ public class CoordinatorServiceJpa extends RootServiceJpa
 
   /* see superclass */
   @Override
-  public List<ScoredResult> process(String inputStr,
-    DataContext requiredInputContext, DataContext requiredOutputContext)
-      throws Exception {
-    Logger.getLogger(getClass()).info("Process - " + inputStr);
-    Logger.getLogger(getClass())
-        .debug("  input context = " + requiredInputContext);
-    Logger.getLogger(getClass())
-        .debug("  output context = " + requiredOutputContext);
+  public List<ScoredResult> process(String inputStr, DataContext inputContext,
+    DataContext requiredOutputContext) throws Exception {
+    Logger.getLogger(getClass()).info("Process - " + inputStr + ", "
+        + inputContext + ", " + requiredOutputContext);
 
     // no processors
     if (inputStr == null || inputStr.isEmpty() || requiredOutputContext == null
         || requiredOutputContext == null || requiredOutputContext.isEmpty()) {
+      Logger.getLogger(getClass()).info("  NO RESULTS");
       return new ArrayList<>();
     }
 
     // STEP 1: Identify providers/converters from input context to output
     // context.
     final Map<ProviderHandler, List<DataContext>> providerMap =
-        getProcessProviders(requiredInputContext);
-    Logger.getLogger(getClass()).debug("  providers = " + providerMap);
+        getProcessProviders(inputContext);
 
     // Collect provider output contexts from the provider map
     final Set<DataContext> providerOutputContexts = new HashSet<>();
     for (final ProviderHandler provider : providerMap.keySet()) {
       providerOutputContexts.addAll(providerMap.get(provider));
     }
-    Logger.getLogger(getClass())
-        .debug("  provider output contexts = " + providerOutputContexts);
 
     // Step 2: Identify the Converters that handle the provider output
     // contexts (as inputs)
@@ -411,11 +427,10 @@ public class CoordinatorServiceJpa extends RootServiceJpa
           getConverters(converterInputContext, requiredOutputContext);
       converterMap.put(converterInputContext, converters);
     }
-    Logger.getLogger(getClass()).debug("  converters = " + converterMap);
 
     // Step 3: Generate normalized content per accepted data contexts
     List<ScoredResult> normalizedResults =
-        normalize(inputStr, requiredInputContext, true);
+        normalize(inputStr, inputContext, true);
 
     // Step 4: Process and collate the results
     final Map<ProviderHandler, List<ScoredResult>> allEvidenceMap =
@@ -435,12 +450,12 @@ public class CoordinatorServiceJpa extends RootServiceJpa
 
             // Obtain the processed results
             for (final ScoredResult result : provider.process(
-                normalizedInputStr.getValue(), requiredInputContext,
-                outputContext)) {
+                normalizedInputStr.getValue(), inputContext, outputContext)) {
 
               // Obtain the final product
-              final DataContextTuple tuple = converter.convert(
-                  result.getValue(), outputContext, requiredOutputContext);
+              final DataContextTuple tuple =
+                  converter.convert(result.getValue(), outputContext,
+                      requiredOutputContext, inputStr, inputContext);
 
               if (tuple != null) {
                 // Compute the score for this piece of evidence
@@ -453,10 +468,7 @@ public class CoordinatorServiceJpa extends RootServiceJpa
                 // Put in providerEvidenceMap if we don't have an entry yet
                 // or this one has a higher score.
                 Logger.getLogger(getClass())
-                    .debug("  evidence = " + provider.getName() + ", "
-                        + converter.getName() + ", "
-                        + normalizedInputStr.getValue() + " = " + score + ", "
-                        + tuple.getData());
+                    .debug("  evidence = " + score + ", " + tuple.getData());
 
                 if (!providerEvidenceMap.containsKey(tuple.getData())
                     || providerEvidenceMap.get(tuple.getData()) < score) {
@@ -494,7 +506,7 @@ public class CoordinatorServiceJpa extends RootServiceJpa
   public List<ScoredResult> normalize(String inputStr,
     DataContext requiredInputContext, boolean includeOrig) throws Exception {
     Logger.getLogger(getClass())
-        .info("Normalize - " + inputStr + ", " + requiredInputContext);
+        .debug("Normalize - " + inputStr + ", " + requiredInputContext);
     List<ScoredResult> normalizedResults = new ArrayList<>();
 
     // STEP 1: Normalize input per normalizer
@@ -516,10 +528,7 @@ public class CoordinatorServiceJpa extends RootServiceJpa
 
     // Add original data if desired
     if (includeOrig) {
-      Logger.getLogger(getClass()).debug("  include orig = true");
       scoreMap.put(inputStr, 1.0f);
-    } else {
-      Logger.getLogger(getClass()).debug("  include orig = false");
     }
 
     // Put scoreMap into normalizedResults
@@ -533,8 +542,6 @@ public class CoordinatorServiceJpa extends RootServiceJpa
 
     // Apply threshold to scores and return
     normalizedResults = threshold.applyThreshold(normalizedResults);
-    Logger.getLogger(getClass())
-        .debug("  normalized results = " + normalizedResults);
     return normalizedResults;
   }
 
