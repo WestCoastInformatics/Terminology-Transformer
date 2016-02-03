@@ -104,8 +104,8 @@ public class RrfSourceDataLoader implements SourceDataLoader {
     try {
       sourceData.setLoaderStatus(SourceData.Status.LOADING);
       sourceDataService.updateSourceData(sourceData);
-      contentService.loadTerminologyRrf(terminology, version, false, prefix,
-          inputDir, adminAuthToken);
+      contentService.loadTerminologyRrf(terminology, version, false, false,
+          prefix, inputDir, adminAuthToken);
       sourceData.setLoaderStatus(SourceData.Status.FINISHED);
       sourceDataService.updateSourceData(sourceData);
 
