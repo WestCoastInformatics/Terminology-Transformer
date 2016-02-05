@@ -339,7 +339,7 @@ public class CoordinatorServiceJpa extends RootServiceJpa
     // STEPS 2: Generate normalized content per accepted data contexts
     // All output data context tuples should be compatible with providers list
     final List<ScoredResult> normalizedResults =
-        normalize(inputStr, requiredInputContext, true);
+        normalize(inputStr, requiredInputContext, false);
 
     // STEP 3: Call identify per each provider's accepted data contexts on
     // data context's associated normalized results
@@ -430,7 +430,7 @@ public class CoordinatorServiceJpa extends RootServiceJpa
 
     // Step 3: Generate normalized content per accepted data contexts
     List<ScoredResult> normalizedResults =
-        normalize(inputStr, inputContext, true);
+        normalize(inputStr, inputContext, false);
 
     // Step 4: Process and collate the results
     final Map<ProviderHandler, List<ScoredResult>> allEvidenceMap =
