@@ -8,6 +8,7 @@ import java.util.List;
 import com.wci.tt.DataContext;
 import com.wci.tt.helpers.ScoredDataContext;
 import com.wci.tt.helpers.ScoredResult;
+import com.wci.tt.infomodels.InfoModel;
 import com.wci.umls.server.helpers.Configurable;
 
 /**
@@ -77,5 +78,15 @@ public interface ProviderHandler extends Configurable {
    * @return the quality
    */
   public float getQuality();
+
+  /**
+   * Goes through all pre-processing filters to determine if term should be
+   * processed.
+   *
+   * @param model the model
+   * @return true, if term should be processed
+   * @throws Exception the exception
+   */
+  boolean isTermSupported(InfoModel<?> model) throws Exception;
 
 }

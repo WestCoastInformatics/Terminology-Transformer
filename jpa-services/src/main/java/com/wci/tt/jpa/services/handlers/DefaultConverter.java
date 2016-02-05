@@ -23,9 +23,11 @@ import com.wci.tt.services.handlers.ConverterHandler;
  */
 public class DefaultConverter extends AbstractAcceptsHandler
     implements ConverterHandler {
+
   /**
    * Instantiates an empty {@link DefaultConverter}.
-   * @throws Exception
+   *
+   * @throws Exception the exception
    */
   public DefaultConverter() throws Exception {
     // Configure input/output matchers
@@ -36,6 +38,7 @@ public class DefaultConverter extends AbstractAcceptsHandler
     addMatcher(matcher, matcher);
   }
 
+  /* see superclass */
   @Override
   public void setProperties(Properties p) throws Exception {
     // n/a
@@ -67,6 +70,13 @@ public class DefaultConverter extends AbstractAcceptsHandler
     }
 
     return tuple;
+  }
+
+  /* see superclass */
+  @Override
+  public boolean isValidModel(String inputStr, String jsonString, float score)
+    throws Exception {
+    return true;
   }
 
 }

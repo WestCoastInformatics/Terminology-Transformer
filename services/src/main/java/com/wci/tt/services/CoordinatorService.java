@@ -10,6 +10,7 @@ import com.wci.tt.DataContext;
 import com.wci.tt.helpers.ScoredDataContext;
 import com.wci.tt.helpers.ScoredResult;
 import com.wci.tt.infomodels.InfoModel;
+import com.wci.tt.services.filters.PostProcessingFilter;
 import com.wci.tt.services.handlers.ConverterHandler;
 import com.wci.tt.services.handlers.NormalizerHandler;
 import com.wci.tt.services.handlers.ProviderHandler;
@@ -53,6 +54,15 @@ public interface CoordinatorService extends RootService {
    * @throws Exception the exception
    */
   public Map<String, ConverterHandler> getConverters() throws Exception;
+
+  /**
+   * Returns the post processing filters.
+   *
+   * @return the filters
+   * @throws Exception the exception
+   */
+  public Map<String, PostProcessingFilter> getPostProcessingFilters()
+    throws Exception;
 
   /**
    * Returns the specialties.

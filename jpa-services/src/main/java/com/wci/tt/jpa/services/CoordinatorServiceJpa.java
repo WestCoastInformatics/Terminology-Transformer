@@ -22,6 +22,7 @@ import com.wci.tt.infomodels.InfoModel;
 import com.wci.tt.jpa.helpers.ScoredResultJpa;
 import com.wci.tt.jpa.services.helper.DataContextMatcher;
 import com.wci.tt.services.CoordinatorService;
+import com.wci.tt.services.filters.PostProcessingFilter;
 import com.wci.tt.services.handlers.ConverterHandler;
 import com.wci.tt.services.handlers.NormalizerHandler;
 import com.wci.tt.services.handlers.ProviderHandler;
@@ -53,6 +54,9 @@ public class CoordinatorServiceJpa extends RootServiceJpa
 
   /** The converter handler . */
   static Map<String, ConverterHandler> converters = new HashMap<>();
+
+  /** The converter handler . */
+  static Map<String, PostProcessingFilter> filters = new HashMap<>();
 
   /** The information models. */
   static Map<String, InfoModel<?>> infoModels = new HashMap<>();
@@ -184,6 +188,30 @@ public class CoordinatorServiceJpa extends RootServiceJpa
       converters = null;
     }
 
+    /** Add post processing filters found in Config to List. */
+    try {
+      if (config == null) {
+        config = ConfigUtility.getConfigProperties();
+      }
+      String key = "filters.post";
+      for (String filterName : config.getProperty(key).split(",")) {
+        if (filterName.isEmpty()) {
+          continue;
+        }
+        // Add handlers to List
+        PostProcessingFilter filter =
+            ConfigUtility.newStandardHandlerInstanceWithConfiguration(key,
+                filterName, PostProcessingFilter.class);
+        filters.put(filterName, filter);
+      }
+      if (filters.isEmpty()) {
+        throw new Exception("filters.post must have one value but none exist");
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+      filters = null;
+    }
+
     /** Add information Models found in Config to List. */
     try {
       if (config == null) {
@@ -239,7 +267,6 @@ public class CoordinatorServiceJpa extends RootServiceJpa
       e.printStackTrace();
       semanticTypes = null;
     }
-
   }
 
   /**
@@ -263,6 +290,11 @@ public class CoordinatorServiceJpa extends RootServiceJpa
     if (converters == null) {
       throw new Exception(
           "Converter Handlers did not properly initialize, serious error.");
+    }
+
+    if (filters == null) {
+      throw new Exception(
+          "Post Processing Filters did not properly initialize, serious error.");
     }
 
     if (infoModels == null) {
@@ -297,6 +329,13 @@ public class CoordinatorServiceJpa extends RootServiceJpa
   @Override
   public Map<String, ConverterHandler> getConverters() throws Exception {
     return converters;
+  }
+
+  /* see superclass */
+  @Override
+  public Map<String, PostProcessingFilter> getPostProcessingFilters()
+    throws Exception {
+    return filters;
   }
 
   /* see superclass */
@@ -465,14 +504,16 @@ public class CoordinatorServiceJpa extends RootServiceJpa
                 final float score = threshold.weightResult(result.getScore(),
                     normalizedInputStr.getScore(), provider.getQuality());
 
-                // Put in providerEvidenceMap if we don't have an entry yet
-                // or this one has a higher score.
-                Logger.getLogger(getClass())
-                    .debug("  evidence = " + score + ", " + tuple.getData());
+                if (converter.isValidModel(inputStr, tuple.getData(), score)) {
+                  // Put in providerEvidenceMap if we don't have an entry yet
+                  // or this one has a higher score.
+                  Logger.getLogger(getClass())
+                      .debug("  evidence = " + score + ", " + tuple.getData());
 
-                if (!providerEvidenceMap.containsKey(tuple.getData())
-                    || providerEvidenceMap.get(tuple.getData()) < score) {
-                  providerEvidenceMap.put(tuple.getData(), score);
+                  if (!providerEvidenceMap.containsKey(tuple.getData())
+                      || providerEvidenceMap.get(tuple.getData()) < score) {
+                    providerEvidenceMap.put(tuple.getData(), score);
+                  }
                 }
               }
             } // end process
@@ -493,11 +534,18 @@ public class CoordinatorServiceJpa extends RootServiceJpa
     }
 
     // Now aggregate the evidence across all providers and sort
-    final List<ScoredResult> aggregatedResults =
-        threshold.aggregate(allEvidenceMap);
+    List<ScoredResult> aggregatedResults = threshold.aggregate(allEvidenceMap);
     Collections.sort(aggregatedResults);
     Logger.getLogger(getClass())
         .debug("  final evidence = " + aggregatedResults);
+
+    for (PostProcessingFilter filter : getPostProcessingFilters(
+        requiredOutputContext)) {
+      List<ScoredResult> filteredResults = new ArrayList<>();
+      filteredResults.addAll(filter.filterResults(inputStr, aggregatedResults));
+      aggregatedResults = filteredResults;
+    }
+
     return aggregatedResults;
   }
 
@@ -639,6 +687,28 @@ public class CoordinatorServiceJpa extends RootServiceJpa
       }
     }
     return converters;
+  }
+
+  /**
+   * Returns the filters.
+   *
+   * @param context the output context
+   * @return the converters
+   * @throws Exception the exception
+   */
+  private List<PostProcessingFilter> getPostProcessingFilters(
+    DataContext context) throws Exception {
+    final List<PostProcessingFilter> filters = new ArrayList<>();
+
+    // Ask each filter if it accepts
+    for (final PostProcessingFilter filter : getPostProcessingFilters()
+        .values()) {
+      if (filter.accepts(context)) {
+        filters.add(filter);
+      }
+    }
+
+    return filters;
   }
 
 }
