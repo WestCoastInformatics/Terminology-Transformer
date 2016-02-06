@@ -12,6 +12,7 @@ import java.util.Properties;
 import com.wci.tt.DataContext;
 import com.wci.tt.jpa.services.helper.DataContextMatcher;
 import com.wci.tt.services.handlers.ProviderHandler;
+import com.wci.umls.server.helpers.ConfigUtility;
 
 /**
  * Abstract handler for the "accepts" method - used for {@ConverterHandler} and
@@ -25,6 +26,19 @@ public abstract class AbstractAcceptsHandler {
 
   /** The quality. */
   private float quality;
+
+  /** The is anaylysis run. */
+  static protected boolean isAnaylysisRun = false;
+
+  static {
+    try {
+      isAnaylysisRun = Boolean.parseBoolean(ConfigUtility.getConfigProperties()
+          .getProperty("execution.type.analysis"));
+    } catch (Exception e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+  }
 
   /**
    * Adds the matcher.
