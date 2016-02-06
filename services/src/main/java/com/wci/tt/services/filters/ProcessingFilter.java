@@ -30,14 +30,14 @@ public abstract class ProcessingFilter {
   /** The input directory path. */
   protected static String inputDirectoryPath;
 
-  /** The is anaylysis run. */
+  /** The is analysis run. */
   protected static boolean isAnalysisRun = false;
 
   static {
     // Configure input and output directories
     try {
       Properties p = ConfigUtility.getConfigProperties();
-      
+
       if (p.containsKey("filters.directory.input")) {
         inputDirectoryPath = p.getProperty("filters.directory.input");
       }
@@ -46,7 +46,7 @@ public abstract class ProcessingFilter {
       }
       if (p.containsKey("execution.type.analysis")) {
         isAnalysisRun = Boolean.parseBoolean(ConfigUtility.getConfigProperties()
-          .getProperty("execution.type.analysis"));
+            .getProperty("execution.type.analysis"));
       }
 
     } catch (Exception e) {

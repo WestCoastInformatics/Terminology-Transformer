@@ -37,7 +37,7 @@ import com.wci.umls.server.jpa.services.RootServiceJpa;
 public class CoordinatorServiceJpa extends RootServiceJpa
     implements CoordinatorService {
 
-  /** The is anaylysis run. */
+  /** The is analysis run. */
   private static boolean isAnalysisRun = false;
 
   /** The config properties. */
@@ -77,7 +77,7 @@ public class CoordinatorServiceJpa extends RootServiceJpa
       }
       if (config.containsKey("execution.type.analysis")) {
         isAnalysisRun = Boolean.parseBoolean(ConfigUtility.getConfigProperties()
-          .getProperty("execution.type.analysis"));
+            .getProperty("execution.type.analysis"));
       }
     } catch (Exception e) {
       e.printStackTrace();
