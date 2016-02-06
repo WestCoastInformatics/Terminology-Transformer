@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Properties;
 import java.util.stream.Collectors;
 
+import com.wci.tt.helpers.ScoredResult;
 import com.wci.tt.infomodels.InfoModel;
 import com.wci.umls.server.helpers.ConfigUtility;
 
@@ -29,16 +30,25 @@ public abstract class ProcessingFilter {
   /** The input directory path. */
   protected static String inputDirectoryPath;
 
+  /** The is anaylysis run. */
+  protected static boolean isAnalysisRun = false;
+
   static {
     // Configure input and output directories
     try {
       Properties p = ConfigUtility.getConfigProperties();
+      
       if (p.containsKey("filters.directory.input")) {
         inputDirectoryPath = p.getProperty("filters.directory.input");
       }
       if (p.containsKey("filters.directory.output")) {
         outputDirectoryPath = p.getProperty("filters.directory.output");
       }
+      if (p.containsKey("execution.type.analysis")) {
+        isAnalysisRun = Boolean.parseBoolean(ConfigUtility.getConfigProperties()
+          .getProperty("execution.type.analysis"));
+      }
+
     } catch (Exception e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
@@ -106,6 +116,23 @@ public abstract class ProcessingFilter {
       Files.write(Paths.get(outputDirectoryPath + outputFile), terms, CREATE,
           APPEND);
     }
+  }
+
+  /**
+   * Prints the models.
+   *
+   * @param outputFile the output file
+   * @param model the model
+   * @param results the results
+   * @throws IOException Signals that an I/O exception has occurred.
+   * @throws Exception the exception
+   */
+  protected synchronized void printModels(String outputFile, InfoModel<?> model,
+    List<ScoredResult> results) throws IOException, Exception {
+    for (ScoredResult result : results) {
+      printModel(outputFile, model.getModel(result.getValue()));
+    }
+
   }
 
   /**
