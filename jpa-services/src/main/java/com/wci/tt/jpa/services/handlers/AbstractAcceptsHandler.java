@@ -28,12 +28,14 @@ public abstract class AbstractAcceptsHandler {
   private float quality;
 
   /** The is anaylysis run. */
-  static protected boolean isAnaylysisRun = false;
+  static protected boolean isAnalysisRun = false;
 
   static {
     try {
-      isAnaylysisRun = Boolean.parseBoolean(ConfigUtility.getConfigProperties()
+      if (ConfigUtility.getConfigProperties().containsKey("execution.type.analysis")) {
+        isAnalysisRun = Boolean.parseBoolean(ConfigUtility.getConfigProperties()
           .getProperty("execution.type.analysis"));
+      }
     } catch (Exception e) {
       // TODO Auto-generated catch block
       e.printStackTrace();

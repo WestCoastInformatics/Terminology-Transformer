@@ -38,7 +38,7 @@ public class CoordinatorServiceJpa extends RootServiceJpa
     implements CoordinatorService {
 
   /** The is anaylysis run. */
-  private static boolean isAnaylysisRun = false;
+  private static boolean isAnalysisRun = false;
 
   /** The config properties. */
   protected static Properties config = null;
@@ -75,8 +75,10 @@ public class CoordinatorServiceJpa extends RootServiceJpa
       if (config == null) {
         config = ConfigUtility.getConfigProperties();
       }
-      String key = "execution.type.analysis";
-      isAnaylysisRun = Boolean.parseBoolean(config.getProperty(key));
+      if (config.containsKey("execution.type.analysis")) {
+        isAnalysisRun = Boolean.parseBoolean(ConfigUtility.getConfigProperties()
+          .getProperty("execution.type.analysis"));
+      }
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -570,7 +572,7 @@ public class CoordinatorServiceJpa extends RootServiceJpa
 
       return aggregatedResults;
     } else {
-      if (isAnaylysisRun) {
+      if (isAnalysisRun) {
         return null;
       } else {
         return new ArrayList<>();
