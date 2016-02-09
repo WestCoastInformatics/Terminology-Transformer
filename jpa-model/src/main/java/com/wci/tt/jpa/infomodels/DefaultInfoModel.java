@@ -133,8 +133,8 @@ public class DefaultInfoModel implements InfoModel<DefaultInfoModel> {
   }
 
   @Override
-  public DefaultInfoModel getModelInCommon(DefaultInfoModel model)
-    throws Exception {
+  public DefaultInfoModel getModelInCommon(DefaultInfoModel model,
+    boolean analysisMode) throws Exception {
     if (model == null) {
       return null;
     }

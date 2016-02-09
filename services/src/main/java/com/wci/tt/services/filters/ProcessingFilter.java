@@ -73,6 +73,7 @@ public abstract class ProcessingFilter {
       try {
         Files.delete(Paths.get(outputFilePath + outputFile));
       } catch (NoSuchFileException e) {
+        // n/a
       }
     }
   }

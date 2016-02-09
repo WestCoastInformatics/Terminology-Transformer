@@ -12,7 +12,8 @@ import com.wci.umls.server.helpers.Configurable;
  */
 public interface InfoModel<T extends InfoModel<?>> extends Configurable {
 
-
+  /**  The Constant MULTIPLE_VALUES. */
+  public final static String MULTIPLE_VALUES = "*";
 
   /**
    * Verifies that the model expressed in the parameter is an example of this
@@ -45,10 +46,11 @@ public interface InfoModel<T extends InfoModel<?>> extends Configurable {
    * Returns the model in common.
    *
    * @param model the model
+   * @param analysisMode the analysis mode flag
    * @return the model in common
    * @throws Exception the exception
    */
-  public T getModelInCommon(T model) throws Exception;
+  public T getModelInCommon(T model, boolean analysisMode) throws Exception;
 
   /**
    * Returns the version of the model.
