@@ -10,7 +10,7 @@ import com.wci.tt.helpers.ScoredResult;
 import com.wci.umls.server.helpers.Configurable;
 
 /**
- * The Interface PostProcessingFilter.
+ * Generically represents a post processing filter
  */
 public interface PostProcessingFilter extends Configurable {
 

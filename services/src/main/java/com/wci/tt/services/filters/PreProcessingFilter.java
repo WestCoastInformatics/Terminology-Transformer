@@ -6,7 +6,7 @@ package com.wci.tt.services.filters;
 import com.wci.tt.infomodels.InfoModel;
 
 /**
- * The Interface PreProcessingFilter.
+ * Generically represents a pre processing filter for an information model.
  */
 public interface PreProcessingFilter {
 
@@ -14,7 +14,7 @@ public interface PreProcessingFilter {
    * Goes through all pre-processing filters to determine if term should be
    * processed.
    *
-   * @param term the term
+   * @param infoModel the info model
    * @return true, if term should be processed
    * @throws Exception the exception
    */
