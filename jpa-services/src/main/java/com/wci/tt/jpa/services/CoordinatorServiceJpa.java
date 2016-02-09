@@ -37,6 +37,9 @@ import com.wci.umls.server.jpa.services.RootServiceJpa;
 public class CoordinatorServiceJpa extends RootServiceJpa
     implements CoordinatorService {
 
+  /** The is analysis run. */
+  private static boolean isAnalysisRun = false;
+
   /** The config properties. */
   protected static Properties config = null;
 
@@ -68,6 +71,17 @@ public class CoordinatorServiceJpa extends RootServiceJpa
   static List<String> semanticTypes = new ArrayList<>();
 
   static {
+    try {
+      if (config == null) {
+        config = ConfigUtility.getConfigProperties();
+      }
+      if (config.containsKey("execution.type.analysis")) {
+        isAnalysisRun = Boolean.parseBoolean(ConfigUtility.getConfigProperties()
+            .getProperty("execution.type.analysis"));
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
 
     /** threshold handler - only one */
     try {
@@ -445,6 +459,8 @@ public class CoordinatorServiceJpa extends RootServiceJpa
       return new ArrayList<>();
     }
 
+    boolean processedResultsFound = false;
+
     // STEP 1: Identify providers/converters from input context to output
     // context.
     final Map<ProviderHandler, List<DataContext>> providerMap =
@@ -486,33 +502,38 @@ public class CoordinatorServiceJpa extends RootServiceJpa
             .get(outputContext)) {
           // for each normalized result
           for (final ScoredResult normalizedInputStr : normalizedResults) {
+            List<ScoredResult> processedResults = provider.process(
+                normalizedInputStr.getValue(), inputContext, outputContext);
+            if (processedResults != null) {
+              processedResultsFound = true;
 
-            // Obtain the processed results
-            for (final ScoredResult result : provider.process(
-                normalizedInputStr.getValue(), inputContext, outputContext)) {
+              // Obtain the processed results
+              for (final ScoredResult result : processedResults) {
 
-              // Obtain the final product
-              final DataContextTuple tuple =
-                  converter.convert(result.getValue(), outputContext,
-                      requiredOutputContext, inputStr, inputContext);
+                // Obtain the final product
+                final DataContextTuple tuple =
+                    converter.convert(result.getValue(), outputContext,
+                        requiredOutputContext, inputStr, inputContext);
 
-              if (tuple != null) {
-                // Compute the score for this piece of evidence
-                // Weight by provider quality
-                // Weight by normalized input score
-                // TODO: this weighting algorithm can be abstracted
-                final float score = threshold.weightResult(result.getScore(),
-                    normalizedInputStr.getScore(), provider.getQuality());
+                if (tuple != null) {
+                  // Compute the score for this piece of evidence
+                  // Weight by provider quality
+                  // Weight by normalized input score
+                  // TODO: this weighting algorithm can be abstracted
+                  final float score = threshold.weightResult(result.getScore(),
+                      normalizedInputStr.getScore(), provider.getQuality());
 
-                if (converter.isValidModel(inputStr, tuple.getData(), score)) {
-                  // Put in providerEvidenceMap if we don't have an entry yet
-                  // or this one has a higher score.
-                  Logger.getLogger(getClass())
-                      .debug("  evidence = " + score + ", " + tuple.getData());
+                  if (converter.isValidModel(inputStr, tuple.getData(),
+                      score)) {
+                    // Put in providerEvidenceMap if we don't have an entry yet
+                    // or this one has a higher score.
+                    Logger.getLogger(getClass()).debug(
+                        "  evidence = " + score + ", " + tuple.getData());
 
-                  if (!providerEvidenceMap.containsKey(tuple.getData())
-                      || providerEvidenceMap.get(tuple.getData()) < score) {
-                    providerEvidenceMap.put(tuple.getData(), score);
+                    if (!providerEvidenceMap.containsKey(tuple.getData())
+                        || providerEvidenceMap.get(tuple.getData()) < score) {
+                      providerEvidenceMap.put(tuple.getData(), score);
+                    }
                   }
                 }
               }
@@ -533,20 +554,30 @@ public class CoordinatorServiceJpa extends RootServiceJpa
 
     }
 
-    // Now aggregate the evidence across all providers and sort
-    List<ScoredResult> aggregatedResults = threshold.aggregate(allEvidenceMap);
-    Collections.sort(aggregatedResults);
-    Logger.getLogger(getClass())
-        .debug("  final evidence = " + aggregatedResults);
+    if (processedResultsFound) {
+      // Now aggregate the evidence across all providers and sort
+      List<ScoredResult> aggregatedResults =
+          threshold.aggregate(allEvidenceMap);
+      Collections.sort(aggregatedResults);
+      Logger.getLogger(getClass())
+          .debug("  final evidence = " + aggregatedResults);
 
-    for (PostProcessingFilter filter : getPostProcessingFilters(
-        requiredOutputContext)) {
-      List<ScoredResult> filteredResults = new ArrayList<>();
-      filteredResults.addAll(filter.filterResults(inputStr, aggregatedResults));
-      aggregatedResults = filteredResults;
+      for (PostProcessingFilter filter : getPostProcessingFilters(
+          requiredOutputContext)) {
+        List<ScoredResult> filteredResults = new ArrayList<>();
+        filteredResults.addAll(filter.filterResults(inputStr, normalizedResults,
+            aggregatedResults));
+        aggregatedResults = filteredResults;
+      }
+
+      return aggregatedResults;
+    } else {
+      if (isAnalysisRun) {
+        return null;
+      } else {
+        return new ArrayList<>();
+      }
     }
-
-    return aggregatedResults;
   }
 
   /* see superclass */

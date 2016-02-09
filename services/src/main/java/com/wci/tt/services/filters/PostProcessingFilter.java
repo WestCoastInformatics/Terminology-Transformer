@@ -32,12 +32,14 @@ public interface PostProcessingFilter extends Configurable {
    * correct. In doing so, this prevents bad results from being combined with
    * good results thus returning incorrect results.
    *
-   * @param jsonString the json string
+   * @param originalTerm the original term
+   * @param normalizedTerms the normalized terms
    * @param results the results
    * @return the list
    * @throws Exception the exception
    */
-  public List<ScoredResult> filterResults(String jsonString,
-    List<ScoredResult> results) throws Exception;
+  public List<ScoredResult> filterResults(String originalTerm,
+    List<ScoredResult> normalizedTerms, List<ScoredResult> results)
+      throws Exception;
 
 }
