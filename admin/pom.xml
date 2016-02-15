@@ -62,7 +62,7 @@
   </dependencies>
 
   <profiles>
-  <!-- Create DB, specify -Drun.config.umls=... -->
+    <!-- Create DB, specify -Drun.config.umls=... -->
     <profile>
       <id>Createdb</id>
       <build>
@@ -208,6 +208,62 @@
       </build>
     </profile>
 
+    <!-- Load dose form data, specify -Drun.config.tt=... -Dterminology=... -->
+    <profile>
+      <id>RRF-umls</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>com.wci.tt</groupId>
+            <artifactId>tt-admin</artifactId>
+            <executions>
+              <execution>
+                <id>load-source-data</id>
+                <phase>package</phase>
+                <goals>
+                  <goal>RRF-umls</goal>
+                </goals>
+                <configuration>
+                  <terminology>${terminology}</terminology>
+                  <version>${version}</version>
+                  <inputDir>${input.dir}</inputDir>
+                  <prefix>${prefix}</prefix>
+                  <mode>${mode}</mode>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+
+    <!-- Load dose form data, specify -Drun.config.tt=... -Dterminology=... -->
+    <profile>
+      <id>RF2-snapshot</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>com.wci.tt</groupId>
+            <artifactId>tt-admin</artifactId>
+            <executions>
+              <execution>
+                <id>load-source-data</id>
+                <phase>package</phase>
+                <goals>
+                  <goal>RF2-snapshot</goal>
+                </goals>
+                <configuration>
+                  <terminology>${terminology}</terminology>
+                  <version>${version}</version>
+                  <inputDir>${input.dir}</inputDir>
+                  <mode>${mode}</mode>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
   </profiles>
 
 </project>
