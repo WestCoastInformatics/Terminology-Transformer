@@ -18,7 +18,7 @@ import org.junit.Test;
 
 import com.wci.tt.helpers.DataContextType;
 import com.wci.tt.helpers.ScoredResult;
-import com.wci.tt.jpa.helpers.DataContextJpa;
+import com.wci.tt.jpa.DataContextJpa;
 import com.wci.tt.jpa.services.handlers.DefaultNormalizer;
 import com.wci.tt.services.handlers.NormalizerHandler;
 

@@ -82,4 +82,17 @@ public class DefaultNormalizer implements NormalizerHandler {
   public float getQuality() {
     return quality;
   }
+
+  @Override
+  public void addFeedback(String inputString, DataContext inputContext,
+    String feedbackString) throws Exception {
+    // n/a
+  }
+
+  @Override
+  public void removeFeedback(String inputString, DataContext inputContext)
+    throws Exception {
+    // n/a
+  }
+
 }

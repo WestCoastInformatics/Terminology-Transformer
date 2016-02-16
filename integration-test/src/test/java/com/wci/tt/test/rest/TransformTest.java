@@ -22,7 +22,7 @@ import com.wci.tt.helpers.ScoredDataContext;
 import com.wci.tt.helpers.ScoredDataContextList;
 import com.wci.tt.helpers.ScoredDataContextTuple;
 import com.wci.tt.helpers.ScoredDataContextTupleList;
-import com.wci.tt.jpa.helpers.DataContextJpa;
+import com.wci.tt.jpa.DataContextJpa;
 import com.wci.tt.jpa.helpers.DataContextListJpa;
 import com.wci.tt.rest.client.TransformClientRest;
 import com.wci.umls.server.helpers.ConfigUtility;

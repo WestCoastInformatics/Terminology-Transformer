@@ -1,11 +1,12 @@
 /*
+
  *    Copyright 2016 West Coast Informatics, LLC
  */
 package com.wci.tt.jpa.services.rest;
 
 import com.wci.tt.helpers.ScoredDataContextList;
 import com.wci.tt.helpers.ScoredDataContextTupleList;
-import com.wci.tt.jpa.helpers.DataContextJpa;
+import com.wci.tt.jpa.DataContextJpa;
 import com.wci.tt.jpa.helpers.DataContextListJpa;
 import com.wci.umls.server.helpers.KeyValuePairList;
 import com.wci.umls.server.helpers.StringList;

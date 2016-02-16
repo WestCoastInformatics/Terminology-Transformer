@@ -23,18 +23,41 @@ import com.wci.umls.server.helpers.Configurable;
 public interface NormalizerHandler extends Configurable {
 
   /**
+   * Mechanism for providing feedback to normalizers. What the normalizer
+   * chooses to do with the feedback data (e.g. use it literally, or generalize
+   * it, or support patterns, etc) is up to the implementation.
+   *
+   * @param inputString the input string
+   * @param inputContext the input context
+   * @param feedbackString the feedback string
+   * @throws Exception the exception
+   */
+  public void addFeedback(String inputString, DataContext inputContext,
+    String feedbackString) throws Exception;
+
+  /**
+   * Removes the feedback.
+   *
+   * @param inputString the input string
+   * @param inputContext the input context
+   * @throws Exception the exception
+   */
+  public void removeFeedback(String inputString, DataContext inputContext)
+    throws Exception;
+
+  /**
    * Returns normalized form of input string with a probability-score based on
    * context. Returns an empty list if there are no normalizations.
    * 
    * Results placed in list based in ordered fashion with top score first
    * because there may be multiple way to interpret the inputStr.
    *
-   * @param inputStr the input string
+   * @param inputString the input string
    * @param context the context
    * @return the list
    * @throws Exception the exception
    */
-  public List<ScoredResult> normalize(String inputStr, DataContext context)
+  public List<ScoredResult> normalize(String inputString, DataContext context)
     throws Exception;
 
   /**

@@ -29,7 +29,7 @@ public class ScoredDataContextListJpa extends
   /* see superclass */
   @Override
   public String toString() {
-    return "ScoredDataContextListJpa [scoredDataContext=" + getObjects()
+    return "ScoredDataContextListJpa [scoredDataContexts=" + getObjects()
         + ", getCount()=" + getCount() + "]";
   }
 }

@@ -8,7 +8,6 @@ import java.util.List;
 import com.wci.tt.DataContext;
 import com.wci.tt.helpers.ScoredDataContext;
 import com.wci.tt.helpers.ScoredResult;
-import com.wci.tt.infomodels.InfoModel;
 import com.wci.umls.server.helpers.Configurable;
 
 /**
@@ -39,6 +38,29 @@ public interface ProviderHandler extends Configurable {
   public List<DataContext> accepts(DataContext inputContext) throws Exception;
 
   /**
+   * Adds the feedback.
+   * 
+   * @param inputString the input string
+   * @param context the context
+   * @param feedbackString the feedback string
+   * @param outputContext the output context
+   * @throws Exception the exception
+   */
+  public void addFeedback(String inputString, DataContext context,
+    String feedbackString, DataContext outputContext) throws Exception;
+
+  /**
+   * Removes the feedback.
+   *
+   * @param inputString the input string
+   * @param context the context
+   * @param outputContext the output context
+   * @throws Exception the exception
+   */
+  public void removeFeedback(String inputString, DataContext context,
+    DataContext outputContext) throws Exception;
+
+  /**
    * Identifies probability of the input string being of the type defined by the
    * provider. an empty list if identify finds nothing.
    * 
@@ -47,13 +69,13 @@ public interface ProviderHandler extends Configurable {
    * 
    * Method able to handle NULL dataContexts.
    *
-   * @param inputStr the input string
+   * @param inputString the input string
    * @param context the context
    * @return the list
    * @throws Exception the exception
    */
-  public List<ScoredDataContext> identify(String inputStr, DataContext context)
-    throws Exception;
+  public List<ScoredDataContext> identify(String inputString,
+    DataContext context) throws Exception;
 
   /**
    * Produces list of scored (by probability) results of as specified by the
@@ -78,15 +100,5 @@ public interface ProviderHandler extends Configurable {
    * @return the quality
    */
   public float getQuality();
-
-  /**
-   * Goes through all pre-processing filters to determine if term should be
-   * processed.
-   *
-   * @param model the model
-   * @return true, if term should be processed
-   * @throws Exception the exception
-   */
-  boolean isTermSupported(InfoModel<?> model) throws Exception;
 
 }

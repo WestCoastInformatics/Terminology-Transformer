@@ -20,7 +20,7 @@ import com.wci.tt.helpers.DataContextType;
 import com.wci.tt.helpers.ScoredDataContext;
 import com.wci.tt.helpers.ScoredResult;
 import com.wci.tt.infomodels.InfoModel;
-import com.wci.tt.jpa.helpers.DataContextJpa;
+import com.wci.tt.jpa.DataContextJpa;
 import com.wci.tt.jpa.services.CoordinatorServiceJpa;
 import com.wci.tt.services.CoordinatorService;
 

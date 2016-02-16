@@ -7,6 +7,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import com.wci.tt.DataContext;
 import com.wci.tt.helpers.ScoredDataContext;
+import com.wci.tt.jpa.DataContextJpa;
 
 /**
  * JPA enabled implementation of {@link ScoredDataContext}.

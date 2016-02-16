@@ -1,7 +1,7 @@
 /*
  * Copyright 2015 West Coast Informatics, LLC
  */
-package com.wci.tt.model;
+package com.wci.tt.jpa;
 
 import static org.junit.Assert.assertTrue;
 
@@ -24,7 +24,7 @@ import com.wci.umls.server.jpa.helpers.NullableFieldTester;
 /**
  * Unit testing for {@link SourceDataFileJpa}.
  */
-public class SourceDataFileJpaUnitTest extends SourceDataSupport {
+public class SourceDataFileJpaUnitTest extends TestSupport {
 
   /** The model object to test. */
   private SourceDataFileJpa object;

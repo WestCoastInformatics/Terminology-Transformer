@@ -20,7 +20,7 @@ import org.apache.log4j.Logger;
 import com.wci.tt.DataContext;
 import com.wci.tt.helpers.ScoredDataContextList;
 import com.wci.tt.helpers.ScoredDataContextTupleList;
-import com.wci.tt.jpa.helpers.DataContextJpa;
+import com.wci.tt.jpa.DataContextJpa;
 import com.wci.tt.jpa.helpers.DataContextListJpa;
 import com.wci.tt.jpa.helpers.ScoredDataContextListJpa;
 import com.wci.tt.jpa.helpers.ScoredDataContextTupleListJpa;

@@ -1,4 +1,5 @@
 /*
+
  *    Copyright 2016 West Coast Informatics, LLC
  */
 package com.wci.tt.jpa.services;
@@ -15,11 +16,15 @@ import java.util.Set;
 import org.apache.log4j.Logger;
 
 import com.wci.tt.DataContext;
+import com.wci.tt.TransformRecord;
 import com.wci.tt.helpers.DataContextTuple;
 import com.wci.tt.helpers.ScoredDataContext;
 import com.wci.tt.helpers.ScoredResult;
+import com.wci.tt.helpers.TransformRecordList;
 import com.wci.tt.infomodels.InfoModel;
+import com.wci.tt.jpa.TransformRecordJpa;
 import com.wci.tt.jpa.helpers.ScoredResultJpa;
+import com.wci.tt.jpa.helpers.TransformRecordListJpa;
 import com.wci.tt.jpa.services.helper.DataContextMatcher;
 import com.wci.tt.services.CoordinatorService;
 import com.wci.tt.services.filters.PostProcessingFilter;
@@ -28,13 +33,16 @@ import com.wci.tt.services.handlers.NormalizerHandler;
 import com.wci.tt.services.handlers.ProviderHandler;
 import com.wci.tt.services.handlers.SourceDataLoader;
 import com.wci.tt.services.handlers.ThresholdHandler;
+import com.wci.umls.server.helpers.Branch;
 import com.wci.umls.server.helpers.ConfigUtility;
-import com.wci.umls.server.jpa.services.RootServiceJpa;
+import com.wci.umls.server.helpers.PfsParameter;
+import com.wci.umls.server.jpa.services.ContentServiceJpa;
+import com.wci.umls.server.services.handlers.SearchHandler;
 
 /**
  * JPA and JAXB-enabled implementation of {@link CoordinatorService}.
  */
-public class CoordinatorServiceJpa extends RootServiceJpa
+public class CoordinatorServiceJpa extends ContentServiceJpa
     implements CoordinatorService {
 
   /** The is analysis run. */
@@ -327,24 +335,48 @@ public class CoordinatorServiceJpa extends RootServiceJpa
     }
   }
 
+  /**
+   * Returns the normalizers.
+   *
+   * @return the normalizers
+   * @throws Exception the exception
+   */
   /* see superclass */
   @Override
   public Map<String, NormalizerHandler> getNormalizers() throws Exception {
     return normalizers;
   }
 
+  /**
+   * Returns the providers.
+   *
+   * @return the providers
+   * @throws Exception the exception
+   */
   /* see superclass */
   @Override
   public Map<String, ProviderHandler> getProviders() throws Exception {
     return providers;
   }
 
+  /**
+   * Returns the converters.
+   *
+   * @return the converters
+   * @throws Exception the exception
+   */
   /* see superclass */
   @Override
   public Map<String, ConverterHandler> getConverters() throws Exception {
     return converters;
   }
 
+  /**
+   * Returns the post processing filters.
+   *
+   * @return the post processing filters
+   * @throws Exception the exception
+   */
   /* see superclass */
   @Override
   public Map<String, PostProcessingFilter> getPostProcessingFilters()
@@ -352,24 +384,50 @@ public class CoordinatorServiceJpa extends RootServiceJpa
     return filters;
   }
 
+  /**
+   * Returns the specialties.
+   *
+   * @return the specialties
+   * @throws Exception the exception
+   */
   /* see superclass */
   @Override
   public List<String> getSpecialties() throws Exception {
     return specialties;
   }
 
+  /**
+   * Returns the semantic types.
+   *
+   * @return the semantic types
+   * @throws Exception the exception
+   */
   /* see superclass */
   @Override
   public List<String> getSemanticTypes() throws Exception {
     return semanticTypes;
   }
 
+  /**
+   * Returns the information models.
+   *
+   * @return the information models
+   * @throws Exception the exception
+   */
   /* see superclass */
   @Override
   public Map<String, InfoModel<?>> getInformationModels() throws Exception {
     return infoModels;
   }
 
+  /**
+   * Identify.
+   *
+   * @param inputStr the input str
+   * @param requiredInputContext the required input context
+   * @return the list
+   * @throws Exception the exception
+   */
   /* see superclass */
   @Override
   public List<ScoredDataContext> identify(String inputStr,
@@ -445,6 +503,15 @@ public class CoordinatorServiceJpa extends RootServiceJpa
     return list;
   }
 
+  /**
+   * Process.
+   *
+   * @param inputStr the input str
+   * @param inputContext the input context
+   * @param requiredOutputContext the required output context
+   * @return the list
+   * @throws Exception the exception
+   */
   /* see superclass */
   @Override
   public List<ScoredResult> process(String inputStr, DataContext inputContext,
@@ -493,7 +560,7 @@ public class CoordinatorServiceJpa extends RootServiceJpa
     // for each provider
     for (final ProviderHandler provider : providerMap.keySet()) {
 
-      // Evidence from ths provider
+      // Evidence from this provider
       final Map<String, Float> providerEvidenceMap = new HashMap<>();
       // for each output context it generates
       for (final DataContext outputContext : providerMap.get(provider)) {
@@ -580,6 +647,15 @@ public class CoordinatorServiceJpa extends RootServiceJpa
     }
   }
 
+  /**
+   * Normalize.
+   *
+   * @param inputStr the input str
+   * @param requiredInputContext the required input context
+   * @param includeOrig the include orig
+   * @return the list
+   * @throws Exception the exception
+   */
   /* see superclass */
   @Override
   public List<ScoredResult> normalize(String inputStr,
@@ -624,6 +700,57 @@ public class CoordinatorServiceJpa extends RootServiceJpa
     return normalizedResults;
   }
 
+  @Override
+  public void addNormalizerFeedback(String inputString,
+    DataContext inputContext, String feedbackString) throws Exception {
+
+    // Iterate through all normalizers and provide them the feedback
+    for (final NormalizerHandler normalizer : getNormalizers().values()) {
+      normalizer.addFeedback(inputString, inputContext, feedbackString);
+    }
+  }
+
+  @Override
+  public void removeNormalizerFeedback(String inputString,
+    DataContext inputContext) throws Exception {
+
+    // Iterate through all normalizers and provide them the feedback
+    for (final NormalizerHandler normalizer : getNormalizers().values()) {
+      normalizer.removeFeedback(inputString, inputContext);
+    }
+  }
+
+  @Override
+  public void addProviderFeedback(String inputString, DataContext inputContext,
+    String feedbackString, DataContext outputContext) throws Exception {
+
+    // Iterate through all providers and provide them the feedback
+    // Iterate through all normalizers and provide them the feedback
+    for (final ProviderHandler provider : getProviders().values()) {
+      provider.addFeedback(inputString, inputContext, feedbackString,
+          outputContext);
+    }
+
+  }
+
+  @Override
+  public void removeProviderFeedback(String inputString,
+    DataContext inputContext, DataContext outputContext) throws Exception {
+
+    // Iterate through all providers and provide them the feedback
+    // Iterate through all normalizers and provide them the feedback
+    for (final ProviderHandler provider : getProviders().values()) {
+      provider.removeFeedback(inputString, inputContext, outputContext);
+    }
+
+  }
+
+  /**
+   * Returns the source data loaders.
+   *
+   * @return the source data loaders
+   * @throws Exception the exception
+   */
   /* see superclass */
   @Override
   public Map<String, SourceDataLoader> getSourceDataLoaders() throws Exception {
@@ -740,6 +867,79 @@ public class CoordinatorServiceJpa extends RootServiceJpa
     }
 
     return filters;
+  }
+
+  /**
+   * Adds the transform record.
+   *
+   * @param record the record
+   * @return the transform record
+   * @throws Exception the exception
+   */
+  /* see superclass */
+  @Override
+  public TransformRecord addTransformRecord(TransformRecord record)
+    throws Exception {
+    return addHasLastModified(record);
+  }
+
+  /**
+   * Update transform record.
+   *
+   * @param record the record
+   * @throws Exception the exception
+   */
+  /* see superclass */
+  @Override
+  public void updateTransformRecord(TransformRecord record) throws Exception {
+    updateHasLastModified(record);
+  }
+
+  /**
+   * Removes the transform record.
+   *
+   * @param recordId the record id
+   * @throws Exception the exception
+   */
+  /* see superclass */
+  @Override
+  public void removeTransformRecord(Long recordId) throws Exception {
+    this.removeHasLastModified(recordId, TransformRecordJpa.class);
+  }
+
+  /**
+   * Returns the transform record.
+   *
+   * @param recordId the record id
+   * @return the transform record
+   * @throws Exception the exception
+   */
+  /* see superclass */
+  @Override
+  public TransformRecord getTransformRecord(Long recordId) throws Exception {
+    return getHasLastModified(recordId, TransformRecordJpa.class);
+  }
+
+  /**
+   * Find transform records for query.
+   *
+   * @param query the query
+   * @param pfs the pfs
+   * @return the transform record list
+   * @throws Exception the exception
+   */
+  @Override
+  public TransformRecordList findTransformRecordsForQuery(String query,
+    PfsParameter pfs) throws Exception {
+    final SearchHandler searchHandler = getSearchHandler(ConfigUtility.DEFAULT);
+    final int[] totalCt = new int[1];
+    List<TransformRecordJpa> results = searchHandler.getQueryResults(null, null,
+        Branch.ROOT, query, null, TransformRecordJpa.class,
+        TransformRecordJpa.class, pfs, totalCt, getEntityManager());
+    TransformRecordList list = new TransformRecordListJpa();
+    list.setTotalCount(totalCt[0]);
+    list.getObjects().addAll(results);
+    return list;
   }
 
 }

@@ -11,7 +11,6 @@ import com.wci.tt.DataContext;
 import com.wci.tt.helpers.DataContextType;
 import com.wci.tt.helpers.ScoredDataContext;
 import com.wci.tt.helpers.ScoredResult;
-import com.wci.tt.infomodels.InfoModel;
 import com.wci.tt.jpa.helpers.ScoredDataContextJpa;
 import com.wci.tt.jpa.helpers.ScoredResultJpa;
 import com.wci.tt.jpa.services.helper.DataContextMatcher;
@@ -107,8 +106,16 @@ public class DefaultProvider extends AbstractAcceptsHandler
 
   /* see superclass */
   @Override
-  public boolean isTermSupported(InfoModel<?> model) throws Exception {
-    return true;
+  public void addFeedback(String inputString, DataContext context,
+    String feedbackString, DataContext outputContext) throws Exception {
+    // n/a
+  }
+
+  /* see superclass */
+  @Override
+  public void removeFeedback(String inputString, DataContext context,
+    DataContext outputContext) throws Exception {
+    // n/a
   }
 
 }

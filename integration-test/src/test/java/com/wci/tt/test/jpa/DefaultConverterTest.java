@@ -19,7 +19,7 @@ import org.junit.Test;
 import com.wci.tt.DataContext;
 import com.wci.tt.helpers.DataContextTuple;
 import com.wci.tt.helpers.DataContextType;
-import com.wci.tt.jpa.helpers.DataContextJpa;
+import com.wci.tt.jpa.DataContextJpa;
 import com.wci.tt.jpa.services.handlers.DefaultConverter;
 import com.wci.tt.services.handlers.ConverterHandler;
 

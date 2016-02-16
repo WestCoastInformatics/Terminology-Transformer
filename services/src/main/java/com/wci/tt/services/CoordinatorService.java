@@ -7,14 +7,17 @@ import java.util.List;
 import java.util.Map;
 
 import com.wci.tt.DataContext;
+import com.wci.tt.TransformRecord;
 import com.wci.tt.helpers.ScoredDataContext;
 import com.wci.tt.helpers.ScoredResult;
+import com.wci.tt.helpers.TransformRecordList;
 import com.wci.tt.infomodels.InfoModel;
 import com.wci.tt.services.filters.PostProcessingFilter;
 import com.wci.tt.services.handlers.ConverterHandler;
 import com.wci.tt.services.handlers.NormalizerHandler;
 import com.wci.tt.services.handlers.ProviderHandler;
 import com.wci.tt.services.handlers.SourceDataLoader;
+import com.wci.umls.server.helpers.PfsParameter;
 import com.wci.umls.server.services.RootService;
 
 /**
@@ -154,4 +157,93 @@ public interface CoordinatorService extends RootService {
   public List<ScoredResult> normalize(String inputStr,
     DataContext requiredInputContext, boolean includeOriginal) throws Exception;
 
+  /**
+   * Normalizer feedback.
+   *
+   * @param inputString the input string
+   * @param inputContext the input context
+   * @param feedbackString the feedback string
+   * @throws Exception the exception
+   */
+  public void addNormalizerFeedback(String inputString,
+    DataContext inputContext, String feedbackString) throws Exception;
+
+  /**
+   * Removes the normalizer feedback.
+   *
+   * @param inputString the input string
+   * @param inputContext the input context
+   * @throws Exception the exception
+   */
+  public void removeNormalizerFeedback(String inputString,
+    DataContext inputContext) throws Exception;
+
+  /**
+   * Provider feedback.
+   *
+   * @param inputString the input string
+   * @param inputContext the input context
+   * @param feedbackString the feedback string
+   * @param outputContext the output context
+   * @throws Exception the exception
+   */
+  public void addProviderFeedback(String inputString, DataContext inputContext,
+    String feedbackString, DataContext outputContext) throws Exception;
+
+  /**
+   * Removes the provider feedback.
+   *
+   * @param inputString the input string
+   * @param inputContext the input context
+   * @param outputContext the output context
+   * @throws Exception the exception
+   */
+  public void removeProviderFeedback(String inputString,
+    DataContext inputContext, DataContext outputContext) throws Exception;
+
+  /**
+   * Adds the transform record.
+   *
+   * @param record the record
+   * @return the transform record
+   * @throws Exception the exception
+   */
+  public TransformRecord addTransformRecord(TransformRecord record)
+    throws Exception;
+
+  /**
+   * Update transform record.
+   *
+   * @param record the record
+   * @throws Exception the exception
+   */
+  public void updateTransformRecord(TransformRecord record) throws Exception;
+
+  /**
+   * Removes the transform record.
+   *
+   * @param recordId the record id
+   * @throws Exception the exception
+   */
+  public void removeTransformRecord(Long recordId) throws Exception;
+
+  /**
+   * Returns the transform record.
+   *
+   * @param recordId the record id
+   * @return the transform record
+   * @throws Exception the exception
+   */
+  public TransformRecord getTransformRecord(Long recordId) throws Exception;
+
+  /**
+   * Find transform records for query.
+   *
+   * @param query the query
+   * @param pfs the pfs
+   * @return the transform record list
+   * @throws Exception the exception
+   */
+  public TransformRecordList findTransformRecordsForQuery(String query,
+    PfsParameter pfs) throws Exception;
 }

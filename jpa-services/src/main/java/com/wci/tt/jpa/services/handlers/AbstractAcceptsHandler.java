@@ -5,9 +5,11 @@ package com.wci.tt.jpa.services.handlers;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 
 import com.wci.tt.DataContext;
 import com.wci.tt.jpa.services.helper.DataContextMatcher;
@@ -20,7 +22,7 @@ import com.wci.tt.services.handlers.ProviderHandler;
 public abstract class AbstractAcceptsHandler {
 
   /** The io matchers. */
-  private Map<DataContextMatcher, DataContextMatcher> ioMatchers =
+  private Map<DataContextMatcher, List<DataContextMatcher>> ioMatchers =
       new HashMap<>();
 
   /** The quality. */
@@ -34,7 +36,10 @@ public abstract class AbstractAcceptsHandler {
    */
   public void addMatcher(DataContextMatcher inputMatcher,
     DataContextMatcher outputMatcher) {
-    ioMatchers.put(inputMatcher, outputMatcher);
+    if (!ioMatchers.containsKey(inputMatcher)) {
+      ioMatchers.put(inputMatcher, new ArrayList<DataContextMatcher>());
+    }
+    ioMatchers.get(inputMatcher).add(outputMatcher);
   }
 
   /**
@@ -50,7 +55,11 @@ public abstract class AbstractAcceptsHandler {
   public List<DataContext> accepts(DataContext inputContext) throws Exception {
     for (final DataContextMatcher inputMatcher : ioMatchers.keySet()) {
       if (inputMatcher.matches(inputContext)) {
-        return ioMatchers.get(inputMatcher).getDataContexts();
+        final Set<DataContext> contexts = new HashSet<>();
+        for (final DataContextMatcher matcher : ioMatchers.get(inputMatcher)) {
+          contexts.addAll(matcher.getDataContexts());
+        }
+        return new ArrayList<>(contexts);
       }
     }
     return new ArrayList<>();

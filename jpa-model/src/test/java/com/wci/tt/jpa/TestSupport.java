@@ -1,7 +1,7 @@
 /*
  * Copyright 2016 West Coast Informatics, LLC
  */
-package com.wci.tt.model;
+package com.wci.tt.jpa;
 
 import org.junit.Rule;
 import org.junit.rules.TestName;
@@ -9,7 +9,7 @@ import org.junit.rules.TestName;
 /**
  * Support object for unit tests.
  */
-public class SourceDataSupport {
+public class TestSupport {
 
   /** The name. */
   @Rule

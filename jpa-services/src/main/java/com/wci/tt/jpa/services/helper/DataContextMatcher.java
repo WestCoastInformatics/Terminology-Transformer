@@ -13,7 +13,7 @@ import org.apache.log4j.Logger;
 
 import com.wci.tt.DataContext;
 import com.wci.tt.helpers.DataContextType;
-import com.wci.tt.jpa.helpers.DataContextJpa;
+import com.wci.tt.jpa.DataContextJpa;
 
 /**
  * Helper utility for specifying data contexts to match.

@@ -1,9 +1,27 @@
 /*
  *    Copyright 2016 West Coast Informatics, LLC
  */
-package com.wci.tt.jpa.helpers;
+package com.wci.tt.jpa;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.TableGenerator;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+
+import org.hibernate.search.annotations.Analyze;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.FieldBridge;
+import org.hibernate.search.annotations.Index;
+import org.hibernate.search.annotations.Store;
+import org.hibernate.search.bridge.builtin.EnumBridge;
+import org.hibernate.search.bridge.builtin.LongBridge;
 
 import com.wci.tt.DataContext;
 import com.wci.tt.helpers.DataContextType;
@@ -11,32 +29,47 @@ import com.wci.tt.helpers.DataContextType;
 /**
  * JPA enabled implementation of {@link DataContext}.
  */
-@XmlRootElement(name = "dataContext")
+@Entity
+@Table(name = "data_contexts")
+// @Audited - no changing here
+// @Indexed - only indexed embedded
+@XmlRootElement(name = "context")
 public class DataContextJpa implements DataContext {
 
   /** The id. */
-  Long id;
+  @TableGenerator(name = "EntityIdGenTransformer", table = "table_generator_transformer", pkColumnValue = "Entity")
+  @Id
+  @GeneratedValue(strategy = GenerationType.TABLE, generator = "EntityIdGenTransformer")
+  private Long id;
 
   /** The terminology. */
-  String terminology;
+  @Column(nullable = true)
+  private String terminology;
 
   /** The version. */
-  String version;
+  @Column(nullable = true)
+  private String version;
 
   /** The data context type. */
-  DataContextType type;
+  @Enumerated(EnumType.STRING)
+  @Column(nullable = false)
+  private DataContextType type;
 
   /** The customer. */
-  String customer;
+  @Column(nullable = true)
+  private String customer;
 
   /** The semantic type. */
-  String semanticType;
+  @Column(nullable = true)
+  private String semanticType;
 
   /** The specialty. */
-  String specialty;
+  @Column(nullable = true)
+  private String specialty;
 
   /** The info model class name. */
-  String infoModelClass;
+  @Column(nullable = true)
+  private String infoModelClass;
 
   /**
    * Instantiates an empty {@link DataContextJpa}.
@@ -61,8 +94,10 @@ public class DataContextJpa implements DataContext {
     this.specialty = context.getSpecialty();
     this.infoModelClass = context.getInfoModelClass();
   }
-
+  
   /* see superclass */
+  @FieldBridge(impl = LongBridge.class)
+  @Field(index = Index.YES, analyze = Analyze.NO, store = Store.NO)
   @Override
   public Long getId() {
     return id;
@@ -75,6 +110,7 @@ public class DataContextJpa implements DataContext {
   }
 
   /* see superclass */
+  @Field(index = Index.YES, analyze = Analyze.NO, store = Store.NO)
   @Override
   public String getTerminology() {
     return this.terminology;
@@ -88,6 +124,7 @@ public class DataContextJpa implements DataContext {
   }
 
   /* see superclass */
+  @Field(index = Index.YES, analyze = Analyze.NO, store = Store.NO)
   @Override
   public String getVersion() {
     return this.version;
@@ -100,6 +137,7 @@ public class DataContextJpa implements DataContext {
   }
 
   /* see superclass */
+  @Field(bridge = @FieldBridge(impl = EnumBridge.class) , index = Index.YES, analyze = Analyze.NO, store = Store.NO)
   @Override
   public DataContextType getType() {
     return type;
@@ -112,6 +150,7 @@ public class DataContextJpa implements DataContext {
   }
 
   /* see superclass */
+  @Field(index = Index.YES, analyze = Analyze.NO, store = Store.NO)
   @Override
   public String getCustomer() {
     return customer;
@@ -124,6 +163,7 @@ public class DataContextJpa implements DataContext {
   }
 
   /* see superclass */
+  @Field(index = Index.YES, analyze = Analyze.NO, store = Store.NO)
   @Override
   public String getSemanticType() {
     return semanticType;
@@ -136,6 +176,7 @@ public class DataContextJpa implements DataContext {
   }
 
   /* see superclass */
+  @Field(index = Index.YES, analyze = Analyze.NO, store = Store.NO)
   @Override
   public String getSpecialty() {
     return specialty;
@@ -148,6 +189,7 @@ public class DataContextJpa implements DataContext {
   }
 
   /* see superclass */
+  @Field(index = Index.YES, analyze = Analyze.NO, store = Store.NO)
   @Override
   public String getInfoModelClass() {
     return infoModelClass;
@@ -160,6 +202,7 @@ public class DataContextJpa implements DataContext {
   }
 
   /* see superclass */
+  @XmlTransient
   @Override
   public boolean isEmpty() {
     return !((terminology != null && !terminology.isEmpty())
