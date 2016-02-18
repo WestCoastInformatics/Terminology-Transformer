@@ -99,12 +99,12 @@ public class TransformerSearchHandler implements SearchHandler {
     }
     FullTextQuery fullTextQuery = null;
     try {
-      Logger.getLogger(getClass()).debug("query = " + finalQuery);
+      Logger.getLogger(getClass()).info("query = " + finalQuery);
       fullTextQuery = IndexUtility.applyPfsToLuceneQuery(clazz, fieldNamesKey,
           finalQuery.toString(), pfs, manager);
     } catch (ParseException | IllegalArgumentException e) {
       // If there's a parse exception, try the literal query
-      Logger.getLogger(getClass()).debug("query = " + finalQuery);
+      Logger.getLogger(getClass()).info("query = " + finalQuery);
       fullTextQuery = IndexUtility.applyPfsToLuceneQuery(clazz, fieldNamesKey,
           escapedQuery + terminologyClause, pfs, manager);
     }
