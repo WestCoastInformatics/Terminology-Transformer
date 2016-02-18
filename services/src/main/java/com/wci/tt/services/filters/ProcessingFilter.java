@@ -10,10 +10,11 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Properties;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.wci.tt.helpers.ScoredResult;
@@ -150,18 +151,20 @@ public abstract class ProcessingFilter {
   }
 
   /**
-   * Returns all numerical tokens found in term.
+   * Returns all unique numerical tokens found in term.
    *
    * @param term the term
    * @return the numerics
    */
-  protected List<String> getNumericalTokens(String term) {
+  protected Set<String> getNumericalTokens(String term) {
     // find Numeric value from term
     String str = term.replaceAll("[^0-9]+", " ");
-    List<String> numerics = Arrays.asList(str.trim().split(" "));
+    Set<String> numerics =
+        new HashSet<String>(Arrays.asList(str.trim().split(" ")));
 
-    if (numerics.size() == 1 && numerics.get(0).trim().length() == 0) {
-      return new ArrayList<>();
+    if (numerics.size() == 1
+        && numerics.iterator().next().trim().length() == 0) {
+      return new HashSet<>();
     }
 
     return numerics;
