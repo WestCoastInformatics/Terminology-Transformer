@@ -146,7 +146,8 @@ public interface CoordinatorService extends RootService {
     DataContext outputContext) throws Exception;
 
   /**
-   * Normalize the input string by running it through all normalizers.
+   * Normalize the input string by running it through all normalizers. The score
+   * range is (0-1) for all normalizers.
    *
    * @param inputStr the input str
    * @param requiredInputContext the required input context

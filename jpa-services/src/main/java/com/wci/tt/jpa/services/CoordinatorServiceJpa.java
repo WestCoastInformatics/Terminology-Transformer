@@ -335,48 +335,24 @@ public class CoordinatorServiceJpa extends ContentServiceJpa
     }
   }
 
-  /**
-   * Returns the normalizers.
-   *
-   * @return the normalizers
-   * @throws Exception the exception
-   */
   /* see superclass */
   @Override
   public Map<String, NormalizerHandler> getNormalizers() throws Exception {
     return normalizers;
   }
 
-  /**
-   * Returns the providers.
-   *
-   * @return the providers
-   * @throws Exception the exception
-   */
   /* see superclass */
   @Override
   public Map<String, ProviderHandler> getProviders() throws Exception {
     return providers;
   }
 
-  /**
-   * Returns the converters.
-   *
-   * @return the converters
-   * @throws Exception the exception
-   */
   /* see superclass */
   @Override
   public Map<String, ConverterHandler> getConverters() throws Exception {
     return converters;
   }
 
-  /**
-   * Returns the post processing filters.
-   *
-   * @return the post processing filters
-   * @throws Exception the exception
-   */
   /* see superclass */
   @Override
   public Map<String, PostProcessingFilter> getPostProcessingFilters()
@@ -384,50 +360,24 @@ public class CoordinatorServiceJpa extends ContentServiceJpa
     return filters;
   }
 
-  /**
-   * Returns the specialties.
-   *
-   * @return the specialties
-   * @throws Exception the exception
-   */
   /* see superclass */
   @Override
   public List<String> getSpecialties() throws Exception {
     return specialties;
   }
 
-  /**
-   * Returns the semantic types.
-   *
-   * @return the semantic types
-   * @throws Exception the exception
-   */
   /* see superclass */
   @Override
   public List<String> getSemanticTypes() throws Exception {
     return semanticTypes;
   }
 
-  /**
-   * Returns the information models.
-   *
-   * @return the information models
-   * @throws Exception the exception
-   */
   /* see superclass */
   @Override
   public Map<String, InfoModel<?>> getInformationModels() throws Exception {
     return infoModels;
   }
 
-  /**
-   * Identify.
-   *
-   * @param inputStr the input str
-   * @param requiredInputContext the required input context
-   * @return the list
-   * @throws Exception the exception
-   */
   /* see superclass */
   @Override
   public List<ScoredDataContext> identify(String inputStr,
@@ -469,9 +419,9 @@ public class CoordinatorServiceJpa extends ContentServiceJpa
             // Compute the score for this piece of evidence
             // Weight by provider quality
             // Weight by normalized input score
-            final float score =
-                threshold.weightResult(identifiedResult.getScore(),
-                    normalizedInput.getScore(), provider.getQuality());
+            final float score = threshold.weightResult(
+                identifiedResult.getScore(), normalizedInput.getScore(),
+                provider.getQuality(), provider.getLogBaseValue());
 
             // Put in providerEvidenceMap if we don't have an entry yet
             // or this one has a higher score.
@@ -503,15 +453,6 @@ public class CoordinatorServiceJpa extends ContentServiceJpa
     return list;
   }
 
-  /**
-   * Process.
-   *
-   * @param inputStr the input str
-   * @param inputContext the input context
-   * @param requiredOutputContext the required output context
-   * @return the list
-   * @throws Exception the exception
-   */
   /* see superclass */
   @Override
   public List<ScoredResult> process(String inputStr, DataContext inputContext,
@@ -587,8 +528,9 @@ public class CoordinatorServiceJpa extends ContentServiceJpa
                   // Weight by provider quality
                   // Weight by normalized input score
                   // TODO: this weighting algorithm can be abstracted
-                  final float score = threshold.weightResult(result.getScore(),
-                      normalizedInputStr.getScore(), provider.getQuality());
+                  float score = threshold.weightResult(result.getScore(),
+                      normalizedInputStr.getScore(), provider.getQuality(),
+                      provider.getLogBaseValue());
 
                   if (converter.isValidModel(inputStr, tuple.getData(),
                       score)) {
@@ -647,15 +589,6 @@ public class CoordinatorServiceJpa extends ContentServiceJpa
     }
   }
 
-  /**
-   * Normalize.
-   *
-   * @param inputStr the input str
-   * @param requiredInputContext the required input context
-   * @param includeOrig the include orig
-   * @return the list
-   * @throws Exception the exception
-   */
   /* see superclass */
   @Override
   public List<ScoredResult> normalize(String inputStr,
@@ -700,6 +633,7 @@ public class CoordinatorServiceJpa extends ContentServiceJpa
     return normalizedResults;
   }
 
+  /* see superclass */
   @Override
   public void addNormalizerFeedback(String inputString,
     DataContext inputContext, String feedbackString) throws Exception {
@@ -710,6 +644,7 @@ public class CoordinatorServiceJpa extends ContentServiceJpa
     }
   }
 
+  /* see superclass */
   @Override
   public void removeNormalizerFeedback(String inputString,
     DataContext inputContext) throws Exception {
@@ -720,6 +655,7 @@ public class CoordinatorServiceJpa extends ContentServiceJpa
     }
   }
 
+  /* see superclass */
   @Override
   public void addProviderFeedback(String inputString, DataContext inputContext,
     String feedbackString, DataContext outputContext) throws Exception {
@@ -733,6 +669,7 @@ public class CoordinatorServiceJpa extends ContentServiceJpa
 
   }
 
+  /* see superclass */
   @Override
   public void removeProviderFeedback(String inputString,
     DataContext inputContext, DataContext outputContext) throws Exception {
@@ -745,12 +682,6 @@ public class CoordinatorServiceJpa extends ContentServiceJpa
 
   }
 
-  /**
-   * Returns the source data loaders.
-   *
-   * @return the source data loaders
-   * @throws Exception the exception
-   */
   /* see superclass */
   @Override
   public Map<String, SourceDataLoader> getSourceDataLoaders() throws Exception {
@@ -869,13 +800,6 @@ public class CoordinatorServiceJpa extends ContentServiceJpa
     return filters;
   }
 
-  /**
-   * Adds the transform record.
-   *
-   * @param record the record
-   * @return the transform record
-   * @throws Exception the exception
-   */
   /* see superclass */
   @Override
   public TransformRecord addTransformRecord(TransformRecord record)
@@ -883,51 +807,25 @@ public class CoordinatorServiceJpa extends ContentServiceJpa
     return addHasLastModified(record);
   }
 
-  /**
-   * Update transform record.
-   *
-   * @param record the record
-   * @throws Exception the exception
-   */
   /* see superclass */
   @Override
   public void updateTransformRecord(TransformRecord record) throws Exception {
     updateHasLastModified(record);
   }
 
-  /**
-   * Removes the transform record.
-   *
-   * @param recordId the record id
-   * @throws Exception the exception
-   */
   /* see superclass */
   @Override
   public void removeTransformRecord(Long recordId) throws Exception {
     this.removeHasLastModified(recordId, TransformRecordJpa.class);
   }
 
-  /**
-   * Returns the transform record.
-   *
-   * @param recordId the record id
-   * @return the transform record
-   * @throws Exception the exception
-   */
   /* see superclass */
   @Override
   public TransformRecord getTransformRecord(Long recordId) throws Exception {
     return getHasLastModified(recordId, TransformRecordJpa.class);
   }
 
-  /**
-   * Find transform records for query.
-   *
-   * @param query the query
-   * @param pfs the pfs
-   * @return the transform record list
-   * @throws Exception the exception
-   */
+  /* see superclass */
   @Override
   public TransformRecordList findTransformRecordsForQuery(String query,
     PfsParameter pfs) throws Exception {

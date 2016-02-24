@@ -118,4 +118,9 @@ public class DefaultProvider extends AbstractAcceptsHandler
     // n/a
   }
 
+  /* see superclass */
+  @Override
+  public float getLogBaseValue() {
+    return 1;
+  }
 }

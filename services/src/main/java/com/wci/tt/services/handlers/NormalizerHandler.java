@@ -47,7 +47,9 @@ public interface NormalizerHandler extends Configurable {
 
   /**
    * Returns normalized form of input string with a probability-score based on
-   * context. Returns an empty list if there are no normalizations.
+   * context. The score range is (0-1) for all normalizers.
+   * 
+   * Returns an empty list if there are no normalizations.
    * 
    * Results placed in list based in ordered fashion with top score first
    * because there may be multiple way to interpret the inputStr.

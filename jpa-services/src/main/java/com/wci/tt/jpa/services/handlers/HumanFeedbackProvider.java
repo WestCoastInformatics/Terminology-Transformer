@@ -214,4 +214,10 @@ public class HumanFeedbackProvider extends AbstractAcceptsHandler
 
   }
 
+  /* see superclass */
+  @Override
+  public float getLogBaseValue() {
+    // n/a
+    return -1;
+  }
 }
