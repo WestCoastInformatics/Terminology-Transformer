@@ -69,10 +69,14 @@ public class DefaultThresholdHandler implements ThresholdHandler {
   /* see superclass */
   @Override
   public float weightResult(float rawScore, float normalizedInputScore,
-    float providerQuality) {
+    float providerQuality, float logBaseValue) {
 
     // Weight all parts (for now)
-    return rawScore * normalizedInputScore * providerQuality;
+    final float score = rawScore * normalizedInputScore * providerQuality;
+
+    // Get the log value and ensure it is b/w 0 & 1
+    return (float) Math.max(
+        Math.min(Math.log(score * 100) / Math.log(logBaseValue * 100), 1f), 0);
   }
 
 }

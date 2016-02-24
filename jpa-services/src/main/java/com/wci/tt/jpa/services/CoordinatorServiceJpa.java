@@ -474,9 +474,9 @@ public class CoordinatorServiceJpa extends ContentServiceJpa
             // Compute the score for this piece of evidence
             // Weight by provider quality
             // Weight by normalized input score
-            final float score =
-                threshold.weightResult(identifiedResult.getScore(),
-                    normalizedInput.getScore(), provider.getQuality());
+            final float score = threshold.weightResult(
+                identifiedResult.getScore(), normalizedInput.getScore(),
+                provider.getQuality(), provider.getLogBaseValue());
 
             // Put in providerEvidenceMap if we don't have an entry yet
             // or this one has a higher score.
@@ -506,15 +506,6 @@ public class CoordinatorServiceJpa extends ContentServiceJpa
     return list;
   }
 
-  /**
-   * Process.
-   *
-   * @param inputStr the input str
-   * @param inputContext the input context
-   * @param requiredOutputContext the required output context
-   * @return the list
-   * @throws Exception the exception
-   */
   /* see superclass */
   @Override
   public List<ScoredResult> process(String inputStr, DataContext inputContext,
@@ -594,8 +585,9 @@ public class CoordinatorServiceJpa extends ContentServiceJpa
                   // Weight by provider quality
                   // Weight by normalized input score
                   // TODO: this weighting algorithm can be abstracted
-                  final float score = threshold.weightResult(result.getScore(),
-                      normalizedInputStr.getScore(), provider.getQuality());
+                  float score = threshold.weightResult(result.getScore(),
+                      normalizedInputStr.getScore(), provider.getQuality(),
+                      provider.getLogBaseValue());
 
                   if (converter.isValidModel(inputStr, tuple.getData(),
                       score)) {
@@ -646,15 +638,6 @@ public class CoordinatorServiceJpa extends ContentServiceJpa
     }
   }
 
-  /**
-   * Normalize.
-   *
-   * @param inputStr the input str
-   * @param requiredInputContext the required input context
-   * @param includeOrig the include orig
-   * @return the list
-   * @throws Exception the exception
-   */
   /* see superclass */
   @Override
   public List<ScoredResult> normalize(String inputStr,
@@ -699,6 +682,7 @@ public class CoordinatorServiceJpa extends ContentServiceJpa
     return normalizedResults;
   }
 
+  /* see superclass */
   @Override
   public void addNormalizerFeedback(String inputString,
     DataContext inputContext, String feedbackString) throws Exception {
@@ -711,6 +695,7 @@ public class CoordinatorServiceJpa extends ContentServiceJpa
     }
   }
 
+  /* see superclass */
   @Override
   public void removeNormalizerFeedback(String inputString,
     DataContext inputContext) throws Exception {
@@ -723,6 +708,7 @@ public class CoordinatorServiceJpa extends ContentServiceJpa
     }
   }
 
+  /* see superclass */
   @Override
   public void addProviderFeedback(String inputString, DataContext inputContext,
     String feedbackString, DataContext outputContext) throws Exception {
@@ -739,6 +725,7 @@ public class CoordinatorServiceJpa extends ContentServiceJpa
 
   }
 
+  /* see superclass */
   @Override
   public void removeProviderFeedback(String inputString,
     DataContext inputContext, DataContext outputContext) throws Exception {

@@ -62,7 +62,7 @@ public interface ProviderHandler extends Configurable {
 
   /**
    * Identifies probability of the input string being of the type defined by the
-   * provider. an empty list if identify finds nothing.
+   * provider. An empty list if identify finds nothing.
    * 
    * Returns a list of ranked possible dataContexts within the provider with an
    * associated probability score.
@@ -101,4 +101,10 @@ public interface ProviderHandler extends Configurable {
    */
   public float getQuality();
 
+  /**
+   * Returns the value used to normalize the provider's results between 0 and 1.
+   *
+   * @return the log base value
+   */
+  public float getLogBaseValue();
 }
