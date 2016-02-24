@@ -208,7 +208,7 @@
       </build>
     </profile>
 
-    <!-- Load dose form data, specify -Drun.config.tt=... -Dterminology=... -->
+    <!-- Load dose form data, specify -Drun.config.umls=... -Dterminology=... -->
     <profile>
       <id>RRF-umls</id>
       <build>
@@ -237,7 +237,7 @@
       </build>
     </profile>
 
-    <!-- Load dose form data, specify -Drun.config.tt=... -Dterminology=... -->
+    <!-- Load RF2 snapshot, specify -Drun.config.umls=... -Dterminology=... -->
     <profile>
       <id>RF2-snapshot</id>
       <build>
@@ -257,6 +257,59 @@
                   <version>${version}</version>
                   <inputDir>${input.dir}</inputDir>
                   <mode>${mode}</mode>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+
+    <!-- Load RF2 delta, specify -Drun.config.umls=... -Dterminology=... -->
+    <profile>
+      <id>RF2-delta</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>com.wci.tt</groupId>
+            <artifactId>tt-admin</artifactId>
+            <executions>
+              <execution>
+                <id>load-source-data</id>
+                <phase>package</phase>
+                <goals>
+                  <goal>RF2-delta</goal>
+                </goals>
+                <configuration>
+                  <terminology>${terminology}</terminology>
+                  <inputDir>${input.dir}</inputDir>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+
+    <!-- Load config, specify -Drun.config.umls=... -Dterminology=... -->
+    <profile>
+      <id>load-config</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>com.wci.tt</groupId>
+            <artifactId>tt-admin</artifactId>
+            <executions>
+              <execution>
+                <id>load-config</id>
+                <phase>package</phase>
+                <goals>
+                  <goal>load-config</goal>
+                </goals>
+                <configuration>
+                  <type>${type}</type>
+                  <inputFile>${input.file}</inputFile>
+                  <reload>true</reload>
                 </configuration>
               </execution>
             </executions>

@@ -21,13 +21,16 @@ import com.wci.tt.helpers.DataContextTuple;
 import com.wci.tt.helpers.ScoredDataContext;
 import com.wci.tt.helpers.ScoredResult;
 import com.wci.tt.helpers.TransformRecordList;
+import com.wci.tt.helpers.TypeKeyValue;
 import com.wci.tt.infomodels.InfoModel;
 import com.wci.tt.jpa.TransformRecordJpa;
 import com.wci.tt.jpa.helpers.ScoredResultJpa;
 import com.wci.tt.jpa.helpers.TransformRecordListJpa;
+import com.wci.tt.jpa.helpers.TypeKeyValueJpa;
 import com.wci.tt.jpa.services.helper.DataContextMatcher;
 import com.wci.tt.services.CoordinatorService;
 import com.wci.tt.services.filters.PostProcessingFilter;
+import com.wci.tt.services.handlers.AnalyzerHandler;
 import com.wci.tt.services.handlers.ConverterHandler;
 import com.wci.tt.services.handlers.NormalizerHandler;
 import com.wci.tt.services.handlers.ProviderHandler;
@@ -59,6 +62,9 @@ public class CoordinatorServiceJpa extends ContentServiceJpa
 
   /** The normalizer handler . */
   static Map<String, NormalizerHandler> normalizers = new HashMap<>();
+
+  /** The normalizer handler . */
+  static Map<String, AnalyzerHandler> analyzers = new HashMap<>();
 
   /** The provider handler . */
   static Map<String, ProviderHandler> providers = new HashMap<>();
@@ -158,6 +164,30 @@ public class CoordinatorServiceJpa extends ContentServiceJpa
     } catch (Exception e) {
       e.printStackTrace();
       normalizers = null;
+    }
+
+    /** Add analyzers found in config. */
+    try {
+      if (config == null) {
+        config = ConfigUtility.getConfigProperties();
+      }
+      String key = "analyzer.handler";
+      // Not required
+      if (config.containsKey(key)) {
+        for (String handlerName : config.getProperty(key).split(",")) {
+          if (handlerName.isEmpty()) {
+            continue;
+          }
+          // Add handlers to List
+          AnalyzerHandler handlerService =
+              ConfigUtility.newStandardHandlerInstanceWithConfiguration(key,
+                  handlerName, AnalyzerHandler.class);
+          analyzers.put(handlerName, handlerService);
+        }
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+      analyzers = null;
     }
 
     /** Add providers found in Config to List. */
@@ -335,105 +365,76 @@ public class CoordinatorServiceJpa extends ContentServiceJpa
     }
   }
 
-  /**
-   * Returns the normalizers.
-   *
-   * @return the normalizers
-   * @throws Exception the exception
-   */
   /* see superclass */
   @Override
   public Map<String, NormalizerHandler> getNormalizers() throws Exception {
+    Logger.getLogger(getClass()).debug("Get normalizers");
+    Logger.getLogger(getClass()).debug("  normalizers = " + normalizers);
     return normalizers;
   }
 
-  /**
-   * Returns the providers.
-   *
-   * @return the providers
-   * @throws Exception the exception
-   */
+  /* see superclass */
+  @Override
+  public Map<String, AnalyzerHandler> getAnalyzers() throws Exception {
+    Logger.getLogger(getClass()).debug("Get analyzers");
+    Logger.getLogger(getClass()).debug("  analyzers = " + analyzers);
+    return analyzers;
+  }
+
   /* see superclass */
   @Override
   public Map<String, ProviderHandler> getProviders() throws Exception {
+    Logger.getLogger(getClass()).debug("Get providers");
+    Logger.getLogger(getClass()).debug("  providers = " + providers);
     return providers;
   }
 
-  /**
-   * Returns the converters.
-   *
-   * @return the converters
-   * @throws Exception the exception
-   */
   /* see superclass */
   @Override
   public Map<String, ConverterHandler> getConverters() throws Exception {
+    Logger.getLogger(getClass()).debug("Get converters");
+    Logger.getLogger(getClass()).debug("  converters = " + converters);
     return converters;
   }
 
-  /**
-   * Returns the post processing filters.
-   *
-   * @return the post processing filters
-   * @throws Exception the exception
-   */
-  /* see superclass */
-  @Override
-  public Map<String, PostProcessingFilter> getPostProcessingFilters()
-    throws Exception {
-    return filters;
-  }
-
-  /**
-   * Returns the specialties.
-   *
-   * @return the specialties
-   * @throws Exception the exception
-   */
   /* see superclass */
   @Override
   public List<String> getSpecialties() throws Exception {
+    Logger.getLogger(getClass()).debug("Get specialties");
+    Logger.getLogger(getClass()).debug("  specialties = " + specialties);
     return specialties;
   }
 
-  /**
-   * Returns the semantic types.
-   *
-   * @return the semantic types
-   * @throws Exception the exception
-   */
   /* see superclass */
   @Override
   public List<String> getSemanticTypes() throws Exception {
+    Logger.getLogger(getClass()).debug("Get semantic types");
+    Logger.getLogger(getClass()).debug("  semantic types s= " + semanticTypes);
     return semanticTypes;
   }
 
-  /**
-   * Returns the information models.
-   *
-   * @return the information models
-   * @throws Exception the exception
-   */
   /* see superclass */
   @Override
   public Map<String, InfoModel<?>> getInformationModels() throws Exception {
+    Logger.getLogger(getClass()).debug("Get information models");
+    Logger.getLogger(getClass()).debug("  models = " + infoModels);
     return infoModels;
   }
 
-  /**
-   * Identify.
-   *
-   * @param inputStr the input str
-   * @param requiredInputContext the required input context
-   * @return the list
-   * @throws Exception the exception
-   */
+  /* see superclass */
+  @Override
+  public Map<String, SourceDataLoader> getSourceDataLoaders() throws Exception {
+    Logger.getLogger(getClass()).debug("Get source data loaders");
+    Logger.getLogger(getClass()).debug("  loaders = " + loaders);
+    return loaders;
+  }
+
   /* see superclass */
   @Override
   public List<ScoredDataContext> identify(String inputStr,
     DataContext requiredInputContext) throws Exception {
     Logger.getLogger(getClass())
-        .info("Identify - " + inputStr + ", " + requiredInputContext);
+        .debug("Identify - " + inputStr + ", " + requiredInputContext);
     final List<ScoredDataContext> allIdentifiedResults = new ArrayList<>();
 
     // Nothing identified
@@ -451,6 +452,10 @@ public class CoordinatorServiceJpa extends ContentServiceJpa
     // All output data context tuples should be compatible with providers list
     final List<ScoredResult> normalizedResults =
         normalize(inputStr, requiredInputContext, false);
+
+    // TODO: put "analyzers" into the pipeline
+    // TODO: Use "TransformRecord" to pass information around instead of
+    // multiple params
 
     // STEP 3: Call identify per each provider's accepted data contexts on
     // data context's associated normalized results
@@ -495,8 +500,6 @@ public class CoordinatorServiceJpa extends ContentServiceJpa
     }
 
     // Apply threshold and return the results
-    Logger.getLogger(getClass())
-        .debug("  all results = " + allIdentifiedResults);
     final List<ScoredDataContext> list =
         threshold.applyThreshold(allIdentifiedResults);
     Logger.getLogger(getClass()).debug("  threshold results = " + list);
@@ -516,13 +519,13 @@ public class CoordinatorServiceJpa extends ContentServiceJpa
   @Override
   public List<ScoredResult> process(String inputStr, DataContext inputContext,
     DataContext requiredOutputContext) throws Exception {
-    Logger.getLogger(getClass()).info("Process - " + inputStr + ", "
+    Logger.getLogger(getClass()).debug("Process - " + inputStr + ", "
         + inputContext + ", " + requiredOutputContext);
 
     // no processors
     if (inputStr == null || inputStr.isEmpty() || requiredOutputContext == null
         || requiredOutputContext == null || requiredOutputContext.isEmpty()) {
-      Logger.getLogger(getClass()).info("  NO RESULTS");
+      Logger.getLogger(getClass()).debug("  NO RESULTS");
       return new ArrayList<>();
     }
 
@@ -553,6 +556,10 @@ public class CoordinatorServiceJpa extends ContentServiceJpa
     // Step 3: Generate normalized content per accepted data contexts
     List<ScoredResult> normalizedResults =
         normalize(inputStr, inputContext, false);
+
+    // TODO: put "analyzers" into the pipeline
+    // TODO: Use "TransformRecord" to pass information around instead of
+    // multiple params
 
     // Step 4: Process and collate the results
     final Map<ProviderHandler, List<ScoredResult>> allEvidenceMap =
@@ -629,14 +636,6 @@ public class CoordinatorServiceJpa extends ContentServiceJpa
       Logger.getLogger(getClass())
           .debug("  final evidence = " + aggregatedResults);
 
-      for (PostProcessingFilter filter : getPostProcessingFilters(
-          requiredOutputContext)) {
-        List<ScoredResult> filteredResults = new ArrayList<>();
-        filteredResults.addAll(filter.filterResults(inputStr, normalizedResults,
-            aggregatedResults));
-        aggregatedResults = filteredResults;
-      }
-
       return aggregatedResults;
     } else {
       if (isAnalysisRun) {
@@ -703,7 +702,9 @@ public class CoordinatorServiceJpa extends ContentServiceJpa
   @Override
   public void addNormalizerFeedback(String inputString,
     DataContext inputContext, String feedbackString) throws Exception {
-
+    Logger.getLogger(getClass()).debug(
+        "Add normalizer feedback - " + inputString + ", " + inputContext);
+    Logger.getLogger(getClass()).debug("  feedback = " + feedbackString);
     // Iterate through all normalizers and provide them the feedback
     for (final NormalizerHandler normalizer : getNormalizers().values()) {
       normalizer.addFeedback(inputString, inputContext, feedbackString);
@@ -713,6 +714,8 @@ public class CoordinatorServiceJpa extends ContentServiceJpa
   @Override
   public void removeNormalizerFeedback(String inputString,
     DataContext inputContext) throws Exception {
+    Logger.getLogger(getClass()).debug(
+        "Remove normalizer feedback - " + inputString + ", " + inputContext);
 
     // Iterate through all normalizers and provide them the feedback
     for (final NormalizerHandler normalizer : getNormalizers().values()) {
@@ -723,9 +726,12 @@ public class CoordinatorServiceJpa extends ContentServiceJpa
   @Override
   public void addProviderFeedback(String inputString, DataContext inputContext,
     String feedbackString, DataContext outputContext) throws Exception {
+    Logger.getLogger(getClass())
+        .debug("Add provider feedback - " + inputString + ", " + inputContext);
+    Logger.getLogger(getClass())
+        .debug("  feedback = " + feedbackString + ", " + outputContext);
 
     // Iterate through all providers and provide them the feedback
-    // Iterate through all normalizers and provide them the feedback
     for (final ProviderHandler provider : getProviders().values()) {
       provider.addFeedback(inputString, inputContext, feedbackString,
           outputContext);
@@ -736,25 +742,14 @@ public class CoordinatorServiceJpa extends ContentServiceJpa
   @Override
   public void removeProviderFeedback(String inputString,
     DataContext inputContext, DataContext outputContext) throws Exception {
+    Logger.getLogger(getClass()).debug("Remove provider feedback - "
+        + inputString + ", " + inputContext + ", " + outputContext);
 
     // Iterate through all providers and provide them the feedback
-    // Iterate through all normalizers and provide them the feedback
     for (final ProviderHandler provider : getProviders().values()) {
       provider.removeFeedback(inputString, inputContext, outputContext);
     }
 
-  }
-
-  /**
-   * Returns the source data loaders.
-   *
-   * @return the source data loaders
-   * @throws Exception the exception
-   */
-  /* see superclass */
-  @Override
-  public Map<String, SourceDataLoader> getSourceDataLoaders() throws Exception {
-    return loaders;
   }
 
   /**
@@ -847,90 +842,40 @@ public class CoordinatorServiceJpa extends ContentServiceJpa
     return converters;
   }
 
-  /**
-   * Returns the filters.
-   *
-   * @param context the output context
-   * @return the converters
-   * @throws Exception the exception
-   */
-  private List<PostProcessingFilter> getPostProcessingFilters(
-    DataContext context) throws Exception {
-    final List<PostProcessingFilter> filters = new ArrayList<>();
-
-    // Ask each filter if it accepts
-    for (final PostProcessingFilter filter : getPostProcessingFilters()
-        .values()) {
-      if (filter.accepts(context)) {
-        filters.add(filter);
-      }
-    }
-
-    return filters;
-  }
-
-  /**
-   * Adds the transform record.
-   *
-   * @param record the record
-   * @return the transform record
-   * @throws Exception the exception
-   */
   /* see superclass */
   @Override
   public TransformRecord addTransformRecord(TransformRecord record)
     throws Exception {
+    Logger.getLogger(getClass()).debug("Add transform record - " + record);
     return addHasLastModified(record);
   }
 
-  /**
-   * Update transform record.
-   *
-   * @param record the record
-   * @throws Exception the exception
-   */
   /* see superclass */
   @Override
   public void updateTransformRecord(TransformRecord record) throws Exception {
+    Logger.getLogger(getClass()).debug("Update transform record - " + record);
     updateHasLastModified(record);
   }
 
-  /**
-   * Removes the transform record.
-   *
-   * @param recordId the record id
-   * @throws Exception the exception
-   */
   /* see superclass */
   @Override
   public void removeTransformRecord(Long recordId) throws Exception {
+    Logger.getLogger(getClass()).debug("remove transform record - " + recordId);
     this.removeHasLastModified(recordId, TransformRecordJpa.class);
   }
 
-  /**
-   * Returns the transform record.
-   *
-   * @param recordId the record id
-   * @return the transform record
-   * @throws Exception the exception
-   */
   /* see superclass */
   @Override
   public TransformRecord getTransformRecord(Long recordId) throws Exception {
+    Logger.getLogger(getClass()).debug("Get transform record - " + recordId);
     return getHasLastModified(recordId, TransformRecordJpa.class);
   }
 
-  /**
-   * Find transform records for query.
-   *
-   * @param query the query
-   * @param pfs the pfs
-   * @return the transform record list
-   * @throws Exception the exception
-   */
   @Override
   public TransformRecordList findTransformRecordsForQuery(String query,
     PfsParameter pfs) throws Exception {
+    Logger.getLogger(getClass())
+        .debug("Find transform records - " + query + ", " + pfs);
     final SearchHandler searchHandler = getSearchHandler(ConfigUtility.DEFAULT);
     final int[] totalCt = new int[1];
     List<TransformRecordJpa> results = searchHandler.getQueryResults(null, null,
@@ -940,6 +885,51 @@ public class CoordinatorServiceJpa extends ContentServiceJpa
     list.setTotalCount(totalCt[0]);
     list.getObjects().addAll(results);
     return list;
+  }
+
+  /* see superclass */
+  @Override
+  public TypeKeyValue addTypeKeyValue(TypeKeyValue typeKeyValue)
+    throws Exception {
+    Logger.getLogger(getClass())
+        .debug("Add type, key, value - " + typeKeyValue);
+    return addObject(typeKeyValue);
+  }
+
+  /* see superclass */
+  @Override
+  public void updateTypeKeyValue(TypeKeyValue typeKeyValue) throws Exception {
+    Logger.getLogger(getClass())
+        .debug("Update type, key, value - " + typeKeyValue);
+    updateObject(typeKeyValue);
+  }
+
+  /* see superclass */
+  @Override
+  public void removeTypeKeyValue(Long typeKeyValueId) throws Exception {
+    Logger.getLogger(getClass())
+        .debug("Remove type, key, value - " + typeKeyValueId);
+    this.removeObject((TypeKeyValueJpa) getTypeKeyValue(typeKeyValueId),
+        TypeKeyValueJpa.class);
+  }
+
+  /* see superclass */
+  @Override
+  public TypeKeyValue getTypeKeyValue(Long typeKeyValueId) throws Exception {
+    Logger.getLogger(getClass())
+        .debug("Get type, key, value - " + typeKeyValueId);
+    return getObject(typeKeyValueId, TypeKeyValueJpa.class);
+  }
+
+  @Override
+  public List<TypeKeyValue> findTypeKeyValuesForQuery(String query)
+    throws Exception {
+    Logger.getLogger(getClass()).debug("Find type, key, values - " + query);
+    final SearchHandler searchHandler = getSearchHandler(ConfigUtility.DEFAULT);
+    final int[] totalCt = new int[1];
+    return new ArrayList<TypeKeyValue>(searchHandler.getQueryResults(null, null,
+        Branch.ROOT, query, null, TypeKeyValueJpa.class, TypeKeyValueJpa.class,
+        null, totalCt, getEntityManager()));
   }
 
 }

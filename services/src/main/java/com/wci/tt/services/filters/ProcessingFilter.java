@@ -161,12 +161,10 @@ public abstract class ProcessingFilter {
     String str = term.replaceAll("[^0-9]+", " ");
     Set<String> numerics =
         new HashSet<String>(Arrays.asList(str.trim().split(" ")));
-
     if (numerics.size() == 1
         && numerics.iterator().next().trim().length() == 0) {
       return new HashSet<>();
     }
-
     return numerics;
   }
 }

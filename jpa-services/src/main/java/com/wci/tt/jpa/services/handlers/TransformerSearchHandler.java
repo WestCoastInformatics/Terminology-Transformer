@@ -16,7 +16,7 @@ import org.apache.lucene.queryparser.classic.ParseException;
 import org.apache.lucene.queryparser.classic.QueryParserBase;
 import org.hibernate.search.jpa.FullTextQuery;
 
-import com.wci.umls.server.helpers.HasLastModified;
+import com.wci.umls.server.helpers.HasId;
 import com.wci.umls.server.helpers.PfsParameter;
 import com.wci.umls.server.helpers.PfscParameter;
 import com.wci.umls.server.jpa.services.helper.IndexUtility;
@@ -39,7 +39,7 @@ public class TransformerSearchHandler implements SearchHandler {
 
   /* see superclass */
   @Override
-  public <T extends HasLastModified> List<T> getQueryResults(String terminology,
+  public <T extends HasId> List<T> getQueryResults(String terminology,
     String version, String branch, String query, String literalField,
     Class<?> fieldNamesKey, Class<T> clazz, PfsParameter pfs, int[] totalCt,
     EntityManager manager) throws Exception {

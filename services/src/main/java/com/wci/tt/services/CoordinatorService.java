@@ -11,8 +11,9 @@ import com.wci.tt.TransformRecord;
 import com.wci.tt.helpers.ScoredDataContext;
 import com.wci.tt.helpers.ScoredResult;
 import com.wci.tt.helpers.TransformRecordList;
+import com.wci.tt.helpers.TypeKeyValue;
 import com.wci.tt.infomodels.InfoModel;
-import com.wci.tt.services.filters.PostProcessingFilter;
+import com.wci.tt.services.handlers.AnalyzerHandler;
 import com.wci.tt.services.handlers.ConverterHandler;
 import com.wci.tt.services.handlers.NormalizerHandler;
 import com.wci.tt.services.handlers.ProviderHandler;
@@ -43,6 +44,14 @@ public interface CoordinatorService extends RootService {
   public Map<String, NormalizerHandler> getNormalizers() throws Exception;
 
   /**
+   * Returns the analyzers.
+   *
+   * @return the analyzers
+   * @throws Exception the exception
+   */
+  public Map<String, AnalyzerHandler> getAnalyzers() throws Exception;
+
+  /**
    * Returns the providers.
    *
    * @return the providers
@@ -57,15 +66,6 @@ public interface CoordinatorService extends RootService {
    * @throws Exception the exception
    */
   public Map<String, ConverterHandler> getConverters() throws Exception;
-
-  /**
-   * Returns the post processing filters.
-   *
-   * @return the filters
-   * @throws Exception the exception
-   */
-  public Map<String, PostProcessingFilter> getPostProcessingFilters()
-    throws Exception;
 
   /**
    * Returns the specialties.
@@ -246,4 +246,49 @@ public interface CoordinatorService extends RootService {
    */
   public TransformRecordList findTransformRecordsForQuery(String query,
     PfsParameter pfs) throws Exception;
+
+  /**
+   * Adds the type, key, value.
+   *
+   * @param typeKeyValue the type key value
+   * @return the type, key, value
+   * @throws Exception the exception
+   */
+  public TypeKeyValue addTypeKeyValue(TypeKeyValue typeKeyValue)
+    throws Exception;
+
+  /**
+   * Update type, key, value.
+   *
+   * @param typeKeyValue the type key value
+   * @throws Exception the exception
+   */
+  public void updateTypeKeyValue(TypeKeyValue typeKeyValue) throws Exception;
+
+  /**
+   * Removes the type, key, value.
+   *
+   * @param typeKeyValueId the type key value id
+   * @throws Exception the exception
+   */
+  public void removeTypeKeyValue(Long typeKeyValueId) throws Exception;
+
+  /**
+   * Returns the type, key, value.
+   *
+   * @param typeKeyValueId the type key value id
+   * @return the type, key, value
+   * @throws Exception the exception
+   */
+  public TypeKeyValue getTypeKeyValue(Long typeKeyValueId) throws Exception;
+
+  /**
+   * Find type, key, values for query.
+   *
+   * @param query the query
+   * @return the type, key, value list
+   * @throws Exception the exception
+   */
+  public List<TypeKeyValue> findTypeKeyValuesForQuery(String query)
+    throws Exception;
 }
