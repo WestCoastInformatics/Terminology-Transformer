@@ -5,7 +5,6 @@ package com.wci.tt.mojo;
 
 import java.io.File;
 import java.util.Date;
-import java.util.Properties;
 
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -15,12 +14,9 @@ import com.wci.tt.SourceData;
 import com.wci.tt.SourceDataFile;
 import com.wci.tt.jpa.SourceDataFileJpa;
 import com.wci.tt.jpa.SourceDataJpa;
-import com.wci.tt.jpa.loaders.Rf2SourceDataLoader;
+import com.wci.tt.jpa.loaders.Rf2DeltaSourceDataLoader;
 import com.wci.tt.jpa.services.SourceDataServiceJpa;
 import com.wci.tt.services.SourceDataService;
-import com.wci.umls.server.helpers.ConfigUtility;
-import com.wci.umls.server.jpa.algo.LuceneReindexAlgorithm;
-import com.wci.umls.server.jpa.services.MetadataServiceJpa;
 import com.wci.umls.server.services.handlers.ExceptionHandler;
 
 /**
@@ -29,10 +25,10 @@ import com.wci.umls.server.services.handlers.ExceptionHandler;
  * 
  * See admin/pom.xml for a sample execution.
  * 
- * @goal RF2-snapshot
+ * @goal RF2-delta
  * @phase package
  */
-public class Rf2SourceDataLoaderMojo extends AbstractMojo {
+public class Rf2DeltaSourceDataLoaderMojo extends AbstractMojo {
 
   /**
    * Name of terminology to be loaded.
@@ -40,19 +36,6 @@ public class Rf2SourceDataLoaderMojo extends AbstractMojo {
    * @required
    */
   private String terminology;
-
-  /**
-   * The terminology version.
-   * @parameter
-   * @required
-   */
-  private String version;
-
-  /**
-   * create or update mode.
-   * @parameter
-   */
-  private String mode;
 
   /**
    * Input directory.
@@ -71,30 +54,10 @@ public class Rf2SourceDataLoaderMojo extends AbstractMojo {
   public void execute() throws MojoExecutionException, MojoFailureException {
     getLog().info("Starting sample data load");
     getLog().info("  terminology = " + terminology);
-    getLog().info("  version = " + version);
-    getLog().info("  mode = " + mode);
     getLog().info("  inputDir = " + inputDir);
 
     SourceDataService service = null;
     try {
-
-      final Properties properties = ConfigUtility.getConfigProperties();
-
-      // Create DB
-      if (mode != null && mode.equals("create")) {
-        getLog().info("Recreate database");
-        // This will trigger a rebuild of the db
-        properties.setProperty("hibernate.hbm2ddl.auto", mode);
-        // Trigger a JPA event
-        new MetadataServiceJpa().close();
-        properties.remove("hibernate.hbm2ddl.auto");
-
-        // Rebuild Indexes
-        final LuceneReindexAlgorithm reindex = new LuceneReindexAlgorithm();
-        reindex.compute();
-      }
-
-      // setup sample data
 
       service = new SourceDataServiceJpa();
       // As this is a sample loader and not an integration test,
@@ -120,7 +83,7 @@ public class Rf2SourceDataLoaderMojo extends AbstractMojo {
       getLog().info("    file = " + sdFile);
 
       // Create loader
-      final Rf2SourceDataLoader loader = new Rf2SourceDataLoader();
+      final Rf2DeltaSourceDataLoader loader = new Rf2DeltaSourceDataLoader();
 
       // Create and add the source data
       final SourceData sourceData = new SourceDataJpa();
@@ -139,7 +102,6 @@ public class Rf2SourceDataLoaderMojo extends AbstractMojo {
       // Now, invoke the loader
       loader.setSourceData(sourceData);
       loader.setTerminology(terminology);
-      loader.setVersion(version);
 
       loader.compute();
       loader.close();

@@ -1,3 +1,6 @@
+/*
+ *    Copyright 2016 West Coast Informatics, LLC
+ */
 package com.wci.tt.helpers;
 
 /**
@@ -10,14 +13,19 @@ public enum DataContextType {
 
   /** The code. */
   CODE,
-  
+
   /** The info model. */
   INFO_MODEL,
-  
+
   /** The name. */
   NAME,
-  
-  /** The text. */
-  TEXT
 
+  /** The text. */
+  TEXT,
+
+  /** The acronym. */
+  ACRONYM,
+
+  /** The pattern. */
+  PATTERN;
 }

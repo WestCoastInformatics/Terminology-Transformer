@@ -6,6 +6,7 @@ package com.wci.tt.services.handlers;
 import java.util.List;
 
 import com.wci.tt.DataContext;
+import com.wci.tt.TransformRecord;
 import com.wci.tt.helpers.ScoredDataContext;
 import com.wci.tt.helpers.ScoredResult;
 import com.wci.umls.server.helpers.Configurable;
@@ -69,13 +70,12 @@ public interface ProviderHandler extends Configurable {
    * 
    * Method able to handle NULL dataContexts.
    *
-   * @param inputString the input string
-   * @param context the context
+   * @param record the record
    * @return the list
    * @throws Exception the exception
    */
-  public List<ScoredDataContext> identify(String inputString,
-    DataContext context) throws Exception;
+  public List<ScoredDataContext> identify(TransformRecord record)
+    throws Exception;
 
   /**
    * Produces list of scored (by probability) results of as specified by the
@@ -85,14 +85,11 @@ public interface ProviderHandler extends Configurable {
    * Returns empty list for any DataContext for which accepts returns an empty
    * list.
    *
-   * @param inputStr the input string
-   * @param inputContext the input context
-   * @param outputContext the output context
+   * @param record the record
    * @return the list
    * @throws Exception the exception
    */
-  public List<ScoredResult> process(String inputStr, DataContext inputContext,
-    DataContext outputContext) throws Exception;
+  public List<ScoredResult> process(TransformRecord record) throws Exception;
 
   /**
    * Returns the quality factor (0-1) for this provider.
@@ -107,4 +104,12 @@ public interface ProviderHandler extends Configurable {
    * @return the log base value
    */
   public float getLogBaseValue();
+
+  /**
+   * Close any open resources on application shutdown.
+   *
+   * @throws Exception the exception
+   */
+  public void close() throws Exception;
+
 }

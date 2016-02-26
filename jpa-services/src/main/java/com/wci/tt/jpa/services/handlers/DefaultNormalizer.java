@@ -20,7 +20,8 @@ import com.wci.tt.services.handlers.NormalizerHandler;
  * Class created to prove that supporting functionality works, not to provide
  * meaningful results.
  */
-public class DefaultNormalizer implements NormalizerHandler {
+public class DefaultNormalizer extends AbstractNormalizer
+    implements NormalizerHandler {
 
   /** The quality. */
   private float quality;
@@ -83,16 +84,15 @@ public class DefaultNormalizer implements NormalizerHandler {
     return quality;
   }
 
+  /* see superclass */
   @Override
-  public void addFeedback(String inputString, DataContext inputContext,
-    String feedbackString) throws Exception {
-    // n/a
+  public boolean accepts(DataContext inputContext) throws Exception {
+    return true;
   }
 
+  /* see superclass */
   @Override
-  public void removeFeedback(String inputString, DataContext inputContext)
-    throws Exception {
-    // n/a
+  public void close() throws Exception {
+    // n/a - nothing opened
   }
-
 }

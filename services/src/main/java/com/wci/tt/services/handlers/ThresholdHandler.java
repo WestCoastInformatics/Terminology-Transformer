@@ -19,18 +19,17 @@ public interface ThresholdHandler extends Configurable {
   /**
    * Weight result for a piece of evidence by combining the raw score from the
    * provider with quality information from the normalizer and the provider.
-   *
+   * 
    * Results returned will be in the range of (0,1) thanks to incorporating
    * logBaseValue.
-   * 
+   *
    * @param rawScore the raw score
-   * @param normalizedInputScore the normalized input score
    * @param providerQuality the provider quality
    * @param logBaseValue the log base value
    * @return the float
    */
-  public float weightResult(float rawScore, float normalizedInputScore,
-    float providerQuality, float logBaseValue);
+  public float weightResult(float rawScore, float providerQuality,
+    float logBaseValue);
 
   /**
    * Apply threshold to the input list. Each element of the output list will be

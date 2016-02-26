@@ -121,7 +121,6 @@ public class RrfSourceDataLoaderMojo extends AbstractMojo {
       sdFile.setLastModifiedBy("loader");
       sdFile.setName(dir.getName());
       sdFile.setPath(inputDir);
-      // TODO
       sdFile.setSize(1000000L);
       sdFile.setTimestamp(new Date());
       service.addSourceDataFile(sdFile);

@@ -68,11 +68,11 @@ public class DefaultThresholdHandler implements ThresholdHandler {
 
   /* see superclass */
   @Override
-  public float weightResult(float rawScore, float normalizedInputScore,
-    float providerQuality, float logBaseValue) {
+  public float weightResult(float rawScore, float providerQuality,
+    float logBaseValue) {
 
     // Weight all parts (for now)
-    final float score = rawScore * normalizedInputScore * providerQuality;
+    final float score = rawScore * providerQuality;
 
     if (logBaseValue <= 0) {
       return score;

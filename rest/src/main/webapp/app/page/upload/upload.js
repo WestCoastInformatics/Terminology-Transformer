@@ -30,7 +30,6 @@ ttApp
         sourceDataService.findSourceDataFiles("").then(
         // Success
         function(response) {
-          // TODO Update this once file details format worked out
           uploadedFiles = response.sourceDataFiles;
           $scope.tpUploaded = new NgTableParams({}, {
             dataset : uploadedFiles
@@ -40,13 +39,11 @@ ttApp
 
       // Download file
       $scope.downloadFile = function() {
-        // TODO
         window.alert('Not yet functional');
       };
 
       // Download all files
       $scope.downloadAllFiles = function() {
-        // TODO
         window.alert('Not yet functional');
       };
 
@@ -113,11 +110,7 @@ ttApp
         return item.file.name.match(/.*\.zip/g) !== null;
       }
 
-      // //////////////////////////////////////////////
       // Specify the angular-file-uploader
-      // TODO: Move this into sourceData service
-      // //////////////////////////////////////////////
-
       var uploader = $scope.uploader = new FileUploader({
         url : fileUrl + '/upload'
       });
@@ -160,7 +153,6 @@ ttApp
 
         // manually set the headers on the item's request (does not inherit from
         // $http, apparently)
-        // TODO Wire this to security service, current cookie
         item.headers = {
           'Authorization' : 'admin'
         };

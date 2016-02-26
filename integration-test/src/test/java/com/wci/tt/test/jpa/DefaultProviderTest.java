@@ -17,10 +17,12 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.wci.tt.DataContext;
+import com.wci.tt.TransformRecord;
 import com.wci.tt.helpers.DataContextType;
 import com.wci.tt.helpers.ScoredDataContext;
 import com.wci.tt.helpers.ScoredResult;
 import com.wci.tt.jpa.DataContextJpa;
+import com.wci.tt.jpa.TransformRecordJpa;
 import com.wci.tt.jpa.services.handlers.DefaultProvider;
 import com.wci.tt.services.handlers.ProviderHandler;
 
@@ -124,7 +126,8 @@ public class DefaultProviderTest extends JpaSupport {
     Logger.getLogger(getClass()).info("TEST " + name.getMethodName());
 
     ProviderHandler handler = new DefaultProvider();
-    List<ScoredDataContext> results = handler.identify(null, null);
+    List<ScoredDataContext> results =
+        handler.identify(new TransformRecordJpa());
 
     Logger.getLogger(getClass()).info("  results = " + results);
 
@@ -141,8 +144,9 @@ public class DefaultProviderTest extends JpaSupport {
     Logger.getLogger(getClass()).info("TEST " + name.getMethodName());
 
     ProviderHandler handler = new DefaultProvider();
-    List<ScoredDataContext> results =
-        handler.identify(null, new DataContextJpa());
+    final TransformRecord record = new TransformRecordJpa();
+    record.setInputContext(new DataContextJpa());
+    List<ScoredDataContext> results = handler.identify(record);
 
     Logger.getLogger(getClass()).info("  results = " + results);
 
@@ -159,7 +163,9 @@ public class DefaultProviderTest extends JpaSupport {
     Logger.getLogger(getClass()).info("TEST " + name.getMethodName());
 
     ProviderHandler handler = new DefaultProvider();
-    List<ScoredDataContext> results = handler.identify("", null);
+    final TransformRecord record = new TransformRecordJpa();
+    record.setInputString("");
+    List<ScoredDataContext> results = handler.identify(record);
 
     Logger.getLogger(getClass()).info("  results = " + results);
 
@@ -176,8 +182,10 @@ public class DefaultProviderTest extends JpaSupport {
     Logger.getLogger(getClass()).info("TEST " + name.getMethodName());
 
     ProviderHandler handler = new DefaultProvider();
-    List<ScoredDataContext> results =
-        handler.identify("", new DataContextJpa());
+    final TransformRecord record = new TransformRecordJpa();
+    record.setInputContext(new DataContextJpa());
+    record.setInputString("");
+    List<ScoredDataContext> results = handler.identify(record);
 
     Logger.getLogger(getClass()).info("  results = " + results);
 
@@ -196,7 +204,9 @@ public class DefaultProviderTest extends JpaSupport {
     String inputString = "test string";
 
     ProviderHandler handler = new DefaultProvider();
-    List<ScoredDataContext> results = handler.identify(inputString, null);
+    final TransformRecord record = new TransformRecordJpa();
+    record.setInputString(inputString);
+    List<ScoredDataContext> results = handler.identify(record);
 
     Logger.getLogger(getClass()).info("  results = " + results);
 
@@ -212,11 +222,11 @@ public class DefaultProviderTest extends JpaSupport {
   public void testIdentifyFilledDataEmptyContext() throws Exception {
     Logger.getLogger(getClass()).info("TEST " + name.getMethodName());
 
-    String inputString = "test string";
-
     ProviderHandler handler = new DefaultProvider();
-    List<ScoredDataContext> results =
-        handler.identify(inputString, new DataContextJpa());
+    final TransformRecord record = new TransformRecordJpa();
+    record.setInputContext(new DataContextJpa());
+    record.setInputString("test string");
+    List<ScoredDataContext> results = handler.identify(record);
 
     Logger.getLogger(getClass()).info("  results = " + results);
 
@@ -245,8 +255,11 @@ public class DefaultProviderTest extends JpaSupport {
     inputContext.setVersion("Test Input Version");
     inputContext.setType(DataContextType.CODE);
 
-    List<ScoredDataContext> results =
-        handler.identify(inputString, inputContext);
+    final TransformRecord record = new TransformRecordJpa();
+    record.setInputContext(inputContext);
+    record.setInputString(inputString);
+
+    List<ScoredDataContext> results = handler.identify(record);
 
     Logger.getLogger(getClass()).info("  results = " + results);
 
@@ -273,7 +286,7 @@ public class DefaultProviderTest extends JpaSupport {
     Logger.getLogger(getClass()).info("TEST " + name.getMethodName());
 
     ProviderHandler handler = new DefaultProvider();
-    List<ScoredResult> results = handler.process(null, null, null);
+    List<ScoredResult> results = handler.process(new TransformRecordJpa());
 
     Logger.getLogger(getClass()).info("  results = " + results);
 
@@ -290,9 +303,11 @@ public class DefaultProviderTest extends JpaSupport {
     Logger.getLogger(getClass()).info("TEST " + name.getMethodName());
 
     ProviderHandler handler = new DefaultProvider();
+    final TransformRecord record = new TransformRecordJpa();
+    record.setInputContext(new DataContextJpa());
+    record.setOutputContext(new DataContextJpa());
 
-    List<ScoredResult> results =
-        handler.process("", new DataContextJpa(), new DataContextJpa());
+    List<ScoredResult> results = handler.process(record);
 
     Logger.getLogger(getClass()).info("  results = " + results);
 
@@ -330,8 +345,12 @@ public class DefaultProviderTest extends JpaSupport {
     outputContext.setVersion("Test Output Version");
     outputContext.setType(DataContextType.CODE);
 
-    List<ScoredResult> results =
-        handler.process(inputString, inputContext, outputContext);
+    final TransformRecord record = new TransformRecordJpa();
+    record.setInputContext(inputContext);
+    record.setOutputContext(outputContext);
+    record.setInputString(inputString);
+
+    List<ScoredResult> results = handler.process(record);
 
     Logger.getLogger(getClass()).info("  results = " + results);
 

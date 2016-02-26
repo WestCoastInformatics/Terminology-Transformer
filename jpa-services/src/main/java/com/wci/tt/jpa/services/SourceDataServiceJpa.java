@@ -23,7 +23,6 @@ import com.wci.umls.server.helpers.StringList;
 import com.wci.umls.server.jpa.services.RootServiceJpa;
 import com.wci.umls.server.services.SecurityService;
 
-// TODO: Auto-generated Javadoc
 /**
  * Reference implementation of the {@link SecurityService}.
  */
@@ -187,7 +186,6 @@ public class SourceDataServiceJpa extends RootServiceJpa
   public StringList getLoaderNames() {
     StringList stringList = new StringList();
 
-    // TODO Discover via reflection
     stringList.addObject("com.wci.tt.jpa.converters.RxNormConverter");
 
     return stringList;

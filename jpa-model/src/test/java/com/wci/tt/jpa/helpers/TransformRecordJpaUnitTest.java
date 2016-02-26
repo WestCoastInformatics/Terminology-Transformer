@@ -112,9 +112,9 @@ public class TransformRecordJpaUnitTest extends TestSupport {
     tester.include("characteristics");
     tester.include("inputContext");
     tester.include("inputString");
-    tester.include("normalizedInputStrings");
+    tester.include("normalizedRecords");
     tester.include("outputContext");
-    tester.include("outputString");
+    tester.include("outputs");
     tester.include("statistics");
 
     tester.proxy(DataContext.class, 1, dc1);
@@ -195,8 +195,8 @@ public class TransformRecordJpaUnitTest extends TestSupport {
     // Test analyzed fields
     IndexedFieldTester tester = new IndexedFieldTester(object);
     tester.include("inputString");
-    tester.include("normalizedInputStrings");
-    tester.include("outputString");
+    tester.include("normalizedRecords");
+    tester.include("outputs");
     assertTrue(tester.testAnalyzedIndexedFields());
 
     // Test non analyzed fields

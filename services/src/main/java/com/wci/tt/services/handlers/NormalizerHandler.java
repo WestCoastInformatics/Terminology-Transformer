@@ -23,6 +23,15 @@ import com.wci.umls.server.helpers.Configurable;
 public interface NormalizerHandler extends Configurable {
 
   /**
+   * Indicates whether this normalizer operates on the specified data.
+   *
+   * @param inputContext the input context
+   * @return true, if successful
+   * @throws Exception the exception
+   */
+  public boolean accepts(DataContext inputContext) throws Exception;
+
+  /**
    * Mechanism for providing feedback to normalizers. What the normalizer
    * chooses to do with the feedback data (e.g. use it literally, or generalize
    * it, or support patterns, etc) is up to the implementation.
@@ -69,4 +78,10 @@ public interface NormalizerHandler extends Configurable {
    */
   public float getQuality();
 
+  /**
+   * Close any open resources on application shutdown.
+   *
+   * @throws Exception the exception
+   */
+  public void close() throws Exception;
 }
