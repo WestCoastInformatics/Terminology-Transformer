@@ -46,4 +46,9 @@ public class DefaultAnalyzer implements AnalyzerHandler {
     return record;
   }
 
+  @Override
+  public void close() throws Exception {
+    // n/a - nothing opened    
+  }
+
 }

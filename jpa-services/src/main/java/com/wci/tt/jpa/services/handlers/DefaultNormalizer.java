@@ -90,4 +90,9 @@ public class DefaultNormalizer extends AbstractNormalizer
     return true;
   }
 
+  /* see superclass */
+  @Override
+  public void close() throws Exception {
+    // n/a - nothing opened
+  }
 }

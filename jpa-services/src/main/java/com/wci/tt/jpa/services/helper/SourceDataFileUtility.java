@@ -18,7 +18,6 @@ import org.apache.log4j.Logger;
 
 import com.wci.umls.server.helpers.LocalException;
 
-// TODO: Auto-generated Javadoc
 /**
  * Utility class for handling source data files.
  */

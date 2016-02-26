@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.persistence.CascadeType;
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -17,6 +18,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
@@ -26,6 +28,7 @@ import javax.persistence.UniqueConstraint;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.hibernate.envers.Audited;
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Analyzer;
 import org.hibernate.search.annotations.Field;
@@ -39,7 +42,8 @@ import org.hibernate.search.bridge.builtin.LongBridge;
 
 import com.wci.tt.DataContext;
 import com.wci.tt.TransformRecord;
-import com.wci.umls.server.jpa.helpers.CollectionToCsvBridge;
+import com.wci.tt.helpers.ScoredResult;
+import com.wci.tt.jpa.helpers.ScoredResultJpa;
 
 /**
  * JPA enabled implementation of {@link TransformRecord}.
@@ -47,9 +51,9 @@ import com.wci.umls.server.jpa.helpers.CollectionToCsvBridge;
 
 @Entity
 @Table(name = "records", uniqueConstraints = @UniqueConstraint(columnNames = {
-    "inputString", "outputString", "id"
+    "inputString", "id"
 }) )
-// @Audited - no changing here
+@Audited
 @Indexed
 @XmlRootElement(name = "record")
 public class TransformRecordJpa implements TransformRecord {
@@ -79,21 +83,24 @@ public class TransformRecordJpa implements TransformRecord {
   private String inputString;
 
   /** The output string. */
-  @Column(nullable = true, length = 4000)
-  private String outputString;
+  @OneToMany(targetEntity = ScoredResultJpa.class, cascade = CascadeType.ALL)
+  @CollectionTable(name = "record_outputs")
+  @IndexedEmbedded
+  private List<ScoredResult> outputs;
 
   /** The normalized input strings. */
-  @ElementCollection(fetch = FetchType.EAGER)
-  @Column(nullable = true, length = 4000)
-  private List<String> normalizedInputStrings;
+  @OneToMany(targetEntity = ScoredResultJpa.class, cascade = CascadeType.ALL)
+  @CollectionTable(name = "record_normalized_results")
+  @IndexedEmbedded
+  private List<ScoredResult> normalizedResults;
 
   /** The input context. */
-  @OneToOne(targetEntity = DataContextJpa.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+  @OneToOne(targetEntity = DataContextJpa.class, cascade = CascadeType.ALL)
   @IndexedEmbedded
   private DataContext inputContext = null;
 
   /** The output context. */
-  @OneToOne(targetEntity = DataContextJpa.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+  @OneToOne(targetEntity = DataContextJpa.class, cascade = CascadeType.ALL)
   @IndexedEmbedded
   private DataContext outputContext = null;
 
@@ -125,9 +132,8 @@ public class TransformRecordJpa implements TransformRecord {
     lastModifiedBy = record.getLastModifiedBy();
     lastModified = record.getLastModified();
     inputString = record.getInputString();
-    normalizedInputStrings =
-        new ArrayList<>(record.getNormalizedInputStrings());
-    outputString = record.getOutputString();
+    normalizedResults = new ArrayList<>(record.getNormalizedResults());
+    outputs = new ArrayList<>(record.getOutputs());
     inputContext = record.getInputContext();
     outputContext = record.getOutputContext();
     characteristics = new HashMap<>(record.getCharacteristics());
@@ -203,20 +209,18 @@ public class TransformRecordJpa implements TransformRecord {
   }
 
   /* see superclass */
-  @FieldBridge(impl = CollectionToCsvBridge.class)
-  @Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
   @Override
-  public List<String> getNormalizedInputStrings() {
-    if (normalizedInputStrings == null) {
-      normalizedInputStrings = new ArrayList<>();
+  public List<ScoredResult> getNormalizedResults() {
+    if (normalizedResults == null) {
+      normalizedResults = new ArrayList<>();
     }
-    return normalizedInputStrings;
+    return normalizedResults;
   }
 
   /* see superclass */
   @Override
-  public void setNormalizedInputStrings(List<String> normalizedInputStrings) {
-    this.normalizedInputStrings = normalizedInputStrings;
+  public void setNormalizedResults(List<ScoredResult> normalizedResults) {
+    this.normalizedResults = normalizedResults;
   }
 
   /* see superclass */
@@ -238,14 +242,17 @@ public class TransformRecordJpa implements TransformRecord {
       @Field(name = "outputStringSort", index = Index.YES, analyze = Analyze.NO, store = Store.NO)
   })
   @Override
-  public String getOutputString() {
-    return outputString;
+  public List<ScoredResult> getOutputs() {
+    if (outputs == null) {
+      outputs = new ArrayList<>();
+    }
+    return outputs;
   }
 
   /* see superclass */
   @Override
-  public void setOutputString(String outputString) {
-    this.outputString = outputString;
+  public void setOutputs(List<ScoredResult> outputs) {
+    this.outputs = outputs;
   }
 
   /* see superclass */
@@ -295,11 +302,13 @@ public class TransformRecordJpa implements TransformRecord {
 
   @Override
   public String toString() {
-    return "TransformRecordJpa [id=" + id + ", inputString=" + inputString
-        + ", outputString=" + outputString + ", normalizedInputStrings="
-        + normalizedInputStrings + ", inputContext=" + inputContext
-        + ", outputContext=" + outputContext + ", characteristics="
-        + characteristics + ", statistics=" + statistics + "]";
+    return "TransformRecordJpa [id=" + id + ", timestamp=" + timestamp
+        + ", lastModified=" + lastModified + ", lastModifiedBy="
+        + lastModifiedBy + ", inputString=" + inputString + ", outputs="
+        + outputs + ", normalizedResults=" + normalizedResults
+        + ", inputContext=" + inputContext + ", outputContext=" + outputContext
+        + ", characteristics=" + characteristics + ", statistics=" + statistics
+        + "]";
   }
 
   @Override
@@ -312,12 +321,11 @@ public class TransformRecordJpa implements TransformRecord {
         prime * result + ((inputContext == null) ? 0 : inputContext.hashCode());
     result =
         prime * result + ((inputString == null) ? 0 : inputString.hashCode());
-    result = prime * result + ((normalizedInputStrings == null) ? 0
-        : normalizedInputStrings.hashCode());
+    result = prime * result
+        + ((normalizedResults == null) ? 0 : normalizedResults.hashCode());
     result = prime * result
         + ((outputContext == null) ? 0 : outputContext.hashCode());
-    result =
-        prime * result + ((outputString == null) ? 0 : outputString.hashCode());
+    result = prime * result + ((outputs == null) ? 0 : outputs.hashCode());
     result =
         prime * result + ((statistics == null) ? 0 : statistics.hashCode());
     return result;
@@ -347,20 +355,20 @@ public class TransformRecordJpa implements TransformRecord {
         return false;
     } else if (!inputString.equals(other.inputString))
       return false;
-    if (normalizedInputStrings == null) {
-      if (other.normalizedInputStrings != null)
+    if (normalizedResults == null) {
+      if (other.normalizedResults != null)
         return false;
-    } else if (!normalizedInputStrings.equals(other.normalizedInputStrings))
+    } else if (!normalizedResults.equals(other.normalizedResults))
       return false;
     if (outputContext == null) {
       if (other.outputContext != null)
         return false;
     } else if (!outputContext.equals(other.outputContext))
       return false;
-    if (outputString == null) {
-      if (other.outputString != null)
+    if (outputs == null) {
+      if (other.outputs != null)
         return false;
-    } else if (!outputString.equals(other.outputString))
+    } else if (!outputs.equals(other.outputs))
       return false;
     if (statistics == null) {
       if (other.statistics != null)

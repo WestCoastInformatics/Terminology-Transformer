@@ -75,16 +75,20 @@ public class HumanFeedbackProvider extends AbstractAcceptsHandler
 
   /* see superclass */
   @Override
-  public List<ScoredDataContext> identify(String inputString,
-    DataContext context) throws Exception {
+  public List<ScoredDataContext> identify(TransformRecord record)
+    throws Exception {
     // does not identify
     return new ArrayList<ScoredDataContext>();
   }
 
   /* see superclass */
   @Override
-  public List<ScoredResult> process(String inputString,
-    DataContext inputContext, DataContext outputContext) throws Exception {
+  public List<ScoredResult> process(TransformRecord record) throws Exception {
+
+    final String inputString = record.getInputString();
+    final DataContext inputContext = record.getInputContext();
+    final DataContext outputContext = record.getOutputContext();
+
     // Validate input/output context
     validate(inputContext, outputContext);
 
@@ -114,14 +118,14 @@ public class HumanFeedbackProvider extends AbstractAcceptsHandler
       }
 
       // Get the transform record
-      final TransformRecord record = list.getObjects().get(0);
+      final TransformRecord result = list.getObjects().get(0);
 
       // Validate the input/output contexts
-      validate(record.getInputContext(), outputContext);
-      validate(inputContext, record.getOutputContext());
+      validate(result.getInputContext(), outputContext);
+      validate(inputContext, result.getOutputContext());
 
       // Return the output string with high score
-      results.add(new ScoredResultJpa(record.getOutputString(), 1000));
+      results.addAll(result.getOutputs());
       Logger.getLogger(getClass()).info("  results = " + results.size());
       Logger.getLogger(getClass()).info("          = " + results);
       return results;
@@ -178,7 +182,7 @@ public class HumanFeedbackProvider extends AbstractAcceptsHandler
       record.setInputString(inputString);
       record.setInputContext(context);
       record.setOutputContext(outputContext);
-      record.setOutputString(feedbackString);
+      record.getOutputs().add(new ScoredResultJpa(feedbackString, 1000));
       Logger.getLogger(getClass()).info("  add feedback record = " + record);
       service.addTransformRecord(record);
 
@@ -219,5 +223,11 @@ public class HumanFeedbackProvider extends AbstractAcceptsHandler
   public float getLogBaseValue() {
     // n/a
     return -1;
+  }
+
+  /* see superclass */
+  @Override
+  public void close() throws Exception {
+    // n/a - nothing opened
   }
 }

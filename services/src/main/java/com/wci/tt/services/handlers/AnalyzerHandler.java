@@ -14,14 +14,21 @@ import com.wci.umls.server.helpers.Configurable;
 public interface AnalyzerHandler extends Configurable {
 
   /**
-   * Analyze the transform record and populate the statistics and characteristics.
-   * Typically analyzers and providers have to be coordinated so that they use 
-   * a shared set of characteristics and statistics.
+   * Analyze the transform record and populate the statistics and
+   * characteristics. Typically analyzers and providers have to be coordinated
+   * so that they use a shared set of characteristics and statistics.
    *
    * @param record the record
    * @return the transform record
    * @throws Exception the exception
    */
   public TransformRecord analyze(TransformRecord record) throws Exception;
+
+  /**
+   * Close any open resources on application shutdown.
+   *
+   * @throws Exception the exception
+   */
+  public void close() throws Exception;
 
 }

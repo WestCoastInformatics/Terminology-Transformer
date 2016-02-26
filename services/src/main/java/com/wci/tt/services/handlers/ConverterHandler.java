@@ -60,15 +60,10 @@ public interface ConverterHandler extends Configurable {
     DataContext origInputContext) throws Exception;
 
   /**
-   * Goes through all convert filters to determine if model instance compiles
-   * with the Model's rules based on term and score.
+   * Close any open resources on application shutdown.
    *
-   * @param inputStr the input str
-   * @param jsonString the json string
-   * @param score the score
-   * @return <code>true</code> if so, <code>false</code> otherwise
    * @throws Exception the exception
    */
-  public boolean isValidModel(String inputStr, String jsonString, float score)
-    throws Exception;
+  public void close() throws Exception;
+
 }

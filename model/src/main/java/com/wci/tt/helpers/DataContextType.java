@@ -1,3 +1,6 @@
+/*
+ *    Copyright 2016 West Coast Informatics, LLC
+ */
 package com.wci.tt.helpers;
 
 /**
@@ -18,6 +21,12 @@ public enum DataContextType {
   NAME,
   
   /** The text. */
-  TEXT
-
+  TEXT,
+  
+  /**  The acronym. */
+  // TODO: formalize this as a mechanism for normalizer feedback
+  ACRONYM,
+  
+  /**  The pattern. */
+  PATTERN;
 }

@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 
+import org.hibernate.envers.Audited;
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Index;
@@ -23,6 +24,7 @@ import com.wci.tt.helpers.TypeKeyValue;
  * JPA enabled scored implementation of {@link TypeKeyValue}.
  */
 @Entity
+@Audited
 @Table(name = "type_key_values")
 @Indexed
 public class TypeKeyValueJpa implements TypeKeyValue, Comparable<TypeKeyValue> {

@@ -292,4 +292,12 @@ public interface CoordinatorService extends RootService {
    */
   public List<TypeKeyValue> findTypeKeyValuesForQuery(String query)
     throws Exception;
+
+  /**
+   * Used to close handlers before shutting application down.
+   *
+   * @throws Exception the exception
+   */
+  public void closeHandlers() throws Exception;
+
 }

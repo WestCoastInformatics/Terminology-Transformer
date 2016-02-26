@@ -4,9 +4,8 @@ import com.wci.umls.server.helpers.HasId;
 import com.wci.umls.server.helpers.HasLastModified;
 import com.wci.umls.server.helpers.HasName;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Interface SourceDataFile.
+ * Generically represents a data file associated with a source provider.
  */
 public interface SourceDataFile extends HasId, HasLastModified, HasName {
 

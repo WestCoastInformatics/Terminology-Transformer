@@ -13,7 +13,7 @@ import com.wci.tt.helpers.ScoredResult;
 import com.wci.umls.server.helpers.Configurable;
 
 /**
- * Generically represents a post processing filter
+ * Generically represents a post processing filter.
  */
 public interface Filter extends Configurable {
 
@@ -25,7 +25,7 @@ public interface Filter extends Configurable {
    */
   public static Set<String> getNumericalTokens(String term) {
     // find Numeric value from term
-    String str = term.replaceAll("[^0-9]+", " ");
+    String str = term.replaceAll("[^0-9.]+", " ");
     Set<String> numerics =
         new HashSet<String>(Arrays.asList(str.trim().split(" ")));
     if (numerics.size() == 1
@@ -66,16 +66,23 @@ public interface Filter extends Configurable {
   public boolean preCheck(String inputString) throws Exception;
 
   /**
-   * Post filter - indicates whether to keep the result given the input string
-   * and normalized terms.
+   * Post filter - indicates which results to keep based on a variety of results
+   * coming back (and the input data).
    *
    * @param inputString the input string
    * @param normalizedTerms the normalized terms
-   * @param result the result
+   * @param results the results
    * @return true, if successful
    * @throws Exception the exception
    */
-  public boolean postCheck(String inputString,
-    List<ScoredResult> normalizedTerms, ScoredResult result) throws Exception;
+  public List<ScoredResult> postCheck(String inputString,
+    List<ScoredResult> normalizedTerms, List<ScoredResult> results)
+      throws Exception;
 
+  /**
+   * Opportunity to close any open resources
+   *
+   * @throws Exception the exception
+   */
+  public void close() throws Exception;
 }

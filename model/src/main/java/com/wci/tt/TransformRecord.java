@@ -6,6 +6,7 @@ package com.wci.tt;
 import java.util.List;
 import java.util.Map;
 
+import com.wci.tt.helpers.ScoredResult;
 import com.wci.umls.server.helpers.HasId;
 import com.wci.umls.server.helpers.HasLastModified;
 
@@ -35,14 +36,14 @@ public interface TransformRecord extends HasId, HasLastModified {
    *
    * @return the normalized input strings
    */
-  public List<String> getNormalizedInputStrings();
+  public List<ScoredResult> getNormalizedResults();
 
   /**
    * Sets the normalized input strings.
    *
-   * @param normalizedInputStrings the normalized input strings
+   * @param normalizedResults the normalized results
    */
-  public void setNormalizedInputStrings(List<String> normalizedInputStrings);
+  public void setNormalizedResults(List<ScoredResult> normalizedResults);
 
   /**
    * Returns the input context.
@@ -59,18 +60,18 @@ public interface TransformRecord extends HasId, HasLastModified {
   public void setInputContext(DataContext inputContext);
 
   /**
-   * Returns the output string.
+   * Returns the output strings.
    *
    * @return the output string
    */
-  public String getOutputString();
+  public List<ScoredResult> getOutputs();
 
   /**
-   * Sets the output string.
+   * Sets the output strings.
    *
-   * @param outputString the output string
+   * @param outputs the outputs
    */
-  public void setOutputString(String outputString);
+  public void setOutputs(List<ScoredResult> outputs);
 
   /**
    * Returns the output context.
@@ -87,7 +88,7 @@ public interface TransformRecord extends HasId, HasLastModified {
   public void setOutputContext(DataContext outputContext);
 
   /**
-   * Returns the characteristics.
+   * Returns the characteristics. TODO: needs example
    *
    * @return the characteristics
    */
@@ -101,7 +102,7 @@ public interface TransformRecord extends HasId, HasLastModified {
   public void setCharacteristics(Map<String, String> characteristics);
 
   /**
-   * Returns the statistics.
+   * Returns the statistics. TODO: needs example
    *
    * @return the statistics
    */

@@ -78,4 +78,10 @@ public interface NormalizerHandler extends Configurable {
    */
   public float getQuality();
 
+  /**
+   * Close any open resources on application shutdown.
+   *
+   * @throws Exception the exception
+   */
+  public void close() throws Exception;
 }

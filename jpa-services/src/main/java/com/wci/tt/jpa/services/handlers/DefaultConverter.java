@@ -74,9 +74,8 @@ public class DefaultConverter extends AbstractAcceptsHandler
 
   /* see superclass */
   @Override
-  public boolean isValidModel(String inputStr, String jsonString, float score)
-    throws Exception {
-    return true;
+  public void close() throws Exception {
+    // n/a - nothing opened
   }
 
 }

@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Properties;
 
 import com.wci.tt.DataContext;
+import com.wci.tt.TransformRecord;
 import com.wci.tt.helpers.DataContextType;
 import com.wci.tt.helpers.ScoredDataContext;
 import com.wci.tt.helpers.ScoredResult;
@@ -54,17 +55,20 @@ public class DefaultProvider extends AbstractAcceptsHandler
 
   /* see superclass */
   @Override
-  public List<ScoredDataContext> identify(String inputStr, DataContext context)
+  public List<ScoredDataContext> identify(TransformRecord record)
     throws Exception {
+    final String inputString = record.getInputString();
+    final DataContext inputContext = record.getInputContext();
     // Simply return context passed in for this "naive" case. As such, the score
     // is set to '1'.
     List<ScoredDataContext> scoredContexts = new ArrayList<ScoredDataContext>();
 
     // Ensure that input is valid although calling method with empty/null
     // context is permissible
-    if (inputStr != null && !inputStr.isEmpty()) {
-      if (context != null) {
-        ScoredDataContext scoredContext = new ScoredDataContextJpa(context);
+    if (inputString != null && !inputString.isEmpty()) {
+      if (inputContext != null) {
+        ScoredDataContext scoredContext =
+            new ScoredDataContextJpa(inputContext);
         scoredContext.setScore(1);
         scoredContexts.add(scoredContext);
       } else {
@@ -76,8 +80,11 @@ public class DefaultProvider extends AbstractAcceptsHandler
 
   /* see superclass */
   @Override
-  public List<ScoredResult> process(String inputStr, DataContext inputContext,
-    DataContext outputContext) throws Exception {
+  public List<ScoredResult> process(TransformRecord record) throws Exception {
+
+    final String inputString = record.getInputString();
+    final DataContext inputContext = record.getInputContext();
+    final DataContext outputContext = record.getOutputContext();
 
     // Validate input/output context
     validate(inputContext, outputContext);
@@ -87,10 +94,10 @@ public class DefaultProvider extends AbstractAcceptsHandler
     final List<ScoredResult> results = new ArrayList<ScoredResult>();
 
     // Ensure that input is valid.
-    if (inputStr != null && !inputStr.isEmpty() && inputContext != null
+    if (inputString != null && !inputString.isEmpty() && inputContext != null
         && outputContext != null) {
       final ScoredResult result = new ScoredResultJpa();
-      result.setValue(inputStr);
+      result.setValue(inputString);
       result.setScore(1);
       results.add(result);
     }
@@ -122,5 +129,11 @@ public class DefaultProvider extends AbstractAcceptsHandler
   @Override
   public float getLogBaseValue() {
     return 1;
+  }
+
+  /* see superclass */
+  @Override
+  public void close() throws Exception {
+    // n/a - nothing opened
   }
 }

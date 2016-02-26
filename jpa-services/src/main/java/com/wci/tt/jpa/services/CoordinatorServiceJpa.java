@@ -29,7 +29,6 @@ import com.wci.tt.jpa.helpers.TransformRecordListJpa;
 import com.wci.tt.jpa.helpers.TypeKeyValueJpa;
 import com.wci.tt.jpa.services.helper.DataContextMatcher;
 import com.wci.tt.services.CoordinatorService;
-import com.wci.tt.services.filters.PostProcessingFilter;
 import com.wci.tt.services.handlers.AnalyzerHandler;
 import com.wci.tt.services.handlers.ConverterHandler;
 import com.wci.tt.services.handlers.NormalizerHandler;
@@ -71,9 +70,6 @@ public class CoordinatorServiceJpa extends ContentServiceJpa
 
   /** The converter handler . */
   static Map<String, ConverterHandler> converters = new HashMap<>();
-
-  /** The converter handler . */
-  static Map<String, PostProcessingFilter> filters = new HashMap<>();
 
   /** The information models. */
   static Map<String, InfoModel<?>> infoModels = new HashMap<>();
@@ -240,30 +236,6 @@ public class CoordinatorServiceJpa extends ContentServiceJpa
       converters = null;
     }
 
-    /** Add post processing filters found in Config to List. */
-    try {
-      if (config == null) {
-        config = ConfigUtility.getConfigProperties();
-      }
-      String key = "filters.post";
-      for (String filterName : config.getProperty(key).split(",")) {
-        if (filterName.isEmpty()) {
-          continue;
-        }
-        // Add handlers to List
-        PostProcessingFilter filter =
-            ConfigUtility.newStandardHandlerInstanceWithConfiguration(key,
-                filterName, PostProcessingFilter.class);
-        filters.put(filterName, filter);
-      }
-      if (filters.isEmpty()) {
-        throw new Exception("filters.post must have one value but none exist");
-      }
-    } catch (Exception e) {
-      e.printStackTrace();
-      filters = null;
-    }
-
     /** Add information Models found in Config to List. */
     try {
       if (config == null) {
@@ -342,11 +314,6 @@ public class CoordinatorServiceJpa extends ContentServiceJpa
     if (converters == null) {
       throw new Exception(
           "Converter Handlers did not properly initialize, serious error.");
-    }
-
-    if (filters == null) {
-      throw new Exception(
-          "Post Processing Filters did not properly initialize, serious error.");
     }
 
     if (infoModels == null) {
@@ -453,6 +420,11 @@ public class CoordinatorServiceJpa extends ContentServiceJpa
     final List<ScoredResult> normalizedResults =
         normalize(inputStr, requiredInputContext, false);
 
+    final TransformRecord record = new TransformRecordJpa();
+    record.setInputString(inputStr);
+    record.setInputContext(requiredInputContext);
+    record.setNormalizedResults(normalizedResults);
+
     // TODO: put "analyzers" into the pipeline
     // TODO: Use "TransformRecord" to pass information around instead of
     // multiple params
@@ -465,30 +437,27 @@ public class CoordinatorServiceJpa extends ContentServiceJpa
       // Evidence from this provider
       final Map<ScoredDataContext, Float> providerEvidenceMap = new HashMap<>();
       // normalize input
-      for (final ScoredResult normalizedInput : normalizedResults) {
-        // identify normalized input
-        for (final ScoredDataContext identifiedResult : provider
-            .identify(normalizedInput.getValue(), requiredInputContext)) {
+      // identify normalized input
+      for (final ScoredDataContext identifiedResult : provider
+          .identify(record)) {
 
-          if (identifiedResult != null) {
-            // Compute the score for this piece of evidence
-            // Weight by provider quality
-            // Weight by normalized input score
-            final float score = threshold.weightResult(
-                identifiedResult.getScore(), normalizedInput.getScore(),
-                provider.getQuality(), provider.getLogBaseValue());
+        if (identifiedResult != null) {
+          // Compute the score for this piece of evidence
+          // Weight by provider quality
+          // Weight by normalized input score
+          final float score =
+              threshold.weightResult(identifiedResult.getScore(),
+                  provider.getQuality(), provider.getLogBaseValue());
 
-            // Put in providerEvidenceMap if we don't have an entry yet
-            // or this one has a higher score.
-            Logger.getLogger(getClass())
-                .debug("  evidence = " + provider.getName() + ", "
-                    + normalizedInput.getValue() + " = " + score + ", "
-                    + identifiedResult);
+          // Put in providerEvidenceMap if we don't have an entry yet
+          // or this one has a higher score.
+          Logger.getLogger(getClass())
+              .debug("  evidence = " + provider.getName() + ", " + ", " + score
+                  + ", " + identifiedResult);
 
-            if (!providerEvidenceMap.containsKey(identifiedResult)
-                || providerEvidenceMap.get(identifiedResult) < score) {
-              providerEvidenceMap.put(identifiedResult, score);
-            }
+          if (!providerEvidenceMap.containsKey(identifiedResult)
+              || providerEvidenceMap.get(identifiedResult) < score) {
+            providerEvidenceMap.put(identifiedResult, score);
           }
         }
 
@@ -508,6 +477,7 @@ public class CoordinatorServiceJpa extends ContentServiceJpa
 
   /* see superclass */
   @Override
+  // TODO: consider returning TransformRecord
   public List<ScoredResult> process(String inputStr, DataContext inputContext,
     DataContext requiredOutputContext) throws Exception {
     Logger.getLogger(getClass()).debug("Process - " + inputStr + ", "
@@ -548,6 +518,12 @@ public class CoordinatorServiceJpa extends ContentServiceJpa
     List<ScoredResult> normalizedResults =
         normalize(inputStr, inputContext, false);
 
+    final TransformRecord record = new TransformRecordJpa();
+    record.setInputString(inputStr);
+    record.setInputContext(inputContext);
+    record.setNormalizedResults(normalizedResults);
+    record.setOutputContext(requiredOutputContext);
+
     // TODO: put "analyzers" into the pipeline
     // TODO: Use "TransformRecord" to pass information around instead of
     // multiple params
@@ -565,46 +541,47 @@ public class CoordinatorServiceJpa extends ContentServiceJpa
         // for each supported converter
         for (final ConverterHandler converter : converterMap
             .get(outputContext)) {
-          // for each normalized result
-          for (final ScoredResult normalizedInputStr : normalizedResults) {
-            List<ScoredResult> processedResults = provider.process(
-                normalizedInputStr.getValue(), inputContext, outputContext);
-            if (processedResults != null) {
-              processedResultsFound = true;
 
-              // Obtain the processed results
-              for (final ScoredResult result : processedResults) {
+          // TODO: consider calling preCheck/Accepts - make this a
+          // ProviderHandler method
+          // We may also need a "getPreCheckValue(inputString)" - this
+          // is what gets passed to the preCheck.
 
-                // Obtain the final product
-                final DataContextTuple tuple =
-                    converter.convert(result.getValue(), outputContext,
-                        requiredOutputContext, inputStr, inputContext);
+          List<ScoredResult> processedResults = provider.process(record);
 
-                if (tuple != null) {
-                  // Compute the score for this piece of evidence
-                  // Weight by provider quality
-                  // Weight by normalized input score
-                  // TODO: this weighting algorithm can be abstracted
-                  float score = threshold.weightResult(result.getScore(),
-                      normalizedInputStr.getScore(), provider.getQuality(),
-                      provider.getLogBaseValue());
+          // TODO: consider calling postCheck/Accepts - make this a
+          // ProviderHandler method
 
-                  if (converter.isValidModel(inputStr, tuple.getData(),
-                      score)) {
-                    // Put in providerEvidenceMap if we don't have an entry yet
-                    // or this one has a higher score.
-                    Logger.getLogger(getClass()).debug(
-                        "  evidence = " + score + ", " + tuple.getData());
+          if (processedResults != null) {
+            processedResultsFound = true;
 
-                    if (!providerEvidenceMap.containsKey(tuple.getData())
-                        || providerEvidenceMap.get(tuple.getData()) < score) {
-                      providerEvidenceMap.put(tuple.getData(), score);
-                    }
-                  }
+            // Obtain the processed results
+            for (final ScoredResult result : processedResults) {
+
+              // Obtain the final product
+              final DataContextTuple tuple =
+                  converter.convert(result.getValue(), outputContext,
+                      requiredOutputContext, inputStr, inputContext);
+
+              if (tuple != null) {
+                // Compute the score for this piece of evidence
+                // Weight by provider quality
+                // Weight by normalized input score
+                float score = threshold.weightResult(result.getScore(),
+                    provider.getQuality(), provider.getLogBaseValue());
+
+                // Put in providerEvidenceMap if we don't have an entry yet
+                // or this one has a higher score.
+                Logger.getLogger(getClass())
+                    .debug("  evidence = " + score + ", " + tuple.getData());
+
+                if (!providerEvidenceMap.containsKey(tuple.getData())
+                    || providerEvidenceMap.get(tuple.getData()) < score) {
+                  providerEvidenceMap.put(tuple.getData(), score);
                 }
               }
-            } // end process
-          } // end normalized results
+            }
+          } // end process
         } // end converter map
       } // end intermediate output context
 
@@ -628,6 +605,7 @@ public class CoordinatorServiceJpa extends ContentServiceJpa
       Logger.getLogger(getClass())
           .debug("  final evidence = " + aggregatedResults);
 
+      record.setOutputs(aggregatedResults);
       return aggregatedResults;
     } else {
       if (isAnalysisRun) {
@@ -917,6 +895,28 @@ public class CoordinatorServiceJpa extends ContentServiceJpa
     return new ArrayList<TypeKeyValue>(searchHandler.getQueryResults(null, null,
         Branch.ROOT, query, null, TypeKeyValueJpa.class, TypeKeyValueJpa.class,
         null, totalCt, getEntityManager()));
+  }
+
+  @Override
+  public void closeHandlers() throws Exception {
+
+    // Close handlers that may have resources open (e.g. for analysis)
+    for (final NormalizerHandler handler : normalizers.values()) {
+      handler.close();
+    }
+
+    for (final AnalyzerHandler handler : analyzers.values()) {
+      handler.close();
+    }
+
+    for (final ProviderHandler handler : providers.values()) {
+      handler.close();
+    }
+
+    for (final ConverterHandler handler : converters.values()) {
+      handler.close();
+    }
+
   }
 
 }

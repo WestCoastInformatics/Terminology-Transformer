@@ -3,26 +3,52 @@
  */
 package com.wci.tt.jpa.helpers;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.TableGenerator;
 import javax.xml.bind.annotation.XmlRootElement;
+
+import org.hibernate.search.annotations.Analyze;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.FieldBridge;
+import org.hibernate.search.annotations.Index;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.Store;
+import org.hibernate.search.bridge.builtin.FloatBridge;
+import org.hibernate.search.bridge.builtin.LongBridge;
 
 import com.wci.tt.helpers.ScoredResult;
 
 /**
  * JPA enabled scored implementation of {@link ScoredResult}.
  */
+@Entity
+@Table(name = "scored_results")
+// @Audited - no changing here
+@Indexed
 @XmlRootElement(name = "scoredResult")
 public class ScoredResultJpa implements ScoredResult, Comparable<ScoredResult> {
 
   /** The id. */
+  @TableGenerator(name = "EntityIdGenTransformer", table = "table_generator_transformer", pkColumnValue = "Entity")
+  @Id
+  @GeneratedValue(strategy = GenerationType.TABLE, generator = "EntityIdGenTransformer")
   private Long id;
 
   /** The score. */
+  @Column(nullable = false)
   private float score = 0;
 
   /** The value. */
+  @Column(nullable = false)
   private String value;
 
   /** The obsolete. */
+  @Column(nullable = false)
   private boolean obsolete = false;
 
   /**
@@ -56,6 +82,8 @@ public class ScoredResultJpa implements ScoredResult, Comparable<ScoredResult> {
   }
 
   /* see superclass */
+  @FieldBridge(impl = LongBridge.class)
+  @Field(index = Index.YES, analyze = Analyze.NO, store = Store.NO)
   @Override
   public Long getId() {
     return id;
@@ -68,6 +96,8 @@ public class ScoredResultJpa implements ScoredResult, Comparable<ScoredResult> {
   }
 
   /* see superclass */
+  @FieldBridge(impl = FloatBridge.class)
+  @Field(index = Index.YES, analyze = Analyze.NO, store = Store.NO)
   @Override
   public float getScore() {
     return score;
@@ -80,6 +110,7 @@ public class ScoredResultJpa implements ScoredResult, Comparable<ScoredResult> {
   }
 
   /* see superclass */
+  @Field(index = Index.YES, analyze = Analyze.NO, store = Store.NO)
   @Override
   public String getValue() {
     return value;
