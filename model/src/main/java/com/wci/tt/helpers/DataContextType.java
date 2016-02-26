@@ -13,20 +13,19 @@ public enum DataContextType {
 
   /** The code. */
   CODE,
-  
+
   /** The info model. */
   INFO_MODEL,
-  
+
   /** The name. */
   NAME,
-  
+
   /** The text. */
   TEXT,
-  
-  /**  The acronym. */
-  // TODO: formalize this as a mechanism for normalizer feedback
+
+  /** The acronym. */
   ACRONYM,
-  
-  /**  The pattern. */
+
+  /** The pattern. */
   PATTERN;
 }

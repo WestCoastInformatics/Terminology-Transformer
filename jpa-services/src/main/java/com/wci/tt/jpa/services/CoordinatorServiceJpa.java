@@ -425,10 +425,6 @@ public class CoordinatorServiceJpa extends ContentServiceJpa
     record.setInputContext(requiredInputContext);
     record.setNormalizedResults(normalizedResults);
 
-    // TODO: put "analyzers" into the pipeline
-    // TODO: Use "TransformRecord" to pass information around instead of
-    // multiple params
-
     // STEP 3: Call identify per each provider's accepted data contexts on
     // data context's associated normalized results
     final Map<ProviderHandler, List<ScoredDataContext>> allEvidenceMap =
@@ -477,7 +473,6 @@ public class CoordinatorServiceJpa extends ContentServiceJpa
 
   /* see superclass */
   @Override
-  // TODO: consider returning TransformRecord
   public List<ScoredResult> process(String inputStr, DataContext inputContext,
     DataContext requiredOutputContext) throws Exception {
     Logger.getLogger(getClass()).debug("Process - " + inputStr + ", "
@@ -523,10 +518,6 @@ public class CoordinatorServiceJpa extends ContentServiceJpa
     record.setInputContext(inputContext);
     record.setNormalizedResults(normalizedResults);
     record.setOutputContext(requiredOutputContext);
-
-    // TODO: put "analyzers" into the pipeline
-    // TODO: Use "TransformRecord" to pass information around instead of
-    // multiple params
 
     // Step 4: Process and collate the results
     final Map<ProviderHandler, List<ScoredResult>> allEvidenceMap =

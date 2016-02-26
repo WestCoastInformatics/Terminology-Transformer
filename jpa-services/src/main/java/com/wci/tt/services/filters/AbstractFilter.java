@@ -127,10 +127,6 @@ public abstract class AbstractFilter {
    * Checks whether the input string is filtered for the specified type. If so,
    * adds a filtered result and returns true. Otherwise it returns false.
    *
-   // TODO: we need a way to check the entire string, or check for a
-   // word in lowercase, or check for a word case match
-   // the actual implementation underlying this decides which method
-   // to use and then must call addFilteredResult
    * @param type the type
    * @param inputStr the input str
    * @return true, if successful

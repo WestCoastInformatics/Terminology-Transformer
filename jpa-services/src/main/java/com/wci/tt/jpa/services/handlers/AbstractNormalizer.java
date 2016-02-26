@@ -51,13 +51,7 @@ public abstract class AbstractNormalizer implements NormalizerHandler {
     }
     CoordinatorService service = new CoordinatorServiceJpa();
     try {
-      // TODO: how do we know it's an acronym?
-      // or a pattern?
-      // Shoudl we use data context for this as well?
-      // e.g. type-ACRONYM,.
-      // do we need a separate accepts methods for feedback vs. for input?
-      // or should normalize always support the feeback type (e.g. exactly as
-      // written)?
+      // n/a
     } catch (Exception e) {
       throw e;
     } finally {
@@ -75,8 +69,7 @@ public abstract class AbstractNormalizer implements NormalizerHandler {
     }
     CoordinatorService service = new CoordinatorServiceJpa();
     try {
-      // TODO: see "add feedback".
-      // This would remove whatever the corresponding add operation added
+      // n/a
     } catch (Exception e) {
       throw e;
     } finally {

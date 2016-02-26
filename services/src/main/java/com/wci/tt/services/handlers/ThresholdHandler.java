@@ -27,7 +27,6 @@ public interface ThresholdHandler extends Configurable {
    * @param providerQuality the provider quality
    * @param logBaseValue the log base value
    * @return the float
-   * // TODO: log base value here is weird because providers have their own scale
    */
   public float weightResult(float rawScore, float providerQuality,
     float logBaseValue);

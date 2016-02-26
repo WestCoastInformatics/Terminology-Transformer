@@ -16,7 +16,6 @@ import com.wci.tt.jpa.SourceDataJpa;
 import com.wci.umls.server.helpers.PfsParameter;
 import com.wci.umls.server.helpers.StringList;
 
-// TODO: Auto-generated Javadoc
 /**
  * Represents a security available via a REST service.
  */

@@ -88,7 +88,7 @@ public interface TransformRecord extends HasId, HasLastModified {
   public void setOutputContext(DataContext outputContext);
 
   /**
-   * Returns the characteristics. TODO: needs example
+   * Returns the characteristics.
    *
    * @return the characteristics
    */
@@ -102,7 +102,7 @@ public interface TransformRecord extends HasId, HasLastModified {
   public void setCharacteristics(Map<String, String> characteristics);
 
   /**
-   * Returns the statistics. TODO: needs example
+   * Returns the statistics.
    *
    * @return the statistics
    */
