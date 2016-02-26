@@ -74,6 +74,10 @@ public class DefaultThresholdHandler implements ThresholdHandler {
     // Weight all parts (for now)
     final float score = rawScore * normalizedInputScore * providerQuality;
 
+    if (logBaseValue <= 0) {
+      return score;
+    }
+
     // Get the log value and ensure it is b/w 0 & 1
     return (float) Math.max(
         Math.min(Math.log(score * 100) / Math.log(logBaseValue * 100), 1f), 0);
