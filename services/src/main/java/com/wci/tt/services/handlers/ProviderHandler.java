@@ -112,4 +112,25 @@ public interface ProviderHandler extends Configurable {
    */
   public void close() throws Exception;
 
+  /**
+   * Indicates whether or not pre check valid is the case based on Provider
+   * defined pre-processing rules.
+   *
+   * @param record the record
+   * @return <code>true</code> if so, <code>false</code> otherwise
+   * @throws Exception the exception
+   */
+  public boolean isPreCheckValid(TransformRecord record) throws Exception;
+
+  /**
+   * Filter results after processing based on Provider defined post-processing
+   * rules.
+   *
+   * @param processedResults the processed results
+   * @param record the record
+   * @return the list
+   * @throws Exception the exception
+   */
+  public List<ScoredResult> filterResults(List<ScoredResult> processedResults,
+    TransformRecord record) throws Exception;
 }

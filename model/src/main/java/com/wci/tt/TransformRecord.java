@@ -88,6 +88,20 @@ public interface TransformRecord extends HasId, HasLastModified {
   public void setOutputContext(DataContext outputContext);
 
   /**
+   * Returns the provider output context.
+   *
+   * @return the provider output context
+   */
+  public DataContext getProviderOutputContext();
+
+  /**
+   * Sets the provider output context.
+   *
+   * @param outputContext the output context
+   */
+  public void setProviderOutputContext(DataContext outputContext);
+
+  /**
    * Returns the characteristics.
    *
    * @return the characteristics

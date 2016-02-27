@@ -84,10 +84,10 @@ public class DefaultProvider extends AbstractAcceptsHandler
 
     final String inputString = record.getInputString();
     final DataContext inputContext = record.getInputContext();
-    final DataContext outputContext = record.getOutputContext();
+    final DataContext providerOutputContext = record.getProviderOutputContext();
 
     // Validate input/output context
-    validate(inputContext, outputContext);
+    validate(inputContext, providerOutputContext);
 
     // Simply return data passed in for this "naive" case. As such, the score is
     // set to '1'.
@@ -95,7 +95,7 @@ public class DefaultProvider extends AbstractAcceptsHandler
 
     // Ensure that input is valid.
     if (inputString != null && !inputString.isEmpty() && inputContext != null
-        && outputContext != null) {
+        && providerOutputContext != null) {
       final ScoredResult result = new ScoredResultJpa();
       result.setValue(inputString);
       result.setScore(1);
@@ -135,5 +135,20 @@ public class DefaultProvider extends AbstractAcceptsHandler
   @Override
   public void close() throws Exception {
     // n/a - nothing opened
+  }
+
+  /* see superclass */
+  @Override
+  public boolean isPreCheckValid(TransformRecord record) {
+    // Initial setup until specific rules defined
+    return true;
+  }
+
+  /* see superclass */
+  @Override
+  public List<ScoredResult> filterResults(List<ScoredResult> processedResults,
+    TransformRecord record) {
+    // Initial setup until specific rules defined
+    return processedResults;
   }
 }

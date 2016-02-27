@@ -24,6 +24,7 @@ import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -104,6 +105,10 @@ public class TransformRecordJpa implements TransformRecord {
   @IndexedEmbedded
   private DataContext outputContext = null;
 
+  /** The non-persisted provider output context. */
+  @Transient
+  private DataContext providerOutputContext = null;
+
   /** The characteristics. */
   @ElementCollection(fetch = FetchType.EAGER)
   @Column(nullable = true)
@@ -136,6 +141,7 @@ public class TransformRecordJpa implements TransformRecord {
     outputs = new ArrayList<>(record.getOutputs());
     inputContext = record.getInputContext();
     outputContext = record.getOutputContext();
+    providerOutputContext = record.getProviderOutputContext();
     characteristics = new HashMap<>(record.getCharacteristics());
     statistics = new HashMap<>(record.getStatistics());
   }
@@ -265,6 +271,18 @@ public class TransformRecordJpa implements TransformRecord {
   }
 
   /* see superclass */
+  @Override
+  public DataContext getProviderOutputContext() {
+    return providerOutputContext;
+  }
+
+  /* see superclass */
+  @Override
+  public void setProviderOutputContext(DataContext outputContext) {
+    this.providerOutputContext = outputContext;
+  }
+
+  /* see superclass */
   // No indexing of characteristics currently
   @Override
   public Map<String, String> getCharacteristics() {
@@ -296,6 +314,7 @@ public class TransformRecordJpa implements TransformRecord {
     this.statistics = statistics;
   }
 
+  /* see superclass */
   @Override
   public String toString() {
     return "TransformRecordJpa [id=" + id + ", timestamp=" + timestamp
@@ -303,10 +322,12 @@ public class TransformRecordJpa implements TransformRecord {
         + lastModifiedBy + ", inputString=" + inputString + ", outputs="
         + outputs + ", normalizedResults=" + normalizedResults
         + ", inputContext=" + inputContext + ", outputContext=" + outputContext
+        + ", providerOutputContext=" + providerOutputContext
         + ", characteristics=" + characteristics + ", statistics=" + statistics
         + "]";
   }
 
+  /* see superclass */
   @Override
   public int hashCode() {
     final int prime = 31;
@@ -321,12 +342,15 @@ public class TransformRecordJpa implements TransformRecord {
         + ((normalizedResults == null) ? 0 : normalizedResults.hashCode());
     result = prime * result
         + ((outputContext == null) ? 0 : outputContext.hashCode());
+    result = prime * result + ((providerOutputContext == null) ? 0
+        : providerOutputContext.hashCode());
     result = prime * result + ((outputs == null) ? 0 : outputs.hashCode());
     result =
         prime * result + ((statistics == null) ? 0 : statistics.hashCode());
     return result;
   }
 
+  /* see superclass */
   @Override
   public boolean equals(Object obj) {
     if (this == obj)
@@ -360,6 +384,11 @@ public class TransformRecordJpa implements TransformRecord {
       if (other.outputContext != null)
         return false;
     } else if (!outputContext.equals(other.outputContext))
+      return false;
+    if (providerOutputContext == null) {
+      if (other.providerOutputContext != null)
+        return false;
+    } else if (!providerOutputContext.equals(other.providerOutputContext))
       return false;
     if (outputs == null) {
       if (other.outputs != null)
