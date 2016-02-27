@@ -5,6 +5,7 @@ package com.wci.tt.jpa.services.handlers;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import org.apache.log4j.Logger;
@@ -240,9 +241,9 @@ public class HumanFeedbackProvider extends AbstractAcceptsHandler
 
   /* see superclass */
   @Override
-  public List<ScoredResult> filterResults(List<ScoredResult> processedResults,
-    TransformRecord record) {
+  public Map<String, Float> filterResults(
+    Map<String, Float> providerEvidenceMap, TransformRecord record) {
     // Initial setup until specific rules defined
-    return processedResults;
+    return providerEvidenceMap;
   }
 }

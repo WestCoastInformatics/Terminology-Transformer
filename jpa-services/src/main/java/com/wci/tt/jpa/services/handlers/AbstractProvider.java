@@ -5,6 +5,7 @@ package com.wci.tt.jpa.services.handlers;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 
@@ -70,17 +71,18 @@ public abstract class AbstractProvider extends AbstractAcceptsHandler
 
   /* see superclass */
   @Override
-  public List<ScoredResult> filterResults(List<ScoredResult> processedResults,
-    TransformRecord record) throws Exception {
+  public Map<String, Float> filterResults(
+    Map<String, Float> providerEvidenceMap, TransformRecord record)
+      throws Exception {
     if (postProcessFilter.postCheckAccepts(record.getOutputContext())) {
       return postProcessFilter.postCheck(record.getInputString(),
-          record.getNormalizedResults(), processedResults);
+          record.getNormalizedResults(), providerEvidenceMap);
       /*
        * if (!ConfigUtility.isAnalysisMode()) { // TODO: Write out results }
        */
     }
 
-    return processedResults;
+    return providerEvidenceMap;
   }
 
   /**

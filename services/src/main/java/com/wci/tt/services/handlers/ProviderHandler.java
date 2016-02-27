@@ -4,6 +4,7 @@
 package com.wci.tt.services.handlers;
 
 import java.util.List;
+import java.util.Map;
 
 import com.wci.tt.DataContext;
 import com.wci.tt.TransformRecord;
@@ -123,14 +124,15 @@ public interface ProviderHandler extends Configurable {
   public boolean isPreCheckValid(TransformRecord record) throws Exception;
 
   /**
-   * Filter results after processing based on Provider defined post-processing
-   * rules.
+   * Filter results after processing based on converted results based on the
+   * provider's rules.
    *
-   * @param processedResults the processed results
+   * @param providerEvidenceMap the provider evidence map
    * @param record the record
    * @return the list
    * @throws Exception the exception
    */
-  public List<ScoredResult> filterResults(List<ScoredResult> processedResults,
-    TransformRecord record) throws Exception;
+  public Map<String, Float> filterResults(
+    Map<String, Float> providerEvidenceMap, TransformRecord record)
+      throws Exception;
 }

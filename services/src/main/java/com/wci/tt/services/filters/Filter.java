@@ -6,6 +6,7 @@ package com.wci.tt.services.filters;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import com.wci.tt.DataContext;
@@ -71,16 +72,16 @@ public interface Filter extends Configurable {
    *
    * @param inputString the input string
    * @param normalizedTerms the normalized terms
-   * @param results the results
+   * @param providerEvidenceMap the provider evidence map
    * @return true, if successful
    * @throws Exception the exception
    */
-  public List<ScoredResult> postCheck(String inputString,
-    List<ScoredResult> normalizedTerms, List<ScoredResult> results)
+  public Map<String, Float> postCheck(String inputString,
+    List<ScoredResult> normalizedTerms, Map<String, Float> providerEvidenceMap)
       throws Exception;
 
   /**
-   * Opportunity to close any open resources
+   * Opportunity to close any open resources.
    *
    * @throws Exception the exception
    */
