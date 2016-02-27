@@ -237,10 +237,6 @@ public class TransformRecordJpa implements TransformRecord {
   }
 
   /* see superclass */
-  @Fields({
-      @Field(name = "outputString", index = Index.YES, store = Store.NO, analyze = Analyze.YES, analyzer = @Analyzer(definition = "noStopWord") ),
-      @Field(name = "outputStringSort", index = Index.YES, analyze = Analyze.NO, store = Store.NO)
-  })
   @Override
   public List<ScoredResult> getOutputs() {
     if (outputs == null) {
