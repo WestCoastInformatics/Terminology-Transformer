@@ -4,8 +4,11 @@
 package com.wci.tt.test.jpa;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.util.List;
 
@@ -61,11 +64,12 @@ public class DefaultProviderTest extends JpaSupport {
     Logger.getLogger(getClass()).info("TEST " + name.getMethodName());
 
     ProviderHandler handler = new DefaultProvider();
-    List<DataContext> results = handler.accepts(null);
-
-    Logger.getLogger(getClass()).info("  results = " + results);
-
-    assertEquals(1, results.size());
+    try {
+      List<DataContext> results = handler.accepts(null);
+      fail("Exception expected.");
+    } catch (Exception e) {
+      // n/a, expected result
+    }
   }
 
   /**
@@ -82,7 +86,7 @@ public class DefaultProviderTest extends JpaSupport {
 
     Logger.getLogger(getClass()).info("  results = " + results);
 
-    assertEquals(1, results.size());
+    assertEquals(0, results.size());
   }
 
   /**
@@ -103,7 +107,7 @@ public class DefaultProviderTest extends JpaSupport {
     inputContext.setSpecialty("Test Input Specialty");
     inputContext.setTerminology("Test Input Terminology");
     inputContext.setVersion("Test Input Version");
-    inputContext.setType(DataContextType.CODE);
+    inputContext.setType(DataContextType.NAME);
 
     List<DataContext> results = handler.accepts(inputContext);
 
@@ -113,7 +117,15 @@ public class DefaultProviderTest extends JpaSupport {
     assertEquals(1, results.size());
 
     DataContext result = results.get(0);
-    assertEquals(inputContext, result);
+    assertEquals(inputContext.getType(), result.getType());
+    assertFalse(inputContext.getCustomer().equals(result.getCustomer()));
+    assertFalse(
+        inputContext.getInfoModelClass().equals(result.getInfoModelClass()));
+    assertFalse(
+        inputContext.getSemanticType().equals(result.getSemanticType()));
+    assertFalse(inputContext.getSpecialty().equals(result.getSpecialty()));
+    assertFalse(inputContext.getTerminology().equals(result.getTerminology()));
+    assertFalse(inputContext.getVersion().equals(result.getVersion()));
   }
 
   /**
@@ -210,7 +222,7 @@ public class DefaultProviderTest extends JpaSupport {
 
     Logger.getLogger(getClass()).info("  results = " + results);
 
-    assertEquals(1, results.size());
+    assertNull(results);
   }
 
   /**
@@ -253,7 +265,7 @@ public class DefaultProviderTest extends JpaSupport {
     inputContext.setSpecialty("Test Input Specialty");
     inputContext.setTerminology("Test Input Terminology");
     inputContext.setVersion("Test Input Version");
-    inputContext.setType(DataContextType.CODE);
+    inputContext.setType(DataContextType.NAME);
 
     final TransformRecord record = new TransformRecordJpa();
     record.setInputContext(inputContext);
@@ -334,7 +346,7 @@ public class DefaultProviderTest extends JpaSupport {
     inputContext.setSpecialty("Test Input Specialty");
     inputContext.setTerminology("Test Input Terminology");
     inputContext.setVersion("Test Input Version");
-    inputContext.setType(DataContextType.CODE);
+    inputContext.setType(DataContextType.NAME);
 
     DataContextJpa outputContext = new DataContextJpa();
     outputContext.setCustomer("Test Output Customer");
@@ -343,7 +355,7 @@ public class DefaultProviderTest extends JpaSupport {
     outputContext.setSpecialty("Test Output Specialty");
     outputContext.setTerminology("Test Output Terminology");
     outputContext.setVersion("Test Output Version");
-    outputContext.setType(DataContextType.CODE);
+    outputContext.setType(DataContextType.NAME);
 
     final TransformRecord record = new TransformRecordJpa();
     record.setInputContext(inputContext);
@@ -351,6 +363,16 @@ public class DefaultProviderTest extends JpaSupport {
     record.setInputString(inputString);
 
     List<ScoredResult> results = handler.process(record);
+
+    Logger.getLogger(getClass()).info("  results = " + results);
+
+    assertNotNull(results);
+    assertEquals(0, results.size());
+
+    record.setOutputContext(null);
+    record.setProviderOutputContext(outputContext);
+
+    results = handler.process(record);
 
     Logger.getLogger(getClass()).info("  results = " + results);
 
