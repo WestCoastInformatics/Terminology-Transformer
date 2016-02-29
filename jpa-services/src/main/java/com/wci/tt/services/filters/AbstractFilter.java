@@ -126,19 +126,38 @@ public abstract class AbstractFilter {
   /**
    * Checks whether the input string is filtered for the specified type. If so,
    * adds a filtered result and returns true. Otherwise it returns false.
+   * 
+   * Filters on: 1) Exact matches (to handle blacklists) 2) Word-based
+   * instances(to handle specified keywords or types)
    *
    * @param type the type
    * @param inputStr the input str
    * @return true, if successful
-   * @throws Exception
+   * @throws Exception the exception
    */
   protected boolean checkFilterType(String type, String inputStr)
     throws Exception {
-    if (configMap.get(type).containsKey(inputStr)) {
-      addFilteredResult(configMap.get(type).get(inputStr), inputStr);
-      return true;
+    boolean filterRequired = false;
+
+    if (configMap.get(type).containsKey(inputStr.toLowerCase())) {
+      // Exact match found
+      filterRequired = true;
+    } else {
+      // Look for keyword matches
+      for (String item : configMap.get(type).keySet()) {
+        if (inputStr.toLowerCase().contains(item.toLowerCase())) {
+          filterRequired = true;
+          break;
+        }
+      }
     }
-    return false;
+
+    if (filterRequired) {
+      // Must be filtered, add to set of filtered results
+      addFilteredResult(configMap.get(type).get(inputStr), inputStr);
+    }
+
+    return filterRequired;
   }
 
   /**
