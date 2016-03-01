@@ -543,7 +543,7 @@ public class CoordinatorServiceJpa extends ContentServiceJpa
             // Get the initial results from the provider
             List<ScoredResult> processedResults = provider.process(record);
 
-            if (processedResults != null) {
+            if (processedResults != null && !processedResults.isEmpty()) {
               processedResultsFound = true;
 
               // Obtain the processed results
