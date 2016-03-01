@@ -58,14 +58,16 @@ public abstract class AbstractProvider extends AbstractAcceptsHandler
   @Override
   public boolean isPreCheckValid(TransformRecord record) throws Exception {
     // Filter precheck on the term name
-    if (!preProcessFilter.preCheckAccepts(record.getInputContext())
-        || !preProcessFilter.preCheck(record.getInputString())) {
-      /*
-       * if (!ConfigUtility.isAnalysisMode()) { // TODO: Write out results }
-       */
-      return false;
+    if (preProcessFilter != null) {
+      if (!preProcessFilter.preCheckAccepts(record.getInputContext())
+          || !preProcessFilter.preCheck(record.getInputString())) {
+        /*
+         * if (!ConfigUtility.isAnalysisMode()) { // TODO: Write out results }
+         */
+        return false;
+      }
     }
-
+    
     return true;
   }
 
@@ -74,14 +76,16 @@ public abstract class AbstractProvider extends AbstractAcceptsHandler
   public Map<String, Float> filterResults(
     Map<String, Float> providerEvidenceMap, TransformRecord record)
       throws Exception {
-    if (postProcessFilter.postCheckAccepts(record.getOutputContext())) {
-      return postProcessFilter.postCheck(record.getInputString(),
-          record.getNormalizedResults(), providerEvidenceMap);
-      /*
-       * if (!ConfigUtility.isAnalysisMode()) { // TODO: Write out results }
-       */
+    if (postProcessFilter != null) {
+      if (postProcessFilter.postCheckAccepts(record.getOutputContext())) {
+        return postProcessFilter.postCheck(record.getInputString(),
+            record.getNormalizedResults(), providerEvidenceMap);
+        /*
+         * if (!ConfigUtility.isAnalysisMode()) { // TODO: Write out results }
+         */
+      }
     }
-
+    
     return providerEvidenceMap;
   }
 
