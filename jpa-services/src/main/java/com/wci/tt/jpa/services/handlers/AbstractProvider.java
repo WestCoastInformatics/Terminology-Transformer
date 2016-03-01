@@ -67,7 +67,7 @@ public abstract class AbstractProvider extends AbstractAcceptsHandler
         return false;
       }
     }
-    
+
     return true;
   }
 
@@ -76,7 +76,7 @@ public abstract class AbstractProvider extends AbstractAcceptsHandler
   public Map<String, Float> filterResults(
     Map<String, Float> providerEvidenceMap, TransformRecord record)
       throws Exception {
-    if (postProcessFilter != null) {
+    if (postProcessFilter != null && !providerEvidenceMap.isEmpty()) {
       if (postProcessFilter.postCheckAccepts(record.getOutputContext())) {
         return postProcessFilter.postCheck(record.getInputString(),
             record.getNormalizedResults(), providerEvidenceMap);
@@ -85,7 +85,7 @@ public abstract class AbstractProvider extends AbstractAcceptsHandler
          */
       }
     }
-    
+
     return providerEvidenceMap;
   }
 
