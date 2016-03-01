@@ -215,6 +215,7 @@ public class TransformRecordJpa implements TransformRecord {
   }
 
   /* see superclass */
+  @XmlElement(type = ScoredResultJpa.class)
   @Override
   public List<ScoredResult> getNormalizedResults() {
     if (normalizedResults == null) {
@@ -243,6 +244,7 @@ public class TransformRecordJpa implements TransformRecord {
   }
 
   /* see superclass */
+  @XmlElement(type = ScoredResultJpa.class)
   @Override
   public List<ScoredResult> getOutputs() {
     if (outputs == null) {
@@ -271,6 +273,7 @@ public class TransformRecordJpa implements TransformRecord {
   }
 
   /* see superclass */
+  @XmlElement(type = DataContextJpa.class)
   @Override
   public DataContext getProviderOutputContext() {
     return providerOutputContext;
