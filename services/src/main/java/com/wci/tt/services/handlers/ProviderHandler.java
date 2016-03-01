@@ -80,8 +80,10 @@ public interface ProviderHandler extends Configurable {
 
   /**
    * Produces list of scored (by probability) results of as specified by the
-   * output context for the (likely normalized) input string based on known
-   * input context. Returns an empty list if there are no processing results.
+   * output context for the all normalized strings based on known input context.
+   * Returns an empty list if there are no processing results.
+   * 
+   * Returns the highest total per normalized string.
    * 
    * Returns empty list for any DataContext for which accepts returns an empty
    * list.

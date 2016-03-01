@@ -4,6 +4,8 @@
 package com.wci.tt.jpa.services.handlers;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -147,7 +149,7 @@ public abstract class AbstractProvider extends AbstractAcceptsHandler
       return new ArrayList<>();
     }
 
-    Logger.getLogger(getClass()).debug("Process " + inputString);
+    Logger.getLogger(getClass()).debug("Process input term = " + inputString);
     Logger.getLogger(getClass()).debug("  inputContext = " + inputContext);
     Logger.getLogger(getClass())
         .debug("  providerOutputContext = " + providerOutputContext);
@@ -157,25 +159,44 @@ public abstract class AbstractProvider extends AbstractAcceptsHandler
         service.getSearchHandler(ConfigUtility.DEFAULT);
 
     try {
-      infoModel = getInfoModel(inputString);
+      Map<String, ScoredResult> allResults = new HashMap<>();
 
-      // Bail if the provider doesn't support this model
-      // e.g., skip messy cases
-      if (!isTermSupported(infoModel)) {
-        return new ArrayList<>();
-      }
+      for (ScoredResult normResult : record.getNormalizedResults()) {
+        infoModel = getInfoModel(normResult.getValue());
 
-      List<ScoredResult> results =
-          performSearch(inputString, searchHandler, service);
+        // Bail if the provider doesn't support this model
+        // e.g., skip messy cases
+        if (!isTermSupported(infoModel)) {
+          return new ArrayList<>();
+        }
 
-      /* Log Results */
-      Logger.getLogger(getClass()).info("  results = " + results.size());
-      for (final ScoredResult result : results) {
+        List<ScoredResult> results =
+            performSearch(normResult.getValue(), searchHandler, service);
+
+        /* Log Results */
         Logger.getLogger(getClass()).info(
-            "    concept = (" + result.getScore() + ") " + result.getValue());
+            "  results for " + normResult.getValue() + " = " + results.size());
+        for (final ScoredResult result : results) {
+          // Multiple process score by the normalized score to help identify top
+          // scores to return when there are more than one instance of a concept
+          // matching on different normalized strings
+          result.setScore(result.getScore() * normResult.getScore());
+
+          Logger.getLogger(getClass()).info(
+              "    concept = (" + result.getScore() + ") " + result.getValue());
+
+          if (!allResults.containsKey(result.getValue()) || (allResults
+              .get(result.getValue()).getScore() < result.getScore())) {
+            allResults.put(result.getValue(), result);
+          }
+        }
       }
 
-      return limitResults(results);
+      ArrayList<ScoredResult> finalResults =
+          new ArrayList<ScoredResult>(allResults.values());
+      Collections.sort(finalResults);
+
+      return limitResults(finalResults);
     } catch (Exception e) {
       throw e;
     } finally {
