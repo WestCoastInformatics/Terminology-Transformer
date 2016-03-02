@@ -65,9 +65,9 @@ public class TransformerSearchHandler implements SearchHandler {
       combinedQuery = fixedQuery;
     } else {
       if (literalField.contains("Sort")) {
-        String nameField = literalField.replace("Sort", "");
-        combinedQuery = fixedQuery + " OR " + nameField + ":\"" + fixedQuery
-            + "\"^10.0" + " OR " + literalField + ":" + escapedQuery + "^20.0";
+        //String nameField = literalField.replace("Sort", "");
+        combinedQuery =
+            fixedQuery + " OR " + literalField + ":" + escapedQuery + "^20.0";
         // combinedQuery =
         // "(" + fixedQuery + ") OR " + nameField + ":\"" + fixedQuery
         // + "\"^2.0 OR " + literalField + ":" + escapedQuery + "^4.0";
