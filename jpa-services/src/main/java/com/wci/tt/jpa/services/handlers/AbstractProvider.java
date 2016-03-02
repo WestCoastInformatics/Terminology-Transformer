@@ -198,17 +198,48 @@ public abstract class AbstractProvider extends AbstractAcceptsHandler
         }
       }
 
-      ArrayList<ScoredResult> finalResults =
-          new ArrayList<ScoredResult>(allResults.values());
-      Collections.sort(finalResults);
-
-      return limitResults(finalResults);
+      return produceFinalResults(allResults);
     } catch (Exception e) {
       throw e;
     } finally {
       service.close();
     }
 
+  }
+
+  /**
+   * <pre>
+   * Method to handle the finalization of the return ScoredResult(s):
+   * 1) Prints out the results of the combined process calls (per normalized string)
+   * 2) Executes the already existing limitResults() call
+   * 3) Prints out the final results returned to the Coordinator
+   * </pre>
+   *
+   * @param allResults the all results
+   * @return the list
+   * @throws Exception the exception
+   */
+  private List<ScoredResult> produceFinalResults(
+    Map<String, ScoredResult> allResults) throws Exception {
+    final ArrayList<ScoredResult> currentResults =
+        new ArrayList<ScoredResult>(allResults.values());
+    Collections.sort(currentResults);
+
+    Logger.getLogger(getClass()).info("Comined Results");
+    for (final ScoredResult result : currentResults) {
+      Logger.getLogger(getClass()).info(
+          "    concept = (" + result.getScore() + ") " + result.getValue());
+    }
+
+    final List<ScoredResult> finalResults = limitResults(currentResults);
+
+    Logger.getLogger(getClass()).info("Final Results");
+    for (final ScoredResult result : finalResults) {
+      Logger.getLogger(getClass()).info(
+          "    concept = (" + result.getScore() + ") " + result.getValue());
+    }
+
+    return finalResults;
   }
 
   /* see superclass */
