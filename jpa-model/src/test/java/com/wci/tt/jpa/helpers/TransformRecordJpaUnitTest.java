@@ -19,6 +19,7 @@ import org.junit.Test;
 
 import com.wci.tt.DataContext;
 import com.wci.tt.TransformRecord;
+import com.wci.tt.helpers.ScoredResult;
 import com.wci.tt.jpa.DataContextJpa;
 import com.wci.tt.jpa.TestSupport;
 import com.wci.tt.jpa.TransformRecordJpa;
@@ -45,10 +46,10 @@ public class TransformRecordJpaUnitTest extends TestSupport {
   private DataContextJpa dc2;
 
   /** The l1 test fixture. */
-  private List<String> l1;
+  private List<ScoredResult> l1;
 
   /** The l2 test fixture. */
-  private List<String> l2;
+  private List<ScoredResult> l2;
 
   /** The m1 test fixture. */
   private Map<String, String> m1;
@@ -77,10 +78,10 @@ public class TransformRecordJpaUnitTest extends TestSupport {
     dc1 = (DataContextJpa) tester.createObject(1);
     dc2 = (DataContextJpa) tester.createObject(2);
 
-    l1 = new ArrayList<String>();
-    l1.add("1");
-    l2 = new ArrayList<String>();
-    l2.add("2");
+    l1 = new ArrayList<ScoredResult>();
+    l1.add(new ScoredResultJpa("1", 1.0f));
+    l2 = new ArrayList<ScoredResult>();
+    l1.add(new ScoredResultJpa("2", 2.0f));
 
     m1 = new HashMap<>();
     m1.put("1", null);
@@ -112,8 +113,9 @@ public class TransformRecordJpaUnitTest extends TestSupport {
     tester.include("characteristics");
     tester.include("inputContext");
     tester.include("inputString");
-    tester.include("normalizedRecords");
+    tester.include("normalizedResults");
     tester.include("outputContext");
+    tester.include("providerOutputContext");
     tester.include("outputs");
     tester.include("statistics");
 
@@ -195,8 +197,6 @@ public class TransformRecordJpaUnitTest extends TestSupport {
     // Test analyzed fields
     IndexedFieldTester tester = new IndexedFieldTester(object);
     tester.include("inputString");
-    tester.include("normalizedRecords");
-    tester.include("outputs");
     assertTrue(tester.testAnalyzedIndexedFields());
 
     // Test non analyzed fields
@@ -205,7 +205,6 @@ public class TransformRecordJpaUnitTest extends TestSupport {
     tester.include("lastModified");
     tester.include("lastModifiedBy");
     tester.include("inputStringSort");
-    tester.include("outputStringSort");
     assertTrue(tester.testNotAnalyzedIndexedFields());
 
   }
