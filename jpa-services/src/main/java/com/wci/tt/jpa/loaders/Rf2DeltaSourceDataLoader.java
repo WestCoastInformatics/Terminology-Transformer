@@ -51,7 +51,7 @@ public class Rf2DeltaSourceDataLoader implements SourceDataLoader {
    */
   @Override
   public String getName() {
-    return "Rf2 source data loader";
+    return "RF2 Delta Source Data Loader";
   }
 
   /**

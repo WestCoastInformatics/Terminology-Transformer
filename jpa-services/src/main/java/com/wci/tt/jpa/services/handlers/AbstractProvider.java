@@ -36,16 +36,16 @@ public abstract class AbstractProvider extends AbstractAcceptsHandler
     implements ProviderHandler {
 
   /** The pre process filter. */
-  protected Filter preProcessFilter = null;
+  private List<Filter> preProcessFilters = null;
 
   /** The post process filter. */
-  protected Filter postProcessFilter = null;
+  private List<Filter> postProcessFilters = null;
 
   /** The log base value. */
-  protected float LOG_BASE_VALUE = 0f;
+  private float LOG_BASE_VALUE = 0f;
 
   /** The info model. */
-  protected InfoModel<?> infoModel = null;;
+  private InfoModel<?> infoModel = null;;
 
   /**
    * Instantiates an empty {@link AbstractProvider}.
@@ -60,11 +60,12 @@ public abstract class AbstractProvider extends AbstractAcceptsHandler
   @Override
   public boolean isPreCheckValid(TransformRecord record) throws Exception {
     // Filter precheck on the term name
-    if (preProcessFilter != null) {
-      if (!preProcessFilter.preCheckAccepts(record.getInputContext())
-          || !preProcessFilter.preCheck(record.getInputString())) {
+    for (final Filter filter : getPreProcessFilters()) {
+      if (!filter.preCheckAccepts(record.getInputContext())
+          || !filter.preCheck(record.getInputString())) {
         /*
          * if (!ConfigUtility.isAnalysisMode()) { // TODO: Write out results }
+         * BAC: I think abstract filter already does this
          */
         return false;
       }
@@ -78,16 +79,17 @@ public abstract class AbstractProvider extends AbstractAcceptsHandler
   public Map<String, Float> filterResults(
     Map<String, Float> providerEvidenceMap, TransformRecord record)
       throws Exception {
-    if (postProcessFilter != null && !providerEvidenceMap.isEmpty()) {
-      if (postProcessFilter.postCheckAccepts(record.getOutputContext())) {
-        return postProcessFilter.postCheck(record.getInputString(),
-            record.getNormalizedResults(), providerEvidenceMap);
+    Map<String, Float> results = providerEvidenceMap;
+    for (final Filter filter : getPostProcessFilters()) {
+      if (filter.postCheckAccepts(record.getOutputContext())) {
+        results = filter.postCheck(record.getInputString(),
+            record.getNormalizedResults(), results);
         /*
          * if (!ConfigUtility.isAnalysisMode()) { // TODO: Write out results }
+         * BAC: I think abstract filter already does this
          */
       }
     }
-
     return providerEvidenceMap;
   }
 
@@ -98,7 +100,7 @@ public abstract class AbstractProvider extends AbstractAcceptsHandler
    * @return the info model
    * @throws Exception the exception
    */
-  protected abstract InfoModel<?> getInfoModel(String inputString)
+  public abstract InfoModel<?> getModelForString(String inputString)
     throws Exception;
 
   /**
@@ -112,11 +114,12 @@ public abstract class AbstractProvider extends AbstractAcceptsHandler
    * @return <code>true</code> if so, <code>false</code> otherwise
    * @throws Exception the exception
    */
-  protected abstract boolean isTermSupported(InfoModel<?> model)
-    throws Exception;
+  public abstract boolean isTermSupported(InfoModel<?> model) throws Exception;
 
   /**
-   * Perform actual provider-specific search.
+   * Perform actual provider-specific search. Can be used by providers that want
+   * to handle individual normalized terms, then limit overall results at the
+   * end. See the local process method.
    *
    * @param inputString the input string
    * @param handler the handler
@@ -124,18 +127,21 @@ public abstract class AbstractProvider extends AbstractAcceptsHandler
    * @return the list
    * @throws Exception the exception
    */
-  abstract protected List<ScoredResult> performSearch(String inputString,
+  public abstract List<ScoredResult> performSearch(String inputString,
     SearchHandler handler, ContentServiceJpa service) throws Exception;
 
   /**
-   * Limit results based on some notion of local quality.
+   * Limit results based on some notion of local quality. Default is to not
+   * limit results
    *
    * @param results the results
    * @return the list
    * @throws Exception the exception
    */
-  abstract protected List<ScoredResult> limitResults(List<ScoredResult> results)
-    throws Exception;
+  public List<ScoredResult> limitResults(List<ScoredResult> results)
+    throws Exception {
+    return results;
+  }
 
   /* see superclass */
   public List<ScoredResult> process(TransformRecord record) throws Exception {
@@ -162,7 +168,7 @@ public abstract class AbstractProvider extends AbstractAcceptsHandler
       Map<String, ScoredResult> allResults = new HashMap<>();
 
       for (ScoredResult normResult : record.getNormalizedResults()) {
-        infoModel = getInfoModel(normResult.getValue());
+        infoModel = getModelForString(normResult.getValue());
 
         // Bail if the provider doesn't support this model
         // e.g., skip messy cases
@@ -219,15 +225,98 @@ public abstract class AbstractProvider extends AbstractAcceptsHandler
     return LOG_BASE_VALUE;
   }
 
+  /**
+   * Sets the log base value.
+   *
+   * @param value the log base value
+   */
+  public void setLogBaseValue(float value) {
+    LOG_BASE_VALUE = value;
+  }
+
   /* see superclass */
   @Override
   public void close() throws Exception {
-    if (preProcessFilter != null) {
-      preProcessFilter.close();
+    for (final Filter filter : getPreProcessFilters()) {
+      filter.close();
     }
 
-    if (postProcessFilter != null) {
-      postProcessFilter.close();
+    for (final Filter filter : getPostProcessFilters()) {
+      filter.close();
     }
+  }
+
+  /**
+   * Returns the pre process filters.
+   *
+   * @return the pre process filters
+   */
+  public List<Filter> getPreProcessFilters() {
+    if (preProcessFilters == null) {
+      preProcessFilters = new ArrayList<>();
+    }
+    return preProcessFilters;
+  }
+
+  /**
+   * Sets the pre process filters.
+   *
+   * @param preProcessFilters the pre process filters
+   */
+  public void setPreProcessFilters(List<Filter> preProcessFilters) {
+    this.preProcessFilters = preProcessFilters;
+  }
+
+  /**
+   * Returns the post process filters.
+   *
+   * @return the post process filters
+   */
+  public List<Filter> getPostProcessFilters() {
+    if (postProcessFilters == null) {
+      postProcessFilters = new ArrayList<>();
+    }
+    return postProcessFilters;
+  }
+
+  /**
+   * Sets the post process filters.
+   *
+   * @param postProcessFilters the post process filters
+   */
+  public void setPostProcessFilters(List<Filter> postProcessFilters) {
+    this.postProcessFilters = postProcessFilters;
+  }
+
+  /**
+   * Returns the info model.
+   *
+   * @return the info model
+   */
+  public InfoModel<?> getInfoModel() {
+    return infoModel;
+  }
+
+  /**
+   * Sets the info model.
+   *
+   * @param infoModel the info model
+   */
+  public void setInfoModel(InfoModel<?> infoModel) {
+    this.infoModel = infoModel;
+  }
+
+  /* see superclass */
+  @Override
+  public void addFeedback(String inputString, DataContext context,
+    String feedbackString, DataContext outputContext) throws Exception {
+    // n/a
+  }
+
+  /* see superclass */
+  @Override
+  public void removeFeedback(String inputString, DataContext context,
+    DataContext outputContext) throws Exception {
+    // n/a
   }
 }

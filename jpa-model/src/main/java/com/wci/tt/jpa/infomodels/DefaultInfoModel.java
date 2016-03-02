@@ -48,7 +48,7 @@ public class DefaultInfoModel implements InfoModel<DefaultInfoModel> {
   /* see superclass */
   @Override
   public String getName() {
-    return "Default information model";
+    return "Default Information Model";
   }
 
   /**

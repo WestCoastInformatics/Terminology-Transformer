@@ -7,7 +7,6 @@ import java.io.File;
 import java.util.Date;
 import java.util.Properties;
 
-import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 
@@ -32,7 +31,7 @@ import com.wci.umls.server.services.handlers.ExceptionHandler;
  * @goal RRF-umls
  * @phase package
  */
-public class RrfSourceDataLoaderMojo extends AbstractMojo {
+public class RrfSourceDataLoaderMojo extends SourceDataMojo {
 
   /**
    * Name of terminology to be loaded.
@@ -131,7 +130,7 @@ public class RrfSourceDataLoaderMojo extends AbstractMojo {
 
       // Create and add the source data
       final SourceData sourceData = new SourceDataJpa();
-      sourceData.setName(terminology + " source data");
+      sourceData.setName(getName(terminology, version));
       sourceData.setDescription("Set of RRF files loaded from " + dir);
       sourceData.setLastModifiedBy("loader");
       sourceData.setLoader(loader.getName());

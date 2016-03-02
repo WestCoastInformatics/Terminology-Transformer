@@ -23,7 +23,7 @@ public class DefaultThresholdHandler implements ThresholdHandler {
   /* see superclass */
   @Override
   public String getName() {
-    return "Default threshold handler";
+    return "Default Threshold Handler";
   }
 
   /* see superclass */
@@ -68,6 +68,7 @@ public class DefaultThresholdHandler implements ThresholdHandler {
 
   /* see superclass */
   @Override
+  // TODO: consider moving this to provider
   public float weightResult(float rawScore, float providerQuality,
     float logBaseValue) {
 

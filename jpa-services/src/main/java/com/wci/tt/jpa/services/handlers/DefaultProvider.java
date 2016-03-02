@@ -51,7 +51,7 @@ public class DefaultProvider extends AbstractAcceptsHandler
   /* see superclass */
   @Override
   public String getName() {
-    return "Default Provider handler";
+    return "Default Provider Handler";
   }
 
   /* see superclass */

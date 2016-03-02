@@ -7,7 +7,6 @@ import java.io.File;
 import java.util.Date;
 import java.util.Properties;
 
-import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 
@@ -32,7 +31,7 @@ import com.wci.umls.server.services.handlers.ExceptionHandler;
  * @goal RF2-snapshot
  * @phase package
  */
-public class Rf2SourceDataLoaderMojo extends AbstractMojo {
+public class Rf2SourceDataLoaderMojo extends SourceDataMojo {
 
   /**
    * Name of terminology to be loaded.
@@ -124,7 +123,7 @@ public class Rf2SourceDataLoaderMojo extends AbstractMojo {
 
       // Create and add the source data
       final SourceData sourceData = new SourceDataJpa();
-      sourceData.setName(terminology + " source data");
+      sourceData.setName(getName(terminology, version));
       sourceData.setDescription("Set of Rf2 files loaded from " + dir);
       sourceData.setLastModifiedBy("loader");
       sourceData.setLoader(loader.getName());

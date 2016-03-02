@@ -16,7 +16,7 @@ import com.wci.umls.server.helpers.HasName;
 public interface SourceData extends HasId, HasLastModified, HasName {
 
   /**
-   * Load status for a {@link SourceData}
+   * Load status for a {@link SourceData}.
    */
   public enum Status {
     /** The unknown. */
@@ -51,7 +51,7 @@ public interface SourceData extends HasId, HasLastModified, HasName {
   public void setLoader(String loader);
 
   /**
-   * Gets the config file key for the loader
+   * Gets the config file key for the loader.
    *
    * @return the loader
    */
@@ -85,4 +85,5 @@ public interface SourceData extends HasId, HasLastModified, HasName {
    * @param description the new description
    */
   public void setDescription(String description);
+
 }

@@ -6,7 +6,6 @@ package com.wci.tt.mojo;
 import java.io.File;
 import java.util.Date;
 
-import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 
@@ -28,7 +27,7 @@ import com.wci.umls.server.services.handlers.ExceptionHandler;
  * @goal RF2-delta
  * @phase package
  */
-public class Rf2DeltaSourceDataLoaderMojo extends AbstractMojo {
+public class Rf2DeltaSourceDataLoaderMojo extends SourceDataMojo {
 
   /**
    * Name of terminology to be loaded.
@@ -36,6 +35,13 @@ public class Rf2DeltaSourceDataLoaderMojo extends AbstractMojo {
    * @required
    */
   private String terminology;
+
+  /**
+   * Version of terminology to be loaded.
+   * @parameter
+   * @required
+   */
+  private String version;
 
   /**
    * Input directory.
@@ -54,6 +60,7 @@ public class Rf2DeltaSourceDataLoaderMojo extends AbstractMojo {
   public void execute() throws MojoExecutionException, MojoFailureException {
     getLog().info("Starting sample data load");
     getLog().info("  terminology = " + terminology);
+    getLog().info("  version = " + version);
     getLog().info("  inputDir = " + inputDir);
 
     SourceDataService service = null;
@@ -87,7 +94,7 @@ public class Rf2DeltaSourceDataLoaderMojo extends AbstractMojo {
 
       // Create and add the source data
       final SourceData sourceData = new SourceDataJpa();
-      sourceData.setName(terminology + " source data");
+      sourceData.setName(getName(terminology, version));
       sourceData.setDescription("Set of Rf2 files loaded from " + dir);
       sourceData.setLastModifiedBy("loader");
       sourceData.setLoader(loader.getName());

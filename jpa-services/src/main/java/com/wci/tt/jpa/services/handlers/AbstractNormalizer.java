@@ -107,7 +107,7 @@ public abstract class AbstractNormalizer implements NormalizerHandler {
         sb.append(token).append(" ");
       }
     }
-    return sb.toString();
+    return sb.toString().trim();
   }
 
   /**

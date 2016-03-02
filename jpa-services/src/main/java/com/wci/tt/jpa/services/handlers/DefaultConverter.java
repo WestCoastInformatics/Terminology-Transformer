@@ -47,7 +47,7 @@ public class DefaultConverter extends AbstractAcceptsHandler
   /* see superclass */
   @Override
   public String getName() {
-    return "Default Converter handler";
+    return "Default Converter Handler";
   }
 
   /* see superclass */

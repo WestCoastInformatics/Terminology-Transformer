@@ -54,7 +54,7 @@ public class Rf2SourceDataLoader implements SourceDataLoader {
    */
   @Override
   public String getName() {
-    return "Rf2 source data loader";
+    return "RF2 Snapshot Source Data Loader";
   }
 
   /**

@@ -114,13 +114,13 @@ public class TypeKeyValueJpaUnitTest extends TestSupport {
 
     // Test analyzed fields
     IndexedFieldTester tester = new IndexedFieldTester(object);
-    // No analyzed fields
+    tester.include("key");
     // assertTrue(tester.testAnalyzedIndexedFields());
 
     // Test non analyzed fields
     tester = new IndexedFieldTester(object);
     tester.include("type");
-    tester.include("key");
+    tester.include("keySort");
     tester.include("value");
     assertTrue(tester.testNotAnalyzedIndexedFields());
 

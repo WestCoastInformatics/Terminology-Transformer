@@ -60,7 +60,7 @@ public class RrfSourceDataLoader implements SourceDataLoader {
    */
   @Override
   public String getName() {
-    return "RRF source data loader";
+    return "RRF Source Data Loader";
   }
 
   /**

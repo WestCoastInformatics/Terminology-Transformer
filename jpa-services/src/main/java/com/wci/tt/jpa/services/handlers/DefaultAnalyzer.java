@@ -27,7 +27,7 @@ public class DefaultAnalyzer implements AnalyzerHandler {
   /* see superclass */
   @Override
   public String getName() {
-    return "Default analyzer";
+    return "Default Analyzer";
   }
 
   /* see superclass */

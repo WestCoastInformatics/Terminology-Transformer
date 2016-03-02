@@ -36,7 +36,7 @@ public class DefaultNormalizer extends AbstractNormalizer
   /* see superclass */
   @Override
   public String getName() {
-    return "Default Normalizer handler";
+    return "Default Normalizer Handler";
   }
 
   /* see superclass */

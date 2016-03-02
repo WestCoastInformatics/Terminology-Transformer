@@ -71,7 +71,7 @@ public class HumanFeedbackProvider extends AbstractAcceptsHandler
   /* see superclass */
   @Override
   public String getName() {
-    return "Human feedback provider";
+    return "Human Feedback Provider";
   }
 
   /* see superclass */

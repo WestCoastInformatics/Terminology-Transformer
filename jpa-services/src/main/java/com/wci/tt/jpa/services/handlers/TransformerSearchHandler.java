@@ -24,7 +24,9 @@ import com.wci.umls.server.services.handlers.SearchHandler;
 
 /**
  * Default implementation of {@link SearchHandler}. This provides an algorithm
- * to aide in lucene searches.
+ * to aide in lucene searches. TODO: we really need another indexer of atoms
+ * that does lowercase and punctuation stripping then we have another good proxy
+ * for "exact" match that handles these things better.
  */
 public class TransformerSearchHandler implements SearchHandler {
 
@@ -64,12 +66,14 @@ public class TransformerSearchHandler implements SearchHandler {
     } else {
       if (literalField.contains("Sort")) {
         String nameField = literalField.replace("Sort", "");
-        combinedQuery =
-            "(" + fixedQuery + ") OR " + nameField + ":\"" + fixedQuery
-                + "\"^2.0 OR " + literalField + ":" + escapedQuery + "^4.0";
+        combinedQuery = fixedQuery + " OR " + nameField + ":\"" + fixedQuery
+            + "\"^10.0" + " OR " + literalField + ":" + escapedQuery + "^20.0";
+        // combinedQuery =
+        // "(" + fixedQuery + ") OR " + nameField + ":\"" + fixedQuery
+        // + "\"^2.0 OR " + literalField + ":" + escapedQuery + "^4.0";
       } else {
         combinedQuery = "(" + fixedQuery + ") OR " + literalField + ":"
-            + escapedQuery + "^4.0";
+            + escapedQuery + "^20.0";
 
       }
     }
@@ -134,6 +138,8 @@ public class TransformerSearchHandler implements SearchHandler {
       @SuppressWarnings("unchecked")
       T t = (T) result[1];
       classes.add(t);
+      // Logger.getLogger(getClass())
+      // .debug("score= " + Float.parseFloat(score.toString()) + ", " + t);
       scoreMap.put(t.getId(), Float.parseFloat(score.toString()));
     }
 
@@ -150,6 +156,6 @@ public class TransformerSearchHandler implements SearchHandler {
   /* see superclass */
   @Override
   public String getName() {
-    return "Transformer search handler";
+    return "Transformer Search Handler";
   }
 }
