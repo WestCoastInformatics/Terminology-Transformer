@@ -94,11 +94,11 @@ public abstract class AbstractFilter {
     // and analysis.mode is set
     final Properties prop = ConfigUtility.getConfigProperties();
     if (ConfigUtility.isAnalysisMode()
-        && prop.containsKey("filter.directory.output")) {
+        && prop.containsKey("filters.directory.output")) {
 
       if (!writerMap.containsKey(category)) {
         final File file =
-            new File(prop.getProperty("filter.directory.output").toString()
+            new File(prop.getProperty("filters.directory.output").toString()
                 + "/" + "filter-" + category + ".txt");
         if (file.exists()) {
           file.delete();
@@ -106,7 +106,6 @@ public abstract class AbstractFilter {
         final PrintWriter out = new PrintWriter(new FileWriter(file));
         writerMap.put(category, out);
       }
-
       writerMap.get(category).println(inputStr);
       writerMap.get(category).flush();
     }

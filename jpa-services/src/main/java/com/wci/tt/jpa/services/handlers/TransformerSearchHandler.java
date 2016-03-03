@@ -73,7 +73,7 @@ public class TransformerSearchHandler implements SearchHandler {
             if (!sb.toString().isEmpty()) {
               sb.append(" ");
             }
-            sb.append(nameField+":").append(word);
+            sb.append(nameField + ":").append(word);
           }
         }
         combinedQuery =
@@ -116,6 +116,8 @@ public class TransformerSearchHandler implements SearchHandler {
     FullTextQuery fullTextQuery = null;
     try {
       Logger.getLogger(getClass()).info("query = " + finalQuery);
+      // Logger.getLogger(getClass())
+      //    .info("pfs.qr = " + (pfs != null ? pfs.getQueryRestriction() : ""));
       fullTextQuery = IndexUtility.applyPfsToLuceneQuery(clazz, fieldNamesKey,
           finalQuery.toString(), pfs, manager);
     } catch (ParseException | IllegalArgumentException e) {
