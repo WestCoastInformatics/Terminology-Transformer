@@ -68,10 +68,10 @@ public class TransformerSearchHandler implements SearchHandler {
       if (literalField.contains("Sort")) {
         StringBuilder sb = new StringBuilder();
         for (final String word : query.split(ConfigUtility.PUNCTUATION_REGEX)) {
-          if (!sb.toString().isEmpty()) {
-            sb.append(" OR ");
-          }
           if (!word.isEmpty()) {
+            if (!sb.toString().isEmpty()) {
+              sb.append(" OR ");
+            }
             sb.append("name:").append(word);
           }
         }
