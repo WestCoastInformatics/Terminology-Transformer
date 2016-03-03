@@ -73,7 +73,7 @@ public class TransformerSearchHandler implements SearchHandler {
             if (!sb.toString().isEmpty()) {
               sb.append(" ");
             }
-            sb.append(nameField).append(word);
+            sb.append(nameField+":").append(word);
           }
         }
         combinedQuery =
