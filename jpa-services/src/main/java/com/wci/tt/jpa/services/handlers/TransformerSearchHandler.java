@@ -16,6 +16,7 @@ import org.apache.lucene.queryparser.classic.ParseException;
 import org.apache.lucene.queryparser.classic.QueryParserBase;
 import org.hibernate.search.jpa.FullTextQuery;
 
+import com.wci.umls.server.helpers.ConfigUtility;
 import com.wci.umls.server.helpers.HasId;
 import com.wci.umls.server.helpers.PfsParameter;
 import com.wci.umls.server.helpers.PfscParameter;
@@ -65,9 +66,20 @@ public class TransformerSearchHandler implements SearchHandler {
       combinedQuery = fixedQuery;
     } else {
       if (literalField.contains("Sort")) {
-        //String nameField = literalField.replace("Sort", "");
+        StringBuilder sb = new StringBuilder();
+        for (final String word : query.split(ConfigUtility.PUNCTUATION_REGEX)) {
+          if (!sb.toString().isEmpty()) {
+            sb.append(" OR ");
+          }
+          if (!word.isEmpty()) {
+            sb.append("name:").append(word);
+          }
+        }
+        String nameField = literalField.replace("Sort", "");
         combinedQuery =
-            fixedQuery + " OR " + literalField + ":" + escapedQuery + "^20.0";
+            (sb.toString().isEmpty() ? "" : "(" + sb.toString() + ") ")
+                + nameField + ":\"" + fixedQuery + "\"^2.0 OR " + literalField
+                + ":" + escapedQuery + "^4.0";
         // combinedQuery =
         // "(" + fixedQuery + ") OR " + nameField + ":\"" + fixedQuery
         // + "\"^2.0 OR " + literalField + ":" + escapedQuery + "^4.0";
