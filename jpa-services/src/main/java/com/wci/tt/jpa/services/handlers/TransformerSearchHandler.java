@@ -66,18 +66,18 @@ public class TransformerSearchHandler implements SearchHandler {
       combinedQuery = fixedQuery;
     } else {
       if (literalField.contains("Sort")) {
+        String nameField = literalField.replace("Sort", "");
         StringBuilder sb = new StringBuilder();
         for (final String word : query.split(ConfigUtility.PUNCTUATION_REGEX)) {
           if (!word.isEmpty()) {
             if (!sb.toString().isEmpty()) {
-              sb.append(" OR ");
+              sb.append(" ");
             }
-            sb.append("name:").append(word);
+            sb.append(nameField).append(word);
           }
         }
-        String nameField = literalField.replace("Sort", "");
         combinedQuery =
-            (sb.toString().isEmpty() ? "" : "(" + sb.toString() + ") ")
+            (sb.toString().isEmpty() ? "" : "(" + sb.toString() + ") OR ")
                 + nameField + ":\"" + fixedQuery + "\"^2.0 OR " + literalField
                 + ":" + escapedQuery + "^4.0";
         // combinedQuery =
@@ -151,7 +151,7 @@ public class TransformerSearchHandler implements SearchHandler {
       T t = (T) result[1];
       classes.add(t);
       // Logger.getLogger(getClass())
-      // .debug("score= " + Float.parseFloat(score.toString()) + ", " + t);
+      // .info("score= " + Float.parseFloat(score.toString()) + ", " + t);
       scoreMap.put(t.getId(), Float.parseFloat(score.toString()));
     }
 
