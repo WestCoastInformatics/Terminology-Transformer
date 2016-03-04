@@ -117,7 +117,7 @@ public class TransformerSearchHandler implements SearchHandler {
     try {
       Logger.getLogger(getClass()).info("query = " + finalQuery);
       // Logger.getLogger(getClass())
-      //    .info("pfs.qr = " + (pfs != null ? pfs.getQueryRestriction() : ""));
+      // .info("pfs.qr = " + (pfs != null ? pfs.getQueryRestriction() : ""));
       fullTextQuery = IndexUtility.applyPfsToLuceneQuery(clazz, fieldNamesKey,
           finalQuery.toString(), pfs, manager);
     } catch (ParseException | IllegalArgumentException e) {
@@ -152,9 +152,11 @@ public class TransformerSearchHandler implements SearchHandler {
       @SuppressWarnings("unchecked")
       T t = (T) result[1];
       classes.add(t);
-      // Logger.getLogger(getClass())
-      // .info("score= " + Float.parseFloat(score.toString()) + ", " + t);
-      scoreMap.put(t.getId(), Float.parseFloat(score.toString()));
+      if (t != null && score != null) {
+        Logger.getLogger(getClass())
+            .info("score= " + Float.parseFloat(score.toString()) + ", " + t);
+        scoreMap.put(t.getId(), Float.parseFloat(score.toString()));
+      }
     }
 
     return classes;

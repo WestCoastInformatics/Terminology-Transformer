@@ -4,7 +4,7 @@
 
   <!-- Module Metadata -->
   <parent>
-    <groupId>com.wci.tt</groupId>
+    <groupId>com.wcinformatics.tt</groupId>
     <artifactId>tt-parent</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <relativePath>../../parent</relativePath>

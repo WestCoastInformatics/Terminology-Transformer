@@ -38,6 +38,9 @@ public abstract class AbstractFilter {
    * @throws Exception the exception
    */
   protected void cacheType(String type) throws Exception {
+    if (!configMap.isEmpty()) {
+      return;
+    }
     final CoordinatorService service = new CoordinatorServiceJpa();
     try {
       configMap.put(type, new HashMap<String, String>());
@@ -137,15 +140,17 @@ public abstract class AbstractFilter {
   protected boolean checkFilterType(String type, String inputStr)
     throws Exception {
     boolean filterRequired = false;
-
+    String category = null;
     if (configMap.get(type).containsKey(inputStr.toLowerCase())) {
       // Exact match found
       filterRequired = true;
+      category = configMap.get(type).get(inputStr);
     } else {
       // Look for keyword matches
       for (String item : configMap.get(type).keySet()) {
         if (inputStr.toLowerCase().contains(item.toLowerCase())) {
           filterRequired = true;
+          category = configMap.get(type).get(item);
           break;
         }
       }
@@ -153,7 +158,7 @@ public abstract class AbstractFilter {
 
     if (filterRequired) {
       // Must be filtered, add to set of filtered results
-      addFilteredResult(configMap.get(type).get(inputStr), inputStr);
+      addFilteredResult(category, inputStr);
     }
 
     return filterRequired;

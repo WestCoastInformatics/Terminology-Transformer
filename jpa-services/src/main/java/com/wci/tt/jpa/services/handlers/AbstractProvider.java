@@ -228,7 +228,7 @@ public abstract class AbstractProvider extends AbstractAcceptsHandler
     Logger.getLogger(getClass()).info("Comined Results");
     for (final ScoredResult result : currentResults) {
       Logger.getLogger(getClass()).info(
-          "    concept = (" + result.getScore() + ") " + result.getValue());
+          "    result = (" + result.getScore() + ") " + result.getValue());
     }
 
     final List<ScoredResult> finalResults = limitResults(currentResults);
@@ -236,7 +236,7 @@ public abstract class AbstractProvider extends AbstractAcceptsHandler
     Logger.getLogger(getClass()).info("Final Results");
     for (final ScoredResult result : finalResults) {
       Logger.getLogger(getClass()).info(
-          "    concept = (" + result.getScore() + ") " + result.getValue());
+          "    result = (" + result.getScore() + ") " + result.getValue());
     }
 
     return finalResults;
