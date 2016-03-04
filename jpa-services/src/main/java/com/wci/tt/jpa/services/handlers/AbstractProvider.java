@@ -55,18 +55,12 @@ public abstract class AbstractProvider extends AbstractAcceptsHandler
   }
 
   /* see superclass */
-  // TODO: We may also need a "getPreCheckValue(inputString)" - this
-  // is what gets passed to the preCheck.
   @Override
   public boolean isPreCheckValid(TransformRecord record) throws Exception {
     // Filter precheck on the term name
     for (final Filter filter : getPreProcessFilters()) {
       if (!filter.preCheckAccepts(record.getInputContext())
           || !filter.preCheck(record.getInputString())) {
-        /*
-         * if (!ConfigUtility.isAnalysisMode()) { // TODO: Write out results }
-         * BAC: I think abstract filter already does this
-         */
         return false;
       }
     }
@@ -84,10 +78,6 @@ public abstract class AbstractProvider extends AbstractAcceptsHandler
       if (filter.postCheckAccepts(record.getOutputContext())) {
         results = filter.postCheck(record.getInputString(),
             record.getNormalizedResults(), results);
-        /*
-         * if (!ConfigUtility.isAnalysisMode()) { // TODO: Write out results }
-         * BAC: I think abstract filter already does this
-         */
       }
     }
     return providerEvidenceMap;
@@ -167,7 +157,7 @@ public abstract class AbstractProvider extends AbstractAcceptsHandler
     try {
       Map<String, ScoredResult> allResults = new HashMap<>();
 
-      for (ScoredResult normResult : record.getNormalizedResults()) {
+      for (ScoredResult normResult : record.getTermsToProcess()) {
         infoModel = getModelForString(normResult.getValue());
 
         // Bail if the provider doesn't support this model
@@ -210,9 +200,9 @@ public abstract class AbstractProvider extends AbstractAcceptsHandler
   /**
    * <pre>
    * Method to handle the finalization of the return ScoredResult(s):
-   * 1) Prints out the results of the combined process calls (per normalized string)
-   * 2) Executes the already existing limitResults() call
-   * 3) Prints out the final results returned to the Coordinator
+   * 1) Prints out the results of the combined process calls (per normalized string).
+   * 2) Executes the already existing limitResults() call.
+   * 3) Prints out the final results returned to the Coordinator.
    * </pre>
    *
    * @param allResults the all results
@@ -225,7 +215,7 @@ public abstract class AbstractProvider extends AbstractAcceptsHandler
         new ArrayList<ScoredResult>(allResults.values());
     Collections.sort(currentResults);
 
-    Logger.getLogger(getClass()).info("Comined Results");
+    Logger.getLogger(getClass()).info("Combined Results");
     for (final ScoredResult result : currentResults) {
       Logger.getLogger(getClass()).info(
           "    result = (" + result.getScore() + ") " + result.getValue());

@@ -129,4 +129,12 @@ public interface TransformRecord extends HasId, HasLastModified {
    */
   public void setStatistics(Map<String, Double> statistics);
 
+  /**
+   * Returns all terms to be processed. Likely by providers.
+   *
+   * @return the terms to process
+   * @throws Exception the exception
+   */
+  public List<ScoredResult> getTermsToProcess() throws Exception;
+
 }

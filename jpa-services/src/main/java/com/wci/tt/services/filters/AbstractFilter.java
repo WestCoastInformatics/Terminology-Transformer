@@ -141,6 +141,7 @@ public abstract class AbstractFilter {
     throws Exception {
     boolean filterRequired = false;
     String category = null;
+
     if (configMap.get(type).containsKey(inputStr.toLowerCase())) {
       // Exact match found
       filterRequired = true;
