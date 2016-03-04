@@ -406,4 +406,19 @@ public class TransformRecordJpa implements TransformRecord {
     return true;
   }
 
+  /* see superclass */
+  @Override
+  public List<ScoredResult> getTermsToProcess() throws Exception {
+    List<ScoredResult> termsToProcess = new ArrayList<>();
+
+    termsToProcess.addAll(getNormalizedResults());
+
+    final ScoredResult result = new ScoredResultJpa();
+    result.setValue(inputString);
+    result.setScore(1);
+    termsToProcess.add(result);
+
+    return termsToProcess;
+  }
+
 }
