@@ -28,6 +28,7 @@ import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 import org.hibernate.envers.Audited;
 import org.hibernate.search.annotations.Analyze;
@@ -407,8 +408,9 @@ public class TransformRecordJpa implements TransformRecord {
   }
 
   /* see superclass */
+  @XmlTransient
   @Override
-  public List<ScoredResult> getTermsToProcess() throws Exception {
+  public List<ScoredResult> getValuesToProcess() throws Exception {
     List<ScoredResult> termsToProcess = new ArrayList<>();
 
     termsToProcess.addAll(getNormalizedResults());

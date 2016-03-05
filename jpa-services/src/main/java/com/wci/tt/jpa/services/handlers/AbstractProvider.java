@@ -157,7 +157,7 @@ public abstract class AbstractProvider extends AbstractAcceptsHandler
     try {
       Map<String, ScoredResult> allResults = new HashMap<>();
 
-      for (ScoredResult normResult : record.getTermsToProcess()) {
+      for (ScoredResult normResult : record.getValuesToProcess()) {
         infoModel = getModelForString(normResult.getValue());
 
         // Bail if the provider doesn't support this model

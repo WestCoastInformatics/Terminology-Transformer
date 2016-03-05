@@ -135,6 +135,6 @@ public interface TransformRecord extends HasId, HasLastModified {
    * @return the terms to process
    * @throws Exception the exception
    */
-  public List<ScoredResult> getTermsToProcess() throws Exception;
+  public List<ScoredResult> getValuesToProcess() throws Exception;
 
 }
