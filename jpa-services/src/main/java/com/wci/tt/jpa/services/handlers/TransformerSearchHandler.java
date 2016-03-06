@@ -66,7 +66,8 @@ public class TransformerSearchHandler implements SearchHandler {
       combinedQuery = fixedQuery;
     } else {
       if (literalField.contains("Sort")) {
-        String nameField = literalField.replace("Sort", "");
+        // TODO: normField
+        String nameField = literalField.replace("Sort", "");        
         StringBuilder sb = new StringBuilder();
         for (final String word : query.split(ConfigUtility.PUNCTUATION_REGEX)) {
           if (!word.isEmpty()) {

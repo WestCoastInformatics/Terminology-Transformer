@@ -41,6 +41,7 @@
       <groupId>com.wcinformatics.tt</groupId>
       <artifactId>tt-rest</artifactId>
       <classifier>classes</classifier>
+      <type>jar</type>
     </dependency>
     <dependency>
       <groupId>com.wcinformatics.tt</groupId>
@@ -52,6 +53,7 @@
       <groupId>com.wcinformatics.umls.server</groupId>
       <artifactId>term-server-rest</artifactId>
       <classifier>classes</classifier>
+      <type>jar</type>
     </dependency>
 
     <!-- Maven Plugin API -->

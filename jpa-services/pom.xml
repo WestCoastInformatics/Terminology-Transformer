@@ -52,6 +52,7 @@
       <groupId>com.wcinformatics.umls.server</groupId>
       <artifactId>term-server-rest</artifactId>
       <classifier>classes</classifier>
+      <type>jar</type>
     </dependency>
     
   </dependencies>
