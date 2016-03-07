@@ -77,11 +77,11 @@ public class DefaultThresholdHandler implements ThresholdHandler {
 
     if (logBaseValue <= 0) {
       return score;
+    } else if (score >= logBaseValue) {
+      return 1;
+    } else {
+      return score / logBaseValue;
     }
-
-    // Get the log value and ensure it is b/w 0 & 1
-    return (float) Math.max(
-        Math.min(Math.log(score * 100) / Math.log(logBaseValue * 100), 1f), 0);
   }
 
 }
