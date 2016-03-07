@@ -80,7 +80,7 @@ public abstract class AbstractProvider extends AbstractAcceptsHandler
             record.getNormalizedResults(), results);
       }
     }
-    return providerEvidenceMap;
+    return results;
   }
 
   /**
