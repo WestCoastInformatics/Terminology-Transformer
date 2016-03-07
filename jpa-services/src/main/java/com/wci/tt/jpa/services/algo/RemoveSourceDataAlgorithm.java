@@ -47,11 +47,12 @@ public class RemoveSourceDataAlgorithm extends RemoveTerminologyAlgorithm {
       // Remove the source data
       final SourceDataService service = new SourceDataServiceJpa();
       try {
+        service.removeSourceData(sourceData.getId());
+
         for (final SourceDataFile file : sourceData.getSourceDataFiles()) {
           service.removeSourceDataFile(file.getId());
         }
 
-        service.removeSourceData(sourceData.getId());
       } catch (Exception e) {
         throw e;
       } finally {

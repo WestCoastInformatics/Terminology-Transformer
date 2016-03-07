@@ -66,8 +66,8 @@ public class TransformerSearchHandler implements SearchHandler {
       combinedQuery = fixedQuery;
     } else {
       if (literalField.contains("Sort")) {
-        // TODO: normField
-        String nameField = literalField.replace("Sort", "");        
+        String normField = literalField.replace("Sort", "Norm");
+        String nameField = literalField.replace("Sort", "");
         StringBuilder sb = new StringBuilder();
         for (final String word : query.split(ConfigUtility.PUNCTUATION_REGEX)) {
           if (!word.isEmpty()) {
@@ -79,8 +79,8 @@ public class TransformerSearchHandler implements SearchHandler {
         }
         combinedQuery =
             (sb.toString().isEmpty() ? "" : "(" + sb.toString() + ") OR ")
-                + nameField + ":\"" + fixedQuery + "\"^2.0 OR " + literalField
-                + ":" + escapedQuery + "^4.0";
+                + normField + ":\"" + fixedQuery.toLowerCase() + "\"^2.0 OR "
+                + literalField + ":" + escapedQuery + "^4.0";
         // combinedQuery =
         // "(" + fixedQuery + ") OR " + nameField + ":\"" + fixedQuery
         // + "\"^2.0 OR " + literalField + ":" + escapedQuery + "^4.0";
