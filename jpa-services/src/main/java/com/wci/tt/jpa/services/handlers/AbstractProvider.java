@@ -114,11 +114,13 @@ public abstract class AbstractProvider extends AbstractAcceptsHandler
    * @param inputString the input string
    * @param handler the handler
    * @param service the service
+   * @param version
    * @return the list
    * @throws Exception the exception
    */
   public abstract List<ScoredResult> performSearch(String inputString,
-    SearchHandler handler, ContentServiceJpa service) throws Exception;
+    SearchHandler handler, ContentServiceJpa service, String version)
+      throws Exception;
 
   /**
    * Limit results based on some notion of local quality. Default is to not
@@ -154,6 +156,11 @@ public abstract class AbstractProvider extends AbstractAcceptsHandler
     final SearchHandler searchHandler =
         service.getSearchHandler(ConfigUtility.DEFAULT);
 
+    // Get version from TermRecord if defined in either its
+    // providerOutputContext or inputContext
+    final String version = (providerOutputContext.getVersion() != null)
+        ? providerOutputContext.getVersion() : inputContext.getVersion();
+
     try {
       Map<String, ScoredResult> allResults = new HashMap<>();
 
@@ -166,8 +173,8 @@ public abstract class AbstractProvider extends AbstractAcceptsHandler
           return new ArrayList<>();
         }
 
-        List<ScoredResult> results =
-            performSearch(normResult.getValue(), searchHandler, service);
+        List<ScoredResult> results = performSearch(normResult.getValue(),
+            searchHandler, service, version);
 
         /* Log Results */
         Logger.getLogger(getClass()).info(
