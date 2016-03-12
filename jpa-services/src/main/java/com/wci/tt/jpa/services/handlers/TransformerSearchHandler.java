@@ -34,6 +34,10 @@ public class TransformerSearchHandler implements SearchHandler {
   /** The score map. */
   private Map<Long, Float> scoreMap = new HashMap<>();
 
+  /** The medication split regex. */
+  private String customSplitRegex =
+      ConfigUtility.PUNCTUATION_REGEX.replaceAll("[\\.]", "");
+
   /* see superclass */
   @Override
   public void setProperties(Properties p) throws Exception {
@@ -69,7 +73,8 @@ public class TransformerSearchHandler implements SearchHandler {
         String normField = literalField.replace("Sort", "Norm");
         String nameField = literalField.replace("Sort", "");
         StringBuilder sb = new StringBuilder();
-        for (final String word : query.split(ConfigUtility.PUNCTUATION_REGEX)) {
+
+        for (final String word : query.split(customSplitRegex)) {
           if (!word.isEmpty()) {
             if (!sb.toString().isEmpty()) {
               sb.append(" ");
@@ -81,9 +86,6 @@ public class TransformerSearchHandler implements SearchHandler {
             (sb.toString().isEmpty() ? "" : "(" + sb.toString() + ") OR ")
                 + normField + ":\"" + ConfigUtility.normalize(fixedQuery)
                 + "\"^2.0 OR " + literalField + ":" + escapedQuery + "^4.0";
-        // combinedQuery =
-        // "(" + fixedQuery + ") OR " + nameField + ":\"" + fixedQuery
-        // + "\"^2.0 OR " + literalField + ":" + escapedQuery + "^4.0";
       } else {
         combinedQuery = "(" + fixedQuery + ") OR " + literalField + ":"
             + escapedQuery + "^20.0";
@@ -154,8 +156,8 @@ public class TransformerSearchHandler implements SearchHandler {
       T t = (T) result[1];
       classes.add(t);
       if (t != null && score != null) {
-//        Logger.getLogger(getClass())
-//            .info("score= " + Float.parseFloat(score.toString()) + ", " + t);
+        // Logger.getLogger(getClass())
+        // .info("score= " + Float.parseFloat(score.toString()) + ", " + t);
         scoreMap.put(t.getId(), Float.parseFloat(score.toString()));
       }
     }
