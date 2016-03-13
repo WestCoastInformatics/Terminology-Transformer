@@ -26,7 +26,8 @@ public interface Filter extends Configurable {
    */
   public static Set<String> getNumericalTokens(String term) {
     // find Numeric value from term
-    String str = term.replaceAll("[^0-9.]+", " ");
+    String str = term.replaceAll("[^0-9.,]+", " ");
+    str = str.replaceAll(",", "");
     Set<String> numerics =
         new HashSet<String>(Arrays.asList(str.trim().split(" ")));
     if (numerics.size() == 1
