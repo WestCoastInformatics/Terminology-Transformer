@@ -149,7 +149,9 @@ public abstract class AbstractFilter {
     } else {
       // Look for keyword matches
       for (String item : configMap.get(type).keySet()) {
-        if (inputStr.toLowerCase().contains(item.toLowerCase())) {
+        String matchWord = item.toLowerCase().replaceAll("\\p{P}","");
+        matchWord = ".*\\b" + matchWord.toLowerCase() + "\\b.*";
+        if (inputStr.toLowerCase().matches(matchWord)) {
           filterRequired = true;
           category = configMap.get(type).get(item);
           break;
