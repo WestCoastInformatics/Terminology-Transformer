@@ -31,6 +31,9 @@ public abstract class AbstractFilter {
   /** The writer map. */
   private Map<String, PrintWriter> writerMap = new HashMap<>();
 
+  private String punctuationRegex =
+      ConfigUtility.PUNCTUATION_REGEX.replace(" ", "");
+
   /**
    * Cache type.
    *
@@ -142,16 +145,17 @@ public abstract class AbstractFilter {
     boolean filterRequired = false;
     String category = null;
 
-    if (configMap.get(type).containsKey(inputStr.toLowerCase())) {
+    if (configMap.get(type).containsKey(inputStr)) {
       // Exact match found
       filterRequired = true;
       category = configMap.get(type).get(inputStr);
     } else {
       // Look for keyword matches
       for (String item : configMap.get(type).keySet()) {
-        String matchWord = item.toLowerCase().replaceAll("\\p{P}","");
+        String matchWord = item.toLowerCase().replaceAll("\\p{P}", "");
         matchWord = ".*\\b" + matchWord.toLowerCase() + "\\b.*";
-        if (inputStr.toLowerCase().matches(matchWord)) {
+        if (inputStr.replaceAll(punctuationRegex, " ").toLowerCase().trim()
+            .matches(matchWord)) {
           filterRequired = true;
           category = configMap.get(type).get(item);
           break;
