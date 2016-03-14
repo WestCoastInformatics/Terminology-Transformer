@@ -16,8 +16,8 @@ import com.wci.tt.jpa.services.helper.DataContextMatcher;
 import com.wci.tt.services.handlers.ProviderHandler;
 
 /**
- * Abstract handler for the "accepts" method - used for {@ConverterHandler} and
- * {@link ProviderHandler} implementations;.
+ * Abstract handler for the "accepts" method - used for ConverterHandler and
+ * link ProviderHandler implementations;.
  */
 public abstract class AbstractAcceptsHandler {
 
