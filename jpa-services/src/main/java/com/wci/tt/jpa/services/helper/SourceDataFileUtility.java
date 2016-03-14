@@ -176,9 +176,12 @@ public class SourceDataFileUtility {
    */
   private static boolean fileExists(String folderPath, String fileName) {
     File dir = new File(folderPath);
-    for (File f : dir.listFiles()) {
-      if (f.getName().equals(fileName)) {
-        return true;
+    File[] files = dir.listFiles();
+    if (files != null) {
+      for (File f : files) {
+        if (f.getName().equals(fileName)) {
+          return true;
+        }
       }
     }
     return false;

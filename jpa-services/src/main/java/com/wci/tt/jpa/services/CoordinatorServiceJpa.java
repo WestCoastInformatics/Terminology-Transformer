@@ -480,7 +480,7 @@ public class CoordinatorServiceJpa extends ContentServiceJpa
 
     // no processors
     if (inputStr == null || inputStr.isEmpty() || requiredOutputContext == null
-        || requiredOutputContext == null || requiredOutputContext.isEmpty()) {
+        || requiredOutputContext.isEmpty()) {
       Logger.getLogger(getClass()).debug("  NO RESULTS");
       return new ArrayList<>();
     }
