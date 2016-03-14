@@ -13,8 +13,9 @@ import com.wci.umls.server.helpers.AbstractResultList;
  * JAXB-enabled implementation of {@link ScoredDataContextTupleList}.
  */
 @XmlRootElement(name = "scoredDataContextTupleList")
-public class ScoredDataContextTupleListJpa extends
-    AbstractResultList<ScoredDataContextTuple> implements ScoredDataContextTupleList {
+public class ScoredDataContextTupleListJpa
+    extends AbstractResultList<ScoredDataContextTuple>
+    implements ScoredDataContextTupleList {
 
   /* see superclass */
   @Override
@@ -26,7 +27,7 @@ public class ScoredDataContextTupleListJpa extends
   /* see superclass */
   @Override
   public String toString() {
-    return "ScoredDataContextTupleListJpa [scoredDataContextTuple=" + getObjects()
-        + ", getCount()=" + getCount() + "]";
+    return "ScoredDataContextTupleListJpa [scoredDataContextTuple="
+        + getObjects() + ", getCount()=" + getCount() + "]";
   }
 }

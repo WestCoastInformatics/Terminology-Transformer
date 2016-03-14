@@ -39,15 +39,14 @@ public class TerminologyTransformerServerApplication extends Application {
    * @throws Exception the exception
    */
   public TerminologyTransformerServerApplication() throws Exception {
-    Logger.getLogger(getClass()).info(
-        "WCI Terminology Transformer APPLICATION START");
+    Logger.getLogger(getClass())
+        .info("WCI Terminology Transformer APPLICATION START");
     BeanConfig beanConfig = new BeanConfig();
     beanConfig.setTitle("WCI Terminology Transformer service API");
-    beanConfig
-        .setDescription("RESTful calls for WCI Terminology Transformer");
+    beanConfig.setDescription("RESTful calls for WCI Terminology Transformer");
     beanConfig.setVersion(API_VERSION);
-    beanConfig.setBasePath(ConfigUtility.getConfigProperties().getProperty(
-        "base.url"));
+    beanConfig.setBasePath(
+        ConfigUtility.getConfigProperties().getProperty("base.url"));
     beanConfig.setResourcePackage("com.wci.tt.rest.impl");
     beanConfig.setScan(true);
 
@@ -76,10 +75,10 @@ public class TerminologyTransformerServerApplication extends Application {
     classes.add(TransformServiceRestImpl.class);
     classes
         .add(com.wordnik.swagger.jersey.listing.ApiListingResourceJSON.class);
-    classes
-        .add(com.wordnik.swagger.jersey.listing.JerseyApiDeclarationProvider.class);
-    classes
-        .add(com.wordnik.swagger.jersey.listing.JerseyResourceListingProvider.class);
+    classes.add(
+        com.wordnik.swagger.jersey.listing.JerseyApiDeclarationProvider.class);
+    classes.add(
+        com.wordnik.swagger.jersey.listing.JerseyResourceListingProvider.class);
     return classes;
   }
 
@@ -91,7 +90,7 @@ public class TerminologyTransformerServerApplication extends Application {
     instances.add(new JsonProcessingFeature());
     instances.add(new MultiPartFeature());
     // Enable for LOTS of logging of HTTP requests
-     instances.add(new LoggingFilter());
+    instances.add(new LoggingFilter());
     return instances;
   }
 

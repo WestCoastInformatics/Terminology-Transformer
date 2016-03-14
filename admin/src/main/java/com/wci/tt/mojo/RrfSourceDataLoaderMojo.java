@@ -41,7 +41,7 @@ public class RrfSourceDataLoaderMojo extends SourceDataMojo {
   private String terminology;
 
   /**
-   * The terminology version.
+   * The version.
    * @parameter
    * @required
    */
@@ -54,7 +54,7 @@ public class RrfSourceDataLoaderMojo extends SourceDataMojo {
   private String mode;
 
   /**
-   * The terminology version.
+   * The filename prefix
    * @parameter
    */
   private String prefix;

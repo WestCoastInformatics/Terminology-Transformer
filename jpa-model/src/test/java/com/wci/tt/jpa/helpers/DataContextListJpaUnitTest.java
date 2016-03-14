@@ -41,7 +41,7 @@ public class DataContextListJpaUnitTest extends AbstractListUnit<DataContext> {
 
   /**
    * Setup.
-   * @throws Exception 
+   * @throws Exception
    */
   @Before
   public void setup() throws Exception {

@@ -48,7 +48,7 @@ public class DefaultAnalyzer implements AnalyzerHandler {
 
   @Override
   public void close() throws Exception {
-    // n/a - nothing opened    
+    // n/a - nothing opened
   }
 
 }

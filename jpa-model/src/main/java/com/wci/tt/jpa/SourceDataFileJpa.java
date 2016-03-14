@@ -40,7 +40,7 @@ import com.wci.tt.SourceDataFile;
 @Indexed
 @XmlRootElement(name = "file")
 public class SourceDataFileJpa implements SourceDataFile {
- 
+
   /** The id. Set initial value to 5 to bypass entries in import.sql */
   @TableGenerator(name = "EntityIdGen", table = "table_generator", pkColumnValue = "Entity")
   @Id

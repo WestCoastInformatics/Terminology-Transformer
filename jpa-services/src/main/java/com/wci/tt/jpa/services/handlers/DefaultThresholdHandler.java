@@ -68,7 +68,6 @@ public class DefaultThresholdHandler implements ThresholdHandler {
 
   /* see superclass */
   @Override
-  // TODO: consider moving this to provider
   public float weightResult(float rawScore, float providerQuality,
     float logBaseValue) {
 

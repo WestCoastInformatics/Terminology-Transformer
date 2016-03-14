@@ -173,8 +173,7 @@ public class SourceDataServiceRestImpl extends RootServiceRestImpl
     @ApiParam(value = "SourceDataFile to update", required = true) SourceDataFileJpa sourceDataFile,
     @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
       throws Exception {
-    Logger.getLogger(getClass())
-        .info("RESTful call (Source Data): /update");
+    Logger.getLogger(getClass()).info("RESTful call (Source Data): /update");
 
     final SourceDataService service = new SourceDataServiceJpa();
     try {

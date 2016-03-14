@@ -9,7 +9,7 @@ import com.wci.tt.helpers.ScoredResultList;
 /**
  * The Interface ProcessHandler.
  */
-public interface  ProcessHandler {
+public interface ProcessHandler {
 
   /**
    * Process.

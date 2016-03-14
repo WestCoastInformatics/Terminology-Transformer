@@ -64,7 +64,6 @@ public interface SourceDataService extends RootService {
    */
   public SourceDataFileList findSourceDataFilesForQuery(String query,
     PfsParameter pfs) throws Exception;
-  
 
   /**
    * Gets the source data files.

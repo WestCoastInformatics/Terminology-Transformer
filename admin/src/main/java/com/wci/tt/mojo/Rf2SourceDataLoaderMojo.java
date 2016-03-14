@@ -41,7 +41,7 @@ public class Rf2SourceDataLoaderMojo extends SourceDataMojo {
   private String terminology;
 
   /**
-   * The terminology version.
+   * The version.
    * @parameter
    * @required
    */

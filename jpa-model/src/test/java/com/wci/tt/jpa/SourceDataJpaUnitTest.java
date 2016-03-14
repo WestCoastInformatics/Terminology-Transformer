@@ -166,7 +166,7 @@ public class SourceDataJpaUnitTest extends TestSupport {
     tester.include("loader");
     tester.include("loaderStatus");
     tester.include("nameSort");
-     assertTrue(tester.testNotAnalyzedIndexedFields());
+    assertTrue(tester.testNotAnalyzedIndexedFields());
 
   }
 

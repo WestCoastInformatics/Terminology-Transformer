@@ -25,9 +25,7 @@ import com.wci.umls.server.services.handlers.SearchHandler;
 
 /**
  * Default implementation of {@link SearchHandler}. This provides an algorithm
- * to aide in lucene searches. TODO: we really need another indexer of atoms
- * that does lowercase and punctuation stripping then we have another good proxy
- * for "exact" match that handles these things better.
+ * to aide in lucene searches.
  */
 public class TransformerSearchHandler implements SearchHandler {
 

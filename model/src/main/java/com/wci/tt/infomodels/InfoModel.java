@@ -12,7 +12,7 @@ import com.wci.umls.server.helpers.Configurable;
  */
 public interface InfoModel<T extends InfoModel<?>> extends Configurable {
 
-  /**  The Constant MULTIPLE_VALUES. */
+  /** The Constant MULTIPLE_VALUES. */
   public final static String MULTIPLE_VALUES = "*";
 
   /**

@@ -33,7 +33,7 @@ public class SourceDataRemoverMojo extends SourceDataMojo {
   private String terminology;
 
   /**
-   * Terminology version to remove.
+   * Version to remove.
    * @parameter
    * @required
    */

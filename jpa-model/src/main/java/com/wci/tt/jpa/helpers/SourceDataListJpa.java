@@ -30,8 +30,8 @@ public class SourceDataListJpa extends AbstractResultList<SourceData>
   /* see superclass */
   @Override
   public String toString() {
-    return "SourceDataListJpa [sourceDatas=" + getObjects()
-        + ", getCount()=" + getCount() + "]";
+    return "SourceDataListJpa [sourceDatas=" + getObjects() + ", getCount()="
+        + getCount() + "]";
   }
 
 }

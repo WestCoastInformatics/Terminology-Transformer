@@ -94,7 +94,7 @@ public class DataContextJpa implements DataContext {
     this.specialty = context.getSpecialty();
     this.infoModelClass = context.getInfoModelClass();
   }
-  
+
   /* see superclass */
   @FieldBridge(impl = LongBridge.class)
   @Field(index = Index.YES, analyze = Analyze.NO, store = Store.NO)
