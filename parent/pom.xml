@@ -13,7 +13,7 @@
   <description>Parent project. Used to define versions of third party modules</description>
 
   <properties>
-    <term.server.version>1.1.0-SNAPSHOT</term.server.version>
+    <term.server.version>1.2.1</term.server.version>
     <!-- Set default maven settings -->
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>

@@ -88,7 +88,7 @@ public class TransformerSearchHandler implements SearchHandler {
                 + "\"^2.0 OR " + literalField + ":" + escapedQuery + "^4.0";
       } else {
         combinedQuery = "(" + fixedQuery + ") OR " + literalField + ":"
-            + escapedQuery + "^20.0";
+            + escapedQuery + "^10.0";
 
       }
     }
@@ -156,8 +156,8 @@ public class TransformerSearchHandler implements SearchHandler {
       T t = (T) result[1];
       classes.add(t);
       if (t != null && score != null) {
-        // Logger.getLogger(getClass())
-        // .info("score= " + Float.parseFloat(score.toString()) + ", " + t);
+        Logger.getLogger(getClass())
+            .debug("score= " + Float.parseFloat(score.toString()) + ", " + t);
         scoreMap.put(t.getId(), Float.parseFloat(score.toString()));
       }
     }

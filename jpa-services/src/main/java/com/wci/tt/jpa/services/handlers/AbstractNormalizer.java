@@ -122,7 +122,6 @@ public abstract class AbstractNormalizer implements NormalizerHandler {
     throws Exception {
     // Cache patterns
     cachePatterns(type);
-
     // matching
     String replString = inputString;
     for (final String match : patterns.keySet()) {

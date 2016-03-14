@@ -55,6 +55,7 @@ public class DefaultConverterTest extends JpaSupport {
    *
    * @throws Exception the exception
    */
+  @SuppressWarnings("unused")
   @Test
   public void testAcceptNullInputs() throws Exception {
     Logger.getLogger(getClass()).info("TEST " + name.getMethodName());
