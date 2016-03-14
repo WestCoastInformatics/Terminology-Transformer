@@ -62,7 +62,7 @@ public interface SourceDataServiceRest {
    * @param sourceDataFile the source data file
    * @param authToken the auth token
    * @return the source data file
-   * @throws Exception
+   * @throws Exception the exception
    */
   public SourceDataFile addSourceDataFile(SourceDataFileJpa sourceDataFile,
     String authToken) throws Exception;
@@ -114,7 +114,7 @@ public interface SourceDataServiceRest {
    *
    * @param sourceData the source data
    * @param authToken the auth token
-   * @throws Exception
+   * @throws Exception the exception
    */
   public void updateSourceData(SourceDataJpa sourceData, String authToken)
     throws Exception;
