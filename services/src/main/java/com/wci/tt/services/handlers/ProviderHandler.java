@@ -25,7 +25,7 @@ public interface ProviderHandler extends Configurable {
 
   /**
    * Ensures input context is supported. If it is, returns all output contexts
-   * the identify & process methods support. Returns an empty list if the input
+   * the identify &amp; process methods support. Returns an empty list if the input
    * context is not supported.
    * 
    * 
