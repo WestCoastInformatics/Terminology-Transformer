@@ -61,11 +61,6 @@ public class TerminologyTransformerServerApplication extends Application {
 
   }
 
-  /**
-   * Initialization task. class InitializationTask extends TimerTask {
-   * @Override public void run() { // n/a } }
-   */
-
   /* see superclass */
   @Override
   public Set<Class<?>> getClasses() {
