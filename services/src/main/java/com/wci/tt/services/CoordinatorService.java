@@ -118,14 +118,14 @@ public interface CoordinatorService extends RootService {
     DataContext inputContext) throws Exception;
 
   /**
-   * Assembles the possible combinations of Providers & Converters based on
+   * Assembles the possible combinations of Providers &amp; Converters based on
    * input Context. Then normalizes content across all normalizers per data
    * context. For each Provider/Converter combination, puts pair's data context
-   * and associated normalized content through process & convert methods. All
+   * and associated normalized content through process &amp; convert methods. All
    * data is returned.
    * 
    * Steps: 1) Identify contexts acceptable by Provider/Converter pairs -
-   * Generates triplet (DataContext to Provider to Set<Converters>) 2) Generate
+   * Generates triplet (DataContext to Provider to Set of Converters) 2) Generate
    * normalized content per accepted data contexts - Generates collated List of
    * DataContextTuple 3) Calls process and convert for each accepted context on
    * data context's associated normalized results - Generates List of
