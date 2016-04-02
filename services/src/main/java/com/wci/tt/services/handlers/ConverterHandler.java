@@ -6,6 +6,7 @@ package com.wci.tt.services.handlers;
 import java.util.List;
 
 import com.wci.tt.DataContext;
+import com.wci.tt.TransformRecord;
 import com.wci.tt.helpers.DataContextTuple;
 import com.wci.umls.server.helpers.Configurable;
 
@@ -46,18 +47,12 @@ public interface ConverterHandler extends Configurable {
    *    4) A Information Model to a Information Model
    * </pre>
    *
-   * @param inputStr the input string
-   * @param inputContext the input context
-   * @param outputContext the output context
-   * @param origInputString the orig input string
-   * @param origInputContext the orig input context
+   * @param record the record
    * @return the data context tuple
    * @throws Exception the exception if the input/output context combination is
    *           not supported
    */
-  public DataContextTuple convert(String inputStr, DataContext inputContext,
-    DataContext outputContext, String origInputString,
-    DataContext origInputContext) throws Exception;
+  public DataContextTuple convert(String inputString, TransformRecord record) throws Exception;
 
   /**
    * Close any open resources on application shutdown.

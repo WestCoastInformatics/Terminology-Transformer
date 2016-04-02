@@ -21,10 +21,9 @@ import com.wci.tt.services.handlers.ProviderHandler;
 /**
  * Default implementation of {@link ProviderHandler}.
  * 
- * This class demonstrates a "naive" implementation of the Provider.
+ * This provider converts a normalized NDC code into an RXNORM code 
+ * (with history information).
  * 
- * Class created to prove that supporting functionality works, not to provide
- * meaningful results.
  */
 public class NdcProvider extends AbstractAcceptsHandler
     implements ProviderHandler {

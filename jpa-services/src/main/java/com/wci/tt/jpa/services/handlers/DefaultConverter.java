@@ -6,6 +6,7 @@ package com.wci.tt.jpa.services.handlers;
 import java.util.Properties;
 
 import com.wci.tt.DataContext;
+import com.wci.tt.TransformRecord;
 import com.wci.tt.helpers.DataContextTuple;
 import com.wci.tt.helpers.DataContextType;
 import com.wci.tt.jpa.helpers.DataContextTupleJpa;
@@ -52,9 +53,13 @@ public class DefaultConverter extends AbstractAcceptsHandler
 
   /* see superclass */
   @Override
-  public DataContextTuple convert(String inputStr, DataContext inputContext,
-    DataContext outputContext, String origInputString,
-    DataContext origInputContext) throws Exception {
+  public DataContextTuple convert(String inputString, TransformRecord record)
+    throws Exception {
+
+    final DataContext inputContext = record.getInputContext();
+    final DataContext outputContext = record.getProviderOutputContext();
+    // final String origInputString = record.getInputString();
+    // final DataContext origInputContext = record.getOutputContext();
 
     // Validate input/output context
     validate(inputContext, outputContext);
@@ -63,10 +68,10 @@ public class DefaultConverter extends AbstractAcceptsHandler
     final DataContextTuple tuple = new DataContextTupleJpa();
 
     // Ensure that input is valid.
-    if (inputStr != null && !inputStr.isEmpty() && inputContext != null
+    if (inputString != null && !inputString.isEmpty() && inputContext != null
         && outputContext != null) {
       tuple.setDataContext(outputContext);
-      tuple.setData(inputStr);
+      tuple.setData(inputString);
     }
 
     return tuple;

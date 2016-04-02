@@ -19,9 +19,11 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.wci.tt.DataContext;
+import com.wci.tt.TransformRecord;
 import com.wci.tt.helpers.DataContextTuple;
 import com.wci.tt.helpers.DataContextType;
 import com.wci.tt.jpa.DataContextJpa;
+import com.wci.tt.jpa.TransformRecordJpa;
 import com.wci.tt.jpa.services.handlers.DefaultConverter;
 import com.wci.tt.services.handlers.ConverterHandler;
 
@@ -135,7 +137,7 @@ public class DefaultConverterTest extends JpaSupport {
     Logger.getLogger(getClass()).info("TEST " + name.getMethodName());
 
     ConverterHandler handler = new DefaultConverter();
-    DataContextTuple results = handler.convert(null, null, null, null, null);
+    DataContextTuple results = handler.convert(null, new TransformRecordJpa());
 
     Logger.getLogger(getClass()).info("  results = " + results);
 
@@ -154,8 +156,7 @@ public class DefaultConverterTest extends JpaSupport {
     Logger.getLogger(getClass()).info("TEST " + name.getMethodName());
 
     ConverterHandler handler = new DefaultConverter();
-    DataContextTuple results = handler.convert("", new DataContextJpa(),
-        new DataContextJpa(), "", new DataContextJpa());
+    DataContextTuple results = handler.convert("", new TransformRecordJpa());
 
     Logger.getLogger(getClass()).info("  results = " + results);
 
@@ -195,8 +196,12 @@ public class DefaultConverterTest extends JpaSupport {
     outputContext.setVersion("Test Output Version");
     outputContext.setType(DataContextType.NAME);
 
-    DataContextTuple results = handler.convert(inputString, inputContext,
-        outputContext, inputString, inputContext);
+    final TransformRecord record = new TransformRecordJpa();
+    record.setInputContext(inputContext);
+    record.setOutputContext(outputContext);
+    record.setProviderOutputContext(outputContext);
+    record.setInputString(inputString);
+    DataContextTuple results = handler.convert(inputString, record);
 
     Logger.getLogger(getClass()).info("  results = " + results);
 

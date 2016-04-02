@@ -551,8 +551,7 @@ public class CoordinatorServiceJpa extends ContentServiceJpa
 
                 // Obtain the final product
                 final DataContextTuple tuple =
-                    converter.convert(result.getValue(), outputContext,
-                        requiredOutputContext, inputStr, inputContext);
+                    converter.convert(result.getValue(), record);
 
                 if (tuple != null) {
                   // Compute the score for this piece of evidence
