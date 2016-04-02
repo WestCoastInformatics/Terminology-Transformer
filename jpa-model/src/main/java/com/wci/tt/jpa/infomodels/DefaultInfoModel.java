@@ -6,6 +6,7 @@ package com.wci.tt.jpa.infomodels;
 import java.util.Properties;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 import com.wci.tt.infomodels.InfoModel;
 import com.wci.umls.server.helpers.ConfigUtility;
@@ -40,12 +41,8 @@ public class DefaultInfoModel implements InfoModel<DefaultInfoModel> {
     code = model.getCode();
   }
 
-  /**
-   * Returns the name.
-   *
-   * @return the name
-   */
   /* see superclass */
+  @XmlTransient
   @Override
   public String getName() {
     return "Default Information Model";
@@ -121,31 +118,91 @@ public class DefaultInfoModel implements InfoModel<DefaultInfoModel> {
   }
 
   /* see superclass */
+  @XmlTransient
   @Override
   public String getVersion() {
     return "1.0";
   }
 
   /* see superclass */
+  @XmlTransient
   @Override
   public String getModelValue() throws Exception {
-    return "{ code : \"" + code + "\", term : \"" + term + "\"}";
+    return ConfigUtility.getJsonForGraph(this);
   }
 
+  /* see superclass */
   @Override
   public DefaultInfoModel getModelInCommon(DefaultInfoModel model,
     boolean analysisMode) throws Exception {
     if (model == null) {
       return null;
     }
+    boolean found = false;
     DefaultInfoModel common = new DefaultInfoModel();
-    if (model.getCode() != null && model.getCode().equals(code)) {
-      common.setCode(code);
+
+    if (model.getCode() != null && code != null) {
+      if (analysisMode && !model.getCode().equals(code)) {
+        common.setCode(InfoModel.MULTIPLE_VALUES);
+      } else if (model.getCode().equals(code)) {
+        common.setCode(code);
+        found = true;
+      }
     }
-    if (model.getTerm() != null && model.getTerm().equals(term)) {
-      common.setTerm(term);
+
+    if (model.getTerm() != null && term != null) {
+      if (analysisMode && !model.getTerm().equals(term)) {
+        common.setTerm(InfoModel.MULTIPLE_VALUES);
+      } else if (model.getTerm().equals(term)) {
+        common.setTerm(term);
+        found = true;
+      }
     }
+
+    if (!found) {
+      return null;
+    }
+
     return common;
+  }
+
+  /* see superclass */
+  @Override
+  public int hashCode() {
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + ((code == null) ? 0 : code.hashCode());
+    result = prime * result + ((term == null) ? 0 : term.hashCode());
+    return result;
+  }
+
+  /* see superclass */
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj)
+      return true;
+    if (obj == null)
+      return false;
+    if (getClass() != obj.getClass())
+      return false;
+    DefaultInfoModel other = (DefaultInfoModel) obj;
+    if (code == null) {
+      if (other.code != null)
+        return false;
+    } else if (!code.equals(other.code))
+      return false;
+    if (term == null) {
+      if (other.term != null)
+        return false;
+    } else if (!term.equals(other.term))
+      return false;
+    return true;
+  }
+
+  /* see superclass */
+  @Override
+  public String toString() {
+    return "DefaultInfoModel [code=" + code + ", term=" + term + "]";
   }
 
 }
