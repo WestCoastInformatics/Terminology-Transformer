@@ -15,14 +15,15 @@ import com.wci.tt.helpers.ScoredDataContext;
 import com.wci.tt.helpers.ScoredResult;
 import com.wci.tt.jpa.helpers.ScoredDataContextJpa;
 import com.wci.tt.jpa.helpers.ScoredResultJpa;
+import com.wci.tt.jpa.infomodels.NdcModel;
 import com.wci.tt.jpa.services.helper.DataContextMatcher;
 import com.wci.tt.services.handlers.ProviderHandler;
 
 /**
  * Default implementation of {@link ProviderHandler}.
  * 
- * This provider converts a normalized NDC code into an RXNORM code 
- * (with history information).
+ * This provider converts a normalized NDC code into an RXNORM code (with
+ * history information).
  * 
  */
 public class NdcProvider extends AbstractAcceptsHandler
@@ -36,13 +37,22 @@ public class NdcProvider extends AbstractAcceptsHandler
   public NdcProvider() throws Exception {
 
     // Configure input/output matchers
-    // Takes any name, returns a code
+
+    // Input matcher needs to have a code, e.g. the caller should use this:
+    // DataContext inputContext = new DataContextJpa();
+    // inputContext.setType(DataContextType.CODE);
+    // inputContext.setTerminology("NDC");
     DataContextMatcher inputMatcher = new DataContextMatcher();
     inputMatcher.configureContext(DataContextType.CODE, null, null, null, null,
         "NDC", null);
     DataContextMatcher outputMatcher = new DataContextMatcher();
-    outputMatcher.configureContext(DataContextType.CODE, null, null, null, null,
-        "RXNORM", null);
+
+    // Output matcher needs to have an NdcModel information model, e.g. the caller should use this:
+    // DataContext outputContext = new DataContextJpa();
+    // outputContext.setType(DataContextType.INFO_MODEL);
+    // inputContext.setInfoModelClass(NdcModel.class.getName());
+    outputMatcher.configureContext(DataContextType.INFO_MODEL, null, null, null,
+        NdcModel.class.getName(), null, null);
     addMatcher(inputMatcher, outputMatcher);
 
   }
@@ -64,7 +74,7 @@ public class NdcProvider extends AbstractAcceptsHandler
     // is set to '1'.
     List<ScoredDataContext> scoredContexts = new ArrayList<ScoredDataContext>();
 
-    // Check whether inputString is an NDC code
+    // Check whether inputString is an NDC code (worry about this later)
     // TODO:
     if (true) {
       // If so, we know it is the supported input type.
@@ -89,7 +99,7 @@ public class NdcProvider extends AbstractAcceptsHandler
     // Set up return value
     final List<ScoredResult> results = new ArrayList<ScoredResult>();
 
-    // Attempt to find the RXNORM CUI (or CUIs) from the NDC code
+    // todo: Attempt to find the RXNORM CUI (or CUIs) from the NDC code
     if (true) {
       final ScoredResult result = new ScoredResultJpa();
       result.setValue(inputString);
