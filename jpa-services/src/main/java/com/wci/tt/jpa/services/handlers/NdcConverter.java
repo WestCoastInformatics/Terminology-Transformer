@@ -22,20 +22,20 @@ import com.wci.tt.services.handlers.ConverterHandler;
  * meaningful results.
  * 
  */
-public class DefaultConverter extends AbstractAcceptsHandler
+public class NdcConverter extends AbstractAcceptsHandler
     implements ConverterHandler {
 
   /**
-   * Instantiates an empty {@link DefaultConverter}.
+   * Instantiates an empty {@link NdcConverter}.
    *
    * @throws Exception the exception
    */
-  public DefaultConverter() throws Exception {
+  public NdcConverter() throws Exception {
     // Configure input/output matchers
     // Takes a code/returns a code
     DataContextMatcher matcher = new DataContextMatcher();
-    matcher.configureContext(DataContextType.NAME, null, null, null, null, null,
-        null);
+    matcher.configureContext(DataContextType.CODE, null, null, null, null,
+        "RXNORM", null);
     addMatcher(matcher, matcher);
   }
 
@@ -48,7 +48,7 @@ public class DefaultConverter extends AbstractAcceptsHandler
   /* see superclass */
   @Override
   public String getName() {
-    return "Default Converter Handler";
+    return "NDC Converter Handler";
   }
 
   /* see superclass */
@@ -67,7 +67,7 @@ public class DefaultConverter extends AbstractAcceptsHandler
     // DefaultHandler returns "converted form" of input as-is
     final DataContextTuple tuple = new DataContextTupleJpa();
 
-    // Ensure that input is valid.
+    // Ensure that input is valid, then pass through
     if (inputString != null && !inputString.isEmpty() && inputContext != null
         && outputContext != null) {
       tuple.setDataContext(outputContext);
