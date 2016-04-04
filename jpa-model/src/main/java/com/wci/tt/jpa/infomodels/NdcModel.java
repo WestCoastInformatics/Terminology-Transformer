@@ -18,7 +18,7 @@ import com.wci.umls.server.helpers.ConfigUtility;
  * Information model for representing NDC-RXNORM history.
  * 
  * <pre>
- *    { active : "false", rxcui = "312656",
+ *    { active : "false", ndc: "19428372921", rxcui : "312656",
  *      history : [{ rxcui : "312656", active : "true", startDate : "200706", endDate : "201101" }]
  *    }
  * </pre>
@@ -28,6 +28,9 @@ public class NdcModel implements InfoModel<NdcModel> {
 
   /** The active flag. */
   private boolean active;
+
+  /** The ndc. */
+  private String ndc;
 
   /** The rxcui. */
   private String rxcui;
@@ -50,9 +53,9 @@ public class NdcModel implements InfoModel<NdcModel> {
   public NdcModel(NdcModel model) {
     active = model.isActive();
     rxcui = model.getRxcui();
+    ndc = model.getNdc();
     history = new ArrayList<>(model.getHistory());
   }
-
 
   /**
    * Returns the name.
@@ -93,6 +96,24 @@ public class NdcModel implements InfoModel<NdcModel> {
    */
   public void setRxcui(String rxcui) {
     this.rxcui = rxcui;
+  }
+
+  /**
+   * Returns the ndc.
+   *
+   * @return the ndc
+   */
+  public String getNdc() {
+    return ndc;
+  }
+
+  /**
+   * Sets the ndc.
+   *
+   * @param ndc the ndc
+   */
+  public void setNdc(String ndc) {
+    this.ndc = ndc;
   }
 
   /**
@@ -190,6 +211,15 @@ public class NdcModel implements InfoModel<NdcModel> {
       }
     }
 
+    if (model.getNdc() != null && ndc != null) {
+      if (analysisMode && !model.getNdc().equals(ndc)) {
+        common.setNdc(InfoModel.MULTIPLE_VALUES);
+      } else if (model.getNdc().equals(ndc)) {
+        common.setNdc(ndc);
+        found = true;
+      }
+    }
+
     if (model.getHistory() != null && history != null) {
       // Find common ingredient strength values
       for (final NdcHistoryModel in : model.getHistory()) {
@@ -219,6 +249,7 @@ public class NdcModel implements InfoModel<NdcModel> {
     result = prime * result + (active ? 1231 : 1237);
     result = prime * result + ((history == null) ? 0 : history.hashCode());
     result = prime * result + ((rxcui == null) ? 0 : rxcui.hashCode());
+    result = prime * result + ((ndc == null) ? 0 : ndc.hashCode());
     return result;
   }
 
@@ -244,14 +275,19 @@ public class NdcModel implements InfoModel<NdcModel> {
         return false;
     } else if (!rxcui.equals(other.rxcui))
       return false;
+    if (ndc == null) {
+      if (other.ndc != null)
+        return false;
+    } else if (!ndc.equals(other.ndc))
+      return false;
     return true;
   }
 
   /* see superclass */
   @Override
   public String toString() {
-    return "NdcModel [active=" + active + ", rxcui=" + rxcui + ", history="
-        + history + "]";
+    return "NdcModel [active=" + active + ", rxcui=" + rxcui + ", ndc=" + ndc
+        + ", history=" + history + "]";
   }
 
 }
