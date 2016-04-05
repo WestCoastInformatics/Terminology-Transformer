@@ -12,14 +12,23 @@ import org.apache.log4j.Logger;
 
 import com.wci.tt.SourceData;
 import com.wci.tt.jpa.services.SourceDataServiceJpa;
+import com.wci.tt.jpa.services.algo.NdcLoaderAlgorithm;
 import com.wci.tt.services.SourceDataService;
 import com.wci.tt.services.handlers.SourceDataLoader;
+import com.wci.umls.server.helpers.Branch;
 import com.wci.umls.server.helpers.ConfigUtility;
 import com.wci.umls.server.helpers.LocalException;
-import com.wci.umls.server.jpa.services.rest.ContentServiceRest;
+import com.wci.umls.server.jpa.algo.LabelSetMarkedParentAlgorithm;
+import com.wci.umls.server.jpa.algo.TransitiveClosureAlgorithm;
+import com.wci.umls.server.jpa.algo.TreePositionAlgorithm;
+import com.wci.umls.server.jpa.services.ContentServiceJpa;
 import com.wci.umls.server.jpa.services.rest.SecurityServiceRest;
-import com.wci.umls.server.rest.impl.ContentServiceRestImpl;
+import com.wci.umls.server.model.content.ConceptSubset;
+import com.wci.umls.server.model.content.Subset;
+import com.wci.umls.server.model.meta.IdType;
+import com.wci.umls.server.model.meta.Terminology;
 import com.wci.umls.server.rest.impl.SecurityServiceRestImpl;
+import com.wci.umls.server.services.ContentService;
 import com.wci.umls.server.services.helpers.ProgressEvent;
 import com.wci.umls.server.services.helpers.ProgressListener;
 
@@ -100,12 +109,83 @@ public class NdcSourceDataLoader implements SourceDataLoader {
     final String adminAuthToken =
         securityService.authenticate(config.getProperty("admin.user"),
             config.getProperty("admin.password")).getAuthToken();
-    final ContentServiceRest contentService = new ContentServiceRestImpl();
+    
     try {
       sourceData.setLoaderStatus(SourceData.Status.LOADING);
       sourceDataService.updateSourceData(sourceData);
-      contentService.loadTerminologyRrf(terminology, version, false, false,
-          prefix, inputDir, adminAuthToken);
+      // Load RRF
+      final NdcLoaderAlgorithm algorithm = new NdcLoaderAlgorithm();
+      algorithm.setTerminology(terminology);
+      algorithm.setVersion(version);
+      algorithm.setInputDir(inputDir);
+      algorithm.compute();
+      algorithm.close();
+
+      // Compute transitive closure
+      // Obtain each terminology and run transitive closure on it with the
+      // correct id type
+      // Refresh caches after metadata has changed in loader
+      ContentService contentService = new ContentServiceJpa();
+      for (final Terminology t : contentService.getTerminologyLatestVersions()
+          .getObjects()) {
+        // Only compute for organizing class types
+        if (t.getOrganizingClassType() != null) {
+          TransitiveClosureAlgorithm algo = new TransitiveClosureAlgorithm();
+          algo.setTerminology(t.getTerminology());
+          algo.setVersion(t.getVersion());
+          algo.setIdType(t.getOrganizingClassType());
+          // some terminologies may have cycles, allow these for now.
+          algo.setCycleTolerant(true);
+          algo.compute();
+          algo.close();
+        }
+      }
+
+      // Compute tree positions
+      // Refresh caches after metadata has changed in loader
+      for (final Terminology t : contentService.getTerminologyLatestVersions()
+          .getObjects()) {
+        // Only compute for organizing class types
+        if (t.getOrganizingClassType() != null) {
+          TreePositionAlgorithm algo = new TreePositionAlgorithm();
+          algo.setTerminology(t.getTerminology());
+          algo.setVersion(t.getVersion());
+          algo.setIdType(t.getOrganizingClassType());
+          // some terminologies may have cycles, allow these for now.
+          algo.setCycleTolerant(true);
+          // compute "semantic types" for concept hierarchies
+          if (t.getOrganizingClassType() == IdType.CONCEPT) {
+            algo.setComputeSemanticType(true);
+          }
+          algo.compute();
+          algo.close();
+        }
+      }
+
+      // Compute label sets - after transitive closure
+      // for each subset, compute the label set
+      for (final Terminology t : contentService.getTerminologyLatestVersions()
+          .getObjects()) {
+        for (final Subset subset : contentService
+            .getConceptSubsets(t.getTerminology(), t.getVersion(), Branch.ROOT)
+            .getObjects()) {
+          final ConceptSubset conceptSubset = (ConceptSubset) subset;
+          if (conceptSubset.isLabelSubset()) {
+            Logger.getLogger(getClass())
+                .info("  Create label set for subset = " + subset);
+            LabelSetMarkedParentAlgorithm algo3 =
+                new LabelSetMarkedParentAlgorithm();
+            algo3.setSubset(conceptSubset);
+            algo3.compute();
+            algo3.close();
+          }
+        }
+      }
+      // Clean-up
+
+      ConfigUtility
+          .deleteDirectory(new File(inputDir, "/RRF-sorted-temp/"));
+
       sourceData.setLoaderStatus(SourceData.Status.FINISHED);
       sourceDataService.updateSourceData(sourceData);
 

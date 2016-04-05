@@ -13,6 +13,7 @@ import com.wci.tt.DataContext;
 import com.wci.tt.helpers.ScoredResult;
 import com.wci.tt.jpa.helpers.ScoredResultJpa;
 import com.wci.tt.services.handlers.NormalizerHandler;
+import com.wci.umls.server.helpers.LocalException;
 
 /**
  * NDC implementation of {@link NormalizerHandler}.
@@ -45,8 +46,10 @@ public class NdcNormalizer extends AbstractNormalizer
   @Override
   public List<ScoredResult> normalize(String inputStr, DataContext context)
     throws Exception {
-/*  <pre>  # reformat any 3-segment NDC into an 11-digit NDC without hyphens
-    #
+/*  
+ * <pre>  
+ *  # reformat any 3-segment NDC into an 11-digit NDC without hyphens
+ *  #
     # NB:
     # * some valid NDCs contain non-numeric digits (product code and package code)
     #   e.g., 53157-AS3-BO 8 POUCH in 1 BOX (53157-AS3-BO)  > 3 BAG in 1 POUCH (53157-AS3-PO)  > 110 mL in 1 BAG (53157-AS3-BG) 
@@ -70,7 +73,9 @@ public class NdcNormalizer extends AbstractNormalizer
     #   - remove the leading 0 ONLY from 12-digit NDCs from VANDF starting with a 0
     #   - replace * with 0 (regardless of source, but intended for MTHFDA)
     # ----------
-    #</pre>*/
+    #
+    </pre>
+    */
 
     String ndc11 = "";
     // replace * with 0 (regardless of source, but intended for MTHFDA)
@@ -122,7 +127,7 @@ public class NdcNormalizer extends AbstractNormalizer
         // # invalid hyphenated NDC format
         System.out.println("format = %d-%d-%d\n" + segment1.length()
             + segment2.length() + segment3.length());
-        System.out.println("invalid hyphenated NDC format = $format");
+        throw new LocalException("invalid hyphenated NDC format = $format");
       }
     } else if (hyphenCt > 2) {
       System.out.println("invalid hyphenated NDC format = %s");
@@ -130,6 +135,8 @@ public class NdcNormalizer extends AbstractNormalizer
       ndc11 = inputStr;
     } else if (inputStr.length() == 12) {
       ndc11 = inputStr.substring(1);
+    } else {
+      throw new LocalException("NDC code has an invalid format.");
     }
 
     // Simply return data passed in for this "naive" case. As such, the

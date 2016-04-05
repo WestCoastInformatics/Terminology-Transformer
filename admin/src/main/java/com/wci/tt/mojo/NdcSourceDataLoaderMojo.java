@@ -14,6 +14,7 @@ import com.wci.tt.SourceData;
 import com.wci.tt.SourceDataFile;
 import com.wci.tt.jpa.SourceDataFileJpa;
 import com.wci.tt.jpa.SourceDataJpa;
+import com.wci.tt.jpa.loaders.NdcSourceDataLoader;
 import com.wci.tt.jpa.loaders.RrfSourceDataLoader;
 import com.wci.tt.jpa.services.SourceDataServiceJpa;
 import com.wci.tt.services.SourceDataService;
@@ -28,7 +29,7 @@ import com.wci.umls.server.services.handlers.ExceptionHandler;
  * 
  * See admin/pom.xml for a sample execution.
  * 
- * @goal RRF-ndc
+ * @goal ndc-rxnorm
  * @phase package
  */
 public class NdcSourceDataLoaderMojo extends SourceDataMojo {
@@ -119,7 +120,7 @@ public class NdcSourceDataLoaderMojo extends SourceDataMojo {
       getLog().info("    file = " + sdFile);
 
       // Create loader
-      final RrfSourceDataLoader loader = new RrfSourceDataLoader();
+      final NdcSourceDataLoader loader = new NdcSourceDataLoader();
 
       // Create and add the source data
       final SourceData sourceData = new SourceDataJpa();

@@ -16,7 +16,7 @@ import javax.ws.rs.core.Response.Status.Family;
 import org.apache.log4j.Logger;
 
 import com.wci.tt.jpa.infomodels.NdcModel;
-import com.wci.tt.jpa.services.rest.NdcRxnormRest;
+import com.wci.tt.jpa.services.rest.NdcRest;
 import com.wci.tt.jpa.services.rest.TransformServiceRest;
 import com.wci.umls.server.helpers.ConfigUtility;
 import com.wci.umls.server.rest.client.RootClientRest;
@@ -25,48 +25,22 @@ import com.wci.umls.server.rest.client.RootClientRest;
  * Class calling the REST Service for Transform routines for
  * {@link TransformServiceRest}.
  */
-public class NdcRxnormClientRest extends RootClientRest
-    implements NdcRxnormRest {
+public class NdcClientRest extends RootClientRest
+    implements NdcRest {
 
   /** The config. */
   private Properties config = null;
 
   /**
-   * Instantiates a {@link NdcRxnormClientRest} from the specified parameters.
+   * Instantiates a {@link NdcClientRest} from the specified parameters.
    *
    * @param config the config
    */
-  public NdcRxnormClientRest(Properties config) {
+  public NdcClientRest(Properties config) {
     this.config = config;
   }
 
-  /* see superclass */
-  @Override
-  public void loadTerminologyNdc(String terminology, String version,
-    String inputDir, String authToken) throws Exception {
-    Logger.getLogger(getClass()).debug("Content Client - load terminology ndc "
-        + terminology + ", " + version + ", " + inputDir);
 
-    validateNotEmpty(terminology, "terminology");
-    validateNotEmpty(version, "version");
-    validateNotEmpty(inputDir, "inputDir");
-
-    Client client = ClientBuilder.newClient();
-    WebTarget target = client.target(
-        config.getProperty("base.url") + "/terminology/load/ndc?terminology="
-            + terminology + "&version=" + version);
-
-    Response response = target.request(MediaType.APPLICATION_XML)
-        .header("Authorization", authToken).put(Entity.text(inputDir));
-
-    if (response.getStatusInfo().getFamily() == Family.SUCCESSFUL) {
-      // do nothing
-    } else {
-      throw new Exception("Unexpected status " + response.getStatus());
-    }
-
-  }
-  
   /* see superclass */
   @Override
   public NdcModel process(String inputStr, String authToken) throws Exception {
