@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Properties;
 
 import org.apache.commons.lang3.StringUtils;
-import org.glassfish.hk2.utilities.reflection.Logger;
 
 import com.wci.tt.DataContext;
 import com.wci.tt.helpers.ScoredResult;
@@ -46,19 +45,33 @@ public class NdcNormalizer extends AbstractNormalizer
   @Override
   public List<ScoredResult> normalize(String inputStr, DataContext context)
     throws Exception {
-    // Normalize the NDC code inputStr
-    // reformat any 3-segment NDC into an 11-digit NDC without hyphens
-    // the NDC11 format (no hyphens) is known as the HIPPA NDC format
-    /*
-     * convert into a 5-4-2 configuration (without hyphens) by padding to the
-     * left with zeros # * official NDC10 formats: # - 4-4-2 # - 5-3-2 # - 5-4-1
-     * # * formats handled by RxNorm normalization: # - 6-4-2 # - 6-4-1 # -
-     * 6-3-2 # - 6-3-1 # - 5-4-2 # - 5-4-1 # - 5-3-2 # - 4-4-2 # * additionally,
-     * RxNorm normalization applies the following rules # - consider invalid
-     * NDCs with alpha characters # - remove the leading 0 ONLY from 12-digit
-     * NDCs from VANDF starting with a 0 # - replace * with 0 (regardless of
-     * source, but intended for MTHFDA)
-     */
+/*  <pre>  # reformat any 3-segment NDC into an 11-digit NDC without hyphens
+    #
+    # NB:
+    # * some valid NDCs contain non-numeric digits (product code and package code)
+    #   e.g., 53157-AS3-BO 8 POUCH in 1 BOX (53157-AS3-BO)  > 3 BAG in 1 POUCH (53157-AS3-PO)  > 110 mL in 1 BAG (53157-AS3-BG) 
+    # * the NDC11 format (no hyphens) is known as the HIPPA NDC format
+    # * convert into a 5-4-2 configuration (without hyphens) by padding to the left with zeros
+    # * official NDC10 formats:
+    #   - 4-4-2
+    #   - 5-3-2
+    #   - 5-4-1
+    # * formats handled by RxNorm normalization:
+    #   - 6-4-2
+    #   - 6-4-1
+    #   - 6-3-2
+    #   - 6-3-1
+    #   - 5-4-2
+    #   - 5-4-1
+    #   - 5-3-2
+    #   - 4-4-2
+    # * additionally, RxNorm normalization applies the following rules
+    #   - consider invalid NDCs with alpha characters
+    #   - remove the leading 0 ONLY from 12-digit NDCs from VANDF starting with a 0
+    #   - replace * with 0 (regardless of source, but intended for MTHFDA)
+    # ----------
+    #</pre>*/
+
     String ndc11 = "";
     // replace * with 0 (regardless of source, but intended for MTHFDA)
     inputStr = inputStr.replace('*', '0');
@@ -72,14 +85,14 @@ public class NdcNormalizer extends AbstractNormalizer
       String segment2 = segments[1];
       String segment3 = segments[2];
 
-      if (inputStr.matches("\\/^\\d{6}\\-\\d{4}\\-\\d{2}$\\/o")
-          || inputStr.matches("\\/^\\d{6}\\-\\d{4}\\-\\d{1}$\\/o")
-          || inputStr.matches("\\/^\\d{6}\\-\\d{3}\\-\\d{2}$\\/o")
-          || inputStr.matches("\\/^\\d{6}\\-\\d{3}\\-\\d{1}$\\/o")
-          || inputStr.matches("\\/^\\d{5}\\-\\d{4}\\-\\d{2}$\\/o")
-          || inputStr.matches("\\/^\\d{5}\\-\\d{4}\\-\\d{1}$\\/o")
-          || inputStr.matches("\\/^\\d{5}\\-\\d{3}\\-\\d{2}$\\/o")
-          || inputStr.matches("\\/^\\d{4}\\-\\d{4}\\-\\d{2}$\\/o")
+      if (inputStr.matches("^\\d{6}\\-\\d{4}\\-\\d{2}$")
+          || inputStr.matches("^\\d{6}\\-\\d{4}\\-\\d{1}$")
+          || inputStr.matches("^\\d{6}\\-\\d{3}\\-\\d{2}$")
+          || inputStr.matches("^\\d{6}\\-\\d{3}\\-\\d{1}$")
+          || inputStr.matches("^\\d{5}\\-\\d{4}\\-\\d{2}$")
+          || inputStr.matches("^\\d{5}\\-\\d{4}\\-\\d{1}$")
+          || inputStr.matches("^\\d{5}\\-\\d{3}\\-\\d{2}$")
+          || inputStr.matches("^\\d{4}\\-\\d{4}\\-\\d{2}$")
       ) {
         // # valid hyphenated NDC format (RxNorm)
         System.out.println("format = %d-%d-%d\n" + segment1.length()
