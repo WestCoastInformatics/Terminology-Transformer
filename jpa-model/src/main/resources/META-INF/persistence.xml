@@ -38,6 +38,7 @@
     <class>com.wci.umls.server.jpa.content.SemanticTypeComponentJpa</class>
     <class>com.wci.umls.server.jpa.content.StringClassJpa</class>
     <class>com.wci.umls.server.jpa.helpers.PrecedenceListJpa</class>
+    <class>com.wci.umls.server.jpa.helpers.LogEntryJpa</class>
     <class>com.wci.umls.server.jpa.meta.AdditionalRelationshipTypeJpa</class>
     <class>com.wci.umls.server.jpa.meta.AttributeNameJpa</class>
     <class>com.wci.umls.server.jpa.meta.CitationJpa</class>

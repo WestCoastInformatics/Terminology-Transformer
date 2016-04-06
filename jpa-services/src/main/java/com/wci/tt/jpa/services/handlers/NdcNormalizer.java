@@ -48,33 +48,33 @@ public class NdcNormalizer extends AbstractNormalizer
     throws Exception {
 /*  
  * <pre>  
- *  # reformat any 3-segment NDC into an 11-digit NDC without hyphens
- *  #
-    # NB:
-    # * some valid NDCs contain non-numeric digits (product code and package code)
-    #   e.g., 53157-AS3-BO 8 POUCH in 1 BOX (53157-AS3-BO)  > 3 BAG in 1 POUCH (53157-AS3-PO)  > 110 mL in 1 BAG (53157-AS3-BG) 
-    # * the NDC11 format (no hyphens) is known as the HIPPA NDC format
-    # * convert into a 5-4-2 configuration (without hyphens) by padding to the left with zeros
-    # * official NDC10 formats:
-    #   - 4-4-2
-    #   - 5-3-2
-    #   - 5-4-1
-    # * formats handled by RxNorm normalization:
-    #   - 6-4-2
-    #   - 6-4-1
-    #   - 6-3-2
-    #   - 6-3-1
-    #   - 5-4-2
-    #   - 5-4-1
-    #   - 5-3-2
-    #   - 4-4-2
-    # * additionally, RxNorm normalization applies the following rules
-    #   - consider invalid NDCs with alpha characters
-    #   - remove the leading 0 ONLY from 12-digit NDCs from VANDF starting with a 0
-    #   - replace * with 0 (regardless of source, but intended for MTHFDA)
-    # ----------
-    #
-    </pre>
+ * reformat any 3-segment NDC into an 11-digit NDC without hyphens
+ *
+ *  NB:
+ *  * some valid NDCs contain non-numeric digits (product code and package code)
+ *   e.g., 53157-AS3-BO 8 POUCH in 1 BOX (53157-AS3-BO)  > 3 BAG in 1 POUCH (53157-AS3-PO)  > 110 mL in 1 BAG (53157-AS3-BG) 
+ * * the NDC11 format (no hyphens) is known as the HIPPA NDC format
+ * * convert into a 5-4-2 configuration (without hyphens) by padding to the left with zeros
+ * * official NDC10 formats:
+ *   - 4-4-2
+ *   - 5-3-2
+ *   - 5-4-1
+ * * formats handled by RxNorm normalization:
+ *   - 6-4-2
+ *   - 6-4-1
+ *   - 6-3-2
+ *   - 6-3-1
+ *   - 5-4-2
+ *   - 5-4-1
+ *   - 5-3-2
+ *   - 4-4-2
+ * * additionally, RxNorm normalization applies the following rules
+ *   - consider invalid NDCs with alpha characters
+ *   - remove the leading 0 ONLY from 12-digit NDCs from VANDF starting with a 0
+ *   - replace * with 0 (regardless of source, but intended for MTHFDA)
+ * ----------
+ *
+ *  </pre>
     */
 
     String ndc11 = "";
@@ -100,9 +100,7 @@ public class NdcNormalizer extends AbstractNormalizer
           || inputStr.matches("^\\d{4}\\-\\d{4}\\-\\d{2}$")
       ) {
         // # valid hyphenated NDC format (RxNorm)
-        System.out.println("format = %d-%d-%d\n" + segment1.length()
-            + segment2.length() + segment3.length());
-
+        
         // # *** make segment 1 have 5 digits
         if (segment1.length() == 6) {
           // # remove the first digit
@@ -125,12 +123,11 @@ public class NdcNormalizer extends AbstractNormalizer
         ndc11 = segment1 + segment2 + segment3;
       } else {
         // # invalid hyphenated NDC format
-        System.out.println("format = %d-%d-%d\n" + segment1.length()
-            + segment2.length() + segment3.length());
-        throw new LocalException("invalid hyphenated NDC format = $format");
+        throw new LocalException("invalid hyphenated NDC format " + segment1.length()
+        + "-" + segment2.length() + "-" + segment3.length());
       }
     } else if (hyphenCt > 2) {
-      System.out.println("invalid hyphenated NDC format = %s");
+      throw new LocalException("NDC code has invalid hyphenated NDC format.");
     } else if (inputStr.length() == 11) {
       ndc11 = inputStr;
     } else if (inputStr.length() == 12) {

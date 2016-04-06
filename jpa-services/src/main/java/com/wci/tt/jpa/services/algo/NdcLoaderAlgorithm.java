@@ -10,8 +10,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
-
 import com.wci.umls.server.algo.Algorithm;
 import com.wci.umls.server.helpers.ConfigUtility;
 import com.wci.umls.server.helpers.FieldedStringTokenizer;
@@ -205,10 +203,10 @@ public class NdcLoaderAlgorithm extends AbstractLoaderAlgorithm
   @Override
   public void compute() throws Exception {
     try {
-      Logger.getLogger(getClass()).info("Start loading RRF");
-      Logger.getLogger(getClass()).info("  terminology = " + terminology);
-      Logger.getLogger(getClass()).info("  version = " + version);
-      Logger.getLogger(getClass()).info("  releaseVersion = " + releaseVersion);
+      logInfo("Start loading RRF");
+      logInfo("  terminology = " + terminology);
+      logInfo("  version = " + version);
+      logInfo("  releaseVersion = " + releaseVersion);
       
       // Check the input directory
       File inputDirFile = new File(inputDir);
@@ -217,7 +215,7 @@ public class NdcLoaderAlgorithm extends AbstractLoaderAlgorithm
       }
 
       // Sort files - not really needed because files are already sorted
-      Logger.getLogger(getClass()).info("  Sort RRF Files");
+      logInfo("  Sort RRF Files");
       final RrfFileSorter sorter = new RrfFileSorter();
       // Be flexible about missing files for RXNORM
       sorter
@@ -228,7 +226,7 @@ public class NdcLoaderAlgorithm extends AbstractLoaderAlgorithm
       if (releaseVersion == null) {
         releaseVersion = version;
       }
-      Logger.getLogger(getClass()).info("  releaseVersion = " + releaseVersion);
+      logInfo("  releaseVersion = " + releaseVersion);
 
       // Open readers - just open original RRF
       final RrfReaders readers = new RrfReaders(inputDirFile);
@@ -284,15 +282,15 @@ public class NdcLoaderAlgorithm extends AbstractLoaderAlgorithm
       loadMrsat();
 
       // Final logging messages
-      Logger.getLogger(getClass()).info("      elapsed time = " + getTotalElapsedTimeStr(startTimeOrig));
-      Logger.getLogger(getClass()).info("Done ...");
+      logInfo("      elapsed time = " + getTotalElapsedTimeStr(startTimeOrig));
+      logInfo("Done ...");
 
       // clear and commit
       commit();
       clear();
 
     } catch (Exception e) {
-      Logger.getLogger(getClass()).error(e.getMessage());
+      logError(e.getMessage());
       throw e;
     }
   }
@@ -306,7 +304,7 @@ public class NdcLoaderAlgorithm extends AbstractLoaderAlgorithm
    * @throws Exception the exception
    */
   private void loadMrsat() throws Exception {
-    Logger.getLogger(getClass()).info("  Load MRSAT data");
+    logInfo("  Load MRSAT data");
     String line = null;
 
     int objectCt = 0;
@@ -408,8 +406,8 @@ public class NdcLoaderAlgorithm extends AbstractLoaderAlgorithm
    * @throws Exception the exception
    */
   private void loadMrconso() throws Exception {
-    Logger.getLogger(getClass()).info("  Load MRCONSO");
-    Logger.getLogger(getClass()).info("  Insert atoms and concepts ");
+    logInfo("  Load MRCONSO");
+    logInfo("  Insert atoms and concepts ");
 
     // Set up maps
     String line = null;
@@ -572,7 +570,7 @@ public class NdcLoaderAlgorithm extends AbstractLoaderAlgorithm
     for (int i = 0; i < listeners.size(); i++) {
       listeners.get(i).updateProgress(pe);
     }
-    Logger.getLogger(getClass()).info("    " + pct + "% " + note);
+    logInfo("    " + pct + "% " + note);
   }
 
   /**

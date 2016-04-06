@@ -106,8 +106,7 @@ public class NdcSourceDataLoader implements SourceDataLoader {
     // Use content service rest because it has "loadRrfTerminology"
     final Properties config = ConfigUtility.getConfigProperties();
     final SecurityServiceRest securityService = new SecurityServiceRestImpl();
-    final String adminAuthToken =
-        securityService.authenticate(config.getProperty("admin.user"),
+    securityService.authenticate(config.getProperty("admin.user"),
             config.getProperty("admin.password")).getAuthToken();
     
     try {
