@@ -65,7 +65,7 @@ public interface TransformServiceRest {
    * @return the source data loaders
    * @throws Exception the exception
    */
-  public KeyValuePairList getSourceDataLoaders(String authToken)
+  public KeyValuePairList getSourceDataHandlers(String authToken)
     throws Exception;
 
   /**

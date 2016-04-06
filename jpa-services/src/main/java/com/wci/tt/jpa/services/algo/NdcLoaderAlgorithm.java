@@ -53,7 +53,7 @@ public class NdcLoaderAlgorithm extends AbstractLoaderAlgorithm
 
   /** The release version. */
   private String releaseVersion;
-  
+
   /** The input dir. */
   private String inputDir;
 
@@ -79,14 +79,11 @@ public class NdcLoaderAlgorithm extends AbstractLoaderAlgorithm
   /** The loaded languages. */
   private Map<String, Language> loadedLanguages = new HashMap<>();
 
-
   /** The term id type map. */
   private Map<String, IdType> termIdTypeMap = new HashMap<>();
 
-
   /** The atom map. */
   private Map<String, Long> atomIdMap = new HashMap<>(10000);
-
 
   /** The lat code map. */
   private static Map<String, String> latCodeMap = new HashMap<>();
@@ -164,7 +161,7 @@ public class NdcLoaderAlgorithm extends AbstractLoaderAlgorithm
   public void setInputDir(String inputDir) {
     this.inputDir = inputDir;
   }
-  
+
   /**
    * Gets the version.
    *
@@ -183,7 +180,6 @@ public class NdcLoaderAlgorithm extends AbstractLoaderAlgorithm
     this.releaseVersion = releaseVersion;
   }
 
-
   /**
    * Sets the readers.
    *
@@ -192,7 +188,6 @@ public class NdcLoaderAlgorithm extends AbstractLoaderAlgorithm
   public void setReaders(RrfReaders readers) {
     this.readers = readers;
   }
-
 
   /**
    * Compute.
@@ -207,7 +202,7 @@ public class NdcLoaderAlgorithm extends AbstractLoaderAlgorithm
       logInfo("  terminology = " + terminology);
       logInfo("  version = " + version);
       logInfo("  releaseVersion = " + releaseVersion);
-      
+
       // Check the input directory
       File inputDirFile = new File(inputDir);
       if (!inputDirFile.exists()) {
@@ -218,8 +213,7 @@ public class NdcLoaderAlgorithm extends AbstractLoaderAlgorithm
       logInfo("  Sort RRF Files");
       final RrfFileSorter sorter = new RrfFileSorter();
       // Be flexible about missing files for RXNORM
-      sorter
-          .setRequireAllFiles(false);
+      sorter.setRequireAllFiles(false);
       // File outputDir = new File(inputDirFile, "/RRF-sorted-temp/");
       // sorter.sortFiles(inputDirFile, outputDir);
       String releaseVersion = sorter.getFileVersion(inputDirFile);
@@ -233,7 +227,6 @@ public class NdcLoaderAlgorithm extends AbstractLoaderAlgorithm
       // Use default prefix if not specified
       readers.openOriginalReaders("RXN");
 
-      
       releaseVersionDate = ConfigUtility.DATE_FORMAT
           .parse(releaseVersion.substring(0, 4) + "0101");
 
@@ -266,15 +259,15 @@ public class NdcLoaderAlgorithm extends AbstractLoaderAlgorithm
 
       RootTerminology root = loadedRootTerminologies.get(terminology);
       root = new RootTerminologyJpa();
-        root.setFamily(terminology);
-        root.setPreferredName(terminology);
-        root.setRestrictionLevel(0);
-        root.setTerminology(terminology);
-        root.setTimestamp(releaseVersionDate);
-        root.setLastModified(releaseVersionDate);
-        root.setLastModifiedBy(loader);
-        root.setLanguage(loadedLanguages.get("ENG"));
-        
+      root.setFamily(terminology);
+      root.setPreferredName(terminology);
+      root.setRestrictionLevel(0);
+      root.setTerminology(terminology);
+      root.setTimestamp(releaseVersionDate);
+      root.setLastModified(releaseVersionDate);
+      root.setLastModifiedBy(loader);
+      root.setLanguage(loadedLanguages.get("ENG"));
+
       // Load the content
       loadMrconso();
 
@@ -295,9 +288,6 @@ public class NdcLoaderAlgorithm extends AbstractLoaderAlgorithm
     }
   }
 
-
-
-
   /**
    * Load MRSAT. This is responsible for loading {@link Attribute}s.
    *
@@ -310,18 +300,17 @@ public class NdcLoaderAlgorithm extends AbstractLoaderAlgorithm
     int objectCt = 0;
     final PushBackReader reader = readers.getReader(RrfReaders.Keys.MRSAT);
     // make set of all atoms that got an additional attribute
-    
+
     final String fields[] = new String[13];
     while ((line = reader.readLine()) != null) {
       line = line.replace("\r", "");
       FieldedStringTokenizer.split(line, "|", 13, fields);
 
-      
       // Only create attributes if ATN=NDC
       if (!fields[8].equals("NDC")) {
         continue;
       }
-      
+
       if (!fields[9].equals("RXNORM")) {
         continue;
       }
@@ -374,8 +363,7 @@ public class NdcLoaderAlgorithm extends AbstractLoaderAlgorithm
         Atom atom = getAtom(atomIdMap.get(fields[3]));
         atom.addAttribute(att);
         addAttribute(att, atom);
-      } 
-
+      }
 
       // log and commit
       logAndCommit(objectCt, RootService.logCt, RootService.commitCt);
@@ -386,18 +374,10 @@ public class NdcLoaderAlgorithm extends AbstractLoaderAlgorithm
 
     } // end while loop
 
-
     // commit
     commitClearBegin();
 
   }
-
-
-
-
-
-
-
 
   /**
    * Load MRCONSO.RRF. This is responsible for loading {@link Atom}s and
@@ -422,7 +402,6 @@ public class NdcLoaderAlgorithm extends AbstractLoaderAlgorithm
       line = line.replace("\r", "");
       FieldedStringTokenizer.split(line, "|", 18, fields);
 
-    
       // Only create atoms if SAB=RXNORM
       if (!fields[11].equals("RXNORM")) {
         continue;
@@ -479,16 +458,12 @@ public class NdcLoaderAlgorithm extends AbstractLoaderAlgorithm
       atom.setTermType(fields[12].intern());
       atom.setWorkflowStatus(published);
 
-
       atom.setConceptId(fields[9]);
 
       atom.setStringClassId(fields[5]);
       atom.setLexicalClassId(fields[3]);
 
-
-
       termIdTypeMap.put(atom.getTerminology(), IdType.CONCEPT);
-      
 
       // Add atoms and commit periodically
       addAtom(atom);
@@ -499,7 +474,7 @@ public class NdcLoaderAlgorithm extends AbstractLoaderAlgorithm
         if (prevCui != null) {
           cui.setName(getComputedPreferredName(cui));
           addConcept(cui);
-          
+
           logAndCommit(++objectCt, RootService.logCt, RootService.commitCt);
         }
         cui = new ConceptJpa();
@@ -524,7 +499,6 @@ public class NdcLoaderAlgorithm extends AbstractLoaderAlgorithm
       logAndCommit(++objectCt, RootService.logCt, RootService.commitCt);
     }
 
-
     // commit
     commitClearBegin();
 
@@ -547,8 +521,6 @@ public class NdcLoaderAlgorithm extends AbstractLoaderAlgorithm
     return super.getComputedPreferredName(atomClass);
   }
 
-
-
   /**
    * Reset.
    *
@@ -562,8 +534,10 @@ public class NdcLoaderAlgorithm extends AbstractLoaderAlgorithm
 
   /**
    * Fires a {@link ProgressEvent}.
+   *
    * @param pct percent done
    * @param note progress note
+   * @throws Exception the exception
    */
   public void fireProgressEvent(int pct, String note) throws Exception {
     final ProgressEvent pe = new ProgressEvent(this, pct, pct, note);

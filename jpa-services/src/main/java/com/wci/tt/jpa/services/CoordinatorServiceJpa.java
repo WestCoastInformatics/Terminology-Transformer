@@ -33,13 +33,13 @@ import com.wci.tt.services.handlers.AnalyzerHandler;
 import com.wci.tt.services.handlers.ConverterHandler;
 import com.wci.tt.services.handlers.NormalizerHandler;
 import com.wci.tt.services.handlers.ProviderHandler;
-import com.wci.tt.services.handlers.SourceDataLoader;
 import com.wci.tt.services.handlers.ThresholdHandler;
 import com.wci.umls.server.helpers.Branch;
 import com.wci.umls.server.helpers.ConfigUtility;
 import com.wci.umls.server.helpers.PfsParameter;
 import com.wci.umls.server.jpa.services.ContentServiceJpa;
 import com.wci.umls.server.services.handlers.SearchHandler;
+import com.wci.umls.server.services.handlers.SourceDataHandler;
 
 /**
  * JPA and JAXB-enabled implementation of {@link CoordinatorService}.
@@ -57,7 +57,7 @@ public class CoordinatorServiceJpa extends ContentServiceJpa
   static ThresholdHandler threshold = null;
 
   /** The source data loaders. */
-  static Map<String, SourceDataLoader> loaders = new HashMap<>();
+  static Map<String, SourceDataHandler> loaders = new HashMap<>();
 
   /** The normalizer handler . */
   static Map<String, NormalizerHandler> normalizers = new HashMap<>();
@@ -123,9 +123,9 @@ public class CoordinatorServiceJpa extends ContentServiceJpa
           continue;
         }
         // Add handlers to List
-        SourceDataLoader handler =
+        SourceDataHandler handler =
             ConfigUtility.newStandardHandlerInstanceWithConfiguration(key,
-                handlerName, SourceDataLoader.class);
+                handlerName, SourceDataHandler.class);
         loaders.put(handlerName, handler);
       }
       if (loaders.isEmpty()) {
@@ -390,7 +390,7 @@ public class CoordinatorServiceJpa extends ContentServiceJpa
 
   /* see superclass */
   @Override
-  public Map<String, SourceDataLoader> getSourceDataLoaders() throws Exception {
+  public Map<String, SourceDataHandler> getSourceDataHandlers() throws Exception {
     Logger.getLogger(getClass()).debug("Get source data loaders");
     Logger.getLogger(getClass()).debug("  loaders = " + loaders);
     return loaders;

@@ -20,7 +20,7 @@ import com.wci.tt.helpers.ScoredResult;
 import com.wci.tt.jpa.DataContextJpa;
 import com.wci.tt.jpa.infomodels.NdcModel;
 import com.wci.tt.jpa.services.CoordinatorServiceJpa;
-import com.wci.tt.jpa.services.rest.NdcRest;
+import com.wci.tt.jpa.services.rest.NdcServiceRest;
 import com.wci.tt.services.CoordinatorService;
 import com.wci.umls.server.UserRole;
 import com.wci.umls.server.jpa.services.SecurityServiceJpa;
@@ -31,10 +31,7 @@ import com.wordnik.swagger.annotations.ApiOperation;
 import com.wordnik.swagger.annotations.ApiParam;
 
 /**
- * Class implementation the REST Service for NDC routines for
- * {@link NdcRxNormServiceRest}.
- * 
- * Includes hibernate tags for MEME database.
+ * Implementation the REST Service for NDC.
  */
 @Path("/ndc")
 @Api(value = "/ndc", description = "NDC Operations")
@@ -44,18 +41,17 @@ import com.wordnik.swagger.annotations.ApiParam;
 @Produces({
     MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML
 })
-public class NdcRestImpl extends RootServiceRestImpl
-    implements NdcRest {
+public class NdcServiceRestImpl extends RootServiceRestImpl implements NdcServiceRest {
 
   /** The security service. */
   private SecurityService securityService;
 
   /**
-   * Instantiates an empty {@link NdcRestImpl}.
+   * Instantiates an empty {@link NdcServiceRestImpl}.
    *
    * @throws Exception the exception
    */
-  public NdcRestImpl() throws Exception {
+  public NdcServiceRestImpl() throws Exception {
     securityService = new SecurityServiceJpa();
   }
 
@@ -76,14 +72,14 @@ public class NdcRestImpl extends RootServiceRestImpl
     try {
       authorizeApp(securityService, authToken, "process ndc",
           UserRole.ADMINISTRATOR);
-      
+
       DataContext inputContext = new DataContextJpa();
       DataContext outputContext = new DataContextJpa();
 
       final List<ScoredResult> results =
           service.process(ndc, inputContext, outputContext);
       ScoredResult result = results.get(0);
-      
+
       // Translate tuples into JPA object
       final NdcModel ndcModel = new NdcModel();
       ndcModel.setNdc(ndc);

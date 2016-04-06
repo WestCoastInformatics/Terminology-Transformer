@@ -7,11 +7,11 @@ import java.util.List;
 
 import org.apache.maven.plugin.MojoFailureException;
 
-import com.wci.tt.SourceData;
-import com.wci.tt.jpa.services.SourceDataServiceJpa;
 import com.wci.tt.jpa.services.algo.RemoveSourceDataAlgorithm;
-import com.wci.tt.services.SourceDataService;
+import com.wci.umls.server.SourceData;
 import com.wci.umls.server.helpers.ConfigUtility;
+import com.wci.umls.server.jpa.services.SourceDataServiceJpa;
+import com.wci.umls.server.services.SourceDataService;
 
 /**
  * Goal which removes a terminology and corresponding source data from a

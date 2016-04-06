@@ -3,11 +3,11 @@
  */
 package com.wci.tt.jpa.services.algo;
 
-import com.wci.tt.SourceData;
-import com.wci.tt.SourceDataFile;
-import com.wci.tt.jpa.services.SourceDataServiceJpa;
-import com.wci.tt.services.SourceDataService;
+import com.wci.umls.server.SourceData;
+import com.wci.umls.server.SourceDataFile;
 import com.wci.umls.server.jpa.algo.RemoveTerminologyAlgorithm;
+import com.wci.umls.server.jpa.services.SourceDataServiceJpa;
+import com.wci.umls.server.services.SourceDataService;
 
 /**
  * Implementation of an algorithm to remove a terminology and the associated

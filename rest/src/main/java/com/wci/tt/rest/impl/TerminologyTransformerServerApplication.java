@@ -67,7 +67,7 @@ public class TerminologyTransformerServerApplication extends Application {
     final Set<Class<?>> classes = new HashSet<Class<?>>();
     classes.add(SecurityServiceRestImpl.class);
     classes.add(TransformServiceRestImpl.class);
-    classes.add(NdcRestImpl.class);
+    classes.add(NdcServiceRestImpl.class);
     classes
         .add(com.wordnik.swagger.jersey.listing.ApiListingResourceJSON.class);
     classes.add(

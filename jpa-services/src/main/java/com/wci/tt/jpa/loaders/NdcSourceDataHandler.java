@@ -1,5 +1,5 @@
 /*
- *    Copyright 2015 West Coast Informatics, LLC
+ *    Copyright 2016 West Coast Informatics, LLC
  */
 package com.wci.tt.jpa.loaders;
 
@@ -10,11 +10,8 @@ import java.util.Properties;
 
 import org.apache.log4j.Logger;
 
-import com.wci.tt.SourceData;
-import com.wci.tt.jpa.services.SourceDataServiceJpa;
 import com.wci.tt.jpa.services.algo.NdcLoaderAlgorithm;
-import com.wci.tt.services.SourceDataService;
-import com.wci.tt.services.handlers.SourceDataLoader;
+import com.wci.umls.server.SourceData;
 import com.wci.umls.server.helpers.Branch;
 import com.wci.umls.server.helpers.ConfigUtility;
 import com.wci.umls.server.helpers.LocalException;
@@ -22,6 +19,7 @@ import com.wci.umls.server.jpa.algo.LabelSetMarkedParentAlgorithm;
 import com.wci.umls.server.jpa.algo.TransitiveClosureAlgorithm;
 import com.wci.umls.server.jpa.algo.TreePositionAlgorithm;
 import com.wci.umls.server.jpa.services.ContentServiceJpa;
+import com.wci.umls.server.jpa.services.SourceDataServiceJpa;
 import com.wci.umls.server.jpa.services.rest.SecurityServiceRest;
 import com.wci.umls.server.model.content.ConceptSubset;
 import com.wci.umls.server.model.content.Subset;
@@ -29,13 +27,15 @@ import com.wci.umls.server.model.meta.IdType;
 import com.wci.umls.server.model.meta.Terminology;
 import com.wci.umls.server.rest.impl.SecurityServiceRestImpl;
 import com.wci.umls.server.services.ContentService;
+import com.wci.umls.server.services.SourceDataService;
+import com.wci.umls.server.services.handlers.SourceDataHandler;
 import com.wci.umls.server.services.helpers.ProgressEvent;
 import com.wci.umls.server.services.helpers.ProgressListener;
 
 /**
  * Converter for RxNorm files.
  */
-public class NdcSourceDataLoader implements SourceDataLoader {
+public class NdcSourceDataHandler implements SourceDataHandler {
 
   /** Listeners. */
   private List<ProgressListener> listeners = new ArrayList<>();
@@ -43,22 +43,10 @@ public class NdcSourceDataLoader implements SourceDataLoader {
   /** The source data. */
   private SourceData sourceData;
 
-  /** The terminology. */
-  private String terminology;
-
-  /** The version. */
-  private String version;
-
-  /** The prefix. */
-  private String prefix;
-
-  /** The props. */
-  private Properties props;
-
   /**
-   * Instantiates an empty {@link NdcSourceDataLoader}.
+   * Instantiates an empty {@link NdcSourceDataHandler}.
    */
-  public NdcSourceDataLoader() {
+  public NdcSourceDataHandler() {
     // n/a
   }
 
@@ -86,7 +74,7 @@ public class NdcSourceDataLoader implements SourceDataLoader {
           "No source data files specified for source data object "
               + sourceData.getName());
     }
-    if (sourceData.getLoader().isEmpty()) {
+    if (sourceData.getHandler().isEmpty()) {
       throw new Exception(
           "No source data loader specified for source data object "
               + sourceData.getName());
@@ -107,15 +95,15 @@ public class NdcSourceDataLoader implements SourceDataLoader {
     final Properties config = ConfigUtility.getConfigProperties();
     final SecurityServiceRest securityService = new SecurityServiceRestImpl();
     securityService.authenticate(config.getProperty("admin.user"),
-            config.getProperty("admin.password")).getAuthToken();
-    
+        config.getProperty("admin.password")).getAuthToken();
+
     try {
-      sourceData.setLoaderStatus(SourceData.Status.LOADING);
+      sourceData.setStatus(SourceData.Status.LOADING);
       sourceDataService.updateSourceData(sourceData);
       // Load RRF
       final NdcLoaderAlgorithm algorithm = new NdcLoaderAlgorithm();
-      algorithm.setTerminology(terminology);
-      algorithm.setVersion(version);
+      algorithm.setTerminology(sourceData.getTerminology());
+      algorithm.setVersion(sourceData.getVersion());
       algorithm.setInputDir(inputDir);
       algorithm.compute();
       algorithm.close();
@@ -182,14 +170,13 @@ public class NdcSourceDataLoader implements SourceDataLoader {
       }
       // Clean-up
 
-      ConfigUtility
-          .deleteDirectory(new File(inputDir, "/RRF-sorted-temp/"));
+      ConfigUtility.deleteDirectory(new File(inputDir, "/RRF-sorted-temp/"));
 
-      sourceData.setLoaderStatus(SourceData.Status.FINISHED);
+      sourceData.setStatus(SourceData.Status.LOADING_COMPLETE);
       sourceDataService.updateSourceData(sourceData);
 
     } catch (Exception e) {
-      sourceData.setLoaderStatus(SourceData.Status.FAILED);
+      sourceData.setStatus(SourceData.Status.LOADING_FAILED);
       sourceDataService.updateSourceData(sourceData);
       throw new Exception("Loading source data failed - " + sourceData, e);
     } finally {
@@ -237,11 +224,7 @@ public class NdcSourceDataLoader implements SourceDataLoader {
   /* see superclass */
   @Override
   public void setProperties(Properties p) throws Exception {
-    props = new Properties();
-    props.putAll(p);
-    if (props.containsKey("prefix")) {
-      prefix = props.getProperty("prefix");
-    }
+    // n/a
   }
 
   /* see superclass */
@@ -256,13 +239,4 @@ public class NdcSourceDataLoader implements SourceDataLoader {
     // n/a
   }
 
-  @Override
-  public void setTerminology(String terminology) {
-    this.terminology = terminology;
-  }
-
-  @Override
-  public void setVersion(String version) {
-    this.version = version;
-  }
 }

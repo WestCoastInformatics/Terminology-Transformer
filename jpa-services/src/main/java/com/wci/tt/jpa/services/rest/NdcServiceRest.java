@@ -2,7 +2,7 @@ package com.wci.tt.jpa.services.rest;
 
 import com.wci.tt.jpa.infomodels.NdcModel;
 
-public interface NdcRest {
+public interface NdcServiceRest {
 
 
   /**

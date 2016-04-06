@@ -189,7 +189,7 @@ public class TransformClientRest extends RootClientRest
   }
 
   @Override
-  public KeyValuePairList getSourceDataLoaders(String authToken)
+  public KeyValuePairList getSourceDataHandlers(String authToken)
     throws Exception {
     Logger.getLogger(getClass()).debug("Transform Client - loaders ");
 

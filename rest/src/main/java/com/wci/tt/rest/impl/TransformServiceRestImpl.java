@@ -35,7 +35,6 @@ import com.wci.tt.services.CoordinatorService;
 import com.wci.tt.services.handlers.ConverterHandler;
 import com.wci.tt.services.handlers.NormalizerHandler;
 import com.wci.tt.services.handlers.ProviderHandler;
-import com.wci.tt.services.handlers.SourceDataLoader;
 import com.wci.umls.server.UserRole;
 import com.wci.umls.server.helpers.KeyValuePair;
 import com.wci.umls.server.helpers.KeyValuePairList;
@@ -43,6 +42,7 @@ import com.wci.umls.server.helpers.StringList;
 import com.wci.umls.server.jpa.services.SecurityServiceJpa;
 import com.wci.umls.server.rest.impl.RootServiceRestImpl;
 import com.wci.umls.server.services.SecurityService;
+import com.wci.umls.server.services.handlers.SourceDataHandler;
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
 import com.wordnik.swagger.annotations.ApiParam;
@@ -228,7 +228,7 @@ public class TransformServiceRestImpl extends RootServiceRestImpl
   @Path("/data/loaders")
   @GET
   @ApiOperation(value = "Get source data loaders", notes = "Gets all source data loader key/name combinations", response = KeyValuePairList.class)
-  public KeyValuePairList getSourceDataLoaders(
+  public KeyValuePairList getSourceDataHandlers(
     @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
       throws Exception {
     Logger.getLogger(getClass())
@@ -239,8 +239,8 @@ public class TransformServiceRestImpl extends RootServiceRestImpl
       authorizeApp(securityService, authToken, "get loaders", UserRole.VIEWER);
 
       final KeyValuePairList list = new KeyValuePairList();
-      for (final Map.Entry<String, SourceDataLoader> entry : service
-          .getSourceDataLoaders().entrySet()) {
+      for (final Map.Entry<String, SourceDataHandler> entry : service
+          .getSourceDataHandlers().entrySet()) {
         final KeyValuePair pair = new KeyValuePair();
         pair.setKey(entry.getKey());
         pair.setValue(entry.getValue().getName());

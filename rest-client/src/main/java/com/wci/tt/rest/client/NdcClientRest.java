@@ -7,7 +7,6 @@ import java.util.Properties;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -16,7 +15,7 @@ import javax.ws.rs.core.Response.Status.Family;
 import org.apache.log4j.Logger;
 
 import com.wci.tt.jpa.infomodels.NdcModel;
-import com.wci.tt.jpa.services.rest.NdcRest;
+import com.wci.tt.jpa.services.rest.NdcServiceRest;
 import com.wci.tt.jpa.services.rest.TransformServiceRest;
 import com.wci.umls.server.helpers.ConfigUtility;
 import com.wci.umls.server.rest.client.RootClientRest;
@@ -26,7 +25,7 @@ import com.wci.umls.server.rest.client.RootClientRest;
  * {@link TransformServiceRest}.
  */
 public class NdcClientRest extends RootClientRest
-    implements NdcRest {
+    implements NdcServiceRest {
 
   /** The config. */
   private Properties config = null;

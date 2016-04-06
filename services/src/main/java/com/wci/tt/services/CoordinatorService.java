@@ -17,9 +17,9 @@ import com.wci.tt.services.handlers.AnalyzerHandler;
 import com.wci.tt.services.handlers.ConverterHandler;
 import com.wci.tt.services.handlers.NormalizerHandler;
 import com.wci.tt.services.handlers.ProviderHandler;
-import com.wci.tt.services.handlers.SourceDataLoader;
 import com.wci.umls.server.helpers.PfsParameter;
 import com.wci.umls.server.services.RootService;
+import com.wci.umls.server.services.handlers.SourceDataHandler;
 
 /**
  * Generically represents a service for handling top-level
@@ -33,7 +33,7 @@ public interface CoordinatorService extends RootService {
    * @return the source data loaders
    * @throws Exception the exception
    */
-  public Map<String, SourceDataLoader> getSourceDataLoaders() throws Exception;
+  public Map<String, SourceDataHandler> getSourceDataHandlers() throws Exception;
 
   /**
    * Returns the normalizers.
