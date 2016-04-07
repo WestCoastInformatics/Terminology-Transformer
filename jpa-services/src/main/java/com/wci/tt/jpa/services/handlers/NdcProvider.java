@@ -130,7 +130,7 @@ public class NdcProvider extends AbstractAcceptsHandler
     // Set up return value
     final List<ScoredResult> results = new ArrayList<ScoredResult>();
 
-    // todo: Attempt to find the RXNORM CUI (or CUIs) from the NDC code
+    // Attempt to find the RXNORM CUI (or CUIs) from the NDC code
     final NdcModel model = getModel(inputString, record.getNormalizedResults());
     if (model != null) {
       final ScoredResult result = new ScoredResultJpa();

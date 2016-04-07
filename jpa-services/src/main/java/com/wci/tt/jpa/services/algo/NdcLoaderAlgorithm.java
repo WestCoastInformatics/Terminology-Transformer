@@ -321,7 +321,7 @@ public class NdcLoaderAlgorithm extends AbstractLoaderAlgorithm
       } else {
         atom.setVersion(version);
       }
-      atom.setName(fields[8]);
+      atom.setName(fields[10]);
       atom.setConceptId(fields[0]);
       atom.setCodeId("");
       atom.setDescriptorId("");
@@ -329,6 +329,7 @@ public class NdcLoaderAlgorithm extends AbstractLoaderAlgorithm
       atom.setStringClassId("");
       atom.setLexicalClassId("");
       atom.setTermType("NDC");
+      atom.setLanguage("ENG");
       
         Concept concept = getConcept(conceptIdMap.get(fields[0]));
         concept.addAtom(atom);

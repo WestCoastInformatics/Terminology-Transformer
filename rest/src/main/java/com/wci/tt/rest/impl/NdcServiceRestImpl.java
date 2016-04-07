@@ -61,17 +61,17 @@ public class NdcServiceRestImpl extends RootServiceRestImpl implements NdcServic
   @GET
   @ApiOperation(value = "Process and Convert on all supported input/output data contexts", notes = "Execute the Process and Convert calls for all supported input and output contexts", response = NdcModel.class)
   public NdcModel process(
-    @ApiParam(value = "NDC Input, e.g. 'oral tablet'", required = true) @PathParam("ndc") String ndc,
+    @ApiParam(value = "NDC Input, e.g. '12345678911'", required = true) @PathParam("ndc") String ndc,
     @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
       throws Exception {
 
     Logger.getLogger(getClass())
-        .info("RESTful POST call (Content): /process ndc=" + ndc);
+        .info("RESTful POST call (Ndc): /process ndc=" + ndc);
 
     final CoordinatorService service = new CoordinatorServiceJpa();
     try {
       authorizeApp(securityService, authToken, "process ndc",
-          UserRole.ADMINISTRATOR);
+          UserRole.VIEWER);
 
       DataContext inputContext = new DataContextJpa();
       DataContext outputContext = new DataContextJpa();

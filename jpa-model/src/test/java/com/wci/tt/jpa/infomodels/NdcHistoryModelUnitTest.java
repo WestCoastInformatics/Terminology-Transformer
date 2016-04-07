@@ -70,7 +70,6 @@ public class NdcHistoryModelUnitTest extends JpaSupport {
     Logger.getLogger(getClass()).debug("TEST " + name.getMethodName());
     EqualsHashcodeTester tester = new EqualsHashcodeTester(object);
     tester.include("rxcui");
-    tester.include("active");
     tester.include("startDate");
     tester.include("endDate");
     assertTrue(tester.testIdentityFieldEquals());

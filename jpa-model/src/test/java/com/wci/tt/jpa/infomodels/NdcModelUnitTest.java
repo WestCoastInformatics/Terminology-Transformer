@@ -163,16 +163,16 @@ public class NdcModelUnitTest extends JpaSupport {
     assertEquals("abc", common.getNdc());
 
     // History
-    m1.getHistory().add(new NdcHistoryModel("abc", true, "def", "ghi"));
+    m1.getHistory().add(new NdcHistoryModel("abc", "def", "ghi"));
     common = m1.getModelInCommon(m2, false);
     assertEquals(0, common.getHistory().size());
-    m2.getHistory().add(new NdcHistoryModel("def", true, "ghi", "jkl"));
+    m2.getHistory().add(new NdcHistoryModel("def", "ghi", "jkl"));
     common = m1.getModelInCommon(m2, false);
     assertEquals(0, common.getHistory().size());
-    m2.getHistory().add(new NdcHistoryModel("abc", true, "def", "ghi"));
+    m2.getHistory().add(new NdcHistoryModel("abc", "def", "ghi"));
     common = m1.getModelInCommon(m2, false);
     assertEquals(1, common.getHistory().size());
-    m1.getHistory().add(new NdcHistoryModel("def", true, "ghi", "jkl"));
+    m1.getHistory().add(new NdcHistoryModel("def", "ghi", "jkl"));
     common = m1.getModelInCommon(m2, false);
     assertEquals(2, common.getHistory().size());
   }

@@ -44,13 +44,13 @@ public class NdcClientRest extends RootClientRest
   @Override
   public NdcModel process(String inputStr, String authToken) throws Exception {
     Logger.getLogger(getClass()).debug(
-        "Transform Client - identify " + inputStr );
+        "Ndc Client - identify " + inputStr );
 
     validateNotEmpty(inputStr, "inputStr");
 
     Client client = ClientBuilder.newClient();
     WebTarget target = client.target(
-        config.getProperty("base.url") + "/transform/process/" + inputStr);
+        config.getProperty("base.url") + "/ndc/process/" + inputStr);
 
 
 
