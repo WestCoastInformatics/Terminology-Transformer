@@ -15,7 +15,7 @@ import com.wci.umls.server.helpers.ConfigUtility;
  * Information model for representing NDC-RXNORM history.
  * 
  * <pre>
- *   { history : [{ rxcui : "312656", active : "true", startDate : "200706", endDate : "201101" }]
+ *   { history : [{ rxcui : "312656", startDate : "200706", endDate : "201101" }]
  *
  * </pre>
  */
@@ -24,9 +24,6 @@ public class NdcHistoryModel implements InfoModel<NdcHistoryModel> {
 
   /** The RXCUI. */
   private String rxcui;
-
-  /** The active flag. */
-  private boolean active;
 
   /** The start date. */
   private String startDate;
@@ -48,7 +45,6 @@ public class NdcHistoryModel implements InfoModel<NdcHistoryModel> {
    */
   public NdcHistoryModel(NdcHistoryModel model) {
     rxcui = model.getRxcui();
-    active = model.isActive();
     startDate = model.getStartDate();
     endDate = model.getEndDate();
   }
@@ -57,14 +53,11 @@ public class NdcHistoryModel implements InfoModel<NdcHistoryModel> {
    * Instantiates a {@link NdcHistoryModel} from the specified parameters.
    *
    * @param rxcui the rxcui
-   * @param active the active
    * @param startDate the start date
    * @param endDate the end date
    */
-  public NdcHistoryModel(String rxcui, boolean active, String startDate,
-      String endDate) {
+  public NdcHistoryModel(String rxcui, String startDate, String endDate) {
     this.rxcui = rxcui;
-    this.active = active;
     this.startDate = startDate;
     this.endDate = endDate;
   }
@@ -90,24 +83,6 @@ public class NdcHistoryModel implements InfoModel<NdcHistoryModel> {
   @Override
   public void setProperties(Properties p) throws Exception {
     // n/a - no configuration
-  }
-
-  /**
-   * Indicates whether or not active is the case.
-   *
-   * @return <code>true</code> if so, <code>false</code> otherwise
-   */
-  public boolean isActive() {
-    return active;
-  }
-
-  /**
-   * Sets the active.
-   *
-   * @param active the active
-   */
-  public void setActive(boolean active) {
-    this.active = active;
   }
 
   /**
@@ -248,7 +223,6 @@ public class NdcHistoryModel implements InfoModel<NdcHistoryModel> {
   public int hashCode() {
     final int prime = 31;
     int result = 1;
-    result = prime * result + (active ? 1231 : 1237);
     result = prime * result + ((endDate == null) ? 0 : endDate.hashCode());
     result = prime * result + ((rxcui == null) ? 0 : rxcui.hashCode());
     result = prime * result + ((startDate == null) ? 0 : startDate.hashCode());
@@ -265,8 +239,6 @@ public class NdcHistoryModel implements InfoModel<NdcHistoryModel> {
     if (getClass() != obj.getClass())
       return false;
     NdcHistoryModel other = (NdcHistoryModel) obj;
-    if (active != other.active)
-      return false;
     if (endDate == null) {
       if (other.endDate != null)
         return false;
@@ -288,8 +260,8 @@ public class NdcHistoryModel implements InfoModel<NdcHistoryModel> {
   /* see superclass */
   @Override
   public String toString() {
-    return "NdcHistoryModel [rxcui=" + rxcui + ", active=" + active
-        + ", startDate=" + startDate + ", endDate=" + endDate + "]";
+    return "NdcHistoryModel [rxcui=" + rxcui + ", startDate=" + startDate
+        + ", endDate=" + endDate + "]";
   }
 
 }
