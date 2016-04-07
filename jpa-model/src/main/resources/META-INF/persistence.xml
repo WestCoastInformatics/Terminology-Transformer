@@ -35,6 +35,8 @@
     <class>com.wci.umls.server.jpa.content.DescriptorTreePositionJpa</class>
     <class>com.wci.umls.server.jpa.content.GeneralConceptAxiomJpa</class>
     <class>com.wci.umls.server.jpa.content.LexicalClassJpa</class>
+    <class>com.wci.umls.server.jpa.content.MappingJpa</class>
+    <class>com.wci.umls.server.jpa.content.MapSetJpa</class>
     <class>com.wci.umls.server.jpa.content.SemanticTypeComponentJpa</class>
     <class>com.wci.umls.server.jpa.content.StringClassJpa</class>
     <class>com.wci.umls.server.jpa.helpers.PrecedenceListJpa</class>
@@ -55,6 +57,8 @@
     <class>com.wci.umls.server.jpa.ProjectJpa</class>
     <class>com.wci.umls.server.jpa.ReleaseInfoJpa</class>
     <class>com.wci.umls.server.jpa.ReleasePropertyJpa</class>
+    <class>com.wci.umls.server.jpa.SourceDataJpa</class>
+    <class>com.wci.umls.server.jpa.SourceDataFileJpa</class>
     <class>com.wci.umls.server.jpa.UserJpa</class>
     <class>com.wci.umls.server.jpa.UserPreferencesJpa</class>
 

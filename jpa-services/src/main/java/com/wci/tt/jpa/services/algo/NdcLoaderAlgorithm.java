@@ -7,8 +7,10 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import com.wci.umls.server.algo.Algorithm;
 import com.wci.umls.server.helpers.ConfigUtility;
@@ -17,7 +19,6 @@ import com.wci.umls.server.jpa.algo.AbstractLoaderAlgorithm;
 import com.wci.umls.server.jpa.algo.RrfFileSorter;
 import com.wci.umls.server.jpa.algo.RrfReaders;
 import com.wci.umls.server.jpa.content.AtomJpa;
-import com.wci.umls.server.jpa.content.AttributeJpa;
 import com.wci.umls.server.jpa.content.ConceptJpa;
 import com.wci.umls.server.jpa.meta.RootTerminologyJpa;
 import com.wci.umls.server.jpa.meta.TerminologyJpa;
@@ -26,7 +27,6 @@ import com.wci.umls.server.model.content.AtomClass;
 import com.wci.umls.server.model.content.Attribute;
 import com.wci.umls.server.model.content.Concept;
 import com.wci.umls.server.model.meta.IdType;
-import com.wci.umls.server.model.meta.Language;
 import com.wci.umls.server.model.meta.RootTerminology;
 import com.wci.umls.server.model.meta.Terminology;
 import com.wci.umls.server.services.RootService;
@@ -69,54 +69,19 @@ public class NdcLoaderAlgorithm extends AbstractLoaderAlgorithm
   /** The published. */
   private final String published = "PUBLISHED";
 
-  /** The loaded terminologies. */
-  private Map<String, Terminology> loadedTerminologies = new HashMap<>();
+  private Terminology term;
 
   /** The loaded root terminologies. */
   private Map<String, RootTerminology> loadedRootTerminologies =
       new HashMap<>();
 
-  /** The loaded languages. */
-  private Map<String, Language> loadedLanguages = new HashMap<>();
-
   /** The term id type map. */
   private Map<String, IdType> termIdTypeMap = new HashMap<>();
 
-  /** The atom map. */
-  private Map<String, Long> atomIdMap = new HashMap<>(10000);
+  /** The concept map. */
+  private Map<String, Long> conceptIdMap = new HashMap<>(10000);
 
-  /** The lat code map. */
-  private static Map<String, String> latCodeMap = new HashMap<>();
 
-  static {
-
-    // from http://www.nationsonline.org/oneworld/country_code_list.htm
-    latCodeMap.put("BAQ", "eu");
-    latCodeMap.put("CZE", "cz");
-    latCodeMap.put("DAN", "dk");
-    latCodeMap.put("DUT", "nl");
-    latCodeMap.put("ENG", "en");
-    latCodeMap.put("FIN", "fi");
-    latCodeMap.put("FRE", "fr");
-    latCodeMap.put("GER", "de");
-    latCodeMap.put("HEB", "he");
-    latCodeMap.put("HUN", "hu");
-    latCodeMap.put("ITA", "it");
-    latCodeMap.put("JPN", "ja");
-    latCodeMap.put("KOR", "ko");
-    latCodeMap.put("LAV", "lv");
-    latCodeMap.put("NOR", "nn");
-    latCodeMap.put("POL", "pl");
-    latCodeMap.put("POR", "pt");
-    latCodeMap.put("RUS", "ru");
-    latCodeMap.put("SCR", "sc");
-    latCodeMap.put("SPA", "es");
-    latCodeMap.put("SWE", "sv");
-    latCodeMap.put("CHI", "zh");
-    latCodeMap.put("TUR", "tr");
-    latCodeMap.put("EST", "et");
-    latCodeMap.put("GRE", "el");
-  }
 
   /**
    * Instantiates an empty {@link NdcLoaderAlgorithm}.
@@ -202,6 +167,7 @@ public class NdcLoaderAlgorithm extends AbstractLoaderAlgorithm
       logInfo("  terminology = " + terminology);
       logInfo("  version = " + version);
       logInfo("  releaseVersion = " + releaseVersion);
+      logInfo("  inputDir = " + inputDir);
 
       // Check the input directory
       File inputDirFile = new File(inputDir);
@@ -223,7 +189,7 @@ public class NdcLoaderAlgorithm extends AbstractLoaderAlgorithm
       logInfo("  releaseVersion = " + releaseVersion);
 
       // Open readers - just open original RRF
-      final RrfReaders readers = new RrfReaders(inputDirFile);
+      readers = new RrfReaders(inputDirFile);
       // Use default prefix if not specified
       readers.openOriginalReaders("RXN");
 
@@ -244,7 +210,7 @@ public class NdcLoaderAlgorithm extends AbstractLoaderAlgorithm
       beginTransaction();
 
       // make terminology
-      final Terminology term = new TerminologyJpa();
+      term = new TerminologyJpa();
       term.setAssertsRelDirection(false);
       term.setCurrent(true);
       term.setOrganizingClassType(IdType.CONCEPT);
@@ -266,7 +232,6 @@ public class NdcLoaderAlgorithm extends AbstractLoaderAlgorithm
       root.setTimestamp(releaseVersionDate);
       root.setLastModified(releaseVersionDate);
       root.setLastModifiedBy(loader);
-      root.setLanguage(loadedLanguages.get("ENG"));
 
       // Load the content
       loadMrconso();
@@ -301,6 +266,7 @@ public class NdcLoaderAlgorithm extends AbstractLoaderAlgorithm
     final PushBackReader reader = readers.getReader(RrfReaders.Keys.MRSAT);
     // make set of all atoms that got an additional attribute
 
+    Set<Concept> modifiedConcepts = new HashSet<>();
     final String fields[] = new String[13];
     while ((line = reader.readLine()) != null) {
       line = line.replace("\r", "");
@@ -336,47 +302,64 @@ public class NdcLoaderAlgorithm extends AbstractLoaderAlgorithm
       // C0001175|L0001842|S0011877|A15662389|CODE|T1|AT100434486||URL|MEDLINEPLUS|http://www.nlm.nih.gov/medlineplus/aids.html|N||
       // C0001175|||R54775538|RUI||AT63713072||CHARACTERISTICTYPE|SNOMEDCT|0|N||
       // C0001175|||R54775538|RUI||AT69142126||REFINABILITY|SNOMEDCT|1|N||
-      final Attribute att = new AttributeJpa();
+      final Atom atom = new AtomJpa();
 
-      att.setTimestamp(releaseVersionDate);
-      att.setLastModified(releaseVersionDate);
-      att.setLastModifiedBy(loader);
-      att.setObsolete(fields[11].equals("O"));
-      att.setSuppressible(!fields[11].equals("N"));
-      att.setPublished(true);
-      att.setPublishable(true);
+      atom.setTimestamp(releaseVersionDate);
+      atom.setLastModified(releaseVersionDate);
+      atom.setLastModifiedBy(loader);
+      atom.setObsolete(fields[11].equals("O"));
+      atom.setSuppressible(!fields[11].equals("N"));
+      atom.setPublished(true);
+      atom.setPublishable(true);
       // fields[5] CODE not used - redundant
-      att.setTerminologyId(fields[7]);
-      att.setTerminology(fields[9].intern());
-      if (loadedTerminologies.get(fields[9]) == null) {
+      atom.setTerminologyId(fields[7]);
+      atom.setTerminology(fields[9].intern());
+      if (!terminology.equals(fields[9])) {
         throw new Exception(
             "Attribute references terminology that does not exist: "
                 + fields[9]);
       } else {
-        att.setVersion(loadedTerminologies.get(fields[9]).getVersion());
+        atom.setVersion(version);
       }
-      att.setName(fields[8]);
-      att.setValue(fields[10]);
-
-      if (fields[4].equals("AUI")) {
-        // Get the concept for the AUI
-        Atom atom = getAtom(atomIdMap.get(fields[3]));
-        atom.addAttribute(att);
-        addAttribute(att, atom);
-      }
+      atom.setName(fields[8]);
+      atom.setConceptId(fields[0]);
+      atom.setCodeId("");
+      atom.setDescriptorId("");
+      atom.setConceptTerminologyIds(new HashMap<String, String>());
+      atom.setStringClassId("");
+      atom.setLexicalClassId("");
+      atom.setTermType("NDC");
+      
+        Concept concept = getConcept(conceptIdMap.get(fields[0]));
+        concept.addAtom(atom);
+        addAtom(atom);
+        modifiedConcepts.add(concept);
 
       // log and commit
-      logAndCommit(objectCt, RootService.logCt, RootService.commitCt);
+      logAndCommit(++objectCt, RootService.logCt, RootService.commitCt);
 
       //
       // NOTE: there are no subset attributes in RRF
       //
 
     } // end while loop
+    
+
 
     // commit
     commitClearBegin();
 
+    for (Concept c : modifiedConcepts) {
+      updateConcept(c);
+      
+      // log and commit
+      logAndCommit(++objectCt, RootService.logCt, RootService.commitCt);
+
+    }
+    
+
+    // commit
+    commitClearBegin();
   }
 
   /**
@@ -432,8 +415,8 @@ public class NdcLoaderAlgorithm extends AbstractLoaderAlgorithm
       // Albumin|0|N|256|
 
       // set the root terminology language
-      loadedRootTerminologies.get(fields[11])
-          .setLanguage(loadedLanguages.get(fields[1]));
+      /*loadedRootTerminologies.get(fields[11])
+          .setLanguage(loadedLanguages.get(fields[1]));*/
 
       final Atom atom = new AtomJpa();
       atom.setLanguage(fields[1].intern());
@@ -446,12 +429,11 @@ public class NdcLoaderAlgorithm extends AbstractLoaderAlgorithm
       atom.setPublishable(true);
       atom.setName(fields[14]);
       atom.setTerminology(fields[11].intern());
-      if (loadedTerminologies.get(fields[11]) == null) {
+      if (!terminology.equals(fields[11])) {
         throw new Exception(
             "Atom references terminology that does not exist: " + fields[11]);
       }
-      atom.setVersion(
-          loadedTerminologies.get(fields[11]).getVersion().intern());
+      atom.setVersion(version);
       // skip in single mode
 
       atom.setTerminologyId(fields[8]);
@@ -459,7 +441,9 @@ public class NdcLoaderAlgorithm extends AbstractLoaderAlgorithm
       atom.setWorkflowStatus(published);
 
       atom.setConceptId(fields[9]);
-
+      atom.setCodeId("");
+      atom.setDescriptorId("");
+      atom.setConceptTerminologyIds(new HashMap<String, String>());
       atom.setStringClassId(fields[5]);
       atom.setLexicalClassId(fields[3]);
 
@@ -468,13 +452,13 @@ public class NdcLoaderAlgorithm extends AbstractLoaderAlgorithm
       // Add atoms and commit periodically
       addAtom(atom);
       logAndCommit(++objectCt, RootService.logCt, RootService.commitCt);
-      atomIdMap.put(fields[7], atom.getId());
       // Add concept
       if (prevCui == null || !fields[0].equals(prevCui)) {
         if (prevCui != null) {
           cui.setName(getComputedPreferredName(cui));
           addConcept(cui);
-
+          conceptIdMap.put(fields[0], cui.getId());
+          
           logAndCommit(++objectCt, RootService.logCt, RootService.commitCt);
         }
         cui = new ConceptJpa();

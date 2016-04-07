@@ -100,7 +100,7 @@ public class NdcSourceDataHandler implements SourceDataHandler {
     try {
       sourceData.setStatus(SourceData.Status.LOADING);
       sourceDataService.updateSourceData(sourceData);
-      // Load RRF
+      // Load NDC-RXNORM
       final NdcLoaderAlgorithm algorithm = new NdcLoaderAlgorithm();
       algorithm.setTerminology(sourceData.getTerminology());
       algorithm.setVersion(sourceData.getVersion());

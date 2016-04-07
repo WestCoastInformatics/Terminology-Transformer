@@ -128,6 +128,8 @@ public class NdcSourceDataHandlerMojo extends SourceDataMojo {
       sourceData.setLastModifiedBy("loader");
       sourceData.setHandler(loader.getName());
       sourceData.getSourceDataFiles().add(sdFile);
+      sourceData.setVersion(version);
+      sourceData.setTerminology(terminology);
       service.addSourceData(sourceData);
       getLog().info("    source data = " + sourceData);
 
