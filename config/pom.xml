@@ -45,6 +45,7 @@
   <!-- Create your own version of one of these projects for custom config -->
   <modules>
     <module>dev-windows</module>
+    <module>ndc-rxnorm</module>
   </modules>
 
 </project>

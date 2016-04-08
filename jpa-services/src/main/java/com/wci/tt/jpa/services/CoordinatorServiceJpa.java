@@ -56,8 +56,7 @@ public class CoordinatorServiceJpa extends ContentServiceJpa
   /** The threshold. */
   static ThresholdHandler threshold = null;
 
-  /** The source data loaders. */
-  static Map<String, SourceDataHandler> loaders = new HashMap<>();
+  static Map<String, SourceDataHandler> sourceDataHandlers = new HashMap<>();
 
   /** The normalizer handler . */
   static Map<String, NormalizerHandler> normalizers = new HashMap<>();
@@ -112,12 +111,12 @@ public class CoordinatorServiceJpa extends ContentServiceJpa
       threshold = null;
     }
 
-    /** Configure loaders */
+    /** Configure source data handlers */
     try {
       if (config == null) {
         config = ConfigUtility.getConfigProperties();
       }
-      String key = "source.data.loader.handler";
+      String key = "source.data.handler";
       for (String handlerName : config.getProperty(key).split(",")) {
         if (handlerName.isEmpty()) {
           continue;
@@ -126,15 +125,15 @@ public class CoordinatorServiceJpa extends ContentServiceJpa
         SourceDataHandler handler =
             ConfigUtility.newStandardHandlerInstanceWithConfiguration(key,
                 handlerName, SourceDataHandler.class);
-        loaders.put(handlerName, handler);
+        sourceDataHandlers.put(handlerName, handler);
       }
-      if (loaders.isEmpty()) {
+      if (sourceDataHandlers.isEmpty()) {
         throw new Exception(
-            "source.data.loader.handler must have one value but none exist");
+            "source.data.handler must have one value but none exist");
       }
     } catch (Exception e) {
       e.printStackTrace();
-      loaders = null;
+      sourceDataHandlers = null;
     }
 
     /** Add normalizers found in Config to List. */
@@ -390,10 +389,11 @@ public class CoordinatorServiceJpa extends ContentServiceJpa
 
   /* see superclass */
   @Override
-  public Map<String, SourceDataHandler> getSourceDataHandlers() throws Exception {
-    Logger.getLogger(getClass()).debug("Get source data loaders");
-    Logger.getLogger(getClass()).debug("  loaders = " + loaders);
-    return loaders;
+  public Map<String, SourceDataHandler> getSourceDataHandlers()
+    throws Exception {
+    Logger.getLogger(getClass()).debug("Get source data handlers");
+    Logger.getLogger(getClass()).debug("  handlers = " + sourceDataHandlers);
+    return sourceDataHandlers;
   }
 
   /* see superclass */

@@ -44,7 +44,7 @@ public class NdcNormalizerUnitTest {
   }
 
   /**
-   * Test {@link NdcNormalizer#normalize(String)}.
+   * Test normalizer.
    * @throws Exception the exception
    */
   @Test

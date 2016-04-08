@@ -16,6 +16,7 @@ import javax.ws.rs.core.MediaType;
 import org.apache.log4j.Logger;
 
 import com.wci.tt.DataContext;
+import com.wci.tt.helpers.DataContextType;
 import com.wci.tt.helpers.ScoredResult;
 import com.wci.tt.jpa.DataContextJpa;
 import com.wci.tt.jpa.infomodels.NdcModel;
@@ -41,7 +42,8 @@ import com.wordnik.swagger.annotations.ApiParam;
 @Produces({
     MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML
 })
-public class NdcServiceRestImpl extends RootServiceRestImpl implements NdcServiceRest {
+public class NdcServiceRestImpl extends RootServiceRestImpl
+    implements NdcServiceRest {
 
   /** The security service. */
   private SecurityService securityService;
@@ -70,22 +72,30 @@ public class NdcServiceRestImpl extends RootServiceRestImpl implements NdcServic
 
     final CoordinatorService service = new CoordinatorServiceJpa();
     try {
-      authorizeApp(securityService, authToken, "process ndc",
-          UserRole.VIEWER);
+      authorizeApp(securityService, authToken, "process ndc", UserRole.VIEWER);
 
+      // Configure contexts
       DataContext inputContext = new DataContextJpa();
+      inputContext.setType(DataContextType.CODE);
+      inputContext.setTerminology("NDC");
       DataContext outputContext = new DataContextJpa();
+      outputContext.setType(DataContextType.INFO_MODEL);
+      outputContext.setInfoModelClass(NdcModel.class.getName());
 
+      // Obtain results
       final List<ScoredResult> results =
           service.process(ndc, inputContext, outputContext);
-      ScoredResult result = results.get(0);
+
+      // Send emty value on no results
+      if (results.size() == 0) {
+        return new NdcModel();
+      }
+
+      // Otherwise, assume 1 result
+      final ScoredResult result = results.get(0);
 
       // Translate tuples into JPA object
-      final NdcModel ndcModel = new NdcModel();
-      ndcModel.setNdc(ndc);
-      // TODO: is this correct? sufficient?
-      ndcModel.setRxcui(result.getValue());
-
+      final NdcModel ndcModel = new NdcModel().getModel(result.getValue());
       return ndcModel;
     } catch (Exception e) {
       handleException(e, "trying to process ndc");

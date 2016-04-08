@@ -10,7 +10,7 @@ import java.util.Properties;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 
-import com.wci.tt.jpa.loaders.NdcSourceDataHandler;
+import com.wci.tt.jpa.handlers.NdcSourceDataHandler;
 import com.wci.umls.server.SourceData;
 import com.wci.umls.server.SourceDataFile;
 import com.wci.umls.server.helpers.ConfigUtility;

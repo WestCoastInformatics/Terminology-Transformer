@@ -11,7 +11,6 @@ import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 
 import org.apache.log4j.Logger;
-import org.glassfish.jersey.filter.LoggingFilter;
 import org.glassfish.jersey.jackson.JacksonFeature;
 import org.glassfish.jersey.jsonp.JsonProcessingFeature;
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
@@ -85,7 +84,7 @@ public class TerminologyTransformerServerApplication extends Application {
     instances.add(new JsonProcessingFeature());
     instances.add(new MultiPartFeature());
     // Enable for LOTS of logging of HTTP requests
-    instances.add(new LoggingFilter());
+    // instances.add(new LoggingFilter());
     return instances;
   }
 

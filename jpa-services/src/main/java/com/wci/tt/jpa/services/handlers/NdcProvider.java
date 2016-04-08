@@ -11,6 +11,8 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
+import org.apache.log4j.Logger;
+
 import com.wci.tt.DataContext;
 import com.wci.tt.TransformRecord;
 import com.wci.tt.helpers.DataContextType;
@@ -99,8 +101,7 @@ public class NdcProvider extends AbstractAcceptsHandler
     List<ScoredDataContext> scoredContexts = new ArrayList<ScoredDataContext>();
 
     // Check whether inputString is an NDC code (worry about this later)
-    // TODO:
-    if (true) {
+    if (!process(record).isEmpty()) {
       // If so, we know it is the supported input type.
       ScoredDataContext scoredContext = new ScoredDataContextJpa(inputContext);
       scoredContext.setScore(1);
@@ -119,6 +120,7 @@ public class NdcProvider extends AbstractAcceptsHandler
   /* see superclass */
   @Override
   public List<ScoredResult> process(TransformRecord record) throws Exception {
+    Logger.getLogger(getClass()).debug("  process - " + record.getInputString());
 
     final String inputString = record.getInputString();
     final DataContext inputContext = record.getInputContext();
@@ -137,6 +139,7 @@ public class NdcProvider extends AbstractAcceptsHandler
       result.setValue(model.getModelValue());
       result.setScore(1);
       results.add(result);
+      Logger.getLogger(getClass()).debug("    result = " + result.getValue());
     } else {
       return new ArrayList<ScoredResult>();
     }
@@ -197,7 +200,7 @@ public class NdcProvider extends AbstractAcceptsHandler
 
         // try to find NDC based on inputString
         SearchResultList list = service.findConceptsForQuery("RXNORM", null,
-            Branch.ROOT, "termType:NDC AND name:" + query, null);
+            Branch.ROOT, "atoms.termType:NDC AND atoms.name:" + query, null);
 
         // [ {version,ndc,ndcActive,rxcui,rxcuiActive}, ... ]
         List<Record> recordList = new ArrayList<>();

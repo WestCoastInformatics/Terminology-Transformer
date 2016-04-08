@@ -1,7 +1,7 @@
 /*
  *    Copyright 2016 West Coast Informatics, LLC
  */
-package com.wci.tt.jpa.loaders;
+package com.wci.tt.jpa.handlers;
 
 import java.io.File;
 import java.util.ArrayList;

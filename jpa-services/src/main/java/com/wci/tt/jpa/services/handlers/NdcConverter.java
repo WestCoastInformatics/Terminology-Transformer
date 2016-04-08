@@ -5,6 +5,8 @@ package com.wci.tt.jpa.services.handlers;
 
 import java.util.Properties;
 
+import org.apache.log4j.Logger;
+
 import com.wci.tt.DataContext;
 import com.wci.tt.TransformRecord;
 import com.wci.tt.helpers.DataContextTuple;
@@ -56,7 +58,8 @@ public class NdcConverter extends AbstractAcceptsHandler
   @Override
   public DataContextTuple convert(String inputString, TransformRecord record)
     throws Exception {
-
+    Logger.getLogger(getClass()).debug("  convert - " + inputString);
+    
     final DataContext inputContext = record.getInputContext();
     final DataContext outputContext = record.getProviderOutputContext();
     // final String origInputString = record.getInputString();
