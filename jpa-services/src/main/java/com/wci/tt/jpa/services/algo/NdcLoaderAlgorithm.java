@@ -448,10 +448,10 @@ public class NdcLoaderAlgorithm extends AbstractLoaderAlgorithm
       atom.setPublishable(true);
       atom.setName(fields[14]);
       atom.setTerminology(fields[11].intern());
-      if (!terminology.equals(fields[11])) {
+      /*if (!terminology.equals(fields[11])) {
         throw new Exception(
             "Atom references terminology that does not exist: " + fields[11]);
-      }
+      }*/
       atom.setVersion(version);
       // skip in single mode
 
