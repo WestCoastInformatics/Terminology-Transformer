@@ -108,42 +108,68 @@ public class NdcSourceDataHandlerMojo extends SourceDataMojo {
         throw new Exception("Input directory does not exist");
       }
 
-      final SourceDataFile sdFile = new SourceDataFileJpa();
-      sdFile.setDirectory(true);
-      sdFile.setLastModifiedBy("loader");
-      sdFile.setName(dir.getName());
-      sdFile.setPath(inputDir);
-      sdFile.setSize(1000000L);
-      sdFile.setTimestamp(new Date());
-      service.addSourceDataFile(sdFile);
-      getLog().info("    file = " + sdFile);
+      if (!dir.isDirectory()) {
+        throw new Exception("Input directory must be a directory");
+      }
 
-      // Create loader
-      final NdcSourceDataHandler loader = new NdcSourceDataHandler();
+      for (File versionDir : dir.listFiles()) {
+        
+        if (!versionDir.getName().matches("\\d{8}")) {
+          continue;
+        }
+        
+        File[] versionDirContents = versionDir.listFiles();
+        File rrfDir = null;
+        for (File f : versionDirContents) {
+          if (f.getName().equals("rrf")) {
+            rrfDir = f;
+          }
+        }
 
-      // Create and add the source data
-      final SourceData sourceData = new SourceDataJpa();
-      sourceData.setName(getName(terminology, version));
-      sourceData.setDescription("Set of RRF files loaded from " + dir);
-      sourceData.setLastModifiedBy("loader");
-      sourceData.setHandler(loader.getName());
-      sourceData.getSourceDataFiles().add(sdFile);
-      sourceData.setVersion(version);
-      sourceData.setTerminology(terminology);
-      service.addSourceData(sourceData);
-      getLog().info("    source data = " + sourceData);
+        if (rrfDir == null) {
+          throw new Exception("No rrf directory in the release: "
+              + versionDir.getCanonicalPath());
+        }
 
-      sdFile.setSourceData(sourceData);
-      service.updateSourceDataFile(sdFile);
-      getLog().info("    file (with reference) = " + sdFile);
+        final SourceDataFile sdFile = new SourceDataFileJpa();
+        sdFile.setDirectory(true);
+        sdFile.setLastModifiedBy("loader");
+        sdFile.setName(rrfDir.getName());
+        sdFile.setPath(rrfDir.getAbsolutePath());
+        sdFile.setSize(1000000L);
+        sdFile.setTimestamp(new Date());
+        service.addSourceDataFile(sdFile);
+        getLog().info("    file = " + sdFile);
 
-      // Now, invoke the loader
-      final Properties p = new Properties();
-      loader.setSourceData(sourceData);
-      loader.setProperties(p);
+        // Create loader
+        final NdcSourceDataHandler loader = new NdcSourceDataHandler();
 
-      loader.compute();
-      loader.close();
+        // Create and add the source data
+        final SourceData sourceData = new SourceDataJpa();
+        sourceData.setName(getName(terminology, versionDir.getName()));
+        sourceData.setDescription("Set of RXNORM-NDC files loaded from " + versionDir.getName());
+        sourceData.setLastModifiedBy("loader");
+        sourceData.setHandler(loader.getName());
+        sourceData.getSourceDataFiles().add(sdFile);
+        sourceData.setVersion(versionDir.getName());
+        sourceData.setTerminology(terminology);
+        service.addSourceData(sourceData);
+        getLog().info("    source data = " + sourceData);
+
+        sdFile.setSourceData(sourceData);
+        service.updateSourceDataFile(sdFile);
+        getLog().info("    file (with reference) = " + sdFile);
+
+        // Now, invoke the loader
+        final Properties p = new Properties();
+        loader.setSourceData(sourceData);
+        loader.setProperties(p);
+
+        loader.compute();
+        loader.close();
+
+        getLog().info("Done loading " + versionDir.getCanonicalPath());
+      }
       getLog().info("Done ...");
 
     } catch (Exception e) {

@@ -19,6 +19,7 @@ import com.wci.umls.server.jpa.algo.AbstractLoaderAlgorithm;
 import com.wci.umls.server.jpa.algo.RrfFileSorter;
 import com.wci.umls.server.jpa.algo.RrfReaders;
 import com.wci.umls.server.jpa.content.AtomJpa;
+import com.wci.umls.server.jpa.content.AttributeJpa;
 import com.wci.umls.server.jpa.content.ConceptJpa;
 import com.wci.umls.server.jpa.meta.RootTerminologyJpa;
 import com.wci.umls.server.jpa.meta.TerminologyJpa;
@@ -81,7 +82,8 @@ public class NdcLoaderAlgorithm extends AbstractLoaderAlgorithm
   /** The concept map. */
   private Map<String, Long> conceptIdMap = new HashMap<>(10000);
 
-
+  /** The atom map. */
+  private Map<String, Long> atomIdMap = new HashMap<>(10000);
 
   /**
    * Instantiates an empty {@link NdcLoaderAlgorithm}.
@@ -182,6 +184,7 @@ public class NdcLoaderAlgorithm extends AbstractLoaderAlgorithm
       sorter.setRequireAllFiles(false);
       // File outputDir = new File(inputDirFile, "/RRF-sorted-temp/");
       // sorter.sortFiles(inputDirFile, outputDir);
+      // TODO: this is only getting the year right, not the correct month and day
       String releaseVersion = sorter.getFileVersion(inputDirFile);
       if (releaseVersion == null) {
         releaseVersion = version;
@@ -272,12 +275,7 @@ public class NdcLoaderAlgorithm extends AbstractLoaderAlgorithm
       line = line.replace("\r", "");
       FieldedStringTokenizer.split(line, "|", 13, fields);
 
-      // Only create attributes if ATN=NDC
-      if (!fields[8].equals("NDC")) {
-        continue;
-      }
-
-      if (!fields[9].equals("RXNORM")) {
+      if (!fields[9].equals("RXNORM") && !fields[9].equals("MTHSPL")) {
         continue;
       }
 
@@ -302,46 +300,66 @@ public class NdcLoaderAlgorithm extends AbstractLoaderAlgorithm
       // C0001175|L0001842|S0011877|A15662389|CODE|T1|AT100434486||URL|MEDLINEPLUS|http://www.nlm.nih.gov/medlineplus/aids.html|N||
       // C0001175|||R54775538|RUI||AT63713072||CHARACTERISTICTYPE|SNOMEDCT|0|N||
       // C0001175|||R54775538|RUI||AT69142126||REFINABILITY|SNOMEDCT|1|N||
-      final Atom atom = new AtomJpa();
 
-      atom.setTimestamp(releaseVersionDate);
-      atom.setLastModified(releaseVersionDate);
-      atom.setLastModifiedBy(loader);
-      atom.setObsolete(fields[11].equals("O"));
-      atom.setSuppressible(!fields[11].equals("N"));
-      atom.setPublished(true);
-      atom.setPublishable(true);
-      // fields[5] CODE not used - redundant
-      atom.setTerminologyId(fields[7]);
-      atom.setTerminology(fields[9].intern());
-      if (!terminology.equals(fields[9])) {
-        throw new Exception(
-            "Attribute references terminology that does not exist: "
-                + fields[9]);
-      } else {
-        atom.setVersion(version);
-      }
-      atom.setName(fields[10]);
-      atom.setConceptId(fields[0]);
-      atom.setCodeId("");
-      atom.setDescriptorId("");
-      atom.setConceptTerminologyIds(new HashMap<String, String>());
-      atom.setStringClassId("");
-      atom.setLexicalClassId("");
-      atom.setTermType("NDC");
-      atom.setLanguage("ENG");
-      
+      if (fields[8].equals("NDC") && fields[9].equals("RXNORM")) {
+
+        final Atom atom = new AtomJpa();
+
+        atom.setTimestamp(releaseVersionDate);
+        atom.setLastModified(releaseVersionDate);
+        atom.setLastModifiedBy(loader);
+        atom.setObsolete(fields[11].equals("O"));
+        atom.setSuppressible(!fields[11].equals("N"));
+        atom.setPublished(true);
+        atom.setPublishable(true);
+        // fields[5] CODE not used - redundant
+        atom.setTerminologyId(fields[7]);
+        atom.setTerminology(fields[9].intern());
+        if (!terminology.equals(fields[9])) {
+          throw new Exception(
+              "Attribute references terminology that does not exist: "
+                  + fields[9]);
+        } else {
+          atom.setVersion(version);
+        }
+        atom.setName(fields[10]);
+        atom.setConceptId(fields[0]);
+        atom.setCodeId("");
+        atom.setDescriptorId("");
+        atom.setConceptTerminologyIds(new HashMap<String, String>());
+        atom.setStringClassId("");
+        atom.setLexicalClassId("");
+        atom.setTermType("NDC");
+        atom.setLanguage("ENG");
+
         Concept concept = getConcept(conceptIdMap.get(fields[0]));
         concept.addAtom(atom);
         addAtom(atom);
         modifiedConcepts.add(concept);
 
+      // load as an attribute that is connected to the MTHSPL aui
+      } else if (fields[9].equals("MTHSPL")) {
+
+        Long aui = atomIdMap.get(fields[3]);
+        Atom atom = getAtom(aui);
+        Attribute att = new AttributeJpa();
+        att.setName(fields[8]); 
+        att.setValue(fields[10]);
+        att.setTimestamp(releaseVersionDate);
+        att.setLastModified(releaseVersionDate);
+        att.setLastModifiedBy(loader);
+        att.setObsolete(false);
+        att.setSuppressible(false);
+        att.setPublished(true);
+        att.setPublishable(true);
+        att.setTerminology(terminology);
+        att.setVersion(version);
+        att.setTerminologyId("");
+
+        addAttribute(att, atom);
+      }
       // log and commit
       logAndCommit(++objectCt, RootService.logCt, RootService.commitCt);
-
-      //
-      // NOTE: there are no subset attributes in RRF
-      //
 
     } // end while loop
     
@@ -386,8 +404,8 @@ public class NdcLoaderAlgorithm extends AbstractLoaderAlgorithm
       line = line.replace("\r", "");
       FieldedStringTokenizer.split(line, "|", 18, fields);
 
-      // Only create atoms if SAB=RXNORM
-      if (!fields[11].equals("RXNORM")) {
+      // Only create atoms if SAB=RXNORM or MTHSPL
+      if (!fields[11].equals("RXNORM") && !fields[11].equals("MTHSPL")) {
         continue;
       }
 
@@ -452,13 +470,14 @@ public class NdcLoaderAlgorithm extends AbstractLoaderAlgorithm
 
       // Add atoms and commit periodically
       addAtom(atom);
+      atomIdMap.put(fields[7], atom.getId());
       logAndCommit(++objectCt, RootService.logCt, RootService.commitCt);
       // Add concept
       if (prevCui == null || !fields[0].equals(prevCui)) {
         if (prevCui != null) {
           cui.setName(getComputedPreferredName(cui));
           addConcept(cui);
-          conceptIdMap.put(fields[0], cui.getId());
+          conceptIdMap.put(prevCui, cui.getId());
           
           logAndCommit(++objectCt, RootService.logCt, RootService.commitCt);
         }

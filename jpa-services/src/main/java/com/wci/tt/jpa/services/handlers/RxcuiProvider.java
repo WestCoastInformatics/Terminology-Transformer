@@ -22,6 +22,7 @@ import com.wci.tt.jpa.helpers.ScoredDataContextJpa;
 import com.wci.tt.jpa.helpers.ScoredResultJpa;
 import com.wci.tt.jpa.infomodels.NdcHistoryModel;
 import com.wci.tt.jpa.infomodels.NdcModel;
+import com.wci.tt.jpa.infomodels.RxcuiModel;
 import com.wci.tt.jpa.services.helper.DataContextMatcher;
 import com.wci.tt.services.handlers.ProviderHandler;
 import com.wci.umls.server.helpers.Branch;
@@ -38,38 +39,38 @@ import com.wci.umls.server.services.ContentService;
 /**
  * Default implementation of {@link ProviderHandler}.
  * 
- * This provider converts a normalized NDC code into an RXNORM code (with
+ * This provider converts a Rxcui into an NDC code (with
  * history information).
  * 
  */
-public class NdcProvider extends AbstractAcceptsHandler
+public class RxcuiProvider extends AbstractAcceptsHandler
     implements ProviderHandler {
 
   /**
-   * Instantiates an empty {@link NdcProvider}.
+   * Instantiates an empty {@link RxcuiProvider}.
    *
    * @throws Exception the exception
    */
-  public NdcProvider() throws Exception {
+  public RxcuiProvider() throws Exception {
 
     // Configure input/output matchers
 
     // Input matcher needs to have a code, e.g. the caller should use this:
     // DataContext inputContext = new DataContextJpa();
     // inputContext.setType(DataContextType.CODE);
-    // inputContext.setTerminology("NDC");
+    // inputContext.setTerminology("RXNORM");
     DataContextMatcher inputMatcher = new DataContextMatcher();
     inputMatcher.configureContext(DataContextType.CODE, null, null, null, null,
-        "NDC", null);
+        "RXNORM", null);
     DataContextMatcher outputMatcher = new DataContextMatcher();
 
-    // Output matcher needs to have an NdcModel information model, e.g. the
+    // Output matcher needs to have an RxcuiModel information model, e.g. the
     // caller should use this:
     // DataContext outputContext = new DataContextJpa();
     // outputContext.setType(DataContextType.INFO_MODEL);
-    // inputContext.setInfoModelClass(NdcModel.class.getName());
+    // inputContext.setInfoModelClass(RxcuiModel.class.getName());
     outputMatcher.configureContext(DataContextType.INFO_MODEL, null, null, null,
-        NdcModel.class.getName(), null, null);
+        RxcuiModel.class.getName(), null, null);
     addMatcher(inputMatcher, outputMatcher);
 
   }
@@ -82,7 +83,7 @@ public class NdcProvider extends AbstractAcceptsHandler
   /* see superclass */
   @Override
   public String getName() {
-    return "NDC Provider Handler";
+    return "Rxcui Provider Handler";
   }
 
   /**
