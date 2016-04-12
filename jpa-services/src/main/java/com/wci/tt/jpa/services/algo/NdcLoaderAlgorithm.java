@@ -76,9 +76,6 @@ public class NdcLoaderAlgorithm extends AbstractLoaderAlgorithm
   private Map<String, RootTerminology> loadedRootTerminologies =
       new HashMap<>();
 
-  /** The term id type map. */
-  private Map<String, IdType> termIdTypeMap = new HashMap<>();
-
   /** The concept map. */
   private Map<String, Long> conceptIdMap = new HashMap<>(10000);
 
@@ -184,7 +181,8 @@ public class NdcLoaderAlgorithm extends AbstractLoaderAlgorithm
       sorter.setRequireAllFiles(false);
       // File outputDir = new File(inputDirFile, "/RRF-sorted-temp/");
       // sorter.sortFiles(inputDirFile, outputDir);
-      // TODO: this is only getting the year right, not the correct month and day
+      // TODO: this is only getting the year right, not the correct month and
+      // day
       String releaseVersion = sorter.getFileVersion(inputDirFile);
       if (releaseVersion == null) {
         releaseVersion = version;
@@ -196,8 +194,7 @@ public class NdcLoaderAlgorithm extends AbstractLoaderAlgorithm
       // Use default prefix if not specified
       readers.openOriginalReaders("RXN");
 
-      releaseVersionDate = ConfigUtility.DATE_FORMAT
-          .parse(releaseVersion.substring(0, 4) + "0101");
+      releaseVersionDate = ConfigUtility.DATE_FORMAT.parse(releaseVersion);
 
       // Track system level information
       long startTimeOrig = System.nanoTime();
@@ -295,11 +292,8 @@ public class NdcLoaderAlgorithm extends AbstractLoaderAlgorithm
       // 12 CVF
       //
       // e.g.
-      // C0001175|L0001175|S0010339|A0019180|SDUI|D000163|AT38209082||FX|MSH|D015492|N||
-      // C0001175|L0001175|S0354232|A2922342|AUI|62479008|AT24600515||DESCRIPTIONSTATUS|SNOMEDCT|0|N||
-      // C0001175|L0001842|S0011877|A15662389|CODE|T1|AT100434486||URL|MEDLINEPLUS|http://www.nlm.nih.gov/medlineplus/aids.html|N||
-      // C0001175|||R54775538|RUI||AT63713072||CHARACTERISTICTYPE|SNOMEDCT|0|N||
-      // C0001175|||R54775538|RUI||AT69142126||REFINABILITY|SNOMEDCT|1|N||
+      // 197589|||1907932|AUI|197589|||NDC|RXNORM|12634069891|N|4096|
+      // 448|||3311306|AUI|3K9958V90M|||SPL_SET_ID|MTHSPL|4192e27f-0034-4cd9-b9e0-27b52cb4b970|N|4096|
 
       if (fields[8].equals("NDC") && fields[9].equals("RXNORM")) {
 
@@ -312,7 +306,6 @@ public class NdcLoaderAlgorithm extends AbstractLoaderAlgorithm
         atom.setSuppressible(!fields[11].equals("N"));
         atom.setPublished(true);
         atom.setPublishable(true);
-        // fields[5] CODE not used - redundant
         atom.setTerminologyId(fields[7]);
         atom.setTerminology(fields[9].intern());
         if (!terminology.equals(fields[9])) {
@@ -337,13 +330,15 @@ public class NdcLoaderAlgorithm extends AbstractLoaderAlgorithm
         addAtom(atom);
         modifiedConcepts.add(concept);
 
+      }
+
       // load as an attribute that is connected to the MTHSPL aui
-      } else if (fields[9].equals("MTHSPL")) {
+      else if (fields[9].equals("MTHSPL")) {
 
         Long aui = atomIdMap.get(fields[3]);
         Atom atom = getAtom(aui);
         Attribute att = new AttributeJpa();
-        att.setName(fields[8]); 
+        att.setName(fields[8]);
         att.setValue(fields[10]);
         att.setTimestamp(releaseVersionDate);
         att.setLastModified(releaseVersionDate);
@@ -362,23 +357,25 @@ public class NdcLoaderAlgorithm extends AbstractLoaderAlgorithm
       logAndCommit(++objectCt, RootService.logCt, RootService.commitCt);
 
     } // end while loop
-    
-
 
     // commit
     commitClearBegin();
 
-    for (Concept c : modifiedConcepts) {
+    for (
+
+    Concept c : modifiedConcepts)
+
+    {
       updateConcept(c);
-      
+
       // log and commit
       logAndCommit(++objectCt, RootService.logCt, RootService.commitCt);
 
     }
-    
 
     // commit
     commitClearBegin();
+
   }
 
   /**
@@ -409,6 +406,16 @@ public class NdcLoaderAlgorithm extends AbstractLoaderAlgorithm
         continue;
       }
 
+      if (fields[11].equals("RXNORM")) {
+        // Restrict to TTYs
+        // BPCK, GPCK, PSN, SBD, SCD
+        if (!fields[12].equals("BPCK") && !fields[12].equals("GPCK")
+            && !fields[12].equals("PSN") && !fields[12].equals("SBD")
+            && !fields[12].equals("SCD")) {
+          continue;
+        }
+      }
+
       // Field Description
       // 0 CUI
       // 1 LAT
@@ -430,12 +437,7 @@ public class NdcLoaderAlgorithm extends AbstractLoaderAlgorithm
       // 17 CVF
       //
       // e.g.
-      // C0000005|ENG|P|L0000005|PF|S0007492|Y|A7755565||M0019694|D012711|MSH|PEN|D012711|(131)I-Macroaggregated
-      // Albumin|0|N|256|
-
-      // set the root terminology language
-      /*loadedRootTerminologies.get(fields[11])
-          .setLanguage(loadedLanguages.get(fields[1]));*/
+      // 38|ENG||||||829|829|38||RXNORM|BN|38|Parlodel||N|4096|
 
       final Atom atom = new AtomJpa();
       atom.setLanguage(fields[1].intern());
@@ -448,25 +450,18 @@ public class NdcLoaderAlgorithm extends AbstractLoaderAlgorithm
       atom.setPublishable(true);
       atom.setName(fields[14]);
       atom.setTerminology(fields[11].intern());
-      /*if (!terminology.equals(fields[11])) {
-        throw new Exception(
-            "Atom references terminology that does not exist: " + fields[11]);
-      }*/
       atom.setVersion(version);
-      // skip in single mode
 
       atom.setTerminologyId(fields[8]);
       atom.setTermType(fields[12].intern());
       atom.setWorkflowStatus(published);
 
-      atom.setConceptId(fields[9]);
+      atom.setConceptId(fields[0]);
       atom.setCodeId("");
       atom.setDescriptorId("");
       atom.setConceptTerminologyIds(new HashMap<String, String>());
       atom.setStringClassId(fields[5]);
       atom.setLexicalClassId(fields[3]);
-
-      termIdTypeMap.put(atom.getTerminology(), IdType.CONCEPT);
 
       // Add atoms and commit periodically
       addAtom(atom);
@@ -478,7 +473,7 @@ public class NdcLoaderAlgorithm extends AbstractLoaderAlgorithm
           cui.setName(getComputedPreferredName(cui));
           addConcept(cui);
           conceptIdMap.put(prevCui, cui.getId());
-          
+
           logAndCommit(++objectCt, RootService.logCt, RootService.commitCt);
         }
         cui = new ConceptJpa();

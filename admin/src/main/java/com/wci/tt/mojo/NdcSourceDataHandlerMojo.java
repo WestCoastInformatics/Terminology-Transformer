@@ -41,13 +41,6 @@ public class NdcSourceDataHandlerMojo extends SourceDataMojo {
   private String terminology;
 
   /**
-   * The version.
-   * @parameter
-   * @required
-   */
-  private String version;
-
-  /**
    * create or update mode.
    * @parameter
    */
@@ -70,7 +63,6 @@ public class NdcSourceDataHandlerMojo extends SourceDataMojo {
   public void execute() throws MojoExecutionException, MojoFailureException {
     getLog().info("Starting sample data load");
     getLog().info("  terminology = " + terminology);
-    getLog().info("  version = " + version);
     getLog().info("  mode = " + mode);
     getLog().info("  inputDir = " + inputDir);
 
@@ -112,12 +104,15 @@ public class NdcSourceDataHandlerMojo extends SourceDataMojo {
         throw new Exception("Input directory must be a directory");
       }
 
+      // Iterate through version directories
       for (File versionDir : dir.listFiles()) {
-        
+
+        // Skip if not an 8 digit yyyyMMdd directory
         if (!versionDir.getName().matches("\\d{8}")) {
           continue;
         }
         
+        // Verify presence of an "rrf" directory
         File[] versionDirContents = versionDir.listFiles();
         File rrfDir = null;
         for (File f : versionDirContents) {
@@ -125,12 +120,12 @@ public class NdcSourceDataHandlerMojo extends SourceDataMojo {
             rrfDir = f;
           }
         }
-
         if (rrfDir == null) {
           throw new Exception("No rrf directory in the release: "
               + versionDir.getCanonicalPath());
         }
-
+        
+        // Create source data file
         final SourceDataFile sdFile = new SourceDataFileJpa();
         sdFile.setDirectory(true);
         sdFile.setLastModifiedBy("loader");
@@ -164,7 +159,6 @@ public class NdcSourceDataHandlerMojo extends SourceDataMojo {
         final Properties p = new Properties();
         loader.setSourceData(sourceData);
         loader.setProperties(p);
-
         loader.compute();
         loader.close();
 

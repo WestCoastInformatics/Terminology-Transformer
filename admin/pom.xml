@@ -257,7 +257,6 @@
                 </goals>
                 <configuration>
                   <terminology>${terminology}</terminology>
-                  <version>${version}</version>
                   <inputDir>${input.dir}</inputDir>
                   <mode>${mode}</mode>
                 </configuration>
