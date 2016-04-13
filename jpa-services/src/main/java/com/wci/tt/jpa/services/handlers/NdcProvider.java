@@ -22,6 +22,8 @@ import com.wci.tt.jpa.helpers.ScoredDataContextJpa;
 import com.wci.tt.jpa.helpers.ScoredResultJpa;
 import com.wci.tt.jpa.infomodels.NdcHistoryModel;
 import com.wci.tt.jpa.infomodels.NdcModel;
+import com.wci.tt.jpa.infomodels.NdcPropertiesModel;
+import com.wci.tt.jpa.infomodels.RxcuiModel;
 import com.wci.tt.jpa.services.helper.DataContextMatcher;
 import com.wci.tt.services.handlers.ProviderHandler;
 import com.wci.umls.server.helpers.Branch;
@@ -61,6 +63,8 @@ public class NdcProvider extends AbstractAcceptsHandler
     DataContextMatcher inputMatcher = new DataContextMatcher();
     inputMatcher.configureContext(DataContextType.CODE, null, null, null, null,
         "NDC", null);
+    inputMatcher.configureContext(DataContextType.CODE, null, null, null, null,
+        "RXNORM", null);
     DataContextMatcher outputMatcher = new DataContextMatcher();
 
     // Output matcher needs to have an NdcModel information model, e.g. the
@@ -70,6 +74,10 @@ public class NdcProvider extends AbstractAcceptsHandler
     // inputContext.setInfoModelClass(NdcModel.class.getName());
     outputMatcher.configureContext(DataContextType.INFO_MODEL, null, null, null,
         NdcModel.class.getName(), null, null);
+    outputMatcher.configureContext(DataContextType.INFO_MODEL, null, null, null,
+        RxcuiModel.class.getName(), null, null);
+    outputMatcher.configureContext(DataContextType.INFO_MODEL, null, null, null,
+        NdcPropertiesModel.class.getName(), null, null);
     addMatcher(inputMatcher, outputMatcher);
 
   }
@@ -96,21 +104,7 @@ public class NdcProvider extends AbstractAcceptsHandler
   @Override
   public List<ScoredDataContext> identify(TransformRecord record)
     throws Exception {
-
-    // final String inputString = record.getInputString();
-    final DataContext inputContext = record.getInputContext();
-    // Simply return context passed in for this "naive" case. As such, the score
-    // is set to '1'.
-    List<ScoredDataContext> scoredContexts = new ArrayList<ScoredDataContext>();
-
-    // Check whether inputString is an NDC code (worry about this later)
-    if (!process(record).isEmpty()) {
-      // If so, we know it is the supported input type.
-      ScoredDataContext scoredContext = new ScoredDataContextJpa(inputContext);
-      scoredContext.setScore(1);
-      scoredContexts.add(scoredContext);
-    }
-    return scoredContexts;
+    throw new UnsupportedOperationException();
   }
 
   /**
@@ -123,28 +117,50 @@ public class NdcProvider extends AbstractAcceptsHandler
   /* see superclass */
   @Override
   public List<ScoredResult> process(TransformRecord record) throws Exception {
-    Logger.getLogger(getClass()).debug("  process - " + record.getInputString());
+    Logger.getLogger(getClass())
+        .debug("  process - " + record.getInputString());
 
     final String inputString = record.getInputString();
     final DataContext inputContext = record.getInputContext();
-    final DataContext providerOutputContext = record.getProviderOutputContext();
+    final DataContext outputContext = record.getProviderOutputContext();
 
     // Validate input/output context
-    validate(inputContext, providerOutputContext);
+    validate(inputContext, outputContext);
 
     // Set up return value
     final List<ScoredResult> results = new ArrayList<ScoredResult>();
 
-    // Attempt to find the RXNORM CUI (or CUIs) from the NDC code
-    final NdcModel model = getModel(inputString, record.getNormalizedResults());
-    if (model != null) {
-      final ScoredResult result = new ScoredResultJpa();
-      result.setValue(model.getModelValue());
-      result.setScore(1);
-      results.add(result);
-      Logger.getLogger(getClass()).debug("    result = " + result.getValue());
-    } else {
-      return new ArrayList<ScoredResult>();
+    if (inputContext.getTerminology().equals("NDC")
+        && outputContext.getInfoModelClass().equals(NdcModel.class.getName())) {
+
+      // Attempt to find the RXNORM CUI (or CUIs) from the NDC code
+      final NdcModel model =
+          getNdcModel(inputString, record.getNormalizedResults());
+      if (model != null) {
+        final ScoredResult result = new ScoredResultJpa();
+        result.setValue(model.getModelValue());
+        result.setScore(1);
+        results.add(result);
+        Logger.getLogger(getClass()).debug("    result = " + result.getValue());
+      } else {
+        return new ArrayList<ScoredResult>();
+      }
+    }
+
+    else if (inputContext.getTerminology().equals("RXNORM") && outputContext
+        .getInfoModelClass().equals(RxcuiModel.class.getName())) {
+
+      // TODO
+    }
+
+    else if (inputContext.getTerminology().equals("NDC") && outputContext
+        .getInfoModelClass().equals(NdcPropertiesModel.class.getName())) {
+      // TODO
+
+    }
+
+    else {
+      throw new Exception("Invalid input/output context combination.");
     }
 
     return results;
@@ -176,6 +192,24 @@ public class NdcProvider extends AbstractAcceptsHandler
     }
   }
 
+  private RxcuiModel getRxcuiModel(String inputString,
+    List<ScoredResult> normalizedResults) throws Exception {
+    return null;
+  }
+
+  /**
+   * Returns the rxcui model.
+   *
+   * @param inputString the input string
+   * @param normalizedResults the normalized results
+   * @return the rxcui model
+   * @throws Exception the exception
+   */
+  private NdcPropertiesModel getPropertiesModel(String inputString,
+    List<ScoredResult> normalizedResults) throws Exception {
+    return null;
+  }
+
   /**
    * Returns the model.
    *
@@ -184,7 +218,7 @@ public class NdcProvider extends AbstractAcceptsHandler
    * @return the model
    * @throws Exception the exception
    */
-  private NdcModel getModel(String inputString,
+  private NdcModel getNdcModel(String inputString,
     List<ScoredResult> normalizedResults) throws Exception {
 
     final ContentService service = new ContentServiceJpa();

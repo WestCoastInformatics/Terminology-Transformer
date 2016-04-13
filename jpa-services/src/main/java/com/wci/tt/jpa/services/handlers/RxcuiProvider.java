@@ -5,11 +5,9 @@ package com.wci.tt.jpa.services.handlers;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-import java.util.Set;
 
 import org.apache.log4j.Logger;
 
@@ -20,8 +18,6 @@ import com.wci.tt.helpers.ScoredDataContext;
 import com.wci.tt.helpers.ScoredResult;
 import com.wci.tt.jpa.helpers.ScoredDataContextJpa;
 import com.wci.tt.jpa.helpers.ScoredResultJpa;
-import com.wci.tt.jpa.infomodels.NdcHistoryModel;
-import com.wci.tt.jpa.infomodels.NdcModel;
 import com.wci.tt.jpa.infomodels.RxcuiHistoryModel;
 import com.wci.tt.jpa.infomodels.RxcuiModel;
 import com.wci.tt.jpa.services.helper.DataContextMatcher;

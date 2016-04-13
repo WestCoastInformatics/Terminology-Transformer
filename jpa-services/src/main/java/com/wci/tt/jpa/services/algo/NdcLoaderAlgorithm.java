@@ -641,4 +641,14 @@ public class NdcLoaderAlgorithm extends AbstractTerminologyLoaderAlgorithm {
     return null;
   }
 
+  @Override
+  public void computeTransitiveClosures() throws Exception {
+    // n/a - do nothing
+  }
+
+  @Override
+  public void computeTreePositions() throws Exception {
+    // n/a - do nothing
+  }
+
 }
