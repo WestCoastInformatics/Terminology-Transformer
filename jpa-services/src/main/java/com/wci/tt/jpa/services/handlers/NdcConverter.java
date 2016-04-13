@@ -13,6 +13,8 @@ import com.wci.tt.helpers.DataContextTuple;
 import com.wci.tt.helpers.DataContextType;
 import com.wci.tt.jpa.helpers.DataContextTupleJpa;
 import com.wci.tt.jpa.infomodels.NdcModel;
+import com.wci.tt.jpa.infomodels.NdcPropertiesModel;
+import com.wci.tt.jpa.infomodels.RxcuiModel;
 import com.wci.tt.jpa.services.helper.DataContextMatcher;
 import com.wci.tt.services.handlers.ConverterHandler;
 
@@ -39,6 +41,10 @@ public class NdcConverter extends AbstractAcceptsHandler
     DataContextMatcher matcher = new DataContextMatcher();
     matcher.configureContext(DataContextType.INFO_MODEL, null, null, null,
         NdcModel.class.getName(), null, null);
+    matcher.configureContext(DataContextType.INFO_MODEL, null, null, null,
+        RxcuiModel.class.getName(), null, null);
+    matcher.configureContext(DataContextType.INFO_MODEL, null, null, null,
+        NdcPropertiesModel.class.getName(), null, null);
     addMatcher(matcher, matcher);
   }
 

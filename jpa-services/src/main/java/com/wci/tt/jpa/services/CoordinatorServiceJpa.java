@@ -510,8 +510,7 @@ public class CoordinatorServiceJpa extends ContentServiceJpa
     }
 
     // Step 3: Generate normalized content per accepted data contexts
-    List<ScoredResult> normalizedResults =
-        normalize(inputStr, inputContext, false);
+    List<ScoredResult> normalizedResults = normalize(inputStr, inputContext, false);
 
     final TransformRecord record = new TransformRecordJpa();
     record.setInputString(inputStr);

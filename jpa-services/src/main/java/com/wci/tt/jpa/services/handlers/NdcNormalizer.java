@@ -11,6 +11,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
 import com.wci.tt.DataContext;
+import com.wci.tt.helpers.DataContextType;
 import com.wci.tt.helpers.ScoredResult;
 import com.wci.tt.jpa.helpers.ScoredResultJpa;
 import com.wci.tt.services.handlers.NormalizerHandler;
@@ -186,7 +187,8 @@ public class NdcNormalizer extends AbstractNormalizer
   /* see superclass */
   @Override
   public boolean accepts(DataContext inputContext) throws Exception {
-    return true;
+    return inputContext != null && "NDC".equals(inputContext.getTerminology()) 
+        && inputContext.getType() == DataContextType.CODE;
   }
 
   /* see superclass */

@@ -23,6 +23,7 @@ import com.wci.tt.jpa.helpers.ScoredResultJpa;
 import com.wci.tt.jpa.infomodels.NdcHistoryModel;
 import com.wci.tt.jpa.infomodels.NdcModel;
 import com.wci.tt.jpa.infomodels.NdcPropertiesModel;
+import com.wci.tt.jpa.infomodels.RxcuiHistoryModel;
 import com.wci.tt.jpa.infomodels.RxcuiModel;
 import com.wci.tt.jpa.services.helper.DataContextMatcher;
 import com.wci.tt.services.handlers.ProviderHandler;
@@ -149,8 +150,19 @@ public class NdcProvider extends AbstractAcceptsHandler
 
     else if (inputContext.getTerminology().equals("RXNORM") && outputContext
         .getInfoModelClass().equals(RxcuiModel.class.getName())) {
-
-      // TODO
+      
+      // Attempt to find the NDC codes from the RXNORM cui
+      final RxcuiModel model =
+          getRxcuiModel(inputString, record.getNormalizedResults());
+      if (model != null) {
+        final ScoredResult result = new ScoredResultJpa();
+        result.setValue(model.getModelValue());
+        result.setScore(1);
+        results.add(result);
+        Logger.getLogger(getClass()).debug("    result = " + result.getValue());
+      } else {
+        return new ArrayList<ScoredResult>();
+      }
     }
 
     else if (inputContext.getTerminology().equals("NDC") && outputContext
@@ -179,6 +191,9 @@ public class NdcProvider extends AbstractAcceptsHandler
 
     /** The rxcui. */
     public String rxcui;
+    
+    /** The ndc. */
+    public String ndc;
 
     /**
      * Compare to.
@@ -194,6 +209,100 @@ public class NdcProvider extends AbstractAcceptsHandler
 
   private RxcuiModel getRxcuiModel(String inputString,
     List<ScoredResult> normalizedResults) throws Exception {
+    final ContentService service = new ContentServiceJpa();
+
+    try {
+
+        // try to find NDC based on inputString
+        PfscParameter pfsc = new PfscParameterJpa();
+        pfsc.setSearchCriteria(new ArrayList<SearchCriteria>());
+        // TODO for rxcui -> ndc
+        SearchResultList list = service.findConceptsForQuery("RXNORM", null,
+            Branch.ROOT, "terminology:RXNORM AND terminologyId:" + inputString, pfsc);
+
+        // [ {version,ndc,ndcActive,rxcui,rxcuiActive}, ... ]
+        List<Record> recordList = new ArrayList<>();
+
+        // list will have each matching concept - e.g. from each version.
+        if (list.getCount() > 0) {
+          // Convert each search result into a record
+          for (final SearchResult result : list.getObjects()) {
+            final Concept concept = service.getConcept(result.getId());
+            // TODO redo this part
+            /*boolean foundActiveMatchingNdc = false;
+            for (final Atom atom : concept.getAtoms()) {
+              if (atom.getTermType().equals("NDC") && !atom.isObsolete()
+                  && atom.getName().equals(inputString)) {
+                foundActiveMatchingNdc = true;
+              }
+            }*/
+
+            final Record record = new Record();
+            //record.rxcuiActive = foundActiveMatchingNdc;
+            record.ndc = result.getTerminologyId();
+            record.version = result.getVersion();
+
+            recordList.add(record);
+          }
+
+          // Sort the record list (so most recent is at the top)
+          Collections.sort(recordList);
+
+          final RxcuiModel model = new RxcuiModel();
+          //model.setActive(recordList.get(0).rxcuiActive);
+          model.setRxcui(inputString);
+          //model.setNdc(recordList.get(0).ndc);
+
+          // NDC VERSION ACTIVE
+          // 12343 20160404 true
+          // 12343 20160304 true
+          // 43921 20160204 true
+          //
+          // History
+          // {ndc: 12343, startDate:20160304, endDate: 20160404
+          // },
+          // {ndc: 43921, startDate:20160204, endDate: 20160204 }
+
+          List<RxcuiHistoryModel> historyModels = new ArrayList<>();
+          RxcuiHistoryModel historyModel = new RxcuiHistoryModel();
+          String prevNdc = null;
+          String prevVersion = null;
+          for (Record record : recordList) {
+            // handle first record
+            if (prevNdc == null) {
+              historyModel.setNdc(record.ndc);
+              historyModel.setEndDate(record.version);
+            }
+
+            // when ndc changes
+            if (prevNdc != null && !prevNdc.equals(record.ndc)) {
+              if (historyModel != null) {
+                historyModel.setStartDate(prevVersion);
+                historyModels.add(historyModel);
+              }
+              historyModel = new RxcuiHistoryModel();
+              historyModel.setNdc(record.ndc);
+              historyModel.setEndDate(record.version);
+            }
+
+            prevNdc = record.ndc;
+            prevVersion = record.version;
+          }
+          // Handle the final record
+          historyModel.setStartDate(prevVersion);
+          historyModels.add(historyModel);
+
+          model.setHistory(historyModels);
+          return model;
+
+        } // if list.getCount() >1
+
+
+    } catch (Exception e) {
+      throw e;
+    } finally {
+      service.close();
+    }
     return null;
   }
 
