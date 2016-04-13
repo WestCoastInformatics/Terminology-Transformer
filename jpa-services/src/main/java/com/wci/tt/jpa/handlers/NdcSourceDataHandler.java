@@ -4,8 +4,6 @@
 package com.wci.tt.jpa.handlers;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Properties;
 
 import org.apache.log4j.Logger;
@@ -20,6 +18,7 @@ import com.wci.umls.server.jpa.algo.TransitiveClosureAlgorithm;
 import com.wci.umls.server.jpa.algo.TreePositionAlgorithm;
 import com.wci.umls.server.jpa.services.ContentServiceJpa;
 import com.wci.umls.server.jpa.services.SourceDataServiceJpa;
+import com.wci.umls.server.jpa.services.handlers.AbstractSourceDataHandler;
 import com.wci.umls.server.jpa.services.rest.SecurityServiceRest;
 import com.wci.umls.server.model.content.ConceptSubset;
 import com.wci.umls.server.model.content.Subset;
@@ -28,20 +27,13 @@ import com.wci.umls.server.model.meta.Terminology;
 import com.wci.umls.server.rest.impl.SecurityServiceRestImpl;
 import com.wci.umls.server.services.ContentService;
 import com.wci.umls.server.services.SourceDataService;
-import com.wci.umls.server.services.handlers.SourceDataHandler;
 import com.wci.umls.server.services.helpers.ProgressEvent;
 import com.wci.umls.server.services.helpers.ProgressListener;
 
 /**
  * Converter for RxNorm files.
  */
-public class NdcSourceDataHandler implements SourceDataHandler {
-
-  /** Listeners. */
-  private List<ProgressListener> listeners = new ArrayList<>();
-
-  /** The source data. */
-  private SourceData sourceData;
+public class NdcSourceDataHandler extends AbstractSourceDataHandler {
 
   /**
    * Instantiates an empty {@link NdcSourceDataHandler}.

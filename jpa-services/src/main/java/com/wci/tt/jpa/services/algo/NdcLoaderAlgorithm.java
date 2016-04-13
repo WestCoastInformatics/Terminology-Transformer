@@ -12,10 +12,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.wci.umls.server.algo.Algorithm;
 import com.wci.umls.server.helpers.ConfigUtility;
 import com.wci.umls.server.helpers.FieldedStringTokenizer;
-import com.wci.umls.server.jpa.algo.AbstractLoaderAlgorithm;
+import com.wci.umls.server.jpa.algo.AbstractTerminologyLoaderAlgorithm;
 import com.wci.umls.server.jpa.algo.RrfFileSorter;
 import com.wci.umls.server.jpa.algo.RrfReaders;
 import com.wci.umls.server.jpa.content.AtomJpa;
@@ -40,8 +39,7 @@ import gnu.trove.strategy.HashingStrategy;
 /**
  * Implementation of an algorithm to import NDC/RXNORM data.
  */
-public class NdcLoaderAlgorithm extends AbstractLoaderAlgorithm
-    implements Algorithm {
+public class NdcLoaderAlgorithm extends AbstractTerminologyLoaderAlgorithm {
 
   /** Listeners. */
   private List<ProgressListener> listeners = new ArrayList<>();
@@ -266,7 +264,8 @@ public class NdcLoaderAlgorithm extends AbstractLoaderAlgorithm
     final PushBackReader reader = readers.getReader(RrfReaders.Keys.MRSAT);
     // make set of all atoms that got an additional attribute
 
-    Set<Concept> modifiedConcepts = new HashSet<>();
+    final Set<Concept> modifiedConcepts = new HashSet<>();
+    final Set<Atom> modifiedAtoms = new HashSet<>();
     final String fields[] = new String[13];
     while ((line = reader.readLine()) != null) {
       line = line.replace("\r", "");
@@ -352,6 +351,8 @@ public class NdcLoaderAlgorithm extends AbstractLoaderAlgorithm
         att.setTerminologyId("");
 
         addAttribute(att, atom);
+        atom.getAttributes().add(att);
+        modifiedAtoms.add(atom);
       }
       // log and commit
       logAndCommit(++objectCt, RootService.logCt, RootService.commitCt);
@@ -361,16 +362,20 @@ public class NdcLoaderAlgorithm extends AbstractLoaderAlgorithm
     // commit
     commitClearBegin();
 
-    for (
-
-    Concept c : modifiedConcepts)
-
-    {
-      updateConcept(c);
+    // Handle modified atoms
+    for (Atom atom : modifiedAtoms) {
+      updateAtom(atom);
 
       // log and commit
       logAndCommit(++objectCt, RootService.logCt, RootService.commitCt);
+    }
 
+    // Handle modified concepts
+    for (Concept concept : modifiedConcepts) {
+      updateConcept(concept);
+
+      // log and commit
+      logAndCommit(++objectCt, RootService.logCt, RootService.commitCt);
     }
 
     // commit
@@ -591,23 +596,6 @@ public class NdcLoaderAlgorithm extends AbstractLoaderAlgorithm
   }
 
   /**
-   * Returns the total elapsed time str.
-   *
-   * @param time the time
-   * @return the total elapsed time str
-   */
-  @SuppressWarnings("boxing")
-  private static String getTotalElapsedTimeStr(long time) {
-    Long resultnum = (System.nanoTime() - time) / 1000000000;
-    String result = resultnum.toString() + "s";
-    resultnum = resultnum / 60;
-    result = result + " / " + resultnum.toString() + "m";
-    resultnum = resultnum / 60;
-    result = result + " / " + resultnum.toString() + "h";
-    return result;
-  }
-
-  /**
    * Close.
    *
    * @throws Exception the exception
@@ -644,6 +632,13 @@ public class NdcLoaderAlgorithm extends AbstractLoaderAlgorithm
       return o1.equals(o2);
     }
 
+  }
+
+  /* see superclass */
+  @Override
+  public String getFileVersion() throws Exception {
+    // Multi-version handler
+    return null;
   }
 
 }
