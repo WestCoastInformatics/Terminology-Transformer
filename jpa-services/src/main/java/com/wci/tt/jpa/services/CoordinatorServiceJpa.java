@@ -615,25 +615,27 @@ public class CoordinatorServiceJpa extends ContentServiceJpa
 
   /* see superclass */
   @Override
-  public List<ScoredResult> normalize(String inputStr,
-    DataContext requiredInputContext, boolean includeOrig) throws Exception {
+  public List<ScoredResult> normalize(String inputStr, DataContext inputContext,
+    boolean includeOrig) throws Exception {
     Logger.getLogger(getClass())
-        .debug("Normalize - " + inputStr + ", " + requiredInputContext);
+        .debug("Normalize - " + inputStr + ", " + inputContext);
     List<ScoredResult> normalizedResults = new ArrayList<>();
 
     // STEP 1: Normalize input per normalizer
     final Map<String, Float> scoreMap = new HashMap<>();
     for (final NormalizerHandler normalizer : getNormalizers().values()) {
-
-      // Get the max score for each value of the various normalizers
-      for (final ScoredResult result : normalizer.normalize(inputStr,
-          requiredInputContext)) {
-        // Retain highest score per value
-        final float score = result.getScore() * normalizer.getQuality();
-        if (!scoreMap.containsKey(result.getValue())
-            || scoreMap.get(result.getValue()) < score) {
-          // Weight score by normalizer quality
-          scoreMap.put(result.getValue(), score);
+      // Only if normalizer accepts input context
+      if (normalizer.accepts(inputContext)) {
+        // Get the max score for each value of the various normalizers
+        for (final ScoredResult result : normalizer.normalize(inputStr,
+            inputContext)) {
+          // Retain highest score per value
+          final float score = result.getScore() * normalizer.getQuality();
+          if (!scoreMap.containsKey(result.getValue())
+              || scoreMap.get(result.getValue()) < score) {
+            // Weight score by normalizer quality
+            scoreMap.put(result.getValue(), score);
+          }
         }
       }
     }
