@@ -14,6 +14,7 @@ import java.util.Set;
 
 import com.wci.umls.server.helpers.ConfigUtility;
 import com.wci.umls.server.helpers.FieldedStringTokenizer;
+import com.wci.umls.server.helpers.PrecedenceList;
 import com.wci.umls.server.jpa.algo.AbstractTerminologyLoaderAlgorithm;
 import com.wci.umls.server.jpa.algo.RrfFileSorter;
 import com.wci.umls.server.jpa.algo.RrfReaders;
@@ -79,6 +80,9 @@ public class NdcLoaderAlgorithm extends AbstractTerminologyLoaderAlgorithm {
 
   /** The atom map. */
   private Map<String, Long> atomIdMap = new HashMap<>(10000);
+
+  /** The list. */
+  private PrecedenceList list;
 
   /**
    * Instantiates an empty {@link NdcLoaderAlgorithm}.
@@ -232,6 +236,7 @@ public class NdcLoaderAlgorithm extends AbstractTerminologyLoaderAlgorithm {
       root.setLastModifiedBy(loader);
 
       // Load the content
+      list = getDefaultPrecedenceList(getTerminology(), getVersion());
       loadMrconso();
 
       // Attributes
@@ -475,7 +480,7 @@ public class NdcLoaderAlgorithm extends AbstractTerminologyLoaderAlgorithm {
       // Add concept
       if (prevCui == null || !fields[0].equals(prevCui)) {
         if (prevCui != null) {
-          cui.setName(getComputedPreferredName(cui));
+          cui.setName(getComputedPreferredName(cui, list));
           addConcept(cui);
           conceptIdMap.put(prevCui, cui.getId());
 
@@ -497,7 +502,7 @@ public class NdcLoaderAlgorithm extends AbstractTerminologyLoaderAlgorithm {
     }
     // Add last concept
     if (prevCui != null) {
-      cui.setName(getComputedPreferredName(cui));
+      cui.setName(getComputedPreferredName(cui, list));
       addConcept(cui);
 
       logAndCommit(++objectCt, RootService.logCt, RootService.commitCt);
@@ -506,23 +511,6 @@ public class NdcLoaderAlgorithm extends AbstractTerminologyLoaderAlgorithm {
     // commit
     commitClearBegin();
 
-  }
-
-  /**
-   * Load atoms before computing.
-   *
-   * @param atomClass the atom class
-   * @return the computed preferred name
-   * @throws Exception the exception
-   */
-  @Override
-  public String getComputedPreferredName(AtomClass atomClass) throws Exception {
-    final List<Atom> atoms = new ArrayList<>();
-    for (final Atom atom : atomClass.getAtoms()) {
-      atoms.add(getAtom(atom.getId()));
-    }
-    atomClass.setAtoms(atoms);
-    return super.getComputedPreferredName(atomClass);
   }
 
   /**

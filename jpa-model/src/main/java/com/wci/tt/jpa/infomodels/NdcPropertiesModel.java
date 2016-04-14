@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -15,28 +14,46 @@ import com.wci.tt.infomodels.InfoModel;
 import com.wci.umls.server.helpers.ConfigUtility;
 
 /**
- * Information model for representing NDC-RXNORM history.
+ * Information model for representing NDC properties.
  * 
  * <pre>
- *    { active : "false", ndc: "19428372921", rxcui : "312656",
- *      history : [{ rxcui : "312656", active : "true", startDate : "200706", endDate : "201101" }]
- *    }
+ *  { rxcui: "1668240", 
+ *    ndc11 : "00069315083", 
+ *    ndc10 : "0069-3150-83"
+ *    ndc9 : "0069-3150",
+ *    splSetId="3b631aa1-2d46-40bc-a614-d698301ea4f9", 
+ *    propertyList: [
+ *      {name : "DM_SPL_ID", value : "172467"},
+ *      {name : "LABELER", value : "Pfizer Laboratories Div Pfizer Inc"},
+ *      {name : "LABEL_TYPE", value : "HUMAN PRESCRIPTION DRUG LABEL"},
+ *      {name : "MARKETING_CATEGORY", value : "NDA"},
+ *      {name : "MARKETING_EFFECTIVE_TIME_LOW", value : "19970130"},
+ *      {name : "MARKETING_STATUS", value : "active"},
+ *      {name  : "NDA", value : "NDA050733"} 
+ *    ]
+ *   }
  * </pre>
  */
-@XmlRootElement(name = "ndc")
+@XmlRootElement(name = "ndcProperties")
 public class NdcPropertiesModel implements InfoModel<NdcPropertiesModel> {
-
-  /** The active flag. */
-  private boolean active;
-
-  /** The ndc. */
-  private String ndc;
 
   /** The rxcui. */
   private String rxcui;
 
-  /** The history. */
-  private List<NdcHistoryModel> history;
+  /** The ndc. */
+  private String ndc11;
+
+  /** The ndc. */
+  private String ndc10;
+
+  /** The ndc. */
+  private String ndc9;
+
+  /** The spl set id. */
+  private String splSetId;
+
+  /** The properties. */
+  private List<PropertyModel> propertyList;
 
   /**
    * Instantiates an empty {@link NdcPropertiesModel}.
@@ -51,10 +68,12 @@ public class NdcPropertiesModel implements InfoModel<NdcPropertiesModel> {
    * @param model the model
    */
   public NdcPropertiesModel(NdcPropertiesModel model) {
-    active = model.isActive();
     rxcui = model.getRxcui();
-    ndc = model.getNdc();
-    history = new ArrayList<>(model.getHistory());
+    ndc11 = model.getNdc11();
+    ndc10 = model.getNdc10();
+    ndc9 = model.getNdc9();
+    splSetId = model.getSplSetId();
+    propertyList = new ArrayList<>(model.getPropertyList());
   }
 
   /**
@@ -66,7 +85,7 @@ public class NdcPropertiesModel implements InfoModel<NdcPropertiesModel> {
   @XmlTransient
   @Override
   public String getName() {
-    return "NDC Information Model";
+    return "NDC Properties Model";
   }
 
   /**
@@ -99,61 +118,96 @@ public class NdcPropertiesModel implements InfoModel<NdcPropertiesModel> {
   }
 
   /**
-   * Returns the ndc.
+   * Returns the 11-digit ndc code.
    *
-   * @return the ndc
+   * @return the 11-digit ndc code.
    */
-  public String getNdc() {
-    return ndc;
+  public String getNdc11() {
+    return ndc11;
   }
 
   /**
-   * Sets the ndc.
+   * Sets the 11-digit ndc code.
    *
-   * @param ndc the ndc
+   * @param ndc11 the ndc11
    */
-  public void setNdc(String ndc) {
-    this.ndc = ndc;
+  public void setNdc11(String ndc11) {
+    this.ndc11 = ndc11;
   }
 
   /**
-   * Indicates whether or not active is the case.
+   * Returns the 10-digit ndc code.
    *
-   * @return <code>true</code> if so, <code>false</code> otherwise
+   * @return the 10-digit ndc code.
    */
-  public boolean isActive() {
-    return active;
+  public String getNdc10() {
+    return ndc10;
   }
 
   /**
-   * Sets the active.
+   * Sets the 10-digit ndc code.
    *
-   * @param active the active
+   * @param ndc10 the ndc10
    */
-  public void setActive(boolean active) {
-    this.active = active;
+  public void setNdc10(String ndc10) {
+    this.ndc10 = ndc10;
   }
 
   /**
-   * Returns the history.
+   * Returns the 9-digit ndc code.
    *
-   * @return the history
+   * @return the 9-digit ndc code.
    */
-  @XmlElement(name = "history")
-  public List<NdcHistoryModel> getHistory() {
-    if (history == null) {
-      history = new ArrayList<>();
+  public String getNdc9() {
+    return ndc9;
+  }
+
+  /**
+   * Sets the 9-digit ndc code.
+   *
+   * @param ndc9 the ndc9
+   */
+  public void setNdc9(String ndc9) {
+    this.ndc9 = ndc9;
+  }
+
+  /**
+   * Returns the spl set id.
+   *
+   * @return the spl set id
+   */
+  public String getSplSetId() {
+    return splSetId;
+  }
+
+  /**
+   * Sets the spl set id.
+   *
+   * @param splSetId the spl set id
+   */
+  public void setSplSetId(String splSetId) {
+    this.splSetId = splSetId;
+  }
+
+  /**
+   * Returns the properties.
+   *
+   * @return the properties
+   */
+  public List<PropertyModel> getPropertyList() {
+    if (propertyList == null) {
+      propertyList = new ArrayList<>();
     }
-    return history;
+    return propertyList;
   }
 
   /**
-   * Sets the history.
+   * Sets the property list.
    *
-   * @param history the history
+   * @param propertyList the property list
    */
-  public void setHistory(List<NdcHistoryModel> history) {
-    this.history = history;
+  public void setPropertyList(List<PropertyModel> propertyList) {
+    this.propertyList = propertyList;
   }
 
   /* see superclass */
@@ -194,8 +248,8 @@ public class NdcPropertiesModel implements InfoModel<NdcPropertiesModel> {
 
   /* see superclass */
   @Override
-  public NdcPropertiesModel getModelInCommon(NdcPropertiesModel model, boolean analysisMode)
-    throws Exception {
+  public NdcPropertiesModel getModelInCommon(NdcPropertiesModel model,
+    boolean analysisMode) throws Exception {
     if (model == null) {
       return null;
     }
@@ -211,24 +265,48 @@ public class NdcPropertiesModel implements InfoModel<NdcPropertiesModel> {
       }
     }
 
-    if (model.getNdc() != null && ndc != null) {
-      if (analysisMode && !model.getNdc().equals(ndc)) {
-        common.setNdc(InfoModel.MULTIPLE_VALUES);
-      } else if (model.getNdc().equals(ndc)) {
-        common.setNdc(ndc);
+    if (model.getNdc11() != null && ndc11 != null) {
+      if (analysisMode && !model.getNdc11().equals(ndc11)) {
+        common.setNdc11(InfoModel.MULTIPLE_VALUES);
+      } else if (model.getNdc11().equals(ndc11)) {
+        common.setNdc11(ndc11);
+        found = true;
+      }
+    }
+    if (model.getNdc10() != null && ndc10 != null) {
+      if (analysisMode && !model.getNdc10().equals(ndc10)) {
+        common.setNdc10(InfoModel.MULTIPLE_VALUES);
+      } else if (model.getNdc10().equals(ndc10)) {
+        common.setNdc10(ndc10);
+        found = true;
+      }
+    }
+    if (model.getNdc9() != null && ndc9 != null) {
+      if (analysisMode && !model.getNdc9().equals(ndc9)) {
+        common.setNdc9(InfoModel.MULTIPLE_VALUES);
+      } else if (model.getNdc9().equals(ndc9)) {
+        common.setNdc9(ndc9);
         found = true;
       }
     }
 
-    if (model.getHistory() != null && history != null) {
+    if (model.getSplSetId() != null && splSetId != null) {
+      if (analysisMode && !model.getSplSetId().equals(splSetId)) {
+        common.setSplSetId(InfoModel.MULTIPLE_VALUES);
+      } else if (model.getSplSetId().equals(splSetId)) {
+        common.setSplSetId(splSetId);
+        found = true;
+      }
+    }
+    if (model.getPropertyList() != null && propertyList != null) {
       // Find common ingredient strength values
-      for (final NdcHistoryModel in : model.getHistory()) {
-        for (final NdcHistoryModel in2 : history) {
-          NdcHistoryModel commonIngredient =
+      for (final PropertyModel in : model.getPropertyList()) {
+        for (final PropertyModel in2 : propertyList) {
+          final PropertyModel commonProperty =
               in.getModelInCommon(in2, analysisMode);
-          if (commonIngredient != null
-              && !common.getHistory().contains(commonIngredient)) {
-            common.getHistory().add(commonIngredient);
+          if (commonProperty != null
+              && !common.getPropertyList().contains(commonProperty)) {
+            common.getPropertyList().add(commonProperty);
           }
           found = true;
         }
@@ -246,10 +324,13 @@ public class NdcPropertiesModel implements InfoModel<NdcPropertiesModel> {
   public int hashCode() {
     final int prime = 31;
     int result = 1;
-    result = prime * result + (active ? 1231 : 1237);
-    result = prime * result + ((history == null) ? 0 : history.hashCode());
+    result = prime * result + ((ndc10 == null) ? 0 : ndc10.hashCode());
+    result = prime * result + ((ndc11 == null) ? 0 : ndc11.hashCode());
+    result = prime * result + ((ndc9 == null) ? 0 : ndc9.hashCode());
+    result =
+        prime * result + ((propertyList == null) ? 0 : propertyList.hashCode());
     result = prime * result + ((rxcui == null) ? 0 : rxcui.hashCode());
-    result = prime * result + ((ndc == null) ? 0 : ndc.hashCode());
+    result = prime * result + ((splSetId == null) ? 0 : splSetId.hashCode());
     return result;
   }
 
@@ -263,22 +344,35 @@ public class NdcPropertiesModel implements InfoModel<NdcPropertiesModel> {
     if (getClass() != obj.getClass())
       return false;
     NdcPropertiesModel other = (NdcPropertiesModel) obj;
-    if (active != other.active)
-      return false;
-    if (history == null) {
-      if (other.history != null)
+    if (ndc10 == null) {
+      if (other.ndc10 != null)
         return false;
-    } else if (!history.equals(other.history))
+    } else if (!ndc10.equals(other.ndc10))
+      return false;
+    if (ndc11 == null) {
+      if (other.ndc11 != null)
+        return false;
+    } else if (!ndc11.equals(other.ndc11))
+      return false;
+    if (ndc9 == null) {
+      if (other.ndc9 != null)
+        return false;
+    } else if (!ndc9.equals(other.ndc9))
+      return false;
+    if (propertyList == null) {
+      if (other.propertyList != null)
+        return false;
+    } else if (!propertyList.equals(other.propertyList))
       return false;
     if (rxcui == null) {
       if (other.rxcui != null)
         return false;
     } else if (!rxcui.equals(other.rxcui))
       return false;
-    if (ndc == null) {
-      if (other.ndc != null)
+    if (splSetId == null) {
+      if (other.splSetId != null)
         return false;
-    } else if (!ndc.equals(other.ndc))
+    } else if (!splSetId.equals(other.splSetId))
       return false;
     return true;
   }
@@ -286,8 +380,9 @@ public class NdcPropertiesModel implements InfoModel<NdcPropertiesModel> {
   /* see superclass */
   @Override
   public String toString() {
-    return "NdcModel [active=" + active + ", rxcui=" + rxcui + ", ndc=" + ndc
-        + ", history=" + history + "]";
+    return "NdcPropertiesModel [rxcui=" + rxcui + ", ndc11=" + ndc11
+        + ", ndc10=" + ndc10 + ", ndc9=" + ndc9 + ", splSetId=" + splSetId
+        + ", propertyList=" + propertyList + "]";
   }
 
 }

@@ -71,7 +71,7 @@ public class RxcuiHistoryModel implements InfoModel<RxcuiHistoryModel> {
   @XmlTransient
   @Override
   public String getName() {
-    return "Default Information Model";
+    return "Rxcui History Model";
   }
 
   /**

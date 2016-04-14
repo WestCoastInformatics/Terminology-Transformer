@@ -71,7 +71,7 @@ public class NdcHistoryModel implements InfoModel<NdcHistoryModel> {
   @XmlTransient
   @Override
   public String getName() {
-    return "Default Information Model";
+    return "NDC History Model";
   }
 
   /**
