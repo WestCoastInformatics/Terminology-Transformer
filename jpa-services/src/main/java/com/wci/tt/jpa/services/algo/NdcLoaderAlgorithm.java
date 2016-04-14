@@ -310,7 +310,7 @@ public class NdcLoaderAlgorithm extends AbstractTerminologyLoaderAlgorithm {
         atom.setSuppressible(!fields[11].equals("N"));
         atom.setPublished(true);
         atom.setPublishable(true);
-        atom.setTerminologyId(fields[7]);
+        atom.setTerminologyId(fields[3]);
         atom.setTerminology(fields[9].intern());
         if (!terminology.equals(fields[9])) {
           throw new Exception(
@@ -334,10 +334,45 @@ public class NdcLoaderAlgorithm extends AbstractTerminologyLoaderAlgorithm {
         addAtom(atom);
         modifiedConcepts.add(concept);
 
+      } else if (fields[8].equals("SPL_SET_ID") && fields[9].equals("MTHSPL")) {
+
+        final Atom atom = new AtomJpa();
+
+        atom.setTimestamp(releaseVersionDate);
+        atom.setLastModified(releaseVersionDate);
+        atom.setLastModifiedBy(loader);
+        atom.setObsolete(fields[11].equals("O"));
+        atom.setSuppressible(!fields[11].equals("N"));
+        atom.setPublished(true);
+        atom.setPublishable(true);
+        atom.setTerminologyId(fields[3]);
+        atom.setTerminology(fields[9].intern());
+        if (!terminology.equals(fields[9])) {
+          throw new Exception(
+              "Attribute references terminology that does not exist: "
+                  + fields[9]);
+        } else {
+          atom.setVersion(version);
+        }
+        atom.setName(fields[10]);
+        atom.setConceptId(fields[0]);
+        atom.setCodeId("");
+        atom.setDescriptorId("");
+        atom.setConceptTerminologyIds(new HashMap<String, String>());
+        atom.setStringClassId("");
+        atom.setLexicalClassId("");
+        atom.setTermType("SPL_SET_ID");
+        atom.setLanguage("ENG");
+
+        Concept concept = getConcept(conceptIdMap.get(fields[0]));
+        concept.addAtom(atom);
+        addAtom(atom);
+        modifiedConcepts.add(concept);
+
       }
 
       // load as an attribute that is connected to the MTHSPL aui
-      else if (fields[9].equals("MTHSPL")) {
+      if (fields[9].equals("MTHSPL")) {
 
         Long aui = atomIdMap.get(fields[3]);
         Atom atom = getAtom(aui);
