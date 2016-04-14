@@ -66,7 +66,7 @@ public class NdcModel implements InfoModel<NdcModel> {
   @XmlTransient
   @Override
   public String getName() {
-    return "NDC Information Model";
+    return "NDC Model";
   }
 
   /**

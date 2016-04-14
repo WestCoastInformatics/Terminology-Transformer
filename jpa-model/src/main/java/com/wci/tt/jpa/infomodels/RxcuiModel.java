@@ -62,7 +62,7 @@ public class RxcuiModel implements InfoModel<RxcuiModel> {
   @XmlTransient
   @Override
   public String getName() {
-    return "NDC Information Model";
+    return "Rxcui Model";
   }
 
   /**
