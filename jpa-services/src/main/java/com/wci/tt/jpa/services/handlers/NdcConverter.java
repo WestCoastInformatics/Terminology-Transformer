@@ -37,14 +37,19 @@ public class NdcConverter extends AbstractAcceptsHandler
    */
   public NdcConverter() throws Exception {
     // Configure input/output matchers
-    // Takes a code/returns a code
     DataContextMatcher matcher = new DataContextMatcher();
     matcher.configureContext(DataContextType.INFO_MODEL, null, null, null,
-        NdcModel.class.getName(), null, null);
+        NdcModel.class.getName(), null, null);    
+    addMatcher(matcher, matcher);
+    
+    matcher = new DataContextMatcher();
     matcher.configureContext(DataContextType.INFO_MODEL, null, null, null,
-        RxcuiModel.class.getName(), null, null);
+        RxcuiModel.class.getName(), null, null);    
+    addMatcher(matcher, matcher);
+    
+    matcher = new DataContextMatcher();
     matcher.configureContext(DataContextType.INFO_MODEL, null, null, null,
-        NdcPropertiesModel.class.getName(), null, null);
+        NdcPropertiesModel.class.getName(), null, null);    
     addMatcher(matcher, matcher);
   }
 

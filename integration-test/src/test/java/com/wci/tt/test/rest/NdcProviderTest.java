@@ -149,7 +149,7 @@ public class NdcProviderTest extends RestIntegrationSupport {
     Logger.getLogger(getClass()).info("TEST " + name.getMethodName());
 
     // Input Data
-    String inputString = "00247100552";
+    String inputString = "61010-5400-2";
 
     NdcPropertiesModel results =
         ndcService.getNdcProperties(inputString, 

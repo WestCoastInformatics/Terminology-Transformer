@@ -112,10 +112,37 @@ public class NdcClientRest extends RootClientRest
 
 
   @Override
-  public NdcPropertiesModel getNdcProperties(String ndc, String authToken)
+  public NdcPropertiesModel getNdcProperties(String inputString, String authToken)
     throws Exception {
-    // TODO Auto-generated method stub
-    return null;
+    Logger.getLogger(getClass()).debug(
+        "Ndc Client - get properties for ndc " + inputString );
+
+    validateNotEmpty(inputString, "inputStr");
+
+    Client client = ClientBuilder.newClient();
+    WebTarget target = client.target(
+        config.getProperty("base.url") + "/ndc/properties/" + inputString);
+
+
+
+    // Call Rest method
+    Response response = target.request(MediaType.APPLICATION_XML)
+        .header("Authorization", authToken)
+        .get();
+
+    String resultString = response.readEntity(String.class);
+    if (response.getStatusInfo().getFamily() == Family.SUCCESSFUL) {
+      // n/a
+    } else {
+      throw new Exception(resultString);
+    }
+
+    // converting to object
+    NdcPropertiesModel result =
+        (NdcPropertiesModel) ConfigUtility.getGraphForString(
+            resultString, NdcPropertiesModel.class);
+
+    return result;
   }
 
 }
