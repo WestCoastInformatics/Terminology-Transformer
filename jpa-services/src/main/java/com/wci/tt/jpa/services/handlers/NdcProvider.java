@@ -23,6 +23,7 @@ import com.wci.tt.jpa.helpers.ScoredResultJpa;
 import com.wci.tt.jpa.infomodels.NdcHistoryModel;
 import com.wci.tt.jpa.infomodels.NdcModel;
 import com.wci.tt.jpa.infomodels.NdcPropertiesModel;
+import com.wci.tt.jpa.infomodels.NdcPropertiesModelList;
 import com.wci.tt.jpa.infomodels.RxcuiHistoryModel;
 import com.wci.tt.jpa.infomodels.RxcuiModel;
 import com.wci.tt.jpa.services.helper.DataContextMatcher;
@@ -187,6 +188,24 @@ public class NdcProvider extends AbstractAcceptsHandler
 
     }
 
+    else if (inputContext.getTerminology().equals("NDC") && outputContext
+        .getInfoModelClass().equals(NdcPropertiesModelList.class.getName())) {
+      
+      // Attempt to find the ndc properties models for the given splsetid
+      final NdcPropertiesModelList model =
+          getPropertiesModelList(inputString, record.getNormalizedResults());
+      if (model != null) {
+        final ScoredResult result = new ScoredResultJpa();
+        result.setValue(model.getModelValue());
+        result.setScore(1);
+        results.add(result);
+        Logger.getLogger(getClass()).debug("    result = " + result.getValue());
+      } else {
+        return new ArrayList<ScoredResult>();
+      }
+
+    }
+
     else {
       return new ArrayList<ScoredResult>();
     }
@@ -333,6 +352,13 @@ public class NdcProvider extends AbstractAcceptsHandler
     return null;
   }
 
+  private NdcPropertiesModelList getPropertiesModelList(String splsetid,
+    List<ScoredResult> normalizedResults) throws Exception {
+    final NdcPropertiesModelList model = new NdcPropertiesModelList();
+    // TODO:  need to get Ndcs for splsetid and call getPropertiesModel on each ndc
+    return model;
+  }
+  
   /**
    * Returns the ndc properties model.
    *
@@ -346,6 +372,7 @@ public class NdcProvider extends AbstractAcceptsHandler
     final ContentService service = new ContentServiceJpa();
     final NdcPropertiesModel model = new NdcPropertiesModel();
     
+
     try {
 
       // gather together original input string and normalized results

@@ -21,6 +21,7 @@ import com.wci.tt.helpers.ScoredResult;
 import com.wci.tt.jpa.DataContextJpa;
 import com.wci.tt.jpa.infomodels.NdcModel;
 import com.wci.tt.jpa.infomodels.NdcPropertiesModel;
+import com.wci.tt.jpa.infomodels.NdcPropertiesModelList;
 import com.wci.tt.jpa.infomodels.RxcuiModel;
 import com.wci.tt.jpa.services.CoordinatorServiceJpa;
 import com.wci.tt.jpa.services.rest.NdcServiceRest;
@@ -206,4 +207,52 @@ public class NdcServiceRestImpl extends RootServiceRestImpl
     }
   }
 
+  /* see superclass */
+  @Override
+  @Path("/list/{splsetid}")
+  @GET
+  @ApiOperation(value = "Process and Convert on all supported input/output data contexts", notes = "Execute the Process and Convert calls for all supported input and output contexts", response = NdcPropertiesModelList.class)
+  public NdcPropertiesModelList getNdcPropertiesForSplSetId(
+    @ApiParam(value = "Ndc Input, e.g. '12345678911'", required = true) @PathParam("splsetid") String splsetid,
+    @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
+      throws Exception {
+
+    Logger.getLogger(getClass())
+        .info("RESTful POST call (Ndc): /list ndc=" + splsetid);
+
+    final CoordinatorService service = new CoordinatorServiceJpa();
+    try {
+      authorizeApp(securityService, authToken, "get ndc properties list", UserRole.VIEWER);
+
+      // Configure contexts
+      DataContext inputContext = new DataContextJpa();
+      inputContext.setType(DataContextType.CODE);
+      inputContext.setTerminology("NDC");
+      DataContext outputContext = new DataContextJpa();
+      outputContext.setType(DataContextType.INFO_MODEL);
+      outputContext.setInfoModelClass(NdcPropertiesModelList.class.getName());
+
+      // Obtain results
+      final List<ScoredResult> results =
+          service.process(splsetid, inputContext, outputContext);
+
+      // Send emty value on no results
+      if (results.size() == 0) {
+        return new NdcPropertiesModelList();
+      }
+
+      // Otherwise, assume 1 result
+      final ScoredResult result = results.get(0);
+
+      // Translate tuples into JPA object
+      final NdcPropertiesModelList ndcPropertiesModelList = new NdcPropertiesModelList().getModel(result.getValue());
+      return ndcPropertiesModelList;
+    } catch (Exception e) {
+      handleException(e, "trying to get ndc properties list");
+      return null;
+    } finally {
+      service.close();
+      securityService.close();
+    }
+  }
 }
