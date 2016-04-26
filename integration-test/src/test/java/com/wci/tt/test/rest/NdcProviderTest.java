@@ -12,6 +12,8 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.wci.tt.jpa.infomodels.NdcModel;
+import com.wci.tt.jpa.infomodels.NdcPropertiesModel;
+import com.wci.tt.jpa.infomodels.RxcuiModel;
 import com.wci.tt.rest.client.NdcClientRest;
 import com.wci.tt.rest.client.TransformClientRest;
 import com.wci.umls.server.helpers.ConfigUtility;
@@ -103,19 +105,57 @@ public class NdcProviderTest extends RestIntegrationSupport {
    * @throws Exception the exception
    */
   @Test
-  public void testAllProcessCallsAnalyzeResults() throws Exception {
+  public void testNdcToRxcuiConversion() throws Exception {
     Logger.getLogger(getClass()).info("TEST " + name.getMethodName());
 
     // Input Data
     String inputString = "00247100552";
 
     NdcModel results =
-        ndcService.process(inputString, 
+        ndcService.processNdc(inputString, 
             adminAuthToken);
 
     Logger.getLogger(getClass()).info("  results = " + results);
-
-    
+   
   }
 
+  /**
+   * Test rxcui to ndc conversion.
+   *
+   * @throws Exception the exception
+   */
+  @Test
+  public void testRxcuiToNdcConversion() throws Exception {
+    Logger.getLogger(getClass()).info("TEST " + name.getMethodName());
+
+    // Input Data
+    String inputString = "283420";
+
+    RxcuiModel results =
+        ndcService.processRxcui(inputString, 
+            adminAuthToken);
+
+    Logger.getLogger(getClass()).info("  results = " + results);
+   
+  }
+  
+  /**
+   * Test get ndc properties.
+   *
+   * @throws Exception the exception
+   */
+  @Test
+  public void testGetNdcProperties() throws Exception {
+    Logger.getLogger(getClass()).info("TEST " + name.getMethodName());
+
+    // Input Data
+    String inputString = "61010-5400-2";
+
+    NdcPropertiesModel results =
+        ndcService.getNdcProperties(inputString, 
+            adminAuthToken);
+
+    Logger.getLogger(getClass()).info("  results = " + results);
+   
+  }
 }

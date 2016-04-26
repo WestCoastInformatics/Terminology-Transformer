@@ -347,13 +347,13 @@ public class NdcLoaderAlgorithm extends AbstractTerminologyLoaderAlgorithm {
         atom.setPublishable(true);
         atom.setTerminologyId(fields[3]);
         atom.setTerminology(fields[9].intern());
-        if (!terminology.equals(fields[9])) {
+        /*if (!terminology.equals(fields[9])) {
           throw new Exception(
               "Attribute references terminology that does not exist: "
                   + fields[9]);
-        } else {
-          atom.setVersion(version);
-        }
+        } else {*/
+        atom.setVersion(version);
+        //}
         atom.setName(fields[10]);
         atom.setConceptId(fields[0]);
         atom.setCodeId("");
