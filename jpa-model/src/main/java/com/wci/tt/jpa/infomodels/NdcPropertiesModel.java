@@ -23,13 +23,13 @@ import com.wci.umls.server.helpers.ConfigUtility;
  *    ndc9 : "0069-3150",
  *    splSetId="3b631aa1-2d46-40bc-a614-d698301ea4f9", 
  *    propertyList: [
- *      {name : "DM_SPL_ID", value : "172467"},
- *      {name : "LABELER", value : "Pfizer Laboratories Div Pfizer Inc"},
- *      {name : "LABEL_TYPE", value : "HUMAN PRESCRIPTION DRUG LABEL"},
- *      {name : "MARKETING_CATEGORY", value : "NDA"},
- *      {name : "MARKETING_EFFECTIVE_TIME_LOW", value : "19970130"},
- *      {name : "MARKETING_STATUS", value : "active"},
- *      {name  : "NDA", value : "NDA050733"} 
+ *      {prop : "DM_SPL_ID", value : "172467"},
+ *      {prop : "LABELER", value : "Pfizer Laboratories Div Pfizer Inc"},
+ *      {prop : "LABEL_TYPE", value : "HUMAN PRESCRIPTION DRUG LABEL"},
+ *      {prop : "MARKETING_CATEGORY", value : "NDA"},
+ *      {prop : "MARKETING_EFFECTIVE_TIME_LOW", value : "19970130"},
+ *      {prop : "MARKETING_STATUS", value : "active"},
+ *      {prop  : "NDA", value : "NDA050733"} 
  *    ]
  *   }
  * </pre>
