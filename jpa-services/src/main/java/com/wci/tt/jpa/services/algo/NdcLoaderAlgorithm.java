@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.log4j.Logger;
+
 import com.wci.umls.server.helpers.ConfigUtility;
 import com.wci.umls.server.helpers.FieldedStringTokenizer;
 import com.wci.umls.server.helpers.PrecedenceList;
@@ -68,12 +70,6 @@ public class NdcLoaderAlgorithm extends AbstractTerminologyLoaderAlgorithm {
 
   /** The published. */
   private final String published = "PUBLISHED";
-
-  private Terminology term;
-
-  /** The loaded root terminologies. */
-  private Map<String, RootTerminology> loadedRootTerminologies =
-      new HashMap<>();
 
   /** The concept map. */
   private Map<String, Long> conceptIdMap = new HashMap<>(10000);
@@ -171,7 +167,7 @@ public class NdcLoaderAlgorithm extends AbstractTerminologyLoaderAlgorithm {
       logInfo("  inputDir = " + inputDir);
 
       // Check the input directory
-      File inputDirFile = new File(inputDir);
+      final File inputDirFile = new File(inputDir);
       if (!inputDirFile.exists()) {
         throw new Exception("Specified input directory does not exist");
       }
@@ -181,10 +177,12 @@ public class NdcLoaderAlgorithm extends AbstractTerminologyLoaderAlgorithm {
       final RrfFileSorter sorter = new RrfFileSorter();
       // Be flexible about missing files for RXNORM
       sorter.setRequireAllFiles(false);
+
+      // If using "original readers" below, then dont need to sort
       // File outputDir = new File(inputDirFile, "/RRF-sorted-temp/");
-      // sorter.sortFiles(inputDirFile, outputDir);
-      // TODO: this is only getting the year right, not the correct month and
-      // day
+      // sorter.sortFiles(inputDirFile, outputDir, "RXN");
+
+      // Get release version
       String releaseVersion = sorter.getFileVersion(inputDirFile);
       if (releaseVersion == null) {
         releaseVersion = version;
@@ -212,7 +210,7 @@ public class NdcLoaderAlgorithm extends AbstractTerminologyLoaderAlgorithm {
       beginTransaction();
 
       // make terminology
-      term = new TerminologyJpa();
+      final Terminology term = new TerminologyJpa();
       term.setAssertsRelDirection(false);
       term.setCurrent(true);
       term.setOrganizingClassType(IdType.CONCEPT);
@@ -225,8 +223,7 @@ public class NdcLoaderAlgorithm extends AbstractTerminologyLoaderAlgorithm {
       term.setDescriptionLogicTerminology(false);
       term.setMetathesaurus(true);
 
-      RootTerminology root = loadedRootTerminologies.get(terminology);
-      root = new RootTerminologyJpa();
+      final RootTerminology root = new RootTerminologyJpa();
       root.setFamily(terminology);
       root.setPreferredName(terminology);
       root.setRestrictionLevel(0);
@@ -251,6 +248,7 @@ public class NdcLoaderAlgorithm extends AbstractTerminologyLoaderAlgorithm {
       clear();
 
     } catch (Exception e) {
+      e.printStackTrace();
       logError(e.getMessage());
       throw e;
     }
@@ -347,13 +345,13 @@ public class NdcLoaderAlgorithm extends AbstractTerminologyLoaderAlgorithm {
         atom.setPublishable(true);
         atom.setTerminologyId(fields[3]);
         atom.setTerminology(fields[9].intern());
-        /*if (!terminology.equals(fields[9])) {
-          throw new Exception(
-              "Attribute references terminology that does not exist: "
-                  + fields[9]);
-        } else {*/
+        /*
+         * if (!terminology.equals(fields[9])) { throw new Exception(
+         * "Attribute references terminology that does not exist: " +
+         * fields[9]); } else {
+         */
         atom.setVersion(version);
-        //}
+        // }
         atom.setName(fields[10]);
         atom.setConceptId(fields[0]);
         atom.setCodeId("");
@@ -364,19 +362,24 @@ public class NdcLoaderAlgorithm extends AbstractTerminologyLoaderAlgorithm {
         atom.setTermType("SPL_SET_ID");
         atom.setLanguage("ENG");
 
-        Concept concept = getConcept(conceptIdMap.get(fields[0]));
-        concept.addAtom(atom);
-        addAtom(atom);
-        modifiedConcepts.add(concept);
-
+        final Long id = conceptIdMap.get(fields[0]);
+        if (id == null) {
+          Logger.getLogger(getClass())
+              .warn("Unable to find concept matching " + fields[0]);
+        } else {
+          final Concept concept = getConcept(id);
+          concept.addAtom(atom);
+          addAtom(atom);
+          modifiedConcepts.add(concept);
+        }
       }
 
       // load as an attribute that is connected to the MTHSPL aui
       if (fields[9].equals("MTHSPL")) {
 
-        Long aui = atomIdMap.get(fields[3]);
-        Atom atom = getAtom(aui);
-        Attribute att = new AttributeJpa();
+        final Long aui = atomIdMap.get(fields[3]);
+        final Atom atom = getAtom(aui);
+        final Attribute att = new AttributeJpa();
         att.setName(fields[8]);
         att.setValue(fields[10]);
         att.setTimestamp(releaseVersionDate);
@@ -539,6 +542,7 @@ public class NdcLoaderAlgorithm extends AbstractTerminologyLoaderAlgorithm {
     if (prevCui != null) {
       cui.setName(getComputedPreferredName(cui, list));
       addConcept(cui);
+      conceptIdMap.put(prevCui, cui.getId());
 
       logAndCommit(++objectCt, RootService.logCt, RootService.commitCt);
     }

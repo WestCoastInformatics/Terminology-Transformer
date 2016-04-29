@@ -5,7 +5,7 @@ package com.wci.tt.jpa.services.rest;
 
 import com.wci.tt.jpa.infomodels.NdcModel;
 import com.wci.tt.jpa.infomodels.NdcPropertiesModel;
-import com.wci.tt.jpa.infomodels.NdcPropertiesModelList;
+import com.wci.tt.jpa.infomodels.NdcPropertiesListModel;
 import com.wci.tt.jpa.infomodels.RxcuiModel;
 
 /**
@@ -51,7 +51,7 @@ public interface NdcServiceRest {
    * @return the ndc properties for spl set id
    * @throws Exception the exception
    */
-  public NdcPropertiesModelList getNdcPropertiesForSplSetId(String inputString,
+  public NdcPropertiesListModel getNdcPropertiesForSplSetId(String inputString,
     String authToken) throws Exception;
 
 }
