@@ -4,7 +4,6 @@
 package com.wci.tt.jpa.services.algo;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -14,6 +13,8 @@ import java.util.Set;
 
 import org.apache.log4j.Logger;
 
+import com.wci.tt.helpers.ScoredResult;
+import com.wci.tt.jpa.services.handlers.NdcNormalizer;
 import com.wci.umls.server.helpers.ConfigUtility;
 import com.wci.umls.server.helpers.FieldedStringTokenizer;
 import com.wci.umls.server.helpers.PrecedenceList;
@@ -33,19 +34,15 @@ import com.wci.umls.server.model.meta.IdType;
 import com.wci.umls.server.model.meta.RootTerminology;
 import com.wci.umls.server.model.meta.Terminology;
 import com.wci.umls.server.services.RootService;
-import com.wci.umls.server.services.helpers.ProgressEvent;
-import com.wci.umls.server.services.helpers.ProgressListener;
 import com.wci.umls.server.services.helpers.PushBackReader;
-
-import gnu.trove.strategy.HashingStrategy;
 
 /**
  * Implementation of an algorithm to import NDC/RXNORM data.
  */
 public class NdcLoaderAlgorithm extends AbstractTerminologyLoaderAlgorithm {
 
-  /** Listeners. */
-  private List<ProgressListener> listeners = new ArrayList<>();
+  /** The attributes flag. */
+  boolean attributesFlag = true;
 
   /** The terminology. */
   private String terminology;
@@ -73,9 +70,6 @@ public class NdcLoaderAlgorithm extends AbstractTerminologyLoaderAlgorithm {
 
   /** The concept map. */
   private Map<String, Long> conceptIdMap = new HashMap<>(10000);
-
-  /** The atom map. */
-  private Map<String, Long> atomIdMap = new HashMap<>(10000);
 
   /** The list. */
   private PrecedenceList list;
@@ -113,6 +107,15 @@ public class NdcLoaderAlgorithm extends AbstractTerminologyLoaderAlgorithm {
    */
   public void setVersion(String version) {
     this.version = version;
+  }
+
+  /**
+   * Sets the attributes flag.
+   *
+   * @param attributesFlag the attributes flag
+   */
+  public void setAttributesFlag(boolean attributesFlag) {
+    this.attributesFlag = attributesFlag;
   }
 
   /**
@@ -165,6 +168,7 @@ public class NdcLoaderAlgorithm extends AbstractTerminologyLoaderAlgorithm {
       logInfo("  version = " + version);
       logInfo("  releaseVersion = " + releaseVersion);
       logInfo("  inputDir = " + inputDir);
+      logInfo("  attributesFlag = " + attributesFlag);
 
       // Check the input directory
       final File inputDirFile = new File(inputDir);
@@ -255,178 +259,6 @@ public class NdcLoaderAlgorithm extends AbstractTerminologyLoaderAlgorithm {
   }
 
   /**
-   * Load MRSAT. This is responsible for loading {@link Attribute}s.
-   *
-   * @throws Exception the exception
-   */
-  private void loadMrsat() throws Exception {
-    logInfo("  Load MRSAT data");
-    String line = null;
-
-    int objectCt = 0;
-    final PushBackReader reader = readers.getReader(RrfReaders.Keys.MRSAT);
-    // make set of all atoms that got an additional attribute
-
-    final Set<Concept> modifiedConcepts = new HashSet<>();
-    final Set<Atom> modifiedAtoms = new HashSet<>();
-    final String fields[] = new String[13];
-    while ((line = reader.readLine()) != null) {
-      line = line.replace("\r", "");
-      FieldedStringTokenizer.split(line, "|", 13, fields);
-
-      if (!fields[9].equals("RXNORM") && !fields[9].equals("MTHSPL")) {
-        continue;
-      }
-
-      // Field Description
-      // 0 CUI
-      // 1 LUI
-      // 2 SUI
-      // 3 METAUI
-      // 4 STYPE
-      // 5 CODE
-      // 6 ATUI
-      // 7 SATUI
-      // 8 ATN
-      // 9 SAB
-      // 10 ATV
-      // 11 SUPPRESS
-      // 12 CVF
-      //
-      // e.g.
-      // 197589|||1907932|AUI|197589|||NDC|RXNORM|12634069891|N|4096|
-      // 448|||3311306|AUI|3K9958V90M|||SPL_SET_ID|MTHSPL|4192e27f-0034-4cd9-b9e0-27b52cb4b970|N|4096|
-
-      if (fields[8].equals("NDC") && fields[9].equals("RXNORM")) {
-
-        final Atom atom = new AtomJpa();
-
-        atom.setTimestamp(releaseVersionDate);
-        atom.setLastModified(releaseVersionDate);
-        atom.setLastModifiedBy(loader);
-        atom.setObsolete(fields[11].equals("O"));
-        atom.setSuppressible(!fields[11].equals("N"));
-        atom.setPublished(true);
-        atom.setPublishable(true);
-        atom.setTerminologyId(fields[3]);
-        atom.setTerminology(fields[9].intern());
-        if (!terminology.equals(fields[9])) {
-          throw new Exception(
-              "Attribute references terminology that does not exist: "
-                  + fields[9]);
-        } else {
-          atom.setVersion(version);
-        }
-        atom.setName(fields[10]);
-        atom.setConceptId(fields[0]);
-        atom.setCodeId("");
-        atom.setDescriptorId("");
-        atom.setConceptTerminologyIds(new HashMap<String, String>());
-        atom.setStringClassId("");
-        atom.setLexicalClassId("");
-        atom.setTermType("NDC");
-        atom.setLanguage("ENG");
-
-        Concept concept = getConcept(conceptIdMap.get(fields[0]));
-        concept.addAtom(atom);
-        addAtom(atom);
-        modifiedConcepts.add(concept);
-
-      } else if (fields[8].equals("SPL_SET_ID") && fields[9].equals("MTHSPL")) {
-
-        final Atom atom = new AtomJpa();
-
-        atom.setTimestamp(releaseVersionDate);
-        atom.setLastModified(releaseVersionDate);
-        atom.setLastModifiedBy(loader);
-        atom.setObsolete(fields[11].equals("O"));
-        atom.setSuppressible(!fields[11].equals("N"));
-        atom.setPublished(true);
-        atom.setPublishable(true);
-        atom.setTerminologyId(fields[3]);
-        atom.setTerminology(fields[9].intern());
-        /*
-         * if (!terminology.equals(fields[9])) { throw new Exception(
-         * "Attribute references terminology that does not exist: " +
-         * fields[9]); } else {
-         */
-        atom.setVersion(version);
-        // }
-        atom.setName(fields[10]);
-        atom.setConceptId(fields[0]);
-        atom.setCodeId("");
-        atom.setDescriptorId("");
-        atom.setConceptTerminologyIds(new HashMap<String, String>());
-        atom.setStringClassId("");
-        atom.setLexicalClassId("");
-        atom.setTermType("SPL_SET_ID");
-        atom.setLanguage("ENG");
-
-        final Long id = conceptIdMap.get(fields[0]);
-        if (id == null) {
-          Logger.getLogger(getClass())
-              .warn("Unable to find concept matching " + fields[0]);
-        } else {
-          final Concept concept = getConcept(id);
-          concept.addAtom(atom);
-          addAtom(atom);
-          modifiedConcepts.add(concept);
-        }
-      }
-
-      // load as an attribute that is connected to the MTHSPL aui
-      if (fields[9].equals("MTHSPL")) {
-
-        final Long aui = atomIdMap.get(fields[3]);
-        final Atom atom = getAtom(aui);
-        final Attribute att = new AttributeJpa();
-        att.setName(fields[8]);
-        att.setValue(fields[10]);
-        att.setTimestamp(releaseVersionDate);
-        att.setLastModified(releaseVersionDate);
-        att.setLastModifiedBy(loader);
-        att.setObsolete(false);
-        att.setSuppressible(false);
-        att.setPublished(true);
-        att.setPublishable(true);
-        att.setTerminology(terminology);
-        att.setVersion(version);
-        att.setTerminologyId("");
-
-        addAttribute(att, atom);
-        atom.getAttributes().add(att);
-        modifiedAtoms.add(atom);
-      }
-      // log and commit
-      logAndCommit(++objectCt, RootService.logCt, RootService.commitCt);
-
-    } // end while loop
-
-    // commit
-    commitClearBegin();
-
-    // Handle modified atoms
-    for (Atom atom : modifiedAtoms) {
-      updateAtom(atom);
-
-      // log and commit
-      logAndCommit(++objectCt, RootService.logCt, RootService.commitCt);
-    }
-
-    // Handle modified concepts
-    for (Concept concept : modifiedConcepts) {
-      updateConcept(concept);
-
-      // log and commit
-      logAndCommit(++objectCt, RootService.logCt, RootService.commitCt);
-    }
-
-    // commit
-    commitClearBegin();
-
-  }
-
-  /**
    * Load MRCONSO.RRF. This is responsible for loading {@link Atom}s and
    * {@link AtomClass}es.
    *
@@ -449,8 +281,8 @@ public class NdcLoaderAlgorithm extends AbstractTerminologyLoaderAlgorithm {
       line = line.replace("\r", "");
       FieldedStringTokenizer.split(line, "|", 18, fields);
 
-      // Only create atoms if SAB=RXNORM or MTHSPL
-      if (!fields[11].equals("RXNORM") && !fields[11].equals("MTHSPL")) {
+      // Only create atoms if SAB=RXNORM
+      if (!fields[11].equals("RXNORM")) {
         continue;
       }
 
@@ -513,7 +345,6 @@ public class NdcLoaderAlgorithm extends AbstractTerminologyLoaderAlgorithm {
 
       // Add atoms and commit periodically
       addAtom(atom);
-      atomIdMap.put(fields[7], atom.getId());
       logAndCommit(++objectCt, RootService.logCt, RootService.commitCt);
       // Add concept
       if (prevCui == null || !fields[0].equals(prevCui)) {
@@ -543,13 +374,233 @@ public class NdcLoaderAlgorithm extends AbstractTerminologyLoaderAlgorithm {
       cui.setName(getComputedPreferredName(cui, list));
       addConcept(cui);
       conceptIdMap.put(prevCui, cui.getId());
-
       logAndCommit(++objectCt, RootService.logCt, RootService.commitCt);
     }
 
     // commit
     commitClearBegin();
 
+  }
+
+  /**
+   * Load MRSAT. This is responsible for loading {@link Attribute}s.
+   *
+   * @throws Exception the exception
+   */
+  private void loadMrsat() throws Exception {
+    logInfo("  Load MRSAT data");
+    String line = null;
+
+    int objectCt = 0;
+    final PushBackReader reader = readers.getReader(RrfReaders.Keys.MRSAT);
+    // make set of all atoms that got an additional attribute
+
+    final NdcNormalizer normalizer = new NdcNormalizer();
+    final Set<Concept> modifiedConcepts = new HashSet<>();
+    Map<String, Atom> ndcAtoms = new HashMap<>();
+    Map<String, String> mthsplNdcCodeMap = new HashMap<>();
+    Map<String, Set<Attribute>> attributeMap = new HashMap<>();
+    Map<String, String> splSetIdMap = new HashMap<>();
+    String prevCui = null;
+    final String fields[] = new String[13];
+    while ((line = reader.readLine()) != null) {
+      line = line.replace("\r", "");
+      FieldedStringTokenizer.split(line, "|", 13, fields);
+
+      if (!fields[9].equals("RXNORM") && !fields[9].equals("MTHSPL")) {
+        continue;
+      }
+
+      // Handle CUI changing - create data structures
+      if (prevCui == null || !fields[0].equals(prevCui)) {
+        if (prevCui != null) {
+          connectAtomsAndAttributes(fields, ndcAtoms, mthsplNdcCodeMap,
+              attributeMap, splSetIdMap, modifiedConcepts);
+          // log and commit
+          logAndCommit(++objectCt, RootService.logCt, RootService.commitCt);
+          ndcAtoms = new HashMap<>();
+          mthsplNdcCodeMap = new HashMap<>();
+          attributeMap = new HashMap<>();
+          splSetIdMap = new HashMap<>();
+        }
+      }
+
+      // Field Description
+      // 0 CUI
+      // 1 LUI
+      // 2 SUI
+      // 3 METAUI
+      // 4 STYPE
+      // 5 CODE
+      // 6 ATUI
+      // 7 SATUI
+      // 8 ATN
+      // 9 SAB
+      // 10 ATV
+      // 11 SUPPRESS
+      // 12 CVF
+      //
+      // e.g.
+      // 197589|||1907932|AUI|197589|||NDC|RXNORM|12634069891|N|4096|
+      // 448|||3311306|AUI|3K9958V90M|||SPL_SET_ID|MTHSPL|4192e27f-0034-4cd9-b9e0-27b52cb4b970|N|4096|
+
+      // Create NDC atoms from RXNORM NDC Attributes
+      if (fields[8].equals("NDC") && fields[9].equals("RXNORM")) {
+
+        final Atom atom = new AtomJpa();
+        atom.setTimestamp(releaseVersionDate);
+        atom.setLastModified(releaseVersionDate);
+        atom.setLastModifiedBy(loader);
+        atom.setObsolete(fields[11].equals("O"));
+        atom.setSuppressible(!fields[11].equals("N"));
+        atom.setPublished(true);
+        atom.setPublishable(true);
+        atom.setTerminologyId(fields[3]);
+        atom.setTerminology(fields[9].intern());
+        if (!terminology.equals(fields[9])) {
+          throw new Exception(
+              "Attribute references terminology that does not exist: "
+                  + fields[9]);
+        } else {
+          atom.setVersion(version);
+        }
+        atom.setName(fields[10]);
+        atom.setConceptId(fields[0]);
+        atom.setCodeId("");
+        atom.setDescriptorId("");
+        atom.setConceptTerminologyIds(new HashMap<String, String>());
+        atom.setStringClassId("");
+        atom.setLexicalClassId("");
+        atom.setTermType("NDC");
+        atom.setLanguage("ENG");
+        ndcAtoms.put(fields[10], atom);
+
+      }
+
+      // Save the SPL_SET_ID
+      else if (fields[8].equals("SPL_SET_ID") && fields[9].equals("MTHSPL")) {
+        // 206977|||2621612|AUI|0409-1276|||SPL_SET_ID|MTHSPL|A13AE145-5C5E-422B-D0A5-6CF34C1B8262|N||
+        splSetIdMap.put(fields[5], fields[10].toLowerCase());
+      }
+
+      // Save the NDC/code map for an MTHSPL NDC entry
+      // Use the normalizer algorithm
+      else if (fields[8].equals("NDC") && fields[9].equals("MTHSPL")) {
+        // 206977|||2621611|AUI|0409-1276|||NDC|MTHSPL|0409-1276-32|N||
+
+        final List<ScoredResult> results =
+            normalizer.normalize(fields[10], null);
+        if (results.size() == 1) {
+          mthsplNdcCodeMap.put(results.get(0).getValue(), fields[5]);
+        } else if (results.size() == 0) {
+          Logger.getLogger(getClass())
+              .warn("  MTHSPL NDC cannot be normalized: " + line);
+        } else if (results.size() > 1) {
+          throw new Exception(
+              "Unexpected multiple normalization results: " + results);
+        }
+      }
+
+      // Create attributes for MTHSPL entries
+      else if (!fields[8].equals("NDC") && fields[9].equals("MTHSPL")) {
+
+        final Attribute att = new AttributeJpa();
+        att.setName(fields[8]);
+        att.setValue(fields[10]);
+        att.setTimestamp(releaseVersionDate);
+        att.setLastModified(releaseVersionDate);
+        att.setLastModifiedBy(loader);
+        att.setObsolete(false);
+        att.setSuppressible(false);
+        att.setPublished(true);
+        att.setPublishable(true);
+        att.setTerminology(terminology);
+        att.setVersion(version);
+        att.setTerminologyId("");
+        if (!attributeMap.containsKey(fields[5])) {
+          attributeMap.put(fields[5], new HashSet<>());
+        }
+        attributeMap.get(fields[5]).add(att);
+      }
+
+      prevCui = fields[0];
+
+    } // end while loop
+
+    // Handle last data
+    if (prevCui != null) {
+      connectAtomsAndAttributes(fields, ndcAtoms, mthsplNdcCodeMap,
+          attributeMap, splSetIdMap, modifiedConcepts);
+    }
+
+    // commit
+    commitClearBegin();
+
+    // Handle modified concepts
+    for (Concept concept : modifiedConcepts) {
+      updateConcept(concept);
+
+      // log and commit
+      logAndCommit(++objectCt, RootService.logCt, RootService.commitCt);
+    }
+
+    // commit
+    commitClearBegin();
+
+  }
+
+  /**
+   * Connect atoms and attributes.
+   *
+   * @param fields the fields
+   * @param ndcAtoms the ndc atoms
+   * @param mthsplNdcCodeMap the mthspl ndc code map
+   * @param attributeMap the attribute map
+   * @param splSetIdMap the spl set id map
+   * @param modifiedConcepts the modified concepts
+   * @throws Exception the exception
+   */
+  private void connectAtomsAndAttributes(String[] fields,
+    Map<String, Atom> ndcAtoms, Map<String, String> mthsplNdcCodeMap,
+    Map<String, Set<Attribute>> attributeMap, Map<String, String> splSetIdMap,
+    Set<Concept> modifiedConcepts) throws Exception {
+    // For each NDC Atom
+    for (final Map.Entry<String, Atom> entry : ndcAtoms.entrySet()) {
+      final String ndcCode = entry.getKey();
+      final Atom ndcAtom = entry.getValue();
+      System.out.println(
+          "  ndc = " + ndcCode + ", rxcui = " + ndcAtom.getConceptId());
+
+      final Concept concept =
+          getConcept(conceptIdMap.get(ndcAtom.getConceptId()));
+
+      final String mthsplCode = mthsplNdcCodeMap.get(ndcCode);
+      System.out.println("    mthspl = " + mthsplCode);
+
+      // assign SPL_SET_ID to the codeId if it exists
+      if (splSetIdMap.containsKey(mthsplCode)) {
+        ndcAtom.setCodeId(splSetIdMap.get(mthsplCode));
+        System.out.println("    splsetid = " + splSetIdMap.get(mthsplCode));
+      }
+
+      // Get attributes
+      if (attributesFlag && mthsplCode != null) {
+        System.out.println("");
+        for (final Attribute attribute : attributeMap.get(mthsplCode)) {
+          final Attribute copy = new AttributeJpa(attribute);
+          copy.setId(null);
+          System.out.println("    att = " + copy.getId() + ", " + copy.getName()
+              + "=" + copy.getValue());
+          addAttribute(copy, ndcAtom);
+          ndcAtom.addAttribute(copy);
+        }
+      }
+
+      // Add the NDC atom
+      concept.addAtom(ndcAtom);
+      addAtom(ndcAtom);
+      modifiedConcepts.add(concept);
+    }
   }
 
   /**
@@ -564,52 +615,6 @@ public class NdcLoaderAlgorithm extends AbstractTerminologyLoaderAlgorithm {
   }
 
   /**
-   * Fires a {@link ProgressEvent}.
-   *
-   * @param pct percent done
-   * @param note progress note
-   * @throws Exception the exception
-   */
-  public void fireProgressEvent(int pct, String note) throws Exception {
-    final ProgressEvent pe = new ProgressEvent(this, pct, pct, note);
-    for (int i = 0; i < listeners.size(); i++) {
-      listeners.get(i).updateProgress(pe);
-    }
-    logInfo("    " + pct + "% " + note);
-  }
-
-  /**
-   * Adds the progress listener.
-   *
-   * @param l the l
-   */
-  /* see superclass */
-  @Override
-  public void addProgressListener(ProgressListener l) {
-    listeners.add(l);
-  }
-
-  /**
-   * Removes the progress listener.
-   *
-   * @param l the l
-   */
-  /* see superclass */
-  @Override
-  public void removeProgressListener(ProgressListener l) {
-    listeners.remove(l);
-  }
-
-  /**
-   * Cancel.
-   */
-  /* see superclass */
-  @Override
-  public void cancel() {
-    throw new UnsupportedOperationException("cannot cancel.");
-  }
-
-  /**
    * Returns the elapsed time.
    *
    * @param time the time
@@ -620,45 +625,6 @@ public class NdcLoaderAlgorithm extends AbstractTerminologyLoaderAlgorithm {
   })
   private static Long getElapsedTime(long time) {
     return (System.nanoTime() - time) / 1000000000;
-  }
-
-  /**
-   * Close.
-   *
-   * @throws Exception the exception
-   */
-  /* see superclass */
-  @Override
-  public void close() throws Exception {
-    super.close();
-    readers = null;
-  }
-
-  /**
-   * Standard hashing strategy.
-   */
-  @SuppressWarnings("serial")
-  public class StandardStrategy implements HashingStrategy<String> {
-
-    /**
-     * Instantiates an empty {@link StandardStrategy}.
-     */
-    public StandardStrategy() {
-      // n/a
-    }
-
-    /* see superclass */
-    @Override
-    public int computeHashCode(String object) {
-      return object.hashCode();
-    }
-
-    /* see superclass */
-    @Override
-    public boolean equals(String o1, String o2) {
-      return o1.equals(o2);
-    }
-
   }
 
   /* see superclass */

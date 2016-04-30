@@ -22,7 +22,7 @@ import com.wci.umls.server.rest.client.SecurityClientRest;
 /**
  * Some initial testing for {@link TransformClientRest}. Assumes stock dev load.
  */
-public class NdcProviderTest extends RestIntegrationSupport {
+public class NdcRestTest extends RestIntegrationSupport {
 
   /** The adminAuthToken auth token. */
   protected static String adminAuthToken;
@@ -112,7 +112,7 @@ public class NdcProviderTest extends RestIntegrationSupport {
     String inputString = "00247100552";
 
     NdcModel results =
-        ndcService.processNdc(inputString, 
+        ndcService.getNdcInfo(inputString, 
             adminAuthToken);
 
     Logger.getLogger(getClass()).info("  results = " + results);
@@ -132,7 +132,7 @@ public class NdcProviderTest extends RestIntegrationSupport {
     String inputString = "283420";
 
     RxcuiModel results =
-        ndcService.processRxcui(inputString, 
+        ndcService.getRxcuiInfo(inputString, 
             adminAuthToken);
 
     Logger.getLogger(getClass()).info("  results = " + results);

@@ -104,6 +104,21 @@ public class NdcSourceDataHandlerMojo extends SourceDataMojo {
         throw new Exception("Input directory must be a directory");
       }
 
+      // Find the highest version to process
+      // Only load attributes for that version
+      String maxVersion = "00000000";
+      for (File versionDir : dir.listFiles()) {
+        // Skip if not an 8 digit yyyyMMdd directory
+        if (!versionDir.getName().matches("\\d{8}")) {
+          continue;
+        } else {
+          String version = versionDir.getName();
+          if (version.compareTo(maxVersion) > 0) {
+            maxVersion = version;
+          }
+        }
+      }
+
       // Iterate through version directories
       for (File versionDir : dir.listFiles()) {
 
@@ -111,7 +126,8 @@ public class NdcSourceDataHandlerMojo extends SourceDataMojo {
         if (!versionDir.getName().matches("\\d{8}")) {
           continue;
         }
-        
+        boolean attributesFlag = versionDir.getName().equals(maxVersion);
+
         // Verify presence of an "rrf" directory
         File[] versionDirContents = versionDir.listFiles();
         File rrfDir = null;
@@ -124,7 +140,7 @@ public class NdcSourceDataHandlerMojo extends SourceDataMojo {
           throw new Exception("No rrf directory in the release: "
               + versionDir.getCanonicalPath());
         }
-        
+
         // Create source data file
         final SourceDataFile sdFile = new SourceDataFileJpa();
         sdFile.setDirectory(true);
@@ -142,7 +158,8 @@ public class NdcSourceDataHandlerMojo extends SourceDataMojo {
         // Create and add the source data
         final SourceData sourceData = new SourceDataJpa();
         sourceData.setName(getName(terminology, versionDir.getName()));
-        sourceData.setDescription("Set of RXNORM-NDC files loaded from " + versionDir.getName());
+        sourceData.setDescription(
+            "Set of RXNORM-NDC files loaded from " + versionDir.getName());
         sourceData.setLastModifiedBy("loader");
         sourceData.setHandler(loader.getName());
         sourceData.getSourceDataFiles().add(sdFile);
@@ -159,6 +176,7 @@ public class NdcSourceDataHandlerMojo extends SourceDataMojo {
         final Properties p = new Properties();
         loader.setSourceData(sourceData);
         loader.setProperties(p);
+        loader.setAttributesFlag(attributesFlag);
         loader.compute();
         loader.close();
 

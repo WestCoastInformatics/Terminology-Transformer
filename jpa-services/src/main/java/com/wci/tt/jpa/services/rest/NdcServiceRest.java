@@ -21,7 +21,7 @@ public interface NdcServiceRest {
    * @return the ndc model
    * @throws Exception the exception
    */
-  public NdcModel processNdc(String ndc, String authToken) throws Exception;
+  public NdcModel getNdcInfo(String ndc, String authToken) throws Exception;
 
   /**
    * Process rxcui and return ndc codes.
@@ -31,7 +31,8 @@ public interface NdcServiceRest {
    * @return the rxcui model
    * @throws Exception the exception
    */
-  public RxcuiModel processRxcui(String rxcui, String authToken) throws Exception;
+  public RxcuiModel getRxcuiInfo(String rxcui, String authToken)
+    throws Exception;
 
   /**
    * Get Ndc properties.
@@ -41,7 +42,8 @@ public interface NdcServiceRest {
    * @return the ndc model
    * @throws Exception the exception
    */
-  public NdcPropertiesModel getNdcProperties(String ndc, String authToken) throws Exception;
+  public NdcPropertiesModel getNdcProperties(String ndc, String authToken)
+    throws Exception;
 
   /**
    * Gets the ndc properties for spl set id.

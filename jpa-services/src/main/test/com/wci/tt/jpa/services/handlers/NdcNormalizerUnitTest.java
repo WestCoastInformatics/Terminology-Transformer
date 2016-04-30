@@ -1,7 +1,7 @@
 /**
  * Copyright 2015 West Coast Informatics, LLC
  */
-package com.wci.tt.jpa.services.test;
+package com.wci.tt.jpa.services.handlers;
 
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;

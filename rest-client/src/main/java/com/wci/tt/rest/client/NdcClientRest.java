@@ -15,8 +15,8 @@ import javax.ws.rs.core.Response.Status.Family;
 import org.apache.log4j.Logger;
 
 import com.wci.tt.jpa.infomodels.NdcModel;
-import com.wci.tt.jpa.infomodels.NdcPropertiesModel;
 import com.wci.tt.jpa.infomodels.NdcPropertiesListModel;
+import com.wci.tt.jpa.infomodels.NdcPropertiesModel;
 import com.wci.tt.jpa.infomodels.RxcuiModel;
 import com.wci.tt.jpa.services.rest.NdcServiceRest;
 import com.wci.tt.jpa.services.rest.TransformServiceRest;
@@ -27,8 +27,7 @@ import com.wci.umls.server.rest.client.RootClientRest;
  * Class calling the REST Service for Transform routines for
  * {@link TransformServiceRest}.
  */
-public class NdcClientRest extends RootClientRest
-    implements NdcServiceRest {
+public class NdcClientRest extends RootClientRest implements NdcServiceRest {
 
   /** The config. */
   private Properties config = null;
@@ -42,25 +41,20 @@ public class NdcClientRest extends RootClientRest
     this.config = config;
   }
 
-
   /* see superclass */
   @Override
-  public NdcModel processNdc(String inputStr, String authToken) throws Exception {
-    Logger.getLogger(getClass()).debug(
-        "Ndc Client - identify ndc" + inputStr );
+  public NdcModel getNdcInfo(String ndc, String authToken) throws Exception {
+    Logger.getLogger(getClass()).debug("NDC Client - get ndc info - " + ndc);
 
-    validateNotEmpty(inputStr, "inputStr");
+    validateNotEmpty(ndc, "ndc");
 
     Client client = ClientBuilder.newClient();
-    WebTarget target = client.target(
-        config.getProperty("base.url") + "/ndc/ndc/" + inputStr);
-
-
+    WebTarget target =
+        client.target(config.getProperty("base.url") + "/rxnorm/ndc/" + ndc);
 
     // Call Rest method
     Response response = target.request(MediaType.APPLICATION_XML)
-        .header("Authorization", authToken)
-        .get();
+        .header("Authorization", authToken).get();
 
     String resultString = response.readEntity(String.class);
     if (response.getStatusInfo().getFamily() == Family.SUCCESSFUL) {
@@ -70,31 +64,28 @@ public class NdcClientRest extends RootClientRest
     }
 
     // converting to object
-    NdcModel result =
-        (NdcModel) ConfigUtility.getGraphForString(
-            resultString, NdcModel.class);
+    NdcModel result = (NdcModel) ConfigUtility.getGraphForString(resultString,
+        NdcModel.class);
 
     return result;
   }
 
   /* see superclass */
   @Override
-  public RxcuiModel processRxcui(String inputStr, String authToken) throws Exception {
-    Logger.getLogger(getClass()).debug(
-        "Ndc Client - identify rxcui" + inputStr );
+  public RxcuiModel getRxcuiInfo(String rxcui, String authToken)
+    throws Exception {
+    Logger.getLogger(getClass())
+        .debug("NDC Client - get rxcui info - " + rxcui);
 
-    validateNotEmpty(inputStr, "inputStr");
+    validateNotEmpty(rxcui, "rxcui");
 
     Client client = ClientBuilder.newClient();
-    WebTarget target = client.target(
-        config.getProperty("base.url") + "/ndc/rxcui/" + inputStr);
-
-
+    WebTarget target = client
+        .target(config.getProperty("base.url") + "/rxnorm/rxcui/" + rxcui);
 
     // Call Rest method
     Response response = target.request(MediaType.APPLICATION_XML)
-        .header("Authorization", authToken)
-        .get();
+        .header("Authorization", authToken).get();
 
     String resultString = response.readEntity(String.class);
     if (response.getStatusInfo().getFamily() == Family.SUCCESSFUL) {
@@ -104,32 +95,28 @@ public class NdcClientRest extends RootClientRest
     }
 
     // converting to object
-    RxcuiModel result =
-        (RxcuiModel) ConfigUtility.getGraphForString(
-            resultString, RxcuiModel.class);
+    RxcuiModel result = (RxcuiModel) ConfigUtility
+        .getGraphForString(resultString, RxcuiModel.class);
 
     return result;
   }
 
-
+  /* see superclass */
   @Override
-  public NdcPropertiesModel getNdcProperties(String inputString, String authToken)
+  public NdcPropertiesModel getNdcProperties(String ndc, String authToken)
     throws Exception {
-    Logger.getLogger(getClass()).debug(
-        "Ndc Client - get properties for ndc " + inputString );
+    Logger.getLogger(getClass())
+        .debug("NDC Client - get NDC properties - " + ndc);
 
-    validateNotEmpty(inputString, "inputStr");
+    validateNotEmpty(ndc, "ndc");
 
     Client client = ClientBuilder.newClient();
     WebTarget target = client.target(
-        config.getProperty("base.url") + "/ndc/properties/" + inputString);
-
-
+        config.getProperty("base.url") + "/rxnorm/ndc/" + ndc + "/properties");
 
     // Call Rest method
     Response response = target.request(MediaType.APPLICATION_XML)
-        .header("Authorization", authToken)
-        .get();
+        .header("Authorization", authToken).get();
 
     String resultString = response.readEntity(String.class);
     if (response.getStatusInfo().getFamily() == Family.SUCCESSFUL) {
@@ -139,31 +126,28 @@ public class NdcClientRest extends RootClientRest
     }
 
     // converting to object
-    NdcPropertiesModel result =
-        (NdcPropertiesModel) ConfigUtility.getGraphForString(
-            resultString, NdcPropertiesModel.class);
+    NdcPropertiesModel result = (NdcPropertiesModel) ConfigUtility
+        .getGraphForString(resultString, NdcPropertiesModel.class);
 
     return result;
   }
 
+  /* see superclass */
   @Override
-  public NdcPropertiesListModel getNdcPropertiesForSplSetId(String inputString, String authToken)
-    throws Exception {
-    Logger.getLogger(getClass()).debug(
-        "Ndc Client - get properties list for ndc splsetid " + inputString );
+  public NdcPropertiesListModel getNdcPropertiesForSplSetId(String splSetId,
+    String authToken) throws Exception {
+    Logger.getLogger(getClass())
+        .debug("NDC Client - get NDC properties for SPL_SET_ID " + splSetId);
 
-    validateNotEmpty(inputString, "inputStr");
+    validateNotEmpty(splSetId, "splSetId");
 
     Client client = ClientBuilder.newClient();
-    WebTarget target = client.target(
-        config.getProperty("base.url") + "/ndc/list/" + inputString);
-
-
+    WebTarget target = client.target(config.getProperty("base.url")
+        + "/rxnorm/spl/" + splSetId + "/ndc/properties");
 
     // Call Rest method
     Response response = target.request(MediaType.APPLICATION_XML)
-        .header("Authorization", authToken)
-        .get();
+        .header("Authorization", authToken).get();
 
     String resultString = response.readEntity(String.class);
     if (response.getStatusInfo().getFamily() == Family.SUCCESSFUL) {
@@ -173,9 +157,8 @@ public class NdcClientRest extends RootClientRest
     }
 
     // converting to object
-    NdcPropertiesListModel result =
-        (NdcPropertiesListModel) ConfigUtility.getGraphForString(
-            resultString, NdcPropertiesListModel.class);
+    NdcPropertiesListModel result = (NdcPropertiesListModel) ConfigUtility
+        .getGraphForString(resultString, NdcPropertiesListModel.class);
 
     return result;
   }
