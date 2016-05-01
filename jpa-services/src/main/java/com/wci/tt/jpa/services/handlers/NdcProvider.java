@@ -16,14 +16,14 @@ import org.apache.log4j.Logger;
 import com.wci.tt.DataContext;
 import com.wci.tt.TransformRecord;
 import com.wci.tt.helpers.DataContextType;
-import com.wci.tt.jpa.infomodels.PropertyModel;
 import com.wci.tt.helpers.ScoredDataContext;
 import com.wci.tt.helpers.ScoredResult;
 import com.wci.tt.jpa.helpers.ScoredResultJpa;
 import com.wci.tt.jpa.infomodels.NdcHistoryModel;
 import com.wci.tt.jpa.infomodels.NdcModel;
 import com.wci.tt.jpa.infomodels.NdcPropertiesModel;
-import com.wci.tt.jpa.infomodels.NdcPropertiesModelList;
+import com.wci.tt.jpa.infomodels.NdcPropertiesListModel;
+import com.wci.tt.jpa.infomodels.PropertyModel;
 import com.wci.tt.jpa.infomodels.RxcuiHistoryModel;
 import com.wci.tt.jpa.infomodels.RxcuiModel;
 import com.wci.tt.jpa.services.helper.DataContextMatcher;
@@ -191,10 +191,10 @@ public class NdcProvider extends AbstractAcceptsHandler
     }
 
     else if (inputContext.getTerminology().equals("NDC") && outputContext
-        .getInfoModelClass().equals(NdcPropertiesModelList.class.getName())) {
+        .getInfoModelClass().equals(NdcPropertiesListModel.class.getName())) {
       
       // Attempt to find the ndc properties models for the given splsetid
-      final NdcPropertiesModelList model =
+      final NdcPropertiesListModel model =
           getPropertiesModelList(inputString, record.getNormalizedResults());
       if (model != null) {
         final ScoredResult result = new ScoredResultJpa();
@@ -354,9 +354,9 @@ public class NdcProvider extends AbstractAcceptsHandler
     return null;
   }
 
-  private NdcPropertiesModelList getPropertiesModelList(String splsetid,
+  private NdcPropertiesListModel getPropertiesModelList(String splsetid,
     List<ScoredResult> normalizedResults) throws Exception {
-    final NdcPropertiesModelList model = new NdcPropertiesModelList();
+    final NdcPropertiesListModel model = new NdcPropertiesListModel();
     // TODO:  need to get Ndcs for splsetid and call getPropertiesModel on each ndc
     
     final ContentService service = new ContentServiceJpa();

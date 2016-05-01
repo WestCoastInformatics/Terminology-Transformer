@@ -16,7 +16,7 @@ import org.apache.log4j.Logger;
 
 import com.wci.tt.jpa.infomodels.NdcModel;
 import com.wci.tt.jpa.infomodels.NdcPropertiesModel;
-import com.wci.tt.jpa.infomodels.NdcPropertiesModelList;
+import com.wci.tt.jpa.infomodels.NdcPropertiesListModel;
 import com.wci.tt.jpa.infomodels.RxcuiModel;
 import com.wci.tt.jpa.services.rest.NdcServiceRest;
 import com.wci.tt.jpa.services.rest.TransformServiceRest;
@@ -147,7 +147,7 @@ public class NdcClientRest extends RootClientRest
   }
 
   @Override
-  public NdcPropertiesModelList getNdcPropertiesForSplSetId(String inputString, String authToken)
+  public NdcPropertiesListModel getNdcPropertiesForSplSetId(String inputString, String authToken)
     throws Exception {
     Logger.getLogger(getClass()).debug(
         "Ndc Client - get properties list for ndc splsetid " + inputString );
@@ -173,9 +173,9 @@ public class NdcClientRest extends RootClientRest
     }
 
     // converting to object
-    NdcPropertiesModelList result =
-        (NdcPropertiesModelList) ConfigUtility.getGraphForString(
-            resultString, NdcPropertiesModelList.class);
+    NdcPropertiesListModel result =
+        (NdcPropertiesListModel) ConfigUtility.getGraphForString(
+            resultString, NdcPropertiesListModel.class);
 
     return result;
   }
