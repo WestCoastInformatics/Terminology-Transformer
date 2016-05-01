@@ -13,6 +13,7 @@ import org.junit.Test;
 
 import com.wci.tt.jpa.infomodels.NdcModel;
 import com.wci.tt.jpa.infomodels.NdcPropertiesModel;
+import com.wci.tt.jpa.infomodels.NdcPropertiesModelList;
 import com.wci.tt.jpa.infomodels.RxcuiModel;
 import com.wci.tt.rest.client.NdcClientRest;
 import com.wci.tt.rest.client.TransformClientRest;
@@ -153,6 +154,26 @@ public class NdcProviderTest extends RestIntegrationSupport {
 
     NdcPropertiesModel results =
         ndcService.getNdcProperties(inputString, 
+            adminAuthToken);
+
+    Logger.getLogger(getClass()).info("  results = " + results);
+   
+  }
+  
+  /**
+   * Test get ndc properties for spl set id.
+   *
+   * @throws Exception the exception
+   */
+  @Test
+  public void testGetNdcPropertiesForSplSetId() throws Exception {
+    Logger.getLogger(getClass()).info("TEST " + name.getMethodName());
+
+    // Input Data
+    String inputString = "8d24bacb-feff-4c6a-b8df-625e1435387a";
+
+    NdcPropertiesModelList results =
+        ndcService.getNdcPropertiesForSplSetId(inputString, 
             adminAuthToken);
 
     Logger.getLogger(getClass()).info("  results = " + results);

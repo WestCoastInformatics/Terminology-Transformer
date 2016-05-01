@@ -83,6 +83,8 @@ public class NdcProvider extends AbstractAcceptsHandler
         RxcuiModel.class.getName(), null, null);
     outputMatcher.configureContext(DataContextType.INFO_MODEL, null, null, null,
         NdcPropertiesModel.class.getName(), null, null);
+    outputMatcher.configureContext(DataContextType.INFO_MODEL, null, null, null,
+        NdcPropertiesModelList.class.getName(), null, null);
     addMatcher(inputMatcher, outputMatcher);
 
   }
@@ -356,6 +358,32 @@ public class NdcProvider extends AbstractAcceptsHandler
     List<ScoredResult> normalizedResults) throws Exception {
     final NdcPropertiesModelList model = new NdcPropertiesModelList();
     // TODO:  need to get Ndcs for splsetid and call getPropertiesModel on each ndc
+    
+    final ContentService service = new ContentServiceJpa();
+
+    try {
+
+      
+
+        // try to find NDC based on inputString
+        PfscParameter pfsc = new PfscParameterJpa();
+        pfsc.setSearchCriteria(new ArrayList<SearchCriteria>());
+        SearchResultList list = service.findConceptsForQuery("RXNORM", null,
+            Branch.ROOT, "atoms.termType:NDC AND atoms.attributes.value:" + splsetid, pfsc);
+
+        // [ {version,ndc,ndcActive,rxcui,rxcuiActive}, ... ]
+        List<NdcRecord> recordList = new ArrayList<>();
+
+        // list will have each matching concept - e.g. from each version.
+        if (list.getCount() > 0) {
+          // Convert each search result into a record
+          for (final SearchResult result : list.getObjects()) {
+            final Concept concept = service.getConcept(result.getId());
+          }
+        }
+    } catch (Exception e) {
+      
+    }
     return model;
   }
   

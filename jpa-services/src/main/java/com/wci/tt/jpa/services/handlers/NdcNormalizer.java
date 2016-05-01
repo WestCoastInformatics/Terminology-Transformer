@@ -131,8 +131,11 @@ public class NdcNormalizer extends AbstractNormalizer
             "invalid hyphenated NDC format " + segment1.length() + "-"
                 + segment2.length() + "-" + segment3.length());
       }
-    } else if (hyphenCt > 2) {
-      throw new LocalException("NDC code has invalid hyphenated NDC format.");
+      // Comment out for now, because splsetid breaks this condition
+/*    } else if (hyphenCt > 2) {
+      throw new LocalException("NDC code has invalid hyphenated NDC format.");*/
+    } else if (inputString.length() == 36) {
+      ndc11 = inputString;
     } else if (inputString.length() == 11) {
       ndc11 = inputString;
     } else if (inputString.length() == 12) {
