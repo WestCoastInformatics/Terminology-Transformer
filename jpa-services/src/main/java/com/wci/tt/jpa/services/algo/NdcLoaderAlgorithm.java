@@ -477,21 +477,22 @@ public class NdcLoaderAlgorithm extends AbstractTerminologyLoaderAlgorithm {
 
       }
 
-      // Save the SPL_SET_ID
+      // Save the SPL_SET_ID - Do not render as an attribute
       else if (fields[8].equals("SPL_SET_ID") && fields[9].equals("MTHSPL")) {
         // 206977|||2621612|AUI|0409-1276|||SPL_SET_ID|MTHSPL|A13AE145-5C5E-422B-D0A5-6CF34C1B8262|N||
-        splSetIdMap.put(fields[5], fields[10].toLowerCase());
+        splSetIdMap.put(fields[3], fields[10].toLowerCase());
       }
 
       // Save the NDC/code map for an MTHSPL NDC entry
       // Use the normalizer algorithm
+      // Do not render as an attribute
       else if (fields[8].equals("NDC") && fields[9].equals("MTHSPL")) {
         // 206977|||2621611|AUI|0409-1276|||NDC|MTHSPL|0409-1276-32|N||
 
         final List<ScoredResult> results =
             normalizer.normalize(fields[10], null);
         if (results.size() == 1) {
-          mthsplNdcCodeMap.put(results.get(0).getValue(), fields[5]);
+          mthsplNdcCodeMap.put(results.get(0).getValue(), fields[3]);
         } else if (results.size() == 0) {
           Logger.getLogger(getClass())
               .warn("  MTHSPL NDC cannot be normalized: " + line);
@@ -502,7 +503,7 @@ public class NdcLoaderAlgorithm extends AbstractTerminologyLoaderAlgorithm {
       }
 
       // Create attributes for MTHSPL entries
-      else if (!fields[8].equals("NDC") && fields[9].equals("MTHSPL")) {
+      else if (fields[9].equals("MTHSPL")) {
 
         final Attribute att = new AttributeJpa();
         att.setName(fields[8]);
@@ -517,10 +518,10 @@ public class NdcLoaderAlgorithm extends AbstractTerminologyLoaderAlgorithm {
         att.setTerminology(terminology);
         att.setVersion(version);
         att.setTerminologyId("");
-        if (!attributeMap.containsKey(fields[5])) {
-          attributeMap.put(fields[5], new HashSet<>());
+        if (!attributeMap.containsKey(fields[3])) {
+          attributeMap.put(fields[3], new HashSet<>());
         }
-        attributeMap.get(fields[5]).add(att);
+        attributeMap.get(fields[3]).add(att);
       }
 
       prevCui = fields[0];
