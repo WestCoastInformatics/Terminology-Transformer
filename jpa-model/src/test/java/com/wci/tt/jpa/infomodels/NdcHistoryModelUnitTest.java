@@ -70,8 +70,8 @@ public class NdcHistoryModelUnitTest extends JpaSupport {
     Logger.getLogger(getClass()).debug("TEST " + name.getMethodName());
     EqualsHashcodeTester tester = new EqualsHashcodeTester(object);
     tester.include("rxcui");
-    tester.include("startDate");
-    tester.include("endDate");
+    tester.include("start");
+    tester.include("end");
     assertTrue(tester.testIdentityFieldEquals());
     assertTrue(tester.testNonIdentityFieldEquals());
     assertTrue(tester.testIdentityFieldNotEquals());
@@ -131,31 +131,31 @@ public class NdcHistoryModelUnitTest extends JpaSupport {
     common = m1.getModelInCommon(m2, false);
     assertEquals("abc", common.getRxcui());
 
-    // startDate
+    // start
     m1 = new NdcHistoryModel();
     m2 = new NdcHistoryModel();
-    m1.setStartDate("abc");
+    m1.setStart("abc");
     common = m1.getModelInCommon(m2, false);
     assertNull(common);
-    m2.setStartDate("def");
+    m2.setStart("def");
     common = m1.getModelInCommon(m2, false);
     assertNull(common);
-    m2.setStartDate("abc");
+    m2.setStart("abc");
     common = m1.getModelInCommon(m2, false);
-    assertEquals("abc", common.getStartDate());
+    assertEquals("abc", common.getStart());
 
-    // end Date
+    // end
     m1 = new NdcHistoryModel();
     m2 = new NdcHistoryModel();
-    m1.setEndDate("abc");
+    m1.setEnd("abc");
     common = m1.getModelInCommon(m2, false);
     assertNull(common);
-    m2.setEndDate("def");
+    m2.setEnd("def");
     common = m1.getModelInCommon(m2, false);
     assertNull(common);
-    m2.setEndDate("abc");
+    m2.setEnd("abc");
     common = m1.getModelInCommon(m2, false);
-    assertEquals("abc", common.getEndDate());
+    assertEquals("abc", common.getEnd());
   }
 
   /**

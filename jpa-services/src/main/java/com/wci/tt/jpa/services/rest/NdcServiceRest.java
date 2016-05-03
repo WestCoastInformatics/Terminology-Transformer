@@ -4,9 +4,10 @@
 package com.wci.tt.jpa.services.rest;
 
 import com.wci.tt.jpa.infomodels.NdcModel;
-import com.wci.tt.jpa.infomodels.NdcPropertiesModel;
 import com.wci.tt.jpa.infomodels.NdcPropertiesListModel;
+import com.wci.tt.jpa.infomodels.NdcPropertiesModel;
 import com.wci.tt.jpa.infomodels.RxcuiModel;
+import com.wci.umls.server.helpers.StringList;
 
 /**
  * REST interface for handling NDC-RXNORM transformations.
@@ -55,5 +56,16 @@ public interface NdcServiceRest {
    */
   public NdcPropertiesListModel getNdcPropertiesForSplSetId(String inputString,
     String authToken) throws Exception;
+
+  /**
+   * Autocomplete.
+   *
+   * @param inputString the input string
+   * @param authToken the auth token
+   * @return the string list
+   * @throws Exception the exception
+   */
+  public StringList autocomplete(String inputString, String authToken)
+    throws Exception;
 
 }

@@ -14,6 +14,15 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import org.apache.log4j.Logger;
+import org.apache.lucene.index.Term;
+import org.apache.lucene.search.BooleanClause;
+import org.apache.lucene.search.BooleanQuery;
+import org.apache.lucene.search.Query;
+import org.apache.lucene.search.TermQuery;
+import org.hibernate.search.jpa.FullTextEntityManager;
+import org.hibernate.search.jpa.FullTextQuery;
+import org.hibernate.search.jpa.Search;
+import org.hibernate.search.query.dsl.QueryBuilder;
 
 import com.wci.tt.DataContext;
 import com.wci.tt.helpers.DataContextType;
@@ -27,7 +36,11 @@ import com.wci.tt.jpa.services.CoordinatorServiceJpa;
 import com.wci.tt.jpa.services.rest.NdcServiceRest;
 import com.wci.tt.services.CoordinatorService;
 import com.wci.umls.server.UserRole;
+import com.wci.umls.server.helpers.StringList;
+import com.wci.umls.server.jpa.content.ConceptJpa;
 import com.wci.umls.server.jpa.services.SecurityServiceJpa;
+import com.wci.umls.server.model.content.Atom;
+import com.wci.umls.server.model.content.AtomClass;
 import com.wci.umls.server.rest.impl.RootServiceRestImpl;
 import com.wci.umls.server.services.SecurityService;
 import com.wordnik.swagger.annotations.Api;
@@ -256,6 +269,92 @@ public class NdcServiceRestImpl extends RootServiceRestImpl
       return null;
     } finally {
       service.close();
+      securityService.close();
+    }
+  }
+
+  /* see superclass */
+  @Override
+  @GET
+  @Path("/ndc/autocomplete")
+  @ApiOperation(value = "Find autocomplete matches for NDC", notes = "Gets a list of search autocomplete matches for the specified NDC code", response = StringList.class)
+  public StringList autocomplete(
+    @ApiParam(value = "Query, e.g. 'sul'", required = true) @PathParam("query") String query,
+    @ApiParam(value = "Authorization token, e.g. 'guest'", required = true) @HeaderParam("Authorization") String authToken)
+      throws Exception {
+
+    Logger.getLogger(getClass())
+        .info("RESTful call (NDC): /ndc/autoComplete - " + query);
+    final CoordinatorServiceJpa coordinatorService =
+        new CoordinatorServiceJpa();
+    try {
+      authorizeApp(securityService, authToken, "autocomplete NDC",
+          UserRole.VIEWER);
+
+      if (query == null || query == null || query == null) {
+        return new StringList();
+      }
+
+      String normalizedQuery =
+          query.replaceAll("\\*", "0").replaceAll("\\-", "");
+
+      final String TITLE_EDGE_NGRAM_INDEX = "atoms.edgeNGramName";
+      final String TITLE_NGRAM_INDEX = "atoms.nGramName";
+
+      final FullTextEntityManager fullTextEntityManager = Search
+          .getFullTextEntityManager(coordinatorService.getEntityManager());
+      final QueryBuilder titleQB = fullTextEntityManager.getSearchFactory()
+          .buildQueryBuilder().forEntity(ConceptJpa.class).get();
+
+      final Query luceneQuery = titleQB.phrase().withSlop(2)
+          .onField(TITLE_NGRAM_INDEX).andField(TITLE_EDGE_NGRAM_INDEX)
+          .boostedTo(5).andField("atoms.name").boostedTo(5)
+          .sentence(normalizedQuery).createQuery();
+
+      // get latest version
+      final Query term1 = new TermQuery(new Term("terminology", "RXNORM"));
+      final Query term2 = new TermQuery(new Term("version", coordinatorService
+          .getTerminologyLatestVersion("RXNORM").getVersion()));
+      final Query term3 =
+          new TermQuery(new Term("atoms.suppressible", "false"));
+      final Query term4 = new TermQuery(new Term("suppressible", "false"));
+      final Query term5 = new TermQuery(new Term("anonymous", "false"));
+      final BooleanQuery booleanQuery = new BooleanQuery();
+      booleanQuery.add(term1, BooleanClause.Occur.MUST);
+      booleanQuery.add(term2, BooleanClause.Occur.MUST);
+      booleanQuery.add(term3, BooleanClause.Occur.MUST);
+      booleanQuery.add(term4, BooleanClause.Occur.MUST);
+      booleanQuery.add(term5, BooleanClause.Occur.MUST);
+      booleanQuery.add(luceneQuery, BooleanClause.Occur.MUST);
+
+      final FullTextQuery fullTextQuery = fullTextEntityManager
+          .createFullTextQuery(booleanQuery, ConceptJpa.class);
+
+      fullTextQuery.setMaxResults(20);
+
+      @SuppressWarnings("unchecked")
+      final List<AtomClass> results = fullTextQuery.getResultList();
+      final StringList list = new StringList();
+      list.setTotalCount(fullTextQuery.getResultSize());
+      for (final AtomClass result : results) {
+        // Find NDCs matching.
+        for (final Atom atom : result.getAtoms()) {
+          // exclude duplicates
+          if (atom.getTermType().equals("NDC")
+              && atom.getName().contains(normalizedQuery)
+              && !list.contains(result.getName()))
+            list.addObject(result.getName());
+        }
+      }
+      // Limit to 20 results
+      list.getObjects().subList(0, Math.min(20, list.getObjects().size() - 1));
+      return list;
+
+    } catch (Exception e) {
+      handleException(e, "trying to autocomplete NDC");
+      return null;
+    } finally {
+      coordinatorService.close();
       securityService.close();
     }
   }

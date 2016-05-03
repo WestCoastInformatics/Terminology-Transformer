@@ -213,6 +213,20 @@ public class NdcLoaderAlgorithm extends AbstractTerminologyLoaderAlgorithm {
       // faster performance.
       beginTransaction();
 
+      // Make root terminology
+      RootTerminology root = getRootTerminology(terminology);
+      if (root == null) {
+        root = new RootTerminologyJpa();
+        root.setFamily(terminology);
+        root.setPreferredName(terminology);
+        root.setRestrictionLevel(0);
+        root.setTerminology(terminology);
+        root.setTimestamp(releaseVersionDate);
+        root.setLastModified(releaseVersionDate);
+        root.setLastModifiedBy(loader);
+        addRootTerminology(root);
+      }
+
       // make terminology
       final Terminology term = new TerminologyJpa();
       term.setAssertsRelDirection(false);
@@ -226,15 +240,10 @@ public class NdcLoaderAlgorithm extends AbstractTerminologyLoaderAlgorithm {
       term.setVersion(version);
       term.setDescriptionLogicTerminology(false);
       term.setMetathesaurus(true);
+      term.setRootTerminology(root);
+      addTerminology(term);
 
-      final RootTerminology root = new RootTerminologyJpa();
-      root.setFamily(terminology);
-      root.setPreferredName(terminology);
-      root.setRestrictionLevel(0);
-      root.setTerminology(terminology);
-      root.setTimestamp(releaseVersionDate);
-      root.setLastModified(releaseVersionDate);
-      root.setLastModifiedBy(loader);
+      commitClearBegin();
 
       // Load the content
       list = getDefaultPrecedenceList(getTerminology(), getVersion());

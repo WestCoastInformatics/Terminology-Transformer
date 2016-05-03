@@ -3,6 +3,7 @@
  */
 package com.wci.tt.rest.client;
 
+import java.net.URLEncoder;
 import java.util.Properties;
 
 import javax.ws.rs.client.Client;
@@ -21,6 +22,7 @@ import com.wci.tt.jpa.infomodels.RxcuiModel;
 import com.wci.tt.jpa.services.rest.NdcServiceRest;
 import com.wci.tt.jpa.services.rest.TransformServiceRest;
 import com.wci.umls.server.helpers.ConfigUtility;
+import com.wci.umls.server.helpers.StringList;
 import com.wci.umls.server.rest.client.RootClientRest;
 
 /**
@@ -64,8 +66,8 @@ public class NdcClientRest extends RootClientRest implements NdcServiceRest {
     }
 
     // converting to object
-    NdcModel result = (NdcModel) ConfigUtility.getGraphForString(resultString,
-        NdcModel.class);
+    NdcModel result =
+        ConfigUtility.getGraphForString(resultString, NdcModel.class);
 
     return result;
   }
@@ -95,8 +97,8 @@ public class NdcClientRest extends RootClientRest implements NdcServiceRest {
     }
 
     // converting to object
-    RxcuiModel result = (RxcuiModel) ConfigUtility
-        .getGraphForString(resultString, RxcuiModel.class);
+    RxcuiModel result =
+        ConfigUtility.getGraphForString(resultString, RxcuiModel.class);
 
     return result;
   }
@@ -126,8 +128,8 @@ public class NdcClientRest extends RootClientRest implements NdcServiceRest {
     }
 
     // converting to object
-    NdcPropertiesModel result = (NdcPropertiesModel) ConfigUtility
-        .getGraphForString(resultString, NdcPropertiesModel.class);
+    NdcPropertiesModel result =
+        ConfigUtility.getGraphForString(resultString, NdcPropertiesModel.class);
 
     return result;
   }
@@ -142,8 +144,8 @@ public class NdcClientRest extends RootClientRest implements NdcServiceRest {
     validateNotEmpty(splSetId, "splSetId");
 
     Client client = ClientBuilder.newClient();
-    WebTarget target = client.target(config.getProperty("base.url")
-        + "/rxnorm/spl/" + splSetId + "/ndc/properties");
+    WebTarget target = client.target(
+        config.getProperty("base.url") + "/rxnorm/spl/" + splSetId + "/ndc/");
 
     // Call Rest method
     Response response = target.request(MediaType.APPLICATION_XML)
@@ -157,8 +159,38 @@ public class NdcClientRest extends RootClientRest implements NdcServiceRest {
     }
 
     // converting to object
-    NdcPropertiesListModel result = (NdcPropertiesListModel) ConfigUtility
+    NdcPropertiesListModel result = ConfigUtility
         .getGraphForString(resultString, NdcPropertiesListModel.class);
+
+    return result;
+  }
+
+  @Override
+  public StringList autocomplete(String query, String authToken)
+    throws Exception {
+    Logger.getLogger(getClass()).debug("NDC Client - autocomplete - " + query);
+    validateNotEmpty(query, "query");
+
+    Client client = ClientBuilder.newClient();
+    WebTarget target = client
+        .target(config.getProperty("base.url") + "/ndc/autocomplete?query="
+            + URLEncoder.encode(query == null ? "" : query, "UTF-8")
+                .replaceAll("\\+", "%20"));
+
+    // Call Rest method
+    Response response = target.request(MediaType.APPLICATION_XML)
+        .header("Authorization", authToken).get();
+
+    String resultString = response.readEntity(String.class);
+    if (response.getStatusInfo().getFamily() == Family.SUCCESSFUL) {
+      // n/a
+    } else {
+      throw new Exception(resultString);
+    }
+
+    // converting to object
+    StringList result =
+        ConfigUtility.getGraphForString(resultString, StringList.class);
 
     return result;
   }
