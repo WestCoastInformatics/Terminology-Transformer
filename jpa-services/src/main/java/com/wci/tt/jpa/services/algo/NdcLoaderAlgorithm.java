@@ -578,29 +578,22 @@ public class NdcLoaderAlgorithm extends AbstractTerminologyLoaderAlgorithm {
     for (final Map.Entry<String, Atom> entry : ndcAtoms.entrySet()) {
       final String ndcCode = entry.getKey();
       final Atom ndcAtom = entry.getValue();
-      System.out.println(
-          "  ndc = " + ndcCode + ", rxcui = " + ndcAtom.getConceptId());
 
       final Concept concept =
           getConcept(conceptIdMap.get(ndcAtom.getConceptId()));
 
       final String mthsplCode = mthsplNdcCodeMap.get(ndcCode);
-      System.out.println("    mthspl = " + mthsplCode);
 
       // assign SPL_SET_ID to the codeId if it exists
       if (splSetIdMap.containsKey(mthsplCode)) {
         ndcAtom.setCodeId(splSetIdMap.get(mthsplCode));
-        System.out.println("    splsetid = " + splSetIdMap.get(mthsplCode));
       }
 
       // Get attributes
       if (attributesFlag && mthsplCode != null) {
-        System.out.println("");
         for (final Attribute attribute : attributeMap.get(mthsplCode)) {
           final Attribute copy = new AttributeJpa(attribute);
           copy.setId(null);
-          System.out.println("    att = " + copy.getId() + ", " + copy.getName()
-              + "=" + copy.getValue());
           addAttribute(copy, ndcAtom);
           ndcAtom.addAttribute(copy);
         }
