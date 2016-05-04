@@ -15,7 +15,7 @@ import com.wci.umls.server.helpers.ConfigUtility;
  * Information model for representing NDC-RXNORM history.
  * 
  * <pre>
- *   { history : [{ rxcui : "312656", startDate : "200706", endDate : "201101" }]
+ *   { history : [{ rxcui : "312656", start : "200706", end : "201101" }]
  *
  * </pre>
  */
@@ -26,10 +26,10 @@ public class NdcHistoryModel implements InfoModel<NdcHistoryModel> {
   private String rxcui;
 
   /** The start date. */
-  private String startDate;
+  private String start;
 
   /** The end date. */
-  private String endDate;
+  private String end;
 
   /**
    * Instantiates an empty {@link NdcHistoryModel}.
@@ -45,21 +45,21 @@ public class NdcHistoryModel implements InfoModel<NdcHistoryModel> {
    */
   public NdcHistoryModel(NdcHistoryModel model) {
     rxcui = model.getRxcui();
-    startDate = model.getStartDate();
-    endDate = model.getEndDate();
+    start = model.getStart();
+    end = model.getEnd();
   }
 
   /**
    * Instantiates a {@link NdcHistoryModel} from the specified parameters.
    *
    * @param rxcui the rxcui
-   * @param startDate the start date
-   * @param endDate the end date
+   * @param start the start date
+   * @param end the end date
    */
-  public NdcHistoryModel(String rxcui, String startDate, String endDate) {
+  public NdcHistoryModel(String rxcui, String start, String end) {
     this.rxcui = rxcui;
-    this.startDate = startDate;
-    this.endDate = endDate;
+    this.start = start;
+    this.end = end;
   }
 
   /**
@@ -104,39 +104,39 @@ public class NdcHistoryModel implements InfoModel<NdcHistoryModel> {
   }
 
   /**
-   * Returns the startDate.
+   * Returns the start.
    *
-   * @return the startDate
+   * @return the start
    */
-  public String getStartDate() {
-    return startDate;
+  public String getStart() {
+    return start;
   }
 
   /**
-   * Sets the startDate.
+   * Sets the start.
    *
-   * @param startDate the startDate
+   * @param start the start
    */
-  public void setStartDate(String startDate) {
-    this.startDate = startDate;
+  public void setStart(String start) {
+    this.start = start;
   }
 
   /**
-   * Returns the endDate.
+   * Returns the end.
    *
-   * @return the endDate
+   * @return the end
    */
-  public String getEndDate() {
-    return endDate;
+  public String getEnd() {
+    return end;
   }
 
   /**
-   * Sets the endDate.
+   * Sets the end.
    *
-   * @param endDate the endDate
+   * @param end the end
    */
-  public void setEndDate(String endDate) {
-    this.endDate = endDate;
+  public void setEnd(String end) {
+    this.end = end;
   }
 
   /* see superclass */
@@ -194,20 +194,20 @@ public class NdcHistoryModel implements InfoModel<NdcHistoryModel> {
       }
     }
 
-    if (model.getStartDate() != null && startDate != null) {
-      if (analysisMode && !model.getStartDate().equals(startDate)) {
-        common.setStartDate(InfoModel.MULTIPLE_VALUES);
-      } else if (model.getStartDate().equals(startDate)) {
-        common.setStartDate(startDate);
+    if (model.getStart() != null && start != null) {
+      if (analysisMode && !model.getStart().equals(start)) {
+        common.setStart(InfoModel.MULTIPLE_VALUES);
+      } else if (model.getStart().equals(start)) {
+        common.setStart(start);
         found = true;
       }
     }
 
-    if (model.getEndDate() != null && endDate != null) {
-      if (analysisMode && !model.getEndDate().equals(endDate)) {
-        common.setEndDate(InfoModel.MULTIPLE_VALUES);
-      } else if (model.getEndDate().equals(endDate)) {
-        common.setEndDate(endDate);
+    if (model.getEnd() != null && end != null) {
+      if (analysisMode && !model.getEnd().equals(end)) {
+        common.setEnd(InfoModel.MULTIPLE_VALUES);
+      } else if (model.getEnd().equals(end)) {
+        common.setEnd(end);
         found = true;
       }
     }
@@ -223,9 +223,9 @@ public class NdcHistoryModel implements InfoModel<NdcHistoryModel> {
   public int hashCode() {
     final int prime = 31;
     int result = 1;
-    result = prime * result + ((endDate == null) ? 0 : endDate.hashCode());
+    result = prime * result + ((end == null) ? 0 : end.hashCode());
     result = prime * result + ((rxcui == null) ? 0 : rxcui.hashCode());
-    result = prime * result + ((startDate == null) ? 0 : startDate.hashCode());
+    result = prime * result + ((start == null) ? 0 : start.hashCode());
     return result;
   }
 
@@ -239,20 +239,20 @@ public class NdcHistoryModel implements InfoModel<NdcHistoryModel> {
     if (getClass() != obj.getClass())
       return false;
     NdcHistoryModel other = (NdcHistoryModel) obj;
-    if (endDate == null) {
-      if (other.endDate != null)
+    if (end == null) {
+      if (other.end != null)
         return false;
-    } else if (!endDate.equals(other.endDate))
+    } else if (!end.equals(other.end))
       return false;
     if (rxcui == null) {
       if (other.rxcui != null)
         return false;
     } else if (!rxcui.equals(other.rxcui))
       return false;
-    if (startDate == null) {
-      if (other.startDate != null)
+    if (start == null) {
+      if (other.start != null)
         return false;
-    } else if (!startDate.equals(other.startDate))
+    } else if (!start.equals(other.start))
       return false;
     return true;
   }
@@ -260,8 +260,8 @@ public class NdcHistoryModel implements InfoModel<NdcHistoryModel> {
   /* see superclass */
   @Override
   public String toString() {
-    return "NdcHistoryModel [rxcui=" + rxcui + ", startDate=" + startDate
-        + ", endDate=" + endDate + "]";
+    return "NdcHistoryModel [rxcui=" + rxcui + ", start=" + start + ", end="
+        + end + "]";
   }
 
 }

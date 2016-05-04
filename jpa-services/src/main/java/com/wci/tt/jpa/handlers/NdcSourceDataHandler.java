@@ -10,22 +10,12 @@ import org.apache.log4j.Logger;
 
 import com.wci.tt.jpa.services.algo.NdcLoaderAlgorithm;
 import com.wci.umls.server.SourceData;
-import com.wci.umls.server.helpers.Branch;
 import com.wci.umls.server.helpers.ConfigUtility;
 import com.wci.umls.server.helpers.LocalException;
-import com.wci.umls.server.jpa.algo.LabelSetMarkedParentAlgorithm;
-import com.wci.umls.server.jpa.algo.TransitiveClosureAlgorithm;
-import com.wci.umls.server.jpa.algo.TreePositionAlgorithm;
-import com.wci.umls.server.jpa.services.ContentServiceJpa;
 import com.wci.umls.server.jpa.services.SourceDataServiceJpa;
 import com.wci.umls.server.jpa.services.handlers.AbstractSourceDataHandler;
 import com.wci.umls.server.jpa.services.rest.SecurityServiceRest;
-import com.wci.umls.server.model.content.ConceptSubset;
-import com.wci.umls.server.model.content.Subset;
-import com.wci.umls.server.model.meta.IdType;
-import com.wci.umls.server.model.meta.Terminology;
 import com.wci.umls.server.rest.impl.SecurityServiceRestImpl;
-import com.wci.umls.server.services.ContentService;
 import com.wci.umls.server.services.SourceDataService;
 import com.wci.umls.server.services.helpers.ProgressEvent;
 import com.wci.umls.server.services.helpers.ProgressListener;
@@ -34,6 +24,9 @@ import com.wci.umls.server.services.helpers.ProgressListener;
  * Converter for RxNorm files.
  */
 public class NdcSourceDataHandler extends AbstractSourceDataHandler {
+
+  /** The attributes flag. */
+  boolean attributesFlag = true;
 
   /**
    * Instantiates an empty {@link NdcSourceDataHandler}.
@@ -97,73 +90,11 @@ public class NdcSourceDataHandler extends AbstractSourceDataHandler {
       algorithm.setTerminology(sourceData.getTerminology());
       algorithm.setVersion(sourceData.getVersion());
       algorithm.setInputDir(inputDir);
+      algorithm.setAttributesFlag(attributesFlag);
       algorithm.compute();
       algorithm.close();
 
-      // Compute transitive closure
-      // Obtain each terminology and run transitive closure on it with the
-      // correct id type
-      // Refresh caches after metadata has changed in loader
-      ContentService contentService = new ContentServiceJpa();
-      for (final Terminology t : contentService.getTerminologyLatestVersions()
-          .getObjects()) {
-        // Only compute for organizing class types
-        if (t.getOrganizingClassType() != null) {
-          TransitiveClosureAlgorithm algo = new TransitiveClosureAlgorithm();
-          algo.setTerminology(t.getTerminology());
-          algo.setVersion(t.getVersion());
-          algo.setIdType(t.getOrganizingClassType());
-          // some terminologies may have cycles, allow these for now.
-          algo.setCycleTolerant(true);
-          algo.compute();
-          algo.close();
-        }
-      }
-
-      // Compute tree positions
-      // Refresh caches after metadata has changed in loader
-      for (final Terminology t : contentService.getTerminologyLatestVersions()
-          .getObjects()) {
-        // Only compute for organizing class types
-        if (t.getOrganizingClassType() != null) {
-          TreePositionAlgorithm algo = new TreePositionAlgorithm();
-          algo.setTerminology(t.getTerminology());
-          algo.setVersion(t.getVersion());
-          algo.setIdType(t.getOrganizingClassType());
-          // some terminologies may have cycles, allow these for now.
-          algo.setCycleTolerant(true);
-          // compute "semantic types" for concept hierarchies
-          if (t.getOrganizingClassType() == IdType.CONCEPT) {
-            algo.setComputeSemanticType(true);
-          }
-          algo.compute();
-          algo.close();
-        }
-      }
-
-      // Compute label sets - after transitive closure
-      // for each subset, compute the label set
-      for (final Terminology t : contentService.getTerminologyLatestVersions()
-          .getObjects()) {
-        for (final Subset subset : contentService
-            .getConceptSubsets(t.getTerminology(), t.getVersion(), Branch.ROOT)
-            .getObjects()) {
-          final ConceptSubset conceptSubset = (ConceptSubset) subset;
-          if (conceptSubset.isLabelSubset()) {
-            Logger.getLogger(getClass())
-                .info("  Create label set for subset = " + subset);
-            LabelSetMarkedParentAlgorithm algo3 =
-                new LabelSetMarkedParentAlgorithm();
-            algo3.setSubset(conceptSubset);
-            algo3.compute();
-            algo3.close();
-          }
-        }
-      }
       // Clean-up
-
-      ConfigUtility.deleteDirectory(new File(inputDir, "/RRF-sorted-temp/"));
-
       sourceData.setStatus(SourceData.Status.LOADING_COMPLETE);
       sourceDataService.updateSourceData(sourceData);
 
@@ -225,10 +156,25 @@ public class NdcSourceDataHandler extends AbstractSourceDataHandler {
     this.sourceData = sourceData;
   }
 
+  /**
+   * Sets the attributes flag.
+   *
+   * @param attributesFlag the attributes flag
+   */
+  public void setAttributesFlag(boolean attributesFlag) {
+    this.attributesFlag = attributesFlag;
+  }
+
   /* see superclass */
   @Override
   public void close() throws Exception {
     // n/a
+  }
+
+  @Override
+  public boolean checkPreconditions() throws Exception {
+    // n/a
+    return false;
   }
 
 }

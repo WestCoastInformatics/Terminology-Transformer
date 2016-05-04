@@ -15,7 +15,6 @@ import com.wci.tt.helpers.DataContextType;
 import com.wci.tt.helpers.ScoredResult;
 import com.wci.tt.jpa.helpers.ScoredResultJpa;
 import com.wci.tt.services.handlers.NormalizerHandler;
-import com.wci.umls.server.helpers.LocalException;
 
 /**
  * NDC implementation of {@link NormalizerHandler}.
@@ -49,6 +48,10 @@ public class NdcNormalizer extends AbstractNormalizer
   public List<ScoredResult> normalize(String inputString, DataContext context)
     throws Exception {
     Logger.getLogger(getClass()).debug("  normalize - " + inputString);
+
+    if (inputString == null) {
+      return new ArrayList<>();
+    }
 
     /**
      * <pre>
@@ -127,9 +130,9 @@ public class NdcNormalizer extends AbstractNormalizer
         ndc11 = segment1 + segment2 + segment3;
       } else {
         // # invalid hyphenated NDC format
-        throw new LocalException(
-            "invalid hyphenated NDC format " + segment1.length() + "-"
-                + segment2.length() + "-" + segment3.length());
+        Logger.getLogger(getClass())
+            .warn("invalid hyphenated NDC format " + inputString);
+        return new ArrayList<>();
       }
       // Comment out for now, because splsetid breaks this condition
 /*    } else if (hyphenCt > 2) {
@@ -141,7 +144,9 @@ public class NdcNormalizer extends AbstractNormalizer
     } else if (inputString.length() == 12) {
       ndc11 = inputString.substring(1);
     } else {
-      throw new LocalException("NDC code has an invalid format.");
+      Logger.getLogger(getClass())
+          .warn("NDC code has an invalid format - " + inputString);
+      return new ArrayList<>();
     }
 
     // Simply return data passed in for this "naive" case. As such, the
@@ -190,7 +195,7 @@ public class NdcNormalizer extends AbstractNormalizer
   /* see superclass */
   @Override
   public boolean accepts(DataContext inputContext) throws Exception {
-    return inputContext != null && "NDC".equals(inputContext.getTerminology()) 
+    return inputContext != null && "NDC".equals(inputContext.getTerminology())
         && inputContext.getType() == DataContextType.CODE;
   }
 

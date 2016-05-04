@@ -19,7 +19,7 @@ import com.wci.umls.server.helpers.ConfigUtility;
  * 
  * <pre>
  *    { active : "false", ndc: "19428372921", rxcui : "312656",
- *      history : [{ rxcui : "312656", active : "true", startDate : "200706", endDate : "201101" }]
+ *      history : [{ rxcui : "312656", active : "true", start : "200706", end : "201101" }]
  *    }
  * </pre>
  */

@@ -12,18 +12,20 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.wci.tt.jpa.infomodels.NdcModel;
+import com.wci.tt.jpa.infomodels.NdcPropertiesListModel;
 import com.wci.tt.jpa.infomodels.NdcPropertiesModel;
 import com.wci.tt.jpa.infomodels.NdcPropertiesModelList;
 import com.wci.tt.jpa.infomodels.RxcuiModel;
 import com.wci.tt.rest.client.NdcClientRest;
 import com.wci.tt.rest.client.TransformClientRest;
 import com.wci.umls.server.helpers.ConfigUtility;
+import com.wci.umls.server.helpers.StringList;
 import com.wci.umls.server.rest.client.SecurityClientRest;
 
 /**
  * Some initial testing for {@link TransformClientRest}. Assumes stock dev load.
  */
-public class NdcProviderTest extends RestIntegrationSupport {
+public class NdcRestTest extends RestIntegrationSupport {
 
   /** The adminAuthToken auth token. */
   protected static String adminAuthToken;
@@ -98,8 +100,6 @@ public class NdcProviderTest extends RestIntegrationSupport {
     securityService.logout(adminAuthToken);
   }
 
-
-
   /**
    * Test cases where call to process expected to return proper results.
    *
@@ -110,14 +110,10 @@ public class NdcProviderTest extends RestIntegrationSupport {
     Logger.getLogger(getClass()).info("TEST " + name.getMethodName());
 
     // Input Data
-    String inputString = "00247100552";
-
-    NdcModel results =
-        ndcService.processNdc(inputString, 
-            adminAuthToken);
-
+    String ndc = "00247100552";
+    NdcModel results = ndcService.getNdcInfo(ndc, adminAuthToken);
     Logger.getLogger(getClass()).info("  results = " + results);
-   
+
   }
 
   /**
@@ -130,16 +126,12 @@ public class NdcProviderTest extends RestIntegrationSupport {
     Logger.getLogger(getClass()).info("TEST " + name.getMethodName());
 
     // Input Data
-    String inputString = "283420";
-
-    RxcuiModel results =
-        ndcService.processRxcui(inputString, 
-            adminAuthToken);
-
+    String ndc = "283420";
+    RxcuiModel results = ndcService.getRxcuiInfo(ndc, adminAuthToken);
     Logger.getLogger(getClass()).info("  results = " + results);
-   
+
   }
-  
+
   /**
    * Test get ndc properties.
    *
@@ -150,14 +142,42 @@ public class NdcProviderTest extends RestIntegrationSupport {
     Logger.getLogger(getClass()).info("TEST " + name.getMethodName());
 
     // Input Data
-    String inputString = "61010-5400-2";
-
+    String ndc = "61010-5400-2";
     NdcPropertiesModel results =
-        ndcService.getNdcProperties(inputString, 
-            adminAuthToken);
-
+        ndcService.getNdcProperties(ndc, adminAuthToken);
     Logger.getLogger(getClass()).info("  results = " + results);
-   
+
+  }
+
+  /**
+   * Test get ndc properties for SPL_SET_ID
+   *
+   * @throws Exception the exception
+   */
+  @Test
+  public void testGetNdcPropertiesForSplSetId() throws Exception {
+    Logger.getLogger(getClass()).info("TEST " + name.getMethodName());
+
+    // Input Data
+    String splSetId = "0013824b-6aee-4da4-affd-35bc6bf19d91";
+    NdcPropertiesListModel results =
+        ndcService.getNdcPropertiesForSplSetId(splSetId, adminAuthToken);
+    Logger.getLogger(getClass()).info("  results = " + results);
+
+  }
+
+  /**
+   * Test autocomlete.
+   *
+   * @throws Exception the exception
+   */
+  @Test
+  public void testAutocomlete() throws Exception {
+    Logger.getLogger(getClass()).info("TEST " + name.getMethodName());
+
+    StringList results = ndcService.autocomplete("247", adminAuthToken);
+    Logger.getLogger(getClass()).info("  results = " + results);
+
   }
   
   /**
