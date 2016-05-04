@@ -34,6 +34,14 @@ Documentation
 -------------
 Find comprehensive documentation here: https://confluence.ihtsdotools.org/TBD
 
+NDC-RXNORM
+----------
+Sample data build for integration testing
+ * 20100104
+ * 20160104
+ * 20160404
+
+
 License
 -------
 See the included LICENSE.txt file.

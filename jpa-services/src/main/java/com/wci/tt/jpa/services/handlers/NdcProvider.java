@@ -240,10 +240,14 @@ public class NdcProvider extends AbstractAcceptsHandler
 
       // Gather together original input string and normalized results
       final Set<String> inputStrings = new HashSet<>();
-      for (final ScoredResult result : normalizedResults) {
-        inputStrings.add(result.getValue());
+      if (normalizedResults.size() > 0) {
+        for (final ScoredResult result : normalizedResults) {
+          inputStrings.add(result.getValue());
+        }
+
+      } else {
+        inputStrings.add(ndc);
       }
-      inputStrings.add(ndc);
       if (inputStrings.size() != 1) {
         throw new Exception(
             "Unexpected number of input strings: " + inputStrings.size());
@@ -300,7 +304,7 @@ public class NdcProvider extends AbstractAcceptsHandler
         // version
         model.setActive(recordList.get(0).active
             && recordList.get(0).version.equals(rxnormLatestVersion));
-        model.setNdc(ndc);
+        model.setNdc(query);
         model.setRxcui(recordList.get(0).rxcui);
 
         // RXCUI VERSION ACTIVE
@@ -496,10 +500,13 @@ public class NdcProvider extends AbstractAcceptsHandler
 
       // gather together original input string and normalized results
       final Set<String> inputStrings = new HashSet<>();
-      for (final ScoredResult result : normalizedResults) {
-        inputStrings.add(result.getValue());
+      if (normalizedResults.size() > 0) {
+        for (final ScoredResult result : normalizedResults) {
+          inputStrings.add(result.getValue());
+        }
+      } else {
+        inputStrings.add(ndc);
       }
-      inputStrings.add(ndc);
       if (inputStrings.size() != 1) {
         throw new Exception(
             "Unexpected number of input strings: " + inputStrings.size());
@@ -633,27 +640,33 @@ public class NdcProvider extends AbstractAcceptsHandler
   /**
    * Gets the ndc10.
    *
-   * @param elevenDigitNdc the eleven digit ndc
+   * @param ndc the eleven digit ndc
    * @return the ndc10
    */
-  private String getNdc10(String elevenDigitNdc) {
+  private String getNdc10(String ndc) {
+    if (!ndc.startsWith("0")) {
+      return null;
+    }
     StringBuffer outputString = new StringBuffer();
-    outputString.append(elevenDigitNdc.substring(1, 5)).append("-");
-    outputString.append(elevenDigitNdc.substring(5, 9)).append("-");
-    outputString.append(elevenDigitNdc.substring(9));
+    outputString.append(ndc.substring(1, 5)).append("-");
+    outputString.append(ndc.substring(5, 9)).append("-");
+    outputString.append(ndc.substring(9));
     return outputString.toString();
   }
 
   /**
    * Gets the ndc9.
    *
-   * @param elevenDigitNdc the eleven digit ndc
+   * @param ndc the eleven digit ndc
    * @return the ndc9
    */
-  private String getNdc9(String elevenDigitNdc) {
+  private String getNdc9(String ndc) {
+    if (!ndc.startsWith("0")) {
+      return null;
+    }
     StringBuffer outputString = new StringBuffer();
-    outputString.append(elevenDigitNdc.substring(1, 5)).append("-");
-    outputString.append(elevenDigitNdc.substring(5, 9));
+    outputString.append(ndc.substring(1, 5)).append("-");
+    outputString.append(ndc.substring(5, 9));
     return outputString.toString();
   }
 

@@ -144,8 +144,8 @@ public class NdcClientRest extends RootClientRest implements NdcServiceRest {
     validateNotEmpty(splSetId, "splSetId");
 
     Client client = ClientBuilder.newClient();
-    WebTarget target = client.target(
-        config.getProperty("base.url") + "/rxnorm/spl/" + splSetId + "/ndc/");
+    WebTarget target = client.target(config.getProperty("base.url")
+        + "/rxnorm/spl/" + splSetId + "/ndc/properties");
 
     // Call Rest method
     Response response = target.request(MediaType.APPLICATION_XML)
@@ -172,8 +172,8 @@ public class NdcClientRest extends RootClientRest implements NdcServiceRest {
     validateNotEmpty(query, "query");
 
     Client client = ClientBuilder.newClient();
-    WebTarget target = client
-        .target(config.getProperty("base.url") + "/ndc/autocomplete?query="
+    WebTarget target = client.target(
+        config.getProperty("base.url") + "/rxnorm/ndc/autocomplete?query="
             + URLEncoder.encode(query == null ? "" : query, "UTF-8")
                 .replaceAll("\\+", "%20"));
 

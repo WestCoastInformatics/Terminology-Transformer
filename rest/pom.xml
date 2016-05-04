@@ -138,23 +138,23 @@
           <warName>tt-rest</warName>
           <attachClasses>false</attachClasses>
           <filteringDeploymentDescriptors>true</filteringDeploymentDescriptors>
+          <overlays>
+            <overlay>
+              <groupId>com.wcinformatics.umls.server</groupId>
+              <artifactId>term-server-rest</artifactId>
+              <type>war</type>
+              <excludes>
+                <exclude>swagger.html</exclude>
+                <exclude>**/TermServerApplication*class</exclude>
+                <exclude>**/label.prop</exclude>
+              </excludes>
+            </overlay>
+          </overlays>
           <webResources>
             <resource>
               <directory>${project.build.directory}/config/resources</directory>
-              <filtering>true</filtering>
-              <!-- include files to filter -->
-              <includes>
-                <include>app/page/login/login.html</include>
-                <include>app/page/login/loginController.js</include>
-              </includes>
-            </resource>
-            <resource>
-              <directory>${project.build.directory}/config/resources</directory>
-              <!-- avoid unnecessary stuff and filtered files -->
-              <filtering>false</filtering>
+              <!-- avoid unnecessary stuff -->
               <excludes>
-                <exclude>app/page/login/login.html</exclude>
-                <exclude>app/page/login/loginController.js</exclude>
                 <exclude>bin/**</exclude>
                 <exclude>config*.properties</exclude>
               </excludes>
@@ -163,12 +163,7 @@
               <directory>src/main/webapp</directory>
               <filtering>true</filtering>
               <includes>
-                <include>app/page/login/login.html</include>
-                <include>app/page/login/loginController.js</include>
-                <include>app/page/general/footer.html</include>
-                <include>app/page/general/header.html</include>
-                <include>app/util/general/services.js</include>
-                <include>index.html</include>
+                <include>app/appConfig.js</include>
                 <include>swagger.html</include>
                 <include>WEB-INF/web.xml</include>
               </includes>
@@ -177,12 +172,7 @@
               <directory>src/main/webapp</directory>
               <filtering>false</filtering>
               <excludes>
-                <exclude>app/page/login/login.html</exclude>
-                <exclude>app/page/login/loginController.js</exclude>
-                <exclude>app/page/general/footer.html</exclude>
-                <exclude>app/page/general/header.html</exclude>
-                <exclude>app/util/general/services.js</exclude>
-                <exclude>index.html</exclude>
+                <include>app/appConfig.js</include>
                 <exclude>swagger.html</exclude>
                 <exclude>WEB-INF/web.xml</exclude>
               </excludes>
