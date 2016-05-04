@@ -76,6 +76,7 @@ public class NdcNormalizer extends AbstractNormalizer
      *   - 5-4-1
      *   - 5-3-2
      *   - 4-4-2
+     *   - 4-4
      * * additionally, RxNorm normalization applies the following rules
      *   - consider invalid NDCs with alpha characters
      *   - remove the leading 0 ONLY from 12-digit NDCs from VANDF starting with a 0
@@ -91,6 +92,7 @@ public class NdcNormalizer extends AbstractNormalizer
 
     int hyphenCt = StringUtils.countMatches(inputString, "-");
     String[] segments = new String[] {};
+
     if (hyphenCt == 2) {
       segments = inputString.split("-");
 
@@ -98,7 +100,7 @@ public class NdcNormalizer extends AbstractNormalizer
       String segment2 = segments[1];
       String segment3 = segments[2];
 
-      if (inputString.matches("^\\d{6}\\-\\d{4}\\-\\d{2}$")
+      if (inputString.matches("^[A-Z\\d{6}]\\-\\d{4}\\-\\d{2}$")
           || inputString.matches("^\\d{6}\\-\\d{4}\\-\\d{1}$")
           || inputString.matches("^\\d{6}\\-\\d{3}\\-\\d{2}$")
           || inputString.matches("^\\d{6}\\-\\d{3}\\-\\d{1}$")

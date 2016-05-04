@@ -20,7 +20,7 @@ import com.wci.umls.server.helpers.ConfigUtility;
  * </pre>
  */
 @XmlRootElement(name = "rxcuihistory")
-public class RxcuiHistoryModel implements InfoModel<RxcuiHistoryModel> {
+public class RxcuiNdcHistoryModel implements InfoModel<RxcuiNdcHistoryModel> {
 
   /** The NDC. */
   private String ndc;
@@ -32,31 +32,31 @@ public class RxcuiHistoryModel implements InfoModel<RxcuiHistoryModel> {
   private String end;
 
   /**
-   * Instantiates an empty {@link RxcuiHistoryModel}.
+   * Instantiates an empty {@link RxcuiNdcHistoryModel}.
    */
-  public RxcuiHistoryModel() {
+  public RxcuiNdcHistoryModel() {
     // n/a
   }
 
   /**
-   * Instantiates a {@link RxcuiHistoryModel} from the specified parameters.
+   * Instantiates a {@link RxcuiNdcHistoryModel} from the specified parameters.
    *
    * @param model the model
    */
-  public RxcuiHistoryModel(RxcuiHistoryModel model) {
+  public RxcuiNdcHistoryModel(RxcuiNdcHistoryModel model) {
     ndc = model.getNdc();
     start = model.getStart();
     end = model.getEnd();
   }
 
   /**
-   * Instantiates a {@link RxcuiHistoryModel} from the specified parameters.
+   * Instantiates a {@link RxcuiNdcHistoryModel} from the specified parameters.
    *
    * @param ndc the ndc
    * @param start the start
    * @param end the end date
    */
-  public RxcuiHistoryModel(String ndc, String start, String end) {
+  public RxcuiNdcHistoryModel(String ndc, String start, String end) {
     this.ndc = ndc;
     this.start = start;
     this.end = end;
@@ -144,7 +144,7 @@ public class RxcuiHistoryModel implements InfoModel<RxcuiHistoryModel> {
   public boolean verify(String model) throws Exception {
     // Accept only JSON representation
     try {
-      ConfigUtility.getGraphForJson(model, RxcuiHistoryModel.class);
+      ConfigUtility.getGraphForJson(model, RxcuiNdcHistoryModel.class);
       return true;
     } catch (Exception e) {
       return false;
@@ -152,10 +152,10 @@ public class RxcuiHistoryModel implements InfoModel<RxcuiHistoryModel> {
   }
 
   /* see superclass */
-  public RxcuiHistoryModel getModel(String model) throws Exception {
+  public RxcuiNdcHistoryModel getModel(String model) throws Exception {
     // Only accept json in correct format
     try {
-      return ConfigUtility.getGraphForJson(model, RxcuiHistoryModel.class);
+      return ConfigUtility.getGraphForJson(model, RxcuiNdcHistoryModel.class);
     } catch (Exception e) {
       throw new Exception("Malformed model - " + model);
     }
@@ -177,13 +177,13 @@ public class RxcuiHistoryModel implements InfoModel<RxcuiHistoryModel> {
 
   /* see superclass */
   @Override
-  public RxcuiHistoryModel getModelInCommon(RxcuiHistoryModel model,
+  public RxcuiNdcHistoryModel getModelInCommon(RxcuiNdcHistoryModel model,
     boolean analysisMode) throws Exception {
     if (model == null) {
       return null;
     }
     boolean found = false;
-    RxcuiHistoryModel common = new RxcuiHistoryModel();
+    RxcuiNdcHistoryModel common = new RxcuiNdcHistoryModel();
 
     if (model.getNdc() != null && ndc != null) {
       if (analysisMode && !model.getNdc().equals(ndc)) {
@@ -238,7 +238,7 @@ public class RxcuiHistoryModel implements InfoModel<RxcuiHistoryModel> {
       return false;
     if (getClass() != obj.getClass())
       return false;
-    RxcuiHistoryModel other = (RxcuiHistoryModel) obj;
+    RxcuiNdcHistoryModel other = (RxcuiNdcHistoryModel) obj;
     if (end == null) {
       if (other.end != null)
         return false;

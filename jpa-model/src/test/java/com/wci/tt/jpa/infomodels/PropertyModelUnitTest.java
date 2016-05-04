@@ -121,7 +121,6 @@ public class PropertyModelUnitTest extends JpaSupport {
     // Prop
     m1.setProp("abc");
     common = m1.getModelInCommon(m2, false);
-    System.out.println("common=" + common);
     assertNull(common);
     m2.setProp("def");
     common = m1.getModelInCommon(m2, false);
