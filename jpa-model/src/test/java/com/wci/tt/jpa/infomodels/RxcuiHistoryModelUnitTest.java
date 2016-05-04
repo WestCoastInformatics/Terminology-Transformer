@@ -21,12 +21,12 @@ import com.wci.umls.server.helpers.GetterSetterTester;
 import com.wci.umls.server.helpers.XmlSerializationTester;
 
 /**
- * Unit testing for {@link RxcuiHistoryModel}.
+ * Unit testing for {@link RxcuiNdcHistoryModel}.
  */
 public class RxcuiHistoryModelUnitTest extends JpaSupport {
 
   /** The model object to test. */
-  private RxcuiHistoryModel object;
+  private RxcuiNdcHistoryModel object;
 
   /**
    * Setup class.
@@ -43,7 +43,7 @@ public class RxcuiHistoryModelUnitTest extends JpaSupport {
    */
   @Before
   public void setup() throws Exception {
-    object = new RxcuiHistoryModel();
+    object = new RxcuiNdcHistoryModel();
 
   }
 
@@ -90,7 +90,7 @@ public class RxcuiHistoryModelUnitTest extends JpaSupport {
     Logger.getLogger(getClass()).debug("TEST " + name.getMethodName());
     CopyConstructorTester tester = new CopyConstructorTester(object);
 
-    assertTrue(tester.testCopyConstructor(RxcuiHistoryModel.class));
+    assertTrue(tester.testCopyConstructor(RxcuiNdcHistoryModel.class));
   }
 
   /**
@@ -113,11 +113,11 @@ public class RxcuiHistoryModelUnitTest extends JpaSupport {
   @Test
   public void testModelInCommon() throws Exception {
 
-    RxcuiHistoryModel m1 = new RxcuiHistoryModel();
-    RxcuiHistoryModel m2 = new RxcuiHistoryModel();
+    RxcuiNdcHistoryModel m1 = new RxcuiNdcHistoryModel();
+    RxcuiNdcHistoryModel m2 = new RxcuiNdcHistoryModel();
 
     // should work, but be empty
-    RxcuiHistoryModel common = m1.getModelInCommon(m2, false);
+    RxcuiNdcHistoryModel common = m1.getModelInCommon(m2, false);
     assertNull(common);
 
     // ndc
@@ -132,8 +132,8 @@ public class RxcuiHistoryModelUnitTest extends JpaSupport {
     assertEquals("abc", common.getNdc());
 
     // start
-    m1 = new RxcuiHistoryModel();
-    m2 = new RxcuiHistoryModel();
+    m1 = new RxcuiNdcHistoryModel();
+    m2 = new RxcuiNdcHistoryModel();
     m1.setStart("abc");
     common = m1.getModelInCommon(m2, false);
     assertNull(common);
@@ -145,8 +145,8 @@ public class RxcuiHistoryModelUnitTest extends JpaSupport {
     assertEquals("abc", common.getStart());
 
     // end 
-    m1 = new RxcuiHistoryModel();
-    m2 = new RxcuiHistoryModel();
+    m1 = new RxcuiNdcHistoryModel();
+    m2 = new RxcuiNdcHistoryModel();
     m1.setEnd("abc");
     common = m1.getModelInCommon(m2, false);
     assertNull(common);

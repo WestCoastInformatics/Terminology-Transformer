@@ -33,10 +33,10 @@ public class RxcuiModelUnitTest extends JpaSupport {
   private RxcuiModel object;
 
   /** the test fixture l1. */
-  private List<RxcuiHistoryModel> l1;
+  private List<RxcuiNdcHistoryModel> l1;
 
   /** the test fixture l2. */
-  private List<RxcuiHistoryModel> l2;
+  private List<RxcuiNdcHistoryModel> l2;
 
   /**
    * Setup class.
@@ -54,11 +54,11 @@ public class RxcuiModelUnitTest extends JpaSupport {
   @Before
   public void setup() throws Exception {
     object = new RxcuiModel();
-    ProxyTester tester = new ProxyTester(new RxcuiHistoryModel());
+    ProxyTester tester = new ProxyTester(new RxcuiNdcHistoryModel());
     l1 = new ArrayList<>();
-    l1.add((RxcuiHistoryModel) tester.createObject(1));
+    l1.add((RxcuiNdcHistoryModel) tester.createObject(1));
     l2 = new ArrayList<>();
-    l2.add((RxcuiHistoryModel) tester.createObject(2));
+    l2.add((RxcuiNdcHistoryModel) tester.createObject(2));
   }
 
   /**
@@ -150,16 +150,16 @@ public class RxcuiModelUnitTest extends JpaSupport {
     assertEquals("abc", common.getRxcui());
 
     // History
-    m1.getHistory().add(new RxcuiHistoryModel("abc", "def", "ghi"));
+    m1.getHistory().add(new RxcuiNdcHistoryModel("abc", "def", "ghi"));
     common = m1.getModelInCommon(m2, false);
     assertEquals(0, common.getHistory().size());
-    m2.getHistory().add(new RxcuiHistoryModel("def", "ghi", "jkl"));
+    m2.getHistory().add(new RxcuiNdcHistoryModel("def", "ghi", "jkl"));
     common = m1.getModelInCommon(m2, false);
     assertEquals(0, common.getHistory().size());
-    m2.getHistory().add(new RxcuiHistoryModel("abc", "def", "ghi"));
+    m2.getHistory().add(new RxcuiNdcHistoryModel("abc", "def", "ghi"));
     common = m1.getModelInCommon(m2, false);
     assertEquals(1, common.getHistory().size());
-    m1.getHistory().add(new RxcuiHistoryModel("def", "ghi", "jkl"));
+    m1.getHistory().add(new RxcuiNdcHistoryModel("def", "ghi", "jkl"));
     common = m1.getModelInCommon(m2, false);
     assertEquals(2, common.getHistory().size());
   }

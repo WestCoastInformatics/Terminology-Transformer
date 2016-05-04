@@ -24,7 +24,7 @@ import com.wci.tt.jpa.infomodels.NdcModel;
 import com.wci.tt.jpa.infomodels.NdcPropertiesListModel;
 import com.wci.tt.jpa.infomodels.NdcPropertiesModel;
 import com.wci.tt.jpa.infomodels.PropertyModel;
-import com.wci.tt.jpa.infomodels.RxcuiHistoryModel;
+import com.wci.tt.jpa.infomodels.RxcuiNdcHistoryModel;
 import com.wci.tt.jpa.infomodels.RxcuiModel;
 import com.wci.tt.jpa.services.helper.DataContextMatcher;
 import com.wci.tt.services.handlers.ProviderHandler;
@@ -86,6 +86,8 @@ public class NdcProvider extends AbstractAcceptsHandler
         RxcuiModel.class.getName(), null, null);
     outputMatcher.configureContext(DataContextType.INFO_MODEL, null, null, null,
         NdcPropertiesModel.class.getName(), null, null);
+    outputMatcher.configureContext(DataContextType.INFO_MODEL, null, null, null,
+        NdcPropertiesListModel.class.getName(), null, null);
     addMatcher(inputMatcher, outputMatcher);
 
   }
@@ -201,7 +203,7 @@ public class NdcProvider extends AbstractAcceptsHandler
 
       // Attempt to find the ndc properties models for the given splsetid
       final NdcPropertiesListModel model =
-          getPropertiesModelList(inputString, record.getNormalizedResults());
+          getPropertiesListModel(inputString, record.getNormalizedResults());
       if (model != null) {
         final ScoredResult result = new ScoredResultJpa();
         result.setValue(model.getModelValue());
@@ -380,7 +382,7 @@ public class NdcProvider extends AbstractAcceptsHandler
       pfsc.setSearchCriteria(new ArrayList<SearchCriteria>());
       // rxcui -> ndc
       final SearchResultList list = service.findConceptsForQuery("RXNORM", null,
-          Branch.ROOT, "terminology:RXNORM AND terminologyId:" + rxcui, pfsc);
+          Branch.ROOT, "terminologyId:" + rxcui, pfsc);
 
       // Determine the current RXNORM version
       final String rxnormLatestVersion =
@@ -429,8 +431,8 @@ public class NdcProvider extends AbstractAcceptsHandler
         // },
         // {ndc: 43921, start:20160204, end: 20160204 }
 
-        List<RxcuiHistoryModel> historyModels = new ArrayList<>();
-        RxcuiHistoryModel historyModel = new RxcuiHistoryModel();
+        List<RxcuiNdcHistoryModel> historyModels = new ArrayList<>();
+        RxcuiNdcHistoryModel historyModel = new RxcuiNdcHistoryModel();
         String prevNdc = null;
         String prevVersion = null;
         for (RxcuiNdcHistoryRecord record : recordList) {
@@ -447,7 +449,7 @@ public class NdcProvider extends AbstractAcceptsHandler
               historyModels.add(historyModel);
             }
             Logger.getLogger(getClass()).debug("    history = " + historyModel);
-            historyModel = new RxcuiHistoryModel();
+            historyModel = new RxcuiNdcHistoryModel();
             historyModel.setNdc(record.ndc);
             historyModel.setEnd(record.version);
           }
@@ -513,27 +515,11 @@ public class NdcProvider extends AbstractAcceptsHandler
           service.getTerminologyLatestVersion("RXNORM").getVersion(),
           Branch.ROOT, "atoms.termType:NDC AND atoms.name:" + query, pfsc);
 
-      // Shoudl be a single matching concept
+      // Should be a single matching concept
       if (list.getCount() == 1) {
 
-        // Determine the current RXNORM version
-        final String rxnormLatestVersion =
-            service.getTerminologyLatestVersion("RXNORM").getVersion();
-        Logger.getLogger(getClass())
-            .debug("  latest RXNORM version = " + rxnormLatestVersion);
-
-        SearchResult ndcResult = null;
-        for (final SearchResult result : list.getObjects()) {
-          if (ndcResult != null) {
-            throw new Exception(
-                "Unexpected error with more than one matching NDC.");
-          }
-          ndcResult = result;
-
-        }
-
-        // This cannot happen
-        assert ndcResult != null;
+        // RXNORM concept returned, there should be only one.
+        final SearchResult ndcResult = list.getObjects().get(0);
 
         final Concept concept = service.getConcept(ndcResult.getId());
         final NdcPropertiesModel model = new NdcPropertiesModel();
@@ -587,7 +573,7 @@ public class NdcProvider extends AbstractAcceptsHandler
    * @return the properties model list
    * @throws Exception the exception
    */
-  private NdcPropertiesListModel getPropertiesModelList(String splsetid,
+  private NdcPropertiesListModel getPropertiesListModel(String splsetid,
     List<ScoredResult> normalizedResults) throws Exception {
 
     final ContentService service = new ContentServiceJpa();

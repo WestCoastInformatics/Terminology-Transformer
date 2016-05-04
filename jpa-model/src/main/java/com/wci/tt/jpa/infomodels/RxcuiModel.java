@@ -33,7 +33,7 @@ public class RxcuiModel implements InfoModel<RxcuiModel> {
   private String rxcui;
 
   /** The history. */
-  private List<RxcuiHistoryModel> history;
+  private List<RxcuiNdcHistoryModel> history;
 
   /**
    * Instantiates an empty {@link RxcuiModel}.
@@ -119,7 +119,7 @@ public class RxcuiModel implements InfoModel<RxcuiModel> {
    * @return the history
    */
   @XmlElement(name = "history")
-  public List<RxcuiHistoryModel> getHistory() {
+  public List<RxcuiNdcHistoryModel> getHistory() {
     if (history == null) {
       history = new ArrayList<>();
     }
@@ -131,7 +131,7 @@ public class RxcuiModel implements InfoModel<RxcuiModel> {
    *
    * @param history the history
    */
-  public void setHistory(List<RxcuiHistoryModel> history) {
+  public void setHistory(List<RxcuiNdcHistoryModel> history) {
     this.history = history;
   }
 
@@ -192,9 +192,9 @@ public class RxcuiModel implements InfoModel<RxcuiModel> {
 
     if (model.getHistory() != null && history != null) {
       // Find common ingredient strength values
-      for (final RxcuiHistoryModel in : model.getHistory()) {
-        for (final RxcuiHistoryModel in2 : history) {
-          RxcuiHistoryModel commonIngredient =
+      for (final RxcuiNdcHistoryModel in : model.getHistory()) {
+        for (final RxcuiNdcHistoryModel in2 : history) {
+          RxcuiNdcHistoryModel commonIngredient =
               in.getModelInCommon(in2, analysisMode);
           if (commonIngredient != null
               && !common.getHistory().contains(commonIngredient)) {
