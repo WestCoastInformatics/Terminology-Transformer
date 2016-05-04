@@ -159,6 +159,8 @@ public class NdcRestTest extends RestIntegrationSupport {
 
     // Input Data
     String splSetId = "0013824b-6aee-4da4-affd-35bc6bf19d91";
+    //String inputString = "8d24bacb-feff-4c6a-b8df-625e1435387a";
+
     NdcPropertiesListModel results =
         ndcService.getNdcPropertiesForSplSetId(splSetId, adminAuthToken);
     Logger.getLogger(getClass()).info("  results = " + results);
@@ -178,4 +180,6 @@ public class NdcRestTest extends RestIntegrationSupport {
     Logger.getLogger(getClass()).info("  results = " + results);
 
   }
+  
+
 }
