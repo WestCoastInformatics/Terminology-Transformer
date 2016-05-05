@@ -173,7 +173,7 @@ public class NdcRestTest extends RestIntegrationSupport {
    * @throws Exception the exception
    */
   @Test
-  public void testAutocomlete() throws Exception {
+  public void testAutocomplete() throws Exception {
     Logger.getLogger(getClass()).info("TEST " + name.getMethodName());
 
     StringList results = ndcService.autocomplete("247", adminAuthToken);
