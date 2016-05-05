@@ -16,6 +16,7 @@ import org.glassfish.jersey.jsonp.JsonProcessingFeature;
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
 
 import com.wci.umls.server.helpers.ConfigUtility;
+import com.wci.umls.server.rest.impl.ConfigureServiceRestImpl;
 import com.wci.umls.server.rest.impl.SecurityServiceRestImpl;
 import com.wordnik.swagger.jaxrs.config.BeanConfig;
 
@@ -64,7 +65,11 @@ public class TransformerServerApplication extends Application {
   @Override
   public Set<Class<?>> getClasses() {
     final Set<Class<?>> classes = new HashSet<Class<?>>();
+    // Need configure and security services
+    classes.add(ConfigureServiceRestImpl.class);
     classes.add(SecurityServiceRestImpl.class);
+
+    // Need transformer services
     classes.add(TransformServiceRestImpl.class);
     classes.add(NdcServiceRestImpl.class);
     classes

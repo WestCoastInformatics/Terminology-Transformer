@@ -9,7 +9,6 @@ tsApp.config(function configureRoutes($routeProvider, appConfig) {
     reloadOnSearch : false
   });
 
-
   //
   // Configurable routes
   //
@@ -32,6 +31,9 @@ tsApp.config(function configureRoutes($routeProvider, appConfig) {
     reloadOnSearch : false
   };
 
+  // Values for xxxEnabled flags are string 'true' or 'false'
+  // and so they must always be compared as such
+
   // if landing enabled
   if (appConfig && appConfig.landingEnabled === 'true') {
     $routeProvider.when('/landing', landingRoute);
@@ -39,7 +41,7 @@ tsApp.config(function configureRoutes($routeProvider, appConfig) {
   }
 
   // if login enabled
-  if (appConfig && appConfig.loginEnabled) {
+  if (appConfig && appConfig.loginEnabled === 'true') {
     $routeProvider.when('/login', loginRoute);
     if (appConfig && appConfig.landingEnabled !== 'true') {
       $routeProvider.when('/', loginRoute);
@@ -47,7 +49,7 @@ tsApp.config(function configureRoutes($routeProvider, appConfig) {
   }
 
   // if license enabled
-  if (appConfig && appConfig.licenseEnabled) {
+  if (appConfig && appConfig.licenseEnabled === 'true') {
     $routeProvider.when('/license', licenseRoute);
     if (appConfig && appConfig.landingEnabled !== 'true' && appConfig.loginEnabled !== 'true') {
       $routeProvider.when('/', licenseRoute);

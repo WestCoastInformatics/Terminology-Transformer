@@ -3,7 +3,7 @@ tsApp.controller('NdcCtrl', [ '$scope', '$location', 'securityService', 'utilSer
   function($scope, $location, securityService, utilService, appConfig) {
     console.debug('configure NdcCtrl');
 
-    utilService.clearError();
+    //utilService.clearError();
 
     // Set up scope
 

@@ -345,8 +345,10 @@ public class NdcServiceRestImpl extends RootServiceRestImpl
         }
       }
       // Limit to 20 results
-      list.setObjects(list.getObjects().subList(0,
-          Math.min(20, list.getObjects().size() - 1)));
+      if (list.getCount() > 0) {
+        list.setObjects(list.getObjects().subList(0,
+            Math.min(20, list.getObjects().size() - 1)));
+      }
       return list;
 
     } catch (Exception e) {
