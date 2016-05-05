@@ -604,7 +604,9 @@ public class NdcProvider extends AbstractAcceptsHandler
           final Concept concept = service.getConcept(result.getId());
           for (final Atom atom : concept.getAtoms()) {
             if (atom.getTerminology().equals("RXNORM")
-                && atom.getTermType().equals("NDC") && !atom.isObsolete()) {
+                && atom.getTermType().equals("NDC") 
+                && !atom.isObsolete()
+                && atom.getCodeId().equals(splsetid)) {
 
               // For each NDC code, get the model
               final NdcPropertiesModel resultModel =
