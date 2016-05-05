@@ -47,6 +47,7 @@ public interface ConverterHandler extends Configurable {
    *    4) A Information Model to a Information Model
    * </pre>
    *
+   * @param inputString the input string
    * @param record the record
    * @return the data context tuple
    * @throws Exception the exception if the input/output context combination is

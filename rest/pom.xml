@@ -19,16 +19,25 @@
   <properties>
     <!-- Specify the config artifact parameters -->
     <config.groupId>com.wcinformatics.tt</config.groupId>
-    <config.artifactId>tt-config-dev-windows</config.artifactId>
+    <config.artifactId>tt-config-ndc-rxnorm</config.artifactId>
     <config.version>${project.version}</config.version>
 
     <!-- Defaults for Eclipse dev -->
     <deploy.title>WCI Terminology Transformer</deploy.title>
     <site.tracking.code></site.tracking.code>
-    <deploy.footer.copyright>(c) Copyright WCI, LLC 2016</deploy.footer.copyright>
-    <deploy.presented.by></deploy.presented.by>
     <base.url>http://localhost:8080</base.url>
     <logout.url>http://localhost:8080/tt-rest/index.html</logout.url>
+
+    <!-- Deployment default settings -->
+    <deploy.link>http://www.westcoastinformatics.com</deploy.link>
+    <deploy.title>NDC-RXNORM Transformer</deploy.title>
+    <deploy.password.reset>tmp</deploy.password.reset>
+    <deploy.presented.by>West Coast Informatics, LLC</deploy.presented.by>
+    <deploy.footer.copyright>(c) Copyright WCI, LLC 2016</deploy.footer.copyright>
+    <deploy.feedback.email>info@westcoastinformatics.com</deploy.feedback.email>
+    <deploy.landing.enabled>true</deploy.landing.enabled>
+    <deploy.license.enabled>false</deploy.license.enabled>
+    <deploy.login.enabled>false</deploy.login.enabled>
   </properties>
 
   <dependencies>

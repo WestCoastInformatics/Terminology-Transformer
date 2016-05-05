@@ -18,13 +18,12 @@ import com.wci.tt.jpa.infomodels.NdcPropertiesListModel;
 import com.wci.tt.jpa.infomodels.NdcPropertiesModel;
 import com.wci.tt.jpa.infomodels.RxcuiModel;
 import com.wci.tt.rest.client.NdcClientRest;
-import com.wci.tt.rest.client.TransformClientRest;
 import com.wci.umls.server.helpers.ConfigUtility;
 import com.wci.umls.server.helpers.StringList;
 import com.wci.umls.server.rest.client.SecurityClientRest;
 
 /**
- * Some initial testing for {@link TransformClientRest}. Assumes stock dev load.
+ * Some initial testing for NDC related services. Independent testing by BAC.
  */
 public class NdcRestTest2 extends RestIntegrationSupport {
 
@@ -193,8 +192,14 @@ public class NdcRestTest2 extends RestIntegrationSupport {
   public void testAutocomplete() throws Exception {
     Logger.getLogger(getClass()).info("TEST " + name.getMethodName());
 
+    // Test something that works
     StringList results = ndcService.autocomplete("247", adminAuthToken);
-    Logger.getLogger(getClass()).info("  results = " + results);
+    Logger.getLogger(getClass()).info("  247 results = " + results);
+    assertEquals(20, results.getCount());
 
-  }
+    // Test something that doesn't work
+    results = ndcService.autocomplete("ABC", adminAuthToken);
+    Logger.getLogger(getClass()).info("  ABC results = " + results);
+    assertEquals(0, results.getCount());
+}
 }
