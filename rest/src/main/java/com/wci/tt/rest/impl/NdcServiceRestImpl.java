@@ -321,7 +321,6 @@ public class NdcServiceRestImpl extends RootServiceRestImpl
       booleanQuery.add(term2, BooleanClause.Occur.MUST);
       booleanQuery.add(luceneQuery, BooleanClause.Occur.MUST);
 
-      System.out.println("booleanQuery=" + booleanQuery);
       final FullTextQuery fullTextQuery = fullTextEntityManager
           .createFullTextQuery(booleanQuery, ConceptJpa.class);
 
@@ -330,20 +329,17 @@ public class NdcServiceRestImpl extends RootServiceRestImpl
       @SuppressWarnings("unchecked")
       final List<AtomClass> results = fullTextQuery.getResultList();
       final StringList list = new StringList();
-      list.setTotalCount(fullTextQuery.getResultSize());
-      System.out.println("  count = " + results.size());
       for (final AtomClass result : results) {
         // Find NDCs matching.
         for (final Atom atom : result.getAtoms()) {
           // exclude duplicates
-          System.out.println(
-              "  atomName = " + normalizedQuery + ", " + atom.getName());
           if (atom.getTermType().equals("NDC")
               && atom.getName().contains(normalizedQuery)
               && !list.contains(result.getName()))
             list.addObject(atom.getName());
         }
       }
+      list.setTotalCount(list.getObjects().size());
       // Limit to 20 results
       if (list.getCount() > 0) {
         list.setObjects(list.getObjects().subList(0,

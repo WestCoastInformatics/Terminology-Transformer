@@ -201,5 +201,6 @@ public class NdcRestTest2 extends RestIntegrationSupport {
     results = ndcService.autocomplete("ABC", adminAuthToken);
     Logger.getLogger(getClass()).info("  ABC results = " + results);
     assertEquals(0, results.getCount());
-}
+    assertEquals(0, results.getTotalCount());
+  }
 }

@@ -306,6 +306,8 @@ public class NdcProvider extends AbstractAcceptsHandler
             && recordList.get(0).version.equals(rxnormLatestVersion));
         model.setNdc(query);
         model.setRxcui(recordList.get(0).rxcui);
+        model.setRxcuiName(service.getConcept(model.getRxcui(), "RXNORM",
+            rxnormLatestVersion, Branch.ROOT).getName());
 
         // RXCUI VERSION ACTIVE
         // 12343 20160404 true
@@ -420,10 +422,11 @@ public class NdcProvider extends AbstractAcceptsHandler
 
         final RxcuiModel model = new RxcuiModel();
         // Determine if latest version of RXCUI is active or not
-        model.setActive(!service
-            .getConcept(rxcui, "RXNORM", rxnormLatestVersion, Branch.ROOT)
-            .isObsolete());
+        final Concept concept = service.getConcept(rxcui, "RXNORM",
+            rxnormLatestVersion, Branch.ROOT);
+        model.setActive(!concept.isObsolete());
         model.setRxcui(rxcui);
+        model.setRxcuiName(concept.getName());
 
         // NDC VERSION ACTIVE
         // 12343 20160404 true
@@ -483,7 +486,7 @@ public class NdcProvider extends AbstractAcceptsHandler
       service.close();
     }
   }
-  
+
   /**
    * Returns the ndc properties model for the specified NDC code.
    *

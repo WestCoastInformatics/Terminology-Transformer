@@ -32,6 +32,9 @@ public class RxcuiModel implements InfoModel<RxcuiModel> {
   /** The rxcui. */
   private String rxcui;
 
+  /** The rxcui. */
+  private String rxcuiName;
+
   /** The history. */
   private List<RxcuiNdcHistoryModel> history;
 
@@ -50,6 +53,7 @@ public class RxcuiModel implements InfoModel<RxcuiModel> {
   public RxcuiModel(RxcuiModel model) {
     active = model.isActive();
     rxcui = model.getRxcui();
+    rxcuiName = model.getRxcuiName();
     history = new ArrayList<>(model.getHistory());
   }
 
@@ -94,6 +98,23 @@ public class RxcuiModel implements InfoModel<RxcuiModel> {
     this.rxcui = rxcui;
   }
 
+  /**
+   * Returns the rxcui name.
+   *
+   * @return the rxcui name
+   */
+  public String getRxcuiName() {
+    return rxcuiName;
+  }
+
+  /**
+   * Sets the rxcui name.
+   *
+   * @param rxcuiName the rxcui name
+   */
+  public void setRxcuiName(String rxcuiName) {
+    this.rxcuiName = rxcuiName;
+  }
 
   /**
    * Indicates whether or not active is the case.
@@ -190,6 +211,15 @@ public class RxcuiModel implements InfoModel<RxcuiModel> {
       }
     }
 
+    if (model.getRxcuiName() != null && rxcuiName != null) {
+      if (analysisMode && !model.getRxcuiName().equals(rxcuiName)) {
+        common.setRxcuiName(InfoModel.MULTIPLE_VALUES);
+      } else if (model.getRxcuiName().equals(rxcuiName)) {
+        common.setRxcuiName(rxcuiName);
+        found = true;
+      }
+    }
+
     if (model.getHistory() != null && history != null) {
       // Find common ingredient strength values
       for (final RxcuiNdcHistoryModel in : model.getHistory()) {
@@ -219,6 +249,7 @@ public class RxcuiModel implements InfoModel<RxcuiModel> {
     result = prime * result + (active ? 1231 : 1237);
     result = prime * result + ((history == null) ? 0 : history.hashCode());
     result = prime * result + ((rxcui == null) ? 0 : rxcui.hashCode());
+    result = prime * result + ((rxcuiName == null) ? 0 : rxcuiName.hashCode());
     return result;
   }
 
@@ -245,14 +276,20 @@ public class RxcuiModel implements InfoModel<RxcuiModel> {
     } else if (!rxcui.equals(other.rxcui))
       return false;
 
+    if (rxcuiName == null) {
+      if (other.rxcuiName != null)
+        return false;
+    } else if (!rxcuiName.equals(other.rxcuiName))
+      return false;
+
     return true;
   }
 
   /* see superclass */
   @Override
   public String toString() {
-    return "NdcModel [active=" + active + ", rxcui=" + rxcui
-        + ", history=" + history + "]";
+    return "NdcModel [active=" + active + ", rxcui=" + rxcui + ", rxcuiName="
+        + rxcuiName + ", history=" + history + "]";
   }
 
 }

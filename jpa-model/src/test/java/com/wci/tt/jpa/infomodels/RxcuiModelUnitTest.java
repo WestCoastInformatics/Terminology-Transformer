@@ -83,6 +83,7 @@ public class RxcuiModelUnitTest extends JpaSupport {
     Logger.getLogger(getClass()).debug("TEST " + name.getMethodName());
     EqualsHashcodeTester tester = new EqualsHashcodeTester(object);
     tester.include("rxcui");
+    tester.include("rxcuiName");
     tester.include("active");
     tester.include("history");
 
@@ -148,6 +149,18 @@ public class RxcuiModelUnitTest extends JpaSupport {
     m2.setRxcui("abc");
     common = m1.getModelInCommon(m2, false);
     assertEquals("abc", common.getRxcui());
+
+    // rxcui name
+    m1 = new RxcuiModel();
+    m1.setRxcuiName("abc");
+    common = m1.getModelInCommon(m2, false);
+    assertNull(common);
+    m2.setRxcuiName("def");
+    common = m1.getModelInCommon(m2, false);
+    assertNull(common);
+    m2.setRxcuiName("abc");
+    common = m1.getModelInCommon(m2, false);
+    assertEquals("abc", common.getRxcuiName());
 
     // History
     m1.getHistory().add(new RxcuiNdcHistoryModel("abc", "def", "ghi"));
