@@ -24,7 +24,7 @@ import com.wordnik.swagger.jaxrs.config.BeanConfig;
  * listener.
  */
 @ApplicationPath("/")
-public class TerminologyTransformerServerApplication extends Application {
+public class TransformerServerApplication extends Application {
 
   /** The API_VERSION - also used in "swagger.htmL" */
   public final static String API_VERSION = "1.0.0";
@@ -33,11 +33,11 @@ public class TerminologyTransformerServerApplication extends Application {
   Timer timer;
 
   /**
-   * Instantiates an empty {@link TerminologyTransformerServerApplication}.
+   * Instantiates an empty {@link TransformerServerApplication}.
    *
    * @throws Exception the exception
    */
-  public TerminologyTransformerServerApplication() throws Exception {
+  public TransformerServerApplication() throws Exception {
     Logger.getLogger(getClass())
         .info("WCI Terminology Transformer APPLICATION START");
     BeanConfig beanConfig = new BeanConfig();
