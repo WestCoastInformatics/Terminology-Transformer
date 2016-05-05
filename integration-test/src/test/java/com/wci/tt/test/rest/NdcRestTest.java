@@ -111,8 +111,15 @@ public class NdcRestTest extends RestIntegrationSupport {
     // Input Data
     String ndc = "00247100552";
     NdcModel results = ndcService.getNdcInfo(ndc, adminAuthToken);
-    Logger.getLogger(getClass()).info("  results = " + results);
-
+    Logger.getLogger(getClass()).info(" results = " + results);
+    assert(results.getRxcui().equals("91349"));
+    assert(results.getHistory().size() == 3);
+    
+    ndc = "00143314501";
+    results = ndcService.getNdcInfo(ndc, adminAuthToken);
+    Logger.getLogger(getClass()).info(" results = " + results);
+    assert(results.getRxcui().equals("1116191"));
+    assert(results.getHistory().size() == 2);
   }
 
   /**
@@ -145,6 +152,17 @@ public class NdcRestTest extends RestIntegrationSupport {
     NdcPropertiesModel results =
         ndcService.getNdcProperties(ndc, adminAuthToken);
     Logger.getLogger(getClass()).info("  results = " + results);
+    assert(results.getRxcui().equals("283420"));
+    // TODO: look at results for ndc11, ndc10 ndc9
+    
+    
+    ndc = "0069-3150-83";
+    results =
+        ndcService.getNdcProperties(ndc, adminAuthToken);
+    Logger.getLogger(getClass()).info("  results = " + results);
+    assert(results.getRxcui().equals("1668240"));
+    assert(results.getNdc10().equals("0069-3150-83"));
+    assert(results.getNdc9().equals("0069-3150"));
 
   }
 
@@ -158,12 +176,16 @@ public class NdcRestTest extends RestIntegrationSupport {
     Logger.getLogger(getClass()).info("TEST " + name.getMethodName());
 
     // Input Data
-    String splSetId = "0013824b-6aee-4da4-affd-35bc6bf19d91";
-    //String inputString = "8d24bacb-feff-4c6a-b8df-625e1435387a";
+    String splSetId = "8d24bacb-feff-4c6a-b8df-625e1435387a";
 
     NdcPropertiesListModel results =
         ndcService.getNdcPropertiesForSplSetId(splSetId, adminAuthToken);
     Logger.getLogger(getClass()).info("  results = " + results);
+    
+    assert(results.getList().size() == 2);
+    assert(results.getList().get(0).getRxcui().equals("1668240"));
+    assert(results.getList().get(0).getSplSetId().equals("8d24bacb-feff-4c6a-b8df-625e1435387a"));
+    assert(results.getList().get(0).getPropertyList().size() == 7);
 
   }
 
@@ -173,7 +195,7 @@ public class NdcRestTest extends RestIntegrationSupport {
    * @throws Exception the exception
    */
   @Test
-  public void testAutocomlete() throws Exception {
+  public void testAutocomplete() throws Exception {
     Logger.getLogger(getClass()).info("TEST " + name.getMethodName());
 
     StringList results = ndcService.autocomplete("247", adminAuthToken);
