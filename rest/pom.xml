@@ -76,6 +76,12 @@
       <type>jar</type>
     </dependency>
 
+    <dependency>
+      <groupId>com.wcinformatics.umls.server</groupId>
+      <artifactId>term-server-rest</artifactId>
+      <scope>runtime</scope>
+      <type>war</type>
+    </dependency>
 
 
   </dependencies>
