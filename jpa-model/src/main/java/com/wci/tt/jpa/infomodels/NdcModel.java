@@ -19,6 +19,7 @@ import com.wci.umls.server.helpers.ConfigUtility;
  * 
  * <pre>
  *    { active : "false", ndc: "19428372921", rxcui : "312656",
+ *      rxcuiName: "Promazine 50 MG/ML Injectable Solution",
  *      history : [{ rxcui : "312656", active : "true", start : "200706", end : "201101" }]
  *    }
  * </pre>
@@ -34,6 +35,9 @@ public class NdcModel implements InfoModel<NdcModel> {
 
   /** The rxcui. */
   private String rxcui;
+
+  /** The rxnorm concept name. */
+  private String rxcuiName;
 
   /** The history. */
   private List<NdcHistoryModel> history;
@@ -53,6 +57,7 @@ public class NdcModel implements InfoModel<NdcModel> {
   public NdcModel(NdcModel model) {
     active = model.isActive();
     rxcui = model.getRxcui();
+    rxcuiName = model.getRxcuiName();
     ndc = model.getNdc();
     history = new ArrayList<>(model.getHistory());
   }
@@ -96,6 +101,24 @@ public class NdcModel implements InfoModel<NdcModel> {
    */
   public void setRxcui(String rxcui) {
     this.rxcui = rxcui;
+  }
+
+  /**
+   * Returns the rxcui name.
+   *
+   * @return the rxcui name
+   */
+  public String getRxcuiName() {
+    return rxcuiName;
+  }
+
+  /**
+   * Sets the rxcui name.
+   *
+   * @param rxcuiName the rxcui name
+   */
+  public void setRxcuiName(String rxcuiName) {
+    this.rxcuiName = rxcuiName;
   }
 
   /**
@@ -156,6 +179,13 @@ public class NdcModel implements InfoModel<NdcModel> {
     this.history = history;
   }
 
+  /**
+   * Verify.
+   *
+   * @param model the model
+   * @return true, if successful
+   * @throws Exception the exception
+   */
   /* see superclass */
   @Override
   public boolean verify(String model) throws Exception {
@@ -168,6 +198,13 @@ public class NdcModel implements InfoModel<NdcModel> {
     }
   }
 
+  /**
+   * Returns the model.
+   *
+   * @param model the model
+   * @return the model
+   * @throws Exception the exception
+   */
   /* see superclass */
   public NdcModel getModel(String model) throws Exception {
     // Only accept json in correct format
@@ -178,6 +215,11 @@ public class NdcModel implements InfoModel<NdcModel> {
     }
   }
 
+  /**
+   * Returns the version.
+   *
+   * @return the version
+   */
   /* see superclass */
   @XmlTransient
   @Override
@@ -185,6 +227,12 @@ public class NdcModel implements InfoModel<NdcModel> {
     return "1.0";
   }
 
+  /**
+   * Returns the model value.
+   *
+   * @return the model value
+   * @throws Exception the exception
+   */
   /* see superclass */
   @XmlTransient
   @Override
@@ -192,6 +240,14 @@ public class NdcModel implements InfoModel<NdcModel> {
     return ConfigUtility.getJsonForGraph(this);
   }
 
+  /**
+   * Returns the model in common.
+   *
+   * @param model the model
+   * @param analysisMode the analysis mode
+   * @return the model in common
+   * @throws Exception the exception
+   */
   /* see superclass */
   @Override
   public NdcModel getModelInCommon(NdcModel model, boolean analysisMode)
@@ -207,6 +263,15 @@ public class NdcModel implements InfoModel<NdcModel> {
         common.setRxcui(InfoModel.MULTIPLE_VALUES);
       } else if (model.getRxcui().equals(rxcui)) {
         common.setRxcui(rxcui);
+        found = true;
+      }
+    }
+
+    if (model.getRxcuiName() != null && rxcuiName != null) {
+      if (analysisMode && !model.getRxcuiName().equals(rxcuiName)) {
+        common.setRxcuiName(InfoModel.MULTIPLE_VALUES);
+      } else if (model.getRxcuiName().equals(rxcuiName)) {
+        common.setRxcuiName(rxcuiName);
         found = true;
       }
     }
@@ -241,6 +306,11 @@ public class NdcModel implements InfoModel<NdcModel> {
     return common;
   }
 
+  /**
+   * Hash code.
+   *
+   * @return the int
+   */
   /* see superclass */
   @Override
   public int hashCode() {
@@ -249,10 +319,17 @@ public class NdcModel implements InfoModel<NdcModel> {
     result = prime * result + (active ? 1231 : 1237);
     result = prime * result + ((history == null) ? 0 : history.hashCode());
     result = prime * result + ((rxcui == null) ? 0 : rxcui.hashCode());
+    result = prime * result + ((rxcuiName == null) ? 0 : rxcuiName.hashCode());
     result = prime * result + ((ndc == null) ? 0 : ndc.hashCode());
     return result;
   }
 
+  /**
+   * Equals.
+   *
+   * @param obj the obj
+   * @return true, if successful
+   */
   /* see superclass */
   @Override
   public boolean equals(Object obj) {
@@ -275,6 +352,11 @@ public class NdcModel implements InfoModel<NdcModel> {
         return false;
     } else if (!rxcui.equals(other.rxcui))
       return false;
+    if (rxcuiName == null) {
+      if (other.rxcuiName != null)
+        return false;
+    } else if (!rxcuiName.equals(other.rxcuiName))
+      return false;
     if (ndc == null) {
       if (other.ndc != null)
         return false;
@@ -283,11 +365,16 @@ public class NdcModel implements InfoModel<NdcModel> {
     return true;
   }
 
+  /**
+   * To string.
+   *
+   * @return the string
+   */
   /* see superclass */
   @Override
   public String toString() {
-    return "NdcModel [active=" + active + ", rxcui=" + rxcui + ", ndc=" + ndc
-        + ", history=" + history + "]";
+    return "NdcModel [active=" + active + ", rxcui=" + rxcui + ", rxcuiName="
+        + rxcuiName + ", ndc=" + ndc + ", history=" + history + "]";
   }
 
 }
