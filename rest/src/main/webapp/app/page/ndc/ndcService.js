@@ -8,8 +8,10 @@ tsApp.service('ndcService', [
   function($http, $q, gpService, utilService) {
     console.debug("configure ndcService");
 
+    $http.defaults.headers.common.Authorization = 'guest';
+    
     // do NOT show tabs
-    tabService.setShowing(false);
+    //tabService.setShowing(false);
 
     // Autocomplete function
     this.autocomplete = function(query) {
@@ -46,7 +48,7 @@ tsApp.service('ndcService', [
       gpService.increment();
       $http.get('rxnorm/ndc/' + encodeURIComponent(ndc)).then(function(response) {
         gpService.decrement();
-        console.debug("  ndc info = ", results);
+        console.debug("  ndc info = ", response);
         deferred.resolve(response.data);
       }, function(response) {
         utilService.handleError(response);
@@ -65,7 +67,7 @@ tsApp.service('ndcService', [
       gpService.increment();
       $http.get('rxnorm/rxcui/' + encodeURIComponent(rxcui)).then(function(response) {
         gpService.decrement();
-        console.debug("  rxcui info = ", results);
+        console.debug("  rxcui info = ", response);
         deferred.resolve(response.data);
       }, function(response) {
         utilService.handleError(response);
@@ -84,7 +86,7 @@ tsApp.service('ndcService', [
       gpService.increment();
       $http.get('rxnorm/ndc/' + encodeURIComponent(ndc) + '/properties').then(function(response) {
         gpService.decrement();
-        console.debug("  ndc properties = ", results);
+        console.debug("  ndc properties = ", response);
         deferred.resolve(response.data);
       }, function(response) {
         utilService.handleError(response);
@@ -104,7 +106,7 @@ tsApp.service('ndcService', [
       $http.get('rxnorm/spl/' + encodeURIComponent(splSetId) + '/ndc/properties').then(
         function(response) {
           gpService.decrement();
-          console.debug("  splSetId properties = ", results);
+          console.debug("  splSetId properties = ", response);
           deferred.resolve(response.data);
         }, function(response) {
           utilService.handleError(response);

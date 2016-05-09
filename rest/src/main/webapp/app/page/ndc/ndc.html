@@ -1,5 +1,104 @@
 <div>
-  Sample NDC page. Include a form for entering a code and picking a function,
-  and then a display for the result or results. <br>
-  <br>This file is in rest/src/main/webapp/app/page/ndc/ndc.html
+  <div class="col-md-4 col-xs-12">
+    <h5 class="section-header">Query</h5>
+    <table class="table">
+      <tbody>
+        <tr>Enter a code and select an action.
+        </tr>
+        <tr>
+          <td>
+            <input ng-model="inputString" type="text"
+              placeholder="e.g. 0069-3150-83 or 283420" style="width: 100%;" 
+              typeahead="suggestion for suggestion in autocomplete($viewValue)"
+                typeahead-loading="loadingSuggestions"
+                typeahead-focus-first="false"
+                typeahead-on-select="searchParams.page = 1 && findComponents(true)"
+                typeahead-editable="true" typeahead-min-length="3"/>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <select title="Select action to perform" ng-model="selectedAction"
+              ng-options="item for item in actionOptions">
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <button class="btn btn-primary" ng-click="submit(); ">Submit</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="col-md-8 col-xs-12">
+    <div class="col-md-12 col-xs-12">
+      <h5 class="section-header">Results</h5>
+      <span ng-show="results && !results.rxcui && (selectedAction == 'Ndc Info' || selectedAction == 'Rxcui Info' || selectedAction == 'Ndc Properties')" class="alert alert-warning">Code returned no results.</span>
+      <table class="table">
+        <thead>
+          <tr>
+            <th class="col-md-2 col-xs-2"></th>
+            <th class="col-md-10 col-xs-10"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-show="results.ndc"><td>Ndc:</td><td> {{results.ndc}}</td></tr>
+          <tr ng-show="results.ndc11"><td>Ndc11:</td><td> {{results.ndc11}}</td></tr>
+          <tr ng-show="results.ndc10"><td>Ndc10:</td><td> {{results.ndc10}}</td></tr>
+          <tr ng-show="results.ndc9"><td>Ndc9:</td><td> {{results.ndc9}}</td></tr>
+          <tr ng-show="results.rxcui"><td>Rxcui:</td><td> {{results.rxcui}}</td></tr>
+          <tr ng-show="results.splSetId"><td>SplSetId:</td><td> {{results.splSetId}}</td></tr>
+          <tr ng-show="results.history.length > 0"><td>
+            History:</td><td>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th class="col-md-4 col-xs-4">Rxcui/Ndc</th>
+                  <th class="col-md-4 col-xs-4">Start</th>
+                  <th class="col-md-4 col-xs-4">End</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="item in results.history">
+                  <td ng-show="item.rxcui">{{item.rxcui}}</td>
+                  <td ng-show="item.ndc">{{item.ndc}}</td>
+                  <td>{{item.start}}</td>
+                  <td>{{item.end}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </td></tr>
+          <tr ng-show="results.propertyList.length > 0"><td>
+            Property List:</td><td>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th class="col-md-6 col-xs-6">Property</th>
+                  <th class="col-md-6 col-xs-6">Value</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="item in results.propertyList">
+                  <td>{{item.prop}}</td>
+                  <td>{{item.value}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </td></tr>
+          
+          
+          <tr ng-show="results.list"><td></td><td>
+            <table>
+              <tbody>
+                <tr ng-repeat="item in results.list">
+                  <td>{{item}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>

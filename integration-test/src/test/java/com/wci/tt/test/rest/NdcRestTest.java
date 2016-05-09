@@ -115,11 +115,33 @@ public class NdcRestTest extends RestIntegrationSupport {
     assert(results.getRxcui().equals("91349"));
     assert(results.getHistory().size() == 3);
     
+    // NDC that exists only in the first terminology version
+    ndc = "49452360601";
+    results = ndcService.getNdcInfo(ndc, adminAuthToken);
+    Logger.getLogger(getClass()).info(" results = " + results);
+    assert(results.getRxcui().equals("91348"));
+    assert(results.getHistory().size() == 1);
+    
+    // NDC that exists only in the third terminology version
+    ndc = "69315020906";
+    results = ndcService.getNdcInfo(ndc, adminAuthToken);
+    Logger.getLogger(getClass()).info(" results = " + results);
+    assert(results.getRxcui().equals("1744400"));
+    assert(results.getHistory().size() == 1);
+    
+    // An NDC that exists in multiple versions but changes RXCUI along the way
     ndc = "00143314501";
     results = ndcService.getNdcInfo(ndc, adminAuthToken);
     Logger.getLogger(getClass()).info(" results = " + results);
     assert(results.getRxcui().equals("1116191"));
     assert(results.getHistory().size() == 2);
+    
+    // NDC that doesn't exist
+    ndc = "5555555";
+    results = ndcService.getNdcInfo(ndc, adminAuthToken);
+    Logger.getLogger(getClass()).info(" results = " + results);
+    assert(results.getRxcui() == null);
+    assert(results.getHistory().size() == 0);    
   }
 
   /**
@@ -132,10 +154,14 @@ public class NdcRestTest extends RestIntegrationSupport {
     Logger.getLogger(getClass()).info("TEST " + name.getMethodName());
 
     // Input Data
-    String ndc = "283420";
-    RxcuiModel results = ndcService.getRxcuiInfo(ndc, adminAuthToken);
+    String rxcui = "283420";
+    RxcuiModel results = ndcService.getRxcuiInfo(rxcui, adminAuthToken);
     Logger.getLogger(getClass()).info("  results = " + results);
 
+    rxcui = "5555555";
+    results = ndcService.getRxcuiInfo(rxcui, adminAuthToken);
+    Logger.getLogger(getClass()).info("  results = " + results);
+    assert(results.getHistory().size() == 0);
   }
 
   /**
