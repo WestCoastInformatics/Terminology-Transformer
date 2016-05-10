@@ -1,7 +1,7 @@
 /*
  *    Copyright 2016 West Coast Informatics, LLC
  */
-package com.wci.tt.jpa.handlers;
+package com.wci.tt.jpa.services.handlers;
 
 import java.io.File;
 import java.util.Properties;

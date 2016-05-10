@@ -536,13 +536,13 @@ public class NdcProvider extends AbstractAcceptsHandler
         model.setRxcui(concept.getTerminologyId());
         model.setNdc9(getNdc9(query));
         model.setNdc10(getNdc10(query));
-        model.setNdc11(ndc);
+        model.setNdc11(query);
 
         for (final Atom atom : concept.getAtoms()) {
 
           if (atom.getTerminology().equals("RXNORM")
               && atom.getTermType().equals("NDC") && !atom.isObsolete()
-              && atom.getName().equals(ndc)) {
+              && atom.getName().equals(query)) {
             // Get the SPL_SET_ID from the code
             model.setSplSetId(atom.getCodeId());
 
@@ -607,8 +607,7 @@ public class NdcProvider extends AbstractAcceptsHandler
           final Concept concept = service.getConcept(result.getId());
           for (final Atom atom : concept.getAtoms()) {
             if (atom.getTerminology().equals("RXNORM")
-                && atom.getTermType().equals("NDC") 
-                && !atom.isObsolete()
+                && atom.getTermType().equals("NDC") && !atom.isObsolete()
                 && atom.getCodeId().equals(splsetid)) {
 
               // For each NDC code, get the model
