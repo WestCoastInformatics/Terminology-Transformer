@@ -119,6 +119,8 @@ public class NdcRestTest2 extends RestIntegrationSupport {
     Logger.getLogger(getClass())
         .info("  results2 = " + results2.getModelValue());
 
+    assertEquals(results, results2);
+
   }
 
   /**
