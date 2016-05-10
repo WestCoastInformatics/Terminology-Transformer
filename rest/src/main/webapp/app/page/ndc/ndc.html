@@ -12,8 +12,8 @@
               typeahead="suggestion for suggestion in autocomplete($viewValue)"
                 typeahead-loading="loadingSuggestions"
                 typeahead-focus-first="false"
-                typeahead-on-select="searchParams.page = 1 && findComponents(true)"
                 typeahead-editable="true" typeahead-min-length="3"/>
+                <!-- typeahead-on-select="searchParams.page = 1 && findComponents(true)" -->
           </td>
         </tr>
         <tr>
@@ -34,7 +34,7 @@
   <div class="col-md-8 col-xs-12">
     <div class="col-md-12 col-xs-12">
       <h5 class="section-header">Results</h5>
-      <span ng-show="results && !results.rxcui && (selectedAction == 'Ndc Info' || selectedAction == 'Rxcui Info' || selectedAction == 'Ndc Properties')" class="alert alert-warning">Code returned no results.</span>
+      <span ng-show="results && !results.rxcui && !results.list && (selectedAction == 'Ndc Info' || selectedAction == 'Rxcui Info' || selectedAction == 'Ndc Properties')" class="alert alert-warning">Code returned no results.</span>
       <table class="table">
         <thead>
           <tr>
@@ -43,26 +43,60 @@
           </tr>
         </thead>
         <tbody>
+          <tr ng-show="results.rxcuiName"><td>Rxcui Name:</td><td> {{results.rxcuiName}}</td></tr>
           <tr ng-show="results.ndc"><td>Ndc:</td><td> {{results.ndc}}</td></tr>
           <tr ng-show="results.ndc11"><td>Ndc11:</td><td> {{results.ndc11}}</td></tr>
           <tr ng-show="results.ndc10"><td>Ndc10:</td><td> {{results.ndc10}}</td></tr>
           <tr ng-show="results.ndc9"><td>Ndc9:</td><td> {{results.ndc9}}</td></tr>
           <tr ng-show="results.rxcui"><td>Rxcui:</td><td> {{results.rxcui}}</td></tr>
           <tr ng-show="results.splSetId"><td>SplSetId:</td><td> {{results.splSetId}}</td></tr>
-          <tr ng-show="results.history.length > 0"><td>
-            History:</td><td>
+          <tr ng-show="pagedHistory.data.length > 0"><td>
+            History:</td>
+            <td>
+            <span style="display: block;">
+            <uib-pagination items-per-page="paging['history'].pageSize" max-size="5"
+              boundary-links="true" class="pagination-sm"
+              previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;"
+              last-text="&raquo;"
+              ng-show="pagedHistory.totalCount > paging['history'].pageSize || paging['history'].filter"
+              total-items="pagedHistory.totalCount"
+              ng-model="paging['history'].page"
+              ng-change="getPagedHistory()"></uib-pagination>
+
+            <input class="input-filter" placeholder="Search"
+              ng-show="pagedHistory.totalCount > paging['history'].pageSize || paging['history'].filter"
+              type="text" ng-model="paging['history'].filter"
+              ng-model-options="{ debounce: 300 }"
+              ng-change="getPagedHistory()">
+
+            <button class="btn btn-xs btn-warning"
+              ng-show="paging['history'].filter"
+              ng-click="paging['history'].filter = ''; getPagedHistory()"
+              title="Click to clear filter text">Clear</button>
+            </span>
             <table class="table">
-              <thead>
-                <tr>
-                  <th class="col-md-4 col-xs-4">Rxcui/Ndc</th>
-                  <th class="col-md-4 col-xs-4">Start</th>
-                  <th class="col-md-4 col-xs-4">End</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr ng-repeat="item in results.history">
-                  <td ng-show="item.rxcui">{{item.rxcui}}</td>
-                  <td ng-show="item.ndc">{{item.ndc}}</td>
+                <thead>
+                  <tr>
+                    <th class="col-md-4 col-xs-4"
+                      ng-show="selectedAction == 'Rxcui Info'"
+                      ng-click="setSortField('history','ndc')">Ndc <span
+                        ng-bind="getSortIndicator('history','ndc')"></span></th>
+                    <th class="col-md-4 col-xs-4"
+                      ng-show="selectedAction == 'Ndc Info'"
+                      ng-click="setSortField('history','rxcui')">Rxcui <span
+                        ng-bind="getSortIndicator('history','rxcui')"></span></th>
+                    <th class="col-md-4 col-xs-4"
+                      ng-click="setSortField('history','start')">Start <span
+                        ng-bind="getSortIndicator('history','start')"></span></th>
+                    <th class="col-md-4 col-xs-4"
+                      ng-click="setSortField('history','end')">End <span
+                        ng-bind="getSortIndicator('history','end')"></span></th>
+                  </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="item in pagedHistory.data">
+                  <td ng-show="item.rxcui"><a ng-click="getRxcuiInfo(item.rxcui)"> {{item.rxcui}}</a></td>
+                  <td ng-show="item.ndc"><a ng-click="getNdcInfo(item.ndc)"> {{item.ndc}}</a></td>
                   <td>{{item.start}}</td>
                   <td>{{item.end}}</td>
                 </tr>
@@ -88,15 +122,71 @@
           </td></tr>
           
           
-          <tr ng-show="results.list"><td></td><td>
-            <table>
-              <tbody>
-                <tr ng-repeat="item in results.list">
-                  <td>{{item}}</td>
-                </tr>
-              </tbody>
-            </table>
-          </td></tr>
+          
+        </tbody>
+      </table>
+      <span style="display: block;">
+            <uib-pagination items-per-page="paging['splsetid'].pageSize" max-size="5"
+              boundary-links="true" class="pagination-sm"
+              previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;"
+              last-text="&raquo;"
+              ng-show="pagedSplsetid.totalCount > paging['splsetid'].pageSize || paging['splsetid'].filter"
+              total-items="pagedSplsetid.totalCount"
+              ng-model="paging['splsetid'].page"
+              ng-change="getPagedSplsetid()"></uib-pagination>
+
+            <input class="input-filter" placeholder="Search"
+              ng-show="pagedSplsetid.totalCount > paging['splsetid'].pageSize || paging['splsetid'].filter"
+              type="text" ng-model="paging['splsetid'].filter"
+              ng-model-options="{ debounce: 300 }"
+              ng-change="getPagedSplsetid()">
+
+            <button class="btn btn-xs btn-warning"
+              ng-show="paging['splsetid'].filter"
+              ng-click="paging['splsetid'].filter = ''; getPagedSplsetid()"
+              title="Click to clear filter text">Clear</button>
+            </span>
+      <table class="table" ng-show="pagedSplsetid.data">
+        <tbody>
+          <tr ng-show="pagedSplsetid.data[0].ndc11">
+            <td>Ndc11:</td>
+            <td>{{pagedSplsetid.data[0].ndc11}}</td>
+          </tr>
+          <tr ng-show="pagedSplsetid.data[0].ndc10">
+            <td>Ndc10:</td>
+            <td>{{pagedSplsetid.data[0].ndc10}}</td>
+          </tr>
+          <tr ng-show="pagedSplsetid.data[0].ndc9">
+            <td>Ndc9:</td>
+            <td>{{pagedSplsetid.data[0].ndc9}}</td>
+          </tr>
+          <tr ng-show="pagedSplsetid.data[0].rxcui">
+            <td>Rxcui:</td>
+            <td>{{pagedSplsetid.data[0].rxcui}}</td>
+          </tr>
+          <tr ng-show="pagedSplsetid.data[0].splSetId">
+            <td>SplSetId:</td>
+            <td>{{pagedSplsetid.data[0].splSetId}}</td>
+          </tr>
+          <tr ng-show="pagedSplsetid.data[0].propertyList.length > 0">
+            <td>Property List:</td>
+            <td>
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th class="col-md-6 col-xs-6">Property</th>
+                    <th class="col-md-6 col-xs-6">Value</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="item in pagedSplsetid.data[0].propertyList">
+                    <td>{{item.prop}}</td>
+                    <td>{{item.value}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </td>
+          </tr>
         </tbody>
       </table>
     </div>

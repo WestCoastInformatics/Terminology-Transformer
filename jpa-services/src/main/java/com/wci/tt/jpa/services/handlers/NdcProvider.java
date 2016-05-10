@@ -541,8 +541,8 @@ public class NdcProvider extends AbstractAcceptsHandler
         for (final Atom atom : concept.getAtoms()) {
 
           if (atom.getTerminology().equals("RXNORM")
-              && atom.getTermType().equals("NDC") && !atom.isObsolete()
-              && atom.getName().equals(ndc)) {
+              && atom.getTermType().equals("NDC") && !atom.isObsolete()) {
+              //&& atom.getName().equals(ndc)) {
             // Get the SPL_SET_ID from the code
             model.setSplSetId(atom.getCodeId());
 
