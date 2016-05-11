@@ -534,6 +534,7 @@ public class NdcProvider extends AbstractAcceptsHandler
         final Concept concept = service.getConcept(ndcResult.getId());
         final NdcPropertiesModel model = new NdcPropertiesModel();
         model.setRxcui(concept.getTerminologyId());
+        model.setRxcuiName(concept.getName());
         model.setNdc9(getNdc9(query));
         model.setNdc10(getNdc10(query));
         model.setNdc11(query);
