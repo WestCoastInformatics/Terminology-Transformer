@@ -599,6 +599,7 @@ public class NdcLoaderAlgorithm extends AbstractTerminologyLoaderAlgorithm {
           att.setName("NDC9");
           att.setValue(ndc9);
           att.setTimestamp(releaseVersionDate);
+          att.setLastModified(releaseVersionDate);
           att.setLastModifiedBy(loader);
           att.setObsolete(false);
           att.setSuppressible(false);
@@ -616,6 +617,7 @@ public class NdcLoaderAlgorithm extends AbstractTerminologyLoaderAlgorithm {
           att.setName("NDC10");
           att.setValue(ndc10);
           att.setTimestamp(releaseVersionDate);
+          att.setLastModified(releaseVersionDate);
           att.setLastModifiedBy(loader);
           att.setObsolete(false);
           att.setSuppressible(false);

@@ -306,8 +306,9 @@ public class NdcProvider extends AbstractAcceptsHandler
             && recordList.get(0).version.equals(rxnormLatestVersion));
         model.setNdc(query);
         model.setRxcui(recordList.get(0).rxcui);
-        model.setRxcuiName(service.getConcept(model.getRxcui(), "RXNORM",
-            rxnormLatestVersion, Branch.ROOT).getName());
+        Concept cpt = service.getConcept(model.getRxcui(), "RXNORM",
+            rxnormLatestVersion, Branch.ROOT);
+        model.setRxcuiName(cpt != null ? cpt.getName() : "");
 
         // RXCUI VERSION ACTIVE
         // 12343 20160404 true

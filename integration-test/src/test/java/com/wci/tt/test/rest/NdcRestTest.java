@@ -165,7 +165,6 @@ public class NdcRestTest extends RestIntegrationSupport {
     assert(results.getHistory().size() == 0);
     
     // Rxcui that exists only in the first terminology version
-    // TODO: causing NPE
     rxcui = "351772";
     results = ndcService.getRxcuiInfo(rxcui, adminAuthToken);
     Logger.getLogger(getClass()).info("  results = " + results);
@@ -200,7 +199,6 @@ public class NdcRestTest extends RestIntegrationSupport {
     assert(results.getNdc11().equals("00069315083"));
     assert(results.getPropertyList().size() == 7);
     assert(results.getSplSetId().equals("3b631aa1-2d46-40bc-a614-d698301ea4f9"));
-    // TODO missing the packagingList
 
   }
 
