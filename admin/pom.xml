@@ -266,7 +266,34 @@
         </plugins>
       </build>
     </profile>
-    
+
+<!-- Load dose form data, specify -Drun.config.umls=... -Dterminology=... -->
+    <profile>
+      <id>NdcRxnormUpdate</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>com.wcinformatics.tt</groupId>
+            <artifactId>tt-admin</artifactId>
+            <version>${project.version}</version>
+            <executions>
+              <execution>
+                <id>ndc-rxnorm</id>
+                <phase>package</phase>
+                <goals>
+                  <goal>ndc-rxnorm-update</goal>
+                </goals>
+                <configuration>
+                  <terminology>${terminology}</terminology>
+                  <inputDir>${input.dir}</inputDir>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+        
     <!-- Load RF2 snapshot, specify -Drun.config.umls=... -Dterminology=... -->
     <profile>
       <id>RF2-snapshot</id>

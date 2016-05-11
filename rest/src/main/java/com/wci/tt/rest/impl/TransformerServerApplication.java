@@ -70,7 +70,7 @@ public class TransformerServerApplication extends Application {
     classes.add(SecurityServiceRestImpl.class);
 
     // Need transformer services
-    classes.add(TransformServiceRestImpl.class);
+    //classes.add(TransformServiceRestImpl.class);
     classes.add(NdcServiceRestImpl.class);
     classes
         .add(com.wordnik.swagger.jersey.listing.ApiListingResourceJSON.class);
