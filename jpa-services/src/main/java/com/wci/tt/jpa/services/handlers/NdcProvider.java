@@ -535,10 +535,10 @@ public class NdcProvider extends AbstractAcceptsHandler
         final NdcPropertiesModel model = new NdcPropertiesModel();
         model.setRxcui(concept.getTerminologyId());
         model.setRxcuiName(concept.getName());
-        model.setNdc9(getNdc9(query));
-        model.setNdc10(getNdc10(query));
         model.setNdc11(query);
 
+        String ndc9 = null;
+        String ndc10 = null;
         for (final Atom atom : concept.getAtoms()) {
 
           if (atom.getTerminology().equals("RXNORM")
@@ -551,15 +551,31 @@ public class NdcProvider extends AbstractAcceptsHandler
             final List<PropertyModel> properties =
                 new ArrayList<PropertyModel>();
             for (final Attribute attrib : atom.getAttributes()) {
-              final PropertyModel prop = new PropertyModel();
-              prop.setProp(attrib.getName());
-              prop.setValue(attrib.getValue());
-              properties.add(prop);
+
+              // Handle NDC9
+              if (attrib.getName().equals("NDC9")) {
+                ndc9 = attrib.getValue();
+              }
+              // Handle NDC10
+              else if (attrib.getName().equals("NDC10")) {
+                ndc10 = attrib.getValue();
+              }
+              // Otherwise, add a property
+              else {
+                final PropertyModel prop = new PropertyModel();
+                prop.setProp(attrib.getName());
+                prop.setValue(attrib.getValue());
+                properties.add(prop);
+              }
             }
             model.setPropertyList(properties);
 
           }
         }
+
+        model.setNdc9(ndc9);
+        model.setNdc10(ndc10);
+
         Logger.getLogger(getClass()).debug("  model = " + model);
         return model;
       }
@@ -640,39 +656,6 @@ public class NdcProvider extends AbstractAcceptsHandler
       service.close();
     }
 
-  }
-
-  /**
-   * Gets the ndc10.
-   *
-   * @param ndc the eleven digit ndc
-   * @return the ndc10
-   */
-  private String getNdc10(String ndc) {
-    if (!ndc.startsWith("0")) {
-      return null;
-    }
-    StringBuffer outputString = new StringBuffer();
-    outputString.append(ndc.substring(1, 5)).append("-");
-    outputString.append(ndc.substring(5, 9)).append("-");
-    outputString.append(ndc.substring(9));
-    return outputString.toString();
-  }
-
-  /**
-   * Gets the ndc9.
-   *
-   * @param ndc the eleven digit ndc
-   * @return the ndc9
-   */
-  private String getNdc9(String ndc) {
-    if (!ndc.startsWith("0")) {
-      return null;
-    }
-    StringBuffer outputString = new StringBuffer();
-    outputString.append(ndc.substring(1, 5)).append("-");
-    outputString.append(ndc.substring(5, 9));
-    return outputString.toString();
   }
 
   /**

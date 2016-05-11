@@ -408,6 +408,8 @@ public class NdcLoaderAlgorithm extends AbstractTerminologyLoaderAlgorithm {
     final Set<Concept> modifiedConcepts = new HashSet<>();
     Map<String, Atom> ndcAtoms = new HashMap<>();
     Map<String, String> mthsplNdcCodeMap = new HashMap<>();
+    Map<String, String> mthsplNdc9Map = new HashMap<>();
+    Map<String, String> mthsplNdc10Map = new HashMap<>();
     Map<String, Set<Attribute>> attributeMap = new HashMap<>();
     Map<String, String> splSetIdMap = new HashMap<>();
     String prevCui = null;
@@ -424,7 +426,8 @@ public class NdcLoaderAlgorithm extends AbstractTerminologyLoaderAlgorithm {
       if (prevCui == null || !fields[0].equals(prevCui)) {
         if (prevCui != null) {
           connectAtomsAndAttributes(fields, ndcAtoms, mthsplNdcCodeMap,
-              attributeMap, splSetIdMap, modifiedConcepts);
+              mthsplNdc9Map, mthsplNdc9Map, attributeMap, splSetIdMap,
+              modifiedConcepts);
           // log and commit
           logAndCommit(++objectCt, RootService.logCt, RootService.commitCt);
           ndcAtoms = new HashMap<>();
@@ -502,6 +505,8 @@ public class NdcLoaderAlgorithm extends AbstractTerminologyLoaderAlgorithm {
             normalizer.normalize(fields[10], null);
         if (results.size() == 1) {
           mthsplNdcCodeMap.put(results.get(0).getValue(), fields[3]);
+          mthsplNdc9Map.put(fields[3], fields[5]);
+          mthsplNdc10Map.put(fields[3] + results.get(0).getValue(), fields[10]);
         } else if (results.size() == 0) {
           Logger.getLogger(getClass())
               .warn("  MTHSPL NDC cannot be normalized: " + line);
@@ -540,7 +545,8 @@ public class NdcLoaderAlgorithm extends AbstractTerminologyLoaderAlgorithm {
     // Handle last data
     if (prevCui != null) {
       connectAtomsAndAttributes(fields, ndcAtoms, mthsplNdcCodeMap,
-          attributeMap, splSetIdMap, modifiedConcepts);
+          mthsplNdc9Map, mthsplNdc9Map, attributeMap, splSetIdMap,
+          modifiedConcepts);
     }
 
     // commit
@@ -572,6 +578,7 @@ public class NdcLoaderAlgorithm extends AbstractTerminologyLoaderAlgorithm {
    */
   private void connectAtomsAndAttributes(String[] fields,
     Map<String, Atom> ndcAtoms, Map<String, String> mthsplNdcCodeMap,
+    Map<String, String> mthsplNdc9Map, Map<String, String> mthsplNdc10Map,
     Map<String, Set<Attribute>> attributeMap, Map<String, String> splSetIdMap,
     Set<Concept> modifiedConcepts) throws Exception {
     // For each NDC Atom
@@ -583,6 +590,45 @@ public class NdcLoaderAlgorithm extends AbstractTerminologyLoaderAlgorithm {
           getConcept(conceptIdMap.get(ndcAtom.getConceptId()));
 
       final String mthsplCode = mthsplNdcCodeMap.get(ndcCode);
+      if (mthsplCode != null) {
+        final String ndc9 = mthsplNdc9Map.get(mthsplCode);
+        final String ndc10 = mthsplNdc10Map.get(mthsplCode + ndcCode);
+
+        if (ndc9 != null) {
+          final Attribute att = new AttributeJpa();
+          att.setName("NDC9");
+          att.setValue(ndc9);
+          att.setTimestamp(releaseVersionDate);
+          att.setLastModifiedBy(loader);
+          att.setObsolete(false);
+          att.setSuppressible(false);
+          att.setPublished(true);
+          att.setPublishable(true);
+          att.setTerminology(terminology);
+          att.setVersion(version);
+          att.setTerminologyId("");
+          addAttribute(att, ndcAtom);
+          ndcAtom.addAttribute(att);
+        }
+
+        if (ndc10 != null) {
+          final Attribute att = new AttributeJpa();
+          att.setName("NDC10");
+          att.setValue(ndc10);
+          att.setTimestamp(releaseVersionDate);
+          att.setLastModifiedBy(loader);
+          att.setObsolete(false);
+          att.setSuppressible(false);
+          att.setPublished(true);
+          att.setPublishable(true);
+          att.setTerminology(terminology);
+          att.setVersion(version);
+          att.setTerminologyId("");
+          addAttribute(att, ndcAtom);
+          ndcAtom.addAttribute(att);
+        }
+
+      }
 
       // assign SPL_SET_ID to the codeId if it exists
       if (splSetIdMap.containsKey(mthsplCode)) {
