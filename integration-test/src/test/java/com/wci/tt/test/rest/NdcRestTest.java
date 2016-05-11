@@ -189,6 +189,7 @@ public class NdcRestTest extends RestIntegrationSupport {
     assert(results.getRxcui().equals("1668240"));
     assert(results.getNdc10().equals("0069-3150-83"));
     assert(results.getNdc9().equals("0069-3150"));
+    // TODO missing the propertyConceptList and packagingList
 
   }
 
