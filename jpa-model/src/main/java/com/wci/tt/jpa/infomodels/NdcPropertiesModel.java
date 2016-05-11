@@ -40,6 +40,9 @@ public class NdcPropertiesModel implements InfoModel<NdcPropertiesModel> {
   /** The rxcui. */
   private String rxcui;
 
+  /** The rxcui name. */
+  private String rxcuiName;
+
   /** The ndc. */
   private String ndc11;
 
@@ -69,6 +72,7 @@ public class NdcPropertiesModel implements InfoModel<NdcPropertiesModel> {
    */
   public NdcPropertiesModel(NdcPropertiesModel model) {
     rxcui = model.getRxcui();
+    rxcuiName = model.getRxcuiName();
     ndc11 = model.getNdc11();
     ndc10 = model.getNdc10();
     ndc9 = model.getNdc9();
@@ -115,6 +119,24 @@ public class NdcPropertiesModel implements InfoModel<NdcPropertiesModel> {
    */
   public void setRxcui(String rxcui) {
     this.rxcui = rxcui;
+  }
+
+  /**
+   * Returns the rxcui name.
+   *
+   * @return the rxcui name
+   */
+  public String getRxcuiName() {
+    return rxcuiName;
+  }
+
+  /**
+   * Sets the rxcui name.
+   *
+   * @param rxcuiName the rxcui name
+   */
+  public void setRxcuiName(String rxcuiName) {
+    this.rxcuiName = rxcuiName;
   }
 
   /**
@@ -264,6 +286,14 @@ public class NdcPropertiesModel implements InfoModel<NdcPropertiesModel> {
         found = true;
       }
     }
+    if (model.getRxcuiName() != null && rxcuiName != null) {
+      if (analysisMode && !model.getRxcuiName().equals(rxcuiName)) {
+        common.setRxcuiName(InfoModel.MULTIPLE_VALUES);
+      } else if (model.getRxcuiName().equals(rxcuiName)) {
+        common.setRxcuiName(rxcuiName);
+        found = true;
+      }
+    }
 
     if (model.getNdc11() != null && ndc11 != null) {
       if (analysisMode && !model.getNdc11().equals(ndc11)) {
@@ -330,6 +360,7 @@ public class NdcPropertiesModel implements InfoModel<NdcPropertiesModel> {
     result =
         prime * result + ((propertyList == null) ? 0 : propertyList.hashCode());
     result = prime * result + ((rxcui == null) ? 0 : rxcui.hashCode());
+    result = prime * result + ((rxcuiName == null) ? 0 : rxcuiName.hashCode());
     result = prime * result + ((splSetId == null) ? 0 : splSetId.hashCode());
     return result;
   }
@@ -369,6 +400,11 @@ public class NdcPropertiesModel implements InfoModel<NdcPropertiesModel> {
         return false;
     } else if (!rxcui.equals(other.rxcui))
       return false;
+    if (rxcuiName == null) {
+      if (other.rxcuiName != null)
+        return false;
+    } else if (!rxcuiName.equals(other.rxcuiName))
+      return false;
     if (splSetId == null) {
       if (other.splSetId != null)
         return false;
@@ -380,9 +416,9 @@ public class NdcPropertiesModel implements InfoModel<NdcPropertiesModel> {
   /* see superclass */
   @Override
   public String toString() {
-    return "NdcPropertiesModel [rxcui=" + rxcui + ", ndc11=" + ndc11
-        + ", ndc10=" + ndc10 + ", ndc9=" + ndc9 + ", splSetId=" + splSetId
-        + ", propertyList=" + propertyList + "]";
+    return "NdcPropertiesModel [rxcui=" + rxcui + ", rxcuiName=" + rxcuiName
+        + ",ndc11=" + ndc11 + ", ndc10=" + ndc10 + ", ndc9=" + ndc9
+        + ", splSetId=" + splSetId + ", propertyList=" + propertyList + "]";
   }
 
 }
