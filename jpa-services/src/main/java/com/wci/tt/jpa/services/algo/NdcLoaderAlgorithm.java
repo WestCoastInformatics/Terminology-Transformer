@@ -426,12 +426,14 @@ public class NdcLoaderAlgorithm extends AbstractTerminologyLoaderAlgorithm {
       if (prevCui == null || !fields[0].equals(prevCui)) {
         if (prevCui != null) {
           connectAtomsAndAttributes(fields, ndcAtoms, mthsplNdcCodeMap,
-              mthsplNdc9Map, mthsplNdc9Map, attributeMap, splSetIdMap,
+              mthsplNdc9Map, mthsplNdc10Map, attributeMap, splSetIdMap,
               modifiedConcepts);
           // log and commit
           logAndCommit(++objectCt, RootService.logCt, RootService.commitCt);
           ndcAtoms = new HashMap<>();
           mthsplNdcCodeMap = new HashMap<>();
+          mthsplNdc9Map = new HashMap<>();
+          mthsplNdc10Map = new HashMap<>();
           attributeMap = new HashMap<>();
           splSetIdMap = new HashMap<>();
         }
@@ -545,7 +547,7 @@ public class NdcLoaderAlgorithm extends AbstractTerminologyLoaderAlgorithm {
     // Handle last data
     if (prevCui != null) {
       connectAtomsAndAttributes(fields, ndcAtoms, mthsplNdcCodeMap,
-          mthsplNdc9Map, mthsplNdc9Map, attributeMap, splSetIdMap,
+          mthsplNdc9Map, mthsplNdc10Map, attributeMap, splSetIdMap,
           modifiedConcepts);
     }
 
@@ -590,7 +592,7 @@ public class NdcLoaderAlgorithm extends AbstractTerminologyLoaderAlgorithm {
           getConcept(conceptIdMap.get(ndcAtom.getConceptId()));
 
       final String mthsplCode = mthsplNdcCodeMap.get(ndcCode);
-      if (mthsplCode != null) {
+      if (attributesFlag && mthsplCode != null) {
         final String ndc9 = mthsplNdc9Map.get(mthsplCode);
         final String ndc10 = mthsplNdc10Map.get(mthsplCode + ndcCode);
 
@@ -599,6 +601,7 @@ public class NdcLoaderAlgorithm extends AbstractTerminologyLoaderAlgorithm {
           att.setName("NDC9");
           att.setValue(ndc9);
           att.setTimestamp(releaseVersionDate);
+          att.setLastModified(releaseVersionDate);
           att.setLastModifiedBy(loader);
           att.setObsolete(false);
           att.setSuppressible(false);
@@ -616,6 +619,7 @@ public class NdcLoaderAlgorithm extends AbstractTerminologyLoaderAlgorithm {
           att.setName("NDC10");
           att.setValue(ndc10);
           att.setTimestamp(releaseVersionDate);
+          att.setLastModified(releaseVersionDate);
           att.setLastModifiedBy(loader);
           att.setObsolete(false);
           att.setSuppressible(false);
