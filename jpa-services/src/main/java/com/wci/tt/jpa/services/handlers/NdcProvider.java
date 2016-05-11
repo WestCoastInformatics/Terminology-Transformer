@@ -402,9 +402,15 @@ public class NdcProvider extends AbstractAcceptsHandler
       // list will have each matching concept - e.g. from each version.
       if (list.getCount() > 0) {
         // Convert each search result into a record
+        String maxVersion = "000000";
+        String rxcuiName = null;
         for (final SearchResult result : list.getObjects()) {
           final Concept concept = service.getConcept(result.getId());
-
+          // get the most recent rxcui name
+          if (concept.getVersion().compareTo(maxVersion) > 0) {
+            maxVersion = concept.getVersion();
+            rxcuiName = concept.getName();
+          }
           for (Atom atom : concept.getAtoms()) {
             if (atom.getTerminology().equals("RXNORM")
                 && atom.getTermType().equals("NDC") && !atom.isObsolete()) {
@@ -424,9 +430,9 @@ public class NdcProvider extends AbstractAcceptsHandler
         // Determine if latest version of RXCUI is active or not
         final Concept concept = service.getConcept(rxcui, "RXNORM",
             rxnormLatestVersion, Branch.ROOT);
-        model.setActive(!concept.isObsolete());
+        model.setActive(concept != null && !concept.isObsolete());
         model.setRxcui(rxcui);
-        model.setRxcuiName(concept.getName());
+        model.setRxcuiName(rxcuiName);
 
         // NDC VERSION ACTIVE
         // 12343 20160404 true

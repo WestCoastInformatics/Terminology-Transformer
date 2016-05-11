@@ -158,7 +158,15 @@ public class NdcRestTest extends RestIntegrationSupport {
     RxcuiModel results = ndcService.getRxcuiInfo(rxcui, adminAuthToken);
     Logger.getLogger(getClass()).info("  results = " + results);
 
-    rxcui = "5555555";
+    // Invalid rxcui
+    rxcui = "5555ddd";
+    results = ndcService.getRxcuiInfo(rxcui, adminAuthToken);
+    Logger.getLogger(getClass()).info("  results = " + results);
+    assert(results.getHistory().size() == 0);
+    
+    // Rxcui that exists only in the first terminology version
+    // TODO: causing NPE
+    rxcui = "351772";
     results = ndcService.getRxcuiInfo(rxcui, adminAuthToken);
     Logger.getLogger(getClass()).info("  results = " + results);
     assert(results.getHistory().size() == 0);
@@ -179,7 +187,7 @@ public class NdcRestTest extends RestIntegrationSupport {
         ndcService.getNdcProperties(ndc, adminAuthToken);
     Logger.getLogger(getClass()).info("  results = " + results);
     assert(results.getRxcui().equals("283420"));
-    // TODO: look at results for ndc11, ndc10 ndc9
+    // TODO: look at results for ndc10 ndc9, null bc first digit not 0
     
     
     ndc = "0069-3150-83";
@@ -189,7 +197,10 @@ public class NdcRestTest extends RestIntegrationSupport {
     assert(results.getRxcui().equals("1668240"));
     assert(results.getNdc10().equals("0069-3150-83"));
     assert(results.getNdc9().equals("0069-3150"));
-    // TODO missing the propertyConceptList and packagingList
+    assert(results.getNdc11().equals("00069315083"));
+    assert(results.getPropertyList().size() == 7);
+    assert(results.getSplSetId().equals("3b631aa1-2d46-40bc-a614-d698301ea4f9"));
+    // TODO missing the packagingList
 
   }
 

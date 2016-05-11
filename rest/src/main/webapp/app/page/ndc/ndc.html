@@ -7,9 +7,9 @@
         </tr>
         <tr>
           <td>
-            <input ng-model="inputString" type="text"
+            <input autofocus ng-model="inputString" type="text"
               placeholder="e.g. 0069-3150-83 or 283420" style="width: 100%;" 
-              typeahead="suggestion for suggestion in autocomplete($viewValue)"
+              uib-typeahead="suggestion for suggestion in autocomplete($viewValue)"
                 typeahead-loading="loadingSuggestions"
                 typeahead-focus-first="false"
                 typeahead-editable="true" typeahead-min-length="3"/>

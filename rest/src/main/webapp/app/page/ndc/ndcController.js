@@ -2,11 +2,10 @@
 tsApp.controller('NdcCtrl', [
   '$scope',
   '$location',
-  'securityService',
   'ndcService',
   'utilService',
   'appConfig',
-  function($scope, $location, securityService, ndcService, utilService,
+  function($scope, $location, ndcService, utilService,
     appConfig) {
     console.debug('configure NdcCtrl');
 
@@ -87,7 +86,6 @@ tsApp.controller('NdcCtrl', [
         $scope.getPagedHistory();
       });
     }
-    
     
     // Autocomplete function
     $scope.autocomplete = function(searchTerms) {
