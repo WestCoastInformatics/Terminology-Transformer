@@ -24,8 +24,8 @@ import com.wci.tt.jpa.infomodels.NdcModel;
 import com.wci.tt.jpa.infomodels.NdcPropertiesListModel;
 import com.wci.tt.jpa.infomodels.NdcPropertiesModel;
 import com.wci.tt.jpa.infomodels.PropertyModel;
-import com.wci.tt.jpa.infomodels.RxcuiNdcHistoryModel;
 import com.wci.tt.jpa.infomodels.RxcuiModel;
+import com.wci.tt.jpa.infomodels.RxcuiNdcHistoryModel;
 import com.wci.tt.jpa.services.helper.DataContextMatcher;
 import com.wci.tt.services.handlers.ProviderHandler;
 import com.wci.umls.server.helpers.Branch;
@@ -275,6 +275,7 @@ public class NdcProvider extends AbstractAcceptsHandler
       if (list.getCount() > 0) {
 
         // Convert each search result into a record
+        String splSetId = null;
         for (final SearchResult result : list.getObjects()) {
           final Concept concept = service.getConcept(result.getId());
           boolean foundActiveMatchingNdc = false;
@@ -282,6 +283,9 @@ public class NdcProvider extends AbstractAcceptsHandler
             if (atom.getTerminology().equals("RXNORM")
                 && atom.getTermType().equals("NDC") && !atom.isObsolete()
                 && atom.getName().equals(ndc)) {
+              if (atom.getVersion().equals(rxnormLatestVersion)) {
+                splSetId = atom.getCodeId();
+              }
               foundActiveMatchingNdc = true;
               break;
             }
@@ -305,6 +309,7 @@ public class NdcProvider extends AbstractAcceptsHandler
         model.setActive(recordList.get(0).active
             && recordList.get(0).version.equals(rxnormLatestVersion));
         model.setNdc(query);
+        model.setSplSetId(splSetId);
         model.setRxcui(recordList.get(0).rxcui);
         model.setRxcuiName(service.getConcept(model.getRxcui(), "RXNORM",
             rxnormLatestVersion, Branch.ROOT).getName());
@@ -344,9 +349,11 @@ public class NdcProvider extends AbstractAcceptsHandler
           prevRxcui = record.rxcui;
           prevVersion = record.version;
         }
-        // Handle the final record
-        historyModel.setStart(prevVersion);
-        historyModels.add(historyModel);
+        // Handle the final record, if there was a record
+        if (recordList.size() > 0) {
+          historyModel.setStart(prevVersion);
+          historyModels.add(historyModel);
+        }
         Logger.getLogger(getClass()).debug("    history = " + historyModel);
 
         model.setHistory(historyModels);
@@ -404,6 +411,7 @@ public class NdcProvider extends AbstractAcceptsHandler
         // Convert each search result into a record
         String maxVersion = "000000";
         String rxcuiName = null;
+        final Set<String> splSetIds = new HashSet<>();
         for (final SearchResult result : list.getObjects()) {
           final Concept concept = service.getConcept(result.getId());
           // get the most recent rxcui name
@@ -418,6 +426,9 @@ public class NdcProvider extends AbstractAcceptsHandler
               record.ndc = atom.getName();
               record.version = result.getVersion();
               recordList.add(record);
+              if (!atom.getCodeId().equals("")) {
+                splSetIds.add(atom.getCodeId());
+              }
             }
           }
 
@@ -433,6 +444,7 @@ public class NdcProvider extends AbstractAcceptsHandler
         model.setActive(concept != null && !concept.isObsolete());
         model.setRxcui(rxcui);
         model.setRxcuiName(rxcuiName);
+        model.setSplSetIds(new ArrayList<>(splSetIds));
 
         // NDC VERSION ACTIVE
         // 12343 20160404 true
@@ -470,9 +482,11 @@ public class NdcProvider extends AbstractAcceptsHandler
           prevNdc = record.ndc;
           prevVersion = record.version;
         }
-        // Handle the final record
-        historyModel.setStart(prevVersion);
-        historyModels.add(historyModel);
+        // Handle the final record if there was at least one record
+        if (recordList.size() > 0) {
+          historyModel.setStart(prevVersion);
+          historyModels.add(historyModel);
+        }
         Logger.getLogger(getClass()).debug("    history = " + historyModel);
 
         model.setHistory(historyModels);

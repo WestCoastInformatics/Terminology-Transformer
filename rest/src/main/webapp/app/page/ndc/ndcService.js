@@ -9,9 +9,9 @@ tsApp.service('ndcService', [
     console.debug("configure ndcService");
 
     $http.defaults.headers.common.Authorization = 'guest';
-    
+
     // do NOT show tabs
-    //tabService.setShowing(false);
+    // tabService.setShowing(false);
 
     // Autocomplete function
     this.autocomplete = function(query) {
@@ -33,7 +33,7 @@ tsApp.service('ndcService', [
       },
       // error
       function(response) {
-        utilHandler.handleError(response);
+        utilService.handleError(response);
         deferred.resolve(response.data);
       });
 
@@ -117,6 +117,40 @@ tsApp.service('ndcService', [
       return deferred.promise;
     };
 
+    // Find RxNorm concepts
+    this.findConceptsByQuery = function(query, pageSize, page) {
+      // Setup deferred
+      var deferred = $q.defer();
+
+      // PFS
+      var pfs = {
+        startIndex : (page - 1) * pageSize,
+        maxResults : pageSize,
+        sortField : null,
+        queryRestriction : ''
+      };
+
+      // Make POST call
+      gpService.increment();
+      $http.post("rxnorm/rxcui/search?query=" + encodeURIComponent(query), pfs).then(
+
+      // success
+      function(response) {
+        console.debug("  concepts = ", response.data);
+        gpService.decrement();
+        deferred.resolve(response.data);
+      },
+      // error
+      function(response) {
+        utilService.handleError(response);
+        gpService.decrement();
+        deferred.reject(response.data);
+      });
+
+      return deferred.promise;
+    };
+
+    
     // end
 
   } ]);

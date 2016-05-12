@@ -82,6 +82,7 @@ public class NdcModelUnitTest extends JpaSupport {
   public void testModelEqualsHashcode() throws Exception {
     Logger.getLogger(getClass()).debug("TEST " + name.getMethodName());
     EqualsHashcodeTester tester = new EqualsHashcodeTester(object);
+    tester.include("splSetId");
     tester.include("rxcui");
     tester.include("rxcuiName");
     tester.include("ndc");
@@ -162,6 +163,18 @@ public class NdcModelUnitTest extends JpaSupport {
     m2.setRxcuiName("abc");
     common = m1.getModelInCommon(m2, false);
     assertEquals("abc", common.getRxcuiName());
+
+    // splSetId
+    m1 = new NdcModel();
+    m1.setSplSetId("abc");
+    common = m1.getModelInCommon(m2, false);
+    assertNull(common);
+    m2.setSplSetId("def");
+    common = m1.getModelInCommon(m2, false);
+    assertNull(common);
+    m2.setSplSetId("abc");
+    common = m1.getModelInCommon(m2, false);
+    assertEquals("abc", common.getSplSetId());
 
     // ndc
     m1 = new NdcModel();

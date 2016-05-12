@@ -21,7 +21,6 @@ import com.wci.tt.jpa.JpaSupport;
 import com.wci.umls.server.helpers.CopyConstructorTester;
 import com.wci.umls.server.helpers.EqualsHashcodeTester;
 import com.wci.umls.server.helpers.GetterSetterTester;
-import com.wci.umls.server.helpers.ProxyTester;
 import com.wci.umls.server.helpers.XmlSerializationTester;
 
 /**
@@ -33,10 +32,10 @@ public class RxcuiModelUnitTest extends JpaSupport {
   private RxcuiModel object;
 
   /** the test fixture l1. */
-  private List<RxcuiNdcHistoryModel> l1;
+  private List<?> l1;
 
   /** the test fixture l2. */
-  private List<RxcuiNdcHistoryModel> l2;
+  private List<?> l2;
 
   /**
    * Setup class.
@@ -54,11 +53,11 @@ public class RxcuiModelUnitTest extends JpaSupport {
   @Before
   public void setup() throws Exception {
     object = new RxcuiModel();
-    ProxyTester tester = new ProxyTester(new RxcuiNdcHistoryModel());
     l1 = new ArrayList<>();
-    l1.add((RxcuiNdcHistoryModel) tester.createObject(1));
+    l1.add(null);
     l2 = new ArrayList<>();
-    l2.add((RxcuiNdcHistoryModel) tester.createObject(2));
+    l2.add(null);
+    l2.add(null);
   }
 
   /**
@@ -85,6 +84,7 @@ public class RxcuiModelUnitTest extends JpaSupport {
     tester.include("rxcui");
     tester.include("rxcuiName");
     tester.include("active");
+    tester.include("splSetIds");
     tester.include("history");
 
     tester.proxy(List.class, 1, l1);
@@ -175,6 +175,21 @@ public class RxcuiModelUnitTest extends JpaSupport {
     m1.getHistory().add(new RxcuiNdcHistoryModel("def", "ghi", "jkl"));
     common = m1.getModelInCommon(m2, false);
     assertEquals(2, common.getHistory().size());
+
+    // Spl Set ids
+    m1.getSplSetIds().add("abc");
+    common = m1.getModelInCommon(m2, false);
+    assertEquals(0, common.getSplSetIds().size());
+    m2.getSplSetIds().add("def");
+    common = m1.getModelInCommon(m2, false);
+    assertEquals(0, common.getSplSetIds().size());
+    m2.getSplSetIds().add("abc");
+    common = m1.getModelInCommon(m2, false);
+    assertEquals(1, common.getSplSetIds().size());
+    m1.getSplSetIds().add("def");
+    common = m1.getModelInCommon(m2, false);
+    assertEquals(2, common.getSplSetIds().size());
+
   }
 
   /**

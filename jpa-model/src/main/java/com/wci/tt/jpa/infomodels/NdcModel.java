@@ -18,7 +18,8 @@ import com.wci.umls.server.helpers.ConfigUtility;
  * Information model for representing NDC-RXNORM history.
  * 
  * <pre>
- *    { active : "false", ndc: "19428372921", rxcui : "312656",
+ *    { active : "false", ndc: "19428372921", rxcui : "312656", rxcuiName : "some drug name",
+ *      splSetId : "fff63bc7-6b92-4080-9a11-017124d95162",
  *      rxcuiName: "Promazine 50 MG/ML Injectable Solution",
  *      history : [{ rxcui : "312656", active : "true", start : "200706", end : "201101" }]
  *    }
@@ -32,6 +33,9 @@ public class NdcModel implements InfoModel<NdcModel> {
 
   /** The ndc. */
   private String ndc;
+
+  /** The rxcui. */
+  private String splSetId;
 
   /** The rxcui. */
   private String rxcui;
@@ -56,6 +60,7 @@ public class NdcModel implements InfoModel<NdcModel> {
    */
   public NdcModel(NdcModel model) {
     active = model.isActive();
+    splSetId = model.getSplSetId();
     rxcui = model.getRxcui();
     rxcuiName = model.getRxcuiName();
     ndc = model.getNdc();
@@ -83,6 +88,24 @@ public class NdcModel implements InfoModel<NdcModel> {
   @Override
   public void setProperties(Properties p) throws Exception {
     // n/a - no configuration
+  }
+
+  /**
+   * Returns the spl set id.
+   *
+   * @return the spl set id
+   */
+  public String getSplSetId() {
+    return splSetId;
+  }
+
+  /**
+   * Sets the spl set id.
+   *
+   * @param splSetId the spl set id
+   */
+  public void setSplSetId(String splSetId) {
+    this.splSetId = splSetId;
   }
 
   /**
@@ -258,6 +281,15 @@ public class NdcModel implements InfoModel<NdcModel> {
     boolean found = false;
     NdcModel common = new NdcModel();
 
+    if (model.getSplSetId() != null && splSetId != null) {
+      if (analysisMode && !model.getSplSetId().equals(splSetId)) {
+        common.setSplSetId(InfoModel.MULTIPLE_VALUES);
+      } else if (model.getSplSetId().equals(splSetId)) {
+        common.setSplSetId(splSetId);
+        found = true;
+      }
+    }
+
     if (model.getRxcui() != null && rxcui != null) {
       if (analysisMode && !model.getRxcui().equals(rxcui)) {
         common.setRxcui(InfoModel.MULTIPLE_VALUES);
@@ -318,6 +350,7 @@ public class NdcModel implements InfoModel<NdcModel> {
     int result = 1;
     result = prime * result + (active ? 1231 : 1237);
     result = prime * result + ((history == null) ? 0 : history.hashCode());
+    result = prime * result + ((splSetId == null) ? 0 : splSetId.hashCode());
     result = prime * result + ((rxcui == null) ? 0 : rxcui.hashCode());
     result = prime * result + ((rxcuiName == null) ? 0 : rxcuiName.hashCode());
     result = prime * result + ((ndc == null) ? 0 : ndc.hashCode());
@@ -347,6 +380,11 @@ public class NdcModel implements InfoModel<NdcModel> {
         return false;
     } else if (!history.equals(other.history))
       return false;
+    if (splSetId == null) {
+      if (other.splSetId != null)
+        return false;
+    } else if (!splSetId.equals(other.splSetId))
+      return false;
     if (rxcui == null) {
       if (other.rxcui != null)
         return false;
@@ -373,8 +411,9 @@ public class NdcModel implements InfoModel<NdcModel> {
   /* see superclass */
   @Override
   public String toString() {
-    return "NdcModel [active=" + active + ", rxcui=" + rxcui + ", rxcuiName="
-        + rxcuiName + ", ndc=" + ndc + ", history=" + history + "]";
+    return "NdcModel [active=" + active + ", splSetId=" + splSetId + ", rxcui="
+        + rxcui + ", rxcuiName=" + rxcuiName + ", ndc=" + ndc + ", history="
+        + history + "]";
   }
 
 }

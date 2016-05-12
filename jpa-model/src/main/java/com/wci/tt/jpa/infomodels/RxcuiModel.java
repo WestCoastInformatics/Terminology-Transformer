@@ -18,7 +18,8 @@ import com.wci.umls.server.helpers.ConfigUtility;
  * Information model for representing NDC-RXNORM history.
  * 
  * <pre>
- *    { active : "false", rxcui : "312656",
+ *    { active : "false", rxcui : "312656", rxcuiName : "Some drug name",
+ *      splSetIds : ["uuid1", "uuid2"],
  *      history : [{ rxcui : "312656", active : "true", startDate : "200706", endDate : "201101" }]
  *    }
  * </pre>
@@ -34,6 +35,9 @@ public class RxcuiModel implements InfoModel<RxcuiModel> {
 
   /** The rxcui. */
   private String rxcuiName;
+
+  /** The splSetIds. */
+  private List<String> splSetIds;
 
   /** The history. */
   private List<RxcuiNdcHistoryModel> history;
@@ -54,6 +58,7 @@ public class RxcuiModel implements InfoModel<RxcuiModel> {
     active = model.isActive();
     rxcui = model.getRxcui();
     rxcuiName = model.getRxcuiName();
+    splSetIds = new ArrayList<>(model.getSplSetIds());
     history = new ArrayList<>(model.getHistory());
   }
 
@@ -156,6 +161,28 @@ public class RxcuiModel implements InfoModel<RxcuiModel> {
     this.history = history;
   }
 
+  /**
+   * Returns the spl set id
+   *
+   * @return the spl set id
+   */
+  @XmlElement
+  public List<String> getSplSetIds() {
+    if (splSetIds == null) {
+      splSetIds = new ArrayList<>();
+    }
+    return splSetIds;
+  }
+
+  /**
+   * Sets the splSetIds.
+   *
+   * @param splSetIds the splSetIds
+   */
+  public void setSplSetIds(List<String> splSetIds) {
+    this.splSetIds = splSetIds;
+  }
+
   /* see superclass */
   @Override
   public boolean verify(String model) throws Exception {
@@ -220,6 +247,18 @@ public class RxcuiModel implements InfoModel<RxcuiModel> {
       }
     }
 
+    if (model.getSplSetIds() != null && splSetIds != null) {
+      // Find common ingredient strength values
+      for (final String in : model.getSplSetIds()) {
+        for (final String in2 : splSetIds) {
+          if (in.equals(in2)) {
+            common.getSplSetIds().add(in);
+          }
+          found = true;
+        }
+      }
+    }
+
     if (model.getHistory() != null && history != null) {
       // Find common ingredient strength values
       for (final RxcuiNdcHistoryModel in : model.getHistory()) {
@@ -247,6 +286,7 @@ public class RxcuiModel implements InfoModel<RxcuiModel> {
     final int prime = 31;
     int result = 1;
     result = prime * result + (active ? 1231 : 1237);
+    result = prime * result + ((splSetIds == null) ? 0 : splSetIds.hashCode());
     result = prime * result + ((history == null) ? 0 : history.hashCode());
     result = prime * result + ((rxcui == null) ? 0 : rxcui.hashCode());
     result = prime * result + ((rxcuiName == null) ? 0 : rxcuiName.hashCode());
@@ -264,6 +304,11 @@ public class RxcuiModel implements InfoModel<RxcuiModel> {
       return false;
     RxcuiModel other = (RxcuiModel) obj;
     if (active != other.active)
+      return false;
+    if (splSetIds == null) {
+      if (other.splSetIds != null)
+        return false;
+    } else if (!splSetIds.equals(other.splSetIds))
       return false;
     if (history == null) {
       if (other.history != null)
@@ -289,7 +334,7 @@ public class RxcuiModel implements InfoModel<RxcuiModel> {
   @Override
   public String toString() {
     return "NdcModel [active=" + active + ", rxcui=" + rxcui + ", rxcuiName="
-        + rxcuiName + ", history=" + history + "]";
+        + rxcuiName + ", history=" + history + ", splSetIds=" + splSetIds + "]";
   }
 
 }

@@ -8,6 +8,7 @@ import java.util.List;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -37,8 +38,13 @@ import com.wci.tt.jpa.services.CoordinatorServiceJpa;
 import com.wci.tt.jpa.services.rest.NdcServiceRest;
 import com.wci.tt.services.CoordinatorService;
 import com.wci.umls.server.UserRole;
+import com.wci.umls.server.helpers.Branch;
+import com.wci.umls.server.helpers.SearchResultList;
 import com.wci.umls.server.helpers.StringList;
 import com.wci.umls.server.jpa.content.ConceptJpa;
+import com.wci.umls.server.jpa.helpers.PfscParameterJpa;
+import com.wci.umls.server.jpa.helpers.SearchResultListJpa;
+import com.wci.umls.server.jpa.services.ContentServiceJpa;
 import com.wci.umls.server.jpa.services.SecurityServiceJpa;
 import com.wci.umls.server.model.content.Atom;
 import com.wci.umls.server.model.content.AtomClass;
@@ -328,15 +334,24 @@ public class NdcServiceRestImpl extends RootServiceRestImpl
 
       @SuppressWarnings("unchecked")
       final List<AtomClass> results = fullTextQuery.getResultList();
+
       final StringList list = new StringList();
       for (final AtomClass result : results) {
-        // Find NDCs matching.
-        for (final Atom atom : result.getAtoms()) {
-          // exclude duplicates
-          if (atom.getTermType().equals("NDC")
-              && atom.getName().contains(normalizedQuery)
-              && !list.contains(result.getName()))
-            list.addObject(atom.getName());
+
+        // RXNORM Search if there are any characters
+        if (query.matches(".*[a-zA-Z].*")) {
+          list.addObject(result.getName());
+        }
+
+        else {
+          // Find NDCs matching.
+          for (final Atom atom : result.getAtoms()) {
+            // exclude duplicates
+            if (atom.getTermType().equals("NDC")
+                && atom.getName().contains(normalizedQuery)
+                && !list.contains(result.getName()))
+              list.addObject(atom.getName());
+          }
         }
       }
       list.setTotalCount(list.getObjects().size());
@@ -352,6 +367,40 @@ public class NdcServiceRestImpl extends RootServiceRestImpl
       return null;
     } finally {
       coordinatorService.close();
+      securityService.close();
+    }
+  }
+
+  /* see superclass */
+  @Override
+  @POST
+  @Path("/rxcui/search")
+  @ApiOperation(value = "Find RxNorm concept", notes = "Finds RxNorm concept matches for query", response = StringList.class)
+  public SearchResultList findConceptsByQuery(
+    @ApiParam(value = "Query, e.g. 'sul'", required = true) @QueryParam("query") String query,
+    @ApiParam(value = "Pfs Parameter, e.g. '{startIndex:0, maxResults:10}'", required = false) PfscParameterJpa pfs,
+    @ApiParam(value = "Authorization token, e.g. 'guest'", required = true) @HeaderParam("Authorization") String authToken)
+      throws Exception {
+
+    Logger.getLogger(getClass())
+        .info("RESTful call (NDC): /rxcui/search - " + query + ", " + pfs);
+    final ContentServiceJpa contentService = new ContentServiceJpa();
+    try {
+      authorizeApp(securityService, authToken, "find RxNorm concepts",
+          UserRole.VIEWER);
+
+      if (query == null || query == null || query == null) {
+        return new SearchResultListJpa();
+      }
+      return contentService.findConceptsForQuery("RXNORM",
+          contentService.getTerminologyLatestVersion("RXNORM").getVersion(),
+          Branch.ROOT, query, pfs);
+
+    } catch (Exception e) {
+      handleException(e, "trying to find RxNorm concepts");
+      return null;
+    } finally {
+      contentService.close();
       securityService.close();
     }
   }

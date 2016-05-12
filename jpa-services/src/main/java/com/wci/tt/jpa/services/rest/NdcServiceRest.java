@@ -7,7 +7,9 @@ import com.wci.tt.jpa.infomodels.NdcModel;
 import com.wci.tt.jpa.infomodels.NdcPropertiesListModel;
 import com.wci.tt.jpa.infomodels.NdcPropertiesModel;
 import com.wci.tt.jpa.infomodels.RxcuiModel;
+import com.wci.umls.server.helpers.SearchResultList;
 import com.wci.umls.server.helpers.StringList;
+import com.wci.umls.server.jpa.helpers.PfscParameterJpa;
 
 /**
  * REST interface for handling NDC-RXNORM transformations.
@@ -67,5 +69,17 @@ public interface NdcServiceRest {
    */
   public StringList autocomplete(String inputString, String authToken)
     throws Exception;
+
+  /**
+   * Find concepts by query.
+   *
+   * @param query the query
+   * @param pfs the pfs
+   * @param authToken the auth token
+   * @return the search result list
+   * @throws Exception the exception
+   */
+  public SearchResultList findConceptsByQuery(String query,
+    PfscParameterJpa pfs, String authToken) throws Exception;
 
 }
