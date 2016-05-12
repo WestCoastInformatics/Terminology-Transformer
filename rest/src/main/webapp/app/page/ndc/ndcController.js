@@ -63,7 +63,7 @@ tsApp
         // Define functions
 
         // Submit form
-        $scope.submit = function(query, clearFlag) {
+        $scope.submit = function(query, clearFlag, historyFlag) {
 
           if (clearFlag) {
             $scope.searchResults = null;
@@ -105,6 +105,9 @@ tsApp
                     .trustAsResourceUrl("http://bioportal.bioontology.org/ontologies/RXNORM?p=classes&conceptid="
                       + $scope.model.rxcui);
                   $scope.getPagedHistory();
+                  if (!historyFlag) {
+                    $scope.addHistory(query);
+                  }
                 });
           }
 
@@ -119,6 +122,9 @@ tsApp
             function(data) {
               $scope.propertiesListModel = data;
               $scope.getPagedSplSet();
+              if (!historyFlag) {
+                $scope.addHistory(query);
+              }
             });
 
           }
@@ -136,6 +142,9 @@ tsApp
             // Success
             function(data) {
               $scope.propertiesModel = data;
+              if (!historyFlag) {
+                $scope.addHistory(query);
+              }
             });
           }
 
@@ -247,6 +256,29 @@ tsApp
           $scope.submit(result.terminologyId);
         };
 
+        // 
+        // HISTORY related functions
+        //
+        $scope.history = new Array();
+        $scope.historyIndex = -1; 
+        
+        $scope.addHistory = function(query) {
+          if ($scope.historyIndex + 1 == $scope.history.length) {
+            $scope.history.push(query);
+            $scope.historyIndex++;
+          } else {   
+            // clear all entries after index that will be added in the middle of the history
+            $scope.history.splice($scope.historyIndex + 1, $scope.history.length - $scope.historyIndex);
+            $scope.historyIndex++;
+            $scope.history[$scope.historyIndex] = query;
+          }
+        }        
+        
+        $scope.getFromHistory = function(index) {
+          $scope.historyIndex = index;
+          $scope.submit($scope.history[$scope.historyIndex], false, true);          
+        }
+        
         // Initialize
         if ($routeParams.query) {
           $scope.submit(query);
