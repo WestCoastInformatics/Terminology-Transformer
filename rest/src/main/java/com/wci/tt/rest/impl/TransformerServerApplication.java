@@ -98,8 +98,8 @@ public class TransformerServerApplication extends Application {
   public Set<Class<?>> getClasses() {
     final Set<Class<?>> classes = new HashSet<Class<?>>();
     // Need configure and security services
-    classes.add(ConfigureServiceRestImpl.class);
-    classes.add(SecurityServiceRestImpl.class);
+    // classes.add(ConfigureServiceRestImpl.class);
+    // classes.add(SecurityServiceRestImpl.class);
 
     // Need transformer services
     // classes.add(TransformServiceRestImpl.class);
