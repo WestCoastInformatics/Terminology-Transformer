@@ -113,8 +113,8 @@
               </span>
               <span ng-show="rxcui">{{model.rxcui}}</span>
               &nbsp;
-              <a title="Open in BioPortal" href="{{rxcui}}" target="_blank"
-                class="glyphicon glyphicon-share noul"></a>
+              <a title="Open in BioPortal" href="{{getRxcuiUrl(model.rxcui)}}"
+                target="_blank" class="glyphicon glyphicon-share noul"></a>
             </td>
           </tr>
           <tr ng-show="model.rxcuiName">
@@ -275,8 +275,10 @@
             <td>
               <a class="noul" ng-click="submit(pagedSplSet.data[0].rxcui)">{{pagedSplSet.data[0].rxcui}}</a>
               &nbsp;
-              <a title="Open in BioPortal" href="{{rxcui}}" target="_blank"
-                class="glyphicon glyphicon-share noul"></a>
+
+              <a title="Open in BioPortal"
+                href="{{getRxcuiUrl(pagedSplSet.data[0].rxcui)}}"
+                target="_blank" class="glyphicon glyphicon-share noul"></a>
             </td>
           </tr>
           <tr ng-show="pagedSplSet.data[0].rxcuiName">
