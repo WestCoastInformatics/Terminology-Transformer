@@ -1,13 +1,3 @@
-<style>
-// TODO: move to tsApp.js
-iframe {
-	border: 5px solid rgba(255, 255, 255, 0);
-	-webkit-border-radius: 20px !important;
-	-ms-border-radius: 20px !important;
-	-o-border-radius: 20px !important;
-	border-radius: 20px !important;
-}
-</style>
 <!-- R1 -->
 <div class="row">
 
@@ -77,39 +67,32 @@ iframe {
 
   <!-- C2R1 (view)-->
   <div ng-show="!jsonEnabled" class="col-md-8 col-xs-12">
-    <div class="col-md-12 col-xs-12">
-      <h5 class="section-header">
-        <div style="display: inline" uib-dropdown dropdown-append-to-body>
-          <i uib-tooltip="View All History"
-            ng-show="history.length > 2"
-            class="glyphicon glyphicon-time dropdown-toggle noul"
-            uib-dropdown-toggle id="history-dropdown"></i>
-          <ul uib-dropdown-menu role="menu" aria-labelledby="history-dropdown">            
-            <li ng-repeat="component in history"
-              ng-click="submit(component)"><a>               
-                {{component}}
-              </a></li>            
-          </ul>
-        </div>
-        <i class="glyphicon glyphicon-step-backward noul"
-          ng-click="getFromHistory(historyIndex -1)"
-          ng-show="historyIndex > 0"
-          uib-tooltip="{{history[historyIndex - 1]}}"></i>
-        <span ng-show="rxcui">RXNORM Concept </span>
-        <span ng-show="ndc">NDC </span>
-        <span ng-show="splSetId">SPL Set Id </span>
-        Results
-        <i class="glyphicon glyphicon-step-forward noul"
-          ng-click="getFromHistory(historyIndex + 1)"
-          ng-show="history.length > historyIndex + 1 && history.length > 0"
-          uib-tooltip="{{history[historyIndex + 1]}}"></i>
-        &nbsp;&nbsp;
-        <span ng-show="rxcui">- {{rxcui}}</span>
-        <span ng-show="ndc">- {{ndc}}</span>
-        <span ng-show="splSetId">- {{splSetId}}</span>
-        <span ng-show="pagedSplSet"> ({{pagedSplSet.totalCount}})</span>
-      </h5>
 
+    <h5 class="section-header">
+      <div style="display: inline" uib-dropdown dropdown-append-to-body>
+        <i title="View All History" ng-show="history.length > 2"
+          class="glyphicon glyphicon-time dropdown-toggle noul"
+          uib-dropdown-toggle id="history-dropdown"></i>
+        <ul uib-dropdown-menu role="menu" aria-labelledby="history-dropdown">
+          <li ng-repeat="component in history" ng-click="submit(component)"><a>
+              {{component}} </a></li>
+        </ul>
+      </div>
+      <i class="glyphicon glyphicon-step-backward noul"
+        ng-click="getFromHistory(historyIndex -1)" ng-show="historyIndex > 0"
+        title="Back to {{history[historyIndex - 1]}}"></i>
+      <span ng-show="rxcui">RXNORM Concept </span>
+      <span ng-show="ndc">NDC </span>
+      <span ng-show="splSetId">SPL Set Id </span>
+      Results
+      <span ng-show="rxcui">- {{rxcui}}</span>
+      <span ng-show="ndc">- {{ndc}}</span>
+      <span ng-show="splSetId">- {{splSetId}}</span>
+      <span ng-show="pagedSplSet"> ({{pagedSplSet.totalCount}})</span>
+      <i class="glyphicon glyphicon-step-forward noul"
+        ng-click="getFromHistory(historyIndex + 1)"
+        ng-show="history.length > historyIndex + 1 && history.length > 0"
+        title="Forward to {{history[historyIndex + 1]}}"></i>
       <span style="float: right">
         <i title="Switch to JSON view" class="glyphicon glyphicon-refresh noul"
           ng-click="enableJson()"></i>
@@ -338,6 +321,8 @@ iframe {
     <!-- End C2R1 (view) -->
   </div>
 
+
+
   <!-- C2R1 (json) -->
   <div ng-show="jsonEnabled" class="col-md-8 col-xs-12">
     <h5 class="section-header">
@@ -376,15 +361,9 @@ iframe {
         style="max-height: 400px; overflow-y: scroll; background-color: light-grey">
         <pre style="background-color: lightgray">{{jsonProperties}}</pre>
       </div>
-
-
-
     </div>
-
 
     <!-- End C2R1 (json) -->
   </div>
-
-
 
 </div>

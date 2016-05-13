@@ -90,6 +90,7 @@ tsApp
           $scope.pagedSplSet = null;
           $scope.pagedHistory = null;
 
+          console.debug('QUERY', query);
           var queryTrim = query.trim();
 
           // If < 9 digits, do an RXCUI lookup
@@ -278,25 +279,27 @@ tsApp
         // HISTORY related functions
         //
         $scope.history = new Array();
-        $scope.historyIndex = -1; 
-        
+        $scope.historyIndex = -1;
+
         $scope.addHistory = function(query) {
           if ($scope.historyIndex + 1 == $scope.history.length) {
             $scope.history.push(query);
             $scope.historyIndex++;
-          } else {   
-            // clear all entries after index that will be added in the middle of the history
-            $scope.history.splice($scope.historyIndex + 1, $scope.history.length - $scope.historyIndex);
+          } else {
+            // clear all entries after index that will be added in the middle of
+            // the history
+            $scope.history.splice($scope.historyIndex + 1,
+              $scope.history.length - $scope.historyIndex);
             $scope.historyIndex++;
             $scope.history[$scope.historyIndex] = query;
           }
-        }        
-        
+        }
+
         $scope.getFromHistory = function(index) {
           $scope.historyIndex = index;
-          $scope.submit($scope.history[$scope.historyIndex], false, true);          
+          $scope.submit($scope.history[$scope.historyIndex], false, true);
         }
-        
+
         // Initialize
         if ($routeParams.query) {
           $scope.query = $routeParams.query;
