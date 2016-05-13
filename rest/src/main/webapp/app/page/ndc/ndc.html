@@ -67,8 +67,8 @@
   </div>
 
   <!-- C2R1 (view)-->
-  <div ng-show="!jsonEnabled" class="col-md-8 col-xs-12">
-    <div class="col-md-12 col-xs-12">
+  <div class="col-md-8 col-xs-12">
+    <div ng-show="!jsonEnabled" class="col-md-12 col-xs-12">
       <h5 class="section-header">
         <div style="display: inline" uib-dropdown dropdown-append-to-body>
           <i uib-tooltip="View All History"
@@ -77,7 +77,7 @@
             uib-dropdown-toggle id="history-dropdown"></i>
           <ul uib-dropdown-menu role="menu" aria-labelledby="history-dropdown">            
             <li ng-repeat="component in history"
-              ng-click="submit(component)"><a>               
+              ng-click="getFromHistory($index)"><a>               
                 {{component}}
               </a></li>            
           </ul>
@@ -99,7 +99,7 @@
         <span ng-show="ndc">- {{ndc}}</span>
         <span ng-show="splSetId">- {{splSetId}}</span>
         <span ng-show="pagedSplSet"> ({{pagedSplSet.totalCount}})</span>
-      </h5>
+
 
       <span style="float: right">
         <i title="Switch to JSON view" class="glyphicon glyphicon-refresh noul"
@@ -347,7 +347,7 @@
   </div>
 
   <!-- C2R1 (json) -->
-  <div ng-show="jsonEnabled" class="col-md-8 col-xs-12">
+  <div ng-show="jsonEnabled" class="col-md-12 col-xs-12">
     <h5 class="section-header">
       <span ng-show="rxcui">RXNORM Concept </span>
       <span ng-show="ndc">NDC </span>
