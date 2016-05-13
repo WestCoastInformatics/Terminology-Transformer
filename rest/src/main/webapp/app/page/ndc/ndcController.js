@@ -92,12 +92,6 @@ tsApp
 
           var queryTrim = query.trim();
 
-          // if (query) {
-          // $scope.query = query.trim();
-          // } else {
-          // return;
-          // }
-
           // If < 9 digits, do an RXCUI lookup
           if ($scope.isRxcui(queryTrim)) {
             $scope.rxcui = queryTrim;
@@ -305,8 +299,8 @@ tsApp
         
         // Initialize
         if ($routeParams.query) {
-          $scope.submit($routeParams.query);
           $scope.query = $routeParams.query;
+          $scope.submit($routeParams.query);
         }
 
       } ]);
