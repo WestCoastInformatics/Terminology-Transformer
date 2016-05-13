@@ -75,18 +75,40 @@ iframe {
     <!-- End C1R2 -->
   </div>
 
-
-  <!-- C2R1 (view) -->
+  <!-- C2R1 (view)-->
   <div ng-show="!jsonEnabled" class="col-md-8 col-xs-12">
-    <h5 class="section-header">
-      <span ng-show="rxcui">RXNORM Concept </span>
-      <span ng-show="ndc">NDC </span>
-      <span ng-show="splSetId">SPL Set Id </span>
-      Results
-      <span ng-show="rxcui">- {{rxcui}}</span>
-      <span ng-show="ndc">- {{ndc}}</span>
-      <span ng-show="splSetId">- {{splSetId}}</span>
-      <span ng-show="pagedSplSet"> ({{pagedSplSet.totalCount}})</span>
+    <div class="col-md-12 col-xs-12">
+      <h5 class="section-header">
+        <div style="display: inline" uib-dropdown dropdown-append-to-body>
+          <i uib-tooltip="View All History"
+            ng-show="history.length > 2"
+            class="glyphicon glyphicon-time dropdown-toggle noul"
+            uib-dropdown-toggle id="history-dropdown"></i>
+          <ul uib-dropdown-menu role="menu" aria-labelledby="history-dropdown">            
+            <li ng-repeat="component in history"
+              ng-click="submit(component)"><a>               
+                {{component}}
+              </a></li>            
+          </ul>
+        </div>
+        <i class="glyphicon glyphicon-step-backward noul"
+          ng-click="getFromHistory(historyIndex -1)"
+          ng-show="historyIndex > 0"
+          uib-tooltip="{{history[historyIndex - 1]}}"></i>
+        <span ng-show="rxcui">RXNORM Concept </span>
+        <span ng-show="ndc">NDC </span>
+        <span ng-show="splSetId">SPL Set Id </span>
+        Results
+        <i class="glyphicon glyphicon-step-forward noul"
+          ng-click="getFromHistory(historyIndex + 1)"
+          ng-show="history.length > historyIndex + 1 && history.length > 0"
+          uib-tooltip="{{history[historyIndex + 1]}}"></i>
+        &nbsp;&nbsp;
+        <span ng-show="rxcui">- {{rxcui}}</span>
+        <span ng-show="ndc">- {{ndc}}</span>
+        <span ng-show="splSetId">- {{splSetId}}</span>
+        <span ng-show="pagedSplSet"> ({{pagedSplSet.totalCount}})</span>
+      </h5>
 
       <span style="float: right">
         <i title="Switch to JSON view" class="glyphicon glyphicon-refresh noul"
