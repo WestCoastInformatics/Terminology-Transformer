@@ -1,6 +1,4 @@
 <style>
-//
-TODO: move to tsApp.js
 iframe {
 	border: 5px solid rgba(255, 255, 255, 0);
 	-webkit-border-radius: 20px !important;
@@ -10,11 +8,36 @@ iframe {
 }
 </style>
 <h4>Introduction</h4>
+<p>
+  This is a sample application for demonstrating the
+  <a href="http://www.westcoastinformatics.com/transformer.html">West Coast
+    Informatics Transformer</a>
+  application. The "transformer" is a terminology-enabled platform that can be
+  configured to answer a variety of different kinds of questions by passing data
+  elements through terminology-based algorithms to produce a result. Follow the
+  link for more information about the platform itself.
+</p>
 <p>The NDC-RXNORM transformer application provides an API and basic user
   interface for interacting with RXNORM concepts, NDC (National Drug Codes), and
   SPL (Standard Product Label) Set Ids. The tool is loaded with all versions of
   RXNORM dating back to June 2007 (the first appearance of NDC code data).</p>
+<p>As an instance of the Transformer application, this pipeline takes
+  terminology codes (as either RXCUI, NDC, or SPL SetId) and transforms them
+  into an information model representing broader and more historical picture of
+  those data elements. While this is a relatively simple use case, it
+  demonstrates how one type of data processed through terminology-enabled
+  algorithms can emerge as a richer and more useful type of data.</p>
 
+<br />
+<h4>Features</h4>
+<ul>
+  <li>Deployable locally</li>
+  <li>Configurable security architecture</li>
+  <li>Supports "unit" and "batch" requests</li>
+  <li>Includes admin tools for easy updating to latest RXNORM version</li>
+</ul>
+
+<br />
 <h4>
   <a href="swagger.html">REST API</a>
 </h4>
@@ -33,18 +56,21 @@ iframe {
         the RXNORM concept history.</li>
     </ul>
   </li>
-  <li>Get RXCUI Info</li>
-  <ul>
-    <li>Takes an RXCUI (an RXNORM concept id) as a parameter and returns a
-      document containing the RXNORM concept info, its active status, any
-      associated SPL Set Ids, and a complete history of NDCs associated with it.</li>
-  </ul>
-  <li>Get NDC Properties</li>
-  <ul>
-    <li>Takes an NDC as a parameter and returns a document a containing
-      details of the NDC, including various properties associated with it in
-      RXNORM.</li>
-  </ul>
+  <li>Get RXCUI Info
+    <ul>
+      <li>Takes an RXCUI (an RXNORM concept id) as a parameter and returns
+        a document containing the RXNORM concept info, its active status, any
+        associated SPL Set Ids, and a complete history of NDCs associated with
+        it.</li>
+    </ul>
+  </li>
+  <li>Get NDC Properties
+    <ul>
+      <li>Takes an NDC as a parameter and returns a document a containing
+        details of the NDC, including various properties associated with it in
+        RXNORM.</li>
+    </ul>
+  </li>
   <li>Get NDC Properties for SPL Set Id
     <ul>
       <li>Takes an SPL Set Id as a parameter NDC as a parameter and returns
@@ -53,6 +79,7 @@ iframe {
   </li>
 </ul>
 
+<br />
 <h4>Sample Invocations</h4>
 <p>Following are examples of calls that demonstrate the different ways of
   performing searches in this application.</p>
@@ -68,12 +95,18 @@ iframe {
       "8d24bacb-feff-4c6a-b8df-625e1435387a"</a></li>
 </ul>
 
+<br />
 <h4>Sample Usage Video</h4>
-<p>FIX LINK ONCE UPLOADED</p>
-<iframe width="640" height="360" src="https://www.youtube.com/embed/F9YofMuyNy0"
-  frameborder="0" allowfullscreen></iframe>
 
+<iframe width="480" height="292" src="https://www.youtube.com/embed/F9YofMuyNy0"
+  allowfullscreen></iframe>
+
+<br />
 <h4>References/Links</h4>
-<ul></ul>
-<li><a href="https://www.nlm.nih.gov/research/umls/rxnorm/">RXNORM Home</a></li>
-<li><a href="https://dailymed.nlm.nih.gov/dailymed/">DailyMed Home</a></li>
+<ul>
+  <li><a href="http://www.westcoastinformatics/transformer.html">West Coast
+      Informatics - Transformer Application</a></li>
+  <li><a href="https://www.nlm.nih.gov/research/umls/rxnorm/">RXNORM
+      Home</a></li>
+  <li><a href="https://dailymed.nlm.nih.gov/dailymed/">DailyMed Home</a></li>
+</ul>
