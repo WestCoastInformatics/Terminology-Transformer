@@ -1,17 +1,17 @@
-IHTSDO Refset and Translation Tool
-==================================
+WCI Terminology Transformer
+===========================
 
-This is a tool developed for IHTSDO to create, maintain, import, export, publish
-and otherwise manage (extensional and intensional) refset creation. It additionally
-supports a module for creating translations based on derived refsets with basic 
-workflow.
+"Transfomer" is a tooling platform that has bene developed to enable users to bridge the gap between their existing data and the capabilities that could be gained by integrating it with standard, structured terminologies or ontologies.  
 
-This project hosts a basic UI that calls a set of REST APIs built around 
-a SNOMED CT data model. The API is fully documented with Swagger (http://swagger.io)
+It is a terminology-enabled analytical engine designed to take as input data that is unstructured, semi-structured, or fully structured (as an information model) and run that data through normalization, processing, and converter steps which make use of loaded terminologies, information models, and other metadata to produce a result that answers an important question about the input data.
 
+This project hosts reference implementations of APIs and user interfaces.
 
-A reference deployment of the system exists here:
-https://refset.ihtsdotools.org/
+For more information, see:
+* http://www.westcoastinformatics.com/transformer.html
+
+For examples of reference deployments, see:
+* https://ndc.terminology.tools
 
 Project Structure
 -----------------
@@ -19,8 +19,6 @@ Project Structure
 * top-level: aggregator for sub-modules (alphabetically):
   * admin: admin tools as maven plugins and poms
   * config: sample config files and data for windows dev environment and the reference deployment.
-  * custom: project for demonstrating how to extend the platform
-  * examples: sample code for learning how to use the API
   * integration-test: integration tests (JPA, REST, and mojo)
   * jpa-model: a JPA enabled implementation of "model"
   * jpa-services: a JPA enabled implementation of "services"
@@ -32,14 +30,8 @@ Project Structure
 
 Documentation
 -------------
-Find comprehensive documentation here: https://confluence.ihtsdotools.org/TBD
-
-NDC-RXNORM
-----------
-Sample data build for integration testing
- * 20100104
- * 20160104
- * 20160404
+Developer documentation we have is here: 
+* http://wiki.terminology.tools/confluence/display/TER (requires account for now)
 
 
 License

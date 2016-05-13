@@ -28,7 +28,6 @@
     <module>rest</module>
     <module>rest-client</module>
     <module>integration-test</module>
-    <module>examples</module>
   </modules>
 
   <distributionManagement>
