@@ -11,8 +11,8 @@ tsApp
       'ndcService',
       'utilService',
       'appConfig',
-      function($scope, $location, $anchorScroll, $sce, $routeParams, ndcService, utilService,
-        appConfig) {
+      function($scope, $location, $anchorScroll, $sce, $routeParams,
+        ndcService, utilService, appConfig) {
         console.debug('configure NdcCtrl');
 
         // Set up scope
@@ -90,13 +90,8 @@ tsApp
           $scope.pagedSplSet = null;
           $scope.pagedHistory = null;
 
+          console.debug('QUERY', query);
           var queryTrim = query.trim();
-
-          // if (query) {
-          // $scope.query = query.trim();
-          // } else {
-          // return;
-          // }
 
           // If < 9 digits, do an RXCUI lookup
           if ($scope.isRxcui(queryTrim)) {
@@ -196,13 +191,15 @@ tsApp
         // Identify input string as an SPL_SET_ID
         // UUID format
         $scope.isSplSetId = function(query) {
-          return query.match(/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/);
+          return query
+            .match(/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/);
         };
 
         // Identify input string as an NDC
         // Between 8 and 14 digits or dashes
         $scope.isNdc = function(query) {
-          return query.length > 8 && query.length < 14 && query.match(/^[\d\-]+$/);
+          return query.length > 8 && query.length < 14
+            && query.match(/^[\d\-]+$/);
         };
 
         // Autocomplete function
@@ -223,8 +220,8 @@ tsApp
         // Get paged splSetId search property info (assume all are loaded)
         $scope.getPagedSplSet = function() {
           if ($scope.propertiesListModel) {
-            $scope.pagedSplSet = utilService.getPagedArray($scope.propertiesListModel.list,
-              $scope.paging['splSetId']);
+            $scope.pagedSplSet = utilService.getPagedArray(
+              $scope.propertiesListModel.list, $scope.paging['splSetId']);
           }
         };
 
@@ -247,17 +244,18 @@ tsApp
 
         // Perform concept search
         $scope.findConceptsByQuery = function() {
-          ndcService.findConceptsByQuery($scope.query, $scope.paging['search'].pageSize,
-            $scope.paging['search'].page).then(
-          // Success
-          function(data) {
-            $scope.searchResults = data.results;
-            $scope.searchResults.totalCount = data.totalCount;
-            // Select first result
-            if ($scope.searchResults.length > 0) {
-              $scope.selectResult($scope.searchResults[0]);
-            }
-          });
+          ndcService.findConceptsByQuery($scope.query,
+            $scope.paging['search'].pageSize, $scope.paging['search'].page)
+            .then(
+            // Success
+            function(data) {
+              $scope.searchResults = data.results;
+              $scope.searchResults.totalCount = data.totalCount;
+              // Select first result
+              if ($scope.searchResults.length > 0) {
+                $scope.selectResult($scope.searchResults[0]);
+              }
+            });
 
         };
 
@@ -281,28 +279,31 @@ tsApp
         // HISTORY related functions
         //
         $scope.history = new Array();
-        $scope.historyIndex = -1; 
-        
+        $scope.historyIndex = -1;
+
         $scope.addHistory = function(query) {
           if ($scope.historyIndex + 1 == $scope.history.length) {
             $scope.history.push(query);
             $scope.historyIndex++;
-          } else {   
-            // clear all entries after index that will be added in the middle of the history
-            $scope.history.splice($scope.historyIndex + 1, $scope.history.length - $scope.historyIndex);
+          } else {
+            // clear all entries after index that will be added in the middle of
+            // the history
+            $scope.history.splice($scope.historyIndex + 1,
+              $scope.history.length - $scope.historyIndex);
             $scope.historyIndex++;
             $scope.history[$scope.historyIndex] = query;
           }
-        }        
-        
+        }
+
         $scope.getFromHistory = function(index) {
           $scope.historyIndex = index;
-          $scope.submit($scope.history[$scope.historyIndex], false, true);          
+          $scope.submit($scope.history[$scope.historyIndex], false, true);
         }
-        
+
         // Initialize
         if ($routeParams.query) {
-          $scope.submit(query);
+          $scope.query = $routeParams.query;
+          $scope.submit($routeParams.query);
         }
 
       } ]);

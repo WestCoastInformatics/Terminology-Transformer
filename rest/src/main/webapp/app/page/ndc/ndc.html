@@ -11,14 +11,13 @@
             <td>Enter name, RXCUI, NDC code, or SPL Set Id</td>
           </tr>
           <tr>
-            <td>
-              <input autofocus ng-model="query" type="text"
-                placeholder="e.g. 0069-3150-83 or 283420 or fff63bc7-6b92-4080-9a11-017124d95162"
-                style="width: 100%; max-width: 400px;"
-                uib-typeahead="suggestion for suggestion in autocomplete($viewValue)"
-                typeahead-loading="loadingSuggestions"
-                typeahead-focus-first="false" typeahead-editable="true"
-                typeahead-on-select="submit(query, 1)" typeahead-min-length="3" />
+            <td><input autofocus ng-model="query" type="text"
+              placeholder="e.g. 0069-3150-83 or 283420 or fff63bc7-6b92-4080-9a11-017124d95162"
+              style="width: 100%; max-width: 400px;"
+              uib-typeahead="suggestion for suggestion in autocomplete($viewValue)"
+              typeahead-loading="loadingSuggestions"
+              typeahead-focus-first="false" typeahead-editable="true"
+              typeahead-on-select="submit(query, 1)" typeahead-min-length="3" />
               <!-- typeahead-on-select="searchParams.page = 1 && findComponents(true)" -->
             </td>
           </tr>
@@ -113,7 +112,8 @@
 
     <!-- Show data for info/property-->
 
-    <table class="table">
+    <table class="table"
+      ng-show="propertiesListModel || model.ndc || model.rxcui">
       <thead>
         <tr>
           <th class="col-md-3 col-xs-3"></th>
@@ -123,23 +123,18 @@
       <tbody>
         <tr ng-show="model.splSetId">
           <td>SPL Set Id:</td>
-          <td>
-            <a class="noul" ng-click="submit(model.splSetId)">{{model.splSetId}}</a>
-            &nbsp;
-            <a title="Open in DailyMed" href="{{getSplSetUrl(model.splSetId)}}"
-              target="_blank" class="glyphicon glyphicon-share noul"></a>
+          <td><a class="noul" ng-click="submit(model.splSetId)">{{model.splSetId}}</a>
+            &nbsp; <a title="Open in DailyMed"
+              href="{{getSplSetUrl(model.splSetId)}}" target="_blank"
+              class="glyphicon glyphicon-share noul"></a>
         </tr>
         <tr ng-show="model.rxcui">
           <td>RXNORM Concept:</td>
-          <td>
-            <span ng-show="!rxcui">
+          <td><span ng-show="!rxcui">
               <a class="noul" ng-click="submit(model.rxcui)">{{model.rxcui}}</a>
-            </span>
-            <span ng-show="rxcui">{{model.rxcui}}</span>
-            &nbsp;
-            <a title="Open in BioPortal" href="{{getRxcuiUrl(model.rxcui)}}"
-              target="_blank" class="glyphicon glyphicon-share noul"></a>
-          </td>
+            </span> <span ng-show="rxcui">{{model.rxcui}}</span> &nbsp; <a
+              title="Open in BioPortal" href="{{getRxcuiUrl(model.rxcui)}}"
+              target="_blank" class="glyphicon glyphicon-share noul"></a></td>
         </tr>
         <tr ng-show="model.rxcuiName">
           <td>RXNORM Name:</td>
@@ -147,8 +142,7 @@
         </tr>
         <tr ng-show="model.splSetIds && model.splSetIds.length > 0">
           <td>SPL Set Ids:</td>
-          <td>
-            <span ng-repeat="splSetId in model.splSetIds">
+          <td><span ng-repeat="splSetId in model.splSetIds">
               <br ng-if="$index > 0" />
               <a class="noul" ng-click="submit(splSetId)">{{splSetId}}</a>
               &nbsp;
@@ -158,12 +152,9 @@
         </tr>
         <tr ng-show="model.ndc">
           <td>NDC:</td>
-          <td>
-            <span ng-show="!ndc">
+          <td><span ng-show="!ndc">
               <a class="noul" ng-click="submit(model.ndc)">{{model.ndc}}</a>
-            </span>
-            <span ng-show="ndc">{{model.ndc}}</span>
-          </td>
+            </span> <span ng-show="ndc">{{model.ndc}}</span></td>
         </tr>
         <tr ng-show="propertiesModel.ndc10">
           <td>NDC10:</td>
@@ -175,15 +166,12 @@
         </tr>
         <tr ng-show="pagedHistory.data.length == 0">
           <td>&nbsp;</td>
-          <td>
-            <span class="alert alert-warning">RXNORM concept has no NDC
-              codes</span>
-          </td>
+          <td><span class="alert alert-warning">RXNORM concept has
+              no NDC codes</span></td>
         </tr>
         <tr ng-show="pagedHistory.data.length > 0">
           <td>History ({{pagedHistory.totalCount}}):</td>
-          <td>
-            <span style="display: block;">
+          <td><span style="display: block;">
               <uib-pagination items-per-page="paging['history'].pageSize"
                 max-size="5" boundary-links="true" class="pagination-sm"
                 previous-text="&lsaquo;" next-text="&rsaquo;"
@@ -223,18 +211,15 @@
               </thead>
               <tbody>
                 <tr ng-repeat="item in pagedHistory.data">
-                  <td ng-show="item.rxcui">
-                    <a class="noul" ng-click="submit(item.rxcui)">{{item.rxcui}}</a>
-                  </td>
-                  <td ng-show="item.ndc">
-                    <a class="noul" ng-click="submit(item.ndc)">{{item.ndc}}</a>
-                  </td>
+                  <td ng-show="item.rxcui"><a class="noul"
+                      ng-click="submit(item.rxcui)">{{item.rxcui}}</a></td>
+                  <td ng-show="item.ndc"><a class="noul"
+                      ng-click="submit(item.ndc)">{{item.ndc}}</a></td>
                   <td>{{item.start}}</td>
                   <td>{{item.end}}</td>
                 </tr>
               </tbody>
-            </table>
-          </td>
+            </table></td>
         </tr>
         <tr ng-show="propertiesModel.propertyList.length > 0">
           <td>Property List ({{propertiesModel.propertyList.length}}):</td>
@@ -278,28 +263,26 @@
         title="Click to clear filter text">Clear</button>
     </span>
 
+    <span ng-show="pagedSplSet.data && pagedSplSet.data.length == 0"
+      class="alert alert-warning">Code returned no results</span>
+
     <!-- For displaying propertiesListModel data, [0] works because there is only one per page -->
-    <table class="table" ng-show="pagedSplSet.data">
+    <table class="table" ng-show="pagedSplSet.data && pagedSplSet.data.length>0">
       <tbody>
         <tr ng-show="pagedSplSet.data[0].splSetId">
           <td>SPL Set Id:</td>
-          <td>
-            {{pagedSplSet.data[0].splSetId}}&nbsp;
-            <a title="Open in DailyMed"
+          <td>{{pagedSplSet.data[0].splSetId}}&nbsp; <a
+              title="Open in DailyMed"
               href="{{getSplSetUrl(pagedSplSet.data[0].splSetId)}}"
               target="_blank" class="glyphicon glyphicon-share noul"></a>
           </td>
         </tr>
         <tr ng-show="pagedSplSet.data[0].rxcui">
           <td>RXNORM Concept:</td>
-          <td>
-            <a class="noul" ng-click="submit(pagedSplSet.data[0].rxcui)">{{pagedSplSet.data[0].rxcui}}</a>
-            &nbsp;
-
-            <a title="Open in BioPortal"
+          <td><a class="noul" ng-click="submit(pagedSplSet.data[0].rxcui)">{{pagedSplSet.data[0].rxcui}}</a>
+            &nbsp; <a title="Open in BioPortal"
               href="{{getRxcuiUrl(pagedSplSet.data[0].rxcui)}}" target="_blank"
-              class="glyphicon glyphicon-share noul"></a>
-          </td>
+              class="glyphicon glyphicon-share noul"></a></td>
         </tr>
         <tr ng-show="pagedSplSet.data[0].rxcuiName">
           <td>RXNORM Name:</td>
@@ -307,8 +290,7 @@
         </tr>
         <tr ng-show="pagedSplSet.data[0].ndc11">
           <td>NDC:</td>
-          <td>
-            <a class="noul" ng-click="submit(pagedSplSet.data[0].ndc11)">{{pagedSplSet.data[0].ndc11}}</a>
+          <td><a class="noul" ng-click="submit(pagedSplSet.data[0].ndc11)">{{pagedSplSet.data[0].ndc11}}</a>
           </td>
         </tr>
         <tr ng-show="pagedSplSet.data[0].ndc10">
@@ -345,6 +327,8 @@
 
     <!-- End C2R1 (view) -->
   </div>
+
+
 
   <!-- C2R1 (json) -->
   <div ng-show="jsonEnabled" class="col-md-12 col-xs-12">
@@ -384,15 +368,9 @@
         style="max-height: 400px; overflow-y: scroll; background-color: light-grey">
         <pre style="background-color: lightgray">{{jsonProperties}}</pre>
       </div>
-
-
-
     </div>
-
 
     <!-- End C2R1 (json) -->
   </div>
-
-
 
 </div>

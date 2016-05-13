@@ -20,7 +20,6 @@ import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import com.wci.umls.server.helpers.ConfigUtility;
 import com.wci.umls.server.jpa.services.MetadataServiceJpa;
 import com.wci.umls.server.rest.impl.ConfigureServiceRestImpl;
-import com.wci.umls.server.rest.impl.SecurityServiceRestImpl;
 import com.wci.umls.server.services.MetadataService;
 import com.wordnik.swagger.jaxrs.config.BeanConfig;
 
@@ -98,7 +97,7 @@ public class TransformerServerApplication extends Application {
   public Set<Class<?>> getClasses() {
     final Set<Class<?>> classes = new HashSet<Class<?>>();
     // Need configure and security services
-    // classes.add(ConfigureServiceRestImpl.class);
+    classes.add(ConfigureServiceRestImpl.class);
     // classes.add(SecurityServiceRestImpl.class);
 
     // Need transformer services

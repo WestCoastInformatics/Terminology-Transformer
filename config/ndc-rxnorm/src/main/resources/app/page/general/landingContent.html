@@ -1,10 +1,23 @@
+<style>
+//
+TODO: move to tsApp.js
+iframe {
+	border: 5px solid rgba(255, 255, 255, 0);
+	-webkit-border-radius: 20px !important;
+	-ms-border-radius: 20px !important;
+	-o-border-radius: 20px !important;
+	border-radius: 20px !important;
+}
+</style>
 <h4>Introduction</h4>
 <p>The NDC-RXNORM transformer application provides an API and basic user
   interface for interacting with RXNORM concepts, NDC (National Drug Codes), and
   SPL (Standard Product Label) Set Ids. The tool is loaded with all versions of
   RXNORM dating back to June 2007 (the first appearance of NDC code data).</p>
 
-<h4>REST API</h4>
+<h4>
+  <a href="swagger.html">REST API</a>
+</h4>
 <p>
   The REST API comprises six functions, four of which represent the core
   services and two of which are used to support the user interface. The full
@@ -15,43 +28,52 @@
 <ul>
   <li>Get NDC Info
     <ul>
-      <li>Takes and NDC as a parameter and returns a document providing the
-        current RXNORM concept, the current SPL Set Id, and the RXNORM concept
-        history.</li>
+      <li>Takes an NDC as a parameter and returns a document containing the
+        current RXNORM concept, its active status, the current SPL Set Id, and
+        the RXNORM concept history.</li>
     </ul>
   </li>
   <li>Get RXCUI Info</li>
-    <ul>
-      <li>Takes and NDC as a parameter and returns a document providing the
-        current RXNORM concept, the current SPL Set Id, and the RXNORM concept
-        history.</li>
-    </ul>
+  <ul>
+    <li>Takes an RXCUI (an RXNORM concept id) as a parameter and returns a
+      document containing the RXNORM concept info, its active status, any
+      associated SPL Set Ids, and a complete history of NDCs associated with it.</li>
+  </ul>
   <li>Get NDC Properties</li>
-    <ul>
-      <li>Takes and NDC as a parameter and returns a document providing the
-        current RXNORM concept, the current SPL Set Id, and the RXNORM concept
-        history.</li>
-    </ul>
+  <ul>
+    <li>Takes an NDC as a parameter and returns a document a containing
+      details of the NDC, including various properties associated with it in
+      RXNORM.</li>
+  </ul>
   <li>Get NDC Properties for SPL Set Id
     <ul>
-      <li>Takes and NDC as a parameter and returns a document providing the
-        current RXNORM concept, the current SPL Set Id, and the RXNORM concept
-        history.</li>
-    </ul></li>
+      <li>Takes an SPL Set Id as a parameter NDC as a parameter and returns
+        a document containing details of all of the NDCs associated with it.</li>
+    </ul>
+  </li>
 </ul>
 
-
 <h4>Sample Invocations</h4>
-<p>The API has six calls, four of which provide the core functionality and
-  tow</p>
-
+<p>Following are examples of calls that demonstrate the different ways of
+  performing searches in this application.</p>
+<ul>
+  <li><a href="index.html#/ndc?query=Aspirin" target="_blank">Searching
+      by name of a medication, e.g. "Aspirin"</a></li>
+  <li><a href="index.html#/ndc?query=351772" target="_blank">Searching
+      by RXNORM concept, e.g. "351772"</a></li>
+  <li><a href="index.html#/ndc?query=00143314501" target="_blank">Searching
+      by NDC, e.g. "00143314501"</a></li>
+  <li><a href="index.html#/ndc?query=8d24bacb-feff-4c6a-b8df-625e1435387a"
+      target="_blank">Searching by SPL Set Id, e.g.
+      "8d24bacb-feff-4c6a-b8df-625e1435387a"</a></li>
+</ul>
 
 <h4>Sample Usage Video</h4>
-<p>VIDEO linked from YouTube</p>
-
+<p>FIX LINK ONCE UPLOADED</p>
+<iframe width="640" height="360" src="https://www.youtube.com/embed/F9YofMuyNy0"
+  frameborder="0" allowfullscreen></iframe>
 
 <h4>References/Links</h4>
 <ul></ul>
-<li>RXNORM</li>
-<li>DailyMed</li>
-<li>RxNav</li>
+<li><a href="https://www.nlm.nih.gov/research/umls/rxnorm/">RXNORM Home</a></li>
+<li><a href="https://dailymed.nlm.nih.gov/dailymed/">DailyMed Home</a></li>
