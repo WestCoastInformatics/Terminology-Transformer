@@ -18,6 +18,11 @@ tsApp
         // Set up scope
         $scope.query = null;
 
+        // Json-view vars
+        $scope.jsonEnabled = false;
+        $scope.jsonInfo = null;
+        $scope.jsonProperties = null;
+
         $scope.model = null;
         $scope.propertiesModel = null;
         $scope.propertiesListModel = null;
@@ -71,6 +76,8 @@ tsApp
           }
 
           // Reset data model
+          $scope.jsonInfo = null;
+          $scope.jsonProperties = null;
           $scope.model = null;
           $scope.propertiesModel = null;
           $scope.propertiesListModel = null;
@@ -101,6 +108,7 @@ tsApp
                 // Success
                 function(data) {
                   $scope.model = data;
+                  $scope.jsonInfo = JSON.stringify(data, null, 2);
                   $scope.rxcuiUrl = $sce
                     .trustAsResourceUrl("http://bioportal.bioontology.org/ontologies/RXNORM?p=classes&conceptid="
                       + $scope.model.rxcui);
@@ -120,6 +128,7 @@ tsApp
             ndcService.getNdcPropertiesForSplSetId(queryTrim).then(
             // Success
             function(data) {
+              $scope.jsonProperties = JSON.stringify(data, null, 2);
               $scope.propertiesListModel = data;
               $scope.getPagedSplSet();
               if (!historyFlag) {
@@ -136,12 +145,14 @@ tsApp
             // Success
             function(data) {
               $scope.model = data;
+              $scope.jsonInfo = JSON.stringify(data, null, 2);
               $scope.getPagedHistory();
             });
             ndcService.getNdcProperties(queryTrim).then(
             // Success
             function(data) {
               $scope.propertiesModel = data;
+              $scope.jsonProperties = JSON.stringify(data, null, 2);
               if (!historyFlag) {
                 $scope.addHistory(query);
               }
@@ -254,6 +265,16 @@ tsApp
         $scope.selectResult = function(result) {
           $scope.selectedResult = result.id;
           $scope.submit(result.terminologyId);
+        };
+
+        // Enable JSON
+        $scope.enableJson = function() {
+          $scope.jsonEnabled = true;
+        };
+
+        // Disable Json
+        $scope.disableJson = function() {
+          $scope.jsonEnabled = false;
         };
 
         // 
