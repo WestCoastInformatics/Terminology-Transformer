@@ -63,13 +63,11 @@ public class NdcServiceRestExamples {
     // Call with RXNORM-style NDC (without history)
     // curl -H Authorization:guest
     // https://ndc.terminology.tools/rxnorm/ndc/00143314501
-
     client.getNdcInfo("00143314501", false, "guest");
 
     // Call with RXNORM-style NDC (with history)
     // curl -H Authorization:guest
     // https://ndc.terminology.tools/rxnorm/ndc/00143314501?history=true
-
     client.getNdcInfo("00143314501", true, "guest");
 
     // Call with SPL-style NDC (without history)

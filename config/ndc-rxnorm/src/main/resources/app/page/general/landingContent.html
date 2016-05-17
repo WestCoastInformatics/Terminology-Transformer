@@ -60,9 +60,12 @@ link TODO: credit olivier's RXNORM APOIs. (at the end - in references/links)
     <ul>
       <li><p>Takes an NDC as a parameter and returns a document
           containing the current RXNORM concept, its active status, the current
-          SPL Set Id, and the RXNORM concept history.</p>
+          SPL Set Id, and (optionally) the RXNORM concept history. The history
+          is only provided if the "history=true" parameter is used.</p>
         <p>Examples</p>
         <div class="well well-sm">
+          <pre>curl -H Authorization:guest https://ndc.terminology.tools/rxnorm/ndc/00143314501?history=true</pre>
+          <pre>curl -H Authorization:guest https://ndc.terminology.tools/rxnorm/ndc/0143-3145-01?history=true</pre>
           <pre>curl -H Authorization:guest https://ndc.terminology.tools/rxnorm/ndc/00143314501</pre>
           <pre>curl -H Authorization:guest https://ndc.terminology.tools/rxnorm/ndc/0143-3145-01</pre>
         </div></li>
@@ -72,10 +75,12 @@ link TODO: credit olivier's RXNORM APOIs. (at the end - in references/links)
     <ul>
       <li><p>Takes an RXCUI (an RXNORM concept id) as a parameter and
           returns a document containing the RXNORM concept info, its active
-          status, any associated SPL Set Ids, and a complete history of NDCs
-          associated with it.</p>
+          status, any associated SPL Set Ids, and (optionally) a complete
+          history of NDCs associated with it. The history is only provided if
+          the "history=true" parameter is used</p>
         <p>Example</p>
         <div class="well well-sm">
+          <pre>curl -H Authorization:guest https://ndc.terminology.tools/rxnorm/rxcui/351772?history=true</pre>
           <pre>curl -H Authorization:guest https://ndc.terminology.tools/rxnorm/rxcui/351772</pre>
         </div></li>
     </ul>
@@ -84,7 +89,7 @@ link TODO: credit olivier's RXNORM APOIs. (at the end - in references/links)
     <ul>
       <li><p>Takes an NDC as a parameter and returns a document a
           containing details of the NDC, including various properties associated
-          with it in RXNORM.</p>
+          with it in the current version of RXNORM.</p>
         <p>Examples</p>
         <div class="well well-sm">
           <pre>curl -H Authorization:guest https://ndc.terminology.tools/rxnorm/ndc/00143314501/properties</pre>
@@ -96,7 +101,7 @@ link TODO: credit olivier's RXNORM APOIs. (at the end - in references/links)
     <ul>
       <li><p>Takes an SPL Set Id as a parameter NDC as a parameter and
           returns a document containing details of all of the NDCs associated
-          with it.</p>
+          with it in the current version of RXNORM.</p>
         <p>Example</p>
         <div class="well well-sm">
           <pre>curl -H Authorization:guest https://ndc.terminology.tools/rxnorm/spl/8d24bacb-feff-4c6a-b8df-625e1435387a/ndc/properties</pre>

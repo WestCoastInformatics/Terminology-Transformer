@@ -46,7 +46,7 @@ tsApp.service('ndcService', [
       var deferred = $q.defer();
 
       gpService.increment();
-      $http.get('rxnorm/ndc/' + encodeURIComponent(ndc)).then(function(response) {
+      $http.get('rxnorm/ndc/' + encodeURIComponent(ndc) + '?history=true').then(function(response) {
         gpService.decrement();
         console.debug("  ndc info = ", response);
         deferred.resolve(response.data);
@@ -65,15 +65,16 @@ tsApp.service('ndcService', [
       var deferred = $q.defer();
 
       gpService.increment();
-      $http.get('rxnorm/rxcui/' + encodeURIComponent(rxcui)).then(function(response) {
-        gpService.decrement();
-        console.debug("  rxcui info = ", response);
-        deferred.resolve(response.data);
-      }, function(response) {
-        utilService.handleError(response);
-        gpService.decrement();
-        deferred.reject(response.data);
-      });
+      $http.get('rxnorm/rxcui/' + encodeURIComponent(rxcui) + '?history=true').then(
+        function(response) {
+          gpService.decrement();
+          console.debug("  rxcui info = ", response);
+          deferred.resolve(response.data);
+        }, function(response) {
+          utilService.handleError(response);
+          gpService.decrement();
+          deferred.reject(response.data);
+        });
 
       return deferred.promise;
     };
@@ -150,7 +151,6 @@ tsApp.service('ndcService', [
       return deferred.promise;
     };
 
-    
     // end
 
   } ]);

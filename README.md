@@ -44,9 +44,11 @@ the reference deployment API.  Following are some example curl calls.
 The reference deployment uses "default" security, so the authorization
 token "guest" can be used in all cases.
 
-1. Test looking up NDC information and RXCUI history
+1. Test looking up NDC information and RXCUI history (with and without history flag)
 
 ```
+curl -H Authorization:guest https://ndc.terminology.tools/rxnorm/ndc/00143314501?history=true
+curl -H Authorization:guest https://ndc.terminology.tools/rxnorm/ndc/0143-3145-01?history=true
 curl -H Authorization:guest https://ndc.terminology.tools/rxnorm/ndc/00143314501
 curl -H Authorization:guest https://ndc.terminology.tools/rxnorm/ndc/0143-3145-01
 ```
@@ -54,6 +56,7 @@ curl -H Authorization:guest https://ndc.terminology.tools/rxnorm/ndc/0143-3145-0
 2. Test looking up RXCUI information and NDC history
 
 ```
+curl -H Authorization:guest https://ndc.terminology.tools/rxnorm/rxcui/351772?history=true
 curl -H Authorization:guest https://ndc.terminology.tools/rxnorm/rxcui/351772
 ```
 
@@ -64,7 +67,7 @@ curl -H Authorization:guest https://ndc.terminology.tools/rxnorm/ndc/00143314501
 curl -H Authorization:guest https://ndc.terminology.tools/rxnorm/ndc/0143-3145-01/properties
 ```
 
-4. Test looking up NDC properties list info for an SPL Set Id
+4. Test looking up NDC properties list info for an SPL Set Id for the current RXNORM version.
 
 ```
 curl -H Authorization:guest https://ndc.terminology.tools/rxnorm/spl/8d24bacb-feff-4c6a-b8df-625e1435387a/ndc/properties
