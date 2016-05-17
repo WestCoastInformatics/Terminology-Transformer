@@ -3,7 +3,11 @@
  */
 package com.wci.tt.jpa;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -25,6 +29,7 @@ import org.hibernate.search.bridge.builtin.LongBridge;
 
 import com.wci.tt.DataContext;
 import com.wci.tt.helpers.DataContextType;
+import com.wci.umls.server.jpa.helpers.MapKeyValueToCsvBridge;
 
 /**
  * JPA enabled implementation of {@link DataContext}.
@@ -71,6 +76,10 @@ public class DataContextJpa implements DataContext {
   @Column(nullable = true)
   private String infoModelClass;
 
+  /** The parameters. */
+  @ElementCollection
+  private Map<String, String> parameters;
+
   /**
    * Instantiates an empty {@link DataContextJpa}.
    */
@@ -93,6 +102,7 @@ public class DataContextJpa implements DataContext {
     this.semanticType = context.getSemanticType();
     this.specialty = context.getSpecialty();
     this.infoModelClass = context.getInfoModelClass();
+    this.parameters = new HashMap<>(context.getParameters());
   }
 
   /* see superclass */
@@ -215,6 +225,22 @@ public class DataContextJpa implements DataContext {
   }
 
   /* see superclass */
+  @Field(bridge = @FieldBridge(impl = MapKeyValueToCsvBridge.class) , index = Index.YES, analyze = Analyze.YES, store = Store.NO)
+  @Override
+  public Map<String, String> getParameters() {
+    if (parameters == null) {
+      parameters = new HashMap<>();
+    }
+    return parameters;
+  }
+
+  /* see superclass */
+  @Override
+  public void setParameters(Map<String, String> parameters) {
+    this.parameters = parameters;
+  }
+
+  /* see superclass */
   @Override
   public int hashCode() {
     final int prime = 31;
@@ -229,6 +255,8 @@ public class DataContextJpa implements DataContext {
     result = prime * result + ((specialty == null) ? 0 : specialty.hashCode());
     result = prime * result
         + ((infoModelClass == null) ? 0 : infoModelClass.hashCode());
+    result =
+        prime * result + ((parameters == null) ? 0 : parameters.hashCode());
     return result;
   }
 
@@ -272,6 +300,11 @@ public class DataContextJpa implements DataContext {
         return false;
     } else if (!specialty.equals(other.specialty))
       return false;
+    if (parameters == null) {
+      if (other.parameters != null)
+        return false;
+    } else if (!parameters.equals(other.parameters))
+      return false;
     if (infoModelClass == null) {
       if (other.infoModelClass != null)
         return false;
@@ -287,6 +320,8 @@ public class DataContextJpa implements DataContext {
         + ", version=" + version + ", type="
         + ((type == null) ? "null" : type.toString()) + ", customer=" + customer
         + ", semanticType=" + semanticType + ", specialty=" + specialty
-        + ", infoModelClass=" + infoModelClass + "]";
+        + ", infoModelClass=" + infoModelClass + ", parameters=" + parameters
+        + "]";
   }
+
 }

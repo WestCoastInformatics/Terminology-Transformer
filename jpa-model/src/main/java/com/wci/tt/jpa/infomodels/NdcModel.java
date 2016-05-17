@@ -185,7 +185,7 @@ public class NdcModel implements InfoModel<NdcModel> {
    *
    * @return the history
    */
-  @XmlElement(name = "history")
+  @XmlElement
   public List<NdcHistoryModel> getHistory() {
     if (history == null) {
       history = new ArrayList<>();
@@ -234,7 +234,7 @@ public class NdcModel implements InfoModel<NdcModel> {
     try {
       return ConfigUtility.getGraphForJson(model, NdcModel.class);
     } catch (Exception e) {
-      throw new Exception("Malformed model - " + model);
+      throw new Exception("Malformed model - " + model, e);
     }
   }
 

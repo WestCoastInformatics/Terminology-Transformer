@@ -1,9 +1,12 @@
 /*
- * Copyright 2015 West Coast Informatics, LLC
+ *    Copyright 2016 West Coast Informatics, LLC
  */
 package com.wci.tt.jpa;
 
 import static org.junit.Assert.assertTrue;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.junit.After;
@@ -28,6 +31,12 @@ public class DataContextJpaUnitTest extends TestSupport {
   /** The model object to test. */
   private DataContextJpa object;
 
+  /** The m1. */
+  private Map<String, String> m1 = null;
+
+  /** The m2. */
+  private Map<String, String> m2 = null;
+
   /**
    * Setup class.
    */
@@ -43,6 +52,10 @@ public class DataContextJpaUnitTest extends TestSupport {
   @Before
   public void setup() throws Exception {
     object = new DataContextJpa();
+    m1 = new HashMap<>();
+    m1.put("11", "1");
+    m2 = new HashMap<>();
+    m2.put("22", "2");
   }
 
   /**
@@ -73,6 +86,10 @@ public class DataContextJpaUnitTest extends TestSupport {
     tester.include("semanticType");
     tester.include("specialty");
     tester.include("infoModelClass");
+    tester.include("parameters");
+
+    tester.proxy(Map.class, 1, m1);
+    tester.proxy(Map.class, 2, m2);
 
     assertTrue(tester.testIdentityFieldEquals());
     assertTrue(tester.testNonIdentityFieldEquals());
@@ -91,6 +108,8 @@ public class DataContextJpaUnitTest extends TestSupport {
   public void testModelCopy() throws Exception {
     Logger.getLogger(getClass()).debug("TEST " + name.getMethodName());
     CopyConstructorTester tester = new CopyConstructorTester(object);
+    tester.proxy(Map.class, 1, m1);
+    tester.proxy(Map.class, 2, m2);
     assertTrue(tester.testCopyConstructor(DataContext.class));
   }
 
@@ -103,6 +122,8 @@ public class DataContextJpaUnitTest extends TestSupport {
   public void testModelXmlSerialization() throws Exception {
     Logger.getLogger(getClass()).debug("TEST " + name.getMethodName());
     XmlSerializationTester tester = new XmlSerializationTester(object);
+    tester.proxy(Map.class, 1, m1);
+    tester.proxy(Map.class, 2, m2);
     assertTrue(tester.testXmlSerialization());
   }
 
@@ -130,8 +151,8 @@ public class DataContextJpaUnitTest extends TestSupport {
 
     // Test analyzed fields
     IndexedFieldTester tester = new IndexedFieldTester(object);
-    // No analyzed fields
-    // assertTrue(tester.testAnalyzedIndexedFields());
+    tester.include("parameters");
+    assertTrue(tester.testAnalyzedIndexedFields());
 
     // Test non analyzed fields
     tester = new IndexedFieldTester(object);

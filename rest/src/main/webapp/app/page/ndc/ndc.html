@@ -11,13 +11,14 @@
             <td>Enter name, RXCUI, NDC code, or SPL Set Id</td>
           </tr>
           <tr>
-            <td><input autofocus ng-model="query" type="text"
-              placeholder="e.g. 0069-3150-83 or 283420 or fff63bc7-6b92-4080-9a11-017124d95162"
-              style="width: 100%; max-width: 400px;"
-              uib-typeahead="suggestion for suggestion in autocomplete($viewValue)"
-              typeahead-loading="loadingSuggestions"
-              typeahead-focus-first="false" typeahead-editable="true"
-              typeahead-on-select="submit(query, 1)" typeahead-min-length="3" />
+            <td>
+              <input autofocus ng-model="query" type="text"
+                placeholder="e.g. 0069-3150-83 or 283420 or fff63bc7-6b92-4080-9a11-017124d95162"
+                style="width: 100%; max-width: 400px;"
+                uib-typeahead="suggestion for suggestion in autocomplete($viewValue)"
+                typeahead-loading="loadingSuggestions"
+                typeahead-focus-first="false" typeahead-editable="true"
+                typeahead-on-select="submit(query, 1)" typeahead-min-length="3" />
               <!-- typeahead-on-select="searchParams.page = 1 && findComponents(true)" -->
             </td>
           </tr>
@@ -70,307 +71,336 @@
     <div ng-show="!jsonEnabled" class="col-md-12 col-xs-12">
       <h5 class="section-header">
         <div style="display: inline" uib-dropdown dropdown-append-to-body>
-          <i uib-tooltip="View All History"
-            ng-show="history.length > 2"
+          <i title="View All History" ng-show="history.length > 2"
             class="glyphicon glyphicon-time dropdown-toggle noul"
             uib-dropdown-toggle id="history-dropdown"></i>
-          <ul uib-dropdown-menu role="menu" aria-labelledby="history-dropdown">            
+          <ul uib-dropdown-menu role="menu" aria-labelledby="history-dropdown">
             <li ng-repeat="component in history"
-              ng-click="getFromHistory($index)"><a>               
-                {{component}}
-              </a></li>            
+              ng-click="getFromHistory($index)"><a> {{component}} </a></li>
           </ul>
         </div>
         <i class="glyphicon glyphicon-step-backward noul"
-          ng-click="getFromHistory(historyIndex -1)"
-          ng-show="historyIndex > 0"
-          uib-tooltip="{{history[historyIndex - 1]}}"></i>
+          ng-click="getFromHistory(historyIndex -1)" ng-show="historyIndex > 0"
+          title="Backward - {{history[historyIndex - 1]}}"></i>
         <span ng-show="rxcui">RXNORM Concept </span>
         <span ng-show="ndc">NDC </span>
         <span ng-show="splSetId">SPL Set Id </span>
-        Results
-        <i class="glyphicon glyphicon-step-forward noul"
+        Results <i class="glyphicon glyphicon-step-forward noul"
           ng-click="getFromHistory(historyIndex + 1)"
           ng-show="history.length > historyIndex + 1 && history.length > 0"
-          uib-tooltip="{{history[historyIndex + 1]}}"></i>
-        &nbsp;&nbsp;
+          title="Forward - {{history[historyIndex + 1]}}"></i> &nbsp;&nbsp;
         <span ng-show="rxcui">- {{rxcui}}</span>
         <span ng-show="ndc">- {{ndc}}</span>
         <span ng-show="splSetId">- {{splSetId}}</span>
         <span ng-show="pagedSplSet"> ({{pagedSplSet.totalCount}})</span>
 
 
-      <span style="float: right">
-        <i title="Switch to JSON view" class="glyphicon glyphicon-refresh noul"
-          ng-click="enableJson()"></i>
-      </span>
-    </h5>
+        <span style="float: right">
+          <i title="Switch to JSON view"
+            class="glyphicon glyphicon-refresh noul" ng-click="enableJson()"></i>
+        </span>
+      </h5>
 
-    <!-- Indicate no results -->
-    <span ng-show="model && !propertiesListModel && !model.ndc && !model.rxcui"
-      class="alert alert-warning">Code returned no results</span>
+      <!-- Indicate no results -->
+      <span
+        ng-show="model && !propertiesListModel && !model.ndc && !model.rxcui"
+        class="alert alert-warning">Code returned no results</span>
 
-    <!-- Show data for info/property-->
+      <!-- Show data for info/property-->
 
-    <table class="table"
-      ng-show="propertiesListModel || model.ndc || model.rxcui">
-      <thead>
-        <tr>
-          <th class="col-md-3 col-xs-3"></th>
-          <th class="col-md-9 col-xs-9"></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr ng-show="model.splSetId">
-          <td>SPL Set Id:</td>
-          <td><a class="noul" ng-click="submit(model.splSetId)">{{model.splSetId}}</a>
-            &nbsp; <a title="Open in DailyMed"
-              href="{{getSplSetUrl(model.splSetId)}}" target="_blank"
-              class="glyphicon glyphicon-share noul"></a>
-        </tr>
-        <tr ng-show="model.rxcui">
-          <td>RXNORM Concept:</td>
-          <td><span ng-show="!rxcui">
-              <a class="noul" ng-click="submit(model.rxcui)">{{model.rxcui}}</a>
-            </span> <span ng-show="rxcui">{{model.rxcui}}</span> &nbsp; <a
-              title="Open in BioPortal" href="{{getRxcuiUrl(model.rxcui)}}"
-              target="_blank" class="glyphicon glyphicon-share noul"></a></td>
-        </tr>
-        <tr ng-show="model.rxcuiName">
-          <td>RXNORM Name:</td>
-          <td>{{model.rxcuiName}}</td>
-        </tr>
-        <tr ng-show="model.splSetIds && model.splSetIds.length > 0">
-          <td>SPL Set Ids:</td>
-          <td><span ng-repeat="splSetId in model.splSetIds">
-              <br ng-if="$index > 0" />
-              <a class="noul" ng-click="submit(splSetId)">{{splSetId}}</a>
+      <table class="table"
+        ng-show="propertiesListModel || model.ndc || model.rxcui">
+        <thead>
+          <tr>
+            <th class="col-md-3 col-xs-3"></th>
+            <th class="col-md-9 col-xs-9"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-show="model.splSetId">
+            <td>SPL Set Id:</td>
+            <td>
+              <a class="noul" ng-click="submit(model.splSetId)">{{model.splSetId}}</a>
               &nbsp;
-              <a title="Open in DailyMed" href="{{getSplSetUrl(splSetId)}}"
+              <a title="Open in DailyMed"
+                href="{{getSplSetUrl(model.splSetId)}}" target="_blank"
+                class="glyphicon glyphicon-share noul"></a>
+          </tr>
+          <tr ng-show="model.rxcui">
+            <td>RXNORM Concept:</td>
+            <td>
+              <span ng-show="!rxcui">
+                <a class="noul" ng-click="submit(model.rxcui)">{{model.rxcui}}</a>
+              </span>
+              <span ng-show="rxcui">{{model.rxcui}}</span>
+              <span class="label label-default" ng-show="!model.active && rxcui"
+                uib-tooltip="Obsolete">O</span>
+
+              &nbsp;
+              <a title="Open in BioPortal" href="{{getRxcuiUrl(model.rxcui)}}"
                 target="_blank" class="glyphicon glyphicon-share noul"></a>
-            </span>
-        </tr>
-        <tr ng-show="model.ndc">
-          <td>NDC:</td>
-          <td><span ng-show="!ndc">
-              <a class="noul" ng-click="submit(model.ndc)">{{model.ndc}}</a>
-            </span> <span ng-show="ndc">{{model.ndc}}</span></td>
-        </tr>
-        <tr ng-show="propertiesModel.ndc10">
-          <td>NDC10:</td>
-          <td>{{propertiesModel.ndc10}}</td>
-        </tr>
-        <tr ng-show="propertiesModel.ndc9">
-          <td>NDC9:</td>
-          <td>{{propertiesModel.ndc9}}</td>
-        </tr>
-        <tr ng-show="pagedHistory.data.length == 0">
-          <td>&nbsp;</td>
-          <td><span class="alert alert-warning">RXNORM concept has
-              no NDC codes</span></td>
-        </tr>
-        <tr ng-show="pagedHistory.data.length > 0">
-          <td>History ({{pagedHistory.totalCount}}):</td>
-          <td><span style="display: block;">
-              <uib-pagination items-per-page="paging['history'].pageSize"
-                max-size="5" boundary-links="true" class="pagination-sm"
-                previous-text="&lsaquo;" next-text="&rsaquo;"
-                first-text="&laquo;" last-text="&raquo;"
-                ng-show="pagedHistory.totalCount > paging['history'].pageSize || paging['history'].filter"
-                total-items="pagedHistory.totalCount"
-                ng-model="paging['history'].page" ng-change="getPagedHistory()"></uib-pagination>
+            </td>
+          </tr>
+          <tr ng-show="model.rxcuiName">
+            <td>RXNORM Name:</td>
+            <td>{{model.rxcuiName}}</td>
+          </tr>
+          <tr ng-show="model.splSetIds && model.splSetIds.length > 0">
+            <td>SPL Set Ids:</td>
+            <td>
+              <span ng-repeat="splSetId in model.splSetIds">
+                <br ng-if="$index > 0" />
+                <a class="noul" ng-click="submit(splSetId)">{{splSetId}}</a>
+                &nbsp;
+                <a title="Open in DailyMed" href="{{getSplSetUrl(splSetId)}}"
+                  target="_blank" class="glyphicon glyphicon-share noul"></a>
+              </span>
+          </tr>
+          <tr ng-show="model.ndc">
+            <td>NDC:</td>
+            <td>
+              <span ng-show="!ndc">
+                <a class="noul" ng-click="submit(model.ndc)">{{model.ndc}}</a>
 
-              <input class="input-filter" placeholder="Search"
-                ng-show="pagedHistory.totalCount > paging['history'].pageSize || paging['history'].filter"
-                type="text" ng-model="paging['history'].filter"
-                ng-model-options="{ debounce: 300 }"
-                ng-change="getPagedHistory()">
+              </span>
+              <span ng-show="ndc">{{model.ndc}}</span>
+              <span class="label label-default" ng-show="!model.active && ndc"
+                uib-tooltip="Obsolete">O</span>
+            </td>
+          </tr>
+          <tr ng-show="propertiesModel.ndc10">
+            <td>NDC10:</td>
+            <td>{{propertiesModel.ndc10}}</td>
+          </tr>
+          <tr ng-show="propertiesModel.ndc9">
+            <td>NDC9:</td>
+            <td>{{propertiesModel.ndc9}}</td>
+          </tr>
+          <tr ng-show="pagedHistory.data.length == 0">
+            <td>&nbsp;</td>
+            <td>
+              <span class="alert alert-warning">No history data
+                available.</span>
+              xx {{model}} zz {{model.history}} y
+            </td>
+          </tr>
+          <tr ng-show="pagedHistory.data.length > 0">
+            <td>History ({{pagedHistory.totalCount}}):</td>
+            <td>
+              <span style="display: block;">
+                <uib-pagination items-per-page="paging['history'].pageSize"
+                  max-size="5" boundary-links="true" class="pagination-sm"
+                  previous-text="&lsaquo;" next-text="&rsaquo;"
+                  first-text="&laquo;" last-text="&raquo;"
+                  ng-show="pagedHistory.totalCount > paging['history'].pageSize || paging['history'].filter"
+                  total-items="pagedHistory.totalCount"
+                  ng-model="paging['history'].page"
+                  ng-change="getPagedHistory()"></uib-pagination>
 
-              <button class="btn btn-xs btn-warning"
-                ng-show="paging['history'].filter"
-                ng-click="paging['history'].filter = ''; getPagedHistory()"
-                title="Click to clear filter text">Clear</button>
-            </span>
-            <table class="table">
-              <thead>
-                <tr>
-                  <th class="col-md-4 col-xs-4" ng-show="rxcui"
-                    ng-click="setSortField('history','ndc')">NDC <span
-                      ng-bind="getSortIndicator('history','ndc')"></span></th>
-                  <th class="col-md-4 col-xs-4" ng-show="ndc"
-                    ng-click="setSortField('history','rxcui')">RXNORM
-                    Concept <span ng-bind="getSortIndicator('history','rxcui')"></span>
-                  </th>
-                  <th class="col-md-4 col-xs-4"
-                    ng-click="setSortField('history','start')">Start <span
-                      ng-bind="getSortIndicator('history','start')"></span></th>
-                  <th class="col-md-4 col-xs-4"
-                    ng-click="setSortField('history','end')">End <span
-                      ng-bind="getSortIndicator('history','end')"></span></th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr ng-repeat="item in pagedHistory.data">
-                  <td ng-show="item.rxcui"><a class="noul"
-                      ng-click="submit(item.rxcui)">{{item.rxcui}}</a></td>
-                  <td ng-show="item.ndc"><a class="noul"
-                      ng-click="submit(item.ndc)">{{item.ndc}}</a></td>
-                  <td>{{item.start}}</td>
-                  <td>{{item.end}}</td>
-                </tr>
-              </tbody>
-            </table></td>
-        </tr>
-        <tr ng-show="propertiesModel.propertyList.length > 0">
-          <td>Property List ({{propertiesModel.propertyList.length}}):</td>
-          <td>
-            <table class="table">
-              <thead>
-                <tr>
-                  <th class="col-md-6 col-xs-6">Property</th>
-                  <th class="col-md-6 col-xs-6">Value</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr
-                  ng-repeat="item in propertiesModel.propertyList | orderBy:'prop'">
-                  <td>{{item.prop}}</td>
-                  <td>{{item.value}}</td>
-                </tr>
-              </tbody>
-            </table>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+                <input class="input-filter" placeholder="Search"
+                  ng-show="pagedHistory.totalCount > paging['history'].pageSize || paging['history'].filter"
+                  type="text" ng-model="paging['history'].filter"
+                  ng-model-options="{ debounce: 300 }"
+                  ng-change="getPagedHistory()">
 
-    <!-- Results for SPL_SET_ID search -->
-    <span style="display: block;">
-      <uib-pagination items-per-page="paging['splSetId'].pageSize" max-size="5"
-        boundary-links="true" class="pagination-sm" previous-text="&lsaquo;"
-        next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"
-        ng-show="pagedSplSet.totalCount > paging['splSetId'].pageSize || paging['splSetId'].filter"
-        total-items="pagedSplSet.totalCount" ng-model="paging['splSetId'].page"
-        ng-change="getPagedSplSet()"></uib-pagination>
+                <button class="btn btn-xs btn-warning"
+                  ng-show="paging['history'].filter"
+                  ng-click="paging['history'].filter = ''; getPagedHistory()"
+                  title="Click to clear filter text">Clear</button>
+              </span>
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th class="col-md-4 col-xs-4" ng-show="rxcui"
+                      ng-click="setSortField('history','ndc')">NDC <span
+                        ng-bind="getSortIndicator('history','ndc')"></span></th>
+                    <th class="col-md-4 col-xs-4" ng-show="ndc"
+                      ng-click="setSortField('history','rxcui')">RXNORM
+                      Concept <span
+                        ng-bind="getSortIndicator('history','rxcui')"></span>
+                    </th>
+                    <th class="col-md-4 col-xs-4"
+                      ng-click="setSortField('history','start')">Start <span
+                        ng-bind="getSortIndicator('history','start')"></span></th>
+                    <th class="col-md-4 col-xs-4"
+                      ng-click="setSortField('history','end')">End <span
+                        ng-bind="getSortIndicator('history','end')"></span></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="item in pagedHistory.data">
+                    <td ng-show="item.rxcui">
+                      <a class="noul" ng-click="submit(item.rxcui)">{{item.rxcui}}</a>
+                    </td>
+                    <td ng-show="item.ndc">
+                      <a class="noul" ng-click="submit(item.ndc)">{{item.ndc}}</a>
+                    </td>
+                    <td>{{item.start}}</td>
+                    <td>{{item.end}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </td>
+          </tr>
+          <tr ng-show="propertiesModel.propertyList.length > 0">
+            <td>Property List ({{propertiesModel.propertyList.length}}):</td>
+            <td>
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th class="col-md-6 col-xs-6">Property</th>
+                    <th class="col-md-6 col-xs-6">Value</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr
+                    ng-repeat="item in propertiesModel.propertyList | orderBy:'prop'">
+                    <td>{{item.prop}}</td>
+                    <td>{{item.value}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </td>
+          </tr>
+        </tbody>
+      </table>
 
-      <input class="input-filter" placeholder="Search"
-        ng-show="pagedSplSet.totalCount > paging['splSetId'].pageSize || paging['splSetId'].filter"
-        type="text" ng-model="paging['splSetId'].filter"
-        ng-model-options="{ debounce: 300 }" ng-change="getPagedSplSet()">
+      <!-- Results for SPL_SET_ID search -->
+      <span style="display: block;">
+        <uib-pagination items-per-page="paging['splSetId'].pageSize"
+          max-size="5" boundary-links="true" class="pagination-sm"
+          previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;"
+          last-text="&raquo;"
+          ng-show="pagedSplSet.totalCount > paging['splSetId'].pageSize || paging['splSetId'].filter"
+          total-items="pagedSplSet.totalCount"
+          ng-model="paging['splSetId'].page" ng-change="getPagedSplSet()"></uib-pagination>
 
-      <button class="btn btn-xs btn-warning" ng-show="paging['splSetId'].filter"
-        ng-click="paging['splSetId'].filter = ''; getPagedSplSet()"
-        title="Click to clear filter text">Clear</button>
-    </span>
+        <input class="input-filter" placeholder="Search"
+          ng-show="pagedSplSet.totalCount > paging['splSetId'].pageSize || paging['splSetId'].filter"
+          type="text" ng-model="paging['splSetId'].filter"
+          ng-model-options="{ debounce: 300 }" ng-change="getPagedSplSet()">
 
-    <span ng-show="pagedSplSet.data && pagedSplSet.data.length == 0"
-      class="alert alert-warning">Code returned no results</span>
-
-    <!-- For displaying propertiesListModel data, [0] works because there is only one per page -->
-    <table class="table" ng-show="pagedSplSet.data && pagedSplSet.data.length>0">
-      <tbody>
-        <tr ng-show="pagedSplSet.data[0].splSetId">
-          <td>SPL Set Id:</td>
-          <td>{{pagedSplSet.data[0].splSetId}}&nbsp; <a
-              title="Open in DailyMed"
-              href="{{getSplSetUrl(pagedSplSet.data[0].splSetId)}}"
-              target="_blank" class="glyphicon glyphicon-share noul"></a>
-          </td>
-        </tr>
-        <tr ng-show="pagedSplSet.data[0].rxcui">
-          <td>RXNORM Concept:</td>
-          <td><a class="noul" ng-click="submit(pagedSplSet.data[0].rxcui)">{{pagedSplSet.data[0].rxcui}}</a>
-            &nbsp; <a title="Open in BioPortal"
-              href="{{getRxcuiUrl(pagedSplSet.data[0].rxcui)}}" target="_blank"
-              class="glyphicon glyphicon-share noul"></a></td>
-        </tr>
-        <tr ng-show="pagedSplSet.data[0].rxcuiName">
-          <td>RXNORM Name:</td>
-          <td>{{pagedSplSet.data[0].rxcuiName}}</td>
-        </tr>
-        <tr ng-show="pagedSplSet.data[0].ndc11">
-          <td>NDC:</td>
-          <td><a class="noul" ng-click="submit(pagedSplSet.data[0].ndc11)">{{pagedSplSet.data[0].ndc11}}</a>
-          </td>
-        </tr>
-        <tr ng-show="pagedSplSet.data[0].ndc10">
-          <td>NDC10:</td>
-          <td>{{pagedSplSet.data[0].ndc10}}</td>
-        </tr>
-        <tr ng-show="pagedSplSet.data[0].ndc9">
-          <td>NDC9:</td>
-          <td>{{pagedSplSet.data[0].ndc9}}</td>
-        </tr>
-        <tr ng-show="pagedSplSet.data[0].propertyList.length > 0">
-          <td>Property List ({{pagedSplSet.data[0].propertyList.length}}):</td>
-          <td>
-            <table class="table">
-              <thead>
-                <tr>
-                  <th class="col-md-6 col-xs-6">Property</th>
-                  <th class="col-md-6 col-xs-6">Value</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr
-                  ng-repeat="item in pagedSplSet.data[0].propertyList | orderBy:'prop'">
-                  <td>{{item.prop}}</td>
-                  <td>{{item.value}}</td>
-                </tr>
-              </tbody>
-            </table>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-
-
-    <!-- End C2R1 (view) -->
-  </div>
-
-
-
-  <!-- C2R1 (json) -->
-  <div ng-show="jsonEnabled" class="col-md-12 col-xs-12">
-    <h5 class="section-header">
-      <span ng-show="rxcui">RXNORM Concept </span>
-      <span ng-show="ndc">NDC </span>
-      <span ng-show="splSetId">SPL Set Id </span>
-      Results
-      <span ng-show="rxcui">- {{rxcui}}</span>
-      <span ng-show="ndc">- {{ndc}}</span>
-      <span ng-show="splSetId">- {{splSetId}}</span>
-      <span ng-show="pagedSplSet"> ({{pagedSplSet.totalCount}})</span>
-
-      <span style="float: right">
-        <i title="Switch to normal view"
-          class="glyphicon glyphicon-refresh noul" ng-click="disableJson()"></i>
+        <button class="btn btn-xs btn-warning"
+          ng-show="paging['splSetId'].filter"
+          ng-click="paging['splSetId'].filter = ''; getPagedSplSet()"
+          title="Click to clear filter text">Clear</button>
       </span>
-    </h5>
 
-    <div ng-show="jsonInfo">
-      <p>
-        Raw JSON document for
+      <span ng-show="pagedSplSet.data && pagedSplSet.data.length == 0"
+        class="alert alert-warning">Code returned no results</span>
+
+      <!-- For displaying propertiesListModel data, [0] works because there is only one per page -->
+      <table class="table"
+        ng-show="pagedSplSet.data && pagedSplSet.data.length>0">
+        <tbody>
+          <tr ng-show="pagedSplSet.data[0].splSetId">
+            <td>SPL Set Id:</td>
+            <td>
+              {{pagedSplSet.data[0].splSetId}}&nbsp;
+              <a title="Open in DailyMed"
+                href="{{getSplSetUrl(pagedSplSet.data[0].splSetId)}}"
+                target="_blank" class="glyphicon glyphicon-share noul"></a>
+            </td>
+          </tr>
+          <tr ng-show="pagedSplSet.data[0].rxcui">
+            <td>RXNORM Concept:</td>
+            <td>
+              <a class="noul" ng-click="submit(pagedSplSet.data[0].rxcui)">{{pagedSplSet.data[0].rxcui}}</a>
+              &nbsp;
+              <a title="Open in BioPortal"
+                href="{{getRxcuiUrl(pagedSplSet.data[0].rxcui)}}"
+                target="_blank" class="glyphicon glyphicon-share noul"></a>
+            </td>
+          </tr>
+          <tr ng-show="pagedSplSet.data[0].rxcuiName">
+            <td>RXNORM Name:</td>
+            <td>{{pagedSplSet.data[0].rxcuiName}}</td>
+          </tr>
+          <tr ng-show="pagedSplSet.data[0].ndc11">
+            <td>NDC:</td>
+            <td>
+              <a class="noul" ng-click="submit(pagedSplSet.data[0].ndc11)">{{pagedSplSet.data[0].ndc11}}</a>
+            </td>
+          </tr>
+          <tr ng-show="pagedSplSet.data[0].ndc10">
+            <td>NDC10:</td>
+            <td>{{pagedSplSet.data[0].ndc10}}</td>
+          </tr>
+          <tr ng-show="pagedSplSet.data[0].ndc9">
+            <td>NDC9:</td>
+            <td>{{pagedSplSet.data[0].ndc9}}</td>
+          </tr>
+          <tr ng-show="pagedSplSet.data[0].propertyList.length > 0">
+            <td>Property List
+              ({{pagedSplSet.data[0].propertyList.length}}):</td>
+            <td>
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th class="col-md-6 col-xs-6">Property</th>
+                    <th class="col-md-6 col-xs-6">Value</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr
+                    ng-repeat="item in pagedSplSet.data[0].propertyList | orderBy:'prop'">
+                    <td>{{item.prop}}</td>
+                    <td>{{item.value}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+
+      <!-- End C2R1 (view) -->
+    </div>
+
+
+
+    <!-- C2R1 (json) -->
+    <div ng-show="jsonEnabled" class="col-md-12 col-xs-12">
+      <h5 class="section-header">
         <span ng-show="rxcui">RXNORM Concept </span>
         <span ng-show="ndc">NDC </span>
-        info
-      </p>
-      <div style="max-height: 400px; overflow-y: scroll">
-        <pre style="background-color: lightgray">{{jsonInfo}}</pre>
+        <span ng-show="splSetId">SPL Set Id </span>
+        Results
+        <span ng-show="rxcui">- {{rxcui}}</span>
+        <span ng-show="ndc">- {{ndc}}</span>
+        <span ng-show="splSetId">- {{splSetId}}</span>
+        <span ng-show="pagedSplSet"> ({{pagedSplSet.totalCount}})</span>
+
+        <span style="float: right">
+          <i title="Switch to normal view"
+            class="glyphicon glyphicon-refresh noul" ng-click="disableJson()"></i>
+        </span>
+      </h5>
+
+      <div ng-show="jsonInfo">
+        <p>
+          Raw JSON document for
+          <span ng-show="rxcui">RXNORM Concept </span>
+          <span ng-show="ndc">NDC </span>
+          info
+        </p>
+        <div style="max-height: 400px; overflow-y: scroll">
+          <pre style="background-color: lightgray">{{jsonInfo}}</pre>
+        </div>
       </div>
+
+      <div ng-show="jsonProperties">
+        <p>
+          Raw JSON document for NDC properties
+          <span ng-show="splSetId">list</span>
+        <div
+          style="max-height: 400px; overflow-y: scroll; background-color: light-grey">
+          <pre style="background-color: lightgray">{{jsonProperties}}</pre>
+        </div>
+      </div>
+
+      <!-- End C2R1 (json) -->
     </div>
 
-    <div ng-show="jsonProperties">
-      <p>
-        Raw JSON document for NDC properties
-        <span ng-show="splSetId">list</span>
-      <div
-        style="max-height: 400px; overflow-y: scroll; background-color: light-grey">
-        <pre style="background-color: lightgray">{{jsonProperties}}</pre>
-      </div>
-    </div>
-
-    <!-- End C2R1 (json) -->
   </div>
-
-</div>

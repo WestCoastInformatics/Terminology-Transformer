@@ -29,16 +29,16 @@ import com.wci.tt.jpa.infomodels.RxcuiNdcHistoryModel;
 import com.wci.tt.jpa.services.helper.DataContextMatcher;
 import com.wci.tt.services.handlers.ProviderHandler;
 import com.wci.umls.server.helpers.Branch;
+import com.wci.umls.server.helpers.ConfigUtility;
 import com.wci.umls.server.helpers.PfscParameter;
 import com.wci.umls.server.helpers.SearchCriteria;
-import com.wci.umls.server.helpers.SearchResult;
-import com.wci.umls.server.helpers.SearchResultList;
+import com.wci.umls.server.jpa.content.ConceptJpa;
 import com.wci.umls.server.jpa.helpers.PfscParameterJpa;
 import com.wci.umls.server.jpa.services.ContentServiceJpa;
 import com.wci.umls.server.model.content.Atom;
 import com.wci.umls.server.model.content.Attribute;
 import com.wci.umls.server.model.content.Concept;
-import com.wci.umls.server.services.ContentService;
+import com.wci.umls.server.services.handlers.SearchHandler;
 
 /**
  * Default implementation of {@link ProviderHandler}.
@@ -135,7 +135,9 @@ public class NdcProvider extends AbstractAcceptsHandler
     final DataContext inputContext = transformRecord.getInputContext();
     final DataContext outputContext =
         transformRecord.getProviderOutputContext();
-
+    boolean history = inputContext.getParameters() != null
+        && inputContext.getParameters().get("history") != null
+        && inputContext.getParameters().get("history").equals("true");
     // Validate input/output context
     validate(inputContext, outputContext);
 
@@ -148,7 +150,7 @@ public class NdcProvider extends AbstractAcceptsHandler
 
       // Attempt to find the RXNORM CUI (or CUIs) from the NDC code
       final NdcModel model =
-          getNdcModel(inputString, record.getNormalizedResults());
+          getNdcModel(inputString, record.getNormalizedResults(), history);
       if (model != null) {
         final ScoredResult result = new ScoredResultJpa();
         result.setValue(model.getModelValue());
@@ -166,7 +168,7 @@ public class NdcProvider extends AbstractAcceptsHandler
 
       // Attempt to find the NDC codes from the RXNORM cui
       final RxcuiModel model =
-          getRxcuiModel(inputString, record.getNormalizedResults());
+          getRxcuiModel(inputString, record.getNormalizedResults(), history);
       if (model != null) {
         final ScoredResult result = new ScoredResultJpa();
         result.setValue(model.getModelValue());
@@ -228,14 +230,15 @@ public class NdcProvider extends AbstractAcceptsHandler
    *
    * @param ndc the input string
    * @param normalizedResults the normalized results
+   * @param history the history
    * @return the model
    * @throws Exception the exception
    */
-  private NdcModel getNdcModel(String ndc, List<ScoredResult> normalizedResults)
-    throws Exception {
+  private NdcModel getNdcModel(String ndc, List<ScoredResult> normalizedResults,
+    boolean history) throws Exception {
     Logger.getLogger(getClass()).debug("Get NDC Model - " + ndc);
 
-    final ContentService service = new ContentServiceJpa();
+    final ContentServiceJpa service = new ContentServiceJpa();
     try {
 
       // Gather together original input string and normalized results
@@ -256,28 +259,33 @@ public class NdcProvider extends AbstractAcceptsHandler
       final String query = inputStrings.iterator().next();
       Logger.getLogger(getClass()).debug("  ndc = " + query);
 
-      // Find all matching RXNORM/NDC atoms from all versions
-      final PfscParameter pfsc = new PfscParameterJpa();
-      pfsc.setSearchCriteria(new ArrayList<SearchCriteria>());
-      final SearchResultList list = service.findConceptsForQuery("RXNORM", null,
-          Branch.ROOT, "atoms.termType:NDC AND atoms.name:" + query, pfsc);
-
       // Determine the current RXNORM version
       final String rxnormLatestVersion =
           service.getTerminologyLatestVersion("RXNORM").getVersion();
       Logger.getLogger(getClass())
           .debug("  latest RXNORM version = " + rxnormLatestVersion);
 
+      // Find all matching RXNORM/NDC atoms from all versions
+      // (or just the latest version if we're not interested in history)
+      final PfscParameter pfsc = new PfscParameterJpa();
+      pfsc.setSearchCriteria(new ArrayList<SearchCriteria>());
+      final SearchHandler handler =
+          service.getSearchHandler(ConfigUtility.ATOMCLASS);
+      final int[] totalCt = new int[1];
+      final List<ConceptJpa> list = handler.getQueryResults("RXNORM", null,
+          Branch.ROOT, "atoms.termType:NDC AND atoms.name:" + query, null,
+          ConceptJpa.class, ConceptJpa.class, pfsc, totalCt,
+          service.getEntityManager());
+
       // [ {version,ndc,ndcActive,rxcui,rxcuiActive}, ... ]
       final List<NdcRxcuiHistoryRecord> recordList = new ArrayList<>();
 
       // list will have each matching concept - e.g. from each version.
-      if (list.getCount() > 0) {
+      if (list.size() > 0) {
 
         // Convert each search result into a record
         String splSetId = null;
-        for (final SearchResult result : list.getObjects()) {
-          final Concept concept = service.getConcept(result.getId());
+        for (final Concept concept : list) {
           boolean foundActiveMatchingNdc = false;
           for (final Atom atom : concept.getAtoms()) {
             if (atom.getTerminology().equals("RXNORM")
@@ -293,8 +301,8 @@ public class NdcProvider extends AbstractAcceptsHandler
 
           final NdcRxcuiHistoryRecord record = new NdcRxcuiHistoryRecord();
           record.active = foundActiveMatchingNdc;
-          record.rxcui = result.getTerminologyId();
-          record.version = result.getVersion();
+          record.rxcui = concept.getTerminologyId();
+          record.version = concept.getVersion();
 
           recordList.add(record);
         }
@@ -309,55 +317,64 @@ public class NdcProvider extends AbstractAcceptsHandler
         model.setActive(recordList.get(0).active
             && recordList.get(0).version.equals(rxnormLatestVersion));
         model.setNdc(query);
-        model.setSplSetId(splSetId);
-        model.setRxcui(recordList.get(0).rxcui);
-        Concept cpt = service.getConcept(model.getRxcui(), "RXNORM",
+        if (splSetId == null || splSetId.isEmpty()) {
+          model.setSplSetId(null);
+        } else {
+          model.setSplSetId(splSetId);
+        }
+        Concept concept = service.getConcept(recordList.get(0).rxcui, "RXNORM",
             rxnormLatestVersion, Branch.ROOT);
-        model.setRxcuiName(cpt != null ? cpt.getName() : "");
+        model.setRxcuiName(concept != null ? concept.getName() : "");
+        model.setRxcui(concept != null ? concept.getTerminologyId() : "");
 
-        // RXCUI VERSION ACTIVE
-        // 12343 20160404 true
-        // 12343 20160304 true
-        // 43921 20160204 true
-        //
-        // History
-        // {rxcui: 12343, start:20160304, end: 20160404
-        // },
-        // {rxcui: 43921, start:20160204, end: 20160204 }
-        final List<NdcHistoryModel> historyModels = new ArrayList<>();
-        NdcHistoryModel historyModel = new NdcHistoryModel();
-        String prevRxcui = null;
-        String prevVersion = null;
-        for (final NdcRxcuiHistoryRecord record : recordList) {
-          // handle first record
-          if (prevRxcui == null) {
-            historyModel.setRxcui(record.rxcui);
-            historyModel.setEnd(record.version);
-          }
-
-          // when rxcui changes
-          if (prevRxcui != null && !prevRxcui.equals(record.rxcui)) {
-            if (historyModel != null) {
-              historyModel.setStart(prevVersion);
-              historyModels.add(historyModel);
+        // Look up history if desired
+        if (history) {
+          // RXCUI VERSION ACTIVE
+          // 12343 20160404 true
+          // 12343 20160304 true
+          // 43921 20160204 true
+          //
+          // History
+          // {rxcui: 12343, start:20160304, end: 20160404
+          // },
+          // {rxcui: 43921, start:20160204, end: 20160204 }
+          final List<NdcHistoryModel> historyModels = new ArrayList<>();
+          NdcHistoryModel historyModel = new NdcHistoryModel();
+          String prevRxcui = null;
+          String prevVersion = null;
+          for (final NdcRxcuiHistoryRecord record : recordList) {
+            // handle first record
+            if (prevRxcui == null) {
+              historyModel.setRxcui(record.rxcui);
+              historyModel.setEnd(record.version);
             }
-            Logger.getLogger(getClass()).debug("    history = " + historyModel);
-            historyModel = new NdcHistoryModel();
-            historyModel.setRxcui(record.rxcui);
-            historyModel.setEnd(record.version);
+
+            // when rxcui changes
+            if (prevRxcui != null && !prevRxcui.equals(record.rxcui)) {
+              if (historyModel != null) {
+                historyModel.setStart(prevVersion);
+                historyModels.add(historyModel);
+              }
+              Logger.getLogger(getClass())
+                  .debug("    history = " + historyModel);
+              historyModel = new NdcHistoryModel();
+              historyModel.setRxcui(record.rxcui);
+              historyModel.setEnd(record.version);
+            }
+
+            prevRxcui = record.rxcui;
+            prevVersion = record.version;
           }
+          // Handle the final record, if there was a record
+          if (recordList.size() > 0) {
+            historyModel.setStart(prevVersion);
+            historyModels.add(historyModel);
+          }
+          Logger.getLogger(getClass()).debug("    history = " + historyModel);
 
-          prevRxcui = record.rxcui;
-          prevVersion = record.version;
-        }
-        // Handle the final record, if there was a record
-        if (recordList.size() > 0) {
-          historyModel.setStart(prevVersion);
-          historyModels.add(historyModel);
-        }
-        Logger.getLogger(getClass()).debug("    history = " + historyModel);
+          model.setHistory(historyModels);
 
-        model.setHistory(historyModels);
+        }
         Logger.getLogger(getClass()).debug("  model = " + model);
         return model;
 
@@ -365,7 +382,6 @@ public class NdcProvider extends AbstractAcceptsHandler
 
       // otherwise, empty list
       else {
-        Logger.getLogger(getClass()).debug("  model = " + new NdcModel());
         return new NdcModel();
       }
 
@@ -381,22 +397,16 @@ public class NdcProvider extends AbstractAcceptsHandler
    *
    * @param rxcui the input string
    * @param normalizedResults the normalized results
+   * @param history the history
    * @return the rxcui model
    * @throws Exception the exception
    */
   private RxcuiModel getRxcuiModel(String rxcui,
-    List<ScoredResult> normalizedResults) throws Exception {
+    List<ScoredResult> normalizedResults, boolean history) throws Exception {
     Logger.getLogger(getClass()).debug("Get RXCUI Model - " + rxcui);
 
-    final ContentService service = new ContentServiceJpa();
+    final ContentServiceJpa service = new ContentServiceJpa();
     try {
-
-      // try to find NDC based on inputString
-      final PfscParameter pfsc = new PfscParameterJpa();
-      pfsc.setSearchCriteria(new ArrayList<SearchCriteria>());
-      // rxcui -> ndc
-      final SearchResultList list = service.findConceptsForQuery("RXNORM", null,
-          Branch.ROOT, "terminologyId:" + rxcui, pfsc);
 
       // Determine the current RXNORM version
       final String rxnormLatestVersion =
@@ -404,17 +414,28 @@ public class NdcProvider extends AbstractAcceptsHandler
       Logger.getLogger(getClass())
           .debug("  latest RXNORM version = " + rxnormLatestVersion);
 
+      // try to find RXCUI for all versions (or just latest version if
+      // not interested in history)
+      final PfscParameter pfsc = new PfscParameterJpa();
+      pfsc.setSearchCriteria(new ArrayList<SearchCriteria>());
+      // rxcui -> ndc
+      final SearchHandler handler =
+          service.getSearchHandler(ConfigUtility.ATOMCLASS);
+      final int[] totalCt = new int[1];
+      final List<ConceptJpa> list = handler.getQueryResults("RXNORM", null,
+          Branch.ROOT, "terminologyId:" + rxcui, null, ConceptJpa.class,
+          ConceptJpa.class, pfsc, totalCt, service.getEntityManager());
+
       // [ {version,ndc,ndcActive,rxcui,rxcuiActive}, ... ]
       final List<RxcuiNdcHistoryRecord> recordList = new ArrayList<>();
 
       // list will have each matching concept - e.g. from each version.
-      if (list.getCount() > 0) {
+      if (list.size() > 0) {
         // Convert each search result into a record
         String maxVersion = "000000";
         String rxcuiName = null;
         final Set<String> splSetIds = new HashSet<>();
-        for (final SearchResult result : list.getObjects()) {
-          final Concept concept = service.getConcept(result.getId());
+        for (final Concept concept : list) {
           // get the most recent rxcui name
           if (concept.getVersion().compareTo(maxVersion) > 0) {
             maxVersion = concept.getVersion();
@@ -425,9 +446,12 @@ public class NdcProvider extends AbstractAcceptsHandler
                 && atom.getTermType().equals("NDC") && !atom.isObsolete()) {
               final RxcuiNdcHistoryRecord record = new RxcuiNdcHistoryRecord();
               record.ndc = atom.getName();
-              record.version = result.getVersion();
+              record.version = concept.getVersion();
               recordList.add(record);
-              if (!atom.getCodeId().equals("")) {
+
+              // Keep only latest version SPL_SET_IDs
+              if (!atom.getCodeId().equals("")
+                  && atom.getVersion().equals(rxnormLatestVersion)) {
                 splSetIds.add(atom.getCodeId());
               }
             }
@@ -445,52 +469,59 @@ public class NdcProvider extends AbstractAcceptsHandler
         model.setActive(concept != null && !concept.isObsolete());
         model.setRxcui(rxcui);
         model.setRxcuiName(rxcuiName);
-        model.setSplSetIds(new ArrayList<>(splSetIds));
+        if (concept != null) {
+          // leave this blank if the rxcui is obsolete
+          model.setSplSetIds(new ArrayList<>(splSetIds));
+        }
 
-        // NDC VERSION ACTIVE
-        // 12343 20160404 true
-        // 12343 20160304 true
-        // 43921 20160204 true
-        //
-        // History
-        // {ndc: 12343, start:20160304, end: 20160404
-        // },
-        // {ndc: 43921, start:20160204, end: 20160204 }
+        if (history) {
+          // NDC VERSION ACTIVE
+          // 12343 20160404 true
+          // 12343 20160304 true
+          // 43921 20160204 true
+          //
+          // History
+          // {ndc: 12343, start:20160304, end: 20160404
+          // },
+          // {ndc: 43921, start:20160204, end: 20160204 }
 
-        List<RxcuiNdcHistoryModel> historyModels = new ArrayList<>();
-        RxcuiNdcHistoryModel historyModel = new RxcuiNdcHistoryModel();
-        String prevNdc = null;
-        String prevVersion = null;
-        for (RxcuiNdcHistoryRecord record : recordList) {
-          // handle first record
-          if (prevNdc == null) {
-            historyModel.setNdc(record.ndc);
-            historyModel.setEnd(record.version);
-          }
-
-          // when ndc changes
-          if (prevNdc != null && !prevNdc.equals(record.ndc)) {
-            if (historyModel != null) {
-              historyModel.setStart(prevVersion);
-              historyModels.add(historyModel);
+          List<RxcuiNdcHistoryModel> historyModels = new ArrayList<>();
+          RxcuiNdcHistoryModel historyModel = new RxcuiNdcHistoryModel();
+          String prevNdc = null;
+          String prevVersion = null;
+          for (RxcuiNdcHistoryRecord record : recordList) {
+            // handle first record
+            if (prevNdc == null) {
+              historyModel.setNdc(record.ndc);
+              historyModel.setEnd(record.version);
             }
-            Logger.getLogger(getClass()).debug("    history = " + historyModel);
-            historyModel = new RxcuiNdcHistoryModel();
-            historyModel.setNdc(record.ndc);
-            historyModel.setEnd(record.version);
+
+            // when ndc changes
+            if (prevNdc != null && !prevNdc.equals(record.ndc)) {
+              if (historyModel != null) {
+                historyModel.setStart(prevVersion);
+                historyModels.add(historyModel);
+              }
+              Logger.getLogger(getClass())
+                  .debug("    history = " + historyModel);
+              historyModel = new RxcuiNdcHistoryModel();
+              historyModel.setNdc(record.ndc);
+              historyModel.setEnd(record.version);
+            }
+
+            prevNdc = record.ndc;
+            prevVersion = record.version;
           }
+          // Handle the final record if there was at least one record
+          if (recordList.size() > 0) {
+            historyModel.setStart(prevVersion);
+            historyModels.add(historyModel);
+          }
+          Logger.getLogger(getClass()).debug("    history = " + historyModel);
 
-          prevNdc = record.ndc;
-          prevVersion = record.version;
+          model.setHistory(historyModels);
         }
-        // Handle the final record if there was at least one record
-        if (recordList.size() > 0) {
-          historyModel.setStart(prevVersion);
-          historyModels.add(historyModel);
-        }
-        Logger.getLogger(getClass()).debug("    history = " + historyModel);
 
-        model.setHistory(historyModels);
         Logger.getLogger(getClass()).debug("  model = " + model);
         return model;
 
@@ -519,7 +550,7 @@ public class NdcProvider extends AbstractAcceptsHandler
   private NdcPropertiesModel getPropertiesModel(String ndc,
     List<ScoredResult> normalizedResults) throws Exception {
     Logger.getLogger(getClass()).debug("Get NDC Properties Model - " + ndc);
-    final ContentService service = new ContentServiceJpa();
+    final ContentServiceJpa service = new ContentServiceJpa();
     try {
 
       // gather together original input string and normalized results
@@ -540,19 +571,20 @@ public class NdcProvider extends AbstractAcceptsHandler
       Logger.getLogger(getClass()).debug("  ndc = " + ndc);
 
       // try to find NDC based on inputString
-      final PfscParameter pfsc = new PfscParameterJpa();
-      pfsc.setSearchCriteria(new ArrayList<SearchCriteria>());
-      final SearchResultList list = service.findConceptsForQuery("RXNORM",
+      final SearchHandler handler =
+          service.getSearchHandler(ConfigUtility.ATOMCLASS);
+      final int[] totalCt = new int[1];
+      final List<ConceptJpa> list = handler.getQueryResults("RXNORM",
           service.getTerminologyLatestVersion("RXNORM").getVersion(),
-          Branch.ROOT, "atoms.termType:NDC AND atoms.name:" + query, pfsc);
+          Branch.ROOT, "atoms.termType:NDC AND atoms.name:" + query, null,
+          ConceptJpa.class, ConceptJpa.class, null, totalCt,
+          service.getEntityManager());
 
       // Should be a single matching concept
-      if (list.getCount() == 1) {
+      if (list.size() == 1) {
 
         // RXNORM concept returned, there should be only one.
-        final SearchResult ndcResult = list.getObjects().get(0);
-
-        final Concept concept = service.getConcept(ndcResult.getId());
+        final Concept concept = list.get(0);
         final NdcPropertiesModel model = new NdcPropertiesModel();
         model.setRxcui(concept.getTerminologyId());
         model.setRxcuiName(concept.getName());
@@ -566,8 +598,11 @@ public class NdcProvider extends AbstractAcceptsHandler
               && atom.getTermType().equals("NDC") && !atom.isObsolete()
               && atom.getName().equals(query)) {
             // Get the SPL_SET_ID from the code
-            model.setSplSetId(atom.getCodeId());
-
+            if (atom.getCodeId().isEmpty()) {
+              model.setSplSetId(null);
+            } else {
+              model.setSplSetId(atom.getCodeId());
+            }
             // Now, look up NDC properties
             final List<PropertyModel> properties =
                 new ArrayList<PropertyModel>();
@@ -624,25 +659,29 @@ public class NdcProvider extends AbstractAcceptsHandler
   private NdcPropertiesListModel getPropertiesListModel(String splsetid,
     List<ScoredResult> normalizedResults) throws Exception {
 
-    final ContentService service = new ContentServiceJpa();
+    final ContentServiceJpa service = new ContentServiceJpa();
 
     try {
       // try to find NDC based on inputString
       final PfscParameter pfsc = new PfscParameterJpa();
       pfsc.setSearchCriteria(new ArrayList<SearchCriteria>());
       // Look only in latest RXNORM version for NDCs with a matching codeId
-      final SearchResultList list = service.findConceptsForQuery("RXNORM",
+      final SearchHandler handler =
+          service.getSearchHandler(ConfigUtility.ATOMCLASS);
+      final int[] totalCt = new int[1];
+      final List<ConceptJpa> list = handler.getQueryResults("RXNORM",
           service.getTerminologyLatestVersion("RXNORM").getVersion(),
-          Branch.ROOT, "atoms.termType:NDC AND atoms.codeId:" + splsetid, pfsc);
+          Branch.ROOT, "atoms.termType:NDC AND atoms.codeId:" + splsetid, null,
+          ConceptJpa.class, ConceptJpa.class, null, totalCt,
+          service.getEntityManager());
 
       // list will have each matching concept - e.g. from each version.
-      if (list.getCount() > 0) {
+      if (list.size() > 0) {
         final NdcPropertiesListModel model = new NdcPropertiesListModel();
 
         // Gather results
-        for (final SearchResult result : list.getObjects()) {
+        for (final Concept concept : list) {
 
-          final Concept concept = service.getConcept(result.getId());
           for (final Atom atom : concept.getAtoms()) {
             if (atom.getTerminology().equals("RXNORM")
                 && atom.getTermType().equals("NDC") && !atom.isObsolete()

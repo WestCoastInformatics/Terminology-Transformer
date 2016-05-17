@@ -20,22 +20,25 @@ public interface NdcServiceRest {
    * Process the ndc and return rxcui.
    *
    * @param ndc the ndc
+   * @param history a flag indicating whether to include history
    * @param authToken the auth token
    * @return the ndc model
    * @throws Exception the exception
    */
-  public NdcModel getNdcInfo(String ndc, String authToken) throws Exception;
+  public NdcModel getNdcInfo(String ndc, Boolean history, String authToken)
+    throws Exception;
 
   /**
    * Process rxcui and return ndc codes.
    *
    * @param rxcui the rxcui
+   * @param history a flag indicating whether to include history
    * @param authToken the auth token
    * @return the rxcui model
    * @throws Exception the exception
    */
-  public RxcuiModel getRxcuiInfo(String rxcui, String authToken)
-    throws Exception;
+  public RxcuiModel getRxcuiInfo(String rxcui, Boolean history,
+    String authToken) throws Exception;
 
   /**
    * Get Ndc properties.

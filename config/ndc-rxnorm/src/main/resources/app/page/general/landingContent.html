@@ -7,6 +7,11 @@ iframe {
 	border-radius: 20px !important;
 }
 </style>
+
+TODO: links to examples (e.g. curl/java) TODO: put "history" calls into the ReST
+API list as well, double-check examples in Swagger, etc. TODO: update the video
+link TODO: credit olivier's RXNORM APOIs. (at the end - in references/links)
+
 <h4>Introduction</h4>
 <p>
   This is a sample application for demonstrating the
@@ -31,10 +36,12 @@ iframe {
 <br />
 <h4>Features</h4>
 <ul>
-  <li>Deployable locally</li>
+  <li>Deployable locally (to run within an existing application stack or
+    behind a firewall)</li>
   <li>Configurable security architecture</li>
   <li>Supports "unit" and "batch" requests</li>
   <li>Includes admin tools for easy updating to latest RXNORM version</li>
+  <li>Individual code and batch forms of API calls</li>
 </ul>
 
 <br />
@@ -51,30 +58,49 @@ iframe {
 <ul>
   <li>Get NDC Info
     <ul>
-      <li>Takes an NDC as a parameter and returns a document containing the
-        current RXNORM concept, its active status, the current SPL Set Id, and
-        the RXNORM concept history.</li>
+      <li><p>Takes an NDC as a parameter and returns a document
+          containing the current RXNORM concept, its active status, the current
+          SPL Set Id, and the RXNORM concept history.</p>
+        <p>Examples</p>
+        <div class="well well-sm">
+          <pre>curl -H Authorization:guest https://ndc.terminology.tools/rxnorm/ndc/00143314501</pre>
+          <pre>curl -H Authorization:guest https://ndc.terminology.tools/rxnorm/ndc/0143-3145-01</pre>
+        </div></li>
     </ul>
   </li>
   <li>Get RXCUI Info
     <ul>
-      <li>Takes an RXCUI (an RXNORM concept id) as a parameter and returns
-        a document containing the RXNORM concept info, its active status, any
-        associated SPL Set Ids, and a complete history of NDCs associated with
-        it.</li>
+      <li><p>Takes an RXCUI (an RXNORM concept id) as a parameter and
+          returns a document containing the RXNORM concept info, its active
+          status, any associated SPL Set Ids, and a complete history of NDCs
+          associated with it.</p>
+        <p>Example</p>
+        <div class="well well-sm">
+          <pre>curl -H Authorization:guest https://ndc.terminology.tools/rxnorm/rxcui/351772</pre>
+        </div></li>
     </ul>
   </li>
   <li>Get NDC Properties
     <ul>
-      <li>Takes an NDC as a parameter and returns a document a containing
-        details of the NDC, including various properties associated with it in
-        RXNORM.</li>
+      <li><p>Takes an NDC as a parameter and returns a document a
+          containing details of the NDC, including various properties associated
+          with it in RXNORM.</p>
+        <p>Examples</p>
+        <div class="well well-sm">
+          <pre>curl -H Authorization:guest https://ndc.terminology.tools/rxnorm/ndc/00143314501/properties</pre>
+          <pre>curl -H Authorization:guest https://ndc.terminology.tools/rxnorm/ndc/0143-3145-01/properties</pre>
+        </div></li>
     </ul>
   </li>
   <li>Get NDC Properties for SPL Set Id
     <ul>
-      <li>Takes an SPL Set Id as a parameter NDC as a parameter and returns
-        a document containing details of all of the NDCs associated with it.</li>
+      <li><p>Takes an SPL Set Id as a parameter NDC as a parameter and
+          returns a document containing details of all of the NDCs associated
+          with it.</p>
+        <p>Example</p>
+        <div class="well well-sm">
+          <pre>curl -H Authorization:guest https://ndc.terminology.tools/rxnorm/spl/8d24bacb-feff-4c6a-b8df-625e1435387a/ndc/properties</pre>
+        </div></li>
     </ul>
   </li>
 </ul>
@@ -104,8 +130,8 @@ iframe {
 <br />
 <h4>References/Links</h4>
 <ul>
-  <li><a href="http://www.westcoastinformatics/transformer.html">West Coast
-      Informatics - Transformer Application</a></li>
+  <li><a href="http://www.westcoastinformatics/transformer.html">West
+      Coast Informatics - Transformer Application</a></li>
   <li><a href="https://www.nlm.nih.gov/research/umls/rxnorm/">RXNORM
       Home</a></li>
   <li><a href="https://dailymed.nlm.nih.gov/dailymed/">DailyMed Home</a></li>

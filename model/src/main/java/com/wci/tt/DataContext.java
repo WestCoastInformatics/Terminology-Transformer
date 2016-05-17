@@ -3,6 +3,8 @@
  */
 package com.wci.tt;
 
+import java.util.Map;
+
 import com.wci.tt.helpers.DataContextType;
 import com.wci.umls.server.helpers.HasId;
 import com.wci.umls.server.helpers.HasTerminology;
@@ -89,4 +91,17 @@ public interface DataContext extends HasTerminology, HasId {
    */
   public boolean isEmpty();
 
+  /**
+   * Returns any additional parameterization of the context.
+   * This information is NOT used as part of the matching algorithm.
+   * @return the parameters
+   */
+  public Map<String,String> getParameters();
+  
+  /**
+   * Sets any additional parameterization of the context.
+   *
+   * @param parameters the parameters
+   */
+  public void setParameters(Map<String,String> parameters);
 }

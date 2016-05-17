@@ -48,14 +48,17 @@ public class NdcClientRest extends RootClientRest implements NdcServiceRest {
 
   /* see superclass */
   @Override
-  public NdcModel getNdcInfo(String ndc, String authToken) throws Exception {
-    Logger.getLogger(getClass()).debug("NDC Client - get ndc info - " + ndc);
+  public NdcModel getNdcInfo(String ndc, Boolean history, String authToken)
+    throws Exception {
+    Logger.getLogger(getClass())
+        .debug("NDC Client - get ndc info - " + ndc + ", history=" + history);
 
     validateNotEmpty(ndc, "ndc");
 
     Client client = ClientBuilder.newClient();
     WebTarget target =
-        client.target(config.getProperty("base.url") + "/rxnorm/ndc/" + ndc);
+        client.target(config.getProperty("base.url") + "/rxnorm/ndc/" + ndc
+            + (history == null ? "" : "?history=" + history));
 
     // Call Rest method
     Response response = target.request(MediaType.APPLICATION_XML)
@@ -77,16 +80,17 @@ public class NdcClientRest extends RootClientRest implements NdcServiceRest {
 
   /* see superclass */
   @Override
-  public RxcuiModel getRxcuiInfo(String rxcui, String authToken)
-    throws Exception {
-    Logger.getLogger(getClass())
-        .debug("NDC Client - get rxcui info - " + rxcui);
+  public RxcuiModel getRxcuiInfo(String rxcui, Boolean history,
+    String authToken) throws Exception {
+    Logger.getLogger(getClass()).debug(
+        "NDC Client - get rxcui info - " + rxcui + ", history=" + history);
 
     validateNotEmpty(rxcui, "rxcui");
 
     Client client = ClientBuilder.newClient();
-    WebTarget target = client
-        .target(config.getProperty("base.url") + "/rxnorm/rxcui/" + rxcui);
+    WebTarget target =
+        client.target(config.getProperty("base.url") + "/rxnorm/rxcui/" + rxcui
+            + (history == null ? "" : "?history=" + history));
 
     // Call Rest method
     Response response = target.request(MediaType.APPLICATION_XML)
