@@ -3,8 +3,13 @@
  */
 package com.wci.tt.test.rest;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 import org.apache.log4j.Logger;
@@ -302,4 +307,20 @@ public class NdcRestTest extends RestIntegrationSupport {
 
   }
 
+  @Test
+  public void testGetNdcInfoBatch() throws Exception {
+    Logger.getLogger(getClass()).info("TEST " + name.getMethodName());
+
+    // Input Data
+    List<String> ndcs = new ArrayList<>();
+    ndcs.add("00247100552");
+    List<NdcModel> results = ndcService.getNdcInfoBatch(ndcs, true, "guest");
+    Logger.getLogger(getClass()).info(" results = " + results);
+    assertEquals(1, results.size());
+    
+    ndcs.add("49452360601");
+    results = ndcService.getNdcInfoBatch(ndcs, true, "guest");
+    Logger.getLogger(getClass()).info(" results = " + results);
+    assertEquals(2, results.size());
+  }
 }

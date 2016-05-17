@@ -12,6 +12,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 import com.wci.tt.infomodels.InfoModel;
+import com.wci.tt.jpa.infomodels.NdcHistoryModel;
 import com.wci.umls.server.helpers.ConfigUtility;
 
 /**

@@ -179,6 +179,11 @@
             <td>NDC9:</td>
             <td>{{propertiesModel.ndc9}}</td>
           </tr>
+		  <tr ng-show="model.active != null">
+            <td>Status:</td>
+            <td ng-show="model.active">Active</td>
+            <td ng-show="!model.active">Obsolete</td>
+          </tr>
           <tr ng-show="pagedHistory.data.length == 0">
             <td>&nbsp;</td>
             <td>

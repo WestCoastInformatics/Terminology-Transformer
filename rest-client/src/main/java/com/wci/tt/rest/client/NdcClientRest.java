@@ -4,6 +4,7 @@
 package com.wci.tt.rest.client;
 
 import java.net.URLEncoder;
+import java.util.List;
 import java.util.Properties;
 
 import javax.ws.rs.client.Client;
@@ -229,6 +230,62 @@ public class NdcClientRest extends RootClientRest implements NdcServiceRest {
     return ConfigUtility.getGraphForString(resultString,
         SearchResultList.class);
 
+  }
+
+  @Override
+  public List<NdcModel> getNdcInfoBatch(List<String> ndcs, Boolean history,
+    String authToken) throws Exception {
+
+    Client client = ClientBuilder.newClient();
+    WebTarget target =
+        client.target(config.getProperty("base.url")
+            + "/rxnorm/ndcs"           
+            + (history == null ? "" : "?history=" + history));
+    String ndcsString = ndcs == null ? "" : 
+        ConfigUtility.getJsonForGraph(ndcs);
+    Response response =
+        target.request(MediaType.APPLICATION_JSON)
+            .header("Authorization", authToken).post(Entity.json(ndcsString));
+    String resultString = response.readEntity(String.class);
+    if (response.getStatusInfo().getFamily() == Family.SUCCESSFUL) {
+      // n/a
+    } else {
+      throw new Exception(response.toString());
+    }
+    
+    // converting to object
+    @SuppressWarnings("unchecked")
+    final List<NdcModel> list =
+        ConfigUtility.getGraphForJson(resultString, List.class);
+    return list;
+  }
+
+  @Override
+  public List<RxcuiModel> getRxcuiInfoBatch(List<String> rxcuis, Boolean history,
+    String authToken) throws Exception {
+
+    Client client = ClientBuilder.newClient();
+    WebTarget target =
+        client.target(config.getProperty("base.url")
+            + "/rxnorm/rxcuis"           
+            + (history == null ? "" : "?history=" + history));
+    String ndcsString = rxcuis == null ? "" : 
+        ConfigUtility.getJsonForGraph(rxcuis);
+    Response response =
+        target.request(MediaType.APPLICATION_JSON)
+            .header("Authorization", authToken).post(Entity.json(ndcsString));
+    String resultString = response.readEntity(String.class);
+    if (response.getStatusInfo().getFamily() == Family.SUCCESSFUL) {
+      // n/a
+    } else {
+      throw new Exception(response.toString());
+    }
+    
+    // converting to object
+    @SuppressWarnings("unchecked")
+    final List<RxcuiModel> list =
+        ConfigUtility.getGraphForJson(resultString, List.class);
+    return list;
   }
 
 }
