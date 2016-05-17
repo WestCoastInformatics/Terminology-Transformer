@@ -69,6 +69,12 @@ tsApp
 
         // Define functions
 
+        // Clear search results
+        $scope.clearResults = function() {
+          $scope.searchResults = null;
+          $scope.selectedResult = null;
+        };
+
         // Submit form
         $scope.submit = function(query, clearFlag, historyFlag) {
 
@@ -294,7 +300,7 @@ tsApp
 
           // Do nothing if this is already on the history list, dups not allowed
           if (flag) {
-            // n/a
+            return;
           }
 
           // In simple case, simply add to the end

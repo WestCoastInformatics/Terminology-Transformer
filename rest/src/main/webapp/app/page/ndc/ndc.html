@@ -41,7 +41,7 @@
         class="alert
         alert-warning">No search results</span>
       <!-- Search results -->
-      <span style="display: block;">
+      <span style="display: block; margin-bottom: 2px;">
         <uib-pagination items-per-page="paging['search'].pageSize" max-size="5"
           boundary-links="true" class="pagination-sm" previous-text="&lsaquo;"
           next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"
@@ -49,6 +49,9 @@
           total-items="searchResults.totalCount"
           ng-model="paging['search'].page" ng-change="findConceptsByQuery()"></uib-pagination>
 
+        <button class="btn btn-sm btn-warning" type="button"
+          ng-show="searchResults && searchResults.length > 0"
+          ng-click="clearResults()" title="Clear search results">Clear</button>
       </span>
       <table class="table">
         <tbody>
@@ -358,9 +361,9 @@
     </div>
 
 
-
     <!-- C2R1 (json) -->
     <div ng-show="jsonEnabled" class="col-md-12 col-xs-12">
+
       <h5 class="section-header">
         <span ng-show="rxcui">RXNORM Concept </span>
         <span ng-show="ndc">NDC </span>
