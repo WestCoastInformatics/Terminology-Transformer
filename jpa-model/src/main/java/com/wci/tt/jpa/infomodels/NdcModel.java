@@ -12,6 +12,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 import com.wci.tt.infomodels.InfoModel;
+import com.wci.tt.jpa.infomodels.NdcHistoryModel;
 import com.wci.umls.server.helpers.ConfigUtility;
 
 /**
@@ -185,7 +186,7 @@ public class NdcModel implements InfoModel<NdcModel> {
    *
    * @return the history
    */
-  @XmlElement(name = "history")
+  @XmlElement
   public List<NdcHistoryModel> getHistory() {
     if (history == null) {
       history = new ArrayList<>();
@@ -234,7 +235,7 @@ public class NdcModel implements InfoModel<NdcModel> {
     try {
       return ConfigUtility.getGraphForJson(model, NdcModel.class);
     } catch (Exception e) {
-      throw new Exception("Malformed model - " + model);
+      throw new Exception("Malformed model - " + model, e);
     }
   }
 

@@ -33,6 +33,53 @@ Documentation
 Developer documentation we have is here: 
 * http://wiki.terminology.tools/confluence/display/TER (requires account for now)
 
+NDC-RXNORM
+----------
+This reference deployment includes services for performing lookup operations
+among RXNORM concept ids (RXCUI), NDCs (National Drug Codes), and SPL Set Ids
+(used in FDA Standard Product Labels)
+
+The project contains example code for running sample queries against
+the reference deployment API.  Following are some example curl calls.
+The reference deployment uses "default" security, so the authorization
+token "guest" can be used in all cases.
+
+1. Test looking up NDC information and RXCUI history (with and without history flag)
+
+```
+curl -H Authorization:guest https://ndc.terminology.tools/rxnorm/ndc/00143314501?history=true
+curl -H Authorization:guest https://ndc.terminology.tools/rxnorm/ndc/0143-3145-01?history=true
+curl -H Authorization:guest https://ndc.terminology.tools/rxnorm/ndc/00143314501
+curl -H Authorization:guest https://ndc.terminology.tools/rxnorm/ndc/0143-3145-01
+```
+
+2. Test looking up RXCUI information and NDC history
+
+```
+curl -H Authorization:guest https://ndc.terminology.tools/rxnorm/rxcui/351772?history=true
+curl -H Authorization:guest https://ndc.terminology.tools/rxnorm/rxcui/351772
+```
+
+3. Test looking up NDC properties from the current RXNORM version.
+
+```
+curl -H Authorization:guest https://ndc.terminology.tools/rxnorm/ndc/00143314501/properties
+curl -H Authorization:guest https://ndc.terminology.tools/rxnorm/ndc/0143-3145-01/properties
+```
+
+4. Test looking up NDC properties list info for an SPL Set Id for the current RXNORM version.
+
+```
+curl -H Authorization:guest https://ndc.terminology.tools/rxnorm/spl/8d24bacb-feff-4c6a-b8df-625e1435387a/ndc/properties
+```
+
+TODO: batch calls
+
+Examples of how to call the services from a Java client are provided in an 
+integration test that cat can be run via Junit.
+
+See integration-tests/src/main/resources/java/com/wci/tt/test/examples/NdcServiceRestExamples
+
 
 License
 -------

@@ -60,16 +60,25 @@ public class NdcServiceRestExamples {
     props.setProperty("base.url", "https://ndc.terminology.tools");
     final NdcClientRest client = new NdcClientRest(props);
 
-    // Call with RXNORM-style NDC
+    // Call with RXNORM-style NDC (without history)
     // curl -H Authorization:guest
     // https://ndc.terminology.tools/rxnorm/ndc/00143314501
+    client.getNdcInfo("00143314501", false, "guest");
 
-    client.getNdcInfo("00143314501", "guest");
-
-    // Call with SPL-style NDC
+    // Call with RXNORM-style NDC (with history)
     // curl -H Authorization:guest
-    // https://ndc.terminology.tools/rxnorm/ndc/00143-3145-01
-    client.getNdcInfo("00143-3145-01", "guest");
+    // https://ndc.terminology.tools/rxnorm/ndc/00143314501?history=true
+    client.getNdcInfo("00143314501", true, "guest");
+
+    // Call with SPL-style NDC (without history)
+    // curl -H Authorization:guest
+    // https://ndc.terminology.tools/rxnorm/ndc/0143-3145-01
+    client.getNdcInfo("0143-3145-01", false, "guest");
+
+    // Call with SPL-style NDC (with history)
+    // curl -H Authorization:guest
+    // https://ndc.terminology.tools/rxnorm/ndc/0143-3145-01?history=true
+    client.getNdcInfo("0143-3145-01", true, "guest");
 
   }
 
@@ -94,8 +103,8 @@ public class NdcServiceRestExamples {
 
     // Call with SPL-style NDC
     // curl -H Authorization:guest
-    // https://ndc.terminology.tools/rxnorm/ndc/00143-3145-01/properties
-    client.getNdcProperties("00143-3145-01", "guest");
+    // https://ndc.terminology.tools/rxnorm/ndc/0143-3145-01/properties
+    client.getNdcProperties("0143-3145-01", "guest");
 
   }
 
@@ -113,10 +122,15 @@ public class NdcServiceRestExamples {
     props.setProperty("base.url", "https://ndc.terminology.tools");
     final NdcClientRest client = new NdcClientRest(props);
 
-    // Call with RXCUI
+    // Call with RXCUI (without history)
     // curl -H Authorization:guest
     // https://ndc.terminology.tools/rxnorm/rxcui/351772
-    client.getRxcuiInfo("351772", "guest");
+    client.getRxcuiInfo("351772", false, "guest");
+
+    // Call with RXCUI (with history)
+    // curl -H Authorization:guest
+    // https://ndc.terminology.tools/rxnorm/rxcui/351772?history=true
+    client.getRxcuiInfo("351772", true, "guest");
 
   }
 

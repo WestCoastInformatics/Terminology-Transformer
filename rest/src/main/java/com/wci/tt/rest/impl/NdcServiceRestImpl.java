@@ -3,6 +3,7 @@
  */
 package com.wci.tt.rest.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -87,8 +88,9 @@ public class NdcServiceRestImpl extends RootServiceRestImpl
   @ApiOperation(value = "Get NDC info", notes = "Gets NDC info and RXCUI history for specified NDC.", response = NdcModel.class)
   public NdcModel getNdcInfo(
     @ApiParam(value = "NDC value, e.g. '00143314501'", required = true) @PathParam("ndc") String ndc,
+    @ApiParam(value = "History flag, e.g. true/false", required = true) @QueryParam("history") Boolean history,
     @ApiParam(value = "Authorization token, e.g. 'guest'", required = true) @HeaderParam("Authorization") String authToken)
-    throws Exception {
+      throws Exception {
 
     Logger.getLogger(getClass()).info("RESTful POST call (NDC): /ndc/" + ndc);
 
@@ -104,11 +106,14 @@ public class NdcServiceRestImpl extends RootServiceRestImpl
       outputContext.setType(DataContextType.INFO_MODEL);
       outputContext.setInfoModelClass(NdcModel.class.getName());
 
+      if (history != null && history) {
+        inputContext.getParameters().put("history", "true");
+      }
       // Obtain results
       final List<ScoredResult> results =
-          service.process(ndc, inputContext, outputContext);
+          service.process(ndc.trim(), inputContext, outputContext);
 
-      // Send emty value on no results
+      // Send empty value on no results
       if (results.size() == 0) {
         return new NdcModel();
       }
@@ -116,6 +121,10 @@ public class NdcServiceRestImpl extends RootServiceRestImpl
       // Otherwise, assume 1 result
       final ScoredResult result = results.get(0);
 
+      if (results.size() != 1) {
+        throw new Exception("more than one result in get ndc info");
+      }
+      
       // Translate tuples into JPA object
       final NdcModel ndcModel = new NdcModel().getModel(result.getValue());
       return ndcModel;
@@ -135,8 +144,9 @@ public class NdcServiceRestImpl extends RootServiceRestImpl
   @ApiOperation(value = "Get RXCUI info", notes = "Gets RXCUI info and NDC history for specified RXCUI.", response = NdcModel.class)
   public RxcuiModel getRxcuiInfo(
     @ApiParam(value = "RXCUI value, e.g. '351772'", required = true) @PathParam("rxcui") String rxcui,
+    @ApiParam(value = "History flag, e.g. true/false", required = true) @QueryParam("history") Boolean history,
     @ApiParam(value = "Authorization token, e.g. 'guest'", required = true) @HeaderParam("Authorization") String authToken)
-    throws Exception {
+      throws Exception {
 
     Logger.getLogger(getClass())
         .info("RESTful POST call (NDC): /rxcui/" + rxcui);
@@ -153,9 +163,13 @@ public class NdcServiceRestImpl extends RootServiceRestImpl
       outputContext.setType(DataContextType.INFO_MODEL);
       outputContext.setInfoModelClass(RxcuiModel.class.getName());
 
+      if (history != null && history) {
+        inputContext.getParameters().put("history", "true");
+      }
+
       // Obtain results
       final List<ScoredResult> results =
-          service.process(rxcui, inputContext, outputContext);
+          service.process(rxcui.trim(), inputContext, outputContext);
 
       // Send emty value on no results
       if (results.size() == 0) {
@@ -186,7 +200,7 @@ public class NdcServiceRestImpl extends RootServiceRestImpl
   public NdcPropertiesModel getNdcProperties(
     @ApiParam(value = "NDC value, e.g. '00143314501'", required = true) @PathParam("ndc") String ndc,
     @ApiParam(value = "Authorization token, e.g. 'guest'", required = true) @HeaderParam("Authorization") String authToken)
-    throws Exception {
+      throws Exception {
 
     Logger.getLogger(getClass())
         .info("RESTful POST call (NDC): /ndc/" + ndc + "/properties");
@@ -206,7 +220,7 @@ public class NdcServiceRestImpl extends RootServiceRestImpl
 
       // Obtain results
       final List<ScoredResult> results =
-          service.process(ndc, inputContext, outputContext);
+          service.process(ndc.trim(), inputContext, outputContext);
 
       // Send emty value on no results
       if (results.size() == 0) {
@@ -237,10 +251,10 @@ public class NdcServiceRestImpl extends RootServiceRestImpl
   public NdcPropertiesListModel getNdcPropertiesForSplSetId(
     @ApiParam(value = "SPL_SET_ID, e.g. '8d24bacb-feff-4c6a-b8df-625e1435387a'", required = true) @PathParam("splSetId") String splSetId,
     @ApiParam(value = "Authorization token, e.g. 'guest'", required = true) @HeaderParam("Authorization") String authToken)
-    throws Exception {
+      throws Exception {
 
     Logger.getLogger(getClass())
-        .info("RESTful POST call (Ndc): /spl/" + splSetId + "/ndc/properties");
+        .info("RESTful call (Ndc): /spl/" + splSetId + "/ndc/properties");
 
     final CoordinatorService service = new CoordinatorServiceJpa();
     try {
@@ -256,8 +270,8 @@ public class NdcServiceRestImpl extends RootServiceRestImpl
       outputContext.setInfoModelClass(NdcPropertiesListModel.class.getName());
 
       // Obtain results
-      final List<ScoredResult> results =
-          service.process(splSetId, inputContext, outputContext);
+      final List<ScoredResult> results = service
+          .process(splSetId.toLowerCase().trim(), inputContext, outputContext);
 
       // Send emty value on no results
       if (results.size() == 0) {
@@ -288,7 +302,7 @@ public class NdcServiceRestImpl extends RootServiceRestImpl
   public StringList autocomplete(
     @ApiParam(value = "Query, e.g. 'asp'", required = true) @QueryParam("query") String query,
     @ApiParam(value = "Authorization token, e.g. 'guest'", required = true) @HeaderParam("Authorization") String authToken)
-    throws Exception {
+      throws Exception {
 
     Logger.getLogger(getClass())
         .info("RESTful call (NDC): /ndc/autoComplete - " + query);
@@ -378,9 +392,9 @@ public class NdcServiceRestImpl extends RootServiceRestImpl
   @ApiOperation(value = "Find RxNorm concept", notes = "Finds RxNorm concept matches for query", response = StringList.class)
   public SearchResultList findConceptsByQuery(
     @ApiParam(value = "Query, e.g. 'aspirin'", required = true) @QueryParam("query") String query,
-    @ApiParam(value = "Pfs Parameter, e.g. '{startIndex:0, maxResults:10}'", required = false) PfscParameterJpa pfs,
+    @ApiParam(value = "Pfs Parameter, e.g. '{\"startIndex\":0, \"maxResults\":10}'", required = false) PfscParameterJpa pfs,
     @ApiParam(value = "Authorization token, e.g. 'guest'", required = true) @HeaderParam("Authorization") String authToken)
-    throws Exception {
+      throws Exception {
 
     Logger.getLogger(getClass())
         .info("RESTful call (NDC): /rxcui/search - " + query + ", " + pfs);
@@ -401,6 +415,122 @@ public class NdcServiceRestImpl extends RootServiceRestImpl
       return null;
     } finally {
       contentService.close();
+      securityService.close();
+    }
+  }
+  
+  @Override
+  @POST
+  @Path("/ndcs")
+  @ApiOperation(value = "Get ndc info batch mode", notes = "Finds Ndc info for all provided ndcs", response = StringList.class)
+  public List<NdcModel> getNdcInfoBatch(
+    @ApiParam(value = "Ndcs, e.g. '61010540004'", required = true) List<String> ndcs,
+    @ApiParam(value = "History flag, e.g. true/false", required = true) @QueryParam("history") Boolean history,
+    @ApiParam(value = "Authorization token, e.g. 'guest'", required = true) @HeaderParam("Authorization") String authToken)
+    throws Exception {
+
+    Logger.getLogger(getClass()).info("RESTful call (NDC): /ndcs - " + ndcs);
+    final CoordinatorService service = new CoordinatorServiceJpa();
+    try {
+      authorizeApp(securityService, authToken, "ndc batch info", UserRole.VIEWER);
+
+      List<NdcModel> list = new ArrayList<>();
+      // Configure contexts
+      DataContext inputContext = new DataContextJpa();
+      inputContext.setType(DataContextType.CODE);
+      inputContext.setTerminology("NDC");
+      DataContext outputContext = new DataContextJpa();
+      outputContext.setType(DataContextType.INFO_MODEL);
+      outputContext.setInfoModelClass(NdcModel.class.getName());
+
+      if (history != null && history) {
+        inputContext.getParameters().put("history", "true");
+      }
+      
+      for (String ndc : ndcs) {
+
+        // Obtain results
+        final List<ScoredResult> results =
+            service.process(ndc.trim(), inputContext, outputContext);
+
+        // Send emty value on no results
+        if (results.size() == 0) {
+          return new ArrayList<>();
+        }
+
+        // Otherwise, assume 1 result
+        final ScoredResult result = results.get(0);
+        
+        if (results.size() != 1) {
+          throw new Exception("more than one result in get ndc info");
+        }
+
+        // Translate tuples into JPA object
+        final NdcModel ndcModel = new NdcModel().getModel(result.getValue());
+        list.add(ndcModel);
+      }
+      return list;
+    } catch (Exception e) {
+      handleException(e, "trying to get ndc batch info");
+      return null;
+    } finally {
+      service.close();
+      securityService.close();
+    }
+  }
+  
+  @Override
+  @POST
+  @Path("/rxcuis")
+  @ApiOperation(value = "Get rxcui info batch mode", notes = "Finds Rxcui info for all provided ndcs", response = StringList.class)
+  public List<RxcuiModel> getRxcuiInfoBatch(
+    @ApiParam(value = "Rxcuis, e.g. '351772'", required = true) List<String> rxcuis,
+    @ApiParam(value = "History flag, e.g. true/false", required = true) @QueryParam("history") Boolean history,
+    @ApiParam(value = "Authorization token, e.g. 'guest'", required = true) @HeaderParam("Authorization") String authToken)
+    throws Exception {
+
+    Logger.getLogger(getClass()).info("RESTful call (NDC): /rxcuis - " + rxcuis);
+    final CoordinatorService service = new CoordinatorServiceJpa();
+    try {
+      authorizeApp(securityService, authToken, "rxcui batch info", UserRole.VIEWER);
+
+      List<RxcuiModel> list = new ArrayList<>();
+      // Configure contexts
+      DataContext inputContext = new DataContextJpa();
+      inputContext.setType(DataContextType.CODE);
+      inputContext.setTerminology("RXNORM");
+      DataContext outputContext = new DataContextJpa();
+      outputContext.setType(DataContextType.INFO_MODEL);
+      outputContext.setInfoModelClass(RxcuiModel.class.getName());
+
+      if (history != null && history) {
+        inputContext.getParameters().put("history", "true");
+      }
+      
+      for (String ndc : rxcuis) {
+
+        // Obtain results
+        final List<ScoredResult> results =
+            service.process(ndc.trim(), inputContext, outputContext);
+
+        // Send emty value on no results
+        if (results.size() == 0) {
+          return new ArrayList<>();
+        }
+
+        // Otherwise, assume 1 result
+        final ScoredResult result = results.get(0);
+
+        // Translate tuples into JPA object
+        final RxcuiModel ndcModel = new RxcuiModel().getModel(result.getValue());
+        list.add(ndcModel);
+      }
+      return list;
+    } catch (Exception e) {
+      handleException(e, "trying to get rxcui batch info");
+      return null;
+    } finally {
+      service.close();
       securityService.close();
     }
   }

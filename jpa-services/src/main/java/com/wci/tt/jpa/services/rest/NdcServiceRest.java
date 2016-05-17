@@ -3,6 +3,8 @@
  */
 package com.wci.tt.jpa.services.rest;
 
+import java.util.List;
+
 import com.wci.tt.jpa.infomodels.NdcModel;
 import com.wci.tt.jpa.infomodels.NdcPropertiesListModel;
 import com.wci.tt.jpa.infomodels.NdcPropertiesModel;
@@ -20,22 +22,25 @@ public interface NdcServiceRest {
    * Process the ndc and return rxcui.
    *
    * @param ndc the ndc
+   * @param history a flag indicating whether to include history
    * @param authToken the auth token
    * @return the ndc model
    * @throws Exception the exception
    */
-  public NdcModel getNdcInfo(String ndc, String authToken) throws Exception;
+  public NdcModel getNdcInfo(String ndc, Boolean history, String authToken)
+    throws Exception;
 
   /**
    * Process rxcui and return ndc codes.
    *
    * @param rxcui the rxcui
+   * @param history a flag indicating whether to include history
    * @param authToken the auth token
    * @return the rxcui model
    * @throws Exception the exception
    */
-  public RxcuiModel getRxcuiInfo(String rxcui, String authToken)
-    throws Exception;
+  public RxcuiModel getRxcuiInfo(String rxcui, Boolean history,
+    String authToken) throws Exception;
 
   /**
    * Get Ndc properties.
@@ -81,5 +86,28 @@ public interface NdcServiceRest {
    */
   public SearchResultList findConceptsByQuery(String query,
     PfscParameterJpa pfs, String authToken) throws Exception;
+
+  /**
+   * Gets the ndc info batch.
+   *
+   * @param ndcs the ndcs
+   * @param authToken the auth token
+   * @return the ndc info batch
+   * @throws Exception the exception
+   */
+  public List<NdcModel> getNdcInfoBatch(List<String> ndcs, Boolean history, String authToken)
+    throws Exception;
+
+  /**
+   * Gets the rxcui info batch.
+   *
+   * @param rxcuis the rxcuis
+   * @param history the history
+   * @param authToken the auth token
+   * @return the rxcui info batch
+   * @throws Exception the exception
+   */
+  public List<RxcuiModel> getRxcuiInfoBatch(List<String> rxcuis, Boolean history,
+    String authToken) throws Exception;
 
 }

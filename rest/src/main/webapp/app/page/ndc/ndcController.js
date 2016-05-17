@@ -11,12 +11,14 @@ tsApp
       'ndcService',
       'utilService',
       'appConfig',
-      function($scope, $location, $anchorScroll, $sce, $routeParams,
-        ndcService, utilService, appConfig) {
+      function($scope, $location, $anchorScroll, $sce, $routeParams, ndcService, utilService,
+        appConfig) {
         console.debug('configure NdcCtrl');
 
         // Set up scope
         $scope.query = null;
+        $scope.history = new Array();
+        $scope.historyIndex = -1;
 
         // Json-view vars
         $scope.jsonEnabled = false;
@@ -191,15 +193,13 @@ tsApp
         // Identify input string as an SPL_SET_ID
         // UUID format
         $scope.isSplSetId = function(query) {
-          return query
-            .match(/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/);
+          return query.match(/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/);
         };
 
         // Identify input string as an NDC
         // Between 8 and 14 digits or dashes
         $scope.isNdc = function(query) {
-          return query.length > 8 && query.length < 14
-            && query.match(/^[\d\-]+$/);
+          return query.length > 8 && query.length < 14 && query.match(/^[\d\-]+$/);
         };
 
         // Autocomplete function
@@ -220,8 +220,8 @@ tsApp
         // Get paged splSetId search property info (assume all are loaded)
         $scope.getPagedSplSet = function() {
           if ($scope.propertiesListModel) {
-            $scope.pagedSplSet = utilService.getPagedArray(
-              $scope.propertiesListModel.list, $scope.paging['splSetId']);
+            $scope.pagedSplSet = utilService.getPagedArray($scope.propertiesListModel.list,
+              $scope.paging['splSetId']);
           }
         };
 
@@ -244,18 +244,17 @@ tsApp
 
         // Perform concept search
         $scope.findConceptsByQuery = function() {
-          ndcService.findConceptsByQuery($scope.query,
-            $scope.paging['search'].pageSize, $scope.paging['search'].page)
-            .then(
-            // Success
-            function(data) {
-              $scope.searchResults = data.results;
-              $scope.searchResults.totalCount = data.totalCount;
-              // Select first result
-              if ($scope.searchResults.length > 0) {
-                $scope.selectResult($scope.searchResults[0]);
-              }
-            });
+          ndcService.findConceptsByQuery($scope.query, $scope.paging['search'].pageSize,
+            $scope.paging['search'].page).then(
+          // Success
+          function(data) {
+            $scope.searchResults = data.results;
+            $scope.searchResults.totalCount = data.totalCount;
+            // Select first result
+            if ($scope.searchResults.length > 0) {
+              $scope.selectResult($scope.searchResults[0]);
+            }
+          });
 
         };
 
@@ -278,27 +277,49 @@ tsApp
         // 
         // HISTORY related functions
         //
-        $scope.history = new Array();
-        $scope.historyIndex = -1;
 
+        // Add a history entry
         $scope.addHistory = function(query) {
-          if ($scope.historyIndex + 1 == $scope.history.length) {
+          // Add to history
+
+          // If query is in the history already, remove it
+          // the list can't have "dups".
+          var flag = false;
+          for (var i = 0; i < $scope.history.length; i++) {
+            if ($scope.history[$scope.historyIndex] === query) {
+              contains = true;
+              break;
+            }
+          }
+
+          // Do nothing if this is already on the history list, dups not allowed
+          if (flag) {
+            // n/a
+          }
+
+          // In simple case, simply add to the end
+          else if ($scope.historyIndex + 1 == $scope.history.length
+            && $scope.history[$scope.historyIndex] !== query) {
             $scope.history.push(query);
             $scope.historyIndex++;
-          } else {
+          }
+
+          // If in the middle, trim the rest of the list
+          else {
             // clear all entries after index that will be added in the middle of
             // the history
-            $scope.history.splice($scope.historyIndex + 1,
-              $scope.history.length - $scope.historyIndex);
+            $scope.history.splice($scope.historyIndex + 1, $scope.history.length
+              - $scope.historyIndex);
             $scope.historyIndex++;
             $scope.history[$scope.historyIndex] = query;
           }
-        }
+        };
 
+        // Load an object from history - do not cause this to add to hstory
         $scope.getFromHistory = function(index) {
           $scope.historyIndex = index;
           $scope.submit($scope.history[$scope.historyIndex], false, true);
-        }
+        };
 
         // Initialize
         if ($routeParams.query) {
