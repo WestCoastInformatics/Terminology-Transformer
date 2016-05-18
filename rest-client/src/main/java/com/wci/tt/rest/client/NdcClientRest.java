@@ -3,7 +3,10 @@
  */
 package com.wci.tt.rest.client;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Properties;
 
@@ -17,6 +20,10 @@ import javax.ws.rs.core.Response.Status.Family;
 
 import org.apache.log4j.Logger;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.AnnotationIntrospector;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.module.jaxb.JaxbAnnotationIntrospector;
 import com.wci.tt.jpa.infomodels.NdcModel;
 import com.wci.tt.jpa.infomodels.NdcPropertiesListModel;
 import com.wci.tt.jpa.infomodels.NdcPropertiesModel;
@@ -254,11 +261,12 @@ public class NdcClientRest extends RootClientRest implements NdcServiceRest {
     }
     
     // converting to object
-    @SuppressWarnings("unchecked")
     final List<NdcModel> list =
-        ConfigUtility.getGraphForJson(resultString, List.class);
+        getGraphForJson(resultString, new TypeReference<List<NdcModel>>() {});
     return list;
   }
+  
+
 
   @Override
   public List<RxcuiModel> getRxcuiInfoBatch(List<String> rxcuis, Boolean history,
@@ -282,10 +290,21 @@ public class NdcClientRest extends RootClientRest implements NdcServiceRest {
     }
     
     // converting to object
-    @SuppressWarnings("unchecked")
     final List<RxcuiModel> list =
-        ConfigUtility.getGraphForJson(resultString, List.class);
+        getGraphForJson(resultString, new TypeReference<List<RxcuiModel>>() {});
     return list;
   }
 
+  // TODO: put in ConfigUtility
+  public <T> List<T> getGraphForJson(String json, TypeReference<List<T>> graphClass)
+      throws Exception {
+      InputStream in =
+          new ByteArrayInputStream(json.getBytes(StandardCharsets.UTF_8));
+      ObjectMapper mapper = new ObjectMapper();
+      AnnotationIntrospector introspector =
+          new JaxbAnnotationIntrospector(mapper.getTypeFactory());
+      mapper.setAnnotationIntrospector(introspector);
+      return mapper.readValue(in, graphClass);
+
+    }
 }

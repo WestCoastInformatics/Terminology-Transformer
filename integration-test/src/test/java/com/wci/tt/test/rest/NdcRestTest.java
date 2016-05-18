@@ -314,13 +314,105 @@ public class NdcRestTest extends RestIntegrationSupport {
     // Input Data
     List<String> ndcs = new ArrayList<>();
     ndcs.add("00247100552");
-    List<NdcModel> results = ndcService.getNdcInfoBatch(ndcs, true, "guest");
-    Logger.getLogger(getClass()).info(" results = " + results);
-    assertEquals(1, results.size());
-    
     ndcs.add("49452360601");
-    results = ndcService.getNdcInfoBatch(ndcs, true, "guest");
-    Logger.getLogger(getClass()).info(" results = " + results);
-    assertEquals(2, results.size());
+    ndcs.add("69315020906");
+    ndcs.add("00143314501");
+    ndcs.add("5555555");
+    
+    List<NdcModel> resultsList = ndcService.getNdcInfoBatch(ndcs, true, "guest");
+    Logger.getLogger(getClass()).info(" results = " + resultsList.getClass() + " " + resultsList);
+
+    NdcModel results = resultsList.get(0);
+    String ndc = "00247100552";
+    assertEquals(ndc, results.getNdc());
+    assertTrue(results.isActive());
+    assertEquals("91349", results.getRxcui());
+    assertEquals("Hydrogen Peroxide 30 MG/ML Topical Solution",
+        results.getRxcuiName());
+    assertNull(null, results.getSplSetId());
+    assertEquals(3, results.getHistory().size());
+
+    // NDC that exists only in the first terminology version (with history)
+    results = resultsList.get(1);
+    ndc = "49452360601";
+    assertEquals(ndc, results.getNdc());
+    assertFalse(results.isActive());
+    assertEquals("91348", results.getRxcui());
+    assertEquals("Hydrogen Peroxide 300 MG/ML Topical Solution",
+        results.getRxcuiName());
+    assertNull(results.getSplSetId());
+    assertEquals(1, results.getHistory().size());
+
+    // NDC that exists only in the third terminology version
+    results = resultsList.get(2);
+    ndc = "69315020906";
+    assertEquals(ndc, results.getNdc());
+    assertTrue(results.isActive());
+    assertEquals("1744400", results.getRxcui());
+    assertEquals("40c18435-ae27-4740-b69e-6bcd1aec3212", results.getSplSetId());
+    assertEquals(1, results.getHistory().size());
+
+    // An NDC that exists in multiple versions but changes RXCUI along the way
+    results = resultsList.get(3);
+    ndc = "00143314501";
+    assertEquals(ndc, results.getNdc());
+    assertTrue(results.isActive());
+    assertEquals("1116191", results.getRxcui());
+    assertEquals("b63d6ef1-ccce-4cd7-80f7-6d674dbf432f", results.getSplSetId());
+    assertEquals(2, results.getHistory().size());
+
+    // NDC that doesn't exist
+    results = resultsList.get(4);
+    ndc = "5555555";
+    assertNull(ndc, results.getNdc());
+    assertNull(results.getRxcui());
+    assertNull(results.getRxcuiName());
+    assertNull(results.getSplSetId());
+    assertEquals(0, results.getHistory().size());
+
+  }
+  
+  @Test
+  public void testGetRxcuiInfoBatch() throws Exception {
+    Logger.getLogger(getClass()).info("TEST " + name.getMethodName());
+
+    // Input Data
+    List<String> rxcuis = new ArrayList<>();
+    rxcuis.add("283420");
+    rxcuis.add("5555ddd");
+    rxcuis.add("351772");
+    
+    List<RxcuiModel> resultsList = ndcService.getRxcuiInfoBatch(rxcuis, true, "guest");
+    Logger.getLogger(getClass()).info(" results = " + resultsList.getClass() + " " + resultsList);
+
+    RxcuiModel results = resultsList.get(0);
+    String rxcui = "283420";
+    assertEquals(rxcui, results.getRxcui());
+    // This is the most recent name the concept had when it was active
+    assertEquals("Hydrogen Peroxide 30 MG/ML Topical Spray",
+        results.getRxcuiName());
+    // These are all the NDCs ever associated with this RXCUI (one entry per
+    // NDC)
+    assertEquals(25, results.getHistory().size());
+    // These are the SPL_SET_IDs associated with the CURRENT version.
+    assertEquals(14, results.getSplSetIds().size());
+
+    // Invalid rxcui
+    results = resultsList.get(1);
+    rxcui = "5555ddd";
+    assertNull(results.getRxcui());
+    assertNull(results.getRxcuiName());
+    assertEquals(0, results.getSplSetIds().size());
+    assertEquals(0, results.getHistory().size());
+
+    // Rxcui that exists only in the first terminology version (with history)
+    results = resultsList.get(2);
+    rxcui = "351772";
+    assertEquals(rxcui, results.getRxcui());
+    assertEquals("Azithromycin 100 MG/ML Injectable Solution [Zithromax]",
+        results.getRxcuiName());
+    assertEquals(0, results.getSplSetIds().size());
+    assertEquals(8, results.getHistory().size());
+
   }
 }
