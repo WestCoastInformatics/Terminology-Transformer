@@ -53,12 +53,29 @@ curl -H Authorization:guest https://ndc.terminology.tools/rxnorm/ndc/00143314501
 curl -H Authorization:guest https://ndc.terminology.tools/rxnorm/ndc/0143-3145-01
 ```
 
+  Also in batch mode
+
+```
+curl --data '[ "00247100552", "00143314501" ]' -H Authorization:guest https://ndc.terminology.tools/rxnorm/ndcs?history=true
+curl --data '[ "00247100552", "00143314501" ]' -H Authorization:guest https://ndc.terminology.tools/rxnorm/ndcs
+
+```
+
+
 2. Test looking up RXCUI information and NDC history
 
 ```
 curl -H Authorization:guest https://ndc.terminology.tools/rxnorm/rxcui/351772?history=true
 curl -H Authorization:guest https://ndc.terminology.tools/rxnorm/rxcui/351772
 ```
+
+  Also in batch mode
+
+```
+curl --data '[ "283420", "351772" ]' -H Authorization:guest https://ndc.terminology.tools/rxnorm/rxcuis?history=true
+curl --data '[ "283420", "351772" ]' -H Authorization:guest https://ndc.terminology.tools/rxnorm/rxcuis
+```
+  
 
 3. Test looking up NDC properties from the current RXNORM version.
 

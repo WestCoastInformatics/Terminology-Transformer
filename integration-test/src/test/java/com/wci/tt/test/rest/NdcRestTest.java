@@ -256,7 +256,7 @@ public class NdcRestTest extends RestIntegrationSupport {
   }
 
   /**
-   * Test get ndc properties for SPL_SET_ID
+   * Test get ndc properties for SPL_SET_ID.
    *
    * @throws Exception the exception
    */
@@ -307,6 +307,11 @@ public class NdcRestTest extends RestIntegrationSupport {
 
   }
 
+  /**
+   * Test get ndc info batch.
+   *
+   * @throws Exception the exception
+   */
   @Test
   public void testGetNdcInfoBatch() throws Exception {
     Logger.getLogger(getClass()).info("TEST " + name.getMethodName());
@@ -317,7 +322,7 @@ public class NdcRestTest extends RestIntegrationSupport {
     List<NdcModel> results = ndcService.getNdcInfoBatch(ndcs, true, "guest");
     Logger.getLogger(getClass()).info(" results = " + results);
     assertEquals(1, results.size());
-    
+
     ndcs.add("49452360601");
     results = ndcService.getNdcInfoBatch(ndcs, true, "guest");
     Logger.getLogger(getClass()).info(" results = " + results);

@@ -91,6 +91,7 @@ public interface NdcServiceRest {
    * Gets the ndc info batch.
    *
    * @param ndcs the ndcs
+   * @param history the history
    * @param authToken the auth token
    * @return the ndc info batch
    * @throws Exception the exception
