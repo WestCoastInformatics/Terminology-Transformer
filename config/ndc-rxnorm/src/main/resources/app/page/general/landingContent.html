@@ -45,19 +45,19 @@ iframe {
   <a href="swagger.html">REST API</a>
 </h4>
 <p>
-  The REST API comprises six functions, four of which represent the core
+  The REST API comprises eight functions, six of which represent the core
   services and two of which are used to support the user interface. The full
   documentation for the API can be found by
   <a href="swagger.html">clicking the API link in the header</a>
   . Following is a description of the core services.
 </p>
 <ul>
-  <li>Get NDC Info
+  <li>Get NDC Info (unit and batch)
     <ul>
       <li><p>Takes an NDC as a parameter and returns a document
           containing the current RXNORM concept, its active status, the current
           SPL Set Id, and (optionally) the RXNORM concept history. The history
-          is only provided if the "history=true" parameter is used.</p>
+          is only included if the "history=true" parameter is used.</p>
         <p>Examples</p>
         <div class="well well-sm">
           <pre>curl -H Authorization:guest https://ndc.terminology.tools/rxnorm/ndc/00143314501?history=true</pre>
@@ -65,19 +65,39 @@ iframe {
           <pre>curl -H Authorization:guest https://ndc.terminology.tools/rxnorm/ndc/00143314501</pre>
           <pre>curl -H Authorization:guest https://ndc.terminology.tools/rxnorm/ndc/0143-3145-01</pre>
         </div></li>
+      <li><p>Takes a list of NDCs as POST data and returns a list of
+          documents containing the current RXNORM concepts, active status,
+          current SPL Set Id, and (optionally) the RXNORM concept history for
+          each NDC provided. The history is only included if the "history=true"
+          parameter is used.</p>
+        <p>Examples</p>
+        <div class="well well-sm">
+          <pre>curl --data '[ "00247100552", "00143314501" ]' -H Authorization:guest https://ndc.terminology.tools/rxnorm/ndcs?history=true</pre>
+          <pre>curl --data '[ "00247100552", "00143314501" ]' -H Authorization:guest https://ndc.terminology.tools/rxnorm/ndcs</pre>
+        </div></li>
     </ul>
   </li>
-  <li>Get RXCUI Info
+  <li>Get RXCUI Info (unit and batch)
     <ul>
       <li><p>Takes an RXCUI (an RXNORM concept id) as a parameter and
           returns a document containing the RXNORM concept info, its active
-          status, any associated SPL Set Ids, and (optionally) a complete
-          history of NDCs associated with it. The history is only provided if
-          the "history=true" parameter is used</p>
+          status, associated SPL Set Ids, and (optionally) a complete NDC
+          history. The history is only included if the "history=true" parameter
+          is used</p>
         <p>Example</p>
         <div class="well well-sm">
           <pre>curl -H Authorization:guest https://ndc.terminology.tools/rxnorm/rxcui/351772?history=true</pre>
           <pre>curl -H Authorization:guest https://ndc.terminology.tools/rxnorm/rxcui/351772</pre>
+        </div></li>
+      <li><p>Takes a list of RXCUIs (RXNORM concept ids) as POST data
+          and returns documents containing the RXNORM concept info, active
+          status, associated SPL Set Ids, and (optionally) a complete NDC
+          history for each RXCUI provided. The history is only included if the
+          "history=true" parameter is used</p>
+        <p>Example</p>
+        <div class="well well-sm">
+          <pre>curl --data '[ "283420", "351772" ]' -H Authorization:guest https://ndc.terminology.tools/rxnorm/rxcuis?history=true</pre>
+          <pre>curl --data '[ "283420", "351772" ]' -H Authorization:guest https://ndc.terminology.tools/rxnorm/rxcuis</pre>
         </div></li>
     </ul>
   </li>
@@ -109,7 +129,8 @@ iframe {
 <br />
 <h4>Sample Invocations</h4>
 <p>Following are examples of calls that demonstrate the different ways of
-  performing searches in this application.</p>
+  performing searches in this application. NOTE: there is no user interface for
+  batch lookups.</p>
 <ul>
   <li><a href="index.html#/ndc?query=Aspirin" target="_blank">Searching
       by name of a medication, e.g. "Aspirin"</a></li>

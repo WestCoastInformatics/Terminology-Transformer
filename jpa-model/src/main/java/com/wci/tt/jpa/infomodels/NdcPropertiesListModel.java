@@ -18,6 +18,7 @@ import com.wci.umls.server.helpers.ConfigUtility;
  * 
  * <pre>
  *  { list: [{ rxcui: "1668240", 
+ *     rxcuiName: "some drug name",
  *     ndc11 : "00069315083", 
  *     ndc10 : "0069-3150-83"
  *     ndc9 : "0069-3150",

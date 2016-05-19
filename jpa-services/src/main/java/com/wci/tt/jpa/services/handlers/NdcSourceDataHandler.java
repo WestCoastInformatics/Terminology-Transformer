@@ -21,7 +21,7 @@ import com.wci.umls.server.services.helpers.ProgressEvent;
 import com.wci.umls.server.services.helpers.ProgressListener;
 
 /**
- * Converter for RxNorm files.
+ * Source data handler to load RXNORM for NDC related searches.
  */
 public class NdcSourceDataHandler extends AbstractSourceDataHandler {
 

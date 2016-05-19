@@ -24,8 +24,7 @@ import com.wci.umls.server.services.MetadataService;
 import com.wordnik.swagger.jaxrs.config.BeanConfig;
 
 /**
- * The application (for jersey). Also serves the role of the initialization
- * listener.
+ * Transformer applicatgion entry point (for jersey).
  */
 @ApplicationPath("/")
 public class TransformerServerApplication extends Application {

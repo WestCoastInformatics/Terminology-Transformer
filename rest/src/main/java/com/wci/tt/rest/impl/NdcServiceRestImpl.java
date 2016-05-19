@@ -124,7 +124,7 @@ public class NdcServiceRestImpl extends RootServiceRestImpl
       if (results.size() != 1) {
         throw new Exception("more than one result in get ndc info");
       }
-      
+
       // Translate tuples into JPA object
       final NdcModel ndcModel = new NdcModel().getModel(result.getValue());
       return ndcModel;
@@ -418,21 +418,23 @@ public class NdcServiceRestImpl extends RootServiceRestImpl
       securityService.close();
     }
   }
-  
+
+  /* see superclass */
   @Override
   @POST
   @Path("/ndcs")
-  @ApiOperation(value = "Get ndc info batch mode", notes = "Finds Ndc info for all provided ndcs", response = StringList.class)
+  @ApiOperation(value = "Get NDC info", notes = "Gets NDC info and RXCUI history for list of NDCs.", response = NdcModel.class, responseContainer = "List")
   public List<NdcModel> getNdcInfoBatch(
-    @ApiParam(value = "Ndcs, e.g. '61010540004'", required = true) List<String> ndcs,
+    @ApiParam(value = "A list of NDC vlaues , e.g. '[ \"00247100552\", \"00143314501\" ]'", required = true) List<String> ndcs,
     @ApiParam(value = "History flag, e.g. true/false", required = true) @QueryParam("history") Boolean history,
     @ApiParam(value = "Authorization token, e.g. 'guest'", required = true) @HeaderParam("Authorization") String authToken)
-    throws Exception {
+      throws Exception {
 
     Logger.getLogger(getClass()).info("RESTful call (NDC): /ndcs - " + ndcs);
     final CoordinatorService service = new CoordinatorServiceJpa();
     try {
-      authorizeApp(securityService, authToken, "ndc batch info", UserRole.VIEWER);
+      authorizeApp(securityService, authToken, "ndc batch info",
+          UserRole.VIEWER);
 
       List<NdcModel> list = new ArrayList<>();
       // Configure contexts
@@ -446,7 +448,7 @@ public class NdcServiceRestImpl extends RootServiceRestImpl
       if (history != null && history) {
         inputContext.getParameters().put("history", "true");
       }
-      
+
       for (String ndc : ndcs) {
 
         // Obtain results
@@ -460,7 +462,7 @@ public class NdcServiceRestImpl extends RootServiceRestImpl
 
         // Otherwise, assume 1 result
         final ScoredResult result = results.get(0);
-        
+
         if (results.size() != 1) {
           throw new Exception("more than one result in get ndc info");
         }
@@ -478,21 +480,24 @@ public class NdcServiceRestImpl extends RootServiceRestImpl
       securityService.close();
     }
   }
-  
+
+  /* see superclass */
   @Override
   @POST
   @Path("/rxcuis")
-  @ApiOperation(value = "Get rxcui info batch mode", notes = "Finds Rxcui info for all provided ndcs", response = StringList.class)
+  @ApiOperation(value = "Get RXCUI info", notes = "Gets RXCUI info and NDC history for list of RXCUIs.", response = NdcModel.class, responseContainer = "List")
   public List<RxcuiModel> getRxcuiInfoBatch(
-    @ApiParam(value = "Rxcuis, e.g. '351772'", required = true) List<String> rxcuis,
+    @ApiParam(value = "A list of RXCUI values, e.g. '[ \"283420\", \"351772\" ]'", required = true) List<String> rxcuis,
     @ApiParam(value = "History flag, e.g. true/false", required = true) @QueryParam("history") Boolean history,
     @ApiParam(value = "Authorization token, e.g. 'guest'", required = true) @HeaderParam("Authorization") String authToken)
-    throws Exception {
+      throws Exception {
 
-    Logger.getLogger(getClass()).info("RESTful call (NDC): /rxcuis - " + rxcuis);
+    Logger.getLogger(getClass())
+        .info("RESTful call (NDC): /rxcuis - " + rxcuis);
     final CoordinatorService service = new CoordinatorServiceJpa();
     try {
-      authorizeApp(securityService, authToken, "rxcui batch info", UserRole.VIEWER);
+      authorizeApp(securityService, authToken, "rxcui batch info",
+          UserRole.VIEWER);
 
       List<RxcuiModel> list = new ArrayList<>();
       // Configure contexts
@@ -506,7 +511,7 @@ public class NdcServiceRestImpl extends RootServiceRestImpl
       if (history != null && history) {
         inputContext.getParameters().put("history", "true");
       }
-      
+
       for (String ndc : rxcuis) {
 
         // Obtain results
@@ -522,7 +527,8 @@ public class NdcServiceRestImpl extends RootServiceRestImpl
         final ScoredResult result = results.get(0);
 
         // Translate tuples into JPA object
-        final RxcuiModel ndcModel = new RxcuiModel().getModel(result.getValue());
+        final RxcuiModel ndcModel =
+            new RxcuiModel().getModel(result.getValue());
         list.add(ndcModel);
       }
       return list;

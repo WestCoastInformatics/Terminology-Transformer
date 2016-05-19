@@ -41,11 +41,8 @@ import com.wci.umls.server.model.content.Concept;
 import com.wci.umls.server.services.handlers.SearchHandler;
 
 /**
- * Default implementation of {@link ProviderHandler}.
- * 
- * This provider converts a normalized NDC code into an RXNORM code (with
- * history information).
- * 
+ * NDC-RXNORM provider. Converts between NDCs, RXNORM concepts, and SPL Set ids,
+ * providing history info and detailed properties info.
  */
 public class NdcProvider extends AbstractAcceptsHandler
     implements ProviderHandler {

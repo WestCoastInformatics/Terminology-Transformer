@@ -17,12 +17,8 @@ import com.wci.tt.jpa.helpers.ScoredResultJpa;
 import com.wci.tt.services.handlers.NormalizerHandler;
 
 /**
- * NDC implementation of {@link NormalizerHandler}.
- * 
- * This class demonstrates a "naive" implementation of the Normalizer.
- * 
- * Class created to prove that supporting functionality works, not to provide
- * meaningful results.
+ * A converter for NDC codes. Accepts a variety of forms of 9, 10, and 11 digit
+ * NDC codes and standardizes them for RXNORM representation.
  */
 public class NdcNormalizer extends AbstractNormalizer
     implements NormalizerHandler {
@@ -137,8 +133,10 @@ public class NdcNormalizer extends AbstractNormalizer
         return new ArrayList<>();
       }
       // Comment out for now, because splsetid breaks this condition
-/*    } else if (hyphenCt > 2) {
-      throw new LocalException("NDC code has invalid hyphenated NDC format.");*/
+      /*
+       * } else if (hyphenCt > 2) { throw new LocalException(
+       * "NDC code has invalid hyphenated NDC format.");
+       */
     } else if (inputString.length() == 36) {
       ndc11 = inputString;
     } else if (inputString.length() == 11) {
