@@ -56,9 +56,8 @@ curl -H Authorization:guest https://ndc.terminology.tools/rxnorm/ndc/0143-3145-0
   Also in batch mode
 
 ```
-curl --data '[ "00247100552", "00143314501" ]' -H Authorization:guest https://ndc.terminology.tools/rxnorm/ndcs?history=true
-curl --data '[ "00247100552", "00143314501" ]' -H Authorization:guest https://ndc.terminology.tools/rxnorm/ndcs
-
+curl -X POST -H "Content-Type: application/json" -H Authorization:guest -d '[ "00247100552", "00143314501" ]' https://ndc.terminology.tools/rxnorm/ndcs?history=true
+curl -X POST -H "Content-Type: application/json" -H Authorization:guest -d '[ "00247100552", "00143314501" ]' https://ndc.terminology.tools/rxnorm/ndcs
 ```
 
 
@@ -72,8 +71,8 @@ curl -H Authorization:guest https://ndc.terminology.tools/rxnorm/rxcui/351772
   Also in batch mode
 
 ```
-curl --data '[ "283420", "351772" ]' -H Authorization:guest https://ndc.terminology.tools/rxnorm/rxcuis?history=true
-curl --data '[ "283420", "351772" ]' -H Authorization:guest https://ndc.terminology.tools/rxnorm/rxcuis
+curl -X POST -H "Content-Type: application/json" -H Authorization:guest  --data '[ "283420", "351772" ]' https://ndc.terminology.tools/rxnorm/rxcuis?history=true
+curl -X POST -H "Content-Type: application/json" -H Authorization:guest  --data '[ "283420", "351772" ]' https://ndc.terminology.tools/rxnorm/rxcuis
 ```
   
 

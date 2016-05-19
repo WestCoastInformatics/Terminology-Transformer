@@ -72,8 +72,8 @@ iframe {
           parameter is used.</p>
         <p>Examples</p>
         <div class="well well-sm">
-          <pre>curl --data '[ "00247100552", "00143314501" ]' -H Authorization:guest https://ndc.terminology.tools/rxnorm/ndcs?history=true</pre>
-          <pre>curl --data '[ "00247100552", "00143314501" ]' -H Authorization:guest https://ndc.terminology.tools/rxnorm/ndcs</pre>
+          <pre>curl -X POST -H "Content-Type: application/json" -H Authorization:guest -d '[ "00247100552", "00143314501" ]' https://ndc.terminology.tools/rxnorm/ndcs?history=true</pre>
+          <pre>curl -X POST -H "Content-Type: application/json" -H Authorization:guest -d '[ "00247100552", "00143314501" ]' https://ndc.terminology.tools/rxnorm/ndcs</pre>
         </div></li>
     </ul>
   </li>
@@ -96,8 +96,8 @@ iframe {
           "history=true" parameter is used</p>
         <p>Example</p>
         <div class="well well-sm">
-          <pre>curl --data '[ "283420", "351772" ]' -H Authorization:guest https://ndc.terminology.tools/rxnorm/rxcuis?history=true</pre>
-          <pre>curl --data '[ "283420", "351772" ]' -H Authorization:guest https://ndc.terminology.tools/rxnorm/rxcuis</pre>
+          <pre>curl -X POST -H "Content-Type: application/json" -H Authorization:guest  --data '[ "283420", "351772" ]' https://ndc.terminology.tools/rxnorm/rxcuis?history=true</pre>
+          <pre>curl -X POST -H "Content-Type: application/json" -H Authorization:guest  --data '[ "283420", "351772" ]' https://ndc.terminology.tools/rxnorm/rxcuis</pre>
         </div></li>
     </ul>
   </li>
