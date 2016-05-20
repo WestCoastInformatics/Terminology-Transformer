@@ -15,8 +15,8 @@ import com.wci.umls.server.helpers.ConfigUtility;
  * Represents a model for a property.
  * 
  * <pre>
- *     { prop : "<prop>",
- *       value : "<value>" }
+ *     { prop : "prop",
+ *       value : "value" }
  * </pre>
  */
 @XmlRootElement(name = "property")
