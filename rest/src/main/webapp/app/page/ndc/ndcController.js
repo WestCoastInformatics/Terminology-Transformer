@@ -41,8 +41,8 @@ tsApp
           page : 1,
           filter : '',
           typeFilter : '',
-          sortField : 'start',
-          ascending : null,
+          sortField : 'end',
+          ascending : false,
           pageSize : 10,
           showHidden : false
         };

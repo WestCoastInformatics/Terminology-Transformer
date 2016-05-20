@@ -47,9 +47,6 @@ import com.wci.umls.server.services.handlers.SearchHandler;
 public class NdcProvider extends AbstractAcceptsHandler
     implements ProviderHandler {
 
-  /** The transform record. */
-  private TransformRecord transformRecord;
-
   /**
    * Instantiates an empty {@link NdcProvider}.
    *
@@ -127,11 +124,10 @@ public class NdcProvider extends AbstractAcceptsHandler
     Logger.getLogger(getClass())
         .debug("  process - " + record.getInputString());
 
-    transformRecord = record;
-    final String inputString = transformRecord.getInputString();
-    final DataContext inputContext = transformRecord.getInputContext();
+    final String inputString = record.getInputString();
+    final DataContext inputContext = record.getInputContext();
     final DataContext outputContext =
-        transformRecord.getProviderOutputContext();
+        record.getProviderOutputContext();
     boolean history = inputContext.getParameters() != null
         && inputContext.getParameters().get("history") != null
         && inputContext.getParameters().get("history").equals("true");

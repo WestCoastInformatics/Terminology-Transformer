@@ -179,7 +179,7 @@
             <td>NDC9:</td>
             <td>{{propertiesModel.ndc9}}</td>
           </tr>
-		  <tr ng-show="model.active != null">
+          <tr ng-show="model.active != null">
             <td>Status:</td>
             <td ng-show="model.active">Active</td>
             <td ng-show="!model.active">Obsolete</td>
@@ -191,7 +191,8 @@
                 available.</span>
             </td>
           </tr>
-          <tr ng-show="pagedHistory.data.length > 0">
+          <tr
+            ng-show="pagedHistory.data.length > 0 || || paging['history'].filter">
             <td>History ({{pagedHistory.totalCount}}):</td>
             <td>
               <span style="display: block;">
