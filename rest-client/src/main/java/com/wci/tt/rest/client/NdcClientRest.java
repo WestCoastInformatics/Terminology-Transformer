@@ -3,10 +3,7 @@
  */
 package com.wci.tt.rest.client;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
 import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Properties;
 
@@ -21,9 +18,6 @@ import javax.ws.rs.core.Response.Status.Family;
 import org.apache.log4j.Logger;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.AnnotationIntrospector;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.module.jaxb.JaxbAnnotationIntrospector;
 import com.wci.tt.jpa.infomodels.NdcModel;
 import com.wci.tt.jpa.infomodels.NdcPropertiesListModel;
 import com.wci.tt.jpa.infomodels.NdcPropertiesModel;
@@ -244,67 +238,50 @@ public class NdcClientRest extends RootClientRest implements NdcServiceRest {
     String authToken) throws Exception {
 
     Client client = ClientBuilder.newClient();
-    WebTarget target =
-        client.target(config.getProperty("base.url")
-            + "/rxnorm/ndcs"           
-            + (history == null ? "" : "?history=" + history));
-    String ndcsString = ndcs == null ? "" : 
-        ConfigUtility.getJsonForGraph(ndcs);
-    Response response =
-        target.request(MediaType.APPLICATION_JSON)
-            .header("Authorization", authToken).post(Entity.json(ndcsString));
+    WebTarget target = client.target(config.getProperty("base.url")
+        + "/rxnorm/ndcs" + (history == null ? "" : "?history=" + history));
+    String ndcsString = ndcs == null ? "" : ConfigUtility.getJsonForGraph(ndcs);
+    Response response = target.request(MediaType.APPLICATION_JSON)
+        .header("Authorization", authToken).post(Entity.json(ndcsString));
     String resultString = response.readEntity(String.class);
     if (response.getStatusInfo().getFamily() == Family.SUCCESSFUL) {
       // n/a
     } else {
       throw new Exception(response.toString());
     }
-    
+
     // converting to object
-    final List<NdcModel> list =
-        getGraphForJson(resultString, new TypeReference<List<NdcModel>>() {});
+    final List<NdcModel> list = ConfigUtility.getGraphForJson(resultString,
+        new TypeReference<List<NdcModel>>() {
+          // n/a
+        });
     return list;
   }
-  
-
 
   @Override
-  public List<RxcuiModel> getRxcuiInfoBatch(List<String> rxcuis, Boolean history,
-    String authToken) throws Exception {
+  public List<RxcuiModel> getRxcuiInfoBatch(List<String> rxcuis,
+    Boolean history, String authToken) throws Exception {
 
     Client client = ClientBuilder.newClient();
-    WebTarget target =
-        client.target(config.getProperty("base.url")
-            + "/rxnorm/rxcuis"           
-            + (history == null ? "" : "?history=" + history));
-    String ndcsString = rxcuis == null ? "" : 
-        ConfigUtility.getJsonForGraph(rxcuis);
-    Response response =
-        target.request(MediaType.APPLICATION_JSON)
-            .header("Authorization", authToken).post(Entity.json(ndcsString));
+    WebTarget target = client.target(config.getProperty("base.url")
+        + "/rxnorm/rxcuis" + (history == null ? "" : "?history=" + history));
+    String ndcsString =
+        rxcuis == null ? "" : ConfigUtility.getJsonForGraph(rxcuis);
+    Response response = target.request(MediaType.APPLICATION_JSON)
+        .header("Authorization", authToken).post(Entity.json(ndcsString));
     String resultString = response.readEntity(String.class);
     if (response.getStatusInfo().getFamily() == Family.SUCCESSFUL) {
       // n/a
     } else {
       throw new Exception(response.toString());
     }
-    
+
     // converting to object
-    final List<RxcuiModel> list =
-        getGraphForJson(resultString, new TypeReference<List<RxcuiModel>>() {});
+    final List<RxcuiModel> list = ConfigUtility.getGraphForJson(resultString,
+        new TypeReference<List<RxcuiModel>>() {
+          // n/a
+        });
     return list;
   }
 
-  // TODO: put in ConfigUtility
-  public <T> List<T> getGraphForJson(String json, TypeReference<List<T>> graphClass)
-      throws Exception {
-      InputStream in =
-          new ByteArrayInputStream(json.getBytes(StandardCharsets.UTF_8));
-      ObjectMapper mapper = new ObjectMapper();
-      AnnotationIntrospector introspector =
-          new JaxbAnnotationIntrospector(mapper.getTypeFactory());
-      mapper.setAnnotationIntrospector(introspector);
-      return mapper.readValue(in, graphClass);
-
-    }
 }

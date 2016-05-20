@@ -377,6 +377,11 @@ public class NdcRestTest extends RestIntegrationSupport {
 
   }
   
+  /**
+   * Test get rxcui info batch.
+   *
+   * @throws Exception the exception
+   */
   @Test
   public void testGetRxcuiInfoBatch() throws Exception {
     Logger.getLogger(getClass()).info("TEST " + name.getMethodName());
