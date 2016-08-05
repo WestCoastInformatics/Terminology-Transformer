@@ -27,7 +27,7 @@ import com.wci.tt.jpa.services.rest.TransformServiceRest;
 import com.wci.umls.server.helpers.ConfigUtility;
 import com.wci.umls.server.helpers.SearchResultList;
 import com.wci.umls.server.helpers.StringList;
-import com.wci.umls.server.jpa.helpers.PfscParameterJpa;
+import com.wci.umls.server.jpa.helpers.PfsParameterJpa;
 import com.wci.umls.server.rest.client.RootClientRest;
 
 /**
@@ -205,7 +205,7 @@ public class NdcClientRest extends RootClientRest implements NdcServiceRest {
   /* see superclass */
   @Override
   public SearchResultList findConceptsByQuery(String query,
-    PfscParameterJpa pfsc, String authToken) throws Exception {
+    PfsParameterJpa pfs, String authToken) throws Exception {
     Logger.getLogger(getClass()).debug("NDC Client - autocomplete - " + query);
     validateNotEmpty(query, "query");
 
@@ -217,7 +217,7 @@ public class NdcClientRest extends RootClientRest implements NdcServiceRest {
 
     // Call Rest method
     String pfsString = ConfigUtility
-        .getStringForGraph(pfsc == null ? new PfscParameterJpa() : pfsc);
+        .getStringForGraph(pfs == null ? new PfsParameterJpa() : pfs);
     Response response = target.request(MediaType.APPLICATION_XML)
         .header("Authorization", authToken).post(Entity.xml(pfsString));
 

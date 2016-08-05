@@ -19,7 +19,6 @@ import org.hibernate.search.jpa.FullTextQuery;
 import com.wci.umls.server.helpers.ConfigUtility;
 import com.wci.umls.server.helpers.HasId;
 import com.wci.umls.server.helpers.PfsParameter;
-import com.wci.umls.server.helpers.PfscParameter;
 import com.wci.umls.server.jpa.services.helper.IndexUtility;
 import com.wci.umls.server.services.handlers.SearchHandler;
 
@@ -128,20 +127,7 @@ public class TransformerSearchHandler implements SearchHandler {
           escapedQuery + terminologyClause, pfs, manager);
     }
 
-    // Apply paging and sorting parameters for the PFSC case
-    // This is needed for the combined search with "search criteria"
-    if (!(pfs instanceof PfscParameter)) {
-      totalCt[0] = fullTextQuery.getResultSize();
-    } else if (pfs instanceof PfscParameter
-        && ((PfscParameter) pfs).getSearchCriteria().isEmpty()) {
-      // Get result size if we know it.
-      totalCt[0] = fullTextQuery.getResultSize();
-    } else {
-      // If with search criteria, save paging
-      fullTextQuery.setFirstResult(0);
-      fullTextQuery.setMaxResults(Integer.MAX_VALUE);
-      totalCt[0] = fullTextQuery.getResultSize();
-    }
+    totalCt[0] = fullTextQuery.getResultSize();
 
     // Use this code to see the actual score values
     fullTextQuery.setProjection(FullTextQuery.SCORE, FullTextQuery.THIS);

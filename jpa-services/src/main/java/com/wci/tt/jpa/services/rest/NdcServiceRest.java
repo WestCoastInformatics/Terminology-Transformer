@@ -11,7 +11,7 @@ import com.wci.tt.jpa.infomodels.NdcPropertiesModel;
 import com.wci.tt.jpa.infomodels.RxcuiModel;
 import com.wci.umls.server.helpers.SearchResultList;
 import com.wci.umls.server.helpers.StringList;
-import com.wci.umls.server.jpa.helpers.PfscParameterJpa;
+import com.wci.umls.server.jpa.helpers.PfsParameterJpa;
 
 /**
  * REST interface for handling NDC-RXNORM transformations.
@@ -85,7 +85,7 @@ public interface NdcServiceRest {
    * @throws Exception the exception
    */
   public SearchResultList findConceptsByQuery(String query,
-    PfscParameterJpa pfs, String authToken) throws Exception;
+    PfsParameterJpa pfs, String authToken) throws Exception;
 
   /**
    * Gets the ndc info batch.

@@ -375,7 +375,7 @@ public class NdcLoaderAlgorithm extends AbstractTerminologyLoaderAlgorithm {
         cui.setVersion(version);
         cui.setWorkflowStatus(published);
       }
-      cui.addAtom(atom);
+      cui.getAtoms().add(atom);
       prevCui = fields[0];
     }
     // Add last concept
@@ -611,7 +611,7 @@ public class NdcLoaderAlgorithm extends AbstractTerminologyLoaderAlgorithm {
           att.setVersion(version);
           att.setTerminologyId("");
           addAttribute(att, ndcAtom);
-          ndcAtom.addAttribute(att);
+          ndcAtom.getAttributes().add(att);
         }
 
         if (ndc10 != null) {
@@ -629,7 +629,7 @@ public class NdcLoaderAlgorithm extends AbstractTerminologyLoaderAlgorithm {
           att.setVersion(version);
           att.setTerminologyId("");
           addAttribute(att, ndcAtom);
-          ndcAtom.addAttribute(att);
+          ndcAtom.getAttributes().add(att);
         }
 
       }
@@ -645,12 +645,12 @@ public class NdcLoaderAlgorithm extends AbstractTerminologyLoaderAlgorithm {
           final Attribute copy = new AttributeJpa(attribute);
           copy.setId(null);
           addAttribute(copy, ndcAtom);
-          ndcAtom.addAttribute(copy);
+          ndcAtom.getAttributes().add(copy);
         }
       }
 
       // Add the NDC atom
-      concept.addAtom(ndcAtom);
+      concept.getAtoms().add(ndcAtom);
       addAtom(ndcAtom);
       modifiedConcepts.add(concept);
     }
@@ -694,6 +694,11 @@ public class NdcLoaderAlgorithm extends AbstractTerminologyLoaderAlgorithm {
 
   @Override
   public void computeTreePositions() throws Exception {
+    // n/a - do nothing
+  }
+
+  @Override
+  public void computeExpressionIndexes() throws Exception {
     // n/a - do nothing
   }
 
