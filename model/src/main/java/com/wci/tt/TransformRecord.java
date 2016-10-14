@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Map;
 
 import com.wci.tt.helpers.ScoredResult;
-import com.wci.umls.server.helpers.HasId;
 import com.wci.umls.server.helpers.HasLastModified;
 
 /**
@@ -15,7 +14,7 @@ import com.wci.umls.server.helpers.HasLastModified;
  * normalized, and output data strings as well as the identified input context
  * and required output context.
  */
-public interface TransformRecord extends HasId, HasLastModified {
+public interface TransformRecord extends HasLastModified {
 
   /**
    * Returns the input string.

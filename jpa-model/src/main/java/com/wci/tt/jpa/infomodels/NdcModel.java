@@ -230,6 +230,7 @@ public class NdcModel implements InfoModel<NdcModel> {
    * @throws Exception the exception
    */
   /* see superclass */
+  @Override
   public NdcModel getModel(String model) throws Exception {
     // Only accept json in correct format
     try {

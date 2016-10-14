@@ -40,10 +40,11 @@ import com.wci.tt.jpa.services.rest.NdcServiceRest;
 import com.wci.tt.services.CoordinatorService;
 import com.wci.umls.server.UserRole;
 import com.wci.umls.server.helpers.Branch;
+import com.wci.umls.server.helpers.ConfigUtility;
 import com.wci.umls.server.helpers.SearchResultList;
 import com.wci.umls.server.helpers.StringList;
 import com.wci.umls.server.jpa.content.ConceptJpa;
-import com.wci.umls.server.jpa.helpers.PfscParameterJpa;
+import com.wci.umls.server.jpa.helpers.PfsParameterJpa;
 import com.wci.umls.server.jpa.helpers.SearchResultListJpa;
 import com.wci.umls.server.jpa.services.ContentServiceJpa;
 import com.wci.umls.server.jpa.services.SecurityServiceJpa;
@@ -51,15 +52,19 @@ import com.wci.umls.server.model.content.Atom;
 import com.wci.umls.server.model.content.AtomClass;
 import com.wci.umls.server.rest.impl.RootServiceRestImpl;
 import com.wci.umls.server.services.SecurityService;
-import com.wordnik.swagger.annotations.Api;
-import com.wordnik.swagger.annotations.ApiOperation;
-import com.wordnik.swagger.annotations.ApiParam;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.Info;
+import io.swagger.annotations.SwaggerDefinition;
 
 /**
  * Implementation the REST Service for NDC-RXNORM transformations.
  */
 @Path("/rxnorm")
-@Api(value = "/rxnorm", description = "Operations related to NDC, RXCUI, and SPL_SET_ID lookups")
+@Api(value = "/rxnorm")
+@SwaggerDefinition(info = @Info(description = "Operations related to NDC, RXCUI, and SPL_SET_ID lookups", title = "NDC Operations", version = "1.0.0"))
 @Consumes({
     MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML
 })
@@ -90,7 +95,7 @@ public class NdcServiceRestImpl extends RootServiceRestImpl
     @ApiParam(value = "NDC value, e.g. '00143314501'", required = true) @PathParam("ndc") String ndc,
     @ApiParam(value = "History flag, e.g. true/false", required = true) @QueryParam("history") Boolean history,
     @ApiParam(value = "Authorization token, e.g. 'guest'", required = true) @HeaderParam("Authorization") String authToken)
-      throws Exception {
+    throws Exception {
 
     Logger.getLogger(getClass()).info("RESTful POST call (NDC): /ndc/" + ndc);
 
@@ -146,7 +151,7 @@ public class NdcServiceRestImpl extends RootServiceRestImpl
     @ApiParam(value = "RXCUI value, e.g. '351772'", required = true) @PathParam("rxcui") String rxcui,
     @ApiParam(value = "History flag, e.g. true/false", required = true) @QueryParam("history") Boolean history,
     @ApiParam(value = "Authorization token, e.g. 'guest'", required = true) @HeaderParam("Authorization") String authToken)
-      throws Exception {
+    throws Exception {
 
     Logger.getLogger(getClass())
         .info("RESTful POST call (NDC): /rxcui/" + rxcui);
@@ -200,7 +205,7 @@ public class NdcServiceRestImpl extends RootServiceRestImpl
   public NdcPropertiesModel getNdcProperties(
     @ApiParam(value = "NDC value, e.g. '00143314501'", required = true) @PathParam("ndc") String ndc,
     @ApiParam(value = "Authorization token, e.g. 'guest'", required = true) @HeaderParam("Authorization") String authToken)
-      throws Exception {
+    throws Exception {
 
     Logger.getLogger(getClass())
         .info("RESTful POST call (NDC): /ndc/" + ndc + "/properties");
@@ -251,7 +256,7 @@ public class NdcServiceRestImpl extends RootServiceRestImpl
   public NdcPropertiesListModel getNdcPropertiesForSplSetId(
     @ApiParam(value = "SPL_SET_ID, e.g. '8d24bacb-feff-4c6a-b8df-625e1435387a'", required = true) @PathParam("splSetId") String splSetId,
     @ApiParam(value = "Authorization token, e.g. 'guest'", required = true) @HeaderParam("Authorization") String authToken)
-      throws Exception {
+    throws Exception {
 
     Logger.getLogger(getClass())
         .info("RESTful call (Ndc): /spl/" + splSetId + "/ndc/properties");
@@ -302,7 +307,7 @@ public class NdcServiceRestImpl extends RootServiceRestImpl
   public StringList autocomplete(
     @ApiParam(value = "Query, e.g. 'asp'", required = true) @QueryParam("query") String query,
     @ApiParam(value = "Authorization token, e.g. 'guest'", required = true) @HeaderParam("Authorization") String authToken)
-      throws Exception {
+    throws Exception {
 
     Logger.getLogger(getClass())
         .info("RESTful call (NDC): /ndc/autoComplete - " + query);
@@ -312,7 +317,7 @@ public class NdcServiceRestImpl extends RootServiceRestImpl
       authorizeApp(securityService, authToken, "autocomplete NDC",
           UserRole.VIEWER);
 
-      if (query == null || query == null || query == null) {
+      if (ConfigUtility.isEmpty(query)) {
         return new StringList();
       }
 
@@ -354,7 +359,7 @@ public class NdcServiceRestImpl extends RootServiceRestImpl
 
         // RXNORM Search if there are any characters
         if (query.matches(".*[a-zA-Z].*")) {
-          list.addObject(result.getName());
+          list.getObjects().add(result.getName());
         }
 
         else {
@@ -364,13 +369,13 @@ public class NdcServiceRestImpl extends RootServiceRestImpl
             if (atom.getTermType().equals("NDC")
                 && atom.getName().contains(normalizedQuery)
                 && !list.contains(result.getName()))
-              list.addObject(atom.getName());
+              list.getObjects().add(atom.getName());
           }
         }
       }
       list.setTotalCount(list.getObjects().size());
       // Limit to 20 results
-      if (list.getCount() > 0) {
+      if (list.size() > 0) {
         list.setObjects(list.getObjects().subList(0,
             Math.min(20, list.getObjects().size() - 1)));
       }
@@ -392,9 +397,9 @@ public class NdcServiceRestImpl extends RootServiceRestImpl
   @ApiOperation(value = "Find RxNorm concept", notes = "Finds RxNorm concept matches for query", response = StringList.class)
   public SearchResultList findConceptsByQuery(
     @ApiParam(value = "Query, e.g. 'aspirin'", required = true) @QueryParam("query") String query,
-    @ApiParam(value = "Pfs Parameter, e.g. '{\"startIndex\":0, \"maxResults\":10}'", required = false) PfscParameterJpa pfs,
+    @ApiParam(value = "Pfs Parameter, e.g. '{\"startIndex\":0, \"maxResults\":10}'", required = false) PfsParameterJpa pfs,
     @ApiParam(value = "Authorization token, e.g. 'guest'", required = true) @HeaderParam("Authorization") String authToken)
-      throws Exception {
+    throws Exception {
 
     Logger.getLogger(getClass())
         .info("RESTful call (NDC): /rxcui/search - " + query + ", " + pfs);
@@ -403,10 +408,10 @@ public class NdcServiceRestImpl extends RootServiceRestImpl
       authorizeApp(securityService, authToken, "find RxNorm concepts",
           UserRole.VIEWER);
 
-      if (query == null || query == null || query == null) {
+      if (ConfigUtility.isEmpty(query)) {
         return new SearchResultListJpa();
       }
-      return contentService.findConceptsForQuery("RXNORM",
+      return contentService.findConcepts("RXNORM",
           contentService.getTerminologyLatestVersion("RXNORM").getVersion(),
           Branch.ROOT, query, pfs);
 
@@ -428,7 +433,7 @@ public class NdcServiceRestImpl extends RootServiceRestImpl
     @ApiParam(value = "A list of NDC vlaues , e.g. '[ \"00247100552\", \"00143314501\" ]'", required = true) List<String> ndcs,
     @ApiParam(value = "History flag, e.g. true/false", required = true) @QueryParam("history") Boolean history,
     @ApiParam(value = "Authorization token, e.g. 'guest'", required = true) @HeaderParam("Authorization") String authToken)
-      throws Exception {
+    throws Exception {
 
     Logger.getLogger(getClass()).info("RESTful call (NDC): /ndcs - " + ndcs);
     final CoordinatorService service = new CoordinatorServiceJpa();
@@ -490,7 +495,7 @@ public class NdcServiceRestImpl extends RootServiceRestImpl
     @ApiParam(value = "A list of RXCUI values, e.g. '[ \"283420\", \"351772\" ]'", required = true) List<String> rxcuis,
     @ApiParam(value = "History flag, e.g. true/false", required = true) @QueryParam("history") Boolean history,
     @ApiParam(value = "Authorization token, e.g. 'guest'", required = true) @HeaderParam("Authorization") String authToken)
-      throws Exception {
+    throws Exception {
 
     Logger.getLogger(getClass())
         .info("RESTful call (NDC): /rxcuis - " + rxcuis);

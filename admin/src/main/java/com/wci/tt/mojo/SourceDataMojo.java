@@ -17,6 +17,7 @@ public abstract class SourceDataMojo extends AbstractMojo {
    * @param version the version
    * @return the name
    */
+  @SuppressWarnings("static-method")
   protected String getName(String terminology, String version) {
     return terminology + " " + version + " source data";
   }

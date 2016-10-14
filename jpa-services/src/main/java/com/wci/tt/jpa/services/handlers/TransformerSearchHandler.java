@@ -14,12 +14,12 @@ import javax.persistence.EntityManager;
 import org.apache.log4j.Logger;
 import org.apache.lucene.queryparser.classic.ParseException;
 import org.apache.lucene.queryparser.classic.QueryParserBase;
+import org.hibernate.search.engine.ProjectionConstants;
 import org.hibernate.search.jpa.FullTextQuery;
 
 import com.wci.umls.server.helpers.ConfigUtility;
 import com.wci.umls.server.helpers.HasId;
 import com.wci.umls.server.helpers.PfsParameter;
-import com.wci.umls.server.helpers.PfscParameter;
 import com.wci.umls.server.jpa.services.helper.IndexUtility;
 import com.wci.umls.server.services.handlers.SearchHandler;
 
@@ -46,8 +46,8 @@ public class TransformerSearchHandler implements SearchHandler {
   @Override
   public <T extends HasId> List<T> getQueryResults(String terminology,
     String version, String branch, String query, String literalField,
-    Class<?> fieldNamesKey, Class<T> clazz, PfsParameter pfs, int[] totalCt,
-    EntityManager manager) throws Exception {
+    Class<T> clazz, PfsParameter pfs, int[] totalCt, EntityManager manager)
+    throws Exception {
 
     // Build an escaped form of the query with wrapped quotes removed
     // This will be used for literal/exact searching
@@ -72,7 +72,8 @@ public class TransformerSearchHandler implements SearchHandler {
         String nameField = literalField.replace("Sort", "");
         StringBuilder sb = new StringBuilder();
 
-        for (final String word : query.split(customSplitRegex)) {
+        for (final String word : (query == null ? "" : query)
+            .split(customSplitRegex)) {
           if (!word.isEmpty()) {
             if (!sb.toString().isEmpty()) {
               sb.append(" ");
@@ -119,32 +120,20 @@ public class TransformerSearchHandler implements SearchHandler {
       Logger.getLogger(getClass()).info("query = " + finalQuery);
       // Logger.getLogger(getClass())
       // .info("pfs.qr = " + (pfs != null ? pfs.getQueryRestriction() : ""));
-      fullTextQuery = IndexUtility.applyPfsToLuceneQuery(clazz, fieldNamesKey,
+      fullTextQuery = IndexUtility.applyPfsToLuceneQuery(clazz,
           finalQuery.toString(), pfs, manager);
     } catch (ParseException | IllegalArgumentException e) {
       // If there's a parse exception, try the literal query
       Logger.getLogger(getClass()).info("query = " + finalQuery);
-      fullTextQuery = IndexUtility.applyPfsToLuceneQuery(clazz, fieldNamesKey,
+      fullTextQuery = IndexUtility.applyPfsToLuceneQuery(clazz,
           escapedQuery + terminologyClause, pfs, manager);
     }
 
-    // Apply paging and sorting parameters for the PFSC case
-    // This is needed for the combined search with "search criteria"
-    if (!(pfs instanceof PfscParameter)) {
-      totalCt[0] = fullTextQuery.getResultSize();
-    } else if (pfs instanceof PfscParameter
-        && ((PfscParameter) pfs).getSearchCriteria().isEmpty()) {
-      // Get result size if we know it.
-      totalCt[0] = fullTextQuery.getResultSize();
-    } else {
-      // If with search criteria, save paging
-      fullTextQuery.setFirstResult(0);
-      fullTextQuery.setMaxResults(Integer.MAX_VALUE);
-      totalCt[0] = fullTextQuery.getResultSize();
-    }
+    totalCt[0] = fullTextQuery.getResultSize();
 
     // Use this code to see the actual score values
-    fullTextQuery.setProjection(FullTextQuery.SCORE, FullTextQuery.THIS);
+    fullTextQuery.setProjection(ProjectionConstants.SCORE,
+        ProjectionConstants.THIS);
     final List<T> classes = new ArrayList<>();
     @SuppressWarnings("unchecked")
     final List<Object[]> results = fullTextQuery.getResultList();

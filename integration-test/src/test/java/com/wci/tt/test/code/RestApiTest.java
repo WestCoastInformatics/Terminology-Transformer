@@ -32,7 +32,6 @@ public class RestApiTest extends RestIntegrationSupport {
    *
    * @throws Exception the exception
    */
-  @SuppressWarnings("static-method")
   @Before
   public void setup() throws Exception {
     // n/a
@@ -43,7 +42,6 @@ public class RestApiTest extends RestIntegrationSupport {
    *
    * @throws Exception the exception
    */
-  @SuppressWarnings("static-method")
   @After
   public void teardown() throws Exception {
     // n/a

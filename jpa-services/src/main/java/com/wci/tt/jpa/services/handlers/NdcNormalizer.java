@@ -14,14 +14,12 @@ import com.wci.tt.DataContext;
 import com.wci.tt.helpers.DataContextType;
 import com.wci.tt.helpers.ScoredResult;
 import com.wci.tt.jpa.helpers.ScoredResultJpa;
-import com.wci.tt.services.handlers.NormalizerHandler;
 
 /**
  * A converter for NDC codes. Accepts a variety of forms of 9, 10, and 11 digit
  * NDC codes and standardizes them for RXNORM representation.
  */
-public class NdcNormalizer extends AbstractNormalizer
-    implements NormalizerHandler {
+public class NdcNormalizer extends AbstractNormalizer {
 
   /** The quality. */
   private float quality;
@@ -48,6 +46,8 @@ public class NdcNormalizer extends AbstractNormalizer
     if (inputString == null) {
       return new ArrayList<>();
     }
+
+    String linputString = inputString;
 
     /**
      * <pre>
@@ -84,26 +84,26 @@ public class NdcNormalizer extends AbstractNormalizer
 
     String ndc11 = null;
     // replace * with 0 (regardless of source, but intended for MTHFDA)
-    inputString = inputString.replace('*', '0');
+    linputString = linputString.replace('*', '0');
 
-    int hyphenCt = StringUtils.countMatches(inputString, "-");
+    int hyphenCt = StringUtils.countMatches(linputString, "-");
     String[] segments = new String[] {};
 
     if (hyphenCt == 2) {
-      segments = inputString.split("-");
+      segments = linputString.split("-");
 
       String segment1 = segments[0];
       String segment2 = segments[1];
       String segment3 = segments[2];
 
-      if (inputString.matches("^[A-Z\\d{6}]\\-\\d{4}\\-\\d{2}$")
-          || inputString.matches("^\\d{6}\\-\\d{4}\\-\\d{1}$")
-          || inputString.matches("^\\d{6}\\-\\d{3}\\-\\d{2}$")
-          || inputString.matches("^\\d{6}\\-\\d{3}\\-\\d{1}$")
-          || inputString.matches("^\\d{5}\\-\\d{4}\\-\\d{2}$")
-          || inputString.matches("^\\d{5}\\-\\d{4}\\-\\d{1}$")
-          || inputString.matches("^\\d{5}\\-\\d{3}\\-\\d{2}$")
-          || inputString.matches("^\\d{4}\\-\\d{4}\\-\\d{2}$")) {
+      if (linputString.matches("^[A-Z\\d{6}]\\-\\d{4}\\-\\d{2}$")
+          || linputString.matches("^\\d{6}\\-\\d{4}\\-\\d{1}$")
+          || linputString.matches("^\\d{6}\\-\\d{3}\\-\\d{2}$")
+          || linputString.matches("^\\d{6}\\-\\d{3}\\-\\d{1}$")
+          || linputString.matches("^\\d{5}\\-\\d{4}\\-\\d{2}$")
+          || linputString.matches("^\\d{5}\\-\\d{4}\\-\\d{1}$")
+          || linputString.matches("^\\d{5}\\-\\d{3}\\-\\d{2}$")
+          || linputString.matches("^\\d{4}\\-\\d{4}\\-\\d{2}$")) {
         // # valid hyphenated NDC format (RxNorm)
 
         // # *** make segment 1 have 5 digits
@@ -129,7 +129,7 @@ public class NdcNormalizer extends AbstractNormalizer
       } else {
         // # invalid hyphenated NDC format
         Logger.getLogger(getClass())
-            .warn("invalid hyphenated NDC format " + inputString);
+            .warn("invalid hyphenated NDC format " + linputString);
         return new ArrayList<>();
       }
       // Comment out for now, because splsetid breaks this condition
@@ -137,15 +137,15 @@ public class NdcNormalizer extends AbstractNormalizer
        * } else if (hyphenCt > 2) { throw new LocalException(
        * "NDC code has invalid hyphenated NDC format.");
        */
-    } else if (inputString.length() == 36) {
-      ndc11 = inputString;
-    } else if (inputString.length() == 11) {
-      ndc11 = inputString;
-    } else if (inputString.length() == 12) {
-      ndc11 = inputString.substring(1);
+    } else if (linputString.length() == 36) {
+      ndc11 = linputString;
+    } else if (linputString.length() == 11) {
+      ndc11 = linputString;
+    } else if (linputString.length() == 12) {
+      ndc11 = linputString.substring(1);
     } else {
       Logger.getLogger(getClass())
-          .warn("NDC code has an invalid format - " + inputString);
+          .warn("NDC code has an invalid format - " + linputString);
       return new ArrayList<>();
     }
 
@@ -167,6 +167,7 @@ public class NdcNormalizer extends AbstractNormalizer
   }
 
   /* see superclass */
+  @Override
   public void setProperties(Properties p) throws Exception {
     if (p == null) {
       throw new Exception("A quality property is required");

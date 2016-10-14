@@ -29,7 +29,7 @@
     </developer>
     <developer>
       <name>Jesse Efron</name>
-      <email>jefrono@westcoastinformatics.com</email>
+      <email>jefron@westcoastinformatics.com</email>
       <organization>West Coast Informatics, LLC</organization>
       <organizationUrl>http://www.westcoastinformatics.com</organizationUrl>
     </developer>
@@ -49,7 +49,7 @@
   </scm>
 
   <properties>
-    <term.server.version>1.3.0</term.server.version>
+    <term.server.version>1.4.0-SNAPSHOT</term.server.version>
     <!-- Set default maven settings -->
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>

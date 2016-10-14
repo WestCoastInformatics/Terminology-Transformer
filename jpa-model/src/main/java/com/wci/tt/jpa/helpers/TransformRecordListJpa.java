@@ -34,6 +34,6 @@ public class TransformRecordListJpa extends AbstractResultList<TransformRecord>
   @Override
   public String toString() {
     return "TransformRecordListJpa [records=" + getObjects() + ", getCount()="
-        + getCount() + "]";
+        + size() + "]";
   }
 }

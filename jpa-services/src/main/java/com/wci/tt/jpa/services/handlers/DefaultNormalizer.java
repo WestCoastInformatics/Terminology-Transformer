@@ -20,8 +20,7 @@ import com.wci.tt.services.handlers.NormalizerHandler;
  * Class created to prove that supporting functionality works, not to provide
  * meaningful results.
  */
-public class DefaultNormalizer extends AbstractNormalizer
-    implements NormalizerHandler {
+public class DefaultNormalizer extends AbstractNormalizer {
 
   /** The quality. */
   private float quality;
@@ -59,6 +58,7 @@ public class DefaultNormalizer extends AbstractNormalizer
   }
 
   /* see superclass */
+  @Override
   public void setProperties(Properties p) throws Exception {
     if (p == null) {
       throw new Exception("A quality property is required");

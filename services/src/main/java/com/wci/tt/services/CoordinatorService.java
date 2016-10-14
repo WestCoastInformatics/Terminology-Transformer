@@ -11,7 +11,6 @@ import com.wci.tt.TransformRecord;
 import com.wci.tt.helpers.ScoredDataContext;
 import com.wci.tt.helpers.ScoredResult;
 import com.wci.tt.helpers.TransformRecordList;
-import com.wci.tt.helpers.TypeKeyValue;
 import com.wci.tt.infomodels.InfoModel;
 import com.wci.tt.services.handlers.AnalyzerHandler;
 import com.wci.tt.services.handlers.ConverterHandler;
@@ -33,7 +32,8 @@ public interface CoordinatorService extends RootService {
    * @return the source data loaders
    * @throws Exception the exception
    */
-  public Map<String, SourceDataHandler> getSourceDataHandlers() throws Exception;
+  public Map<String, SourceDataHandler> getSourceDataHandlers()
+    throws Exception;
 
   /**
    * Returns the normalizers.
@@ -121,14 +121,14 @@ public interface CoordinatorService extends RootService {
    * Assembles the possible combinations of Providers &amp; Converters based on
    * input Context. Then normalizes content across all normalizers per data
    * context. For each Provider/Converter combination, puts pair's data context
-   * and associated normalized content through process &amp; convert methods. All
-   * data is returned.
+   * and associated normalized content through process &amp; convert methods.
+   * All data is returned.
    * 
    * Steps: 1) Identify contexts acceptable by Provider/Converter pairs -
-   * Generates triplet (DataContext to Provider to Set of Converters) 2) Generate
-   * normalized content per accepted data contexts - Generates collated List of
-   * DataContextTuple 3) Calls process and convert for each accepted context on
-   * data context's associated normalized results - Generates List of
+   * Generates triplet (DataContext to Provider to Set of Converters) 2)
+   * Generate normalized content per accepted data contexts - Generates collated
+   * List of DataContextTuple 3) Calls process and convert for each accepted
+   * context on data context's associated normalized results - Generates List of
    * DataContextTuples
    * 
    * The associated score may be examined to determine if the probability score
@@ -247,51 +247,6 @@ public interface CoordinatorService extends RootService {
    */
   public TransformRecordList findTransformRecordsForQuery(String query,
     PfsParameter pfs) throws Exception;
-
-  /**
-   * Adds the type, key, value.
-   *
-   * @param typeKeyValue the type key value
-   * @return the type, key, value
-   * @throws Exception the exception
-   */
-  public TypeKeyValue addTypeKeyValue(TypeKeyValue typeKeyValue)
-    throws Exception;
-
-  /**
-   * Update type, key, value.
-   *
-   * @param typeKeyValue the type key value
-   * @throws Exception the exception
-   */
-  public void updateTypeKeyValue(TypeKeyValue typeKeyValue) throws Exception;
-
-  /**
-   * Removes the type, key, value.
-   *
-   * @param typeKeyValueId the type key value id
-   * @throws Exception the exception
-   */
-  public void removeTypeKeyValue(Long typeKeyValueId) throws Exception;
-
-  /**
-   * Returns the type, key, value.
-   *
-   * @param typeKeyValueId the type key value id
-   * @return the type, key, value
-   * @throws Exception the exception
-   */
-  public TypeKeyValue getTypeKeyValue(Long typeKeyValueId) throws Exception;
-
-  /**
-   * Find type, key, values for query.
-   *
-   * @param query the query
-   * @return the type, key, value list
-   * @throws Exception the exception
-   */
-  public List<TypeKeyValue> findTypeKeyValuesForQuery(String query)
-    throws Exception;
 
   /**
    * Used to close handlers before shutting application down.

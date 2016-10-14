@@ -116,6 +116,7 @@ public class NdcPropertiesListModel
   }
 
   /* see superclass */
+  @Override
   public NdcPropertiesListModel getModel(String model) throws Exception {
     // Only accept json in correct format
     try {

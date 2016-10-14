@@ -14,7 +14,7 @@ import com.wci.tt.jpa.DataContextJpa;
  */
 @XmlRootElement(name = "scoredDataContext")
 public class ScoredDataContextJpa extends DataContextJpa
-    implements ScoredDataContext, Comparable<ScoredDataContext> {
+    implements ScoredDataContext {
 
   /** The score. */
   private float score = 0;

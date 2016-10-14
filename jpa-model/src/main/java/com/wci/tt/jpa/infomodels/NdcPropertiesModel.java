@@ -246,6 +246,7 @@ public class NdcPropertiesModel implements InfoModel<NdcPropertiesModel> {
   }
 
   /* see superclass */
+  @Override
   public NdcPropertiesModel getModel(String model) throws Exception {
     // Only accept json in correct format
     try {

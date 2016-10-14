@@ -152,6 +152,7 @@ public class RxcuiNdcHistoryModel implements InfoModel<RxcuiNdcHistoryModel> {
   }
 
   /* see superclass */
+  @Override
   public RxcuiNdcHistoryModel getModel(String model) throws Exception {
     // Only accept json in correct format
     try {

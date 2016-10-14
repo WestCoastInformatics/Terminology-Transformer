@@ -31,7 +31,7 @@ import com.wci.tt.helpers.ScoredResult;
 // @Audited - no changing here
 @Indexed
 @XmlRootElement(name = "scoredResult")
-public class ScoredResultJpa implements ScoredResult, Comparable<ScoredResult> {
+public class ScoredResultJpa implements ScoredResult {
 
   /** The id. */
   @TableGenerator(name = "EntityIdGenTransformer", table = "table_generator_transformer", pkColumnValue = "Entity")

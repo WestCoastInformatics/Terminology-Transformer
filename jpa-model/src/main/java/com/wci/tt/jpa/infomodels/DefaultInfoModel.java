@@ -108,6 +108,7 @@ public class DefaultInfoModel implements InfoModel<DefaultInfoModel> {
   }
 
   /* see superclass */
+  @Override
   public DefaultInfoModel getModel(String model) throws Exception {
     // Only accept json in correct format
     try {

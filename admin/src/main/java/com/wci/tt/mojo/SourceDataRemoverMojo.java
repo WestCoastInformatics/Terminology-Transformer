@@ -92,7 +92,7 @@ public class SourceDataRemoverMojo extends SourceDataMojo {
 
           SourceData sourceData = null;
           List<SourceData> data = sdService
-              .findSourceDatasForQuery(
+              .findSourceDatas(
                   "nameSort:\"" + getName(terminology, version) + "\"", null)
               .getObjects();
           if (data.size() == 1) {

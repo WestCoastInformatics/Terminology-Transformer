@@ -196,6 +196,7 @@ public class RxcuiModel implements InfoModel<RxcuiModel> {
   }
 
   /* see superclass */
+  @Override
   public RxcuiModel getModel(String model) throws Exception {
     // Only accept json in correct format
     try {

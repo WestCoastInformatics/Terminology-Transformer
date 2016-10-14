@@ -140,17 +140,18 @@ public class PropertyModel implements InfoModel<PropertyModel> {
    * @throws Exception the exception
    */
   /* see superclass */
+  @Override
   public PropertyModel getModel(String model) throws Exception {
     // Only accept json in correct format
     try {
-      return (PropertyModel) ConfigUtility.getGraphForJson(model,
-          PropertyModel.class);
+      return ConfigUtility.getGraphForJson(model, PropertyModel.class);
     } catch (Exception e) {
       throw new Exception("Malformed model - " + model);
     }
   }
 
   /* see superclass */
+  @Override
   @XmlTransient
   public String getModelValue() throws Exception {
     return ConfigUtility.getJsonForGraph(this);

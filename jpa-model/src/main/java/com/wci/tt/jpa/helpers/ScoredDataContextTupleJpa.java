@@ -12,7 +12,7 @@ import com.wci.tt.helpers.ScoredDataContextTuple;
  */
 @XmlRootElement(name = "scoredDataContextTuple")
 public class ScoredDataContextTupleJpa extends DataContextTupleJpa
-    implements ScoredDataContextTuple, Comparable<ScoredDataContextTuple> {
+    implements ScoredDataContextTuple {
 
   /** The context associated with the data. */
   private float score = 0;

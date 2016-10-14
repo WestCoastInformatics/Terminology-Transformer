@@ -10,7 +10,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
@@ -21,12 +20,10 @@ import com.wci.tt.helpers.DataContextTuple;
 import com.wci.tt.helpers.ScoredDataContext;
 import com.wci.tt.helpers.ScoredResult;
 import com.wci.tt.helpers.TransformRecordList;
-import com.wci.tt.helpers.TypeKeyValue;
 import com.wci.tt.infomodels.InfoModel;
 import com.wci.tt.jpa.TransformRecordJpa;
 import com.wci.tt.jpa.helpers.ScoredResultJpa;
 import com.wci.tt.jpa.helpers.TransformRecordListJpa;
-import com.wci.tt.jpa.helpers.TypeKeyValueJpa;
 import com.wci.tt.jpa.services.helper.DataContextMatcher;
 import com.wci.tt.services.CoordinatorService;
 import com.wci.tt.services.handlers.AnalyzerHandler;
@@ -50,12 +47,10 @@ public class CoordinatorServiceJpa extends ContentServiceJpa
   /** The is analysis run. */
   private static boolean isAnalysisRun = false;
 
-  /** The config properties. */
-  protected static Properties config = null;
-
   /** The threshold. */
   static ThresholdHandler threshold = null;
 
+  /** The source data handlers. */
   static Map<String, SourceDataHandler> sourceDataHandlers = new HashMap<>();
 
   /** The normalizer handler . */
@@ -441,7 +436,7 @@ public class CoordinatorServiceJpa extends ContentServiceJpa
           // Compute the score for this piece of evidence
           // Weight by provider quality
           // Weight by normalized input score
-          final float score =
+          final Float score =
               threshold.weightResult(identifiedResult.getScore(),
                   provider.getQuality(), provider.getLogBaseValue());
 
@@ -510,7 +505,8 @@ public class CoordinatorServiceJpa extends ContentServiceJpa
     }
 
     // Step 3: Generate normalized content per accepted data contexts
-    List<ScoredResult> normalizedResults = normalize(inputStr, inputContext, false);
+    List<ScoredResult> normalizedResults =
+        normalize(inputStr, inputContext, false);
 
     final TransformRecord record = new TransformRecordJpa();
     record.setInputString(inputStr);
@@ -843,59 +839,13 @@ public class CoordinatorServiceJpa extends ContentServiceJpa
         .debug("Find transform records - " + query + ", " + pfs);
     final SearchHandler searchHandler = getSearchHandler(ConfigUtility.DEFAULT);
     final int[] totalCt = new int[1];
-    List<TransformRecordJpa> results = searchHandler.getQueryResults(null, null,
-        Branch.ROOT, query, null, TransformRecordJpa.class,
-        TransformRecordJpa.class, pfs, totalCt, getEntityManager());
+    List<TransformRecordJpa> results =
+        searchHandler.getQueryResults(null, null, Branch.ROOT, query, null,
+            TransformRecordJpa.class, pfs, totalCt, getEntityManager());
     TransformRecordList list = new TransformRecordListJpa();
     list.setTotalCount(totalCt[0]);
     list.getObjects().addAll(results);
     return list;
-  }
-
-  /* see superclass */
-  @Override
-  public TypeKeyValue addTypeKeyValue(TypeKeyValue typeKeyValue)
-    throws Exception {
-    Logger.getLogger(getClass())
-        .debug("Add type, key, value - " + typeKeyValue);
-    return addObject(typeKeyValue);
-  }
-
-  /* see superclass */
-  @Override
-  public void updateTypeKeyValue(TypeKeyValue typeKeyValue) throws Exception {
-    Logger.getLogger(getClass())
-        .debug("Update type, key, value - " + typeKeyValue);
-    updateObject(typeKeyValue);
-  }
-
-  /* see superclass */
-  @Override
-  public void removeTypeKeyValue(Long typeKeyValueId) throws Exception {
-    Logger.getLogger(getClass())
-        .debug("Remove type, key, value - " + typeKeyValueId);
-    this.removeObject((TypeKeyValueJpa) getTypeKeyValue(typeKeyValueId),
-        TypeKeyValueJpa.class);
-  }
-
-  /* see superclass */
-  @Override
-  public TypeKeyValue getTypeKeyValue(Long typeKeyValueId) throws Exception {
-    Logger.getLogger(getClass())
-        .debug("Get type, key, value - " + typeKeyValueId);
-    return getObject(typeKeyValueId, TypeKeyValueJpa.class);
-  }
-
-  /* see superclass */
-  @Override
-  public List<TypeKeyValue> findTypeKeyValuesForQuery(String query)
-    throws Exception {
-    Logger.getLogger(getClass()).debug("Find type, key, values - " + query);
-    final SearchHandler searchHandler = getSearchHandler(ConfigUtility.DEFAULT);
-    final int[] totalCt = new int[1];
-    return new ArrayList<TypeKeyValue>(searchHandler.getQueryResults(null, null,
-        Branch.ROOT, query, null, TypeKeyValueJpa.class, TypeKeyValueJpa.class,
-        null, totalCt, getEntityManager()));
   }
 
   /* see superclass */

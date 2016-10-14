@@ -75,7 +75,7 @@ public class TransformClientRest extends RootClientRest
     }
 
     // converting to object
-    ScoredDataContextListJpa result = (ScoredDataContextListJpa) ConfigUtility
+    ScoredDataContextListJpa result = ConfigUtility
         .getGraphForString(resultString, ScoredDataContextListJpa.class);
 
     return result;
@@ -97,28 +97,30 @@ public class TransformClientRest extends RootClientRest
     // Ensure the JPA class has content before passing to server
     List<DataContext> updatedInputOutputContexts = new ArrayList<>();
 
-    if (inputOutputContexts == null) {
-      inputOutputContexts = new DataContextListJpa();
+    DataContextListJpa linputOutputContexts = inputOutputContexts;
+
+    if (linputOutputContexts == null) {
+      linputOutputContexts = new DataContextListJpa();
     }
 
-    if (inputOutputContexts.getObjects().get(0) == null) {
+    if (linputOutputContexts.getObjects().get(0) == null) {
       updatedInputOutputContexts.add(new DataContextJpa());
     } else {
-      updatedInputOutputContexts.add(inputOutputContexts.getObjects().get(0));
+      updatedInputOutputContexts.add(linputOutputContexts.getObjects().get(0));
     }
 
-    if (inputOutputContexts.getObjects().get(1) == null) {
+    if (linputOutputContexts.getObjects().get(1) == null) {
       updatedInputOutputContexts.add(new DataContextJpa());
     } else {
-      updatedInputOutputContexts.add(inputOutputContexts.getObjects().get(1));
+      updatedInputOutputContexts.add(linputOutputContexts.getObjects().get(1));
     }
 
-    inputOutputContexts.setObjects(updatedInputOutputContexts);
-    inputOutputContexts.setTotalCount(2);
+    linputOutputContexts.setObjects(updatedInputOutputContexts);
+    linputOutputContexts.setTotalCount(2);
 
     // JPA Object ready for conversion
     String inputOutputContextString =
-        ConfigUtility.getStringForGraph(inputOutputContexts);
+        ConfigUtility.getStringForGraph(linputOutputContexts);
 
     // Call Rest method
     Response response = target.request(MediaType.APPLICATION_XML)
@@ -133,9 +135,8 @@ public class TransformClientRest extends RootClientRest
     }
 
     // converting to object
-    ScoredDataContextTupleListJpa result =
-        (ScoredDataContextTupleListJpa) ConfigUtility.getGraphForString(
-            resultString, ScoredDataContextTupleListJpa.class);
+    ScoredDataContextTupleListJpa result = ConfigUtility
+        .getGraphForString(resultString, ScoredDataContextTupleListJpa.class);
 
     return result;
   }

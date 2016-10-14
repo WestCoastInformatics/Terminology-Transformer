@@ -12,10 +12,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-import com.wci.tt.helpers.TypeKeyValue;
 import com.wci.tt.jpa.services.CoordinatorServiceJpa;
 import com.wci.tt.services.CoordinatorService;
 import com.wci.umls.server.helpers.ConfigUtility;
+import com.wci.umls.server.helpers.TypeKeyValue;
 
 /**
  * Abstract {@link Filter} to be used as a superclass.
@@ -31,6 +31,7 @@ public abstract class AbstractFilter {
   /** The writer map. */
   private Map<String, PrintWriter> writerMap = new HashMap<>();
 
+  /** The punctuation regex. */
   private String punctuationRegex =
       ConfigUtility.PUNCTUATION_REGEX.replace(" ", "");
 
@@ -89,6 +90,7 @@ public abstract class AbstractFilter {
    * @param inputStr the input str
    * @throws Exception the exception
    */
+  @SuppressWarnings("resource")
   protected void addFilteredResult(String category, String inputStr)
     throws Exception {
     if (!filteredMap.containsKey(category)) {

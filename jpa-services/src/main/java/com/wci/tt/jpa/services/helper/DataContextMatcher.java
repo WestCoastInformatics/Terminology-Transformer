@@ -191,51 +191,59 @@ public class DataContextMatcher {
       throw new Exception("At least one type must be supplied");
     }
 
+    // handle defaults if null is passed in
+    List<String> lcustomers = customers;
+    List<String> lsemanticTypes = semanticTypes;
+    List<String> lspecialties = specialties;
+    List<String> linfoModelClasses = infoModelClasses;
+    List<String> lterminologies = terminologies;
+    List<String> lversions = versions;
+
     // Handle wildcard setup
-    if (customers == null) {
-      customers = new ArrayList<>();
-      customers.add("*");
-    } else if (customers.isEmpty()) {
+    if (lcustomers == null) {
+      lcustomers = new ArrayList<>();
+      lcustomers.add("*");
+    } else if (lcustomers.isEmpty()) {
       throw new Exception(
           "Empty customer list is not allowed, pass null for wildcard.");
     }
 
-    if (semanticTypes == null) {
-      semanticTypes = new ArrayList<>();
-      semanticTypes.add("*");
-    } else if (semanticTypes.isEmpty()) {
+    if (lsemanticTypes == null) {
+      lsemanticTypes = new ArrayList<>();
+      lsemanticTypes.add("*");
+    } else if (lsemanticTypes.isEmpty()) {
       throw new Exception(
           "Empty semantic type list is not allowed, pass null for wildcard.");
     }
 
-    if (specialties == null) {
-      specialties = new ArrayList<>();
-      specialties.add("*");
-    } else if (specialties.isEmpty()) {
+    if (lspecialties == null) {
+      lspecialties = new ArrayList<>();
+      lspecialties.add("*");
+    } else if (lspecialties.isEmpty()) {
       throw new Exception(
           "Empty specialty list is not allowed, pass null for wildcard.");
     }
 
-    if (infoModelClasses == null) {
-      infoModelClasses = new ArrayList<>();
-      infoModelClasses.add("*");
-    } else if (infoModelClasses.isEmpty()) {
+    if (linfoModelClasses == null) {
+      linfoModelClasses = new ArrayList<>();
+      linfoModelClasses.add("*");
+    } else if (linfoModelClasses.isEmpty()) {
       throw new Exception(
           "Empty info model name list is not allowed, pass null for wildcard.");
     }
 
-    if (terminologies == null) {
-      terminologies = new ArrayList<>();
-      terminologies.add("*");
-    } else if (terminologies.isEmpty()) {
+    if (lterminologies == null) {
+      lterminologies = new ArrayList<>();
+      lterminologies.add("*");
+    } else if (lterminologies.isEmpty()) {
       throw new Exception(
           "Empty terminology list is not allowed, pass null for wildcard.");
     }
 
-    if (versions == null) {
-      versions = new ArrayList<>();
-      versions.add("*");
-    } else if (versions.isEmpty()) {
+    if (lversions == null) {
+      lversions = new ArrayList<>();
+      lversions.add("*");
+    } else if (lversions.isEmpty()) {
       throw new Exception(
           "Empty version list is not allowed, pass null for wildcard.");
     }
@@ -243,12 +251,12 @@ public class DataContextMatcher {
     // Add all possible combinations (seems combinatorially problematic
     // but in practice, most of these parameters will have 1 entry
     for (final DataContextType type : types) {
-      for (final String customer : customers) {
-        for (final String semanticType : semanticTypes) {
-          for (final String specialty : specialties) {
-            for (final String infoModelClass : infoModelClasses) {
-              for (final String terminology : terminologies) {
-                for (final String version : versions) {
+      for (final String customer : lcustomers) {
+        for (final String semanticType : lsemanticTypes) {
+          for (final String specialty : lspecialties) {
+            for (final String infoModelClass : linfoModelClasses) {
+              for (final String terminology : lterminologies) {
+                for (final String version : lversions) {
                   final DataContext context = new DataContextJpa();
                   context.setType(type);
                   context.setCustomer(customer.equals("*") ? null : customer);

@@ -33,41 +33,41 @@ public class AbstractListUnit<T> {
     T object2) throws Exception {
 
     assertTrue(list.getObjects().size() == 0);
-    assertTrue(list.getCount() == 0);
+    assertTrue(list.size() == 0);
     assertTrue(list.getTotalCount() == 0);
 
-    list.addObject(object1);
+    list.getObjects().add(object1);
     assertTrue(list.getObjects().size() == 1);
-    assertTrue(list.getCount() == 1);
+    assertTrue(list.size() == 1);
     assertTrue(list.getTotalCount() == 0);
 
     assertFalse(list.contains(object2));
 
-    list.addObject(object2);
+    list.getObjects().add(object2);
     assertTrue(list.getObjects().size() == 2);
-    assertTrue(list.getCount() == 2);
+    assertTrue(list.size() == 2);
     assertTrue(list.getTotalCount() == 0);
 
     assertTrue(list.contains(object1));
     assertTrue(list.contains(object2));
 
-    list2.addObject(object1);
+    list2.getObjects().add(object1);
     assertFalse(list.equals(list2));
-    list2.addObject(object2);
+    list2.getObjects().add(object2);
     assertTrue(list.equals(list2));
     assertTrue(list.getObjects().equals(list2.getObjects()));
 
     list.setTotalCount(5);
     assertTrue(list.getTotalCount() == 5);
 
-    list.removeObject(object1);
+    list.getObjects().remove(object1);
     assertTrue(list.getObjects().size() == 1);
-    assertTrue(list.getCount() == 1);
+    assertTrue(list.size() == 1);
     assertTrue(list.getTotalCount() == 5);
 
-    list.removeObject(object2);
+    list.getObjects().remove(object2);
     assertTrue(list.getObjects().size() == 0);
-    assertTrue(list.getCount() == 0);
+    assertTrue(list.size() == 0);
     assertTrue(list.getTotalCount() == 5);
 
     List<T> list3 = new ArrayList<T>();
@@ -75,7 +75,7 @@ public class AbstractListUnit<T> {
     list3.add(object2);
     list.setObjects(list3);
     assertTrue(list.getObjects().size() == 2);
-    assertTrue(list.getCount() == 2);
+    assertTrue(list.size() == 2);
     assertTrue(list.getTotalCount() == 5);
     assertTrue(list.equals(list2));
 
@@ -96,29 +96,29 @@ public class AbstractListUnit<T> {
     T object1, T object2) throws Exception {
 
     // get underlying objects list and change it
-    list.addObject(object1);
+    list.getObjects().add(object1);
     List<T> list3 = list.getObjects();
     list3.add(object2);
 
     assertTrue(list.getObjects().size() == 2);
-    assertTrue(list.getCount() == 2);
+    assertTrue(list.size() == 2);
 
     list3.remove(object1);
     list3.remove(object2);
     assertTrue(list.getObjects().size() == 0);
-    assertTrue(list.getCount() == 0);
+    assertTrue(list.size() == 0);
     assertFalse(list.contains(object1));
 
     // Set underlying object to null then try to add an object
     list.setObjects(null);
     try {
-      list.addObject(object1);
+      list.getObjects().add(object1);
       fail("Expected exception did not occur.");
     } catch (Exception e) {
       // expected outcome
     }
     try {
-      list.getCount();
+      list.size();
       fail("Expected exception did not occur.");
     } catch (Exception e) {
       // expected outcome
@@ -139,43 +139,43 @@ public class AbstractListUnit<T> {
     T object2) throws Exception {
 
     // add and remove null
-    list.addObject(null);
+    list.getObjects().add(null);
     assertTrue(list.getObjects().size() == 1);
-    assertTrue(list.getCount() == 1);
-    list.removeObject(null);
+    assertTrue(list.size() == 1);
+    list.getObjects().remove(null);
     assertTrue(list.getObjects().size() == 0);
-    assertTrue(list.getCount() == 0);
+    assertTrue(list.size() == 0);
 
     // add the same thing multiple times and remove it multiple times
-    list.addObject(object1);
+    list.getObjects().add(object1);
     assertTrue(list.getObjects().size() == 1);
-    assertTrue(list.getCount() == 1);
-    list.addObject(object1);
+    assertTrue(list.size() == 1);
+    list.getObjects().add(object1);
     assertTrue(list.getObjects().size() == 2);
-    assertTrue(list.getCount() == 2);
-    list.removeObject(object1);
+    assertTrue(list.size() == 2);
+    list.getObjects().remove(object1);
     assertTrue(list.getObjects().size() == 1);
-    assertTrue(list.getCount() == 1);
-    list.removeObject(object1);
+    assertTrue(list.size() == 1);
+    list.getObjects().remove(object1);
     assertTrue(list.getObjects().size() == 0);
-    assertTrue(list.getCount() == 0);
+    assertTrue(list.size() == 0);
 
     // add once and remove multiple times
-    list.addObject(object1);
+    list.getObjects().add(object1);
     assertTrue(list.getObjects().size() == 1);
-    assertTrue(list.getCount() == 1);
-    list.removeObject(object1);
+    assertTrue(list.size() == 1);
+    list.getObjects().remove(object1);
     assertTrue(list.getObjects().size() == 0);
-    assertTrue(list.getCount() == 0);
-    list.removeObject(object1);
+    assertTrue(list.size() == 0);
+    list.getObjects().remove(object1);
     assertTrue(list.getObjects().size() == 0);
-    assertTrue(list.getCount() == 0);
+    assertTrue(list.size() == 0);
 
     // contains null
     assertFalse(list.contains(null));
-    list.addObject(null);
+    list.getObjects().add(null);
     assertTrue(list.contains(null));
-    list.removeObject(null);
+    list.getObjects().remove(null);
     assertFalse(list.contains(null));
 
     // total count is managed by user, any value is allowed
@@ -200,7 +200,7 @@ public class AbstractListUnit<T> {
     // test serializing an empty list (e.g. no exception)
     String xml = ConfigUtility.getStringForGraph(list);
     // Add contents
-    list.addObject(object1);
+    list.getObjects().add(object1);
 
     xml = ConfigUtility.getStringForGraph(list);
 
@@ -209,7 +209,7 @@ public class AbstractListUnit<T> {
     assertTrue(list.equals(list3));
 
     // Add 2 contents
-    list.addObject(object2);
+    list.getObjects().add(object2);
     xml = ConfigUtility.getStringForGraph(list);
     list3 = ConfigUtility.getGraphForString(xml, list.getClass());
 

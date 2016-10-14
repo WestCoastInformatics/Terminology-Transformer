@@ -1,5 +1,5 @@
-/**
- * Copyright 2015 West Coast Informatics, LLC
+/*
+ *    Copyright 2016 West Coast Informatics, LLC
  */
 package com.wci.tt.jpa.services.handlers;
 
@@ -17,7 +17,6 @@ import org.junit.Test;
 
 import com.wci.tt.helpers.ScoredResult;
 import com.wci.tt.jpa.DataContextJpa;
-import com.wci.tt.jpa.services.handlers.NdcNormalizer;
 import com.wci.umls.server.helpers.CancelException;
 
 /**
@@ -25,8 +24,9 @@ import com.wci.umls.server.helpers.CancelException;
  */
 public class NdcNormalizerUnitTest {
 
+  /** The ndc normalizer. */
   private NdcNormalizer ndcNormalizer;
-  
+
   /**
    * Setup class.
    */
@@ -72,7 +72,7 @@ public class NdcNormalizerUnitTest {
     // 6-3-2
     normStr = ndcNormalizer.normalize("123456-123-12", new DataContextJpa());
     assertTrue(normStr.get(0).getValue().equals("23456012312"));
-    
+
     // 6-3-1
     normStr = ndcNormalizer.normalize("123456-123-1", new DataContextJpa());
     assertTrue(normStr.get(0).getValue().equals("23456012301"));
@@ -80,11 +80,11 @@ public class NdcNormalizerUnitTest {
     // 5-4-2
     normStr = ndcNormalizer.normalize("12345-1234-12", new DataContextJpa());
     assertTrue(normStr.get(0).getValue().equals("12345123412"));
-    
+
     // 5-4-1
     normStr = ndcNormalizer.normalize("12345-1234-1", new DataContextJpa());
     assertTrue(normStr.get(0).getValue().equals("12345123401"));
-    
+
     // 5-3-2
     normStr = ndcNormalizer.normalize("12345-123-12", new DataContextJpa());
     assertTrue(normStr.get(0).getValue().equals("12345012312"));
@@ -92,12 +92,12 @@ public class NdcNormalizerUnitTest {
     // 4-4-2
     normStr = ndcNormalizer.normalize("1234-1234-12", new DataContextJpa());
     assertTrue(normStr.get(0).getValue().equals("01234123412"));
-    
+
     // contains '*' MTHFDA - replace with 0
     normStr = ndcNormalizer.normalize("*1234-1234-12", new DataContextJpa());
     assertTrue(normStr.get(0).getValue().equals("01234123412"));
 
-    // 10 digit no hyphens - invalid  // TODO throw exception? warn?
+    // 10 digit no hyphens - invalid // TODO throw exception? warn?
     try {
       normStr = ndcNormalizer.normalize("1657104311", new DataContextJpa());
       fail("10 digits no hyphens is invalid and should throw exception");
@@ -105,13 +105,13 @@ public class NdcNormalizerUnitTest {
       // do nothing
     }
 
-    // more than 2 hyphens - invalid 
+    // more than 2 hyphens - invalid
     try {
       normStr = ndcNormalizer.normalize("165-710-431-1", new DataContextJpa());
       fail("more than 2 hyphens is invalid and should throw exception");
     } catch (Exception e) {
       // do nothing
-    }    
+    }
   }
 
   /**

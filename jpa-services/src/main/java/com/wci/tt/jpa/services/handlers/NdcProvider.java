@@ -18,8 +18,8 @@ import com.wci.tt.TransformRecord;
 import com.wci.tt.helpers.DataContextType;
 import com.wci.tt.helpers.ScoredDataContext;
 import com.wci.tt.helpers.ScoredResult;
-import com.wci.tt.jpa.infomodels.NdcHistoryModel;
 import com.wci.tt.jpa.helpers.ScoredResultJpa;
+import com.wci.tt.jpa.infomodels.NdcHistoryModel;
 import com.wci.tt.jpa.infomodels.NdcModel;
 import com.wci.tt.jpa.infomodels.NdcPropertiesListModel;
 import com.wci.tt.jpa.infomodels.NdcPropertiesModel;
@@ -30,10 +30,9 @@ import com.wci.tt.jpa.services.helper.DataContextMatcher;
 import com.wci.tt.services.handlers.ProviderHandler;
 import com.wci.umls.server.helpers.Branch;
 import com.wci.umls.server.helpers.ConfigUtility;
-import com.wci.umls.server.helpers.PfscParameter;
-import com.wci.umls.server.helpers.SearchCriteria;
+import com.wci.umls.server.helpers.PfsParameter;
 import com.wci.umls.server.jpa.content.ConceptJpa;
-import com.wci.umls.server.jpa.helpers.PfscParameterJpa;
+import com.wci.umls.server.jpa.helpers.PfsParameterJpa;
 import com.wci.umls.server.jpa.services.ContentServiceJpa;
 import com.wci.umls.server.model.content.Atom;
 import com.wci.umls.server.model.content.Attribute;
@@ -126,8 +125,7 @@ public class NdcProvider extends AbstractAcceptsHandler
 
     final String inputString = record.getInputString();
     final DataContext inputContext = record.getInputContext();
-    final DataContext outputContext =
-        record.getProviderOutputContext();
+    final DataContext outputContext = record.getProviderOutputContext();
     boolean history = inputContext.getParameters() != null
         && inputContext.getParameters().get("history") != null
         && inputContext.getParameters().get("history").equals("true");
@@ -260,15 +258,13 @@ public class NdcProvider extends AbstractAcceptsHandler
 
       // Find all matching RXNORM/NDC atoms from all versions
       // (or just the latest version if we're not interested in history)
-      final PfscParameter pfsc = new PfscParameterJpa();
-      pfsc.setSearchCriteria(new ArrayList<SearchCriteria>());
+      final PfsParameter pfs = new PfsParameterJpa();
       final SearchHandler handler =
           service.getSearchHandler(ConfigUtility.ATOMCLASS);
       final int[] totalCt = new int[1];
       final List<ConceptJpa> list = handler.getQueryResults("RXNORM", null,
           Branch.ROOT, "atoms.termType:NDC AND atoms.name:" + query, null,
-          ConceptJpa.class, ConceptJpa.class, pfsc, totalCt,
-          service.getEntityManager());
+          ConceptJpa.class, pfs, totalCt, service.getEntityManager());
 
       // [ {version,ndc,ndcActive,rxcui,rxcuiActive}, ... ]
       final List<NdcRxcuiHistoryRecord> recordList = new ArrayList<>();
@@ -344,10 +340,9 @@ public class NdcProvider extends AbstractAcceptsHandler
 
             // when rxcui changes
             if (prevRxcui != null && !prevRxcui.equals(record.rxcui)) {
-              if (historyModel != null) {
-                historyModel.setStart(prevVersion);
-                historyModels.add(historyModel);
-              }
+              historyModel.setStart(prevVersion);
+              historyModels.add(historyModel);
+
               Logger.getLogger(getClass())
                   .debug("    history = " + historyModel);
               historyModel = new NdcHistoryModel();
@@ -409,15 +404,14 @@ public class NdcProvider extends AbstractAcceptsHandler
 
       // try to find RXCUI for all versions (or just latest version if
       // not interested in history)
-      final PfscParameter pfsc = new PfscParameterJpa();
-      pfsc.setSearchCriteria(new ArrayList<SearchCriteria>());
+      final PfsParameter pfs = new PfsParameterJpa();
       // rxcui -> ndc
       final SearchHandler handler =
           service.getSearchHandler(ConfigUtility.ATOMCLASS);
       final int[] totalCt = new int[1];
       final List<ConceptJpa> list = handler.getQueryResults("RXNORM", null,
-          Branch.ROOT, "terminologyId:" + rxcui, null, ConceptJpa.class,
-          ConceptJpa.class, pfsc, totalCt, service.getEntityManager());
+          Branch.ROOT, "terminologyId:" + rxcui, null, ConceptJpa.class, pfs,
+          totalCt, service.getEntityManager());
 
       // [ {version,ndc,ndcActive,rxcui,rxcuiActive}, ... ]
       final List<RxcuiNdcHistoryRecord> recordList = new ArrayList<>();
@@ -491,10 +485,9 @@ public class NdcProvider extends AbstractAcceptsHandler
 
             // when ndc changes
             if (prevNdc != null && !prevNdc.equals(record.ndc)) {
-              if (historyModel != null) {
-                historyModel.setStart(prevVersion);
-                historyModels.add(historyModel);
-              }
+              historyModel.setStart(prevVersion);
+              historyModels.add(historyModel);
+
               Logger.getLogger(getClass())
                   .debug("    history = " + historyModel);
               historyModel = new RxcuiNdcHistoryModel();
@@ -570,8 +563,7 @@ public class NdcProvider extends AbstractAcceptsHandler
       final List<ConceptJpa> list = handler.getQueryResults("RXNORM",
           service.getTerminologyLatestVersion("RXNORM").getVersion(),
           Branch.ROOT, "atoms.termType:NDC AND atoms.name:" + query, null,
-          ConceptJpa.class, ConceptJpa.class, null, totalCt,
-          service.getEntityManager());
+          ConceptJpa.class, null, totalCt, service.getEntityManager());
 
       // Should be a single matching concept
       if (list.size() == 1) {
@@ -655,9 +647,6 @@ public class NdcProvider extends AbstractAcceptsHandler
     final ContentServiceJpa service = new ContentServiceJpa();
 
     try {
-      // try to find NDC based on inputString
-      final PfscParameter pfsc = new PfscParameterJpa();
-      pfsc.setSearchCriteria(new ArrayList<SearchCriteria>());
       // Look only in latest RXNORM version for NDCs with a matching codeId
       final SearchHandler handler =
           service.getSearchHandler(ConfigUtility.ATOMCLASS);
@@ -665,8 +654,7 @@ public class NdcProvider extends AbstractAcceptsHandler
       final List<ConceptJpa> list = handler.getQueryResults("RXNORM",
           service.getTerminologyLatestVersion("RXNORM").getVersion(),
           Branch.ROOT, "atoms.termType:NDC AND atoms.codeId:" + splsetid, null,
-          ConceptJpa.class, ConceptJpa.class, null, totalCt,
-          service.getEntityManager());
+          ConceptJpa.class, null, totalCt, service.getEntityManager());
 
       // list will have each matching concept - e.g. from each version.
       if (list.size() > 0) {
@@ -824,6 +812,13 @@ public class NdcProvider extends AbstractAcceptsHandler
     public boolean active;
 
     /**
+     * Instantiates an empty {@link NdcRxcuiHistoryRecord}.
+     */
+    public NdcRxcuiHistoryRecord() {
+      // n/a
+    }
+
+    /**
      * Compare to.
      *
      * @param o the o
@@ -846,6 +841,13 @@ public class NdcProvider extends AbstractAcceptsHandler
 
     /** The ndc. */
     public String ndc;
+
+    /**
+     * Instantiates an empty {@link RxcuiNdcHistoryRecord}.
+     */
+    public RxcuiNdcHistoryRecord() {
+      // n/a
+    }
 
     /**
      * Compare to.

@@ -45,7 +45,7 @@ public abstract class AbstractProvider extends AbstractAcceptsHandler
   private float LOG_BASE_VALUE = 0f;
 
   /** The info model. */
-  private InfoModel<?> infoModel = null;;
+  private InfoModel<?> infoModel = null;
 
   /**
    * Instantiates an empty {@link AbstractProvider}.
@@ -72,7 +72,7 @@ public abstract class AbstractProvider extends AbstractAcceptsHandler
   @Override
   public Map<String, Float> filterResults(
     Map<String, Float> providerEvidenceMap, TransformRecord record)
-      throws Exception {
+    throws Exception {
     Map<String, Float> results = providerEvidenceMap;
     for (final Filter filter : getPostProcessFilters()) {
       if (filter.postCheckAccepts(record.getOutputContext())) {
@@ -120,7 +120,7 @@ public abstract class AbstractProvider extends AbstractAcceptsHandler
    */
   public abstract List<ScoredResult> performSearch(String inputString,
     SearchHandler handler, ContentServiceJpa service, String version)
-      throws Exception;
+    throws Exception;
 
   /**
    * Limit results based on some notion of local quality. Default is to not
@@ -130,12 +130,14 @@ public abstract class AbstractProvider extends AbstractAcceptsHandler
    * @return the list
    * @throws Exception the exception
    */
+  @SuppressWarnings("static-method")
   public List<ScoredResult> limitResults(List<ScoredResult> results)
     throws Exception {
     return results;
   }
 
   /* see superclass */
+  @Override
   public List<ScoredResult> process(TransformRecord record) throws Exception {
     final String inputString = record.getInputString();
     final DataContext inputContext = record.getInputContext();

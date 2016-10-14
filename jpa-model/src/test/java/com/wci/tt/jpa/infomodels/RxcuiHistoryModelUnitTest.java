@@ -110,6 +110,7 @@ public class RxcuiHistoryModelUnitTest extends JpaSupport {
    *
    * @throws Exception the exception
    */
+  @SuppressWarnings("static-method")
   @Test
   public void testModelInCommon() throws Exception {
 

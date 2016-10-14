@@ -9,15 +9,18 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
 
 import com.wci.tt.helpers.ScoredResult;
 import com.wci.tt.jpa.services.handlers.NdcNormalizer;
+import com.wci.umls.server.ValidationResult;
 import com.wci.umls.server.helpers.ConfigUtility;
 import com.wci.umls.server.helpers.FieldedStringTokenizer;
 import com.wci.umls.server.helpers.PrecedenceList;
+import com.wci.umls.server.jpa.ValidationResultJpa;
 import com.wci.umls.server.jpa.algo.AbstractTerminologyLoaderAlgorithm;
 import com.wci.umls.server.jpa.algo.RrfFileSorter;
 import com.wci.umls.server.jpa.algo.RrfReaders;
@@ -33,6 +36,7 @@ import com.wci.umls.server.model.content.Concept;
 import com.wci.umls.server.model.meta.IdType;
 import com.wci.umls.server.model.meta.RootTerminology;
 import com.wci.umls.server.model.meta.Terminology;
+import com.wci.umls.server.model.workflow.WorkflowStatus;
 import com.wci.umls.server.services.RootService;
 import com.wci.umls.server.services.helpers.PushBackReader;
 
@@ -66,7 +70,7 @@ public class NdcLoaderAlgorithm extends AbstractTerminologyLoaderAlgorithm {
   private final String loader = "loader";
 
   /** The published. */
-  private final String published = "PUBLISHED";
+  private final WorkflowStatus published = WorkflowStatus.PUBLISHED;
 
   /** The concept map. */
   private Map<String, Long> conceptIdMap = new HashMap<>(10000);
@@ -87,6 +91,7 @@ public class NdcLoaderAlgorithm extends AbstractTerminologyLoaderAlgorithm {
    *
    * @param terminology the terminology
    */
+  @Override
   public void setTerminology(String terminology) {
     this.terminology = terminology;
   }
@@ -96,6 +101,7 @@ public class NdcLoaderAlgorithm extends AbstractTerminologyLoaderAlgorithm {
    *
    * @return the terminology
    */
+  @Override
   public String getTerminology() {
     return terminology;
   }
@@ -105,6 +111,7 @@ public class NdcLoaderAlgorithm extends AbstractTerminologyLoaderAlgorithm {
    *
    * @param version the terminology version
    */
+  @Override
   public void setVersion(String version) {
     this.version = version;
   }
@@ -132,6 +139,7 @@ public class NdcLoaderAlgorithm extends AbstractTerminologyLoaderAlgorithm {
    *
    * @return the version
    */
+  @Override
   public String getVersion() {
     return version;
   }
@@ -141,6 +149,7 @@ public class NdcLoaderAlgorithm extends AbstractTerminologyLoaderAlgorithm {
    *
    * @param releaseVersion the rlease version
    */
+  @Override
   public void setReleaseVersion(String releaseVersion) {
     this.releaseVersion = releaseVersion;
   }
@@ -246,7 +255,7 @@ public class NdcLoaderAlgorithm extends AbstractTerminologyLoaderAlgorithm {
       commitClearBegin();
 
       // Load the content
-      list = getDefaultPrecedenceList(getTerminology(), getVersion());
+      list = getPrecedenceList(getTerminology(), getVersion());
       loadMrconso();
 
       // Attributes
@@ -273,6 +282,7 @@ public class NdcLoaderAlgorithm extends AbstractTerminologyLoaderAlgorithm {
    *
    * @throws Exception the exception
    */
+  @SuppressWarnings("resource")
   private void loadMrconso() throws Exception {
     logInfo("  Load MRCONSO");
     logInfo("  Insert atoms and concepts ");
@@ -284,7 +294,7 @@ public class NdcLoaderAlgorithm extends AbstractTerminologyLoaderAlgorithm {
     final PushBackReader reader = readers.getReader(RrfReaders.Keys.MRCONSO);
     final String fields[] = new String[18];
     String prevCui = null;
-    Concept cui = null;
+    Concept cui = new ConceptJpa();
     while ((line = reader.readLine()) != null) {
 
       line = line.replace("\r", "");
@@ -375,7 +385,7 @@ public class NdcLoaderAlgorithm extends AbstractTerminologyLoaderAlgorithm {
         cui.setVersion(version);
         cui.setWorkflowStatus(published);
       }
-      cui.addAtom(atom);
+      cui.getAtoms().add(atom);
       prevCui = fields[0];
     }
     // Add last concept
@@ -396,6 +406,7 @@ public class NdcLoaderAlgorithm extends AbstractTerminologyLoaderAlgorithm {
    *
    * @throws Exception the exception
    */
+  @SuppressWarnings("resource")
   private void loadMrsat() throws Exception {
     logInfo("  Load MRSAT data");
     String line = null;
@@ -573,6 +584,8 @@ public class NdcLoaderAlgorithm extends AbstractTerminologyLoaderAlgorithm {
    * @param fields the fields
    * @param ndcAtoms the ndc atoms
    * @param mthsplNdcCodeMap the mthspl ndc code map
+   * @param mthsplNdc9Map the mthspl ndc 9 map
+   * @param mthsplNdc10Map the mthspl ndc 10 map
    * @param attributeMap the attribute map
    * @param splSetIdMap the spl set id map
    * @param modifiedConcepts the modified concepts
@@ -611,7 +624,7 @@ public class NdcLoaderAlgorithm extends AbstractTerminologyLoaderAlgorithm {
           att.setVersion(version);
           att.setTerminologyId("");
           addAttribute(att, ndcAtom);
-          ndcAtom.addAttribute(att);
+          ndcAtom.getAttributes().add(att);
         }
 
         if (ndc10 != null) {
@@ -629,7 +642,7 @@ public class NdcLoaderAlgorithm extends AbstractTerminologyLoaderAlgorithm {
           att.setVersion(version);
           att.setTerminologyId("");
           addAttribute(att, ndcAtom);
-          ndcAtom.addAttribute(att);
+          ndcAtom.getAttributes().add(att);
         }
 
       }
@@ -645,12 +658,12 @@ public class NdcLoaderAlgorithm extends AbstractTerminologyLoaderAlgorithm {
           final Attribute copy = new AttributeJpa(attribute);
           copy.setId(null);
           addAttribute(copy, ndcAtom);
-          ndcAtom.addAttribute(copy);
+          ndcAtom.getAttributes().add(copy);
         }
       }
 
       // Add the NDC atom
-      concept.addAtom(ndcAtom);
+      concept.getAtoms().add(ndcAtom);
       addAtom(ndcAtom);
       modifiedConcepts.add(concept);
     }
@@ -688,13 +701,14 @@ public class NdcLoaderAlgorithm extends AbstractTerminologyLoaderAlgorithm {
   }
 
   @Override
-  public void computeTransitiveClosures() throws Exception {
-    // n/a - do nothing
+  public ValidationResult checkPreconditions() throws Exception {
+    // n/a
+    return new ValidationResultJpa();
   }
 
   @Override
-  public void computeTreePositions() throws Exception {
-    // n/a - do nothing
+  public void setProperties(Properties arg0) throws Exception {
+    // n/a
   }
 
 }

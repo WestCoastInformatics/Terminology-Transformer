@@ -152,6 +152,7 @@ public class NdcHistoryModel implements InfoModel<NdcHistoryModel> {
   }
 
   /* see superclass */
+  @Override
   public NdcHistoryModel getModel(String model) throws Exception {
     // Only accept json in correct format
     try {

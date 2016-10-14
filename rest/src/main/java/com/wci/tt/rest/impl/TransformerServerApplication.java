@@ -3,31 +3,33 @@
  */
 package com.wci.tt.rest.impl;
 
+import java.net.URL;
 import java.util.Calendar;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import javax.ws.rs.ApplicationPath;
-import javax.ws.rs.core.Application;
 
 import org.apache.log4j.Logger;
 import org.glassfish.jersey.jackson.JacksonFeature;
-import org.glassfish.jersey.jsonp.JsonProcessingFeature;
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
+import org.glassfish.jersey.server.ResourceConfig;
 
+import com.fasterxml.jackson.module.jaxb.JaxbAnnotationModule;
 import com.wci.umls.server.helpers.ConfigUtility;
 import com.wci.umls.server.jpa.services.MetadataServiceJpa;
 import com.wci.umls.server.rest.impl.ConfigureServiceRestImpl;
+import com.wci.umls.server.rest.impl.ObjectMapperProvider;
 import com.wci.umls.server.services.MetadataService;
-import com.wordnik.swagger.jaxrs.config.BeanConfig;
+
+import io.swagger.jaxrs.config.BeanConfig;
+import io.swagger.util.Json;
 
 /**
- * Transformer applicatgion entry point (for jersey).
+ * Transformer application entry point (for jersey).
  */
 @ApplicationPath("/")
-public class TransformerServerApplication extends Application {
+public class TransformerServerApplication extends ResourceConfig {
 
   /** The API_VERSION - also used in "swagger.htmL" */
   public final static String API_VERSION = "1.0.0";
@@ -41,18 +43,44 @@ public class TransformerServerApplication extends Application {
    * @throws Exception the exception
    */
   public TransformerServerApplication() throws Exception {
-    Logger.getLogger(getClass())
-        .info("WCI Terminology Transformer APPLICATION START");
-    BeanConfig beanConfig = new BeanConfig();
-    beanConfig.setTitle("WCI Terminology Transformer service API");
-    beanConfig.setDescription("RESTful calls for WCI Terminology Transformer");
-    beanConfig.setVersion(API_VERSION);
-    beanConfig.setBasePath(
-        ConfigUtility.getConfigProperties().getProperty("base.url"));
-    beanConfig.setResourcePackage("com.wci.tt.rest.impl");
-    beanConfig.setScan(true);
 
-    // Set up a timer task to run at 2AM every day
+    // Register providers and features
+    super(ObjectMapperProvider.class, JacksonFeature.class,
+        MultiPartFeature.class);
+    Logger.getLogger(getClass()).info("TRANSFORMER APPLICATION START");
+
+    register(ConfigureServiceRestImpl.class);
+
+    // Need transformer services
+    register(NdcServiceRestImpl.class);
+
+    // register swagger classes
+    register(io.swagger.jaxrs.listing.ApiListingResource.class);
+    register(io.swagger.jaxrs.listing.SwaggerSerializers.class);
+
+    // Instantiate bean config
+    BeanConfig beanConfig = new BeanConfig();
+    beanConfig.setTitle("Transformer API");
+    beanConfig.setDescription("RESTful calls for transformer");
+    beanConfig.setVersion(API_VERSION);
+    final URL url =
+        new URL(ConfigUtility.getConfigProperties().getProperty("base.url"));
+    final String host = url.getHost() + ":" + url.getPort();
+
+    if (new ConfigureServiceRestImpl().isConfigured()) {
+      beanConfig.setHost(host);
+      beanConfig.setBasePath(url.getPath());
+      beanConfig.setSchemes(new String[] {
+          url.getProtocol()
+      });
+      beanConfig.setResourcePackage("com.wci.tt.rest.impl");
+      beanConfig.setScan(true);
+      beanConfig.setPrettyPrint(true);
+    }
+
+    // this makes Swagger honor JAXB annotations
+    Json.mapper().registerModule(new JaxbAnnotationModule());
+
     // Set up a timer task to run at 2AM every day
     TimerTask task = new InitializationTask();
     timer = new Timer();
@@ -89,38 +117,6 @@ public class TransformerServerApplication extends Application {
         Logger.getLogger(getClass()).error("Error running the process to xxx.");
       }
     }
-  }
-
-  /* see superclass */
-  @Override
-  public Set<Class<?>> getClasses() {
-    final Set<Class<?>> classes = new HashSet<Class<?>>();
-    // Need configure and security services
-    classes.add(ConfigureServiceRestImpl.class);
-    // classes.add(SecurityServiceRestImpl.class);
-
-    // Need transformer services
-    // classes.add(TransformServiceRestImpl.class);
-    classes.add(NdcServiceRestImpl.class);
-    classes
-        .add(com.wordnik.swagger.jersey.listing.ApiListingResourceJSON.class);
-    classes.add(
-        com.wordnik.swagger.jersey.listing.JerseyApiDeclarationProvider.class);
-    classes.add(
-        com.wordnik.swagger.jersey.listing.JerseyResourceListingProvider.class);
-    return classes;
-  }
-
-  /* see superclass */
-  @Override
-  public Set<Object> getSingletons() {
-    final Set<Object> instances = new HashSet<Object>();
-    instances.add(new JacksonFeature());
-    instances.add(new JsonProcessingFeature());
-    instances.add(new MultiPartFeature());
-    // Enable for LOTS of logging of HTTP requests
-    // instances.add(new LoggingFilter());
-    return instances;
   }
 
 }

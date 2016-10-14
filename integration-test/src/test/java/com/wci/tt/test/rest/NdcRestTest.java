@@ -59,7 +59,6 @@ public class NdcRestTest extends RestIntegrationSupport {
    *
    * @throws Exception the exception
    */
-  @SuppressWarnings("static-method")
   @Before
   public void setup() throws Exception {
     // n/a
@@ -70,7 +69,6 @@ public class NdcRestTest extends RestIntegrationSupport {
    *
    * @throws Exception the exception
    */
-  @SuppressWarnings("static-method")
   @After
   public void teardown() throws Exception {
     // n/a
@@ -297,12 +295,12 @@ public class NdcRestTest extends RestIntegrationSupport {
 
     StringList results = ndcService.autocomplete("247", "guest");
     Logger.getLogger(getClass()).info("  results = " + results);
-    assertEquals(20, results.getCount());
+    assertEquals(20, results.size());
     assertEquals(33, results.getTotalCount());
 
     results = ndcService.autocomplete("asp", "guest");
     Logger.getLogger(getClass()).info("  results = " + results);
-    assertEquals(19, results.getCount());
+    assertEquals(19, results.size());
     assertEquals(20, results.getTotalCount());
 
   }
@@ -324,8 +322,10 @@ public class NdcRestTest extends RestIntegrationSupport {
     ndcs.add("00143314501");
     ndcs.add("5555555");
 
-    List<NdcModel> resultsList = ndcService.getNdcInfoBatch(ndcs, true, "guest");
-    Logger.getLogger(getClass()).info(" results = " + resultsList.getClass() + " " + resultsList);
+    List<NdcModel> resultsList =
+        ndcService.getNdcInfoBatch(ndcs, true, "guest");
+    Logger.getLogger(getClass())
+        .info(" results = " + resultsList.getClass() + " " + resultsList);
 
     NdcModel results = resultsList.get(0);
     String ndc = "00247100552";
@@ -376,7 +376,7 @@ public class NdcRestTest extends RestIntegrationSupport {
     assertEquals(0, results.getHistory().size());
 
   }
-  
+
   /**
    * Test get rxcui info batch.
    *
@@ -391,9 +391,11 @@ public class NdcRestTest extends RestIntegrationSupport {
     rxcuis.add("283420");
     rxcuis.add("5555ddd");
     rxcuis.add("351772");
-    
-    List<RxcuiModel> resultsList = ndcService.getRxcuiInfoBatch(rxcuis, true, "guest");
-    Logger.getLogger(getClass()).info(" results = " + resultsList.getClass() + " " + resultsList);
+
+    List<RxcuiModel> resultsList =
+        ndcService.getRxcuiInfoBatch(rxcuis, true, "guest");
+    Logger.getLogger(getClass())
+        .info(" results = " + resultsList.getClass() + " " + resultsList);
 
     RxcuiModel results = resultsList.get(0);
     String rxcui = "283420";

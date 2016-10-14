@@ -110,7 +110,7 @@ public class NdcUpdateSourceDataHandlerMojo extends SourceDataMojo {
         // Clear attributes from atoms and save attribute list
         for (final Attribute attribute : new HashSet<>(atom.getAttributes())) {
           attributes.add(attribute);
-          atom.removeAttribute(attribute);
+          atom.getAttributes().remove(attribute);
         }
         // Update atom
         contentService.updateAtom(atom);

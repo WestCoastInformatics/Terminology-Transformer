@@ -6,19 +6,17 @@ package com.wci.tt.jpa.services.handlers;
 import java.io.File;
 import java.util.Properties;
 
-import org.apache.log4j.Logger;
-
 import com.wci.tt.jpa.services.algo.NdcLoaderAlgorithm;
 import com.wci.umls.server.SourceData;
+import com.wci.umls.server.ValidationResult;
 import com.wci.umls.server.helpers.ConfigUtility;
 import com.wci.umls.server.helpers.LocalException;
+import com.wci.umls.server.jpa.ValidationResultJpa;
 import com.wci.umls.server.jpa.services.SourceDataServiceJpa;
 import com.wci.umls.server.jpa.services.handlers.AbstractSourceDataHandler;
 import com.wci.umls.server.jpa.services.rest.SecurityServiceRest;
 import com.wci.umls.server.rest.impl.SecurityServiceRestImpl;
 import com.wci.umls.server.services.SourceDataService;
-import com.wci.umls.server.services.helpers.ProgressEvent;
-import com.wci.umls.server.services.helpers.ProgressListener;
 
 /**
  * Source data handler to load RXNORM for NDC related searches.
@@ -30,8 +28,11 @@ public class NdcSourceDataHandler extends AbstractSourceDataHandler {
 
   /**
    * Instantiates an empty {@link NdcSourceDataHandler}.
+   *
+   * @throws Exception the exception
    */
-  public NdcSourceDataHandler() {
+  public NdcSourceDataHandler() throws Exception {
+    super();
     // n/a
   }
 
@@ -113,31 +114,6 @@ public class NdcSourceDataHandler extends AbstractSourceDataHandler {
     // n/a
   }
 
-  /**
-   * Fires a {@link ProgressEvent}.
-   * @param pct percent done
-   * @param note progress note
-   */
-  public void fireProgressEvent(int pct, String note) {
-    ProgressEvent pe = new ProgressEvent(this, pct, pct, note);
-    for (int i = 0; i < listeners.size(); i++) {
-      listeners.get(i).updateProgress(pe);
-    }
-    Logger.getLogger(getClass()).info("    " + pct + "% " + note);
-  }
-
-  /* see superclass */
-  @Override
-  public void addProgressListener(ProgressListener l) {
-    listeners.add(l);
-  }
-
-  /* see superclass */
-  @Override
-  public void removeProgressListener(ProgressListener l) {
-    listeners.remove(l);
-  }
-
   /* see superclass */
   @Override
   public void cancel() {
@@ -171,10 +147,11 @@ public class NdcSourceDataHandler extends AbstractSourceDataHandler {
     // n/a
   }
 
+  /* see superclass */
   @Override
-  public boolean checkPreconditions() throws Exception {
+  public ValidationResult checkPreconditions() throws Exception {
     // n/a
-    return false;
+    return new ValidationResultJpa();
   }
 
 }

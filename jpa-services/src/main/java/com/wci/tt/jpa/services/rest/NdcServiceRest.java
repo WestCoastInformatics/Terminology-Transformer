@@ -11,7 +11,7 @@ import com.wci.tt.jpa.infomodels.NdcPropertiesModel;
 import com.wci.tt.jpa.infomodels.RxcuiModel;
 import com.wci.umls.server.helpers.SearchResultList;
 import com.wci.umls.server.helpers.StringList;
-import com.wci.umls.server.jpa.helpers.PfscParameterJpa;
+import com.wci.umls.server.jpa.helpers.PfsParameterJpa;
 
 /**
  * REST interface for handling NDC-RXNORM transformations.
@@ -84,8 +84,8 @@ public interface NdcServiceRest {
    * @return the search result list
    * @throws Exception the exception
    */
-  public SearchResultList findConceptsByQuery(String query,
-    PfscParameterJpa pfs, String authToken) throws Exception;
+  public SearchResultList findConceptsByQuery(String query, PfsParameterJpa pfs,
+    String authToken) throws Exception;
 
   /**
    * Gets the ndc info batch.
@@ -96,8 +96,8 @@ public interface NdcServiceRest {
    * @return the ndc info batch
    * @throws Exception the exception
    */
-  public List<NdcModel> getNdcInfoBatch(List<String> ndcs, Boolean history, String authToken)
-    throws Exception;
+  public List<NdcModel> getNdcInfoBatch(List<String> ndcs, Boolean history,
+    String authToken) throws Exception;
 
   /**
    * Gets the rxcui info batch.
@@ -108,7 +108,7 @@ public interface NdcServiceRest {
    * @return the rxcui info batch
    * @throws Exception the exception
    */
-  public List<RxcuiModel> getRxcuiInfoBatch(List<String> rxcuis, Boolean history,
-    String authToken) throws Exception;
+  public List<RxcuiModel> getRxcuiInfoBatch(List<String> rxcuis,
+    Boolean history, String authToken) throws Exception;
 
 }

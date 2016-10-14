@@ -43,9 +43,12 @@ import com.wci.umls.server.jpa.services.SecurityServiceJpa;
 import com.wci.umls.server.rest.impl.RootServiceRestImpl;
 import com.wci.umls.server.services.SecurityService;
 import com.wci.umls.server.services.handlers.SourceDataHandler;
-import com.wordnik.swagger.annotations.Api;
-import com.wordnik.swagger.annotations.ApiOperation;
-import com.wordnik.swagger.annotations.ApiParam;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.Info;
+import io.swagger.annotations.SwaggerDefinition;
 
 /**
  * Class implementation the REST Service for Transform routines for
@@ -54,7 +57,8 @@ import com.wordnik.swagger.annotations.ApiParam;
  * Includes hibernate tags for MEME database.
  */
 @Path("/transform")
-@Api(value = "/transform", description = "Transformation Operations")
+@Api(value = "/transform")
+@SwaggerDefinition(info = @Info(description = "Transformation Operations", title = "Transformation Operations", version = "1.0.0"))
 @Consumes({
     MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML
 })
@@ -85,7 +89,7 @@ public class TransformServiceRestImpl extends RootServiceRestImpl
     @ApiParam(value = "Input text, e.g. 'oral tablet'", required = true) @PathParam("inputStr") String inputStr,
     @ApiParam(value = "Data context, e.g. Defined Customer and/or Terminology, ...", required = true) DataContextJpa context,
     @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
-      throws Exception {
+    throws Exception {
 
     Logger.getLogger(getClass())
         .info("RESTful POST call (Content): /identify inputStr=" + inputStr
@@ -125,7 +129,7 @@ public class TransformServiceRestImpl extends RootServiceRestImpl
     @ApiParam(value = "Input text, e.g. 'oral tablet'", required = true) @PathParam("inputStr") String inputStr,
     @ApiParam(value = "Input and Output Data context, e.g. List of Defined Customer and/or Terminology", required = true) DataContextListJpa inputOutputContexts,
     @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
-      throws Exception {
+    throws Exception {
 
     Logger.getLogger(getClass())
         .info("RESTful POST call (Content): /process inputStr=" + inputStr
@@ -155,7 +159,7 @@ public class TransformServiceRestImpl extends RootServiceRestImpl
         tuples.getObjects().add(tuple);
       }
       Collections.sort(tuples.getObjects());
-      tuples.setTotalCount(tuples.getCount());
+      tuples.setTotalCount(tuples.size());
 
       return tuples;
     } catch (Exception e) {
@@ -174,7 +178,7 @@ public class TransformServiceRestImpl extends RootServiceRestImpl
   @ApiOperation(value = "Get specialties", notes = "Gets all specialty values", response = StringList.class)
   public StringList getSpecialties(
     @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
-      throws Exception {
+    throws Exception {
     Logger.getLogger(getClass())
         .info("RESTful POST call (Transform): /specialties");
 
@@ -185,7 +189,7 @@ public class TransformServiceRestImpl extends RootServiceRestImpl
 
       final StringList list = new StringList();
       list.setObjects(service.getSpecialties());
-      list.setTotalCount(list.getCount());
+      list.setTotalCount(list.size());
       return list;
     } catch (Exception e) {
       handleException(e, "get specialties");
@@ -203,7 +207,7 @@ public class TransformServiceRestImpl extends RootServiceRestImpl
   @ApiOperation(value = "Get semantic types", notes = "Gets all semantic type values", response = StringList.class)
   public StringList getSemanticTypes(
     @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
-      throws Exception {
+    throws Exception {
     Logger.getLogger(getClass()).info("RESTful POST call (Transform): /stys");
 
     final CoordinatorService service = new CoordinatorServiceJpa();
@@ -212,7 +216,7 @@ public class TransformServiceRestImpl extends RootServiceRestImpl
 
       final StringList list = new StringList();
       list.setObjects(service.getSemanticTypes());
-      list.setTotalCount(list.getCount());
+      list.setTotalCount(list.size());
       return list;
     } catch (Exception e) {
       handleException(e, "get stys");
@@ -230,7 +234,7 @@ public class TransformServiceRestImpl extends RootServiceRestImpl
   @ApiOperation(value = "Get source data loaders", notes = "Gets all source data loader key/name combinations", response = KeyValuePairList.class)
   public KeyValuePairList getSourceDataHandlers(
     @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
-      throws Exception {
+    throws Exception {
     Logger.getLogger(getClass())
         .info("RESTful POST call (Transform): /data/loaders");
 
@@ -262,7 +266,7 @@ public class TransformServiceRestImpl extends RootServiceRestImpl
   @ApiOperation(value = "Get normalizers", notes = "Gets all normalizer key/name combinations", response = KeyValuePairList.class)
   public KeyValuePairList getNormalizers(
     @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
-      throws Exception {
+    throws Exception {
     Logger.getLogger(getClass())
         .info("RESTful POST call (Transform): /normalizers");
 
@@ -295,7 +299,7 @@ public class TransformServiceRestImpl extends RootServiceRestImpl
   @ApiOperation(value = "Get providers", notes = "Gets all provider key/name combinations", response = KeyValuePairList.class)
   public KeyValuePairList getProviders(
     @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
-      throws Exception {
+    throws Exception {
     Logger.getLogger(getClass())
         .info("RESTful POST call (Transform): /providers");
 
@@ -328,7 +332,7 @@ public class TransformServiceRestImpl extends RootServiceRestImpl
   @ApiOperation(value = "Get converters", notes = "Gets all converter key/name combinations", response = KeyValuePairList.class)
   public KeyValuePairList getConverters(
     @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
-      throws Exception {
+    throws Exception {
     Logger.getLogger(getClass())
         .info("RESTful POST call (Transform): /converters");
 
