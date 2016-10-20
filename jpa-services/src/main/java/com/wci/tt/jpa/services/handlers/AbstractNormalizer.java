@@ -3,7 +3,6 @@
  */
 package com.wci.tt.jpa.services.handlers;
 
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -29,7 +28,7 @@ import com.wci.umls.server.helpers.TypeKeyValue;
 public abstract class AbstractNormalizer implements NormalizerHandler {
 
   /** The acronyms. */
-  private Map<String, Set<String>> acronyms = new HashMap<>();
+  private Map<String, Set<String>> acronyms = new TreeMap<>();
 
   /** The patterns. */
   private Map<String, String> patterns = new TreeMap<>();

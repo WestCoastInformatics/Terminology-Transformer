@@ -109,7 +109,14 @@
         <version>${releaseVersion}</version>
       </dependency>
 
+
       <!-- Term server dependencies. -->
+      <dependency>
+        <groupId>com.wcinformatics.umls.server</groupId>
+        <artifactId>term-server-integration-test</artifactId>
+        <version>${term.server.version}</version>
+      </dependency>
+
       <dependency>
         <groupId>com.wcinformatics.umls.server</groupId>
         <artifactId>term-server-rest</artifactId>
@@ -145,6 +152,12 @@
       <dependency>
         <groupId>com.wcinformatics.umls.server</groupId>
         <artifactId>term-server-jpa-services</artifactId>
+        <version>${term.server.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.wcinformatics.umls.server</groupId>
+        <artifactId>term-server-admin-mojo</artifactId>
         <version>${term.server.version}</version>
       </dependency>
 

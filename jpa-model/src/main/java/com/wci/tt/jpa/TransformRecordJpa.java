@@ -30,7 +30,6 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-import org.hibernate.envers.Audited;
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Analyzer;
 import org.hibernate.search.annotations.Field;
@@ -52,10 +51,8 @@ import com.wci.tt.jpa.helpers.ScoredResultJpa;
  */
 
 @Entity
-@Table(name = "records", uniqueConstraints = @UniqueConstraint(columnNames = {
-    "inputString", "id"
-}) )
-@Audited
+@Table(name = "records")
+// @Audited
 @Indexed
 @XmlRootElement(name = "record")
 public class TransformRecordJpa implements TransformRecord {
@@ -201,7 +198,7 @@ public class TransformRecordJpa implements TransformRecord {
 
   /* see superclass */
   @Fields({
-      @Field(name = "inputString", index = Index.YES, store = Store.NO, analyze = Analyze.YES, analyzer = @Analyzer(definition = "noStopWord") ),
+      @Field(name = "inputString", index = Index.YES, store = Store.NO, analyze = Analyze.YES, analyzer = @Analyzer(definition = "noStopWord")),
       @Field(name = "inputStringSort", index = Index.YES, analyze = Analyze.NO, store = Store.NO)
   })
   @Override

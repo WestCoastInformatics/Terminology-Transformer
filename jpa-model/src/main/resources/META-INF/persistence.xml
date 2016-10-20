@@ -9,20 +9,26 @@
     <!-- JPA persistence provider. -->
     <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
-    <!-- This is a hack to get all entity objects from TermServer
-    NOTE: if a class gets added to term server, it has to get added here to work  -->
+    <!-- This is a hack to get all entity objects from TermServer NOTE: if a class 
+      gets added to term server, it has to get added here to work -->
     <!-- TODO: could make this based on a dynamically downloaded .jar file, but that 
       could get complicated, use dependency:get of dependency plugin for that -->
     <class>com.wci.umls.server.jpa.content.AtomJpa</class>
     <class>com.wci.umls.server.jpa.content.AtomRelationshipJpa</class>
     <class>com.wci.umls.server.jpa.content.AtomSubsetJpa</class>
     <class>com.wci.umls.server.jpa.content.AtomSubsetMemberJpa</class>
+    <class>com.wci.umls.server.jpa.content.AtomTransitiveRelationshipJpa</class>
+    <class>com.wci.umls.server.jpa.content.AtomTreePositionJpa</class>
     <class>com.wci.umls.server.jpa.content.AttributeJpa</class>
     <class>com.wci.umls.server.jpa.content.CodeJpa</class>
+    <class>com.wci.umls.server.jpa.content.CodeNoteJpa</class>
     <class>com.wci.umls.server.jpa.content.CodeRelationshipJpa</class>
     <class>com.wci.umls.server.jpa.content.CodeTransitiveRelationshipJpa</class>
     <class>com.wci.umls.server.jpa.content.CodeTreePositionJpa</class>
+    <class>com.wci.umls.server.jpa.content.ComponentHistoryJpa</class>
+    <class>com.wci.umls.server.jpa.content.ComponentInfoRelationshipJpa</class>
     <class>com.wci.umls.server.jpa.content.ConceptJpa</class>
+    <class>com.wci.umls.server.jpa.content.ConceptNoteJpa</class>
     <class>com.wci.umls.server.jpa.content.ConceptRelationshipJpa</class>
     <class>com.wci.umls.server.jpa.content.ConceptSubsetJpa</class>
     <class>com.wci.umls.server.jpa.content.ConceptSubsetMemberJpa</class>
@@ -30,6 +36,7 @@
     <class>com.wci.umls.server.jpa.content.ConceptTreePositionJpa</class>
     <class>com.wci.umls.server.jpa.content.DefinitionJpa</class>
     <class>com.wci.umls.server.jpa.content.DescriptorJpa</class>
+    <class>com.wci.umls.server.jpa.content.DescriptorNoteJpa</class>
     <class>com.wci.umls.server.jpa.content.DescriptorRelationshipJpa</class>
     <class>com.wci.umls.server.jpa.content.DescriptorTransitiveRelationshipJpa</class>
     <class>com.wci.umls.server.jpa.content.DescriptorTreePositionJpa</class>
@@ -40,6 +47,7 @@
     <class>com.wci.umls.server.jpa.content.SemanticTypeComponentJpa</class>
     <class>com.wci.umls.server.jpa.content.StringClassJpa</class>
     <class>com.wci.umls.server.jpa.helpers.PrecedenceListJpa</class>
+    <class>com.wci.umls.server.jpa.helpers.TypeKeyValueJpa</class>
     <class>com.wci.umls.server.jpa.helpers.LogEntryJpa</class>
     <class>com.wci.umls.server.jpa.meta.AdditionalRelationshipTypeJpa</class>
     <class>com.wci.umls.server.jpa.meta.AttributeNameJpa</class>
@@ -61,6 +69,36 @@
     <class>com.wci.umls.server.jpa.SourceDataFileJpa</class>
     <class>com.wci.umls.server.jpa.UserJpa</class>
     <class>com.wci.umls.server.jpa.UserPreferencesJpa</class>
+
+    <!-- Process Objects -->
+    <class>com.wci.umls.server.jpa.AlgorithmConfigJpa</class>
+    <class>com.wci.umls.server.jpa.AlgorithmExecutionJpa</class>
+    <class>com.wci.umls.server.jpa.ProcessConfigJpa</class>
+    <class>com.wci.umls.server.jpa.ProcessExecutionJpa</class>
+
+    <!-- Identity Objects -->
+    <class>com.wci.umls.server.jpa.meta.AtomIdentityJpa</class>
+    <class>com.wci.umls.server.jpa.meta.RelationshipIdentityJpa</class>
+    <class>com.wci.umls.server.jpa.meta.AttributeIdentityJpa</class>
+    <class>com.wci.umls.server.jpa.meta.SemanticTypeComponentIdentityJpa</class>
+    <class>com.wci.umls.server.jpa.meta.LexicalClassIdentityJpa</class>
+    <class>com.wci.umls.server.jpa.meta.StringClassIdentityJpa</class>
+
+    <!-- workflow objects -->
+    <class>com.wci.umls.server.jpa.workflow.ChecklistJpa</class>
+    <class>com.wci.umls.server.jpa.workflow.ChecklistNoteJpa</class>
+    <class>com.wci.umls.server.jpa.workflow.ClusterTypeStatsJpa</class>
+    <class>com.wci.umls.server.jpa.workflow.TrackingRecordJpa</class>
+    <class>com.wci.umls.server.jpa.workflow.WorkflowBinDefinitionJpa</class>
+    <class>com.wci.umls.server.jpa.workflow.WorkflowBinJpa</class>
+    <class>com.wci.umls.server.jpa.workflow.WorkflowConfigJpa</class>
+    <class>com.wci.umls.server.jpa.workflow.WorkflowEpochJpa</class>
+    <class>com.wci.umls.server.jpa.workflow.WorklistJpa</class>
+    <class>com.wci.umls.server.jpa.workflow.WorklistNoteJpa</class>
+
+    <!-- Action objects -->
+    <class>com.wci.umls.server.jpa.actions.AtomicActionJpa</class>
+    <class>com.wci.umls.server.jpa.actions.MolecularActionJpa</class>
 
   </persistence-unit>
 </persistence>

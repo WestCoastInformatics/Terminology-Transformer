@@ -24,6 +24,11 @@
 
     <!-- Dependencies -->
     <dependency>
+      <groupId>com.wcinformatics.umls.server</groupId>
+      <artifactId>term-server-integration-test</artifactId>
+    </dependency>
+
+    <dependency>
       <groupId>com.wcinformatics.tt</groupId>
       <artifactId>tt-rest-client</artifactId>
     </dependency>
