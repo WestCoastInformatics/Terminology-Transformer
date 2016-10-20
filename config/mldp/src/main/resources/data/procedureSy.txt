@@ -1,0 +1,1842 @@
+Local excision of lesion or tissue of patella	Excision of lesion of patella
+Rectorectostomy	Anastomosis of rectum
+Ultrasound of kidney	Echography of kidney
+US kidneys	Echography of kidney
+Application of corneal tissue adhesive	Corneal gluing
+Closure of vesicocolic fistula	Repair of vesicocolic fistula
+Intracranial phlebotomy	Incision of intracranial vein
+Intracranial venotomy	Incision of intracranial vein
+Cephalic thermogram	Cerebral thermography
+Bursa operation	Operation on bursa
+Graft of testis	Transplantation of testis
+Resection of brain	Excision of brain
+Excision of tissue of brain	Excision of brain
+Excision of brain tissue	Excision of brain
+Brain excision	Excision of brain
+Excision of Cowper's gland	Excision of bulbourethral gland
+Cauterization of Bartholin gland	Cauterization of Bartholin's gland
+Choledochal sphincterotomy	Incision of sphincter of Oddi
+Sphincterotomy of papilla of Vater	Incision of sphincter of Oddi
+Inguinal incision	Incision of inguinal region
+Transfer of muscle origin	Muscle transfer
+Transfer of muscle	Muscle transfer
+Restoration of eyebrow	Reconstruction of eyebrow
+Vascular shuntogram	Angiography of arteriovenous shunt
+Vulpius operation	Lengthening of gastrocnemius muscle
+Removal of electronic stimulator of skeletal muscle with synchronous replacement	Replacement of skeletal muscle stimulator
+Bursocentesis of hand	Aspiration of bursa of hand
+Drainage of bursa of hand by aspiration	Aspiration of bursa of hand
+Hand tendon foreign body removed	Removal of foreign body from tendon of hand
+FB - Removal of foreign body from brain	Removal of foreign body from brain
+Repair of coronary artery aneurysm	Repair of aneurysm of coronary artery
+Drainage of nasal septal abscess	Drainage of abscess of nasal septum
+Brain meninges operation	Operation on cerebral meninges
+Application of manual or electric breast pump	Application of breast pump
+Breast pumping	Application of breast pump
+Stripping and ligation of great saphenous vein	Stripping and ligation of saphenous vein
+Destruction of Bartholin's gland or cyst	Destruction of Bartholin's gland
+Destruction of Bartholin gland	Destruction of Bartholin's gland
+Excision of exostosis of head of fifth metatarsal	Excision of bunionette
+Diskectomy	Chondrectomy of spine
+Chondrectomy of intervertebral cartilage	Chondrectomy of spine
+Excision of intervertebral cartilage	Chondrectomy of spine
+Excision of intervertebral disc	Chondrectomy of spine
+Arthrectomy of intervertebral disc	Chondrectomy of spine
+Intervertebral discectomy	Chondrectomy of spine
+Discectomy	Chondrectomy of spine
+Diminution of ciliary body	Reduction of ciliary body
+Cheilorrhaphy	Suture of lip
+Transplantation of muscle	Muscle transplantation
+Muscle flap	Muscle transplantation
+Capsulectomy of ovary	Decortication of ovary
+Lysis of adhesions of trigeminal nerve	Neurolysis of trigeminal nerve
+Percutaneous biopsy of muscle	Percutaneous needle biopsy of muscle
+Detorsion of spermatic cord	Reduction of torsion of spermatic cord
+Ovarian biopsy	Biopsy of ovary
+Liver operation	Operation on liver
+Hepatic operation	Operation on liver
+Local excision of lesion of ankle joint	Excision of lesion of ankle joint
+Manual reduction of prolapsed pile	Manual reduction of hemorrhoids
+Manual reduction of prolapsed hemorrhoid	Manual reduction of hemorrhoids
+Manual reduction of rectal hemorrhoids	Manual reduction of hemorrhoids
+Adrenal artery ligation	Ligation of adrenal artery
+Shortening of heel cord	Shortening of Achilles tendon
+Destruction of liver lesion	Destruction of lesion of liver
+Extirpation of lesion of liver	Destruction of lesion of liver
+Removal of foreign body of ciliary body with use of magnet	Magnet extraction of foreign body from ciliary body
+Seminal vesiculotomy	Incision of seminal vesicle
+Nasal septal operation	Operation on nasal septum
+Operation on septum of nose	Operation on nasal septum
+Suture of spermatic cord	Repair of spermatic cord
+Repair of spermatic cord laceration	Repair of spermatic cord
+Colorrhaphy	Suture of colon
+Choledochectomy	Excision of common bile duct
+Insertion of CL denture	Complete lower denture
+Insertion of denture - lower	Complete lower denture
+Insertion of FL denture	Complete lower denture
+Insertion of -/F denture	Complete lower denture
+Insertion of full mandibular denture	Complete lower denture
+Insertion of complete lower denture	Complete lower denture
+Insertion of complete mandibular denture	Complete lower denture
+Fit complete lower denture	Complete lower denture
+Insertion of full lower denture	Complete lower denture
+Insertion of -/C denture	Complete lower denture
+Incision of hypophysis	Incision of pituitary gland
+Aspirating nasogastric tube	Nasogastric tube aspiration
+Suction of nasogastric tube	Nasogastric tube aspiration
+Alexander operation for shortening of round ligaments	Shortening of round ligament of uterus
+Renal biopsy	Kidney biopsy
+Sialoadenotomy	Incision of salivary gland
+Angiotomy	Incision of blood vessel
+Closure of gastric ulcer	Closure of stomach ulcer
+Lysis of adhesions of peripheral nerve	Neurolysis of peripheral nerve
+Appendix operation	Operation on appendix
+Gastrorrhaphy	Suture of stomach
+Reduction of closed tarsal bone fracture with manipulation	Manual reduction of closed fracture of tarsal bone
+Graft of penis	Grafting of penis
+Diverticulectomy of small intestine	Excision of diverticulum of small intestine
+Excision of diverticula of small intestine	Excision of diverticulum of small intestine
+Diverticulectomy - small intestine	Excision of diverticulum of small intestine
+Surgical procedure on omentum	Operation on omentum
+Spinal decompression	Decompression of spinal cord
+Removal of ambulatory peritoneal catheter	Removal of peritoneal dialysis catheter
+Brachial arteriography	Angiography of brachial artery
+Brachial arteriogram	Angiography of brachial artery
+Vasotomy	Incision of vas deferens
+Resection of synovial membrane	Excision of synovial cyst
+Hagner operation on epididymis	Incision of epididymis
+Epididymotomy	Incision of epididymis
+Salpingoplasty	Repair of fallopian tube
+Fallopian tube repair	Repair of fallopian tube
+Cecal operation	Operation on cecum
+Neurotomy	Incision of nerve
+Ligation of varicose veins of stomach	Ligation of gastric varices
+Biopsy of vagina	Vaginal biopsy
+Closure of ulcer of skin	Suture of ulcer of skin
+Dilation and manipulation of enterostomy stoma	Dilation of intestinal stoma
+Suture of skin of eyelid	Suture of eyelid
+Operative procedure on adrenal gland	Operation on adrenal gland
+Suprarenal gland operation	Operation on adrenal gland
+Adrenal gland operation	Operation on adrenal gland
+Adrenal operation	Operation on adrenal gland
+Suture of chest wall	Suture of laceration of chest wall
+Graft of larynx	Transplantation of larynx
+Extracapsular cataract extraction	Extracapsular extraction of lens
+ECCE - Extracapsular cataract extraction	Extracapsular extraction of lens
+Pericardiotomy	Incision of pericardium
+Pericardotomy	Incision of pericardium
+Fanny-lift operation	Augmentation of buttock
+Incision of fascia with division	Division of fascia
+Fasciotomy	Division of fascia
+Division fasciotomy	Division of fascia
+Thromboendarterectomy of descending aorta	Endarterectomy of descending aorta
+Intimectomy of descending aorta	Endarterectomy of descending aorta
+Operative procedure on upper respiratory tract	Operation on upper respiratory tract
+Injection of coxofemoral joint	Injection of hip joint
+Reduction of fracture of vertebra	Reduction of fracture of spine
+Oophoroplasty	Repair of ovary
+Tongue operation	Operation on tongue
+Urethral operation	Operation on urethra
+Intra-amniotic injection	Injection of amnion
+Operative procedure on the thyroid gland	Operation on thyroid gland
+Thyroid gland operation	Operation on thyroid gland
+Drainage of nasal septal hematoma	Drainage of hematoma of nasal septum
+Spermatocelectomy	Excision of spermatocele
+Spermatocystectomy	Excision of spermatocele
+Biopsy of pharynx	Pharyngeal biopsy
+Gastric operation	Operation on stomach
+Stomach operation	Operation on stomach
+Operative procedure on nervous system	Operation on nervous system
+Renewal of ventricular shunt	Replacement of ventricular shunt
+Renewal of cerebroventricular shunt	Replacement of ventricular shunt
+Appendicotomy	Incision of appendix
+Fascia operation	Operation on fascia
+Epigastric incision	Incision of epigastric region
+Surgical procedure on ocular muscle	Operation on extraocular muscle
+Ocular muscle operation	Operation on extraocular muscle
+Eye muscle operation	Operation on extraocular muscle
+Orchidotomy	Incision of testis
+Tx - Liver transplantation	Transplantation of liver
+Hepatic transplantation	Transplantation of liver
+LTx - Liver transplant	Transplantation of liver
+FB - Removal of foreign body from testis	Removal of foreign body of testis
+Reduction of closed humeral fracture with manipulation	Manual reduction of closed fracture of humerus
+Reduction of closed ulnar shaft fracture with manipulation	Manual reduction of closed fracture of shaft of ulna
+Reduction of closed humeral medial condylar fracture with manipulation	Manual reduction of closed fracture of medial condyle of humerus
+Operation on the scrotum	Operation on scrotum
+Scrotum operation	Operation on scrotum
+Removal of thoracotomy tube	Removal of tube from pleural cavity
+Hand tendon transposition	Transposition of tendon of hand
+Radiculotomy	Incision of spinal nerve root
+Radicotomy	Incision of spinal nerve root
+Spinal radicotomy	Incision of spinal nerve root
+Spinal radiculotomy	Incision of spinal nerve root
+Spinal rhizotomy	Incision of spinal nerve root
+Transection of spinal nerve root	Incision of spinal nerve root
+Cutting of spinal nerve root	Incision of spinal nerve root
+Division of spinal nerve root	Incision of spinal nerve root
+Rhizotomy	Incision of spinal nerve root
+Reduction of closed talus fracture with manipulation	Manual reduction of closed fracture of talus
+Gallbladder operation	Operation on gallbladder
+Application of skin allograft	Homograft of skin
+Division of lacrimal ductules	Division of lacrimal canaliculus
+Slitting of lacrimal canaliculus	Division of lacrimal canaliculus
+Anastomosis of kidney pelvis	Anastomosis of renal pelvis
+Tourniquet application	Application of tourniquet
+Tourniquet on	Application of tourniquet
+Thromboendarterectomy of coronary artery	Endarterectomy of coronary artery
+Coronary endarterectomy	Endarterectomy of coronary artery
+Wedge resection of tongue base	Wedge resection of tongue
+Excision reduction of tongue	Wedge resection of tongue
+Breast injection	Injection of breast
+Injection into breast	Injection of breast
+Reduction of closed radial shaft fracture with manipulation	Manual reduction of closed fracture of shaft of radius
+Lumbar puncture for removal of dye	Removal of dye from spinal canal
+Intracranial thrombectomy	Removal of thrombus from intracranial artery
+Thrombectomy of intracranial artery	Removal of thrombus from intracranial artery
+Excision of scrotal lesion	Excision of lesion of scrotum
+Lymph node biopsy	Biopsy of lymph node
+Reattachment of amputated penis	Replantation of penis
+Operative procedure on lower respiratory tract	Operation on lower respiratory tract
+Bartholin's gland operation	Operation on Bartholin's gland
+Operation on Bartholin gland	Operation on Bartholin's gland
+Reduction of laryngeal fracture	Reduction of fracture of larynx
+Cardioplasty	Repair of heart
+Bursotomy	Incision of bursa
+Excision of torus mandibularis	Excision of lingual torus
+Vas deferens operations	Operation on vas deferens
+Reinsertion of nephrostomy tube or catheter	Replacement of nephrostomy tube
+Change of nephrostomy catheter	Replacement of nephrostomy tube
+Change of nephrostomy tube	Replacement of nephrostomy tube
+Renewal of nephrostomy tube	Replacement of nephrostomy tube
+Bone marrow graft	Transplantation of bone marrow
+BMT - Bone marrow transplant	Transplantation of bone marrow
+US scan of digestive system	Ultrasonography of digestive system
+Neurexeresis	Avulsion of nerve
+Diagnostic ultrasound of head and neck	Ultrasonography of head and neck
+Coronary atherectomy	Coronary artery atherectomy
+Drainage of liver by aspiration	Percutaneous aspiration of liver
+Reduction of closed greater tuberosity fracture with manipulation	Manual reduction of closed fracture of greater tuberosity of humerus
+Adams operation	Excision of palmar fascia
+Excision of fascia of hand	Excision of palmar fascia
+Fasciectomy of hand	Excision of palmar fascia
+Palmar fasciectomy	Excision of palmar fascia
+Laryngorrhaphy	Suture of larynx
+Repair of laceration of larynx	Suture of larynx
+Suture of laceration of larynx	Suture of larynx
+Hand fascia foreign body removed	Removal of foreign body from fascia of hand
+Myocardiotomy	Incision of myocardium
+Biopsy of thyroid gland	Biopsy of thyroid
+Ultrasonography of pelvis	Pelvic echography
+Ultrasound scan of pelvis	Pelvic echography
+Revision of stoma of bronchus	Repair of stoma of bronchus
+Coventry operation	Wedge osteotomy of tibia
+Excisional biopsy of iris	Biopsy of iris
+Excisional biopsy of perivesical tissue	Excision of lesion of perivesical tissue
+US scan of chest	Ultrasonography of thorax
+Excision and replacement of aortic valve	Replacement of aortic valve
+AVR - Aortic valve replacement	Replacement of aortic valve
+Bronchus operation	Operation on bronchus
+Excision of lesion of eye muscle	Excision of lesion of extraocular muscle
+Surgical closure of gastrostomy	Closure of gastrostomy
+Closure of stoma of stomach	Closure of gastrostomy
+Take-down of stoma of stomach	Closure of gastrostomy
+Buckling procedure of sclera	Scleral buckling
+Scleral buckle procedure	Scleral buckling
+Hand fascia operation	Operation on fascia of hand
+Resection of transverse colon	Transverse colectomy
+Excision of transverse colon	Transverse colectomy
+Excision of lesion of brain meninges	Excision of lesion of cerebral meninges
+Cholecystorrhaphy	Repair of laceration of gallbladder
+Suture of gallbladder	Repair of laceration of gallbladder
+Suturing of gallbladder	Repair of laceration of gallbladder
+Arteriectomy of descending aorta	Excision of descending aorta
+Osteotomy of mandibular body	Osteotomy of body of mandible
+Mandibular body osteotomy	Osteotomy of body of mandible
+Removal of mammary implant material	Removal of breast implant
+Removal of prosthesis for breast	Removal of breast implant
+Intracranial embolectomy	Removal of embolus from intracranial artery
+Embolectomy of intracranial artery	Removal of embolus from intracranial artery
+Graft to peripheral nerve	Peripheral nerve graft
+Incision of tendon of hand with division	Division of tendon of hand
+Transection of tendon of hand	Division of tendon of hand
+Gifford operation	Destruction of lacrimal sac
+Phrenicotripsy	Crushing of phrenic nerve
+Phrenemphraxis	Crushing of phrenic nerve
+Operative procedure on hip joint	Operation on hip joint
+Hip joint operations	Operation on hip joint
+Dorsal myelogram	Thoracic myelography
+Thoracic myelogram	Thoracic myelography
+FB - Removal of foreign body from spinal cord	Removal of foreign body from spinal cord
+Removal of foreign body from spinal cord tissue	Removal of foreign body from spinal cord
+Percutaneous transluminal angioscopy	Percutaneous angioscopy
+Laparorrhaphy	Suture of abdominal wall
+Suturing of abdominal wall	Suture of abdominal wall
+Suture of abdominal incision	Suture of abdominal wall
+Resection of peripheral nerve	Excision of peripheral nerve
+Sacrifice of peripheral nerve	Excision of peripheral nerve
+Peripheral nerve neurectomy	Excision of peripheral nerve
+Limb reimplantation	Reattachment of extremity
+Limb replantation	Reattachment of extremity
+Surgical procedure on external ear	Operation on external ear
+External ear operations	Operation on external ear
+Dilation and stretching of urethra	Dilation of urethra
+Urethral dilatation	Dilation of urethra
+UD - Urethral dilatation	Dilation of urethra
+Dilatation of urethra	Dilation of urethra
+Barton forceps delivery	Barton's forceps delivery
+Gastric vasoligation	Ligation of gastric artery
+Enterotomy of small intestine	Incision of small intestine
+Small intestine incision	Incision of small intestine
+Enterotomy	Incision of small intestine
+Pleural operations	Operation on pleural cavity
+Pleural procedure	Operation on pleural cavity
+Closed reduction of dislocation of knee	Reduction of closed knee dislocation
+Primary fenestration excision of cervical intervertebral disc	Fenestration of intervertebral disc
+Tibial osteotomy	Osteotomy of tibia
+Injection into larynx	Injection of larynx
+Stomach lesion resection	Excision of lesion of stomach
+Surgical avulsion of peripheral nerve	Avulsion of peripheral nerve
+Heart transplantation	Transplantation of heart
+Heart transplant	Transplantation of heart
+CTx - Cardiac transplant	Transplantation of heart
+HtTx - Heart transplant	Transplantation of heart
+HTx - Heart transplant	Transplantation of heart
+Replacement of prosthesis of arm, bioelectric or cineplastic	Replacement of prosthesis of upper extremity
+Gastric intubation	Intubation of stomach
+Local excision of lesion of joint	Excision of lesion of joint
+Ptyalectasis	Dilation of salivary duct
+Sialectasis	Dilation of salivary duct
+Dilatation of salivary duct	Dilation of salivary duct
+Cecorrhaphy	Suture of cecum
+Section of spinal ligament	Division of ligament of spine
+Eye injection	Injection of eye
+Injection of eye proper	Injection of eye
+Otoplasty of external ear	Repair of external ear
+Plastic operations on external ear	Repair of external ear
+Nephroplasty	Repair of kidney
+Glossorrhaphy	Suture of tongue
+Suture of laceration of tongue	Suture of tongue
+Excisional biopsy of blood vessel	Biopsy of blood vessel
+Aponeurorrhaphy	Suture of aponeurosis
+Suturing of mesentery	Suture of mesentery
+Cyclophotocoagulation	Photocoagulation of ciliary body
+Laser coagulation of ciliary body	Photocoagulation of ciliary body
+Nephrotomy	Incision of kidney
+Construction of transverse colostomy	Transverse colostomy
+Excision of skin lesion	Excision of lesion of skin
+Thromboendarterectomy of ascending aorta	Endarterectomy of ascending aorta
+Intimectomy of ascending aorta	Endarterectomy of ascending aorta
+Removal of calculus from lacrimal gland	Removal of calculus of lacrimal gland
+Removal of orbital implant	Removal of external orbital implant
+Removal of orbital implant outside muscle cone	Removal of external orbital implant
+Removal of prosthetic replacement for orbit	Removal of external orbital implant
+Removal of external orbital prosthesis	Removal of external orbital implant
+Oversewing perforated duodenal ulcer	Oversewing of perforated duodenal ulcer
+Surgical release of torsion of testis	Surgical reduction of torsion of testis
+Surgical detorsion of testis	Surgical reduction of torsion of testis
+Reduction of torsion of testis	Surgical reduction of torsion of testis
+Isotopic renogram	Kidney imaging
+Excision of lesion of uterine cervix	Excision of lesion of cervix
+Scrotal varicocelectomy	Excision of varicocele
+Incision of muscle with division	Division of muscle
+Myotomy with division	Division of muscle
+Release of muscle by division	Division of muscle
+Myotomy	Division of muscle
+Open reduction of fracture of nasal bone	Open reduction of nasal fracture
+Intracardiac injection	Injection of heart
+Operative procedure on pituitary gland	Operation on pituitary gland
+Operative procedure on hypophysis	Operation on pituitary gland
+Pituitary gland operation	Operation on pituitary gland
+Drainage of pinna	Drainage of external ear
+Repair of arteriovenous fistula of coronary artery	Ligation of arteriovenous fistula of coronary artery
+Removal of dacryolith of nasolacrimal duct	Removal of calculus of nasolacrimal duct
+Endarterectomy of thoracic artery	Thoracic endarterectomy
+Intimectomy of thoracic artery	Thoracic endarterectomy
+Removal of foreign body of sclera with use of magnet	Magnet extraction of foreign body from sclera
+Bladder training	Urinary bladder training
+Excision of lesion of parotid duct	Excision of lesion of parotid gland
+Amputation by hip disarticulation	Disarticulation of hip
+Amputation of leg through hip by disarticulation	Disarticulation of hip
+Through hip amputation of lower limb	Disarticulation of hip
+Oophorotomy	Incision of ovary
+Ovariotomy	Incision of ovary
+Upper limb venogram	Venography of upper extremity
+Lysis of adhesions of cranial nerve	Neurolysis of cranial nerve
+Release of peripheral nerve	Decompression of peripheral nerve
+Touroff operation for ligation of subclavian artery	Ligation of subclavian artery
+Angiectomy	Excision of blood vessel
+Manual relief of incarcerated internal hernia	Manual reduction of internal abdominal hernia
+Removal of foreign body from maxillary antrum	Removal of foreign body from maxillary sinus
+FB - Removal of foreign body from maxillary antrum	Removal of foreign body from maxillary sinus
+Reduction of closed humeral shaft fracture with manipulation	Manual reduction of closed fracture of shaft of humerus
+Amputation great toe	Amputation of hallux
+Exploration of brain tissue	Exploration of brain
+Reattachment of ankle	Ankle reattachment
+Repair of cranial meninges	Repair of cerebral meninges
+Open renal biopsy	Open biopsy of kidney
+Sympatheticotripsy	Crushing of sympathetic nerve
+Fixation of small intestine to abdominal wall	Fixation of small intestine
+Splenoplasty	Repair of spleen
+Splenorrhaphy	Repair of spleen
+Cranial neurotomy	Incision of cranial nerve
+Main bile duct anastomosis	Anastomosis of common bile duct
+Destruction of lesion of Bartholin gland	Destruction of lesion of Bartholin's gland
+Excision of hydatid of Morgagni	Excision of cyst of fallopian tube
+Cerebral scan	Radioisotope brain imaging
+Positrocephalogram	Radioisotope brain imaging
+Radioisotope scan of brain	Radioisotope brain imaging
+Radionuclide brain study	Radioisotope brain imaging
+Superior mesenteric arteriogram	Arteriography of superior mesenteric artery
+Superior mesenteric angiography	Arteriography of superior mesenteric artery
+Hysterotomy	Incision of uterus
+Tenodesis	Fixation of tendon
+Enucleation of cyst of broad ligament	Excision of cyst of broad ligament
+Glossotomy	Incision of tongue
+Biliary procedure	Operation on biliary tract
+Biliary operations	Operation on biliary tract
+Intracerebral incision	Incision of brain
+Reduction of closed humeral lateral epicondylar fracture with manipulation	Manual reduction of closed fracture of lateral epicondyle of humerus
+Repair of spinal myelomeningocele	Repair of myelomeningocele
+Repair of meninges in spinal myelomeningocele	Repair of myelomeningocele
+Closure of myelomeningocele	Repair of myelomeningocele
+Meningeorrhaphy for myelomeningocele	Repair of myelomeningocele
+Closure of spinal myelomeningocele	Repair of myelomeningocele
+Fulguration of subcutaneous tissue	Cauterization of skin
+Bone marrow operations	Operation on bone marrow
+Suture of Tenon capsule	Suture of Tenon's capsule
+Excision of lesion of maxillary antrum	Excision of lesion of maxillary sinus
+Uterine ligament operation	Operation on uterine ligament
+Destruction of lesion - small intestine	Destruction of lesion of small intestine
+Removal of urinary bladder catheter	Removal of bladder catheter
+Thrombectomy	Removal of thrombus
+US scan of biliary tree	Ultrasonography of biliary tract
+Repair of stoma of intestine	Repair of enterostomy
+Revision of enterostomy	Repair of enterostomy
+Manipulation of vertebral column	Manipulation of spine
+Manipulation of the vertebrae - non-surgical	Manipulation of spine
+Manipulation of the vertebrae	Manipulation of spine
+Cholecystotomy	Incision of gallbladder
+Salpingorrhaphy	Suture of fallopian tube
+Injection into temporomandibular joint	Injection of temporomandibular joint
+Inguinal herniorrhaphy	Repair of inguinal hernia
+Inguinal hernioplasty	Repair of inguinal hernia
+Intracranial thromboendarterectomy	Endarterectomy of intracranial artery
+Intracranial intimectomy	Endarterectomy of intracranial artery
+Removal of foreign body from lacrimal punctum	Removal of foreign body of lacrimal punctum
+FB - Removal of foreign body from lacrimal punctum	Removal of foreign body of lacrimal punctum
+Umbilical herniorrhaphy	Repair of umbilical hernia
+Umbilical hernioplasty	Repair of umbilical hernia
+US abdominal scan	Ultrasonography of abdomen
+Glossoplasty	Repair of tongue
+Tongue repair	Repair of tongue
+Destruction of gastric lesion	Destruction of lesion of stomach
+Intracranial decompression	Decompression of brain
+Cranial decompression	Decompression of brain
+Bony decompression of brain	Decompression of brain
+Replacement of prosthesis of leg, bioelectric or cineplastic	Replacement of prosthesis of lower extremity
+Cheilotomy	Incision of lip
+Pneumonotomy	Incision of lung
+Salivary duct operation	Operation on salivary duct
+Amputation through hand	Amputation of hand
+Kroenlein operation	Lateral orbitotomy
+Removal foreign body from abdominal wall	Removal of foreign body from abdominal wall
+FB - Removal of foreign body from abdominal wall	Removal of foreign body from abdominal wall
+Tack operation	Sacculotomy of inner ear
+Breast examination	Examination of breast
+Replacement of IUD	Replacement of intrauterine contraceptive device
+Change of intrauterine contraceptive device	Replacement of intrauterine contraceptive device
+IUCD - Change of intrauterine contraceptive device	Replacement of intrauterine contraceptive device
+IUD - Change of intrauterine device	Replacement of intrauterine contraceptive device
+Change of coil	Replacement of intrauterine contraceptive device
+Replacement of contraceptive intrauterine device	Replacement of intrauterine contraceptive device
+Peripheral neurotomy	Incision of peripheral nerve
+Ultrasonic examination of breast	Ultrasonography of breast
+Arthroplasty of coxofemoral joint	Repair of hip
+Hip arthroplasty	Repair of hip
+Arthroplasty of the hip	Repair of hip
+Repair of hip joint	Repair of hip
+Release of carpal tunnel for nerve decompression	Decompression of median nerve
+Release of carpal tunnel for median nerve decompression	Decompression of median nerve
+Release of transverse carpal ligament for nerve decompression	Decompression of median nerve
+Retinaculotomy of carpal tunnel	Decompression of median nerve
+Decompression of median nerve at wrist	Decompression of median nerve
+Carpal tunnel release	Decompression of median nerve
+CTR - Carpal tunnel release	Decompression of median nerve
+CTD - Carpal tunnel decompression	Decompression of median nerve
+Carpal tunnel decompression	Decompression of median nerve
+Excision of lesion of apocrine gland	Excision of lesion of sweat gland
+Retropunctal cautery of lacrimal punctum	Cauterization of lacrimal punctum
+Tenovaginotomy	Incision of tendon sheath
+Lingual tonsillectomy	Excision of lingual tonsil
+Plastic repair with reconstruction of cardia of stomach	Cardioplasty of stomach
+Destruction of lesion of urinary bladder	Destruction of lesion of bladder
+Tracheostomy	Incision of trachea
+Tracheotomy	Incision of trachea
+Trachy	Incision of trachea
+Surgical tracheostomy	Incision of trachea
+Bronchostomy	Incision of bronchus
+Bronchotomy	Incision of bronchus
+Revision of lateral canthus	Reconstruction of lateral canthus
+Urethral sphincter EMG	Electromyography of urethral sphincter
+Suture of laceration of uterus	Suture of uterus
+Hysterorrhaphy	Suture of uterus
+Epididymoplasty	Repair of epididymis
+Epididymis repair	Repair of epididymis
+Washing out eye	Irrigation of eye
+Irrigating eye	Irrigation of eye
+Irrigation of ocular surface	Irrigation of eye
+Irrigation of eye proper	Irrigation of eye
+Rubin test on fallopian tube	Inflation of fallopian tube
+Insufflation of fallopian tube	Inflation of fallopian tube
+Fallopian insufflation	Inflation of fallopian tube
+Resection of one extraocular muscle	Excision of extraocular muscle
+Myectomy of eye muscle	Excision of extraocular muscle
+Resection of eye muscle	Excision of extraocular muscle
+Resection of extraocular muscle	Excision of extraocular muscle
+Extraocular muscle myectomy	Excision of extraocular muscle
+Hymenotomy	Incision of hymen
+Surgical defloration	Incision of hymen
+Incision of stye	Incision of hordeolum
+Incision of sty	Incision of hordeolum
+Injection into epidural space	Injection of spinal epidural space
+Removal of bile duct T-tube	Removal of T-tube from bile duct
+Pelviotomy	Pelvic osteotomy
+Osteotomy of pelvis	Pelvic osteotomy
+Innominate osteotomy	Pelvic osteotomy
+Osteotomy of innominate bone	Pelvic osteotomy
+Ligament repair	Repair of ligament
+Pelvic evisceration	Pelvic exenteration
+Exenteration of pelvis	Pelvic exenteration
+Caring for nasogastric tube	Nasogastric tube maintenance
+Attention to nasogastric tube	Nasogastric tube maintenance
+Operation on the epididymis	Operation on epididymis
+Suture of laceration of urethra	Suture of urethra
+Urethrorrhaphy	Suture of urethra
+Biopsy of tunica of testis	Biopsy of tunica vaginalis
+ECC - Endocervical curettage	Endocervical curettage
+Reduction of closed humeral medial epicondylar fracture with manipulation	Manual reduction of closed fracture of medial epicondyle of humerus
+Reduction of closed metatarsal fracture with manipulation	Manual reduction of closed fracture of metatarsal bone
+Tanner operation, devascularization of stomach	Devascularization of stomach
+Gastric devascularization	Devascularization of stomach
+Diaphragm operation	Operation on diaphragm
+Diaphragm procedure	Operation on diaphragm
+Aspiration and lavage of nasal sinus	Irrigation of nasal sinus
+IOFB - Removal of intraocular foreign body	Removal of foreign body from eye
+Removal of intraocular foreign body	Removal of foreign body from eye
+Removal of foreign body from globe	Removal of foreign body from eye
+FB removed from eye	Removal of foreign body from eye
+FB - Removal of foreign body from globe	Removal of foreign body from eye
+Marsupialization of laryngeal cyst	Marsupialization of cyst of larynx
+Retinal operation	Operation on retina
+Tenectomy of tendon	Excision of lesion of tendon
+Closure of septum defect of heart	Closure of septal fenestration of heart
+Detachment of uterosacral ligament	Division of uterosacral ligament
+Excision of lesion of floor of mouth	Excision of lesion from floor of mouth
+Cauterization of broad ligament of uterus	Cauterization of broad ligament
+Hepatotomy	Incision of liver
+Rectal biopsy	Biopsy of rectum
+Noblett rectal biopsy	Biopsy of rectum
+Excision of cataract	Extraction of cataract
+Cataract extraction	Extraction of cataract
+CE - Cataract extraction	Extraction of cataract
+Cutting of nerve	Transection of nerve
+Section of nerve	Transection of nerve
+Division of nerve	Transection of nerve
+Reduction of closed humeral lateral condylar fracture with manipulation	Manual reduction of closed fracture of lateral condyle of humerus
+Exodontia procedure	Tooth extraction
+Extract tooth	Tooth extraction
+Xtn - Extraction of tooth	Tooth extraction
+Extn - Extraction of tooth	Tooth extraction
+Removal of tooth	Tooth extraction
+Exodontia	Tooth extraction
+X - Extraction of tooth	Tooth extraction
+Closure of coronary sinus	Ligation of coronary sinus
+Attention to chest drain	Maintenance of thoracic drain
+Maintenance of chest tube	Maintenance of thoracic drain
+Salpingotomy	Incision of fallopian tube
+Irrigation of lacrimal canaliculi	Irrigation of lacrimal canaliculus
+Division of joint ligament of hand	Division of ligament of hand
+Respiratory medication administered by nebulizer	Nebulizer therapy
+Small bowel transplant	Transplantation of small intestine
+Excision of lesion of skull	Excision of lesion of cranium
+Excision of skull lesion	Excision of lesion of cranium
+Excision of cranial lesion	Excision of lesion of cranium
+Suture of thoracic duct	Repair of thoracic duct
+Reconstruction of lymphatic duct	Repair of thoracic duct
+Bone operation	Operation on bone
+Harvest of fascia	Harvesting of fascia
+O2 therapy	Oxygen therapy
+Oxygen therapy care	Oxygen therapy
+Gastroplication	Plication of stomach
+Intracranial angiotomy of artery	Incision of intracranial artery
+Intracranial arteriotomy	Incision of intracranial artery
+Lymphadenotomy	Incision of lymph node
+Removal of prosthetic device from bile duct	Removal of prosthesis of bile duct
+Removal of biliary stent	Removal of prosthesis of bile duct
+Fit complete upper denture	Complete upper denture
+Insertion of full upper denture	Complete upper denture
+Insertion of complete maxillary denture	Complete upper denture
+Insertion of full maxillary denture	Complete upper denture
+Insertion of C/- denture	Complete upper denture
+Insertion of CU denture	Complete upper denture
+Insertion of FU denture	Complete upper denture
+Insertion of complete upper denture	Complete upper denture
+Insertion of F/- denture	Complete upper denture
+Simple lymphadenectomy	Excision of lymph node
+Lymphadenectomy	Excision of lymph node
+Graft of fallopian tube	Grafting of fallopian tube
+Drainage of thenar space	Incision of thenar space
+Incision and drainage of thenar space	Incision of thenar space
+Removal of foreign body from lens with use of magnet	Magnet extraction of foreign body from lens
+Magnet extraction of foreign body from lens without extraction of lens	Magnet extraction of foreign body from lens
+Obliteration of mastoid cavity	Mastoid obliteration
+Manual reduction of dislocation	Closed reduction of dislocation
+Closed reduction of dislocated joint	Closed reduction of dislocation
+ECA - External carotid artery ligation	Ligation of external carotid artery
+Spleen operation	Operation on spleen
+Reduction of closed clavicular fracture with manipulation	Manual reduction of closed fracture of clavicle
+Phrenicoexeresis	Avulsion of phrenic nerve
+Biopsy of stomach by laparotomy	Open biopsy of stomach
+Release of plantar nerve	Decompression of plantar digital nerve
+Laryngeal polypectomy	Excision of laryngeal polyp
+Excision of vocal fold polyp	Excision of laryngeal polyp
+Excision of vocal cord polyp	Excision of laryngeal polyp
+Excision of vocal polyp	Excision of laryngeal polyp
+Proctectasis	Dilation of rectum
+Repair of eyeball	Repair of eye
+Eye repair	Repair of eye
+Repair of globe	Repair of eye
+Submandibular incision	Incision of submental space
+Removal of scleral lesion	Excision of lesion of sclera
+Reimplantation of ovary	Transposition of ovary
+Cervical incision	Incision of neck
+Laryngotomy	Incision of larynx
+Section of sympathetic ganglion	Division of sympathetic ganglion
+Excision of synovial cyst of popliteal space	Excision of Baker's cyst of knee
+Excision of popliteal cyst of knee	Excision of Baker's cyst of knee
+Excision of Baker cyst of knee	Excision of Baker's cyst of knee
+Removal of prosthetic replacement for eyeball	Removal of eye prosthesis
+Removal of artificial eye	Removal of eye prosthesis
+Mammogram-thermographic	Breast thermography
+Resection of ligament of joint	Excision of ligament of joint
+Application of or delivery by mid forceps	Mid forceps delivery
+Mid forceps operation	Mid forceps delivery
+Mid-cavity forceps delivery	Mid forceps delivery
+Pericardial operation	Operation on pericardium
+Pericardium operation	Operation on pericardium
+Closure of nasal septal perforation	Repair of nasal septal perforation
+Resection of cranial nerve	Excision of cranial nerve
+Dilatation of larynx	Dilation of larynx
+Abdominal phlebotomy	Incision of abdominal vein
+Abdominal venotomy	Incision of abdominal vein
+Angiotomy of abdominal vein	Incision of abdominal vein
+Revision of cholecystostomy	Repair of stoma of gallbladder
+Revision of stoma of gallbladder	Repair of stoma of gallbladder
+Arteriectomy of ascending aorta	Excision of ascending aorta
+Scrotorrhaphy	Suture of scrotum
+Suture of laceration of scrotum	Suture of scrotum
+Cutting of cranial nerve	Transection of cranial nerve
+Section of cranial nerve	Transection of cranial nerve
+Division of cranial nerve	Transection of cranial nerve
+Ovarian operation	Operation on ovary
+Ovary operation	Operation on ovary
+Operative procedure on heart	Operation on heart
+Cardiac surgery procedure	Operation on heart
+Closure of rectovaginal fistula	Repair of rectovaginal fistula
+Revision of stoma of larynx	Repair of stoma of larynx
+Repair of laryngostomy	Repair of stoma of larynx
+Laryngostomy revision	Repair of stoma of larynx
+Vasorrhaphy	Suture of laceration of vas deferens
+Suture of vas deferens	Suture of laceration of vas deferens
+Ligation of the thoracic duct	Ligation of thoracic duct
+Closed reduction of dislocation of hip	Closed manipulation of dislocation of hip
+Reduction of closed sternoclavicular dislocation with manipulation	Manual reduction of closed dislocation of sternoclavicular joint
+Neck angiography	Angiography of neck
+Vidal operation for varicocele	Ligation of varicocele
+High ligation of spermatic vein	Ligation of varicocele
+FB - Removal of foreign body from breast	Removal of foreign body from breast
+Extraction of foetus	Extraction of fetus
+Replantation of forearm	Reattachment of forearm
+Syringing of ear	Irrigation of ear
+Irrigation of external auditory canal	Irrigation of ear
+Suture of skin of eyebrow	Suture of eyebrow
+Omentotomy	Incision of omentum
+Closure of enterostomy of small intestine	Closure of stoma of small intestine
+Closure of artificial opening of small intestine	Closure of stoma of small intestine
+Excision of spleen lesion	Excision of lesion of spleen
+Glomectomy jugulare	Excision of glomus jugulare tumor
+Excision of glomus jugulare	Excision of glomus jugulare tumor
+Harvest of bone graft	Harvesting of bone
+Harvesting of bone graft	Harvesting of bone
+FB - Removal of foreign body from scrotum	Removal of foreign body of scrotum
+Mesenteriplication	Plication of mesentery
+Oophororrhaphy	Suture of ovary
+Graft of trachea	Grafting of trachea
+Graft of nasal septum	Grafting of nasal septum
+Destruction of breast lesion	Destruction of lesion of breast
+Removal of calculus from lacrimal sac	Removal of calculus of lacrimal sac
+Adrenalotomy	Incision of adrenal gland
+Division of joint ligament of finger	Division of ligament of finger
+Brain operations	Operation on brain
+Graft of muscle	Grafting of muscle
+Cyclocryotherapy	Cryotherapy of ciliary body
+Cryotherapy to ciliary body	Cryotherapy of ciliary body
+Resection of uterine ligament	Excision of uterine ligament
+Adrenal venogram	Venography of adrenal
+Take-down of intestinal stoma	Closure of enterostomy
+Closure of stoma of intestine	Closure of enterostomy
+Take-down of enterostomy	Closure of enterostomy
+Closure of artificial opening of intestine	Closure of enterostomy
+Urethrotomy	Incision of urethra
+Fasciorrhaphy	Suture of fascia
+Suture of lacerated fascia	Suture of fascia
+Procedure on penis	Operation on penis
+Penis operations	Operation on penis
+Neuroplasty and transposition of ulnar nerve at wrist	Transposition of ulnar nerve at wrist
+Operation on the testis	Operation on testis
+Sialoadenectomy	Excision of salivary gland
+Salivary gland excision	Excision of salivary gland
+Embolectomy	Removal of embolus
+Cheiloplasty	Repair of lip
+Removal of internal fixation device from bone	Removal of internal fixation device
+Orchidorrhaphy	Suture of laceration of testis
+Suture of testis	Suture of laceration of testis
+Excision of liver lesion	Excision of lesion of liver
+Bronchial repair procedure	Repair of bronchus
+Open repair procedure to bronchus	Repair of bronchus
+Prostatotomy	Incision of prostate
+Closure of thoracostomy	Closure of stoma of thorax
+Amputation of teat	Excision of nipple
+Needle bone biopsy	Needle biopsy of bone
+Excision of tarsal plate of eyelid	Tarsectomy of eyelid
+Nonexcisional destruction of lesion of iris	Destruction of lesion of iris
+Excision of abdominal wall	Excision of lesion of abdominal wall
+Transplantation of parotid gland duct	Parotid duct transposition
+Repositioning of parotid duct	Parotid duct transposition
+Transposition of parotid duct	Parotid duct transposition
+Cervical cautery	Cauterization of lesion of cervix
+Cauterization of lesion of cervix uteri	Cauterization of lesion of cervix
+Tenonectomy	Excision of tendon
+Removal of foreign body from retina with use of magnet	Magnet extraction of foreign body from retina
+Rectal operation	Operation on rectum
+Rectorrhaphy	Suture of rectum
+Proctorrhaphy	Suture of rectum
+Rectal suture	Suture of rectum
+Cerebral ventriculovenostomy	Ventricular shunt to venous system
+Cerebral ventricular shunt to venous system	Ventricular shunt to venous system
+Destruction of lesion of pinna	Destruction of lesion of external ear
+Removal of suprapubic tube into bladder	Removal of cystostomy tube
+Removal of suprapubic catheter	Removal of cystostomy tube
+Reduction of open hyoid fracture with manipulation	Manual reduction of open fracture of hyoid bone
+Excision of Gartner's duct cyst	Excision of cyst of Gartner's duct
+Excision of cyst of Gartner duct	Excision of cyst of Gartner's duct
+Reattachment of tendon of hand to skeletal attachment	Fixation of tendon of hand
+Tenodesis of hand	Fixation of tendon of hand
+Open reduction of coxofemoral joint dislocation	Open reduction of dislocation of hip
+Choroid plexectomy	Excision of choroid plexus
+Removal or destruction of superficial scrotal lesion	Fulguration of scrotum
+Vascular bypass of peripheral artery	Peripheral arterial bypass
+Peripheral vascular shunt or bypass	Peripheral arterial bypass
+Myorrhaphy	Suture of muscle
+Myosuture	Suture of muscle
+Muscle sutured	Suture of muscle
+Suturing of muscle	Suture of muscle
+Spinal cord procedure	Operation on spinal cord
+Spinal cord operation	Operation on spinal cord
+Revision of gastrostomy	Repair of stoma of stomach
+Revision of stoma of stomach	Repair of stoma of stomach
+Plastic repair of arteriovenous aneurysm	Repair of arteriovenous fistula
+Plasty procedure of arteriovenous fistula	Repair of arteriovenous fistula
+Hemorrhoidectomy by crushing	Crushing of hemorrhoids
+Tubal ligation	Ligation of fallopian tube
+TL - Tubal ligation	Ligation of fallopian tube
+Destruction of scrotal lesion	Destruction of lesion of scrotum
+Cryocautery of cervix	Cryosurgery of lesion of cervix
+Cryosurgery to cervix	Cryosurgery of lesion of cervix
+Removal of foreign body of iris with use of magnet	Magnet extraction of foreign body from iris
+Puncture of fallopian tube with aspiration	Aspiration of fallopian tube
+Simple bladder irrigation	Irrigation of urinary bladder
+Bladder irrigation	Irrigation of urinary bladder
+Transplantation of parathyroid tissue	Transplantation of parathyroid
+Excision of lesion of groin region	Excision of lesion of inguinal region
+Adams operation for crushing of nasal septum	Crushing of nasal septum
+Open reduction of dislocated joint	Open reduction of dislocation
+Repair of wound of Tenon capsule	Repair of wound of Tenon's capsule
+Complete incision and removal	Complete excision
+Complete excision of organ	Complete excision
+Gastric biopsy	Biopsy of stomach
+Reduction of closed scapular fracture with manipulation	Manual reduction of closed fracture of scapula
+Snip incision of lacrimal punctum	Incision of lacrimal punctum
+Slitting of lacrimal papilla	Incision of lacrimal punctum
+Removal of packing from cavity of nose	Removal of nasal pack
+Lymphatic gland operation	Operation on lymph node
+Lymph node operation	Operation on lymph node
+FB - Removal of foreign body from muscle	Removal of foreign body from muscle
+Operative procedure on endocrine system	Operation on endocrine system
+Endocrine operations	Operation on endocrine system
+Excisional biopsy of external ear	Biopsy of external ear
+Choledochotomy with exploration	Exploration of common bile duct
+Incision and exploration of common bile duct	Exploration of common bile duct
+Gant trochanter wedge osteotomy	Wedge osteotomy of trochanter of femur
+Whitman trochanter wedge osteotomy	Wedge osteotomy of trochanter of femur
+Uterine operation	Operation on uterus
+Sharrard operation	Transfer of iliopsoas muscle
+Transposition of iliopsoas muscle	Transfer of iliopsoas muscle
+Reclosure of postoperative disruption of abdominal wall	Closure of abdominal wall dehiscence
+Closure of abdominal wall evisceration	Closure of abdominal wall dehiscence
+Repair of abdominal wall dehiscence	Closure of abdominal wall dehiscence
+Resuture of previous abdominal wall incision	Closure of abdominal wall dehiscence
+Resection of lesion of diaphragm	Excision of lesion of diaphragm
+Operations on canthus	Operation on canthus
+Laryngoplasty	Repair of larynx
+Penectomy	Amputation of penis
+Resection of penis	Amputation of penis
+Transplantation of bone	Bone graft
+Excision of pericardial lesion	Excision of lesion of pericardium
+Resection of pericardial lesion	Excision of lesion of pericardium
+Removing nasogastric tube	Nasogastric tube removal
+Removal of nasogastric tube	Nasogastric tube removal
+Shaving of bone	Curettage of bone
+Balanoplasty	Repair of penis
+Omentorrhaphy	Suture of omentum
+Suturing of omentum	Suture of omentum
+Plication of the diaphragm	Plication of diaphragm
+Procedure for eventration of diaphragm	Plication of diaphragm
+Thal operation, repair of esophageal stricture	Repair of esophageal stricture
+Repair of stricture of esophagus	Repair of esophageal stricture
+Thyrotomy	Incision of thyroid
+Thyroidotomy	Incision of thyroid
+Thyroid incision	Incision of thyroid
+Resection of descending colon	Left colectomy
+Left hemicolectomy	Left colectomy
+Resection of left hemicolon	Left colectomy
+Excision of left hemicolon	Left colectomy
+Closure of laceration of lung	Suture of lung
+Colon operation	Operation on colon
+Tight binding of breast	Application of breast binder
+Radionuclide joint study	Radioisotope joint imaging
+Radionuclide arthrography	Radioisotope joint imaging
+Tendon sheath operation	Operation on tendon sheath
+Aponeurotomy	Incision of aponeurosis
+FB - Removal of foreign body from lens	Removal of foreign body from lens
+IOFB - Removal of foreign body from lens	Removal of foreign body from lens
+Lip operation	Operation on lip
+Removal of electronic stimulator from skeletal muscle	Removal of skeletal muscle stimulator
+Removal of functional electrical stimulator from skeletal muscle	Removal of skeletal muscle stimulator
+Insertion of colonic tube	Intubation of colon
+Abdominal herniorrhaphy	Repair of hernia of abdominal wall
+Scrototomy	Incision of scrotum
+Scrotal incision	Incision of scrotum
+Injection into intervertebral disc	Injection of intervertebral space
+Open reduction of fracture of humerus without internal fixation	Open reduction of fracture of humerus
+Surgical toilet of skin wound	Debridement of wound of skin
+Wound debridement	Debridement of wound of skin
+Debridement of skin	Debridement of wound of skin
+Release of cranial nerve	Decompression of cranial nerve
+Cranial nerve decompression	Decompression of cranial nerve
+Manual reduction of closed fracture	Closed reduction of fracture
+Excision of cyst of clavicle	Curettage of cyst of clavicle
+Splenotomy	Incision of spleen
+Open # reduction	Open reduction of fracture
+Dilation of choanae of nasopharynx	Dilation of nasopharynx
+Tendon operation	Operation on tendon
+Trachea operation	Operation on trachea
+Graft of lip	Grafting of lip
+Destruction of skin lesion	Destruction of lesion of skin
+Bronchial lesion - local excision	Excision of lesion of bronchus
+Cerebral ventricular shunt to urinary system	Ventricular shunt to urinary system
+Closed treatment of fracture of sternum	Closed reduction of fracture of sternum
+Repair of tunica vaginalis laceration	Suture of tunica vaginalis
+Suture of tunica vaginalis laceration	Suture of tunica vaginalis
+Dilation of cervix uteri	Dilation of cervical canal
+Cervix dilatation procedure	Dilation of cervical canal
+Cervical dilatation procedure	Dilation of cervical canal
+Curettage of skin lesion or subcutaneous tissue	Curettage of skin lesion
+Fitting of prosthetic device of hand	Fitting of prosthesis of hand
+PVR - Pulmonary valve replacement	Replacement of pulmonary valve
+Removal of prosthesis of lens	Removal of implant of lens
+Removal of pseudophakos	Removal of implant of lens
+Removal of intraocular lens	Removal of implant of lens
+Removal of IOL	Removal of implant of lens
+Incision of sublingual space	Incision of floor of mouth
+Harvest of tendon	Harvesting of tendon
+Drainage of spinal cord	Drainage of vertebral column
+FB - Removal of foreign body from abdominal cavity	Removal of foreign body from abdominal cavity
+Nephrorrhaphy	Suture of kidney
+Excision distal end of ulna	Excision of distal ulna
+Excision of the distal end of the ulna	Excision of distal ulna
+Broad ligament operation	Operation on broad ligament
+Operation on broad ligament of uterus	Operation on broad ligament
+Pancreatic duct anastomosis	Anastomosis of pancreatic duct
+Anastomosis of pancreas	Anastomosis of pancreatic duct
+Injection into tendon sheath	Injection of tendon sheath
+Injection of tendon	Injection of tendon sheath
+Reduction of closed hyoid fracture with manipulation	Manual reduction of closed fracture of hyoid bone
+Revision of stoma of rectum	Repair of stoma of rectum
+Suction clearance of nasal sinus	Aspiration of nasal sinus
+Ligament operation	Operation on ligament
+Graft of fascia	Grafting of fascia
+Fascial graft	Grafting of fascia
+Carotid glomectomy	Excision of carotid body
+Excision of lesion and/or tissue of carotid body	Excision of carotid body
+Liver US scan	Ultrasonography of liver
+LUSS - Ultrasound scan of liver	Ultrasonography of liver
+Ultrasound liver	Ultrasonography of liver
+Resection of small intestine	Small intestine excision
+Excision small intestine	Small intestine excision
+Small bowel resection	Small intestine excision
+Salivary manipulation	Salivary gland manipulation
+Hepatectomy	Liver excision
+Resection of liver	Liver excision
+Excision of urethral tissue	Urethra excision
+Urethrectomy	Urethra excision
+Excision of external ear	External ear excision
+Excision of diaphragm	Diaphragm excision
+Diaphragm resection	Diaphragm excision
+Abdominal incision	Abdomen incision
+Musculoskeletal procedure	Operation on musculoskeletal system
+Operation on joint structures	Operation on joint
+Joint operation	Operation on joint
+FB - Removal of foreign body from bursa	Removal of foreign body from bursa
+Take-down of laryngostomy	Closure of stoma of larynx
+Take-down of stoma of larynx	Closure of stoma of larynx
+Intracranial arteriectomy	Excision of intracranial artery
+Defatting of graft	Debridement of skin graft
+Glossopexy	Fixation of tongue
+Transfixion of tongue	Fixation of tongue
+Salivary gland operation	Operation on salivary gland
+FB - Removal of foreign body from liver	Removal of foreign body from liver
+Hysteroplasty	Repair of uterus
+Metroplasty	Repair of uterus
+Uteroplasty	Repair of uterus
+Coagulation of uterus	Cauterization of uterus
+Endaural resection	Excision of inner ear
+Labyrinthectomy	Excision of inner ear
+ENT examination	Ear, nose and throat examination
+Examination of ear, nose and throat	Ear, nose and throat examination
+ENT - Ear, nose and throat examination	Ear, nose and throat examination
+Excision of wedge of ovary	Wedge resection of ovary
+Creation of arterioarterial bypass	Arterial bypass graft
+Creation of arterial vascular bypass	Arterial bypass graft
+Bypass/graft of artery	Arterial bypass graft
+Creation of arterial bypass	Arterial bypass graft
+Creation of arterioarterial shunt	Arterial bypass graft
+Bone shortening	Bone shortening procedure
+Correction of alignment of bone	Realignment of bone
+Division of A-V fistula	Division of arteriovenous fistula
+Procedure on organ system	Procedure on body system
+Respiratory procedures	Procedure on respiratory system
+Cardiovascular procedure	Procedure on cardiovascular system
+Cardiovasc. procedures	Procedure on cardiovascular system
+CVS procedures	Procedure on cardiovascular system
+Gastrointestinal and digestive procedures	Procedure on digestive system
+Nervous system procedure	Procedure on nervous system
+Neck procedure	Procedure on neck
+Procedure on pelvic region	Procedure on pelvis
+Procedure on Bartholin gland	Procedure on Bartholin's gland
+Lung procedure	Procedure on lung
+Heart procedure	Procedure on heart
+Floor of mouth operation	Procedure on floor of mouth
+FOM - Operation on floor of mouth	Procedure on floor of mouth
+Sympathetic nervous system procedure	Procedure on sympathetic nerve
+Procedure on eyeball	Procedure on eye
+Eye procedure	Procedure on eye
+Globe procedure	Procedure on eye
+Procedure on eye proper	Procedure on eye
+Excision of papilla of Vater	Excision of ampulla of Vater
+Musculoskeletal surgical repair	Musculoskeletal system repair
+Arthrotomy of hip	Hip joint incision
+Excision of hand structure	Hand excision
+Injection of hand	Hand injection
+Repair of hand	Hand repair
+Manipulation of foot	Foot manipulation
+Manipulation of foot - non-surgical	Foot manipulation
+Manipulation of the ankle - non-surgical	Ankle manipulation
+Manipulation of the ankle	Ankle manipulation
+Laryngoplasty	Larynx reconstruction
+Reconstruction of larynx	Larynx reconstruction
+Bronchus resection	Bronchus excision
+Closure of bronchus	Bronchus closure
+Tracheal reconstruction procedure	Trachea reconstruction
+Reconstruction of trachea operations	Trachea reconstruction
+Tracheoplasty	Trachea reconstruction
+Excision of lung	Lung excision
+Pulmonary resection	Lung excision
+Resection of lung	Lung excision
+Repair of skin	Integumentary system repair
+Skin flap and skin graft operations	Integumentary system transposition
+Repair of breast	Breast repair
+Reconstruction of lip	Lip reconstruction
+Reconstruction of tongue	Tongue reconstruction
+Closure of rectum	Rectum closure
+As - Adenoidectomy	Adenoid excision
+Excision of adenoid	Adenoid excision
+Ads - Adenoidectomy	Adenoid excision
+Adenoidectomy	Adenoid excision
+Injection of spleen	Spleen injection
+Excision of testis	Testis excision
+Orchiectomy	Testis excision
+Excision of vas deferens	Vas deferens excision
+Scrotal reconstruction	Scrotum reconstruction
+Scrotoplasty	Scrotum reconstruction
+Salpingectomy	Fallopian tube excision
+Reconstruction of fallopian tube	Fallopian tube reconstruction
+Excision of eye	Eye excision
+Removal of eye	Eye excision
+Eye structure transplantation	Eye transplantation
+Injection into eyelid	Eyelid injection
+Extraocular muscles transplantation	Extraocular muscle transplantation
+Reconstruction of external ear	External ear reconstruction
+Excision of chest wall	Chest wall excision
+Reconstruction of chest wall	Chest wall reconstruction
+Closure of abdomen	Abdomen closure
+Closure of abdominal wall	Abdomen closure
+Release of ligament	Division of ligament
+Desmotomy	Division of ligament
+Syndesmotomy	Division of ligament
+Reduction of dislocated joint	Reduction of dislocation
+Procedure on bone	Procedure on skeletal system
+Pelvis excision	Excision of pelvis
+Direct anastomosis of artery	Arterial anastomosis
+Larynx procedure	Procedure on larynx
+Laryngeal procedure	Procedure on larynx
+Hair procedure	Procedure on hair
+Closed reduction of spinal fracture	Closed reduction of fracture of vertebra
+Induction of vomiting	Induction of emesis
+Clinical examination larynx	Examination of larynx
+Radius X-ray	Plain X-ray radius
+Screening of diaphragm	Fluoroscopy of diaphragm
+Focal excision of brain tissue	Excision of lesion of brain tissue
+Guyon's canal decompression	Decompression of ulnar nerve at wrist
+Release of ulnar nerve in Guyon's canal	Decompression of ulnar nerve at wrist
+Cubital tunnel release	Decompression of ulnar nerve at elbow
+Pituitary cryoablation	Cryotherapy to pituitary gland
+Cryodestruction of pituitary	Cryotherapy to pituitary gland
+Excision of thyroglossal duct	Excision of thyroglossal tract
+Excision of lesion of thyroid gland	Excision of lesion of thyroid
+Exploration of thyroid	Exploration of thyroid gland
+Removal of orbit floor implant	Removal of orbital floor implant
+FB - Removal of foreign body from eyelid	Removal of foreign body from eyelid
+Punctal occlusion	Occlusion of lacrimal punctum
+Sclerotomy	Incision of sclera
+YAG trabeculopuncture	Laser trabeculoplasty
+LTP - Laser trabeculoplasty	Laser trabeculoplasty
+FB - Removal of foreign body from iris	Removal of foreign body from iris
+ICCE - Intracapsular cataract extraction	Intracapsular extraction of lens
+Intracapsular extraction of cataract	Intracapsular extraction of lens
+Vitrectomy by anterior approach	Anterior vitrectomy
+Extirpation of vitreous body using anterior approach	Anterior vitrectomy
+Fluorescein angiogram	Fluorescein angiography of eye
+FA - Fluorescein angiogram	Fluorescein angiography of eye
+Wedge resection of auricle	Wedge resection of pinna
+Wedge excision of pinna	Wedge resection of pinna
+Wedge excision of external ear	Wedge resection of pinna
+Drainage of hematoma of external ear	Drainage of hematoma of pinna
+Drainage of abscess of external ear	Drainage of abscess of pinna
+Biopsy of lesion of external ear	Biopsy of lesion of pinna
+Operation on turbinate of nose	Operation on nasal turbinate
+Electrocautery to nasal turbinate	Cauterization of nasal turbinate
+CIT - Cautery to inferior turbinate	Cauterization of nasal turbinate
+Operations on frontal sinus	Operation on frontal sinus
+Frontal sinus operation	Operation on frontal sinus
+Open resection of tracheal lesion	Open excision of tracheal lesion
+Bx - Open biopsy of tracheal lesion	Open biopsy of tracheal lesion
+Wedge excision of lip	Wedge resection of lip
+Cautery to lesion of lip	Cauterization of lesion of lip
+Replacement of knocked out tooth	Replantation of tooth
+Reimplantation of avulsed tooth	Replantation of tooth
+Tooth reimplantation	Replantation of tooth
+Reimplantation of knocked out tooth	Replantation of tooth
+Replantation of avulsed tooth	Replantation of tooth
+Realignment of tooth	Repositioning of tooth
+Extirpation of lesion of tongue	Removal of lesion of tongue
+FB - Removal of foreign body from tongue	Removal of foreign body from tongue
+Percutaneous biopsy of salivary gland	Percutaneous biopsy of major salivary gland
+Washing out stomach contents	Irrigation of stomach
+Gastric irrigation	Irrigation of stomach
+Pumping stomach out	Irrigation of stomach
+Stomach washout	Irrigation of stomach
+Gastric lavage	Irrigation of stomach
+Gastric washout	Irrigation of stomach
+Oversewing of small bowel	Oversewing of small intestine
+Drainage of appendicular abscess	Drainage of appendix abscess
+Colonic washout	Irrigation of colon
+Colonic lavage	Irrigation of colon
+Lavage of colon	Irrigation of colon
+Washout of colon	Irrigation of colon
+Bowel washout	Irrigation of colon
+Anal polypectomy	Excision of anal polyp
+Destruction of pile	Destruction of hemorrhoid
+Wedge excision of liver	Wedge resection of liver
+Percutaneous transluminal embolization of hepatic artery	Percutaneous embolization of hepatic artery
+Percutaneous cholecystotomy	Percutaneous cholecystostomy
+Percutaneous drainage of gallbladder	Percutaneous cholecystostomy
+Percutaneous lithotripsy of calculus in gallbladder	Percutaneous fragmentation of gallbladder stone
+Open removal of tubal prosthesis from bile duct	Open removal of bile duct stent
+EBD - Exploration of bile duct	Exploration of bile duct
+Excision of head of pancreas	Proximal pancreatectomy
+Dismantling of pancreatic duct anastomosis	Closure of anastomosis of pancreatic duct
+Repair of Wirsung's duct	Repair of pancreatic duct
+ASD - Open enlargement of atrial septal defect	Open enlargement of atrial septal defect
+Allograft replacement of aortic valve	Homograft aortic valve replacement
+Pericardial aortic valve replacement	Xenograft aortic valve replacement
+Repositioning of tricuspid valve	Repair of Ebstein's anomaly of tricuspid valve
+Repair of Ebstein anomaly of tricuspid valve	Repair of Ebstein's anomaly of tricuspid valve
+Allograft pulmonary valve replacement	Homograft pulmonary valve replacement
+Pericardial pulmonary valve replacement	Xenograft pulmonary valve replacement
+Allograft replacement of coronary artery	Allograft bypass of coronary artery
+Pericardial biopsy	Biopsy of pericardium
+Patch angioplasty of artery	Patch repair of aorta
+Plastic repair of aorta using patch graft	Patch repair of aorta
+Head artery reconstruction	Reconstruction of cerebral artery
+Percutaneous transluminal embolization of vertebral artery	Percutaneous embolization of vertebral artery
+Replantation of renal artery	Reimplantation of renal artery
+Endarterectomy of the renal artery	Endarterectomy of renal artery
+Percutaneous transluminal embolization of renal artery	Percutaneous embolization of renal artery
+Interposition of venous valve	Interposition of valve of vein
+Incision of Cowper's glands	Incision of periurethral tissue
+Evacuation of scrotum	Drainage of scrotum
+Total amputation of penis	Complete amputation of penis
+Excision of Bartholin gland	Excision of Bartholin's gland
+Marsupialization of Bartholin gland	Marsupialization of Bartholin's gland
+Drainage of Bartholin gland	Drainage of Bartholin's gland
+Excision of lesion of Bartholin gland	Excision of lesion of Bartholin's gland
+Laser vaporization of lesion of vulva	Laser destruction of lesion of vulva
+Cryosurgery of lesion of vulva	Cryotherapy of lesion of vulva
+Nonobstetrical perineoplasty	Female perineoplasty
+RSO - Right salpingo-oophorectomy	Right salpingo-oophorectomy
+LSO - Left salpingo-oophorectomy	Left salpingo-oophorectomy
+Oophorotomy and rupture of cyst	Open drainage of ovarian cyst
+Open drainage of cyst of ovary	Open drainage of ovarian cyst
+Diathermy lesion uterosacral ligament	Diathermy of lesion of uterosacral ligament
+Percutaneous biopsy of foetus	Percutaneous biopsy of fetus
+Resection of lesion of chest wall	Excision of lesion of chest wall
+Open excision of pleura	Open pleurectomy
+Decortication of pleura	Decortication of lung
+Open resection of pleural lesion	Open excision of pleural lesion
+Eloesser procedure	Open drainage of pleural cavity
+Bx - Open biopsy of pleural lesion	Open biopsy of pleural lesion
+Release fasciotomy	Release of fascia
+Ganglionectomy of tendon sheath of wrist	Excision of ganglion of wrist
+Bursocentesis	Aspiration of bursa
+Bursal aspiration	Aspiration of bursa
+FB - Removal of foreign body from tendon	Removal of foreign body from tendon
+Myotasis	Stretching of muscle
+LNS - Lymph node sampling	Sampling of lymph node
+Lymph node sampling	Sampling of lymph node
+Reduction of fracture of malar bone	Reduction of fracture of zygomatic bone
+Open surgical fracture of bone	Open osteoclasis
+Xenograft of bone	Application of bone xenograft
+Periosteal release	Release of periosteum
+Closed reduction of dislocation of leg	Closed reduction of dislocation of lower limb
+Closed reduction of dislocation of jaw	Closed reduction of dislocation of temporomandibular joint
+Open lavage of joint	Open irrigation of joint
+Replantation of upper limb	Reattachment of upper extremity
+Reattachment of arm	Reattachment of upper extremity
+Internal electrode cardioversion	Internal cardioversion
+PFEX - Pelvic floor exercises	Pelvic floor exercises
+PFE - Pelvic floor exercises	Pelvic floor exercises
+Kegel exercises	Pelvic floor exercises
+Pelvic muscle exercises	Pelvic floor exercises
+Lower extremity surgical repair	Surgical repair of lower extremity
+Preparing skin	Skin preparation
+Application of anti-embolic stockings	Application of antithromboembolic stockings
+TED - Application of TED support stockings	Application of antithromboembolic stockings
+Anti-embolism compression stockings (TED) application	Application of antithromboembolic stockings
+Clinical examination of ear	Examination of ear
+Dilating lacrimal punctum	Dilatation of lacrimal punctum
+Dilation of lacrimal punctum	Dilatation of lacrimal punctum
+Arthrectomy	Excision of joint
+Grafting of tendon	Tendon graft
+Excision of cartilage of joint	Chondrectomy of joint
+Arm exercises	Upper limb exercises
+Leg exercises	Lower limb exercises
+Debridement of callus	Reduction of callus
+Paring of callus	Reduction of callus
+Drilling of a nail	Drilling of nail
+Reduction of a nail	Drilling of nail
+DBS - Deep brain stimulation	Deep brain stimulation
+Irrigation of cerebrospinal fluid valve	Irrigation of subcutaneous cerebrospinal fluid reservoir
+FB - Removal of intravascular foreign body from intracranial artery	Removal of foreign body from intracranial artery
+FB - Removal intravenous foreign body from intracranial vein	Removal of foreign body from intracranial vein
+Opsons block	Lumbar plexus block
+Infiltration of Tenon capsule	Infiltration of Tenon's capsule
+Cryotherapy for abdominal cutaneous nerve entrapment syndrome - ACNES	Cryotherapy to abdominal cutaneous nerve
+Superior oblique readvancement	Superior oblique advancement
+Inferior oblique readvancement	Inferior oblique advancement
+Biopsy of eye muscle	Biopsy of extraocular muscle
+Laser sclerotomy	Laser sclerostomy
+Attention to middle ear grommet	Attention to middle ear ventilation tube
+Excision of intranasal lesion of nose	Excision of lesion of internal nose
+Biopsy of postnasal space	Biopsy of nasopharynx
+Excision of vocal fold nodule	Excision of vocal cord nodule
+FB - Removal of foreign body from larynx	Removal of foreign body from larynx
+Bx - Open biopsy of bronchial lesion	Open biopsy of bronchial lesion
+Open resection of lesion of bronchus	Open excision of bronchial lesion
+FB - Removal of foreign body from airway	Removal of foreign body from airway
+CABG - Coronary artery bypass graft	Coronary artery bypass graft
+CBG - Coronary bypass graft	Coronary artery bypass graft
+Coronary artery bypass grafting	Coronary artery bypass graft
+Coronary artery bypass graft operations	Coronary artery bypass graft
+CAG - Coronary artery graft	Coronary artery bypass graft
+Removal of clot from aortic valve	Removal of thrombus from aortic valve
+Aortic valve thrombectomy	Removal of thrombus from aortic valve
+Declotting of aortic valve	Removal of thrombus from aortic valve
+Removal of clot from pulmonary valve	Removal of thrombus from pulmonary valve
+Declotting of pulmonary valve	Removal of thrombus from pulmonary valve
+Pulmonary valve thrombectomy	Removal of thrombus from pulmonary valve
+Oversewing of pulmonary valve	Closure of pulmonary valve
+Repair of Ebstein anomaly of atrioventricular valve	Repair of Ebstein's anomaly of atrioventricular valve
+Removal of clot from atrioventricular valve	Removal of thrombus from atrioventricular valve
+Atrioventricular valve thrombectomy	Removal of thrombus from atrioventricular valve
+Declotting of atrioventricular valve	Removal of thrombus from atrioventricular valve
+Oversewing of atrioventricular valve	Closure of atrioventricular valve
+Allograft atrioventricular valve replacement	Homograft atrioventricular valve replacement
+Declotting of truncal valve	Removal of thrombus from truncal valve
+Truncal valve thrombectomy	Removal of thrombus from truncal valve
+Removal of clot from truncal valve	Removal of thrombus from truncal valve
+Allograft truncal valve replacement	Homograft truncal valve replacement
+Right atrial thrombectomy	Removal of right atrial thrombus
+Left atrial thrombectomy	Removal of left atrial thrombus
+Arterioplasty of pulmonary artery	Reconstruction of pulmonary artery
+Pulmonary arterioplasty operations	Reconstruction of pulmonary artery
+Endarterectomy of the CIA - common iliac artery	Endarterectomy of common iliac artery
+EIA - Endarterectomy of the external iliac artery	Endarterectomy of external iliac artery
+CFA - Endarterectomy of the common femoral artery	Endarterectomy of common femoral artery
+SFA - Endarterectomy of the superficial femoral artery	Endarterectomy of superficial femoral artery
+ABG - Aortobifemoral graft	Aortic bifurcation bypass graft
+Trouser graft	Aortic bifurcation bypass graft
+ABF - Aortobifemoral graft	Aortic bifurcation bypass graft
+ABG - Aortic bifurcation graft	Aortic bifurcation bypass graft
+Aortic bifurcation graft	Aortic bifurcation bypass graft
+Creation of external arteriovenous fistula	Creation of external arteriovenous shunt
+Removal of drip needle	Vascular cannula removal
+Decannulation	Vascular cannula removal
+Vascular catheter removal	Vascular cannula removal
+Axillary lymph node dissection	Excision of axillary lymph node
+Excision of lymphatic cyst	Excision of lymphocyst
+Suturing of spleen	Suture of spleen
+Bone marrow biopsy	Bone marrow sampling
+Crown prep - Crown preparation of tooth	Crown preparation of tooth
+Crprep - Crown preparation of tooth	Crown preparation of tooth
+Insertion of partial denture	Fit partial denture
+Insertion of part denture	Fit partial denture
+Insertion of PU denture	Fit partial upper denture
+Insertion of P/- denture	Fit partial upper denture
+Insertion of partial denture - upper	Fit partial upper denture
+PL - Insertion of partial lower denture	Fit partial lower denture
+Insertion of denture - lower	Fit partial lower denture
+Insertion of partial denture - lower	Fit partial lower denture
+Insertion of maxillary obturator	Fit maxillary obturator
+Insertion of URA -upper removable orthodontic appliance	Fit upper removable orthodontic appliance
+Insertion of upper removable orthodontic appliance	Fit upper removable orthodontic appliance
+Fit URA - upper removable orthodontic appliance	Fit upper removable orthodontic appliance
+Insertion of LRA - lower removable orthodontic appliance	Fit lower removable orthodontic appliance
+Insertion of lower removable orthodontic appliance	Fit lower removable orthodontic appliance
+Fit LRA - lower removable orthodontic appliance	Fit lower removable orthodontic appliance
+Insertion of fixed orthodontic retainer	Fit fixed orthodontic retainer
+Insertion of removable orthodontic retainer	Fit removable orthodontic retainer
+Cleft palate repair	Repair of cleft palate
+Correction of cleft palate	Repair of cleft palate
+Extirpation of lesion of floor of mouth	Removal of lesion of floor of mouth
+Removal of lesion of cheek	Extirpation of lesion of cheek
+FB - Removal of foreign body from cheek	Removal of foreign body from cheek
+FB - Removal of foreign body from floor of mouth	Removal of foreign body from floor of mouth
+FOM - Removal of foreign body from floor of mouth	Removal of foreign body from floor of mouth
+Labial gland biopsy	Biopsy of lesion of minor salivary gland
+Interposition of jejunum	Jejunal interposition
+Boerema gastropexy	Anterior gastropexy
+Hill gastropexy	Posterior gastropexy
+FB - Removal of foreign body from stomach	Removal of foreign body from stomach
+FB - Removal of foreign body from small intestine	Removal of foreign body from small intestine
+Interposition of ileum	Ileal transposition
+Sacral rectopexy	Posterior fixation of rectum
+Rectopexy using sutures	Lateral ligament suspension
+Drainage of rectoanal abscess	Drainage of anorectal abscess
+Excision of condyloma acuminatum	Excision of condylomata acuminatum
+Gastrointestinal intubation	Intubation of gastrointestinal tract
+Enteral tube insertion	Intubation of gastrointestinal tract
+Removal of rectal tube	Removal of flatus tube
+Attention to rectal tube	Attention to flatus tube
+Opening of pancreatic duct	Incision of pancreatic duct
+Choledochorrhaphy	Suture of bile duct
+Suturing of bile duct	Suture of bile duct
+Adjustment of bile duct prosthesis	Repositioning of bile duct prosthesis
+Repositioning of biliary stent	Repositioning of bile duct prosthesis
+Dilatation of bile duct stricture	Dilatation of bile duct
+Dilatation of biliary anastomosis	Dilatation of anastomosis of bile duct
+Dilatation of bile duct anastomotic stricture	Dilatation of anastomosis of bile duct
+Excision of lesion of duodenal papilla	Excision of duodenal papilla
+Biopsy of lesion of papilla of Vater	Biopsy of lesion of ampulla of Vater
+Nephroscopic removal of ureteric stent	Percutaneous removal of ureteric stent
+Nephroscopic adjustment of ureteric stent	Percutaneous adjustment of ureteric stent
+Nephroscopic replacement of ureteric stent	Percutaneous replacement of ureteric stent
+Excision of lesion of vulva	Excision of vulval lesion
+Marsupialization of Gartner duct cyst	Marsupialization of Gartner's duct cyst
+Intrauterine polypectomy	Excision of uterine polyp
+Excision of endometrial polyp	Excision of uterine polyp
+Milking of fallopian tube	Expression of fallopian tube
+RMLE - Right mediolateral episiotomy	Right mediolateral episiotomy
+Perineal tear repair	Repair of perineal tear
+Suturing of perineal tear	Repair of perineal tear
+CPT - Repair of complete perineal tear	Repair of complete perineal tear
+Repair of laceration of vagina	Repair of vaginal tear
+Suture of laceration of vagina	Repair of vaginal tear
+Vaginal tear sutured	Repair of vaginal tear
+Repair of vulval graze	Repair of superficial vulval tear
+Repair of colporrhexis	Repair of vaginal vault tear
+Scrape cytology of nipple	Scraping of nipple
+Incisional herniorrhaphy	Repair of incisional hernia
+Incisional hernioplasty	Repair of incisional hernia
+Ventral herniorrhaphy	Repair of ventral hernia
+Ventral hernioplasty	Repair of ventral hernia
+Repair of hernia of anterior abdominal wall	Repair of ventral hernia
+Perineal hernioplasty	Repair of perineal hernia
+Perineal herniorrhaphy	Repair of perineal hernia
+Parastomal hernioplasty	Repair of parastomal hernia
+Parastomal herniorrhaphy	Repair of parastomal hernia
+Repair of peristomal hernia	Repair of parastomal hernia
+Application of abdominal belt	Application of abdominal corset
+Application of abdominal binder	Application of abdominal corset
+Reconstruction of abdominal wall	Repair of abdominal wall
+Lavage of abdominal wall	Irrigation of abdominal wall
+Washout of abdominal wall	Irrigation of abdominal wall
+Drainage of peridiverticular abscess	Drainage of diverticular abscess
+Removal of pack from peritoneal cavity	Removal of abdominal pack
+Removal of pack from abdominal cavity	Removal of abdominal pack
+Biopsy of lesion of abdominal cavity	Biopsy of lesion of peritoneal cavity
+Bx- Biopsy of lesion of chest wall	Biopsy of lesion of chest wall
+Abram's pleural punch biopsy	Percutaneous pleural biopsy
+Bx - Percutaneous pleural biopsy	Percutaneous pleural biopsy
+Realignment of patellar tendon	Transfer of patellar tendon
+FB - Removal of foreign body from tendon sheath	Removal of foreign body from tendon sheath
+Fixation of fracture using internal fixator	Internal fixation of fracture
+Malar osteotomy	Zygomatic osteotomy
+Schanz operation	Osteotomy of proximal femur
+Proximal femoral osteotomy	Osteotomy of proximal femur
+Upper femoral osteotomy	Osteotomy of proximal femur
+Distal femoral osteotomy	Osteotomy of distal femur
+Proximal tibial osteotomy	Osteotomy of proximal tibia
+Upper tibial osteotomy	Osteotomy of proximal tibia
+HTO - High tibial osteotomy	Osteotomy of proximal tibia
+Distal tibial osteotomy	Osteotomy of distal tibia
+Ostectomy	Excision of bone
+FB - Removal of foreign body from bone	Removal of foreign body from bone
+Tessier - Zygomatic augmentation	Zygomatic augmentation
+Malar augmentation	Zygomatic augmentation
+MCL - Repair of medial collateral ligament	Repair of medial collateral ligament of knee joint
+LCL - Repair of lateral collateral ligament	Repair of lateral collateral ligament of knee joint
+TMJ - Temporomandibular joint manipulation	Surgical manipulation of temporomandibular joint
+Temporomandibular joint manipulation	Surgical manipulation of temporomandibular joint
+Excision of osteophytes	Excision of osteophyte
+Intervertebral disc operation	Operation on intervertebral disc
+Cervical discectomy	Excision of cervical intervertebral disc
+Lumbar discectomy	Excision of lumbar intervertebral disc
+Replacement of intervertebral disc	Reconstruction of intervertebral disc
+Endarterectomy of the infrapopliteal artery	Endarterectomy of crural artery
+Endarterectomy of the crural artery	Endarterectomy of crural artery
+FB - Removal of foreign body from pulmonary artery	Removal of foreign body from pulmonary artery
+Skin biopsy	Biopsy of skin
+Plain X-ray metacarpals	Metacarpal X-ray
+Thigh X-ray	Femur X-ray
+Plain X-ray metatarsal bones	Metatarsal X-ray
+Plain X-ray tarsus	Tarsus X-ray
+Plain X-ray ischium	Ischium X-ray
+Plain X-ray ilium	Ilium X-ray
+Pneumomyelography	Air myelogram
+Intra-abdominal angiography	Abdominal angiography
+Inferior mesenteric angiography	Inferior mesenteric arteriogram
+Computed tomography arthrogram of elbow	CT arthrogram of elbow
+Computed tomography arthrogram of hip	CT arthrogram of hip
+Computed tomography arthrogram of knee	CT arthrogram of knee
+Computed tomography arthrogram of ankle	CT arthrogram of ankle
+Magnetic resonance imaging arthrography of elbow	MRI arthrography of elbow
+Magnetic resonance imaging arthrography of hip	MRI arthrography of hip
+Magnetic resonance imaging arthrography of knee	MRI arthrography of knee
+Magnetic resonance imaging arthrography of ankle	MRI arthrography of ankle
+Tourniquet off	Tourniquet release
+Provision of eyeglass magnifier	Provision of spectacle magnifier
+Provision of telescopic eyeglasses	Provision of telescopic spectacles
+Provision of trismus screw	Provision of mouth opening appliance
+Provision of Archimedian screw	Provision of mouth opening appliance
+FBS - Fetal blood sampling	Fetal blood sampling
+LD - Laser doppler	Laser doppler
+EGG - Electrogastrography	Electromyography of stomach
+Gastric electromyography	Electromyography of stomach
+Electrogastrography	Electromyography of stomach
+Scalp electroencephalogram	Scalp EEG
+Transection of trigeminal nerve	Cutting of trigeminal nerve
+Percutaneous fixation	Percutaneous fixation of bone
+External skeletal fixation	External fixation of bone
+External fixation	External fixation of bone
+Costatectomy	Excision of rib
+Resection of rib	Excision of rib
+Costectomy	Excision of rib
+Release fasciotomy	Compartment syndrome decompression
+Transposition of tendon	Transfer of tendon
+Rerouting of tendon	Transfer of tendon
+Tendon transfer	Transfer of tendon
+Plastic repair of peroneal tendon	Repair of peroneal tendon
+Elongation of tendo achilles	Lengthening of Achilles tendon
+ETA - Elongation of tendo achilles	Lengthening of Achilles tendon
+Lengthening of tendo achilles	Lengthening of Achilles tendon
+Lengthening of heel cord	Lengthening of Achilles tendon
+EA - Endometrial ablation	Endometrial ablation
+Manipulation of ankle joint	Surgical manipulation of ankle joint
+Removal of ventricular shunt	Removal of cerebral ventricular shunt
+NLD - Operation on nasolacrimal duct	Operation on nasolacrimal duct
+Attention to cochlear implant	Attention to cochlear prosthesis
+Open cholelithotomy	Open removal of calculus from gallbladder
+Pericardial drainage	Drainage of pericardium
+Decompression of pericardium	Drainage of pericardium
+Total obliteration of vagina	Complete colpocleisis
+Total colpocleisis	Complete colpocleisis
+Avulsion of nail	Removal of nail plate
+Surgical biopsy - eyelid	Surgical biopsy of eyelid
+Examination of GIT	Examination of digestive system
+GU - Examination of genitourinary system	Examination of genitourinary system
+CNS examination	Central nervous system examination
+Insertion of denture	Fit denture
+Fit prosthodontic appliance	Fit denture
+Graft of scrotum	Grafting of scrotum
+Incision of breast	Breast incision
+Mammotomy	Breast incision
+Mastotomy	Breast incision
+Ulnar nerve decompression	Decompression of ulnar nerve
+Aberrant thyroid gland excision	Excision of aberrant thyroid tissue
+Drainage of stye	Drainage of hordeolum
+Calculus removal - GUT	Urinary calculus removal
+Vulval polypectomy	Excision of vulval polyp
+Surgical # reduction	Surgical reduction of fracture
+Lung - needle biopsy	Needle biopsy of lung
+Dislocated ankle reduction	Reduction of dislocation of ankle
+Reduction of ankle dislocation	Reduction of dislocation of ankle
+Foetal manipulation	Fetal manipulation
+Examination of legs	Examination of lower limb
+Funduscopy	Examination of retina
+Ophthalmoscopy	Examination of retina
+Electrosurgical epilation of eyelid	Electrolysis of eyelash
+Removal of tympanic ventilation tube from tympanic membrane	Removal of grommet from tympanic membrane
+Repair of ingrown toenail	Refashioning of ingrowing toenail
+Fitting of contraceptive diaphragm	Diaphragm fit
+Rectoplasty	Repair of rectum
+Insertion of functional orthodontic appliance	Fit functional orthodontic appliance
+Dorsal vestibuloplasty procedure	Dorsal vestibuloplasty
+DOVE - Dorsal vestibuloplasty procedure	Dorsal vestibuloplasty
+Intravenous guanethidine block	Guanethidine block
+Urinary system examination	Examination of urinary system
+Lancing boil	Drainage of boil of skin
+Tenoplasty	Repair of tendon
+Tenomyoplasty	Repair of tendon
+Fascial release of upper limb	Compartment syndrome decompression of upper limb
+Fascial release of lower limb	Compartment syndrome decompression of lower limb
+Aspiration of fluid from knee joint	Aspiration of knee joint
+Division of Dupuytren contracture of foot	Division of Dupuytren's contracture of foot
+Cholangiotomy	Incision of bile duct
+Application of wound glue	Gluing of wound
+Examination of big toe	Examination of hallux
+Examination of great toe	Examination of hallux
+Examination of little toe	Examination of fifth toe
+TMJ - Examination of temporomandibular joint	Examination of temporomandibular joint
+ECS - Endocervical swab	Endocervical swab
+Excision of cyst of pericardium	Pericardial cyst excision
+Excision of pericardial cyst	Pericardial cyst excision
+Diaphragm sutured	Suture of diaphragm
+External ear lesion curetted	Curettage of lesion of pinna
+Sialodochoplasty	Salivary duct repair
+Reconstruction of urinary bladder	Urinary bladder reconstruction
+Excision of ulcer of duodenum	Duodenal ulcer excision
+Diverticulectomy of stomach	Stomach diverticulum excision
+Liver drainage	Drainage of liver
+Excision of vaginal polyp	Vaginal polyp excision
+Removal of orthopedic device	Orthopedic device removal
+Choledochotomy	Incision of common bile duct
+Removal of vestibular schwannoma	Removal of acoustic neuroma
+Ablation of nail matrix	Ablation of nail bed
+Extraction of stone from parotid duct	Removal of calculus from parotid duct
+Excision sebaceous cyst	Excision of sebaceous cyst
+Laser vaporization of lesion of cervix	Laser destruction of lesion of cervix
+Ovarian diathermy	Diathermy of ovary
+Biopsy of spinal cord tissue	Biopsy of spinal cord
+Aural polypectomy (middle ear)	Excision of middle ear polyp
+Diversion of salivary duct	Repositioning of salivary duct
+Transposition of salivary duct	Repositioning of salivary duct
+Placentacentesis	Placental biopsy
+FD - Forceps delivery	Forceps delivery
+Application of and delivery by forceps	Forceps delivery
+Freezing of skin lesion	Cryotherapy to skin lesion
+Radius and ulna X-ray	Radius and/or ulna X-ray
+FB - Removal of foreign body from skin	Removal of foreign body from skin
+Desloughing wound	Removal of slough from skin
+Bx - Biopsy of diaphragm	Biopsy of diaphragm
+Thoracic discectomy	Excision of thoracic intervertebral disc
+Spinal osteotomy	Osteotomy of vertebra
+Osteotomy of spine	Osteotomy of vertebra
+Replantation of finger	Reattachment of finger
+Colposacropexy	Abdominal sacrocolpopexy
+Abdominal suspension of vaginal vault	Abdominal sacrocolpopexy
+Sebaceous cyst removal	Removal of sebaceous cyst
+Complete deband orthodontic fixed appliance	Complete removal of fixed orthodontic appliance
+Removal of fixed orthodontic appliance	Complete removal of fixed orthodontic appliance
+Complete debond orthodontic fixed appliance	Complete removal of fixed orthodontic appliance
+Plain film by body site	Plain film of body region
+Skin graft operation	Skin grafting
+Resection of pancreatic cyst	Excision of pancreatic cyst
+Repair of small bowel	Repair of small intestine
+Arthroscopy of knee joint	Arthroscopy of knee
+Repair of pulmonary artery using patch	Patch repair of pulmonary artery
+Patch arterioplasty of pulmonary artery	Patch repair of pulmonary artery
+Palate exercises	Palatal exercises
+Disimpaction of feces	Manual evacuation of feces from rectum
+Graft of nipple	Grafting of nipple
+Cardiotomy	Incision of heart
+Transplant of tissue of tongue	Tongue graft
+Incision of spinal meninges	Incision of spinal cord meninges
+Right hemicolectomy	Right colectomy
+Resection of ascending colon, cecum and terminal ileum	Right colectomy
+Angiotomy of ascending aorta	Incision of ascending aorta
+Arteriotomy of ascending aorta	Incision of ascending aorta
+Arteriotomy of descending aorta	Incision of descending aorta
+Angiotomy of descending aorta	Incision of descending aorta
+Incision of descending thoracic aorta	Incision of descending aorta
+Upper extremity surgical repair	Surgical repair of upper extremity
+Thoracostomy	Incision of chest wall
+Incision of thorax	Incision of chest wall
+Thoracic incision	Incision of chest wall
+Repair procedure to the trachea	Repair of trachea
+Removal of gallstones in bile duct	Bile duct stone removal
+Removal of gallstone from bile duct	Bile duct stone removal
+Oral, dental and salivary procedures	Operation on oral cavity
+Oral operation	Operation on oral cavity
+Replantation of lower limb	Reattachment of lower extremity
+Gastrointestinal tube care	Maintenance of gastrointestinal tract tube
+Tube care: gastrointestinal tract	Maintenance of gastrointestinal tract tube
+Enteral tube care	Maintenance of gastrointestinal tract tube
+Ear wax removal	Removal of ear wax
+Determination of immunologic status	Immune system evaluation
+Immunologic evaluation	Immune system evaluation
+Immune system observation	Immune system evaluation
+Respiratory tract observation	Respiratory tract evaluation
+Chest observation	Respiratory tract evaluation
+Chest observation regime	Respiratory tract evaluation
+Excision of lesion of esophagus	Excision of esophageal lesion
+Plastic repair of middle ear	Repair of middle ear
+Tympanoplasty	Repair of middle ear
+Middle ear otoplasty	Repair of middle ear
+Operative procedure on ocular lens	Operation on lens
+Lens operations	Operation on lens
+GI - Gastrointestinal operation	Operation on gastrointestinal tract
+GIT - Gastrointestinal tract operation	Operation on gastrointestinal tract
+Gut operation	Operation on gastrointestinal tract
+Excision of intraspinal lesion	Excision of lesion of spinal cord
+Excision of lesion of spinal cord tissue	Excision of lesion of spinal cord
+Valvuloplasty of pulmonary valve	Repair of pulmonary valve
+PVP - Pulmonary valvuloplasty	Repair of pulmonary valve
+Pulmonary valvoplasty	Repair of pulmonary valve
+Surgical division of peripheral nerve	Division of peripheral nerve
+Section of peripheral nerve	Transection of peripheral nerve
+Cutting of peripheral nerve	Transection of peripheral nerve
+EB - Endometrial biopsy	Endometrial biopsy
+Endometrial sampling	Endometrial biopsy
+Fetal operation	Operation on fetus
+Aneurysmectomy of sinus of Valsalva	Repair of aneurysm of sinus of Valsalva
+Mammilliplasty	Nipple reconstruction
+Theleplasty	Nipple reconstruction
+Reconstruction of nipple	Nipple reconstruction
+Larynx operation	Operation on larynx
+Bilateral excision of vulva	Bilateral vulvectomy
+Block dissection of vulva	Bilateral vulvectomy
+Operative procedure on respiratory tract	Operation on respiratory tract
+Respiratory tract operations	Operation on respiratory tract
+Renal exploration	Exploration of kidney
+MUA - Manipulation of joint under anesthetic	Surgical manipulation of joint
+Manipulation of elbow joint under anesthetic	Surgical manipulation of elbow joint
+Wrist manipulation	Manipulation of wrist joint
+Pulmonary operation	Operation on lung
+Lung operation	Operation on lung
+Incision of middle palmar space	Incision of midpalmar space
+Ovarian cystectomy	Excision of cyst of ovary
+Oophorocystectomy	Excision of cyst of ovary
+Cautery to lung lesion	Cauterization of lung lesion
+Scrotal exploration	Exploration of scrotum
+Gastrotomy	Incision of stomach
+Labbe operation, gastrotomy	Incision of stomach
+Suture of laceration of trachea	Suture of trachea
+Tracheorrhaphy	Suture of trachea
+Dermatological operation	Operation on skin
+Skin operation	Operation on skin
+Excision of bony exostosis	Excision of exostosis of bone
+Exostectomy	Excision of exostosis of bone
+Excision of exostosis	Excision of exostosis of bone
+Urinary operations	Operation on urinary system
+Mammary gland operation	Operation on breast
+Breast operation	Operation on breast
+Mammary operation	Operation on breast
+Drainage of abscess of peritonsillar tissues	Drainage of peritonsillar abscess
+Drainage of quinsy	Drainage of peritonsillar abscess
+Fallopian tube operation	Operation on fallopian tube
+Tubal operations - fallopian	Operation on fallopian tube
+Amputation of leg	Amputation of lower limb
+Hind limb amputation	Amputation of lower limb
+Lower limb amputation	Amputation of lower limb
+Amputation of the lower limb	Amputation of lower limb
+Disarticulation of knee	Knee disarticulation
+Disarticulation at knee	Knee disarticulation
+Hemorrhoidectomy - cauterize	Cauterization of hemorrhoids
+Hemorrhoidectomy by cauterization	Cauterization of hemorrhoids
+Disarticulation of ankle	Ankle disarticulation
+Disarticulation of foot	Ankle disarticulation
+Disarticulation of the ankle	Ankle disarticulation
+Amputation of leg through ankle joints	Amputation of ankle
+Through ankle amputation	Amputation of ankle
+Lavage of bronchus	Irrigation of bronchus
+Incision of fascia of hand with division	Division of fascia of hand
+Hand fasciotomy	Division of fascia of hand
+Fasciotomy of hand	Division of fascia of hand
+Eyelash removal	Removal of eyelash
+Epilation of eyelash	Removal of eyelash
+Repair of laceration of bronchus by suture	Suture of laceration of bronchus
+Eyelid repair	Repair of eyelid
+Retinal laser photocoagulation	Laser photocoagulation to retina
+Laser photocoagulation of retina	Laser photocoagulation to retina
+ALT - argon laser trabeculoplasty	Argon laser trabeculoplasty
+Creation of upper extremity arteriovenous fistula	Creation of upper limb arteriovenous fistula
+Creation of lower extremity arteriovenous fistula	Creation of lower limb arteriovenous fistula
+Reconstruction nail bed	Repair of nail bed
+Occlusion therapy for amblyopia	Occlusion therapy
+Faden operation	Extraocular muscle posterior fixation suture
+Faden procedure	Extraocular muscle posterior fixation suture
+Posterior fixation suture	Extraocular muscle posterior fixation suture
+LTK-Laser thermokeratoplasty	Laser thermokeratoplasty
+Removal of joint implant	Removal of joint prosthesis
+Removal of prosthetic joint	Removal of joint prosthesis
+Repair of ear laceration by suture	Suture of laceration of external ear
+Intertarsal joint arthrogram	Fluoroscopic arthrography of intertarsal joint
+Inferior mesenteric angiogram	Fluoroscopic angiography of inferior mesenteric artery
+Splenic venogram	Fluoroscopic venography of spleen
+Procedure on cranial nerve III	Procedure on oculomotor nerve
+Procedure on third cranial nerve	Procedure on oculomotor nerve
+Ovarian angiogram	Fluoroscopic angiography of ovarian artery
+US scan of inguinal region	Ultrasonography of inguinal region
+Ultrasound scan of inguinal region	Ultrasonography of inguinal region
+Bronchial angiogram	Fluoroscopic angiography of bronchial artery
+Subtalar joint arthrogram	Fluoroscopic arthrography of subtalar joint
+Ultrasound angiography of subclavian artery	US angiography of subclavian artery
+Thoracic aorta angiogram	Fluoroscopic angiography of thoracic aorta
+Ultrasound angiography of renal artery	US angiography of renal artery
+Anel operation	Dilation of nasolacrimal duct
+Dilation of lacrimal duct	Dilation of nasolacrimal duct
+Mesenteric angiogram	Fluoroscopic angiography of mesenteric artery
+Axillary angiogram	Fluoroscopic angiography of axillary artery
+Splenic angiogram	Fluoroscopic angiography of splenic artery
+Hepatic angiogram	Fluoroscopic angiography of hepatic artery
+Umbilical venogram	Fluoroscopic venography of umbilical vein
+Computed tomography angiography of cerebral artery	CT angiography of cerebral artery
+Subclavian angiogram	Fluoroscopic angiography of subclavian artery
+Internal carotid angiogram	Fluoroscopic angiography of internal carotid artery
+Fluoroscopic arthrography of hip	Fluoroscopy of hip
+Lower limb venogram	Fluoroscopic venography of lower limb
+Digestive system angiogram	Fluoroscopic angiography of digestive system
+Vertebral angiogram	Fluoroscopic angiography of vertebral artery
+Celiac angiogram	Fluoroscopic angiography of celiac artery
+External carotid angiogram	Fluoroscopic angiography of external carotid artery
+Elbow arthrogram	Fluoroscopic arthrography of elbow
+Femoral angiogram	Fluoroscopic angiography of femoral artery
+Right cardiac angiogram	Fluoroscopic angiography of right side of heart
+Computed tomography angiography of pulmonary artery	CT angiography of pulmonary artery
+Pelvic venogram	Fluoroscopic venography of pelvis
+Iliac angiogram	Fluoroscopic angiography of iliac artery
+Cerebral angiogram	Fluoroscopic angiography of cerebral artery
+Iliac venogram	Fluoroscopic venography of iliac vein
+Spinal angiogram	Fluoroscopic angiography of spinal artery
+Magnetic resonance imaging venography of upper limb	MRI venography of upper limb
+Penile venogram	Fluoroscopic venography of penis
+Temporomandibular joint arthrogram	Fluoroscopic arthrography of temporomandibular joint
+Computed tomography angiography of renal artery	CT angiography of renal artery
+Metacarpophalangeal joint arthrogram	Fluoroscopic arthrography of metacarpophalangeal joint
+Metatarsophalangeal joint arthrogram	Fluoroscopic arthrography of metatarsophalangeal joint
+Cardiac angiogram	Fluoroscopic angiography of heart
+Portal venogram	Fluoroscopic venography of portal vein
+External iliac angiogram	Fluoroscopic angiography of external iliac artery
+Upper limb venogram	Fluoroscopic venography of upper limb
+Common carotid angiogram	Fluoroscopic angiography of common carotid artery
+Penile angiogram	Fluoroscopic angiography of penile artery
+Computed tomography angiography of intracranial artery	CT angiography of intracranial artery
+Uterine angiogram	Fluoroscopic angiography of uterine artery
+Renal angiogram	Fluoroscopic angiography of renal artery
+Abdominal aorta angiogram	Fluoroscopic angiography of abdominal aorta
+Superior mesenteric angiogram	Fluoroscopic angiography of superior mesenteric artery
+Popliteal angiogram	Fluoroscopic angiography of popliteal artery
+Internal iliac angiogram	Fluoroscopic angiography of internal iliac artery
+Left cardiac angiogram	Fluoroscopic angiography of left side of heart
+Carotid angiogram	Fluoroscopic angiography of carotid artery
+Magnetic resonance imaging venography of lower limb	MRI venography of lower limb
+Arterial catheter removal	Removal of arterial catheter
+Pulmonary artery catheter removal	Removal of pulmonary artery catheter
+Discontinue pulmonary artery catheter	Removal of pulmonary artery catheter
+Measurement of lower extremity	Measurement of lower limb
+Leg measurement	Measurement of lower limb
+Apply foot pump	Application of foot pump
+US scan of forearm	Ultrasound scan of forearm
+US scan of left hip	Ultrasound scan of left hip
+Marsupialization of canaliculus	Marsupialization of lacrimal canaliculus
+Computed tomography angiography of thorax	CT angiography of thorax
+Plain X-ray of bone	X-ray of bone
+US scan of right hip	Ultrasound scan of right hip
+Radiographic imaging of acetabulum	X-ray of acetabulum
+US scan of sacral spine	Ultrasound scan of sacral spine
+US scan of sacrum	Ultrasound scan of sacral spine
+Enucleation of skin lesion	Enucleation of lesion of skin
+Single photon emission computed tomography (SPECT) of parathyroid	Single photon emission computed tomography of parathyroid
+Biopsy of foetus	Biopsy of fetus
+Biopsy of striated muscle	Biopsy of skeletal muscle
+Facial massage	Massage of face
+Ultrasonography (US) of cervical spine	Ultrasonography of cervical spine
+Ultrasonography (US) of cranial cavity	Ultrasonography of cranial cavity
+Ultrasonography (US) of pleural cavity	Ultrasonography of pleural cavity
+Endoscopic ultrasonography (US) of stomach	Endoscopic ultrasonography of stomach
+Ultrasonography (US) of subtalar joint	Ultrasonography of subtalar joint
+Ultrasonography (US) of acromioclavicular joint	Ultrasonography of acromioclavicular joint
+Ultrasonography (US) of thumb	Ultrasonography of thumb
+Ultrasonography (US) of rib	Ultrasonography of rib
+Ultrasonography (US) of scalp	Ultrasonography of scalp
+Abdominal massage	Massage of abdomen
+Magnetic resonance imaging (MRI) arthrography of midtarsal joint	MRI arthrography of midtarsal joint
+Magnetic resonance imaging arthrography of midtarsal joint	MRI arthrography of midtarsal joint
+Ultrasonography (US) of popliteal fossa	Ultrasonography of popliteal fossa
+Single photon emission computed tomography (SPECT) of bone of wrist	Single photon emission computed tomography of bone of wrist
+Magnetic resonance imaging (MRI) arthrography of metacarpophalangeal joint	MRI arthrography of metacarpophalangeal joint
+Magnetic resonance imaging arthrography of metacarpophalangeal joint	MRI arthrography of metacarpophalangeal joint
+Ultrasonography (US) of coccyx	Ultrasonography of coccyx
+Ultrasonography (US) of temporomandibular joint	Ultrasonography of temporomandibular joint
+Ultrasonography (US) of sternum	Ultrasonography of sternum
+Ultrasonography (US) of sciatic nerve	Ultrasonography of sciatic nerve
+Magnetic resonance imaging (MRI) arthrography of metatarsophalangeal joint	MRI arthrography of metatarsophalangeal joint
+Magnetic resonance imaging arthrography of metatarsophalangeal joint	MRI arthrography of metatarsophalangeal joint
+Single photon emission computed tomography (SPECT) of bone	Single photon emission computed tomography of bone
+Ultrasonography (US) of lumbar spine	Ultrasonography of lumbar spine
+Ultrasonography (US) of toe	Ultrasonography of toe
+Ultrasonography (US) of sacroiliac joint	Ultrasonography of sacroiliac joint
+Ultrasonography (US) of forefoot	Ultrasonography of forefoot
+Ultrasonography (US) of anterior abdominal wall	Ultrasonography of anterior abdominal wall
+Ultrasonography (US) of symphysis pubis	Ultrasonography of symphysis pubis
+Ultrasonography (US) of sternoclavicular joint	Ultrasonography of sternoclavicular joint
+Ultrasonography (US) of thoracic spine	Ultrasonography of thoracic spine
+Ultrasonography (US) of clavicular region	Ultrasonography of clavicular region
+Ultrasonography (US) of scapula	Ultrasonography of scapula
+Magnetic resonance imaging (MRI) arthrography of subtalar joint	MRI arthrography of subtalar joint
+Magnetic resonance imaging arthrography of subtalar joint	MRI arthrography of subtalar joint
+Closed reduction of fracture of greater trochanter of femur	Closed reduction of fracture of greater trochanter
+Cardioversion using medication	Chemical cardioversion
+Open tenotomy of hamstring tendon	Open division of tendon of hamstring muscle
+Computed tomography angiography of subclavian artery	CT angiography of subclavian artery
+Open tenotomy of bilateral hamstring tendon	Open division of bilateral tendon of hamstring muscle
+Construction of urostomy	Construction of external stoma of urinary system
+Gastric bypass	Bypass of stomach
+Open repair of tibiofibular syndesmosis	Open repair of distal tibiofibular joint
+Computed tomography angiography of vascular structure of spine	CT angiography of vascular structure of spine
+Removal of gum shield	Removal of sports mouth guard
+Removal of mouth protector	Removal of sports mouth guard
+Removal of sports bite guard	Removal of sports mouth guard
+Removal of sports tooth guard	Removal of sports mouth guard
+Prosthetic arthroplasty of left knee	Replacement of left knee joint
+Removal of night bite guard	Removal of night mouth guard
+Removal of night tooth guard	Removal of night mouth guard
+Prosthetic arthroplasty of right knee	Replacement of right knee joint
+Percutaneous achillotomy	Percutaneous division of Achilles tendon
+Percutaneous achillotenotomy	Percutaneous division of Achilles tendon
+Ultrasonography of dialysis shunt	Ultrasonography of arteriovenous fistula
+Temporal lobectomy	Excision of temporal lobe
+Arthrectomy of toe	Excision of joint of toe
+Tenotomy of foot	Division of tendon of foot
+Bursotomy of foot	Incision of bursa of foot
+Arthrotomy of toe	Incision of joint of toe
+Sequestrectomy of tarsal bone	Excision of sequestrum of tarsal bone
+Debulking of intraabdominal neoplasm	Debulking of neoplasm of abdominal cavity
+Excision of vessel of head and/or neck	Excision of vascular structure of head and/or neck
+Sequestrectomy of phalanx	Excision of sequestrum of phalanx
+Incision of abscess of perianal region	Incision of perianal abscess
+Incision of perianal region abscess	Incision of perianal abscess
+Excision of vessel of upper limb	Excision of vascular structure of upper limb
+Incision of vessel of head and/or neck	Incision of vascular structure of head and/or neck
+Incision of vessel of upper limb	Incision of vascular structure of upper limb
+Cryosurgery of hepatic lesion	Cryosurgery of lesion of liver
+Removal of foreign body from pouch of Douglas	Removal of foreign body from rectouterine pouch
+Excision of lesion of wall of heart	Excision of lesion of cardiac wall
+Repair of wall of heart	Repair of cardiac wall
+Excision of digital mucous cyst of finger	Excision of mucous cyst of finger
+Open reduction of dislocation of patella	Open reduction of dislocation of patellofemoral joint
+Clipping hair	Cutting of hair
+Patch repair of duodenal ulcer	Patch repair of perforated duodenal ulcer
+Graft of hand	Grafting of hand
+Orthotopic cystoplasty	Orthotopic repair of urinary bladder
+Computed tomography angiography of head and neck	CT angiography of head and neck
+Marsupialization of nasopharyngeal abscess	Marsupialization of abscess of nasopharynx
+Removal of urethral calculus	Removal of calculus of urethra
+Removal of urethral stone	Removal of calculus of urethra
+Open drainage of liver abscess	Open drainage of abscess of liver
+Open hepatotomy	Open incision of liver
+Angiography of liver	Liver angiography
+Extraction of stone of biliary tract	Extraction of calculus of biliary tract
+Wedge resection of ingrown toenail	Wedge resection of ingrowing toenail
+Cryoablation to lung, percutaneous	Percutaneous cryoablation of lung
+Piriformis muscle injection	Injection of piriformis muscle
+Resection of emphysematous bleb of lung	Excision of emphysematous bleb of lung
+Excision of neoplasm of sympathetic nerve	Excision of tumor of sympathetic nerve
+Removal of salivary stone	Removal of calculus of salivary gland
+Incision of carpal bone	Incision of carpus
+Bursotomy of wrist	Incision of bursa of wrist
+Harvesting of nasal mucosa	Harvesting of mucous membrane of nose
+Excision of lamina of thoracic vertebra	Thoracic laminectomy
+Intertrochanteric osteotomy of femur	Osteotomy of intertrochanteric structure of femur
+Endoscopic ultrasound examination of biliary tract	Endoscopic ultrasonography of biliary tract
+SPECT of neck	Single photon emission computed tomography of neck
+SPECT of heart	Single photon emission computed tomography of heart
+Computed tomography angiography of iliac artery	CT angiography of iliac artery
+CT angiogram of iliac artery	CT angiography of iliac artery
+CT angiogram of mesenteric artery	CT angiography of mesenteric artery
+Computed tomography angiography of mesenteric artery	CT angiography of mesenteric artery
+Computed tomography angiography of hepatic artery	CT angiography of hepatic artery
+CT angiogram of hepatic artery	CT angiography of hepatic artery
+Computed tomography angiography of femoral artery	CT angiography of femoral artery
+CT angiogram of femoral artery	CT angiography of femoral artery
+Biopsy of extremity	Biopsy of limb
+Ultrasound of paranasal sinus	Ultrasonography of nasal sinus
+Ultrasound scan of paranasal sinus	Ultrasonography of nasal sinus
+Ultrasonography of paranasal sinus	Ultrasonography of nasal sinus
+Computed tomography of vascular structure of pelvis	CT angiography of pelvis
+CT angiogram of pelvis	CT angiography of pelvis
+Ultrasound scan of pseudoaneurysm	Ultrasonography of pseudoaneurysm
+Ultrasound of pseudoaneurysm	Ultrasonography of pseudoaneurysm
+Ultrasound scan of thoracic outlet	Ultrasonography of thoracic outlet
+Ultrasound of thoracic outlet	Ultrasonography of thoracic outlet
+Ultrasound of foetal head	Ultrasonography of fetal head
+Ultrasound scan of fetal head	Ultrasonography of fetal head
+Ultrasound of fetal head	Ultrasonography of fetal head
+Ultrasound scan of foetal head	Ultrasonography of fetal head
+Ultrasonography of foetal head	Ultrasonography of fetal head
+Ultrasound scan of appendix	Ultrasonography of appendix
+Ultrasound of appendix	Ultrasonography of appendix
+Fluoroscopic fistulography of extremity	Fluoroscopic fistulography of limb
+Ultrasound scan of cervix	Ultrasonography of cervix uteri
+Ultrasound of cervix	Ultrasonography of cervix uteri
+Ultrasound scan of limb	Ultrasonography of limb
+Ultrasonography of extremity	Ultrasonography of limb
+Ultrasound of limb	Ultrasonography of limb
+X-ray of extremity	X-ray of limb
+Stripping of diaphragm	Diaphragm stripping
+Ultrasound of genital labium	Ultrasonography of genital labium
+Ultrasound scan of labia	Ultrasonography of genital labium
+Computed tomography angiography of lower limb	CT angiography of lower limb
+CT angiogram of lower extremity	CT angiography of lower limb
+Computed tomography angiography of vascular structure of limb	CT angiography of vascular structure of limb
+Plain x-ray of pelvis	Plain radiography of pelvis
+Upper limb X-ray	Plain x-ray of upper limb
+X-ray of upper limb	Plain x-ray of upper limb
+Ultrasound scan of brachial plexus	Ultrasonography of brachial plexus
+Imaging of lower extremity	Imaging of lower limb
+Fluoroscopic venography of subclavian vein	Venography of subclavian vein
+Venogram of subclavian vein	Venography of subclavian vein
+Excision of hepatic neoplasm	Excision of tumor of liver
+Excision of cartilage of knee joint	Chondrectomy of knee joint

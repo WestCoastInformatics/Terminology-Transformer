@@ -1,0 +1,180 @@
+<style>
+.video-container {
+	position: relative;
+	padding-bottom: 56.25%;
+	padding-top: 30px;
+	height: 0;
+	overflow: hidden;
+}
+
+.video-container iframe, .video-container object, .video-container embed
+	{
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	border: 5px solid rgba(255, 255, 255, 0);
+	-webkit-border-radius: 20px !important;
+	-ms-border-radius: 20px !important;
+	-o-border-radius: 20px !important;
+	border-radius: 20px !important;
+}
+</style>
+
+<h4>Introduction</h4>
+<p>
+  This is a sample application for demonstrating the
+  <a href="http://www.westcoastinformatics.com/transformer.html">West Coast
+    Informatics Transformer</a>
+  . The "transformer" is a terminology-enabled platform that can be configured
+  to answer a variety of different kinds of questions by passing data elements
+  through terminology-based algorithms to produce a result. Follow the link for
+  more information about the platform itself.
+</p>
+<p>This tool, the NDC-RXNORM Transformer Application provides an API and
+  basic user interface for interacting with RXNORM concepts, NDC (National Drug
+  Codes), and SPL (Standard Product Label) Set Ids. The tool is loaded with all
+  versions of RXNORM dating back to June 2007 (the first appearance of NDC
+  data).</p>
+<p>As an instance of the Transformer platform, this pipeline takes
+  terminology codes (as either RXCUI, NDC, or SPL SetId) and transforms them
+  into an information model representing broader and more historical picture of
+  those data elements. While this is a relatively simple use case, it
+  demonstrates how one type of data processed through terminology-enabled
+  algorithms can emerge as a richer and more useful type of data.</p>
+
+<br />
+<h4>Features</h4>
+<ul>
+  <li>User interface for testing APIs</li>
+  <li>Mobile friendly, responsive UI</li>
+  <li>Lightweight deployment (Tomcat/Mysql stack)</li>
+  <li>Deployable locally (to run within an existing environment or behind a
+    firewall)</li>
+  <li>Configurable security architecture</li>
+  <li>Supports "unit" and "batch" requests</li>
+  <li>Includes admin tools for easy updating to latest RXNORM version</li>
+</ul>
+
+<br />
+<h4>Sample Invocations</h4>
+<p>Following are examples of calls that demonstrate the different ways of
+  performing searches in this application. NOTE: there is no user interface for
+  batch lookups.</p>
+<ul>
+  <li><a href="index.html#/ndc?query=Aspirin" target="_blank">Searching
+      by name of a medication, e.g. "Aspirin"</a></li>
+  <li><a href="index.html#/ndc?query=351772" target="_blank">Searching
+      by RXNORM concept, e.g. "351772"</a></li>
+  <li><a href="index.html#/ndc?query=00143314501" target="_blank">Searching
+      by NDC, e.g. "00143314501"</a></li>
+  <li><a href="index.html#/ndc?query=8d24bacb-feff-4c6a-b8df-625e1435387a"
+      target="_blank">Searching by SPL Set Id, e.g.
+      "8d24bacb-feff-4c6a-b8df-625e1435387a"</a></li>
+</ul>
+
+<br />
+<h4>Sample Usage Video</h4>
+<p>Simple training video on using the tool.</p>
+
+<div class="visible-xs video-container">
+  <iframe width="480" height="292"
+    src="https://www.youtube.com/embed/lPxdhyqmSHg" allowfullscreen></iframe>
+</div>
+
+<div class="hidden-xs">
+  <iframe width="480" height="292"
+    src="https://www.youtube.com/embed/lPxdhyqmSHg" allowfullscreen></iframe>
+</div>
+
+<br />
+<h4>
+  <a href="swagger.html">REST API</a>
+</h4>
+<p>
+  The REST API comprises eight functions, six of which represent the core
+  services and two of which are used to support the user interface. The full
+  documentation for the API can be found by
+  <a href="swagger.html">clicking the API link in the header</a>
+  . Following is a description of the core services.
+</p>
+
+<h5>Get NDC Info (unit and batch)</h5>
+<ul>
+  <li><p>Takes an NDC as a parameter and returns a document containing
+      the current RXNORM concept, its active status, the current SPL Set Id, and
+      (optionally) the RXNORM concept history. The history is only included if
+      the "history=true" parameter is used.</p>
+    <div class="well well-sm">
+      <pre>curl -H Authorization:guest https://ndc.terminology.tools/rxnorm/ndc/00143314501?history=true</pre>
+      <pre>curl -H Authorization:guest https://ndc.terminology.tools/rxnorm/ndc/0143-3145-01?history=true</pre>
+      <pre>curl -H Authorization:guest https://ndc.terminology.tools/rxnorm/ndc/00143314501</pre>
+      <pre>curl -H Authorization:guest https://ndc.terminology.tools/rxnorm/ndc/0143-3145-01</pre>
+    </div></li>
+  <li><p>Takes a list of NDCs as POST data and returns a list of
+      documents containing the current RXNORM concepts, active status, current
+      SPL Set Id, and (optionally) the RXNORM concept history for each NDC
+      provided. The history is only included if the "history=true" parameter is
+      used.</p>
+    <div class="well well-sm">
+      <pre>curl -X POST -H "Content-Type: application/json" -H Authorization:guest -d '[ "00247100552", "00143314501" ]' https://ndc.terminology.tools/rxnorm/ndcs?history=true</pre>
+      <pre>curl -X POST -H "Content-Type: application/json" -H Authorization:guest -d '[ "00247100552", "00143314501" ]' https://ndc.terminology.tools/rxnorm/ndcs</pre>
+    </div></li>
+</ul>
+
+<h5>Get RXCUI Info (unit and batch)</h5>
+<ul>
+  <li><p>Takes an RXCUI (an RXNORM concept id) as a parameter and
+      returns a document containing the RXNORM concept info, its active status,
+      associated SPL Set Ids, and (optionally) a complete NDC history. The
+      history is only included if the "history=true" parameter is used</p>
+    <div class="well well-sm">
+      <pre>curl -H Authorization:guest https://ndc.terminology.tools/rxnorm/rxcui/351772?history=true</pre>
+      <pre>curl -H Authorization:guest https://ndc.terminology.tools/rxnorm/rxcui/351772</pre>
+    </div></li>
+  <li><p>Takes a list of RXCUIs (RXNORM concept ids) as POST data and
+      returns documents containing the RXNORM concept info, active status,
+      associated SPL Set Ids, and (optionally) a complete NDC history for each
+      RXCUI provided. The history is only included if the "history=true"
+      parameter is used</p>
+    <div class="well well-sm">
+      <pre>curl -X POST -H "Content-Type: application/json" -H Authorization:guest  --data '[ "283420", "351772" ]' https://ndc.terminology.tools/rxnorm/rxcuis?history=true</pre>
+      <pre>curl -X POST -H "Content-Type: application/json" -H Authorization:guest  --data '[ "283420", "351772" ]' https://ndc.terminology.tools/rxnorm/rxcuis</pre>
+    </div></li>
+</ul>
+
+<h5>Get NDC Properties</h5>
+<ul>
+  <li><p>Takes an NDC as a parameter and returns a document a
+      containing details of the NDC, including various properties associated
+      with it in the current version of RXNORM.</p>
+    <div class="well well-sm">
+      <pre>curl -H Authorization:guest https://ndc.terminology.tools/rxnorm/ndc/00143314501/properties</pre>
+      <pre>curl -H Authorization:guest https://ndc.terminology.tools/rxnorm/ndc/0143-3145-01/properties</pre>
+    </div></li>
+</ul>
+
+<h5>Get NDC Properties for SPL Set Id</h5>
+<ul>
+  <li><p>Takes an SPL Set Id as a parameter NDC as a parameter and
+      returns a document containing details of all of the NDCs associated with
+      it in the current version of RXNORM.</p>
+    <div class="well well-sm">
+      <pre>curl -H Authorization:guest https://ndc.terminology.tools/rxnorm/spl/8d24bacb-feff-4c6a-b8df-625e1435387a/ndc/properties</pre>
+    </div></li>
+</ul>
+
+<br />
+<h4>References/Links</h4>
+<ul>
+  <li><a href="http://www.westcoastinformatics.com/transformer.html">West
+      Coast Informatics - Transformer Platform</a></li>
+  <li><a href="https://www.nlm.nih.gov/research/umls/rxnorm/">RXNORM
+      Home</a></li>
+  <li><a href="https://dailymed.nlm.nih.gov/dailymed/">DailyMed Home</a></li>
+  <li><a href="https://rxnav.nlm.nih.gov/RxNormAPIREST.html">NLM RXNORM
+      APIs </a><small>Work on this tool was based on the idea of making
+      services like this NLM REST API downloadable and installable locally, and
+      with a friendly UI.</small></li>
+</ul>
