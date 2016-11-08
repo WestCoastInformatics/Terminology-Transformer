@@ -120,8 +120,7 @@
                 <include>**/com/wci/tt/test/mojo/*Test.java</include>
               </includes>
               <excludes>
-                <exclude>**/com/wci/tt/test/mojo/ResetDevDatabase.java
-                </exclude>
+                <exclude>**/com/wci/tt/test/mojo/Reset*Database.java</exclude>
               </excludes>
               <additionalClasspathElements>
                 <additionalClasspathElement>src/main/resources</additionalClasspathElement>

@@ -122,10 +122,10 @@ public class CoordinatorServiceJpa extends ContentServiceJpa
                 handlerName, SourceDataHandler.class);
         sourceDataHandlers.put(handlerName, handler);
       }
-      if (sourceDataHandlers.isEmpty()) {
-        throw new Exception(
-            "source.data.handler must have one value but none exist");
-      }
+//      if (sourceDataHandlers.isEmpty()) {
+//        throw new Exception(
+//            "source.data.handler must have one value but none exist");
+//      }
     } catch (Exception e) {
       e.printStackTrace();
       sourceDataHandlers = null;

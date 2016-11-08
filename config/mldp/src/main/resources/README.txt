@@ -19,14 +19,14 @@ mvn clean install
 
 # config
 cd ~/mldp
-unzip code1/config/mldp/target/ -d config
+unzip code1/config/mldp/target/tt-config-mldp-*.zip -d config
 
 # create db
 echo "CREATE database mldpdb CHARACTER SET utf8 default collate utf8_unicode_ci;" | mysql
 
 # integration-test "reset"
 cd /home/ec2-tomcat/mldp/code1/integration-test
-mvn -DskipTests=true -Drun.config.umls=/home/ec2-tomcat/mldp/config/config.properties -Preset
+mvn clean install -Preset -DskipTests=false -Drun.config.umls=/home/ec2-tomcat/mldp/config/config.properties -Dmaven.home=/project/maven-current/bin/mvn
 
 
 
