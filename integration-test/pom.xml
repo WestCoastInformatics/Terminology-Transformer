@@ -144,7 +144,7 @@
             <artifactId>maven-surefire-plugin</artifactId>
             <configuration>
               <includes>
-                <include>**/com/wci/tt/test/mojo/ResetDevDatabase.java</include>
+                <include>**/com/wci/tt/test/mojo/ResetMldpDatabase.java</include>
               </includes>
               <additionalClasspathElements>
                 <additionalClasspathElement>src/main/resources</additionalClasspathElement>

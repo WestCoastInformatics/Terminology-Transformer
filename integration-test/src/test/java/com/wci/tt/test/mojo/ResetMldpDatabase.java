@@ -70,7 +70,7 @@ public class ResetMldpDatabase {
     p.setProperty("mode", "create");
     p.setProperty("terminology", "HKT");
     p.setProperty("version", "latest");
-    p.setProperty("input.dir", "../../config/mldp/src/main/resources/data");
+    p.setProperty("input.dir", "../config/mldp/src/main/resources/data");
     if (System.getProperty("input.dir") != null) {
       p.setProperty("input.dir", System.getProperty("input.dir"));
     }
@@ -91,7 +91,7 @@ public class ResetMldpDatabase {
     p.setProperty("run.config.umls", System.getProperty("run.config.umls"));
     p.setProperty("type", System.getProperty("conditionAbbr"));
     p.setProperty("input.file",
-        "../../config/mldp/src/main/resources/data/conditionAbbr.txt");
+        "../config/mldp/src/main/resources/data/conditionAbbr.txt");
     request.setProperties(p);
     request.setDebug(false);
     invoker = new DefaultInvoker();
@@ -109,7 +109,7 @@ public class ResetMldpDatabase {
     p.setProperty("run.config.umls", System.getProperty("run.config.umls"));
     p.setProperty("type", System.getProperty("procedureAbbr"));
     p.setProperty("input.file",
-        "../../config/mldp/src/main/resources/data/procedureAbbr.txt");
+        "../config/mldp/src/main/resources/data/procedureAbbr.txt");
     request.setProperties(p);
     request.setDebug(false);
     invoker = new DefaultInvoker();
