@@ -1,0 +1,268 @@
+Abbreviation	Expansion
+AAA	abdominal aortic aneurysm
+AAD	acute aortic dissection
+AAO	acute aortic occlusion
+ABI	ankle-brachial index
+AC	Acromioclavicular
+ACAS	Asymptomatic Carotid Artery Stenosis Study
+ACD	Anterior Cervical Disc
+ACL	Anterior Cruciate Ligament
+AF	atrial fibrillation
+AICD	Automated Implantable Cardiac Defibrillator
+AKA	above-knee amputation
+ALI	acute limb ischemia
+AMI	acute myocardial infarction
+AOID	aortoiliac occlusive disease
+AP	Antero-posterior
+APG	air plethysmography
+APR	Abdominal Perineal Resection
+ARDS	acute respiratory distress syndrome
+ARF	acute renal failure
+AS	atherosclerosis/aortic stenosis
+ASCVD	arteriosclerotic vascular disease
+ASIS	anterior superior iliac spine
+ASVD	arteriosclerotic vascular disease
+AV	Arteriovenous OR Arterial-Venous
+AVF	arteriovenous fistula
+AVG	arteriovenous graft
+AVM	arteriovenous malformation
+AVR	Aortic Valve Replacement
+Ax-fem	Axillo-Femoral bypass
+BAI	blunt aortic injury
+BASIL	Bypass vs. Angioplasty in Severe Ischemia of the Leg
+Bi	bilateral
+Bilat	bilateral
+BILAT	bilateral
+BIV	Bi-Ventricular
+BKA	below-knee amputation
+BMS	bare-metal stents
+BP	blood pressure
+BPG	Bypass Graft
+BSO	Bilateral Salpingo-oopherectomy
+BSSO	Bilateral Saggital Split Osteotomy
+CAAA	complex abdominal aortic aneurysm repair
+CABG	Coronary artery bypass graft
+CAS	carotid artery stenting
+CAT	computerized axial tomography
+CBI	Catheter Based Intervention
+CCA	common carotid artery
+CEA	Carotid endarterectomy
+CFA	Common femoral artery
+CFI	color flow imaging
+CHF	congestive heart failure
+CIA	common iliac artery
+CKD	chronic kidney disease 
+CLI	critical limb ischemia
+CMI	chronic mesenteric ischemia
+COMPLX	complex
+COPD	chronic obstructive pulmonary disease
+CPAP	continuous positive airway pressure
+CREST	Carotid Revascularization Endarterectomy vs. Stenting Trial
+CT	Computerized tomography
+CTA	computed tomography angiography
+CTD	connective-tissue disease
+CTO	chronic total occlusion
+CV	cardiovascular
+CVA	cerebrovascular accident
+CVC	central venous catheter
+CVI	Cerebrovascular incident
+CVS	cardiovascular system
+D&C	Dilation and Curettage
+DDx	differential diagnosis
+DES	drug-eluting stents
+DESTR MALIG	destruction malignant lesion
+DESTR	Destriction
+DL	Direct Laryngoscopy
+Dm	Diagnostic mammography
+DPA	dorsalis pedis artery
+DTA	descending thoracic aorta
+DVIU	Direct Visual Internal Urethrotomy
+DVT	deep vein thrombosis
+ECA	external carotid artery
+ecg	electrocardiogram
+ECG	electrocardiogram
+Echo	echocardiogram
+EC-IC	extracranial to intracranial bypass
+EEG	Electroencephalogram
+Egd	Esophagogastroduodenoscopy
+EGD	Esophagogastroduodenoscopy
+ekg	electrocardiogram
+EKG	electrocardiogram
+ERCP	Endoscopic Retrograde Cholangiopancreatogram
+ESRD	end stage renal disease
+ESWL	Extra-corporeal Shock Wave Lithotripsy
+ET	endovascular therapy
+EUA	Exam Under Anesthesia
+EVAR	endovascular aneurysm repair
+EVH	Endoscopic Vein Harvest
+EVLT	endovenous laser treatment
+EXT	internal
+Fem-fem	Femoral to Femoral Bypass
+Fem-pop	Femoropopliteal Bypass
+FEVAR	fenestrated endovascular aortic aneurysm repair
+FMD	fibromuscular dysplasia
+FTSG	Full Thickness Skin Graft
+FV	femoral vein
+GAVF	graft arteriovenous fistula
+GCA	giant cell arteritis
+GGA	Genioglossus Advancement
+GSV	greater saphenous vein 
+HBO	hyperbaric oxygen
+HBOT	hyperbaric oxygen therapy
+HCU	homocystinuria
+HD	hemodialysis
+HDL	high-density lipoprotein
+HHS	hypothenar hammer syndrome
+HIT	heparin-induced thrombocytopenia
+HITT	heparin-induced thrombocytopenia with thrombosis
+Hiv	Human immunodeficiency virus
+HNP	Herniated Nucleus Pulposis
+HTN	hypertension
+I&D	Incision and Drainage
+I/I	image intensifier
+IAA	Iliac artery aneurysm
+IAAA	inflammatory abdominal aortic aneurysm
+ICA	internal carotid artery
+IDDM	insulin-dependent diabetes mellitus
+IIA	internal iliac artery
+IM	Intra-Medullary
+IMA	inferior mesenteric artery
+IMS	Intra-Metatarsal Space
+IMV	inferior mesenteric vein
+INT	internal
+IOC	Intraoperative Cholangiogram
+IOL	Intra-Ocular Lens
+IPG	impedance plethysmography
+IPJ	Intra-Phalangeal Joint
+IR	interventional radiology
+ITR	Inferior Turbinate Reduction
+IVC	Inferior vena cava
+IVCF	inferior vena cava filter
+IVP	intravenous pyelogram
+IVUS	intravascular ultrasound
+LAO	left anterior oblique
+Lap Appy	Laparoscopic Appendectomy
+Lap Chole	Laparoscopic Cholecystectomy
+LAVH	Laparoscopic Assisted Vaginal Hysterectomy
+LDL	low-density lipoprotein
+LDS	Loeys–Dietz syndrome
+LE	lower extremity
+LER	lower extremity revascularization
+LESNS	lesions
+LLE	left lower extremity
+LMWH	low-molecular-weight heparin
+LP	Lumbar Peritoneal OR Lumbar Puncture
+LSV	Lesser saphenous vein
+Mammo	Mammogram
+MECC	Minimal Extracorporeal Circulation
+MFS	Marfan syndrome
+MI	myocardial infarction
+ML	Microlaryngoscopy
+MPJ	Metatarsal Phalangeal Joint
+MR	mitral regurgitation
+MRA	magnetic resonance angiography
+MRCP	Magnetic Resonance Cholangiopancreatogram
+Mri	Magnetic resonance imaging
+MRI	Magnetic resonance imaging
+MVR	Mitral Valve Replacement
+MVV	Mitral Valve Valvuloplasty
+NASCET	North American Symptomatic Carotid Endarterectomy Trial
+NAVF	native arteriovenous fistula
+NCS	nutcracker syndrome
+NIDDM	noninsulin-dependent diabetes mellitus
+NIVL	Non-invasive vascular lab
+NOMI	non-occlusive mesenteric ischemia
+NPWT	negative-pressure wound therapy
+NSTEMI	non-ST elevation myocardial infarction
+OATS	Osteochondral Autograft Transfer System
+PA	postero-anterior
+PAA	popliteal artery aneurysm
+PAD	peripheral arterial disease
+PAES	popliteal artery entrapment syndrome
+PAOD	peripheral artery occlusive disease
+PAU	penetrating aortic ulcer
+PCNL	Percutaneous Nephrolithotomy
+PD	Peritoneal Dialysis
+PE	pulmonary embolism
+PEG	Percutaneous Endoscopic Gastrotomy
+PFA	profunda femoral artery
+PFT	pulmonary function test
+PICC	Peripherally inserted central catheter
+PLIF	Posterior Lumber Interbody Fusion
+PN	panel
+PPH	Procedure for Prolapsed Hemorrhoids
+Pr	 
+PR	 
+PRG	phleborheography
+PSA	persistent sciatic artery
+PTA	Percutaneous transluminal angioplasty
+PTFE	polytetrafluoroethylene
+PVA	permanent vascular access
+PVD	peripheral vascular disease
+PVR	pulmonary vascular resistance
+PXE	pseudoxanthoma elasticum
+RAA	renal artery aneurysm
+RAAA	ruptured abdominal aortic aneurysms
+RAO	right anterior oblique
+RAS	renal artery stenosis
+REMVL	removal
+REVAR	ruptured endovascular abdominal aortic aneurysm repair
+RFA	Radio Frequency Ablation
+RIND	reversible ischemic neurologic deficit
+RLE	right lower extremity
+RP	Raynaud's phenomenon
+RPG	Retrograde Pyelogram
+RRT	renal replacement therapy
+SCR	screen
+SEPS	subfascial endoscopic perforator surgery
+SF	Sapheno Femoral OR Superficial Femoral
+SFA	superficial femoral artery
+SIRS	systemic inflammatory response syndrome
+SMA	superior mesenteric artery 
+SMV	superior mesenteric vein
+SPECT	single-photon emission computed tomography
+STSG	Split Thickness Skin Graft
+SVAD	subcutaneous vascular access device
+SVC	superior vena cava
+SVG	saphenous vein graft
+SVR	systemic vascular resistance
+TAA	thoracic aortic aneurysm
+TAAA	thoracoabdominal aortic aneurysm
+TAVR	transcatheter aortic valve replacement
+TEE	Transesophageal echocardiogram
+TEVAR	thoracic endovascular aortic repair
+TI	Transurethral Incision
+TIA	transient ischemic attack
+TLIF	Transforamenal Lumbar Interbody Fusion
+TMA	transmetatarsal amputation
+TMB	transient monocular blindness
+TMJ	Temporal Mandibular Joint
+TMR	Trans-myocardial Revascularization
+TOS	thoracic outlet syndrome
+TPEG	transluminally placed endovascular grafts
+TRUS	Transrectal Ultrasound
+TUI	Transurethral Incision
+TURBT	Transurethral Resection of Bladder Tumor
+TURP	Transurethral Resection of Prostate
+TVC	True Vocal Cord
+TVR	Tricuspid Valve Replacement
+TVV	Tricuspid Valve Valvuloplasty
+UE	upper extremity
+UEDVT	upper extremity deep venous thrombosis
+UNI	unilateral
+UNILAT	unilateral
+UP3	Uvulopalatopharyngoplasty
+UPJ	Ureteral Pelvic Junction
+Upper Gi	upper gastrointestinal series
+UPPP	Uvulopalatopharyngoplasty
+Us	Ultrasound
+US	Ultrasound
+VA	Vascular access
+VATS	Video Assisted Thoracoscopy
+VBI	Vertebrobasilar insufficiency
+vEDS	Vascular Ehlers–Danlos syndrome
+VP	Vertriculo-Peritoneal
+VTE	Venous thromboembolism
+W	with
+wwo	with and without
+XR	X-ray

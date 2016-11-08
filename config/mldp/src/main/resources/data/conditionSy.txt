@@ -1,0 +1,1470 @@
+Chronic sore throat	Chronic pharyngitis
+Persistent pneumothorax	Chronic pneumothorax
+Partial arterial retinal occlusion	Partial retinal artery occlusion
+Partial occlusion of retinal artery	Partial retinal artery occlusion
+Hordeolum externum	External hordeolum
+Stye	External hordeolum
+Boil of eyelid	External hordeolum
+Sty	External hordeolum
+Furuncle of eyelid	External hordeolum
+Hordeolum, external	External hordeolum
+Closed fracture clavicle, lateral end	Closed fracture of acromial end of clavicle
+Intracranial swelling	Cerebral edema
+Superficial phlebitis	Superficial thrombophlebitis
+Congenital deformity of hip	Congenital deformity of hip joint
+AOM - Acute otitis media	Acute otitis media
+Closed fracture of the radial shaft	Closed fracture of shaft of radius
+Open fracture of astragalus	Open fracture of talus
+Partial thickness burn of thumb	Second degree burn of thumb
+Lower urinary tract infection	Lower urinary tract infectious disease
+UTI - Lower urinary tract infection	Lower urinary tract infectious disease
+Acute low salt syndrome	Acute hyponatremia
+Schroeder's syndrome	Acute hyponatremia
+Phencyclidine-induced mood disorder	PCP mood disorder
+Phencyclidine (PCP) mood disorder	PCP mood disorder
+Phencyclidine mood disorder	PCP mood disorder
+PCP induced mood disorder	PCP mood disorder
+Acute iridocyclitis	Acute anterior uveitis
+AAU - acute anterior uveitis	Acute anterior uveitis
+Habitual dislocation of joint	Recurrent dislocation of joint
+Capillary pneumonia	Acute bronchiolitis
+Acute capillary bronchiolitis	Acute bronchiolitis
+Chronic pericementitis	Chronic periodontitis
+Chronic periodontal disease	Chronic periodontitis
+Obstetrical laceration, second degree	Second degree perineal laceration
+Laceration of inner AND/OR muscular layers of perineal structures	Second degree perineal laceration
+Burn to trunk - blister	Second degree burn of trunk
+Partial thickness burn of trunk	Second degree burn of trunk
+Blister of trunk, second degree burn	Second degree burn of trunk
+Open fracture shaft of femur	Open fracture of shaft of femur
+Periodic ophthalmia	Recurrent iridocyclitis
+Open fracture of articular process of humerus	Open fracture of condyle of humerus
+Phencyclidine abuse	PCP abuse
+Phencyclidine (PCP) abuse	PCP abuse
+CG - Chronic gastritis	Chronic gastritis
+Hypoplastic breast	Congenital hypoplasia of breast
+Hypoplasia of breast	Congenital hypoplasia of breast
+Acute abdominal pain syndrome	Acute abdomen
+Surgical abdomen	Acute abdomen
+Palatal nystagmus	Palatal myoclonus
+Full thickness burn of hand	Third degree burn of hand
+Congenital narrowed trachea	Congenital stenosis of trachea
+Congenital tracheal stenosis	Congenital stenosis of trachea
+Obstetrical laceration, third degree	Third degree perineal laceration
+Laceration of tissues between vaginal AND/OR perineal muscular layers and rectal mucosa	Third degree perineal laceration
+Open traumatic dislocation elbow joint	Open dislocation of elbow
+Congenital laryngeal stenosis	Congenital stenosis of larynx
+Ascending aortic hypoplasia	Congenital hypoplasia of ascending aorta
+Closed fracture multiple ribs	Closed fracture of multiple ribs
+Werlhof's disease	Chronic idiopathic thrombocytopenic purpura
+Purpura hemorrhagica	Chronic idiopathic thrombocytopenic purpura
+Chronic thrombocytopenic purpura	Chronic idiopathic thrombocytopenic purpura
+Autoimmune thrombocytopenic purpura	Chronic idiopathic thrombocytopenic purpura
+Congenital urethral stenosis	Congenital stricture of urethra
+Congenital urethral stricture	Congenital stricture of urethra
+Conjunctival concretions	Conjunctival concretion
+Open dislocation of shoulder	Open dislocation of glenohumeral joint
+Open dislocation of humerus	Open dislocation of glenohumeral joint
+Open traumatic dislocation of shoulder	Open dislocation of glenohumeral joint
+Tracheal diverticulum	Tracheal diverticulosis
+Congenital stricture of small intestine	Congenital stenosis of small intestine
+Open fracture larynx	Open fracture of larynx
+ARF - Acute renal failure	Acute renal failure syndrome
+Acute renal failure	Acute renal failure syndrome
+Ethanol abuse	Alcohol abuse
+AA - Alcohol abuse	Alcohol abuse
+Hemorrhage of esophagus	Esophageal bleeding
+Esophageal hemorrhage	Esophageal bleeding
+Acute inflammation of nasal sinus	Acute sinusitis
+Acute inflammation of sinus	Acute sinusitis
+Acute infection of sinus	Acute sinusitis
+Cerebellar hypoplasia	Congenital cerebellar hypoplasia
+Congenital hypoplasia of cerebellum	Congenital cerebellar hypoplasia
+Congenital small cerebellum	Congenital cerebellar hypoplasia
+Hypoplasia of the cerebellum	Congenital cerebellar hypoplasia
+Primary hydronephrosis	Congenital hydronephrosis
+Congenital stenosis of duodenum	Congenital duodenal stenosis
+CDH - Congenital diaphragmatic hernia	Congenital diaphragmatic hernia
+Infective tonsillitis	Acute tonsillitis
+Open fracture of arm	Open fracture of upper limb
+Congenital aortic stenosis	Congenital stenosis of aortic valve
+Corneal vascularization	Corneal neovascularization
+Traumatic open dislocation of interphalangeal joint of hand	Open dislocation of interphalangeal joint of hand
+Acute exudative glomerulonephritis	Acute glomerulonephritis
+AGN - Acute glomerulonephritis	Acute glomerulonephritis
+Chronic skin ulcer	Chronic ulcer of skin
+Cerebral arterial occlusion	Cerebral artery occlusion
+Occlusion of cerebral artery	Cerebral artery occlusion
+CGN - Chronic glomerulonephritis	Chronic glomerulonephritis
+Acute pericementitis	Acute periodontitis
+Aggressive periodontitis	Acute periodontitis
+Open fracture of finger	Open fracture of phalanx of finger
+Umbilical adenoma	Umbilical polyp
+Partial thickness burn of scalp	Second degree burn of scalp
+Open fracture shaft of tibia	Open fracture of shaft of tibia
+Angina pectoris with documented spasm	Coronary artery spasm
+Coronary spasm	Coronary artery spasm
+Open fracture of humerus, shaft	Open fracture of shaft of humerus
+External hemorrhoid	External hemorrhoids
+Closed fracture of finger	Closed fracture of phalanx of finger
+Renal tubular acidosis, type 2	Proximal renal tubular acidosis
+Bicarbonate reabsorption defect	Proximal renal tubular acidosis
+Renal tubular acidosis, rate type	Proximal renal tubular acidosis
+Type II renal tubular acidosis	Proximal renal tubular acidosis
+RTA Type II - Type II renal tubular acidosis	Proximal renal tubular acidosis
+Effects of radiation	Radiation injury
+Injury due to exposure to ionizing radiation	Radiation injury
+Injury caused by exposure to ionizing radiation	Radiation injury
+Closed fracture of thigh	Closed fracture of femur
+Closed fracture of upper leg	Closed fracture of femur
+Congenital fissure of the sternum	Congenital fissure of sternum
+Medication abuse	Drug abuse
+Closed fracture shaft of femur	Closed fracture of shaft of femur
+Chronic ulcer of lower limb	Chronic ulcer of lower extremity
+Chronic ulcer of lower leg	Chronic ulcer of lower extremity
+Burn to arm - full thickness	Third degree burn of upper limb
+Lacrimal cyst	Lacrimal gland cyst
+Cyst of lacrimal gland	Lacrimal gland cyst
+Irreversible ischemic colitis	Chronic ischemic colitis
+Congenital deformity of ankle	Congenital deformity of ankle joint
+Open fracture multiple ribs	Open fracture of multiple ribs
+Meningitis due to enterovirus	Enterovirus meningitis
+EM - Enteroviral meningitis	Enterovirus meningitis
+Closed fracture fibula, head	Closed fracture of head of fibula
+Partial thickness burn of toe	Second degree burn of toe
+Open fracture of thigh	Open fracture of femur
+Open fracture of upper leg	Open fracture of femur
+Secondary lymphedema	Chronic acquired lymphedema
+Acute T.I.N.	Acute interstitial nephritis
+Acute tubulointerstitial disease	Acute interstitial nephritis
+AIN - Acute interstitial nephritis	Acute interstitial nephritis
+ATIN - Acute tubulo-interstitial nephritis	Acute interstitial nephritis
+Acute tubulo-interstitial nephritis	Acute interstitial nephritis
+Ectopic parathormone production	Ectopic hyperparathyroidism
+Congenital complete cataract	Congenital total cataract
+Full thickness burn of abdominal wall	Third degree burn of abdominal wall
+Closed fracture of shoulder blade	Closed fracture of scapula
+Partial seizures	Partial seizure
+Focal seizure	Partial seizure
+Local seizure	Partial seizure
+Local convulsion	Partial seizure
+Coronary embolus	Coronary artery embolism
+Coronary embolism	Coronary artery embolism
+Nontraumatic tear of anus	Anal fissure
+Fissure in ano	Anal fissure
+Full thickness burn of foot	Third degree burn of foot
+Spasm of accommodation	Ciliary muscle spasm
+Accommodative spasm	Ciliary muscle spasm
+Full thickness burn of knee	Third degree burn of knee
+Cocaine-induced psychotic disorder with delusions	Cocaine delusional disorder
+Recurrent dislocation of the shoulder joint	Recurrent dislocation of shoulder region
+Recurrent dislocation of shoulder	Recurrent dislocation of shoulder region
+Sudoriferous cyst	Sweat gland cyst
+Ureteral calculus	Ureteric stone
+Ureteral stone	Ureteric stone
+Ureteric calculus	Ureteric stone
+Ureterolithiasis	Ureteric stone
+Calculus of ureter	Ureteric stone
+Vaginal ulceration	Vaginal ulcer
+Chronic abscess of the parametrium	Chronic abscess of parametrium
+Acute gingival inflammation	Acute gingivitis
+Myeloma cast nephropathy	Myeloma kidney
+Renal hypoplasia	Congenital hypoplasia of kidney
+Polycythemia neonatorum	Neonatal polycythemia
+Plethora of newborn	Neonatal polycythemia
+Partial thickness burn of elbow	Second degree burn of elbow
+Closed fracture acetabulum	Closed fracture of acetabulum
+Congenital forehead deformity	Congenital deformity of forehead
+Herpes genitalis	Genital herpes simplex
+High myopia	Severe myopia
+Superficial gum ulcer	Superficial gingival ulcer
+Gingival erosion	Superficial gingival ulcer
+Erosion of gum	Superficial gingival ulcer
+Ophthalmia neonatorum	Neonatal conjunctivitis
+Partial thickness burn of chest wall	Second degree burn of chest wall
+Micropenis	Congenital hypoplasia of penis
+Hypoplasia of penis	Congenital hypoplasia of penis
+Open dislocation of astragalus	Open dislocation of talus
+Extensive superficial corneal vascularization	Corneal pannus
+Corrosive esophagitis	Chemical esophagitis
+Closed fracture pelvis, ischium	Closed fracture of ischium
+Full thickness burn of ear	Third degree burn of ear
+Acute PN - pyelonephritis	Acute pyelonephritis
+APN - Acute pyelonephritis	Acute pyelonephritis
+Acute kidney infection	Acute pyelonephritis
+Full thickness burn of breast	Third degree burn of breast
+Closed fracture metatarsal	Closed fracture of metatarsal bone
+Closed fracture of arm	Closed fracture of upper limb
+Hypothyroidism due to TRH deficiency	Hypothalamic hypothyroidism
+Ectopic hyperinsulinemia	Ectopic hyperinsulinism
+Tumor-induced hyperinsulinemia	Ectopic hyperinsulinism
+Hyperinsulinemia due to ectopic tumor source	Ectopic hyperinsulinism
+Cadmiosis	Cadmium pneumonitis
+LAFB - Left anterior fascicular block	Left anterior fascicular block
+Left anterior hemiblock	Left anterior fascicular block
+Head - open wound	Open wound of head
+Pseudogranulomatous thyroiditis	Subacute thyroiditis
+CRAO - Central retinal artery occlusion	Central retinal artery occlusion
+CRA - Central retinal artery occlusion	Central retinal artery occlusion
+Closed fracture of pelvic rim	Closed fracture of innominate bone
+Thyroglossal cyst	Thyroglossal duct cyst
+Congenital rectal stricture	Congenital stricture of rectum
+Congenital rectal stenosis	Congenital stricture of rectum
+Tympanic membrane marginal perforation	Marginal perforation of tympanic membrane
+Infantile diarrhea	Toddler diarrhea
+Retinal break	Retinal defect
+Chronic rhinosinusitis	Chronic sinusitis
+Chronic infection of sinus	Chronic sinusitis
+Full thickness burn of neck	Third degree burn of neck
+Acute edema of lung	Acute pulmonary edema
+Pulmonary edema - acute	Acute pulmonary edema
+Cerebral cysts	Cerebral cyst
+Moderate bipolar I disorder, most recent episode mixed	Moderate mixed bipolar I disorder
+Closed fracture of ulna, styloid process	Closed fracture of styloid process of ulna
+Mild pre-eclamptic toxemia	Mild pre-eclampsia
+PET - Mild pre-eclamptic toxemia	Mild pre-eclampsia
+Mild proteinuric hypertension of pregnancy	Mild pre-eclampsia
+Open fracture finger distal phalanx	Open fracture of distal phalanx of finger
+Partial thickness burn of ear	Second degree burn of ear
+Enteric paratyphosis	Salmonella gastroenteritis
+Dacryocele	Lacrimal mucocele
+Dacryocystocele	Lacrimal mucocele
+Lacrimal sac mucocele	Lacrimal mucocele
+Lacrimal mucocoele	Lacrimal mucocele
+Open fracture of the ulnar shaft	Open fracture of shaft of ulna
+Ectopic dentition	Ectopic tooth
+Closed fracture of upper arm	Closed fracture of humerus
+Mild bipolar I disorder, most recent episode mixed	Mild mixed bipolar I disorder
+Diabetes mellitus type II	Type 2 diabetes mellitus
+Diabetes mellitus type 2	Type 2 diabetes mellitus
+Type II diabetes mellitus	Type 2 diabetes mellitus
+Umbilical artery hypoplasia	Congenital hypoplasia of umbilical artery
+Full thickness burn of back of hand	Third degree burn of back of hand
+Synorchism	Congenital fusion of testis
+Fusion of testes	Congenital fusion of testis
+Localized gingival enlargement	Gingival polyp
+Epulis	Gingival polyp
+Open fracture rib	Open fracture of rib
+Open fracture of pelvic rim	Open fracture of innominate bone
+Diabetes mellitus type I	Type 1 diabetes mellitus
+Diabetes mellitus type 1	Type 1 diabetes mellitus
+Type I diabetes mellitus	Type 1 diabetes mellitus
+Cutaneous ulcer	Skin ulcer
+Severe pre-eclamptic toxemia	Severe pre-eclampsia
+PET - Severe pre-eclamptic toxemia	Severe pre-eclampsia
+Severe proteinuric hypertension of pregnancy	Severe pre-eclampsia
+Primary atypical pneumonia due to Mycoplasma pneumoniae	Mycoplasma pneumonia
+PAP due to Mycoplasma pneumoniae	Mycoplasma pneumonia
+Endemic pneumonia	Mycoplasma pneumonia
+Infection by PPLO	Mycoplasma pneumonia
+Pneumonia due to PPLO	Mycoplasma pneumonia
+Mycoplasma pneumoniae pneumonia	Mycoplasma pneumonia
+Mycoplasmal pneumonia	Mycoplasma pneumonia
+Pneumonia due to Mycoplasma pneumoniae	Mycoplasma pneumonia
+Eaton's agent pneumonia	Mycoplasma pneumonia
+Pneumonia caused by Mycoplasma pneumoniae	Mycoplasma pneumonia
+Primary atypical pneumonia caused by Mycoplasma pneumoniae	Mycoplasma pneumonia
+PAP caused by Mycoplasma pneumoniae	Mycoplasma pneumonia
+Pneumonia caused by PPLO	Mycoplasma pneumonia
+Hydrocephalus in newborn	Congenital hydrocephalus
+Congenital hydrocephaly	Congenital hydrocephalus
+Primary hydrocephaly	Congenital hydrocephalus
+Primary hydrocephalus	Congenital hydrocephalus
+Congenital hydrencephalus	Congenital hydrocephalus
+Congenital hydrencephaly	Congenital hydrocephalus
+Congenital dilatation of cerebral ventricles	Congenital hydrocephalus
+Open fracture of shoulder blade	Open fracture of scapula
+Congenital renal calculus	Congenital calculus of kidney
+Developmental dislocation of hip	Congenital dislocation of hip
+Developmental displacement of the hip	Congenital dislocation of hip
+CDH - Congenital dislocation of the hip	Congenital dislocation of hip
+Closed fracture clavicle, medial end	Closed fracture of sternal end of clavicle
+Eunuchoidism hypogonadism	Male hypogonadism
+Primary gonadal failure	Male hypogonadism
+Testicular hypogonadism	Male hypogonadism
+Eunuchoidism	Male hypogonadism
+Testicular failure	Male hypogonadism
+Primary male hypogonadism	Male hypogonadism
+Eunuchoidism, hypogonadism	Male hypogonadism
+Parasternal hernia of Morgagni	Congenital hernia of foramen of Morgagni
+Hernia through foramen of Morgagni	Congenital hernia of foramen of Morgagni
+Retrosternal hernia	Congenital hernia of foramen of Morgagni
+Tidal platelet dysgenesis	Cyclic thrombocytopenia
+Familial nephrotic syndrome	Congenital nephrotic syndrome
+Radiodermatitis	Radiation dermatitis
+Hernia cerebri	Cerebral herniation
+Aberrant adrenal gland	Ectopic adrenal gland
+Infantile acne	Neonatal acne
+Acne neonatorum	Neonatal acne
+Full thickness burn of thigh	Third degree burn of thigh
+Ectopic fetal tissue	Ectopic fetus
+Ectopic foetus	Ectopic fetus
+Beer-drinker's cardiomyopathy	Cobalt cardiomyopathy
+Vestibular vertigo	Peripheral vertigo
+Peripheral vestibular vertigo	Peripheral vertigo
+Open fracture of leg	Open fracture of lower limb
+Phencyclidine-induced psychotic disorder with delusions	PCP delusional disorder
+Phencyclidine (PCP) delusional disorder	PCP delusional disorder
+Phencyclidine delusional disorder	PCP delusional disorder
+Ectopic testicle	Ectopic testis
+Recurrent periodic urticaria	Chronic urticaria
+Carotid sinus syndrome	Carotid sinus syncope
+Thermoplegia	Heat stroke
+Heat apoplexy	Heat stroke
+Heat hyperpyrexia	Heat stroke
+Closed fracture of leg	Closed fracture of lower limb
+Polyp of nasal cavity	Nasal polyp
+Polyp in anterior nares	Nasal polyp
+Nasal polyp - anterior	Nasal polyp
+Nasal polyposis	Nasal polyp
+Partial thickness burn of leg	Second degree burn of lower limb
+Blister of leg, second degree burn	Second degree burn of lower limb
+Burn to leg/foot - blister	Second degree burn of lower limb
+Burn to arm - blister	Second degree burn of upper limb
+Acute AND chronic dermatitis	Subacute dermatitis
+Medial epicondylitis of elbow	Medial epicondylitis
+Golfer's elbow	Medial epicondylitis
+Medial epicondylitis of elbow joint	Medial epicondylitis
+Closed fracture of the ulnar shaft	Closed fracture of shaft of ulna
+Sinus of Valsalva aneurysm	Congenital aneurysm of sinus of Valsalva
+Partial thickness burn of hand	Second degree burn of hand
+Open dislocation lumbar spine	Open dislocation of lumbar vertebra
+Open traumatic dislocation ankle joint	Open dislocation of ankle
+Open dislocation of phalanx of hand	Open dislocation of finger
+Basilar artery narrowing	Basilar artery stenosis
+Stenosis of basilar artery	Basilar artery stenosis
+Open fracture of neck of humerus	Open fracture of surgical neck of humerus
+Pulmonary artery hypoplasia	Congenital hypoplasia of pulmonary artery
+Embolic arterial occlusion	Arterial embolism
+Arterial embolus	Arterial embolism
+Jejunal ulceration	Jejunal ulcer
+Partial thickness burn of breast	Second degree burn of breast
+Full thickness burn of leg	Third degree burn of lower limb
+Burn leg/foot - full thickness	Third degree burn of lower limb
+LV hypertrophy	Left ventricular hypertrophy
+LV+ - Left ventricular hypertrophy	Left ventricular hypertrophy
+LVH - Left ventricular hypertrophy	Left ventricular hypertrophy
+Full thickness burn of scalp	Third degree burn of scalp
+Nerve damage	Nerve injury
+Injuries to nerves, nerve plexuses and roots	Nerve injury
+Hepatic portal vein obstruction	Portal vein obstruction
+Occlusion of hepatic portal vein	Portal vein obstruction
+Laceration of superficial layers of perineal structures	First degree perineal laceration
+Obstetrical laceration, first degree	First degree perineal laceration
+Gingival cyst	Gingival odontogenic cyst
+Antimoniosis	Antimony pneumoconiosis
+Gower's muscular dystrophy	Distal muscular dystrophy
+Grumbling appendix	Chronic appendicitis
+Right fascicular block	Right bundle branch block
+RBBB - Right bundle branch block	Right bundle branch block
+Congenital cardiac septal defect	Congenital septal defect of heart
+Blue diaper syndrome	Tryptophan malabsorption syndrome
+Partial thickness burn of back of hand	Second degree burn of back of hand
+Parenchymal intracranial abscess	Cerebral abscess
+Stenosed aortic valve	Aortic valve stenosis
+Aortic stenosis	Aortic valve stenosis
+AS - Aortic stenosis	Aortic valve stenosis
+Closed fracture rib	Closed fracture of rib
+Chronic T.I.N.	Chronic interstitial nephritis
+Chronic tubulointerstitial nephritis	Chronic interstitial nephritis
+CTIN - Chronic tubulo-interstitial nephritis	Chronic interstitial nephritis
+Chronic tubulo-interstitial nephritis	Chronic interstitial nephritis
+CIN - Chronic interstitial nephritis	Chronic interstitial nephritis
+Neovascularization of retina	Retinal neovascularization
+Vasoproliferative retinopathy	Retinal neovascularization
+Retinal vascular proliferation	Retinal neovascularization
+Congenital malformation of knee	Congenital deformity of knee joint
+Congenital knee joint deformity	Congenital deformity of knee joint
+Acute nephritic syndrome	Acute nephritis
+Partial thickness burn of foot	Second degree burn of foot
+Conjunctival deposits	Conjunctival deposit
+CPN - Chronic pyelonephritis	Chronic pyelonephritis
+LBBB - Left bundle branch block	Left bundle branch block
+Charcot's syndrome	Intermittent claudication
+Myasthenia angiosclerotica	Intermittent claudication
+IC - Intermittent claudication	Intermittent claudication
+Cannabis-induced psychotic disorder with delusions	Cannabis delusional disorder
+Subtotal congenital cataract	Congenital subtotal cataract
+Subacute iridocyclitis	Subacute anterior uveitis
+Palatine cyst of papilla	Median palatal cyst
+Cyst of palatine papilla	Median palatal cyst
+Cyst of the incisive papilla	Median palatal cyst
+Full thickness burn of toe(s)	Third degree burn of toe
+Sedative, hypnotic AND/OR anxiolytic abuse	Sedative abuse
+Tranquillizer abuse	Sedative abuse
+Carotid artery narrowing	Carotid artery stenosis
+Sarcoidosis of lymph nodes	Lymph node sarcoidosis
+Vertebral artery embolus	Vertebral artery embolism
+Aberrant spleen	Ectopic spleen
+ARF - Acute respiratory failure	Acute respiratory failure
+Beta thalassemia syndrome	beta Thalassemia
+Closed dislocation of astragalus	Closed dislocation of talus
+Closed fracture sternum	Closed fracture of sternum
+Nondependent abuse of drugs	Substance abuse
+Nondependent abuse of substance	Substance abuse
+Harmful substance use	Substance abuse
+Open fracture of the radial shaft	Open fracture of shaft of radius
+Hematocele of tunica vaginalis testis	Male hematocele
+Hematocele	Male hematocele
+Recurrent major depressive disorder	Recurrent major depression
+Partial thickness burn of knee	Second degree burn of knee
+Moderate bipolar I disorder, most recent episode depressed	Moderate depressed bipolar I disorder
+Difficulty staying asleep	Middle insomnia
+Night waking	Middle insomnia
+Keeps waking up	Middle insomnia
+Broken sleep	Middle insomnia
+Interrupted sleep	Middle insomnia
+Fitful sleep	Middle insomnia
+Difficulty in sleep maintenance	Middle insomnia
+Congenital valvular pulmonic stenosis	Congenital stenosis of pulmonary valve
+PV - Congenital pulmonary valve stenosis	Congenital stenosis of pulmonary valve
+Aneurysm of aorta	Aortic aneurysm
+AA - Aortic aneurysm	Aortic aneurysm
+Angelucci's syndrome	Acute atopic conjunctivitis
+Critical allergic conjunctivitis syndrome	Acute atopic conjunctivitis
+Acute allergic conjunctivitis	Acute atopic conjunctivitis
+Acute ethmoiditis	Acute ethmoidal sinusitis
+Acute on chronic respiratory failure	Acute-on-chronic respiratory failure
+Partial thickness burn of thigh	Second degree burn of thigh
+Closed fracture of ulna, coronoid	Closed fracture of coronoid process of ulna
+Closed fracture radius, head	Closed fracture of head of radius
+Open fracture radial head	Open fracture of head of radius
+Interatrial septal defect	Atrial septal defect
+ASD - Atrial septal defect	Atrial septal defect
+Small intestinal bleeding	Small intestinal hemorrhage
+Partial thickness burn of forearm	Second degree burn of forearm
+Vesical calculus	Urinary bladder stone
+Bladder stone	Urinary bladder stone
+Vesicolithiasis	Urinary bladder stone
+Bladder calculus	Urinary bladder stone
+Calculus of bladder	Urinary bladder stone
+Open fracture clavicle, shaft	Open fracture of shaft of clavicle
+Apocrine cyst	Apocrine gland cyst
+Apocrine cystomatosis	Apocrine gland cyst
+Miliary granuloma of tuberculosis	Chronic granulomatous tuberculosis
+Mild bipolar I disorder, most recent episode manic	Mild manic bipolar I disorder
+Monday fever	Metal fever
+Monday morning fever	Metal fever
+Metal-fume fever	Metal fever
+Metal fume fever	Metal fever
+The smothers	Metal fever
+Open fracture clavicle, lateral end	Open fracture of acromial end of clavicle
+Closed fracture radius, neck	Closed fracture of neck of radius
+Chronic ethmoiditis	Chronic ethmoidal sinusitis
+Closed fracture of neck of humerus	Closed fracture of surgical neck of humerus
+Full thickness burn of chin	Third degree burn of chin
+PNI - Peripheral nerve injury	Peripheral nerve injury
+SBE	Subacute bacterial endocarditis
+Endocarditis lenta	Subacute bacterial endocarditis
+SBE - Subacute bacterial endocarditis	Subacute bacterial endocarditis
+Partial thickness burn of abdominal wall	Second degree burn of abdominal wall
+Open fracture of toe	Open fracture of phalanx of foot
+Open fracture of phalanx of toe	Open fracture of phalanx of foot
+Mild bipolar I disorder, most recent episode depressed	Mild depressed bipolar I disorder
+Adult-onset periodontitis	Adult periodontitis
+Full thickness burn of trunk	Third degree burn of trunk
+Acute pyometra	Uterine abscess
+Ectopia lentis	Congenital ectopic lens
+Congenital subluxation of lens	Congenital ectopic lens
+Hemorrhagic cerebellum	Cerebellar hemorrhage
+Intra-abdominal abscess	Abdominal abscess
+Homozygous thalassemia	Thalassemia major
+Cerebral arterial embolism	Cerebral embolism
+Decapitated migraine	Abdominal migraine
+Closed fracture finger distal phalanx	Closed fracture of distal phalanx of finger
+Open fracture pelvis, ischium	Open fracture of ischium
+Full thickness burn of the thumb	Third degree burn of thumb
+Chronic abscess of the broad ligament	Chronic abscess of broad ligament
+Open fracture metatarsal	Open fracture of metatarsal bone
+Developmental bronchiectasis	Congenital bronchiectasis
+Open fracture acetabulum	Open fracture of acetabulum
+Meningitis due to salmonella	Salmonella meningitis
+Closed fracture shaft of fibula	Closed fracture of shaft of fibula
+Cyst of spleen	Splenic cyst
+Spleen cyst	Splenic cyst
+Alcoholic jealousy	Alcohol paranoia
+Alcohol induced paranoia	Alcohol paranoia
+Closed fracture of astragalus	Closed fracture of talus
+Full thickness burn of forearm	Third degree burn of forearm
+Gas bacillus infection	Gas gangrene
+Malignant edema	Gas gangrene
+Clostridial myositis	Gas gangrene
+Clostridial myonecrosis	Gas gangrene
+Gas gangrene due to Clostridia	Gas gangrene
+Progressive emphysematous necrosis	Gas gangrene
+Carotid embolus	Carotid artery embolism
+Closed fracture of lower epiphysis of humerus	Closed fracture of condyle of humerus
+Closed fracture of articular process of humerus	Closed fracture of condyle of humerus
+Congenital small lung	Congenital hypoplasia of lung
+Rudimentary lung	Congenital hypoplasia of lung
+Congenital pulmonary hypoplasia	Congenital hypoplasia of lung
+Intestinal occlusion	Intestinal obstruction
+Bowel obstruction	Intestinal obstruction
+Obstruction of intestine	Intestinal obstruction
+IO - Intestinal obstruction	Intestinal obstruction
+Congenital bladder diverticulum	Congenital diverticulum of bladder
+Open wound of arm	Open wound of upper limb
+Periapical granuloma	Apical granuloma
+Dental granuloma	Apical granuloma
+Simple chronic serous otitis media	Chronic serous otitis media
+Glue ear - serous	Chronic serous otitis media
+Otitis media with effusion - serous	Chronic serous otitis media
+Chronic secretory otitis media, serous	Chronic serous otitis media
+Chronic non-suppurative otitis media with effusion - serous	Chronic serous otitis media
+Closed fracture of toe	Closed fracture of phalanx of foot
+Closed fracture of phalanx of toe	Closed fracture of phalanx of foot
+Abscess of spleen	Splenic abscess
+Spleen abscess	Splenic abscess
+Congenital hydrocele of tunica vaginalis	Congenital hydrocele
+Neonatal purpura	Neonatal thrombocytopenia
+Purpura of newborn	Neonatal thrombocytopenia
+Moderate bipolar I disorder, most recent episode manic	Moderate manic bipolar I disorder
+Chloracne	Chlorine acne
+Chronic schizophrenic	Chronic schizophrenia
+Pulmonary radiation alveolitis	Radiation pneumonitis
+Edema of conjunctiva	Conjunctival edema
+Acute lymphangitis of gluteal region	Acute lymphangitis of buttock
+Acute osteonecrosis	Acute necrosis of bone
+Retinal grouped capillary aneurysms	Retinal telangiectasia
+Open traumatic dislocation of hip	Open dislocation of hip
+Full thickness burn of ankle	Third degree burn of ankle
+Hepatic cyst	Liver cyst
+Cyst of liver	Liver cyst
+Streak testis	Congenital hypoplasia of testis
+Congenital small testis	Congenital hypoplasia of testis
+Congenital micro-orchidia	Congenital hypoplasia of testis
+Congenital micro-orchidism	Congenital hypoplasia of testis
+Open dislocation of toe	Open dislocation of phalanx of foot
+Scratch of cornea	Corneal abrasion
+CA - Corneal abrasion	Corneal abrasion
+Scratch to cornea	Corneal abrasion
+Chronic gastric torsion	Chronic torsion of stomach
+Open fracture of ulna, coronoid	Open fracture of coronoid process of ulna
+Hernia of Bochdalek	Congenital hernia of foramen of Bochdalek
+Pleuroperitoneal hernia	Congenital hernia of foramen of Bochdalek
+Hernia through foramen of Bochdalek	Congenital hernia of foramen of Bochdalek
+Open fracture sternum	Open fracture of sternum
+Closed fracture clavicle, shaft	Closed fracture of shaft of clavicle
+Full thickness burn of elbow	Third degree burn of elbow
+Manganese poisoning	Manganese pneumonitis
+Manganic pneumonia	Manganese pneumonitis
+Manganic pneumonitis	Manganese pneumonitis
+Manganism	Manganese pneumonitis
+Open dislocation of spine	Open dislocation of vertebra
+Partial thickness burn of chin	Second degree burn of chin
+Partial thickness burn of ankle	Second degree burn of ankle
+Open fracture of upper arm	Open fracture of humerus
+RV hypertrophy	Right ventricular hypertrophy
+RVH - Right ventricular hypertrophy	Right ventricular hypertrophy
+Heat collapse	Heat syncope
+Collapse - heat	Heat syncope
+Closed fracture of humerus, shaft	Closed fracture of shaft of humerus
+Internal hemorrhoid	Internal hemorrhoids
+Vertebral artery narrowing	Vertebral artery stenosis
+SCI - Spinal cord injury	Spinal cord injury
+Scarring of conjunctiva	Conjunctival scar
+Conjunctival scarring	Conjunctival scar
+Chronic renal failure syndrome	Chronic renal failure
+Chronic uremia	Chronic renal failure
+CRF - Chronic renal failure	Chronic renal failure
+Adrenal rest	Ectopic adrenal cortex
+Appendicitis of a pelvic appendix	Pelvic appendicitis
+Endocardial thrombosis	Mural thrombus of heart
+Mural thrombosis	Mural thrombus of heart
+Neonatal herpes simplex	Congenital herpes simplex
+Congenital herpes simplex infection	Congenital herpes simplex
+Acute leukemia, disease	Acute leukemia
+Chronic leukemia, disease	Chronic leukemia
+Congenital basisphenoid hole	Congenital fenestration of basisphenoid bone
+Simple cyst of spleen	Congenital cyst of spleen
+Serous cyst of spleen	Congenital cyst of spleen
+Congenital enlarged adrenal gland	Congenital hypertrophy of adrenal gland
+Congenital enlarged aortic valve	Congenital hypertrophy of aortic valve
+Congenital enlarged lung	Congenital hypertrophy of lung
+Congenital enlarged nasal cavity	Congenital hypertrophy of nasal cavity
+Congenital enlarged ovary	Congenital hypertrophy of ovary
+Congenital hypertrophy of pulmonic valve	Congenital hypertrophy of pulmonary valve
+Congenital enlarged pulmonic valve	Congenital hypertrophy of pulmonary valve
+Congenital enlarged testis	Congenital hypertrophy of testis
+Congenital enlarged ventricular wall	Congenital hypertrophy of cardiac ventricle
+Congenital frontal hole	Congenital fenestration of frontal bone
+Congenital interparietal hole	Congenital fenestration of interparietal bone
+Congenital nasal bone hole	Congenital fenestration of nasal bone
+Congenital parietal hole	Congenital fenestration of parietal bone
+Congenital supraoccipital hole	Congenital fenestration of supraoccipital bone
+Localized adult-onset periodontitis	Localized adult periodontitis
+Congenital small adrenal gland	Congenital hypoplasia of adrenal gland
+Congenital adrenal hypoplasia	Congenital hypoplasia of adrenal gland
+CAH - Congenital adrenal hypoplasia	Congenital hypoplasia of adrenal gland
+Congenital small aortic valve	Congenital hypoplasia of aortic valve
+Congenital small cervical arch	Congenital hypoplasia of arch of cervical vertebra
+Congenital small lumbar arch	Congenital hypoplasia of arch of lumbar vertebra
+Congenital small sacral arch	Congenital hypoplasia of arch of sacral vertebra
+Congenital small thoracic arch	Congenital hypoplasia of arch of thoracic vertebra
+Congenital small basisphenoid bone	Congenital hypoplasia of basisphenoid bone
+Congenital small ventricular chamber	Congenital hypoplasia of cardiac ventricle
+Congenital small cerebrum	Congenital hypoplasia of cerebrum
+Congenital small clavicle	Congenital hypoplasia of clavicle
+Hypoplastic clavicle	Congenital hypoplasia of clavicle
+Poorly developed clavicle	Congenital hypoplasia of clavicle
+Congenital short epididymis	Congenital hypoplasia of epididymis
+Congenital small epididymis	Congenital hypoplasia of epididymis
+Congenital short femur	Congenital hypoplasia of femur
+Congenital short fibula	Congenital hypoplasia of fibula
+Congenital small frontal bone	Congenital hypoplasia of frontal bone
+Congenital small gallbladder	Congenital hypoplasia of gallbladder
+Hypoplasia of gallbladder	Congenital hypoplasia of gallbladder
+Congenital small genital tubercle	Congenital hypoplasia of genital tubercle
+Congenital small heart	Congenital hypoplasia of heart
+Congenital microcardia	Congenital hypoplasia of heart
+Congenital short humerus	Congenital hypoplasia of humerus
+Congenital small hyoid bone	Congenital hypoplasia of hyoid bone
+Congenital small ilium	Congenital hypoplasia of ilium
+Congenital small interparietal bone	Congenital hypoplasia of interparietal bone
+Congenital small ischium	Congenital hypoplasia of ischium
+Congenital small lacrimal bone	Congenital hypoplasia of lacrimal bone
+Congenital small metatarsal bone	Congenital hypoplasia of metatarsal bone
+Congenital small nasal bone	Congenital hypoplasia of nasal bone
+Congenital small nasal cavity	Congenital hypoplasia of nasal cavity
+Congenital hypoplasia of nasal conchae	Congenital hypoplasia of nasal turbinate
+Congenital small nasal conchae	Congenital hypoplasia of nasal turbinate
+Congenital small nasal septum	Congenital hypoplasia of nasal septum
+Congenital small ovary	Congenital hypoplasia of ovary
+Congenital small palatine bone	Congenital hypoplasia of palatine bone
+Congenital small parietal bone	Congenital hypoplasia of parietal bone
+Congenital small pubis	Congenital hypoplasia of pubis
+Congenital hypoplasia of pulmonic valve	Congenital hypoplasia of pulmonary valve
+Congenital small pulmonic valve	Congenital hypoplasia of pulmonary valve
+Congenital short radius	Congenital hypoplasia of radius
+Congenital small renal pelvis	Congenital hypoplasia of renal pelvis
+Congenital short rib	Congenital hypoplasia of rib
+Congenital microsplenia	Congenital hypoplasia of spleen
+Congenital small spleen	Congenital hypoplasia of spleen
+Congenital small supraoccipital bone	Congenital hypoplasia of supraoccipital bone
+Congenital small talus	Congenital hypoplasia of talus
+Congenital small tarsal bone	Congenital hypoplasia of tarsal bone
+Congenital short tibia	Congenital hypoplasia of tibia
+Congenital small tympanic anulus	Congenital hypoplasia of tympanic anulus
+Congenital short ulna	Congenital hypoplasia of ulna
+Congenital ulnar negative variant wrist	Congenital hypoplasia of ulna
+Congenital ulnar negative variant of wrist	Congenital hypoplasia of ulna
+Rudimentary vas deferens	Congenital hypoplasia of vas deferens
+Congenital small zygomatic bone	Congenital hypoplasia of zygomatic bone
+Congenital narrowed stomach	Congenital stenosis of stomach
+Congenital narrowed subclavian artery	Congenital stenosis of subclavian artery
+Interrupted ossification of rib	Discontinuous rib
+Erosion of skin	Superficial ulcer of skin
+Cutaneous edema	Edematous skin
+Cutaneous necrosis	Skin necrosis
+Sloughing of skin	Skin necrosis
+Airway hemorrhage	Respiratory tract hemorrhage
+Venous claudication	Venous intermittent claudication
+Congenital neurological degeneration	Congenital degeneration of nervous system
+Retinal arteriovenous anomaly	Retinal arteriovenous malformation
+Renal stone	Kidney stone
+Nephrolith	Kidney stone
+Renal calculus	Kidney stone
+Calculus of kidney	Kidney stone
+Nephrolithiasis	Kidney stone
+Kidney calculus	Kidney stone
+Renal artery embolus	Renal artery embolism
+Neonatal lupus	Neonatal lupus erythematosus
+Laceration to cornea	Corneal laceration
+Annular keratitis	Marginal keratitis
+Ulceration of conjunctiva	Conjunctival ulcer
+Irradiated bone	Radiation injury of bone
+Acute alveolar abscess	Acute apical abscess
+Acute dentoalveolar abscess	Acute apical abscess
+Acute periapical abscess	Acute apical abscess
+Chronic dentoalveolar abscess	Chronic apical abscess
+Chronic periapical abscess	Chronic apical abscess
+Suppurative apical periodontitis	Chronic apical abscess
+Chronic alveolar abscess	Chronic apical abscess
+Chronic periradicular abscess	Chronic apical abscess
+Parulis	Gingival abscess
+Gum boil	Gingival abscess
+Parulides	Gingival abscess
+Lateral luxation of tooth	Lateral dislocation of tooth
+Lateral displacement of tooth	Lateral dislocation of tooth
+Acute sialadenitis	Acute sialoadenitis
+Hernia through epiploic foramen	Foraminal hernia
+Foraminal hernia into epiploic foramen	Foraminal hernia
+Irradiated bone marrow	Radiation injury of bone marrow
+Partial thickness burn of forehead	Second degree burn of forehead
+Full thickness burn of forehead	Third degree burn of forehead
+Partial thickness burn of cheek	Second degree burn of cheek
+Full thickness burn of cheek	Third degree burn of cheek
+Atypical schizophrenia	Undifferentiated schizophrenia
+Open fracture clavicle, medial end	Open fracture of sternal end of clavicle
+Open fracture radial neck	Open fracture of neck of radius
+Open fracture shaft of fibula	Open fracture of shaft of fibula
+Full thickness burn of chest wall	Third degree burn of chest wall
+Left coronary artery obstruction	Left coronary artery occlusion
+Right coronary artery obstruction	Right coronary artery occlusion
+Acute focal pyelonephritis	Focal pyelonephritis
+Adenocarcinoma of endocervix	Endocervical adenocarcinoma
+Closed traumatic shoulder dislocation	Closed traumatic dislocation of glenohumeral joint
+Open wound of body region	Open wound
+Open wound, finger	Open wound of finger
+Open wound of hip	Open wound of hip region
+Closed traumatic medial dislocation of subtalar joint	Closed medial dislocation of subtalar joint
+Closed traumatic lateral dislocation of subtalar joint	Closed lateral dislocation of subtalar joint
+Contusion of cerebellum	Cerebellar contusion
+Laceration of cerebellum	Cerebellar laceration
+Foetal neoplasm	Fetal neoplasm
+Acute metabolic disease	Acute metabolic disorder
+CP - Cerebral palsy	Cerebral palsy
+Cerebral palsy (CP)	Cerebral palsy
+Congenital cerebral palsy	Cerebral palsy
+Infantile cerebral palsy	Cerebral palsy
+Chronic metabolic disease	Chronic metabolic disorder
+Chronic mental illness	Chronic mental disorder
+Chronic mental disease	Chronic mental disorder
+Chronic type C viral hepatitis	Chronic hepatitis C
+Traumatic radiculopathy	Nerve root injury
+Nerve root traumatic injury	Nerve root injury
+Superficial pressure sore	Superficial pressure ulcer
+Deep pressure sore	Deep pressure ulcer
+Gas gangrene-neck	Gas gangrene of neck
+Gas gangrene-shoulder	Gas gangrene of shoulder region
+Gas gangrene-forearm	Gas gangrene of forearm
+Gas gangrene-hand	Gas gangrene of hand
+Gas gangrene-pelvis	Gas gangrene of pelvic region of trunk
+Gas gangrene-thigh	Gas gangrene of thigh
+Gas gangrene-foot	Gas gangrene of foot
+Meningitis due to Escherichia coli	Escherichia coli meningitis
+Meningitis due to pseudomonas	Pseudomonas meningitis
+Toxoplasmosis of brain	Toxoplasma encephalitis
+Cerebral toxoplasmosis	Toxoplasma encephalitis
+Toxoplasmosis encephalitis	Toxoplasma encephalitis
+Toxoplasma meningoencephalitis	Toxoplasma encephalitis
+TE - Toxoplasma encephalitis	Toxoplasma encephalitis
+Phlebitis of cavernous venous sinus	Phlebitis cavernous sinus
+TLE - Temporal lobe epilepsy	Temporal lobe epilepsy
+Psychomotor seizure	Temporal lobe epilepsy
+Ectopia pupillae	Ectopic pupil
+Corectopia	Ectopic pupil
+Neonatal nasolacrimal duct obstruction	Congenital nasolacrimal duct obstruction
+CNLDO - Congenital nasolacrimal duct obstruction	Congenital nasolacrimal duct obstruction
+CNDO - Congenital nasolacrimal duct obstruction	Congenital nasolacrimal duct obstruction
+Alternating intermittent esotropia	Intermittent alternating esotropia
+Alternating intermittent exotropia	Intermittent alternating exotropia
+Third nerve palsy - partial	Partial oculomotor nerve palsy
+Third nerve palsy with pupil involved	Total oculomotor nerve palsy
+Third nerve palsy - total	Total oculomotor nerve palsy
+Pupil-involving third nerve palsy	Total oculomotor nerve palsy
+Acute non-suppurative otitis media - serous	Acute serous otitis media
+PA - Pulmonary artery aneurysm	Pulmonary artery aneurysm
+Aneurysm of pulmonary artery	Pulmonary artery aneurysm
+Incomplete atrioventricular block	Partial atrioventricular block
+Incomplete heart block	Partial atrioventricular block
+Partial heart block	Partial atrioventricular block
+Incomplete atrioventricular block, second degree	Second degree atrioventricular block
+Second degree heart block	Second degree atrioventricular block
+Basilar artery obstruction	Basilar artery occlusion
+Occlusion of basilar artery	Basilar artery occlusion
+Aneurysm of brachial artery	Brachial artery aneurysm
+Aneurysm of radial artery	Radial artery aneurysm
+Aneurysm of ulnar artery	Ulnar artery aneurysm
+RAT - Recurrent acute tonsillitis	Recurrent acute tonsillitis
+Polyp of frontal sinus	Frontal sinus polyp
+Partial bilateral paralysis of vocal cords	Bilateral partial vocal cord paralysis
+Partial paralysis of both vocal cords	Bilateral partial vocal cord paralysis
+Legionnaire's disease	Legionella pneumonia
+Legionnaires' disease	Legionella pneumonia
+Legionnaires disease	Legionella pneumonia
+Chronic wheezy bronchitis	Chronic asthmatic bronchitis
+ADU - Acute duodenal ulcer	Acute duodenal ulcer
+CSG - Chronic superficial gastritis	Chronic superficial gastritis
+Cicatrix of duodenum	Duodenal scar
+SMAE - Superior mesenteric artery embolus	Superior mesenteric artery embolus
+Gastroenteritis due to radiation	Radiation gastroenteritis
+Subacute bowel obstruction	Subacute intestinal obstruction
+Massive hepatic necrosis	Acute necrosis of liver
+Acute yellow atrophy of liver	Acute necrosis of liver
+Acute yellow atrophy	Acute necrosis of liver
+AP - Acute pancreatitis	Acute pancreatitis
+Polyp of ureter	Ureteric polyp
+Recurrent UTI - urinary tract infection	Recurrent urinary tract infection
+Stricture of tunica vaginalis	Tunica vaginalis stricture
+Localized dermatosclerosis	Localized scleroderma
+Morphea scleroderma	Localized scleroderma
+Circumscribed scleroderma	Localized scleroderma
+Addison's keloid	Localized scleroderma
+Localized morphea	Localized scleroderma
+Elbow - recurrent dislocation	Recurrent dislocation of elbow
+Knee - recurrent dislocation	Recurrent dislocation of knee
+Recurrent dislocation of the knee	Recurrent dislocation of knee
+Discitis of thoracic region	Thoracic discitis
+Complete rupture of rotator cuff	Full thickness rotator cuff tear
+Tennis elbow	Lateral epicondylitis
+Lateral epicondylitis of elbow	Lateral epicondylitis
+Toxic synovitis	Transient synovitis
+Muscle abscess-back	Muscle abscess of back
+Congenital hypoplasia of spinal cord	Spinal cord hypoplasia
+Atelomyelia	Spinal cord hypoplasia
+Congenital arteriovenous anomaly of retina	Congenital arteriovenous malformation of retina
+Congenital stricture of coronary artery	Congenital stenosis of coronary artery
+Congenital stenosis of jejunum	Congenital jejunal stenosis
+Congenital stenosis of ileum	Congenital ileal stenosis
+CVT - Congenital vertical talus	Congenital vertical talus
+Fetal hemorrhage	Fetal blood loss
+Closed fracture of pubis	Closed fracture pubis
+Closed fracture head of femur	Closed fracture of head of femur
+Open dislocation of mandible	Open dislocation of jaw
+Open dislocation of inferior maxilla	Open dislocation of jaw
+Open dislocation of acromioclavicular joint	Open traumatic dislocation acromioclavicular joint
+Open dislocation of midcarpal joint of wrist	Open traumatic dislocation midcarpal joint
+Open dislocation of carpometacarpal joint of wrist	Open traumatic dislocation carpometacarpal joint
+Closed traumatic dislocation of hip joint	Closed traumatic dislocation of hip
+Closed traumatic dislocation of patella	Closed traumatic dislocation of patellofemoral joint
+Open dislocation of foot	Open traumatic dislocation of foot
+Open dislocation of tarsometatarsal joint	Open traumatic dislocation of tarsometatarsal joint
+Closed dislocation of cervical vertebra	Closed dislocation cervical spine
+Closed dislocation of neck	Closed dislocation cervical spine
+Compound dislocation of neck	Open dislocation of cervical spine
+Open dislocation of neck	Open dislocation of cervical spine
+Open dislocation of cervical vertebra	Open dislocation of cervical spine
+Closed dislocation thoracic vertebra	Closed dislocation thoracic spine
+Open dislocation of thoracic vertebra	Open dislocation thoracic spine
+Open wound of ear auricle	Open wound of external ear
+Closed injury, radial nerve	Closed injury of radial nerve
+Open injury, radial nerve	Open injury of radial nerve
+Fat embolus	Fat embolism
+Pressure sore on ear	Pressure ulcer of ear
+Pressure ulcer on ear	Pressure ulcer of ear
+Pressure sore on head	Pressure ulcer of head
+Pressure ulcer on head	Pressure ulcer of head
+Pressure sore on elbow	Pressure ulcer of elbow
+Pressure ulcer on elbow	Pressure ulcer of elbow
+Pressure sore on heel	Pressure ulcer of heel
+Pressure ulcer on heel	Pressure ulcer of heel
+Pressure sore on sacrum	Pressure ulcer of sacral region
+Sacral pressure sore	Pressure ulcer of sacral region
+Pressure ulcer on sacrum	Pressure ulcer of sacral region
+Pressure sore of buttock	Pressure ulcer of buttock
+Anterior aphasia	Anterior dysphasia
+Callosity on foot	Foot callus
+Zoster encephalitis	Herpes zoster encephalitis
+Focal Alzheimer disease	Focal Alzheimer's disease
+CPC - Choroid plexus cyst	Choroid plexus cyst
+Hemorrhage into cornea	Corneal hemorrhage
+Hematocornea	Corneal hemorrhage
+ARN - Acute retinal necrosis	Acute retinal necrosis
+BARN - Bilateral acute retinal necrosis	Acute retinal necrosis
+RAO - Retinal artery occlusion	Retinal artery occlusion
+Cholesteatoma of mastoid	Mastoid cholesteatoma
+Cricopharyngeal spasm	Pharyngeal spasm
+Pharyngeal stricture	Pharyngeal stenosis
+Submucosal hemorrhage of vocal cord	Vocal cord hematoma
+Submucosal hemorrhage of vocal fold	Vocal cord hematoma
+Chronic suppurative lung disease	Chronic bronchial sepsis
+Benign asbestos pleurisy	Asbestos pleurisy
+Acute asbestos pleurisy	Asbestos pleurisy
+Pulmonary edema of mountaineers	High altitude pulmonary edema
+HB - Heart block	Heart block
+AMPE - Acute massive pulmonary embolism	Acute massive pulmonary embolism
+AMP - Acute massive pulmonary embolism	Acute massive pulmonary embolism
+SAMPE - Subacute massive pulmonary embolism	Subacute massive pulmonary embolism
+Peripheral ischemic vascular disease	Peripheral ischemia
+Ischemic arm	Upper limb ischemia
+Ischemic leg	Lower limb ischemia
+ICA - Internal carotid artery stenosis	Internal carotid artery stenosis
+CIA - Common iliac artery stenosis	Common iliac artery stenosis
+EIA - External iliac artery stenosis	External iliac artery stenosis
+SFA - Superficial femoral artery stenosis	Superficial femoral artery stenosis
+Aneurysm of carotid artery	Carotid artery aneurysm
+Aneurysm of ductus arteriosus	Ductus arteriosus aneurysm
+Arterial bleed	Arterial hemorrhage
+Avulsion of artery	Arterial avulsion
+Phlebitis of saphenous vein	Saphenous vein phlebitis
+Embolus of vein	Venous embolism
+AV - Congenital arteriovenous malformation	Congenital arteriovenous malformation
+AVM - Congenital arteriovenous malformation	Congenital arteriovenous malformation
+Arteriovenous malformation	Congenital arteriovenous malformation
+AV - Congenital arteriovenous anomaly	Congenital arteriovenous malformation
+Congenital cerebral arteriovenous malformation	Cerebral arteriovenous malformation
+AVM - Cerebral arteriovenous malformation	Cerebral arteriovenous malformation
+Congenital AV - arteriovenous fistula	Congenital arteriovenous fistula
+Congenital arteriovenous fistula - disorder	Congenital arteriovenous fistula
+Pseudocyst of spleen	Splenic pseudocyst
+Fibrous epulis	Gingival fibroepithelial polyp
+FEP - Gingival fibroepithelial polyp	Gingival fibroepithelial polyp
+Chronic nonspecific sialadenitis	Chronic sialadenitis
+CP - Chronic pancreatitis	Chronic pancreatitis
+Nonspecific duodenitis	Chronic duodenitis
+Radiation induced proctitis	Radiation proctitis
+Reversible ischemic colitis	Transient ischemic colitis
+Pancreatic duct occlusion	Pancreatic duct obstruction
+Rutherford Morrison pouch abscess	Rutherford Morrison's pouch abscess
+RIH - Right inguinal hernia	Right inguinal hernia
+LIH - Left inguinal hernia	Left inguinal hernia
+Hamman Rich syndrome	Acute interstitial pneumonia
+MCGN type III - Mesangiocapillary glomerulonephritis type III	Mesangiocapillary glomerulonephritis type III
+MCGN type IV - Mesangiocapillary glomerulonephritis type IV	Mesangiocapillary glomerulonephritis type IV
+Acute on chronic renal failure	Acute-on-chronic renal failure
+Type I renal tubular acidosis	Distal renal tubular acidosis
+RTA Type I - Type I renal tubular acidosis	Distal renal tubular acidosis
+Late radiation effect of bladder	Chronic radiation cystitis
+Endometrioma	Chocolate cyst of ovary
+Moderate pre-eclampsia	Moderate proteinuric hypertension of pregnancy
+Laceration of vulva	Vulval tear
+Hymenal laceration	Hymen tear
+Lacerated hymen	Hymen tear
+Breast prosthesis extrusion	Breast implant protrusion
+Fiberglass itch	Fiberglass dermatitis
+Hand dermatitis	Hand eczema
+Dermatitis of hand	Hand eczema
+Wear and tear dermatitis	Chronic irritant contact dermatitis
+Oleoma	Oil granuloma
+Oleogranuloma	Oil granuloma
+CDLE - Chronic discoid lupus erythematosus	Chronic discoid lupus erythematosus
+Skin and joint lupus	Limited lupus erythematosus
+Injury of tendon	Tendon injury
+Black limb	Gas gangrene of limb
+Osteonecrosis	Bone necrosis
+Foetal acidosis	Fetal acidosis
+Herpes simplex esophagitis	Esophageal herpes simplex infection
+CDU - Candiru fever	Candiru fever
+Guinea-worm abscess	Guinea-worm ulcer
+Demodecosis	Demodex folliculitis
+Blast injury to lungs	Blast lung
+PVD - Posterior vitreous detachment	Posterior vitreous detachment
+NVD - New vessels optic disc	Optic disc neovascularization
+New vessels in optic disc	Optic disc neovascularization
+Peripheral vasoproliferative retinopathy	Peripheral retinal neovascularization
+Peripheral drusenosis	Peripheral drusen
+Whitehead	Closed comedone
+SAD - Seasonal affective disorder	Seasonal affective disorder
+Gynoid fat distribution	Peripheral obesity
+Fat limbs with thin body	Peripheral obesity
+Pyorrhea alveolaris	Marginal periodontitis
+Riggs' disease	Marginal periodontitis
+Periodontitis simplex	Marginal periodontitis
+Chronic suppurative pericementitis	Marginal periodontitis
+Simple periodontitis	Marginal periodontitis
+Fauchard's disease	Marginal periodontitis
+NTD - Neural tube defect	Neural tube defect
+Arnold Chiari type 1	Chiari malformation type I
+Arnold Chiari type 3	Chiari malformation type III
+PPS - Peripheral pulmonary stenosis	Peripheral pulmonary artery stenosis
+Annuloaortic ectasia	Congenital aneurysm of ascending aorta
+Localized fibrous tumor of pleura	Pleural fibroma
+Solitary fibrous tumor of pleura	Pleural fibroma
+Cutis marmorata telangiectatica congenita	Congenital livedo reticularis
+CMTC - Cutis marmorata telangiectatica congenita	Congenital livedo reticularis
+Cutis marmorata telangiectasia congenita	Congenital livedo reticularis
+Van Lohuizen's syndrome	Congenital livedo reticularis
+Brain tumor	Intracranial tumor
+BT - Brain tumor	Intracranial tumor
+ICT - Intracranial tumor	Intracranial tumor
+Intracranial neoplasm	Intracranial tumor
+Glioma of brain	Intracranial glioma
+Injury of thumb	Thumb injury
+Superficial graze	Superficial abrasion
+Graze	Superficial abrasion
+Friction burn	Superficial friction burn
+Deep bruise	Deep bruising
+Deep contusion	Deep bruising
+Head - burn	Head burn
+Burn of head	Head burn
+First degree burn of finger	Superficial burn of finger
+Foreign body of brain tissue	Intracranial foreign body
+Foreign body in gum	Gingival foreign body
+Foreign body in oropharynx	Oropharyngeal foreign body
+Hematoma of spleen	Splenic hematoma
+Bursting injury of duodenum	Duodenal rupture
+Rupture of duodenum	Duodenal rupture
+Disruption of duodenum	Duodenal rupture
+Colporrhexis	Vaginal vault tear
+Complete tear of ligament	Ligament rupture
+Ligament tear	Ligament rupture
+Closed fracture of tuberosity of tibia	Closed fracture of tibial tuberosity
+Fracture of metatarsal bone	Metatarsal bone fracture
+TIA	Transient cerebral ischemia
+Temporary cerebral vascular dysfunction	Transient cerebral ischemia
+Transient ischemic attack	Transient cerebral ischemia
+Follicular impetigo	Superficial folliculitis
+Fat pad	Localized adiposity
+Fatty tissue hyperplasia	Localized adiposity
+Lipohyperplasia	Localized adiposity
+Localized obesity	Localized adiposity
+First degree heart block	First degree atrioventricular block
+Incomplete atrioventricular block, first degree	First degree atrioventricular block
+Perforation of duodenum	Duodenal perforation
+Hematoma with intact skin	Superficial bruising
+Superficial hematoma	Superficial bruising
+Superficial contusion	Superficial bruising
+Superficial bruise	Superficial bruising
+Congenital unstable hip	Congenital instability of hip joint
+Congenital imperforate nasolacrimal duct	Congenital stenosis of nasolacrimal duct
+Horner syndrome	Horner's syndrome pupil
+Miosis innervational defect	Horner's syndrome pupil
+Horner syndrome pupil	Horner's syndrome pupil
+Intracerebral hemorrhage (ICH)	Cerebral hemorrhage
+Abscess, male genital	Male genital abscess
+Abscess of male genital organs	Male genital abscess
+Genital org.-open wound	Open wound of genital organ
+Congenital tetraplegia	Congenital quadriplegia
+Aspiration of mucus in newborn	Neonatal aspiration of mucus
+Tracheal bronchial hemorrhage	Tracheobronchial hemorrhage
+Foetal stress	Fetal stress
+Viral ophthalmia neonatorum	Neonatal viral conjunctivitis
+Neonatal conjunctivitis due to virus	Neonatal viral conjunctivitis
+Ophthalmia neonatorum - viral	Neonatal viral conjunctivitis
+Berry aneurysm - disorder	Berry aneurysm
+Phrenic nerve palsy	Phrenic nerve lesion
+Phrenic nerve paralysis	Phrenic nerve lesion
+Paralysis of phrenic nerve	Phrenic nerve lesion
+Fetal injury	Fetal trauma
+Foetal trauma	Fetal trauma
+Foetal injury	Fetal trauma
+LT - Left hemiplegia	Left hemiplegia
+Right sided weakness	Right hemiparesis
+Left sided weakness	Left hemiparesis
+TB - Genital tuberculosis	Genital tuberculosis
+Congenital aneurysm	Congenital arterial aneurysm
+Collar bone injury	Clavicle injury
+Injury of pelvis region	Pelvic injury
+Superficial injury of plantar surface of foot	Superficial injury of sole of foot
+BI - Bone injury	Bone injury
+Burn to head - erythema	First degree burn of head
+Burn to head - blister	Second degree burn of head
+Burn to head - full thickness	Third degree burn of head
+Indometacin allergy	Indomethacin allergy
+5-aminosalicylic acid allergy	Mesalazine allergy
+Mesalamine allergy	Mesalazine allergy
+Dantron allergy	Danthron allergy
+Dicyclomine allergy	Dicycloverine allergy
+Thiopental allergy	Thiopentone allergy
+Lignocaine allergy	Lidocaine allergy
+Amethocaine allergy	Tetracaine allergy
+Mustine allergy	Chlormethine allergy
+Mechlorethamine allergy	Chlormethine allergy
+Mitozantrone allergy	Mitoxantrone allergy
+Tioguanine allergy	Thioguanine allergy
+Hydroxyurea allergy	Hydroxycarbamide allergy
+Ciclosporin allergy	Cyclosporin allergy
+Lisuride allergy	Lysuride allergy
+Dothiepin allergy	Dosulepin allergy
+Phenobarbital allergy	Phenobarbitone allergy
+Amobarbital allergy	Amylobarbitone allergy
+Butobarbital allergy	Butobarbitone allergy
+Secobarbital allergy	Quinalbarbitone allergy
+Clomethiazole allergy	Chlormethiazole allergy
+Pipotiazine allergy	Pipothiazine allergy
+Flupentixol allergy	Flupenthixol allergy
+Dexamfetamine allergy	Dexamphetamine allergy
+Benzhexol allergy	Trihexyphenidyl allergy
+Benzatropine allergy	Benztropine allergy
+Chlorpheniramine allergy	Chlorphenamine allergy
+Dimetindene allergy	Dimethindene allergy
+Trimeprazine allergy	Alimemazine allergy
+Sodium cromoglicate allergy	Sodium cromoglycate allergy
+Ribavirin allergy	Tribavirin allergy
+Hexachlorophene allergy	Hexachlorophane allergy
+Dibromopropamidine isethionate allergy	Dibrompropamidine isethionate allergy
+Tiabendazole allergy	Thiabendazole allergy
+Amoxycillin allergy	Amoxicillin allergy
+Cefalexin allergy	Cephalexin allergy
+Cefazolin allergy	Cephazolin allergy
+Cefradine allergy	Cephradine allergy
+Desoximetasone allergy	Desoxymethasone allergy
+Flurandrenolone allergy	Fludroxycortide allergy
+Beclometasone allergy	Beclomethasone allergy
+Etynodiol diacetate allergy	Ethynodiol diacetate allergy
+Diethylstilbestrol allergy	Stilbestrol allergy
+Clomifene allergy	Clomiphene allergy
+Tetracosactide allergy	Tetracosactrin allergy
+Nicoumalone allergy	Acenocoumarol allergy
+Nicotinamide allergy	Niacinamide allergy
+Colestyramine allergy	Cholestyramine allergy
+Bendrofluazide allergy	Bendroflumethiazide allergy
+Frusemide allergy	Furosemide allergy
+Chlortalidone allergy	Chlorthalidone allergy
+Pentaerithrityl tetranitrate allergy	Pentaerythritol tetranitrate allergy
+Oxpentifylline allergy	Pentoxifylline allergy
+Thymoxamine allergy	Moxisylyte allergy
+Limited scleroderma	Limited systemic sclerosis
+Systemic sclerosis, limited	Limited systemic sclerosis
+Lower lobe pneumonia	Basal pneumonia
+Proteus UTI (urinary tract infection)	Proteus urinary tract infection
+VUJ - Vesicoureteric junction calculus	Vesicoureteric junction calculus
+RAS - Renal artery stenosis	Renal artery stenosis
+Vocal cord paresis	Vocal cord palsy
+Vocal cord paralysis	Vocal cord palsy
+VCP - Vocal cord palsy	Vocal cord palsy
+Paralysis of vocal cords	Vocal cord palsy
+Vocal fold palsy	Vocal cord palsy
+Pubertal mastitis	Adolescent mastitis
+Pneumatosis arterialis	Arterial air embolus
+Arterial air embolism	Arterial air embolus
+Arterial gas embolism	Arterial air embolus
+Occlusion of vein	Venous occlusion
+Obstruction of vein	Venous occlusion
+Twelfth cranial nerve palsy	Hypoglossal nerve palsy
+Fracture of elbow	Elbow fracture
+Moderate nonproliferative retinopathy	Moderate nonproliferative diabetic retinopathy
+Severe nonproliferative retinopathy	Severe nonproliferative diabetic retinopathy
+Severe NPDR	Severe nonproliferative diabetic retinopathy
+Chronic cyclitis	Intermediate uveitis
+Peripheral uveitis	Intermediate uveitis
+Peripheral uveoretinitis	Intermediate uveitis
+Chronic posterior cyclitis	Intermediate uveitis
+ALI - Acute lung injury	Acute lung injury
+ASC - Anterior subcapsular cataract	Anterior subcapsular cataract
+PSC - posterior subcapsular cataract	Posterior subcapsular cataract
+Injury of esophagus	Esophageal injury
+Hemorrhage from pharynx	Pharyngeal hemorrhage
+Persistent hyperinsulinemic hypoglycemia of infancy	Congenital hyperinsulinism
+Endocardial cushion defect, complete type	Common atrioventricular canal
+Atrioventricular canal type ventricular septal defect	Common atrioventricular canal
+Macrocheilia	Lip hypertrophy
+Major depression	Major depressive disorder
+Neonatal cerebral infarction	Neonatal stroke
+Arnold Chiari type 2	Chiari malformation type II
+Mild cognitive impairment	Mild cognitive disorder
+Vulvar cellulitis	Vulval cellulitis
+Phlegmonous vulvitis	Vulval cellulitis
+Pressure angioedema-urticaria	Pressure urticaria
+Exomphalos	Umbilical hernia
+Exumbilication	Umbilical hernia
+HZV keratitis	Herpes zoster keratitis
+Vaginocele	Vaginal hernia
+Colpocele	Vaginal hernia
+Chronic iritis	Chronic anterior uveitis
+Partial tear of ligament	Partial rupture of ligament
+Pressure sore	Pressure ulcer
+Contact ulcer	Pressure ulcer
+Congenital hamartosis	Congenital hamartoma
+Hamartomatous disease	Congenital hamartoma
+Hamartomatosis	Congenital hamartoma
+Hamartoma of spleen	Splenic hamartoma
+Childhood atopic eczema	Childhood atopic dermatitis
+Adult atopic eczema	Adult atopic dermatitis
+Acute seborrheic eczema	Acute seborrheic dermatitis
+Chronic seborrheic eczema	Chronic seborrheic dermatitis
+Acute hand dermatitis	Acute hand eczema
+Chronic hand dermatitis	Chronic hand eczema
+Eczema of foot	Foot eczema
+Vulval dermatitis	Vulval eczema
+Acute graft versus host disease	Acute graft-versus-host disease
+Chronic graft versus host disease	Chronic graft-versus-host disease
+Recurrent idiopathic urticaria	Episodic idiopathic urticaria
+Recurrent urticaria	Episodic urticaria
+Juvenile bullous pemphigoid	Childhood bullous pemphigoid
+Recurrent herpetic keratitis	Recurrent herpes simplex infection of eye
+Recurrent herpes labialis	Recurrent herpes simplex labialis
+Recurrent herpes genitalis	Recurrent genital herpes simplex
+P. acnes folliculitis	Propionibacterium acnes folliculitis
+Lip fissure	Median fissure of lip
+Gangrene of penis	Penile gangrene
+Cystic dermoid choristoma of midline	Midline dermoid cyst
+Hollenhorst plaque	Cholesterol retinal embolus
+Laryngospasm	Laryngeal spasm
+Bone sequestration	Bone sequestrum
+VZV conjunctivitis	Herpes zoster conjunctivitis
+Varicella virus conjunctivitis	Herpes zoster conjunctivitis
+Chronic coronary insufficiency	Chronic myocardial ischemia
+Gingival cyst of neonate	Gingival cyst of newborn
+Incisional hernia of anterior abdominal wall	Ventral incisional hernia
+Hordeolum internum	Internal hordeolum
+Infected chalazion	Internal hordeolum
+Infected cyst of meibomian gland	Internal hordeolum
+Infected meibomian cyst	Internal hordeolum
+Infection of meibomian gland	Internal hordeolum
+Meibomian adenitis	Internal hordeolum
+P. acne endophthalmitis	Propionibacterium acnes endophthalmitis
+Recurrent ventral hernia	Recurrent hernia of anterior abdominal wall
+Recurrent incisional hernia of anterior abdominal wall	Recurrent ventral incisional hernia
+Allergy to drug	Drug allergy
+Medication allergy	Drug allergy
+Medicine allergy	Drug allergy
+Polyarthritis	Undifferentiated inflammatory polyarthritis
+Lacrimal passage granuloma	Lacrimal sac granuloma
+Keratitis, chemical	Chemical keratitis
+Closed fracture of bone	Closed fracture
+Papilledema	Optic disc edema
+Edema of optic disc	Optic disc edema
+Herpes simplex type 2 genital infection	Genital herpes simplex type 2
+Drug abuse, episodic	Episodic drug abuse
+Congenital cervical spondylolisthesis	Congenital spondylolisthesis of cervical vertebra
+Chronic organic brain syndrome	Chronic organic mental disorder
+Bilateral lower lobe pneumonia	Bilateral basal pneumonia
+Chronic lower UTI (urinary tract infection)	Chronic lower urinary tract infection
+Iliohypogastric neuritis	Iliohypogastric nerve neuritis
+Congenital hypoplasia of fovea	Congenital hypoplasia of fovea centralis
+Foetal hydronephrosis	Fetal hydronephrosis
+Closed head wound	Closed wound of head
+Foetal microcephaly	Fetal microcephaly
+Upper urinary tract infection of sudden onset AND/OR short duration	Acute upper urinary tract infection
+Acute upper UTI (urinary tract infection)	Acute upper urinary tract infection
+Urinary tract infection of sudden onset AND/OR short duration	Acute urinary tract infection
+Acute UTI (urinary tract infection)	Acute urinary tract infection
+Lower urinary tract infection of sudden onset AND/OR short duration	Acute lower urinary tract infection
+Foetal macrocephaly	Fetal macrocephaly
+Chronic pain, psychogenic	Chronic psychogenic pain
+Chronic inflammation of uveal tract	Chronic uveitis
+Childhood obesity BMI 95-100 percentile	Childhood obesity
+Inflammation of bronchus due to Aspergillus	Aspergillus bronchitis
+Inflammation of bronchus caused by Aspergillus	Aspergillus bronchitis
+Eighth cranial nerve palsy	Vestibulocochlear nerve palsy
+Adenocarcinoma of anorectum	Anorectal adenocarcinoma
+Neoplasm of abdominal wall	Abdominal wall tumor
+Dural arteriovenous fistula of spinal cord	Type I arteriovenous malformation of spinal cord
+Type I spinal dural AV fistula	Type I arteriovenous malformation of spinal cord
+Type I spinal dural arteriovenous fistula	Type I arteriovenous malformation of spinal cord
+Intramedullary glomus arteriovenous malformation of spinal cord	Type II arteriovenous malformation of spinal cord
+Intramedullary and extramedullary arteriovenous malformation of spinal cord	Type III arteriovenous malformation of spinal cord
+Juvenile arteriovenous malformation of spinal cord	Type III arteriovenous malformation of spinal cord
+Perimedullary arteriovenous fistula of spinal cord	Type IV arteriovenous malformation of spinal cord
+Fetal congestive cardiomyopathy	Fetal dilated cardiomyopathy
+Congenital obstruction of coronary sinus	Congenital occlusion of coronary sinus
+Congenital obstruction of iliac vein	Congenital occlusion of iliac vein
+Congenital obstruction of femoral vein	Congenital occlusion of femoral vein
+Abrasion of conjunctiva	Conjunctival abrasion
+Cortical myoclonus	Cerebral cortex myoclonus
+Spinal myoclonus	Spinal cord myoclonus
+Paratesticular malignant tumor	Paratesticular malignant neoplasm
+Methylmethacrylate embolism	Methyl methacrylate embolism
+Neoplasm of endolymphatic sac	Endolymphatic sac tumor
+CFA - Cryptogenic fibrosing alveolitis	Chronic idiopathic pulmonary fibrosis
+Cryptogenic fibrosing alveolitis	Chronic idiopathic pulmonary fibrosis
+Scadding syndrome	Subacute idiopathic pulmonary fibrosis
+Idiopathic fibrosing alveolitis, subacute form	Subacute idiopathic pulmonary fibrosis
+Bilateral spastic cerebral palsy	Bilateral cerebral palsy
+Metamizole sodium allergy	Dipyrone allergy
+Allergy to Dermatophagoides pteronyssinus	Dermatophagoides pteronyssinus allergy
+Closed articular fracture of head of femur	Closed intra-articular fracture of head of femur
+Open fracture of scapular body	Open fracture of body of scapula
+Closed fracture of physis of lesser toe	Closed fracture of epiphyseal plate of lesser toe
+Closed fracture of physis of metatarsal bone	Closed fracture of epiphyseal plate of metatarsal bone
+Closed fracture of physis of thumb	Closed fracture of epiphyseal plate of phalanx of thumb
+Closed fracture of physis of great toe	Closed fracture of epiphyseal plate of phalanx of great toe
+Closed fracture of physis of finger	Closed fracture of epiphyseal plate of phalanx of finger
+Open fracture of lesser toe	Open fracture of phalanx of lesser toe
+Open articular fracture of head of femur	Open intra-articular fracture of head of femur
+Open acetabulum dome fracture	Open fracture of roof of acetabulum
+Closed acetabulum dome fracture	Closed fracture of roof of acetabulum
+Flagellate erythema	Flagellate dermatitis
+Congenital left pulmonary arterial stenosis	Congenital stenosis of left pulmonary artery
+Congenital right pulmonary arterial stenosis	Congenital stenosis of right pulmonary artery
+Localized tooth hypoplasia	Localized hypoplasia of tooth
+Asthma attack	Acute exacerbation of asthma
+Idiopathic pulmonary fibrosis, acute fatal form	Acute idiopathic pulmonary fibrosis
+Chronic erythema nodosum migrans	Chronic migratory panniculitis
+Endophthalmitis caused by Acanthamoeba	Acanthamoeba endophthalmitis
+Congenital rotated penis	Congenital penile torsion
+Cranial nerve 5 palsy	Trigeminal nerve palsy
+Fifth nerve palsy	Trigeminal nerve palsy
+Adult cardiac tumor	Adult heart tumor
+Heart tumor of childhood	Childhood neoplasm of heart
+Heart tumour of childhood	Childhood neoplasm of heart
+Partial atrioventricular canal	Partial defect of atrioventricular canal
+Closed head injury	Closed injury of head
+Valley fever	Acute coccidioidomycosis
+Allergy to promestriene	Promestriene allergy
+Allergy to casein	Casein allergy
+Female perineocele	Female perineal hernia
+Allergy to levofloxacin	Levofloxacin allergy
+Allergy to atorvastatin	Atorvastatin allergy
+Lesion of oropharynx	Oropharyngeal lesion
+Musculocutaneous nerve paralysis	Musculocutaneous nerve palsy
+Persistent mood disorder	Chronic mood disorder
+Acute allergic conjunctivitis of right eye	Acute atopic conjunctivitis of right eye
+Acute allergic conjunctivitis of left eye	Acute atopic conjunctivitis of left eye
+Vitreous detachment of both eyes	Bilateral vitreous detachment
+Khat abuse	Catha edulis abuse
+Miraa abuse	Catha edulis abuse
+Qat abuse	Catha edulis abuse
+Gat abuse	Catha edulis abuse
+Embolism of posterior cerebral artery	Posterior cerebral artery embolism
+Chronic stroke	Chronic cerebrovascular accident
+Closed fracture of left leg	Closed fracture of left lower limb
+Closed fracture of right leg	Closed fracture of right lower limb
+Closed fracture of left arm	Closed fracture of left upper limb
+Closed fracture of right arm	Closed fracture of right upper limb
+Pressure ulcer of right lower extemity	Pressure ulcer of right lower limb
+Closed fracture of right collar bone	Closed fracture of right clavicle
+Open fracture of proximal right upper arm	Open fracture of proximal right humerus
+Open fracture of right kneecap	Open fracture of right patella
+Open right radial fracture	Open fracture of right radius
+Open left tibial fracture	Open fracture of left tibia
+Open left ulnar fracture	Open fracture of left ulna
+Open fracture of distal left upper arm	Open fracture of distal left humerus
+Open fracture of neck of left upper leg bone	Open fracture of neck of left femur
+Open fracture of distal right upper arm	Open fracture of distal right humerus
+Open fracture of neck of right upper leg bone	Open fracture of neck of right femur
+Open fracture of shaft of right upper leg bone	Open fracture of shaft of right femur
+Open fracture of shaft of left upper leg bone	Open fracture of shaft of left femur
+Open fracture of right upper leg bone	Open fracture of right femur
+Open fracture of left upper leg bone	Open fracture of left femur
+Open fracture of lateral condyle of right upper arm	Open fracture of lateral condyle of right humerus
+Open fracture of right upper arm	Open fracture of right humerus
+Open right tibial fracture	Open fracture of right tibia
+Open right ulnar fracture	Open fracture of right ulna
+Open fracture of shaft of left upper arm	Open fracture of shaft of left humerus
+Open fracture of lateral condyle of left upper arm	Open fracture of lateral condyle of left humerus
+Open fracture of left upper arm	Open fracture of left humerus
+Open fracture of toe of right foot	Open fracture of phalanx of right foot
+Open fracture of proximal left upper arm	Open fracture of proximal left humerus
+Open fracture of proximal phalanx of great toe of right foot	Open fracture of proximal phalanx of right great toe
+Open right great toe proximal phalanx fracture	Open fracture of proximal phalanx of right great toe
+Open fracture of left kneecap	Open fracture of left patella
+Open left radial fracture	Open fracture of left radius
+Closed fracture of upper end of right humerus	Closed fracture of proximal right humerus
+Closed fracture of upper end of left humerus	Closed fracture of proximal left humerus
+Closed fracture of medial end of right clavicle	Closed fracture of sternal end of right clavicle
+Closed fracture of medial end of left clavicle	Closed fracture of sternal end of left clavicle
+Closed left collar bone fracture	Closed fracture of left clavicle
+Closed fracture of right astragalus	Closed fracture of right talus
+Closed fracture of left astragalus	Closed fracture of left talus
+Closed fracture of physis of right great toe	Closed fracture of epiphyseal plate of phalanx of right great toe
+Closed fracture of right lesser toe	Closed fracture of phalanx of right lesser toe
+Closed fracture of left lesser toe	Closed fracture of phalanx of left lesser toe
+Closed fracture of right kneecap	Closed fracture of right patella
+Closed fracture of left kneecap	Closed fracture of left patella
+Closed articular fracture of head of left femur	Closed intra-articular fracture of head of left femur
+Closed fracture of right medial femoral condyle	Closed fracture of medial condyle of right femur
+Closed fracture of left medial femoral condyle	Closed fracture of medial condyle of left femur
+Closed fracture of right lateral femoral condyle	Closed fracture of lateral condyle of right femur
+Closed fracture of left lateral femoral condyle	Closed fracture of lateral condyle of left femur
+Closed fracture of right femoral condyle	Closed fracture of condyle of right femur
+Closed fracture of left femoral condyle	Closed fracture of condyle of left femur
+Closed fracture of right radial head	Closed fracture of head of right radius
+Closed fracture of left radial head	Closed fracture of head of left radius
+Closed fracture of right index finger	Closed fracture of phalanx of right index finger
+Closed fracture of left index finger	Closed fracture of phalanx of left index finger
+Closed fracture of right middle finger	Closed fracture of phalanx of right middle finger
+Closed fracture of left middle finger	Closed fracture of phalanx of left middle finger
+Closed fracture of right ring finger	Closed fracture of phalanx of right ring finger
+Closed fracture of left ring finger	Closed fracture of phalanx of left ring finger
+Closed fracture of right little finger	Closed fracture of phalanx of right little finger
+Closed fracture of left little finger	Closed fracture of phalanx of left little finger
+Closed fracture of right scapular body	Closed fracture of body of right scapula
+Closed fracture of right radial neck	Closed fracture of neck of right radius
+Closed fracture of left radial neck	Closed fracture of neck of left radius
+Bilateral senile cataract	Bilateral age-related cataract
+Senile cataract of both eyes	Bilateral age-related cataract
+Open orbital fracture	Open fracture of orbit
+Right pubic bone open fracture	Open fracture of right pubis
+Left pubic bone open fracture	Open fracture of left pubis
+Closed right pubic bone fracture	Closed fracture of right pubis
+Closed right pubic bone fracture	Closed fracture of left pubis
+Open right acetabular fracture	Open fracture of right acetabulum
+Open occipital fracture	Open fracture of occipital bone
+Open temporal bone fracture	Open fracture of temporal bone
+Tendonitis of both achilles tendons	Bilateral achilles tendonitis
+Inflammation of both achilles tendons	Bilateral achilles tendonitis
+Bursitis of both trochanteric bursas	Bilateral trochanteric bursitis
+Inflammation of both trochanteric bursas	Bilateral trochanteric bursitis
+Partial thickness burn of right hand	Second degree burn of right hand
+Partial thickness burn of left hand	Second degree burn of left hand
+Conjunctivitis of both eyes	Bilateral conjunctivitis
+Glaucoma of both eyes	Bilateral glaucoma
+Plantar wart of both feet	Bilateral plantar wart
+Fracture of mastoid	Mastoid fracture
+Talalgia	Heel pain
+Osteodynia	Bone pain
+AP - Abdominal pain	Abdominal pain
+Gonalgia	Knee pain
+Arthralgia of knee	Knee pain
+Knee joint pain	Knee pain
+Prostatalgia	Prostatic pain
+Prostatodynia	Prostatic pain
+Prostate pain	Prostatic pain
+Pain in vagina	Vaginal pain
+Hip joint pain	Hip pain
+Arthralgia of hip	Hip pain
+Painful hand	Hand pain
+Tender breasts	Breast tenderness
+Arthralgia	Joint pain
+Painful joint	Joint pain
+Articular pain	Joint pain
+Myalgia	Muscle pain
+Muscle ache	Muscle pain
+Myodynia	Muscle pain
+Myosalgia	Muscle pain
+Myoneuralgia	Muscle pain
+Aching muscles	Muscle pain
+Painful neck	Neck pain
+Cervicalgia	Neck pain
+Nonspecific pain in the neck region	Neck pain
+Cervical pain	Neck pain
+Neck ache	Neck pain
+Visceral seizure	Abdominal seizure
+Joint tender	Joint tenderness
+RIF - Right iliac fossa pain	Right iliac fossa pain
+Pain in right iliac fossa	Right iliac fossa pain
+Pain in left iliac fossa	Left iliac fossa pain
+LIF - Left iliac fossa pain	Left iliac fossa pain
+Pain of vulva	Vulval pain
+Temporary memory loss	Temporary loss of memory
+Arthralgia of the hand	Hand joint pain
+Arthralgia of sternoclavicular joint	Sternoclavicular joint pain
+Arthralgia of acromioclavicular joint	Acromioclavicular joint pain
+Arthralgia of elbow	Elbow joint pain
+Arthralgia of wrist	Wrist joint pain
+Arthralgia of metacarpophalangeal joint	Metacarpophalangeal joint pain
+Arthralgia of proximal interphalangeal joint of finger	Proximal interphalangeal joint of finger pain
+Arthralgia of distal interphalangeal joint of finger	Distal interphalangeal joint of finger pain
+Arthralgia of sacroiliac joint	Sacroiliac joint pain
+Arthralgia of tibiofibular joint	Tibiofibular joint pain
+Arthralgia of ankle	Ankle joint pain
+Arthralgia of subtalar joint	Subtalar joint pain
+Arthralgia of talonavicular joint	Talonavicular joint pain
+Arthralgia of 1st metatarsophalangeal joint	First metatarsophalangeal joint pain
+Nipple pain	Nipple painful
+Ataxic dysarthria	Cerebellar dysarthria
+AKP - Anterior knee pain	Anterior knee pain
+Pain of jaw	Jaw pain
+Skin tender	Skin tenderness
+Pain of ovary	Ovarian pain
+Arthralgia of foot	Foot joint pain
+Recurrent febrile fit	Recurrent febrile convulsion
+Transient amnesia	Transient memory loss
+Chronic pain in vagina	Chronic vaginal pain
+Pain in both knees	Bilateral knee pain
+Pain in both hip joints	Bilateral hip joint pain
+Pain in both ankle joints	Bilateral ankle joint pain
+Pain in both elbow joints	Bilateral elbow joint pain
+Pain in both heels	Bilateral heel pain
+LOA - Left occipitoanterior position	Left occipitoanterior position
+ROA - Right occipitoanterior position	Right occipitoanterior position
+Foetal head extended	Fetal head extended
+Swollen ankle - edema	Ankle edema
+Retinal hemorrhages	Retinal hemorrhage
+Intraretinal hemorrhage	Retinal hemorrhage
+Spasm of uterus	Uterine spasm
+Heaping of retina	Retinal fold
+Dragging of retina	Retinal fold
+Bout of coughing	Paroxysmal cough
+Fit of coughing	Paroxysmal cough
+Paroxysm of coughing	Paroxysmal cough
+Dot AND blot hemorrhage	Deep retinal hemorrhage
+Retinal blot hemorrhages	Deep retinal hemorrhage
+Deep intra-retinal hemorrhages	Deep retinal hemorrhage
+Succinylcholine apnea	Suxamethonium apnea
+Muscles tire easily	Muscle fatigue
+Muscle tiredness	Muscle fatigue
+Nodule of skin	Skin nodule
+Cutaneous nodule	Skin nodule
+Mucosal edema	Mucous membrane edema
+NO - Nasal obstruction	Nasal obstruction
+Nasal obstruction present	Nasal obstruction
+Nasal airway obstruction	Nasal obstruction
+Colloid bodies in retina	Retinal drusen
+Bulging eardrum	Bulging tympanic membrane
+Observations of vaginal bleeding	Vaginal bleeding
+Bleeding from vagina	Vaginal bleeding
+Observation of nipple bleeding	Nipple bleeding
+Observation of bleeding of skin	Bleeding skin
+Finding of bleeding of skin	Bleeding skin
+Coxa valga	Hip joint valgus deformity
+Knock-knees	Knee joint valgus deformity
+Genu valgus	Knee joint valgus deformity
+Knock-kneed	Knee joint valgus deformity
+Limited mandibular protrusion	Limited jaw protrusion
+Nodule of conjunctiva	Conjunctival nodule
+Male baby	Baby male
+Female baby	Baby female
