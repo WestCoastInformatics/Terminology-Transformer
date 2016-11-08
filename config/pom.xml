@@ -46,6 +46,7 @@
   <modules>
     <module>dev-windows</module>
     <module>ndc-rxnorm</module>
+    <module>mldp</module>
   </modules>
 
 </project>
