@@ -1,0 +1,1097 @@
+lowWord	fullWord
+25_hydroxy	25 hydroxy
+25-oh	25 hydroxy
+25-hydroxy	25 hydroxy
+25oh	25 hydroxy
+tibc	total iron binding capacity
+scn	screening
+scr	screening
+non-hdlc	non high density lipoprotein
+non-hdl	non high density lipoprotein
+spec	specific
+spec.	specific
+spec	specimen
+spec	spectrum
+leukocytes	leukocyte
+leuk	leukocyte
+leuko	leukocyte
+leukest	leukocyte esterase
+q-t	qt
+neut	neutrophil
+neutrophil%auto	neutrophil
+neut%	neutrophil
+neutrophils	neutrophil
+cmv	cytomegalovirus
+dihy	dihydroxy
+neg	negative
+hispanic-american	hispanic american
+med	medium
+cult	culture
+path	pathology
+hdl-cholesterol	high density lipoprotein
+hdl	high density lipoprotein
+hdlc	high density lipoprotein
+wr-crp	wide range c-reactive protein
+nonafricn	non african
+non-african	non african
+non-afr	non african
+non-afric	non african
+nonafrican	non african
+eosinophil%auto	eosinophil
+eosin	eosinophil
+%eosinophils	eosinophil
+eosinophils	eosinophil
+eosin%	eosinophil
+eos	eosinophil
+lymp	lymphocyte
+lymphs	lymphocyte
+lymph#	lymphocyte
+lymph%	lymphocyte
+%lymphocytes	lymphocyte
+lymph	lymphocyte
+lymph%auto	lymphocyte
+lymphocytes	lymphocyte
+lym	lymphocyte
+ly	lymphocyte
+calc	calculated
+cal	calculated
+mg	milligram
+mm	millimeter
+ml	milliliter
+ms	mass spectrometry
+creatinine-random	creatinine
+creatinine-based	creatinine
+creat	creatinine
+cr	creatinine
+ena	extractable nuclear antigen
+ssa	extractable nuclear antigen
+ss-a	extractable nuclear antigen
+ssb	extractable nuclear antigen
+ss-b	extractable nuclear antigen
+toxin	toxigenic
+di-oh	di hydroxy
+oh2	di hydroxy
+enz	enzyme
+enzym	enzyme
+cto2	concentration total oxygen
+sgpt	serum glutamic-pyruvic transaminase
+vfr	volume fraction
+fam	family
+vari	varicella
+donor-	donor
+imm	immature
+pf4-interpretation	pf4 interpretation
+tco2	total carbon dioxide
+nitrite-ua	nitrite
+nitrites	nitrite
+distrib	distribution
+distribtion	distribution
+dist	distribution
+rt	real time
+rv	right ventricular
+ra	right atrial
+got	glutamic oxaloacetic transaminase
+rh	rhesus
+ntd	neural tube defects
+autoabs	autoantibodies
+autoab	autoantibodies
+ata	antithyroglobulin antibody
+chlam	chlamydia
+c	chlamydia
+rand	random
+testost	testosterone
+testos	testosterone
+testost.	testosterone
+tot	total
+t	total
+t.	total
+eqn	equation
+corpus	corpuscular
+corp	corpuscular
+int'l	international
+sjogren's	sjogrens
+non-aa	non african american
+non-african-american	non african american
+non-black	non african american
+nonafram	non african american
+lbs	pounds
+pneumo	pneumonia
+hgba1c%	hemoglobin a1c
+hba1c	hemoglobin a1c
+hgba1c	hemoglobin a1c
+a1c	hemoglobin a1c
+mins	minutes
+estrogens	estrogen
+chem	chemistry
+glom	glomerular
+glob	globulin
+g	globulin
+mammo	mammogram
+metab	metabolic
+afr-am	african american
+black	african american
+africanamerican	african american
+african-american	african american
+aa	african american
+dob	date of birth
+anti-hav	anti hepatitis a virus
+lpf	low power field
+concentrn	concentration
+conc	concentration
+conc.	concentration
+mcnc	mass concentration
+plts	platelets
+dl	deciliter
+dx	diagnosis
+diag	diagnosis
+diabet	diabetes
+num	number
+antiglob	antiglobulin
+co2	carbon dioxide
+dlco	diffusing capacity lung carbon monoxide
+wb	western blot
+ckmb	creatine kinase mb
+ck-mb	creatine kinase mb
+17-oh	17 hydroxy
+mdrd	modification of diet in renal disease
+lot#	lot
+25-hydroxyvitamin	25 hydroxy vitamin
+diff	differential
+diff	difficile
+anc	absolute neutrophil count
+anc-neutrophil	absolute neutrophil count
+egfr2	estimated glomerular filtration rate
+egfr	estimated glomerular filtration rate
+pco2iv	partial pressure of carbon dioxide iv
+mch	mean corpuscular hemoglobin
+mcv	mean corpuscular volume
+n	neisseria
+poc-glucose	point care glucose
+african amiercan	african american
+am	american
+amer	american
+iu	international unit
+ia	immunoassay
+id	identification
+id	immunodiffusion
+req'd	required
+antign	antigen
+agn	antigen
+ag	antigen
+ag.	antigen
+verification-manual	verification
+quant	quantitative
+quantitive	quantitative
+qnt	quantitative
+qn	quantitative
+ccnc	catalytic concentration
+ldl+vldl	low density lipoprotein and very low density lipoprotein
+glu	glucose
+glucose-ua	glucose
+epi	epithelial
+epithieals	epithelial
+epithel	epithelial
+epis	epithelial
+epith	epithelial
+thb	total hemoglobin
+ibci	iron binding capacity
+ibc	iron binding capacity
+1hr	1 hour
+mid	mid-range
+rnp	ribonucleoprotein
+bnp	b-type natriuretic peptide
+her-2	human epidermal growth factor receptor 2
+nrbc	nucleated red blood cells
+nrbc's	nucleated red blood cells
+nrbc	nucleated red blood cell
+hav	hepatitis a virus
+po2iv	partial pressure of oxygen iv
+indicated?	indicated
+urobilinogen-ua	urobilinogen
+%saturation	saturation
+sat	saturation
+vit	vitamin
+interp	interpretation
+sendo	send out
+cnt	count
+ct	count
+angio	angiotensin
+at	angiotensin
+icp	inductively coupled plasma
+hsv	herpes simplex virus
+peep	positive end expiratory pressure
+c	c
+unsat	unsaturated
+ppd	purified protein derivative
+granulocytes	granulocyte
+grans	granulocyte
+gran#	granulocyte
+gran%	granulocyte
+gran	granulocyte
+ldl	low density lipoprotein
+ldl-cholesterol	low density lipoprotein
+ldl-lp	low density lipoprotein
+descrip	descrption
+des	descrption
+crys	crystals
+vlldl-lp	very low density lipoprotein
+vldl	very low density lipoprotein
+devicev	device
+retic	reticulocyte
+bact	bacteria
+trig	triglyceride
+triglycerides	triglyceride
+nk	natural killer
+na	sodium
+ng	nanogram
+nt	n-terminal
+n-term	n-terminal
+fsh	follicle stimulating hormone
+prot	protein
+protein-ua	protein
+protein-total	protein
+segs	segmented
+seg	segmented
+%segmented	segmented
+aptt	activated partial thromboplastin time
+monocytes	monocyte
+mono%-lonc	monocyte
+mono	monocyte
+monocyte%auto	monocyte
+%monocytes	monocyte
+mono#	monocyte
+mono%	monocyte
+monos	monocyte
+mo	monocyte
+vel	velocity
+ketone-ua	ketone
+anti-hcv	anti hepatitis c virus
+p	plasma
+plas	plasma
+p	parasite
+fio2i	fraction of inspired oxygen i
+dir	direct
+plt	platelet
+mchc	mean corpuscular hemoglobin concentration
+ptt-la	ptt lupus anticoagulant
+hsct	hematopoietic stem cell transplants
+hered	hereditary
+ekg	electrocardiogram
+ecg	electrocardiogram
+hbc	hepatitis b core
+rslt	result
+hbs	hepatitis b surface
+myoglob	myoglobin
+abo+rh	abo & rhesus
+aborh	abo & rhesus
+preg	pregnancy
+p'tase	phosphatase
+phos	phosphatase
+ptase	phosphatase
+phos.	phosphatase
+cholest	cholesterol
+chol	cholesterol
+choles	cholesterol
+cholestrol	cholesterol
+prev	previous
+prep	preparation
+srce	source
+semi-qn	semi quantitative
+semi-quant	semi quantitative
+semiquant	semi quantitative
+cap	capacity
+vegf	vascular endothelial growth factor
+flc	free light chain
+trans	transferase
+trans	transitional
+fld	fluid
+cad	computer aided detection
+basos	basophil
+basophil%	basophil
+basophils	basophil
+baso	basophil
+%basophils	basophil
+baso%	basophil
+*hbsab	hepatitis b surface antibody
+idl	intermediate density lipoprotein 
+1&2	1 and 2
+1+2	1 and 2
+immuno	immunochemical
+cells_renal	renal
+ebna	epstein barr nuclear antigen
+ebvna	epstein barr nuclear antigen
+max	maximum
+max.	maximum
+man	manual
+ss	specimen submitted
+sq	square
+sp	species
+sm	smith
+sa	semen analysis
+se	serum
+s	serum
+srm	serum
+ser	serum
+sd	standard deviation
+recipient-	recipient
+recpt	recipient
+ttg	tissue transglutaminase
+transglut	tissue transglutaminase
+mitogen-nil	mitogen - nil
+mit-nil	mitogen - nil
+gtt	glucose tolerance test
+anti-hbc	anti hepatitis b core
+nom	nominal
+est-other	estimated other
+ef	ejection fraction
+d-dimer	d dimer
+hcv	hepatitis c virus
+hct	hematocrit
+cyto	cytology
+cyto	cytoplasmic
+poct	point care testing
+hcg	human chorionic gonadotropin
+bld	blood
+blood-ua	blood
+lmp	last menstrual period
+quantiferon-tb	quantiferon tb
+ord	ordinal
+lac	lupus anticoagulant
+hemoglobin-urine	hemoglobin
+hgb	hemoglobin
+hb	hemoglobin
+ql	qualitative
+qual	qualitative
+rt-pcr	reverse transcription-polymerase chain reaction
+lat	lateral
+xr	xray
+ldl-r	low density lipoprotein receptor
+fobt	fecal occult blood test 
+ldl-c	low density lipoprotein cholesterol
+cell#1	cell
+cells	cell
+cholesterol-lp	cholesterol lipoprotein
+entmass	entitic mass
+ana	antinuclear antibody
+ana	anaerobic
+anti-ro	anti ro
+prn	pro re nata
+hco3	bicarbonate
+est-african	estimated african
+anti-mitochondrial	anti mitochondrial
+squam	squamous
+cells_squamous	squamous
+urine-color	color
+color-ua	color
+surf	surface
+hdl-direct	high density lipoprotein direct
+htlv	human t-cell lymphotropic virus
+c-anca	cytoplasmic antineutrophil cytoplasmic antibodies
+phiv	intravenus ph
+mri	magnetic resonance imaging
+trop	troponin
+24hr	24 hour
+qtcint	qtc interval
+info	information
+wwo	with and without
+fio2	fraction of inspired oxygen
+%fio2	fraction of inspired oxygen
+fio2i	fraction of inspired oxygen
+fio2iv	fraction of inspired oxygen
+gen	generation
+gestatnal	gestational
+gest	gestational
+bilirubin-total	bilirubin
+bilirubin-ua	bilirubin
+bili	bilirubin
+rdw-cv	red blood cell distribution width coefficient of variation
+vitd	vitamin d
+vit.d	vitamin d
+vrat	volume rate
+comp	complete
+entlen	entitic length
+mono	mononucleosis
+pcr	polymerase chain reaction
+poc	point care
+ldl-calculated	low density lipoprotein calculated
+po4	phosphate
+po2	partial pressure of oxygen
+dhea	dehydroepiandrosterone
+dheas	dehydroepiandrosterone
+50g	50 gram
+eia	enzyme immunosorbent assay
+trich	trichomonas
+met-hemoglobin	methemoglobin
+f+w	free and weakly
+free&weakly	free and weakly
+ivp	intravenous pyelogram
+ph-ua	ph
+anti-tpo	anti thyroperoxidase
+ccp	cyclic citrullinated peptide
+rden	relative density
+ck	creatine kinase
+resp	respiratory
+gdh	glutamate dehydrogenase
+gdlh	glutamate dehydrogenase
+reqstd	requested
+fvc	forced vital capacity
+psa	prostate specific antigen
+reac	reactive
+np	nasal prongs
+mom	multiple of the median
+amp	amplified
+ams	automatic mode switching
+wbc	white blood cell
+100wbc	white blood cell
+wbc's	white blood cell
+vldl-p	very low density lipoprotein particle
+ss-a	ssa
+ss-b	ssb
+protime	prothrombin time
+pt	prothrombin time
+ife	immunofixation electrophoresis
+bhcg	beta human chorionic gonadotropin
+vzv	varicella zoster virus
+interva	interval
+vldl-3	very low density lipoprotein 3
+oh	hydroxy
+fasting?	fasting
+fast	fasting
+hep	hepatitis
+hex	hexagonal
+mets*10	metabolic equivalents
+hem	hemolytic
+scrn	screen
+cbc	complete blood count
+ab	antibody
+af	african
+africn	african
+afr	african
+platelet-coag	platelet coagulation
+igg	immunoglobulin g
+igg+igm	immunoglobulin g
+ige	immunoglobulin e
+iga	immunoglobulin a
+igm	immunoglobulin m
+phys	physician
+cpk	creatine phosphokinase 
+antiglobulin-broad	antiglobulin broad
+u	urine
+ur	urine
+urn	urine
+disp	displacement
+alk	alkaline
+alk.	alkaline
+alki	alkaline
+alh	amplitude of lateral head
+pth	parathyroid hormone
+alb	albumin
+alc	absolute lymphocyte count
+ala	alanine
+pco2	partial pressure of carbon dioxide
+alt	alanine aminotransferase
+ptt	partial thromboplastin time
+tv	tidal volume
+o2ct	oxygen content
+tg	thyroglobulin
+tb	tuberculosis
+tc	total cholesterol
+g6pd	glucose 6 phosphate dehydrogenase
+normaliz	normalized
+normal	normalized
+mpv	mean platelet volume
+scnc	substance concentration
+anti-cardiolipin	anti cardiolipin
+abd	abdomen
+abs	absolute
+#	absolute
+absolute#	absolute
+abs.	absolute
+aby	antibodies
+ggt	gamma glutamyl transferase
+inr-therapeutic	international normalized ratio therapeutic
+anti-smooth	anti smooth
+band's	band
+clarity-ua	clarity
+deb	diepoxybutane
+stim	stimulating
+acth	adrenocorticotropic hormone
+csp	cervical spine
+fr	fraction
+brady	bradycardia
+drvvt	dilute russell's viper venom time
+coag	coagulation
+pct	percent
+%	percent
+cea	carcinoembryonic antigen
+misc	miscellaneous
+d2+25-hydroxyvitamin	d2 25 hydroxy vitamin
+ifa	indirect fluorescent antibody
+	
+pmns	polymorphonuclear neutrophil
+pmn	polymorphonuclear neutrophil
+pmn's	polymorphonuclear neutrophil
+thrombo	thromboplastin
+gfr	glomerular filtration rate
+ast	aspartate aminotransferase
+recd	received
+ag-nil	antigen nil
+hsv-1	herpes simplex virus 1
+hsv-2	herpes simplex virus 2
+koh	potassium hydroxide
+gpt	glutamate-pyruvate transaminase
+dfa	direct fluorescent antibody
+part	partial
+std	standard
+refl	reflex
+rflx	reflex
+cmva	cytomegalovirus antigenemia
+epstein-barr	epstein barr
+esterase-ua	esterase
+k+	potassium
+k	potassium
+staph	staphylococcus
+	
+tpo	thyroid peroxidase
+exp	expiration
+iep	immunoelectrophores
+hiv	human immunodeficiency virus
+hhv-6	human herpesvirus 6
+pco2i	partial pressure of carbon dioxide i
+crp	c-reactive protein
+stl	stool
+hplc	high performance liquid chromatography
+sep	serum electrophoresis protein
+sed	sediment
+dehydrogenas	dehydrogenase
+alpha-1-antitrypsin	alpha-1 antitrypsin
+alpha-1-globulin	alpha-1 globulin
+hiv-1	human immunodeficiency virus 1
+hiv1	human immunodeficiency virus 1
+c	clostridium
+hco3iv	bicarbonate iv
+perox	peroxidase
+pt	patient
+pt	point
+pm	pacemaker
+basophile%auto	basophile
+cholhdl	cholesterol high density lipoprotein ratio
+vol	volume
+usthy	ultrasound thyroid
+neutros	neutrophils
+neut	neutrophils
+polys	neutrophils
+polys-auto	neutrophils
+entvol	entitic volume
+dgp	deamidated gliadin peptide
+ldh	lactate dehydrogenase
+ld	lactate dehydrogenase
+ptt-d	activated d partial thromboplastin time
+transglut	transglutaminase
+bil	bilateral
+rbcs	red blood cell
+rbc's	red blood cell
+rbc	red blood cell
+d	dermatophagoides
+fcpath	flow cytometry
+lipo	lipoprotein
+lp	lipoprotein
+b2	beta 2
+mucous	mucus
+mrsa	methicillin resistant staphylococcus aureus
+toxo	toxoplasma
+hco3i	bicarbonate i
+nonfast	non fasting
+non-fasting	non fasting
+gamma-glutamyl	gamma glutamyl
+bf	body fluid
+bm	bone marrow
+bp	blood pressure
+&	and
+gravity-ua	gravity
+grav	gravity
+	
+calcium-calculated	calcium
+ca	calcium
+ua	urinalysis
+grp	group
+tmstp	time stamp
+est	estimated
+est.	estimated
+eval	evaluate
+eval	evaluation
+subclass4	subclass 4
+fio2iv	fraction of inspired oxygen iv
+affm	affirm
+gc	Neisseria gonorrhoeae
+nt-probnp	n-terminal pro b-type natriuretic peptide
+hiv2	human immunodeficiency virus 2
+o2	oxygen
+inrcomment	international normalized ratio comment
+ue3	unconjugated estriol
+rdw	red blood cell distribution width
+cth	computed tomography head
+polys-auto	polymorphonuclears automated
+acnc	arbitrary concentration
+d25-hydroxy	d25 hydroxy
+apl	ap/lat
+b2glycoprotein	beta 2 glycoprotein
+o2-hemoglobin	oxyhemoglobin
+o2hb	oxyhemoglobin
+creatinine-ct	creatinine computed tomography
+triglycerides-lp	triglyceride lp
+ncnc	number concentration
+phos	phosphatidylserine
+serine	phosphatidylserine
+f	fetal
+uibc	unsaturated iron binding capacity
+naric	number aeric
+htlv-i	human t-cell lymphotropic virus i
+afb	acid fast bacilli
+meia	microparticle enzyme immunoassay
+afp	alpha fetoprotein
+anti-ena	anti extractable nuclear antigens
+p-r	pr
+sgot	serum glutamic oxaloacetic transaminase
+lg	large
+lc	liquid chromatography
+tsh	thyroid stimulating hormone
+small-a	small pattern a
+small-c	small pattern c
+small-b	small pattern b
+ds	double strand
+auto	automated
+agap	anion gap
+nfr	number fraction
+po2i	partial pressure of oxygen i
+activit	activity
+hla	human leukocyte antigen
+vcl	track speed
+rel	relative
+ref	reference
+large-a	large pattern a
+large-b	large pattern b
+ogt	oral glucose tolerance
+p-anca	perinuclear antineutrophil cytoplasmic antibodies
+rsv	respiratory syncytial virus
+morph	morphology
+min	minute
+mit	mitogen
+ghb	glycohemoglobin
+urd	unrelated donor
+performed?	performed
+desc	description
+troponin-i	troponin i
+combo	combination
+gran	granules
+convert	converting
+dhea-sulfate	dehydroepiandrosterone sulfate
+dheas	dehydroepiandrosterone sulfate
+aer	aerobic
+qt	quantity
+qn	quantity
+h	helicobacter
+qc	quality control
+gran	granulation
+ebv	epstein barr virus
+luc	large unstained cells
+vca	viral capsid antigen
+bronc	bronchial
+tlc	total lung capacity
+rpr	rapid plasma reagin
+cc	cubic centimeter
+cf	complement fixation
+small-d	small pattern d
+veni	venipuncture
+cv	coefficient of variation
+ct	cycle threshold
+ct	chlamydia trachomatis
+c.trachomatis	chlamydia trachomatis
+ct	computed tomography
+tsh-3rd	thyroid stimulating hormone 3rd
+ag	albumin globulin
+filt	filtration
+alpha-2-globulin	alpha-2 globulin
+vs	versus
+vt	vitro
+vz	varicella zoster
+varicella-zoster	varicella zoster
+avg	average
+indir	indirect
+phi	intramucosal ph
+anti-la	anti la
+polys	polymorphonuclears
+pmn	polymorphonuclears
+pmn's	polymorphonuclears
+igf	insulin-like growth factor
+hdl-2	high density lipoprotein 2
+hdl-3	high density lipoprotein 3
+adj	adjustment
+hdl-p	high density lipoprotein particle
+propep	propeptide
+vsl	progressive velocity
+tms	tandem mass spectrometry
+esr	erythrocyte sedimentation rate
+tma	transcription mediated amplification
+egfr-nonafrican	estimated glomerular filtration rate non african
+serpl	serum/plasma
+hbsag	hepatitis b surface antigen
+mssa	methicillin susceptible staphylococcus aureus
+25-hydroxycalciferol	25 hydroxy calciferol
+vap	velocity average path
+hx	history
+hr	hour
+hr	heart rate
+ea	early
+bun	blood urea nitrogen
+lvl	level
+inr	international normalized ratio
+inrcomment	international normalized ratio
+hpp	hours post prandial
+hpv	human papillomaviruses
+hpf	high power field
+egfr-african	estimated glomerular filtration rate african
+bcp	bromocresol purple
+19-9	cancer antigen 19-9
+25_hydroxy	Vitamin
+25-hydroxy	Vitamin
+25-hydroxyvitamin	Vitamin
+25oh	Vitamin
+25-oh	Vitamin
+27.29	cancer antigen 27-29
+aat	atypical antibody test
+abeos	absolute eosinophil count
+abg	arterial blood gas
+abn	abnormal
+abo+rh	ABO/Rh blood type
+aborh	ABO/Rh blood type
+abx	antibiotics
+ace	angiotensin-converting enzyme
+acei	angiotensin-converting enzyme inhibitor
+ach	acetylcholine
+ache	acetylcholine esterase
+acnc	angigen antibody combination
+adh	antidiuretic hormone
+adj	adjusted
+adp	adenosine diphosphate
+afb	acid fast bacteria
+afp	alpha fetaprotein
+aga	anti-gliadin antibodies
+ahf	antihemophilic factor
+ahg	antihemophilic globulin
+ahh	aryl hydrocarbon hydroxylase
+aht	antihyaluronic acid test
+aiirb	angiotensin II receptor antagonist
+arb	angiotensin II receptor antagonist
+alc	alcohol
+alg	antilymphocytic globulin
+alh	amplitude of lateral head displacement
+alk.phosphatase	alkaline phosphatase
+alp	alkaline phosphatase
+ap	alkaline phosphatase
+ama	antimitochondrial antibody
+aminotrans	aminotransferase
+amp	adenosine monophosphate
+amp	amplification
+anca	antineutrophil cytoplasmic antibody
+anf	atrial natriuretic factor
+anp	atrial natriuretic peptide
+anti-hav	Anti-Hepatitits A virus
+anti-hbc	Anti-Hepatitits B C virus
+anti-hcv	Anti-Hepatitits C virus
+	
+apsac	anisoylated plasminogen streptokinase activator complex
+arg	arginine
+asca	anti saccharomyces cerevisiae antibodies
+at	antithrombin
+ata	antitransglutaminase antibodies
+atb	antibiotic
+atg	anti-thymocyte globulin
+at-iii	antithrombin III
+atp	adenosine triphosphate
+atra	all-trans retinoic acid
+av	Delay atrioventricular delay
+b2glycoprotein	beta-2 glycoprotein
+bac	blood alcohol content
+bal	blood alcohol level
+bao	basic acid output
+baso	Basophils
+basos	Basophils
+baso%	Basophils %
+basophile%auto	Basophils %
+bc	blood culture
+bcx	blood culture
+bl.cult	blood culture
+bcf	beat cross frequency
+bg	blood glucose
+bgl	blood glucose level
+bilirubin-ua	bilirubin urinalysis
+blood-ua	blood urinalysis
+bmp	basic metabolic panel
+chem-7	basic metabolic panel
+bnp	brain Natriuretic Peptide
+bronc	BRONChial
+bt	bleeding time
+bw	blood work
+bzds	benzodiazepines
+c	cytosine
+c.difficile	Clostridium difficile
+c3	component 3
+c4	component 4
+ca153	antigen 15-3
+cad	computer Aided Detection
+camp	cyclic adenosine monophosphate
+caox	calcium oxalate
+cdp	cytosine diphosphate
+cf	cystic fibrosis
+cfa	complement-fixing antibody
+cgmp	cyclic guanosine monophosphate
+che	cholinesterase
+chem-20	metabolic panel
+chlam	chalymidia
+cholhdl	cholesterol to HDL cholesterol ratio
+ckmb	MB isoenzyme of creatine kinase
+cl	chlorine
+co	carbon monoxide
+cpk	creatine phosphokinase kinase
+cppd	calcium pyrophosphate
+cr	blood urea nitrogen creatinine ratio
+crcl	creatinine clearance
+crf	corticotropin-releasing factor
+crh	corticotropin-releasing hormone
+crit	erythrocyte to blood ratio
+hct	erythrocyte to blood ratio
+hematocrit	erythrocyte to blood ratio
+csf	cerebrospinal fluid
+csp	cyclosporine
+cst	contraction stress test
+csu	catheter specimen of urine
+cto2	concentration of total blood oxygen
+ctp	cytosine triphosphate
+cv	cell corpuscular volume
+cx	microbiological culture
+d25-hydroxy	Vitamin D
+dfa	direct fluorescent assay
+diag	diagnostic
+dlco	diffusing capacity of the lungs for carbon monoxide
+ebna	epstein barr virus nuclear antigen
+ebv	epstein barr virus dna
+ebvna	epstein barr virus nuclear antige
+ecf	extracellular fluid
+ecg	echocardiogram
+ekg	echocardiogram
+egf	epidermal growth factor
+eia	enzyme immunoassay
+emu	early morning urine sample
+eos	eosinophils
+eosin	eosinophils
+eos	eosinophils count
+eosin%	eosinophils %
+epis	epithelium
+esr	Erythrocyte sedimentation rate
+fbc	full blood count
+fbe	full blood exam
+fbg	fasting blood glucose sugar
+fe	iron
+fef	Forced expiratory volume 25-75
+fev1	forced expiratory volume 1
+fibrinogen	Fibrinogen
+filt	filtration rate
+fio2	Fraction of inspired oxygen
+fobt	Fecal occult blood test
+fta	fluorescent treponemal antibody
+fvc	Forced Vital Capacity
+g6pd	glucose-6-phosphate-dehydrogenase
+gaba	gamma-aminobutyric acid
+gamma	gamma globulin
+g-csf	granulocyte colony-stimulating factor
+gdh	glutamate dehydrogenase antigen
+gdp	guanosine diphosphate
+ggtp	gamma glutamyl transpeptidase
+gh	growth hormone
+gmp	guanosine monophosphate
+gnrh	gonadotropin-releasing hormone
+god	glucose oxidase
+got	glutamic-oxalacetic transaminase
+gpt	glutamic-pyruvic transaminase
+gran	Granulocyte
+grans	Granulocyte
+granulocytes	Granulocyte
+gran#	Granulocyte #
+gran%	Granulocyte %
+gtn	glyceryl trinitrate
+h.	Helicobacter
+hav	hepatitis B virus
+hbv	hepatitis B virus
+hb%	hemoglobin %
+hba	hemoglobin A
+hba1c	glycosylated hemoglobin
+hbf	fetal hemoglobin
+hbs	Hepatitis
+hbsab	Hepatitis B Surface Antibody
+hbsag	hepatitis B surface antigen
+hco3i	bicarbonate intravenous
+hco3iv	bicarbonate intravenous
+hdl	HDL cholesterol
+hdlc	HDL cholesterol
+hdl-c	HDL cholesterol
+hdv	hepatitis D virus
+hep	hepatits
+hev	hepatitis E virus
+hgba1c	Hemoglobin A1C percentage
+hgv	hepatitis G virus
+hhv-6	Human herpesvirus 6
+hivrt	Human immunodeficiency virus reverse transcripterase
+hla	Human leukocyte antigen
+hla	Humn leukocye antigen
+hmg	human menopausal gonadotropin
+hplc	High Performance Liquid Chromotoraphy
+hpv	human papillomavirus
+htlv	Human T-lymphotropic virus
+htlv-i	Human T-lymphotropic virus I
+ibc	Iron-binding capacity
+ig	immunoglobulin
+iga	immunoglobulin A
+igd	immunoglobulin D
+ige	immunoglobulin E
+igg	immunoglobulin G
+igm	immunoglobulin M
+lab	laboratory
+ld	Lactate dehydrogenase
+ldh	Lactate dehydrogenase
+ldl	LDL cholesterol
+ldl-c	LDL cholesterol
+leu	leukocytes
+leuk	Leukocyte
+leuko.	Leukocyte
+wbc	Leukocyte
+wbc's	Leukocyte
+leukest	leukocyte esterase
+lft	liver function test
+lh	luteinizing hormone
+lin	linearity
+lpl	lipoprotein lipase
+luc	Large unstained cells
+lymph#	lymphocyte #
+lymph%	lymphocyte %
+lymph%auto	lymphocyte %
+lymphs,%	lymphocyte %
+lytes	electrolytes
+mad	mean angular displacement
+mch	Mean cell hemoglobin concentration
+mchc	Mean cell hemoglobin concentration
+mcv	mean cell volume
+mg	magnesium
+mom	Multiple of median
+mono#	monocyte #
+mono%	monocyte %
+mono%-lonc	monocyte % LONC
+mpv	mean thrombocyte volume
+mrsa	methicillin-resistant Staphylococcus aureus
+msu	monosodium urate
+neut%	neutrophils %
+nitrites	Nitrite
+nk	Natural Killer cells
+no	nitric oxide
+non-hdl	non HDL
+non-hdlc	non HDL cholesterol
+normaliz	normalzied
+nos	nitric oxide synthase
+nrbc	nucleated erythrocyte
+nrbc's	nucleated erythrocyte
+nt-probnp	Brain Natriuretic Peptide
+o2ct	Oxygen count
+o2hb	Oxygen hemoglobin
+o2-hemoglobin	Oxygen hemoglobin
+ogt	Glucola Dose  Glucose tolerance test
+p-anca	Perinuclear Anti-Neutrophil Cytoplasmic Antibodies
+pap	pap smear
+part.	partner
+pco2	Partial pressure of carbon dioxide
+pco2i	Partial pressure of carbon dioxide internal
+pco2iv	Partial pressure of carbon dioxide intravenous
+pct	percentage
+pe1	protein electroheresis 1
+peep	Positive end-expiratory pressure
+pf4	thrombocyte factor
+ph	hydrogen ion concentration
+phi	Prostate health index
+phiv	Plasmid HIV
+phos.serine	Phosphatidyl Serine
+ph-ua	Urine Ph
+plas	Plasma
+platelet	thrombocyte
+platelets	thrombocyte
+plt	thrombocyte
+pneumo	pneumoniae
+poc-glucose	point of care glucose
+ppd	ppd electrocardiogram
+pr	pr electrocardiogram
+p-r	pr electrocardiogram
+psa	Prostate-specific antigen
+ptrserum	parathyroid serum
+ptt-la	partial thromboplastin time la
+q_t	qt electrocardiogram
+qt	qt electrocardiogram
+qrs	qrs electrocardiogram
+qrsd	qrsd electrocardiogram
+qtc	qtc electrocardiogram
+qtcb	qtc b electrocardiogram
+qtcint	atc int electrocardiogram
+ra	ra electrocardiogram
+rbc	Erythrocyte
+rbc's	Erythrocyte
+rdw	erythrocyte distribution width
+rdw-cv	erythrocyte distribution width cell volume
+ria	radioimmunoassay
+rnp	ribonucleoprotien antibody
+rsv	respiratory cyncytial virus
+rtcxv	Respiratory cyncytial virus specific type
+rt-pcr	rt polymerase chain reaction
+rv	rv electrocardiogram
+s	Serum
+ser	Serum
+satci	semen analysis test complete
+satciv	semen analysis test complete
+see	EMR for details
+segs	segmented neutrophils
+serpl	serum plasma
+sgot	Serum glutamic oxaloacetic transaminase
+sgpt	Serum Glutamic-Pyruvic Transaminase
+ss	hemoglobin SS
+st	st electrocardiogram
+strep	streptococcus
+strep	streptococcus pneumoniae
+tb	Tuberculosis
+tb-nil	Tuberculosis nil
+tcn	tetracycline
+tct	thrombin clotting time
+tgf	tumor growth factor
+thb	total hemoglobin mass
+tibc	total iron-binding capacity
+tlc	total Leukocyte count
+tma	Transcription Mediated Amplification
+tng	trinitroglycerin
+tp	total protein
+triglyceride	Triacylglycerol
+triglycerides	Triacylglycerol
+tt	thrombin time
+ttg	transglutaminase Antibody
+u&e	urea and electrolytes
+ubt	urea breath test
+uds	urine drug screening
+uibc	unsaturated iron-binding capacity
+uip	usual interstitial pneumonitis
+ur.wbc	Leukocyte, urine
+vap	average path velocity
+vari	Varicella
+vbg	venous blood gases
+vcl	curvilinear velocity
+vldl	very low density lipoprotein cholesterol
+vldl-3	very low density protein cholesterol
+vlldl-lp	very low density protein cholesterol
+vpa	valproic acid
+vsl	straight line velocity
+xr	x-ray
+xrpcxr	hest x-ray
+zn	zinc

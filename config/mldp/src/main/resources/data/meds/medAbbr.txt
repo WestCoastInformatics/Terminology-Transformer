@@ -1,0 +1,154 @@
+##
+## Medication Acronyms
+##
+## A two-column tab-delimited file.
+##
+## If the first column matches any whole word in the input string (regardless of case),
+## a new normalized string is created.  The single normalized string created replaces 
+## all matching words found in the input string with with the associated word/phrase 
+## found in the second column.
+##
+ad	Right Ear
+aepb	Aerosol Powder Breath
+aero	Aerosol
+aers	Aerosol
+as	Left Ear
+au	Both Ears
+biwkly	Biweekly
+buc	Buccal Tablet
+buccal	Buccal Tablet
+cap	Capsule
+caps	Capsule
+capsules	Capsule
+cd	Controlled Diffusion
+chew	Chewable
+chew tab	Chewable tablet
+clsr	Cleanser
+cmpk	Pack
+conc	Concentrate
+cp12	Capsule 12 Hour
+cp16	Capsule 16 Hour
+cp24	Capsule 24 Hour
+cp48	Capsule 48 Hour
+cp72	Capsule 72 Hour
+cp8	Capsule8 Hour
+cpdr	Capsule Delayed Release
+cper	Capsule Extended Release
+cpsr	Capsule Slow Release
+cr	Continuous Controlled Release
+cr	Cream
+crea	Cream
+crt	Controlled Release Tablet
+devi	Device
+dr	Delayed Release
+drop	Drops
+ec tab	Enteric Coated Tablet
+elix	Elixir
+elix	Elixir
+enema	Enema
+er	Extended Release
+ex	Topical
+gel	Gelatin
+gt	Gastrostomy Tube
+hep	Hepatitis
+ia	Intraarterial
+id	Intradermal
+im	Intramuscular
+inh	Inhaler
+inhl	Inhaler
+inj	Injection
+it	Intrathecal
+iv	Intravenous
+iv	Intravenous
+la	Long Acting
+liq	Liquid
+liqd	Liquid
+lot	Lotion
+lotn	Lotion
+loz	Lozenge
+mdi	Metered Dose Inhaler
+misc	Miscellaneous
+nas	Nasal
+nasl	Nasal
+nbsp	Nebulization Suspension
+ng	Nasogastric
+ngt	Nasogastric Tube
+od	Right Eye
+oint	Ointment
+opht	Ophthalmic
+or	Oral
+os	Left Eye
+ou	Both Eyes
+pkt	Packet
+po	Oral
+pr	Rectal
+pt	Patch
+pttw	Patch Biweekly
+ptwk	Patch Weekly
+rx	Prescription
+sa	Sustained Action
+sham	Shampoo
+sl	Sublingual
+so	Solution
+soln	Solution
+solr	Solution Reconstituted
+spcr	Spacer
+spry	Spray
+sq	Subcutaneous
+sr	Slow Release
+supp	Suppository
+susp	Suspension
+susr	Suspension Reconstituted
+syr	Syringe
+syrg	Syringe
+syrp	Syrup
+tab	Tablet
+tablets	Tablet
+tabs	Tablet
+tb	Tablet
+tb12	Tablet 12 Hour
+tb16	Tablet 16 Hour
+tb24	Tablet 24 Hour
+tb48	Tablet 48 Hour
+tb72	Tablet 72 Hour
+tb8	Tablet 8 Hour
+tbdp	Tablet Dispersible
+tbdr	Tablet Delayed Release
+tbec	Tablet Enteric Coated
+tbef	Tablet Effervescent
+tber	Tablet Extended Release
+tbl	Tablet
+tblt	Tablet
+tbp48	Tablet 48 Hour
+tbsr	Tablet Slow Release
+td	Time Delay
+td	Transdermal
+tinc	Tincture
+top	Topical
+tp	Topical
+tr	Time Release
+troches	Troche
+va	Vaginal
+vac	Vaccine
+vaccin	Vaccine
+vag cr	Vaginal Cream
+vag tab	Vaginal Tablet
+vit	Vitamin
+wkly	Weekly
+xl	Extra Long
+xr	Extended Release
+##
+## Rejected --
+## cap	Gel Cap 
+## top	Patch, transdermal
+## top	Powder
+## top	Transdermal
+## sq/sc	Subcutaneous
+## ivpb	Intravenous Piggyback
+## os	Ophthalmic
+## od	Ophthalmic
+## ou	Ophthalmic
+## as	Otic
+## ad	Otic
+## au	Otic
+## sr	Sustained Slow Release
