@@ -68,9 +68,9 @@ public class ResetMldpDatabase {
     p.setProperty("run.config.umls", System.getProperty("run.config.umls"));
     p.setProperty("server", server);
     p.setProperty("mode", "create");
-    p.setProperty("terminology", "HKT");
+    p.setProperty("terminology", "HKFT-LABS");
     p.setProperty("version", "latest");
-    p.setProperty("input.dir", "../config/mldp/src/main/resources/data");
+    p.setProperty("input.dir", "../config/mldp/src/main/resources/data/labs");
     if (System.getProperty("input.dir") != null) {
       p.setProperty("input.dir", System.getProperty("input.dir"));
     }
@@ -78,6 +78,147 @@ public class ResetMldpDatabase {
     request.setDebug(false);
     DefaultInvoker invoker = new DefaultInvoker();
     InvocationResult result = invoker.execute(request);
+    if (result.getExitCode() != 0) {
+      throw result.getExecutionException();
+    }
+
+    request = new DefaultInvocationRequest();
+    request.setPomFile(new File("../admin/pom.xml"));
+    request.setProfiles(Arrays.asList("Simple"));
+    request.setGoals(Arrays.asList("clean", "install"));
+    p = new Properties();
+    p.setProperty("run.config.umls", System.getProperty("run.config.umls"));
+    p.setProperty("server", server);
+    p.setProperty("mode", "create");
+    p.setProperty("terminology", "HKFT-MEDS");
+    p.setProperty("version", "latest");
+    p.setProperty("input.dir", "../config/mldp/src/main/resources/data/meds");
+    if (System.getProperty("input.dir") != null) {
+      p.setProperty("input.dir", System.getProperty("input.dir"));
+    }
+    request.setProperties(p);
+    request.setDebug(false);
+    invoker = new DefaultInvoker();
+    result = invoker.execute(request);
+    if (result.getExitCode() != 0) {
+      throw result.getExecutionException();
+    }
+
+    request = new DefaultInvocationRequest();
+    request.setPomFile(new File("../admin/pom.xml"));
+    request.setProfiles(Arrays.asList("Simple"));
+    request.setGoals(Arrays.asList("clean", "install"));
+    p = new Properties();
+    p.setProperty("run.config.umls", System.getProperty("run.config.umls"));
+    p.setProperty("server", server);
+    p.setProperty("mode", "create");
+    p.setProperty("terminology", "HKFT-CONDITIONS");
+    p.setProperty("version", "latest");
+    p.setProperty("input.dir",
+        "../config/mldp/src/main/resources/data/conditions");
+    if (System.getProperty("input.dir") != null) {
+      p.setProperty("input.dir", System.getProperty("input.dir"));
+    }
+    request.setProperties(p);
+    request.setDebug(false);
+    invoker = new DefaultInvoker();
+    result = invoker.execute(request);
+    if (result.getExitCode() != 0) {
+      throw result.getExecutionException();
+    }
+
+    request = new DefaultInvocationRequest();
+    request.setPomFile(new File("../admin/pom.xml"));
+    request.setProfiles(Arrays.asList("Simple"));
+    request.setGoals(Arrays.asList("clean", "install"));
+    p = new Properties();
+    p.setProperty("run.config.umls", System.getProperty("run.config.umls"));
+    p.setProperty("server", server);
+    p.setProperty("mode", "create");
+    p.setProperty("terminology", "HKFT-PROCEDURES");
+    p.setProperty("version", "latest");
+    p.setProperty("input.dir",
+        "../config/mldp/src/main/resources/data/procedures");
+    if (System.getProperty("input.dir") != null) {
+      p.setProperty("input.dir", System.getProperty("input.dir"));
+    }
+    request.setProperties(p);
+    request.setDebug(false);
+    invoker = new DefaultInvoker();
+    result = invoker.execute(request);
+    if (result.getExitCode() != 0) {
+      throw result.getExecutionException();
+    }
+
+    // Load lab acronym config files
+    request = new DefaultInvocationRequest();
+    request.setPomFile(new File("../admin/pom.xml"));
+    request.setProfiles(Arrays.asList("LoadConfig"));
+    request.setGoals(Arrays.asList("clean", "install"));
+    p = new Properties();
+    p.setProperty("run.config.umls", System.getProperty("run.config.umls"));
+    p.setProperty("type", "labAbbr");
+    p.setProperty("input.file",
+        "../config/mldp/src/main/resources/data/labs/labAbbr.txt");
+    request.setProperties(p);
+    request.setDebug(false);
+    invoker = new DefaultInvoker();
+    result = invoker.execute(request);
+    if (result.getExitCode() != 0) {
+      throw result.getExecutionException();
+    }
+    // Load lab sy config files
+    request = new DefaultInvocationRequest();
+    request.setPomFile(new File("../admin/pom.xml"));
+    request.setProfiles(Arrays.asList("LoadConfig"));
+    request.setGoals(Arrays.asList("clean", "install"));
+    p = new Properties();
+    p.setProperty("run.config.umls", System.getProperty("run.config.umls"));
+    p.setProperty("type", "labSy");
+    p.setProperty("input.file",
+        "../config/mldp/src/main/resources/data/labs/labSy.txt");
+    request.setProperties(p);
+    request.setDebug(false);
+    invoker = new DefaultInvoker();
+    result = invoker.execute(request);
+    if (result.getExitCode() != 0) {
+      throw result.getExecutionException();
+    }
+
+
+    // Load meds acronym config files
+    request = new DefaultInvocationRequest();
+    request.setPomFile(new File("../admin/pom.xml"));
+    request.setProfiles(Arrays.asList("LoadConfig"));
+    request.setGoals(Arrays.asList("clean", "install"));
+    p = new Properties();
+    p.setProperty("run.config.umls", System.getProperty("run.config.umls"));
+    p.setProperty("type", "medAbbr");
+    p.setProperty("input.file",
+        "../config/mldp/src/main/resources/data/meds/medAbbr.txt");
+    request.setProperties(p);
+    request.setDebug(false);
+    invoker = new DefaultInvoker();
+    result = invoker.execute(request);
+    if (result.getExitCode() != 0) {
+      throw result.getExecutionException();
+    }
+    
+
+    // Load meds sy config files
+    request = new DefaultInvocationRequest();
+    request.setPomFile(new File("../admin/pom.xml"));
+    request.setProfiles(Arrays.asList("LoadConfig"));
+    request.setGoals(Arrays.asList("clean", "install"));
+    p = new Properties();
+    p.setProperty("run.config.umls", System.getProperty("run.config.umls"));
+    p.setProperty("type", "medSy");
+    p.setProperty("input.file",
+        "../config/mldp/src/main/resources/data/meds/medSy.txt");
+    request.setProperties(p);
+    request.setDebug(false);
+    invoker = new DefaultInvoker();
+    result = invoker.execute(request);
     if (result.getExitCode() != 0) {
       throw result.getExecutionException();
     }
@@ -91,7 +232,26 @@ public class ResetMldpDatabase {
     p.setProperty("run.config.umls", System.getProperty("run.config.umls"));
     p.setProperty("type", "conditionAbbr");
     p.setProperty("input.file",
-        "../config/mldp/src/main/resources/data/conditionAbbr.txt");
+        "../config/mldp/src/main/resources/data/conditions/conditionAbbr.txt");
+    request.setProperties(p);
+    request.setDebug(false);
+    invoker = new DefaultInvoker();
+    result = invoker.execute(request);
+    if (result.getExitCode() != 0) {
+      throw result.getExecutionException();
+    }
+    
+
+    // Load condition sy config files
+    request = new DefaultInvocationRequest();
+    request.setPomFile(new File("../admin/pom.xml"));
+    request.setProfiles(Arrays.asList("LoadConfig"));
+    request.setGoals(Arrays.asList("clean", "install"));
+    p = new Properties();
+    p.setProperty("run.config.umls", System.getProperty("run.config.umls"));
+    p.setProperty("type", "conditionSy");
+    p.setProperty("input.file",
+        "../config/mldp/src/main/resources/data/conditions/conditionSy.txt");
     request.setProperties(p);
     request.setDebug(false);
     invoker = new DefaultInvoker();
@@ -109,7 +269,7 @@ public class ResetMldpDatabase {
     p.setProperty("run.config.umls", System.getProperty("run.config.umls"));
     p.setProperty("type", "procedureAbbr");
     p.setProperty("input.file",
-        "../config/mldp/src/main/resources/data/procedureAbbr.txt");
+        "../config/mldp/src/main/resources/data/procedures/procedureAbbr.txt");
     request.setProperties(p);
     request.setDebug(false);
     invoker = new DefaultInvoker();
@@ -118,6 +278,24 @@ public class ResetMldpDatabase {
       throw result.getExecutionException();
     }
 
+
+    // Load procedure sy config files
+    request = new DefaultInvocationRequest();
+    request.setPomFile(new File("../admin/pom.xml"));
+    request.setProfiles(Arrays.asList("LoadConfig"));
+    request.setGoals(Arrays.asList("clean", "install"));
+    p = new Properties();
+    p.setProperty("run.config.umls", System.getProperty("run.config.umls"));
+    p.setProperty("type", "procedureSy");
+    p.setProperty("input.file",
+        "../config/mldp/src/main/resources/data/procedures/procedureSy.txt");
+    request.setProperties(p);
+    request.setDebug(false);
+    invoker = new DefaultInvoker();
+    result = invoker.execute(request);
+    if (result.getExitCode() != 0) {
+      throw result.getExecutionException();
+    }
     // Generate Sample Data
     // request = new DefaultInvocationRequest();
     // request.setPomFile(new File("../admin/loader/pom.xml"));
