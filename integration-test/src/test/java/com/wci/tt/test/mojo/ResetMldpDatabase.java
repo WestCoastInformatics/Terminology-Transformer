@@ -89,7 +89,7 @@ public class ResetMldpDatabase {
     p = new Properties();
     p.setProperty("run.config.umls", System.getProperty("run.config.umls"));
     p.setProperty("server", server);
-    p.setProperty("mode", "create");
+    p.setProperty("mode", "update");
     p.setProperty("terminology", "HKFT-MEDS");
     p.setProperty("version", "latest");
     p.setProperty("input.dir", "../config/mldp/src/main/resources/data/meds");
@@ -111,7 +111,7 @@ public class ResetMldpDatabase {
     p = new Properties();
     p.setProperty("run.config.umls", System.getProperty("run.config.umls"));
     p.setProperty("server", server);
-    p.setProperty("mode", "create");
+    p.setProperty("mode", "update");
     p.setProperty("terminology", "HKFT-CONDITIONS");
     p.setProperty("version", "latest");
     p.setProperty("input.dir",
@@ -134,7 +134,7 @@ public class ResetMldpDatabase {
     p = new Properties();
     p.setProperty("run.config.umls", System.getProperty("run.config.umls"));
     p.setProperty("server", server);
-    p.setProperty("mode", "create");
+    p.setProperty("mode", "update");
     p.setProperty("terminology", "HKFT-PROCEDURES");
     p.setProperty("version", "latest");
     p.setProperty("input.dir",
