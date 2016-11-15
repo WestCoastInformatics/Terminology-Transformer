@@ -14,6 +14,7 @@
     <!-- TODO: could make this based on a dynamically downloaded .jar file, but that 
       could get complicated, use dependency:get of dependency plugin for that -->
     <class>com.wci.umls.server.jpa.content.AtomJpa</class>
+    <class>com.wci.umls.server.jpa.content.AtomNoteJpa</class>
     <class>com.wci.umls.server.jpa.content.AtomRelationshipJpa</class>
     <class>com.wci.umls.server.jpa.content.AtomSubsetJpa</class>
     <class>com.wci.umls.server.jpa.content.AtomSubsetMemberJpa</class>
