@@ -6,8 +6,6 @@ package com.wci.tt.jpa.services.handlers;
 import java.io.File;
 import java.util.Properties;
 
-import org.apache.log4j.Logger;
-
 import com.wci.tt.jpa.services.algo.NdcLoaderAlgorithm;
 import com.wci.umls.server.SourceData;
 import com.wci.umls.server.ValidationResult;
@@ -18,8 +16,6 @@ import com.wci.umls.server.jpa.services.handlers.AbstractSourceDataHandler;
 import com.wci.umls.server.jpa.services.rest.SecurityServiceRest;
 import com.wci.umls.server.rest.impl.SecurityServiceRestImpl;
 import com.wci.umls.server.services.SourceDataService;
-import com.wci.umls.server.services.helpers.ProgressEvent;
-import com.wci.umls.server.services.helpers.ProgressListener;
 
 /**
  * Source data handler to load RXNORM for NDC related searches.
@@ -32,7 +28,7 @@ public class NdcSourceDataHandler extends AbstractSourceDataHandler {
   /**
    * Instantiates an empty {@link NdcSourceDataHandler}.
    */
-  public NdcSourceDataHandler() {
+  public NdcSourceDataHandler() throws Exception {
     // n/a
   }
 
@@ -114,30 +110,6 @@ public class NdcSourceDataHandler extends AbstractSourceDataHandler {
     // n/a
   }
 
-  /**
-   * Fires a {@link ProgressEvent}.
-   * @param pct percent done
-   * @param note progress note
-   */
-  public void fireProgressEvent(int pct, String note) {
-    ProgressEvent pe = new ProgressEvent(this, pct, pct, note);
-    for (int i = 0; i < listeners.size(); i++) {
-      listeners.get(i).updateProgress(pe);
-    }
-    Logger.getLogger(getClass()).info("    " + pct + "% " + note);
-  }
-
-  /* see superclass */
-  @Override
-  public void addProgressListener(ProgressListener l) {
-    listeners.add(l);
-  }
-
-  /* see superclass */
-  @Override
-  public void removeProgressListener(ProgressListener l) {
-    listeners.remove(l);
-  }
 
   /* see superclass */
   @Override
@@ -170,12 +142,6 @@ public class NdcSourceDataHandler extends AbstractSourceDataHandler {
   @Override
   public void close() throws Exception {
     // n/a
-  }
-
-  @Override
-  public boolean checkPreconditions() throws Exception {
-    // n/a
-    return false;
   }
 
   @Override
