@@ -45,8 +45,8 @@ public class TransformerSearchHandler implements SearchHandler {
   @Override
   public <T extends HasId> List<T> getQueryResults(String terminology,
     String version, String branch, String query, String literalField,
-    Class<?> fieldNamesKey, Class<T> clazz, PfsParameter pfs, int[] totalCt,
-    EntityManager manager) throws Exception {
+    Class<T> clazz, PfsParameter pfs, int[] totalCt, EntityManager manager)
+    throws Exception {
 
     // Build an escaped form of the query with wrapped quotes removed
     // This will be used for literal/exact searching
@@ -118,12 +118,12 @@ public class TransformerSearchHandler implements SearchHandler {
       Logger.getLogger(getClass()).info("query = " + finalQuery);
       // Logger.getLogger(getClass())
       // .info("pfs.qr = " + (pfs != null ? pfs.getQueryRestriction() : ""));
-      fullTextQuery = IndexUtility.applyPfsToLuceneQuery(clazz, fieldNamesKey,
+      fullTextQuery = IndexUtility.applyPfsToLuceneQuery(clazz,
           finalQuery.toString(), pfs, manager);
     } catch (ParseException | IllegalArgumentException e) {
       // If there's a parse exception, try the literal query
       Logger.getLogger(getClass()).info("query = " + finalQuery);
-      fullTextQuery = IndexUtility.applyPfsToLuceneQuery(clazz, fieldNamesKey,
+      fullTextQuery = IndexUtility.applyPfsToLuceneQuery(clazz,
           escapedQuery + terminologyClause, pfs, manager);
     }
 
@@ -159,4 +159,18 @@ public class TransformerSearchHandler implements SearchHandler {
   public String getName() {
     return "Transformer Search Handler";
   }
+
+  @Override
+  public void checkProperties(Properties arg0) throws Exception {
+   // do nothing
+  }
+
+  @Override
+  public List<Long> getIdResults(String arg0, String arg1, String arg2,
+    String arg3, String arg4, Class<?> arg5, PfsParameter arg6, int[] arg7,
+    EntityManager arg8) throws Exception {
+    // TODO Decide if this method is needed
+    return null;
+  }
+
 }
