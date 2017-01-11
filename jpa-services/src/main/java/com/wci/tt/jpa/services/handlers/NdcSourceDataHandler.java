@@ -10,6 +10,7 @@ import org.apache.log4j.Logger;
 
 import com.wci.tt.jpa.services.algo.NdcLoaderAlgorithm;
 import com.wci.umls.server.SourceData;
+import com.wci.umls.server.ValidationResult;
 import com.wci.umls.server.helpers.ConfigUtility;
 import com.wci.umls.server.helpers.LocalException;
 import com.wci.umls.server.jpa.services.SourceDataServiceJpa;
@@ -175,6 +176,18 @@ public class NdcSourceDataHandler extends AbstractSourceDataHandler {
   public boolean checkPreconditions() throws Exception {
     // n/a
     return false;
+  }
+
+  @Override
+  public ValidationResult checkPreconditions() throws Exception {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+  @Override
+  public void checkProperties(Properties arg0) throws Exception {
+    // TODO Auto-generated method stub
+    
   }
 
 }

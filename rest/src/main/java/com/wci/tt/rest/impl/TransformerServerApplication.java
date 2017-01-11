@@ -4,30 +4,26 @@
 package com.wci.tt.rest.impl;
 
 import java.util.Calendar;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import javax.ws.rs.ApplicationPath;
-import javax.ws.rs.core.Application;
 
 import org.apache.log4j.Logger;
-import org.glassfish.jersey.jackson.JacksonFeature;
-import org.glassfish.jersey.jsonp.JsonProcessingFeature;
-import org.glassfish.jersey.media.multipart.MultiPartFeature;
+import org.glassfish.jersey.server.ResourceConfig;
 
 import com.wci.umls.server.helpers.ConfigUtility;
 import com.wci.umls.server.jpa.services.MetadataServiceJpa;
 import com.wci.umls.server.rest.impl.ConfigureServiceRestImpl;
 import com.wci.umls.server.services.MetadataService;
-import com.wordnik.swagger.jaxrs.config.BeanConfig;
+
+import io.swagger.jaxrs.config.BeanConfig;
 
 /**
  * Transformer applicatgion entry point (for jersey).
  */
 @ApplicationPath("/")
-public class TransformerServerApplication extends Application {
+public class TransformerServerApplication extends ResourceConfig {
 
   /** The API_VERSION - also used in "swagger.htmL" */
   public final static String API_VERSION = "1.0.0";
@@ -43,6 +39,15 @@ public class TransformerServerApplication extends Application {
   public TransformerServerApplication() throws Exception {
     Logger.getLogger(getClass())
         .info("WCI Terminology Transformer APPLICATION START");
+    
+    // register REST implementations
+    register(NdcServiceRestImpl.class);
+    
+    // register swagger classes
+    register(io.swagger.jaxrs.listing.ApiListingResource.class);
+    register(io.swagger.jaxrs.listing.SwaggerSerializers.class);
+    
+    
     BeanConfig beanConfig = new BeanConfig();
     beanConfig.setTitle("WCI Terminology Transformer service API");
     beanConfig.setDescription("RESTful calls for WCI Terminology Transformer");
@@ -91,36 +96,5 @@ public class TransformerServerApplication extends Application {
     }
   }
 
-  /* see superclass */
-  @Override
-  public Set<Class<?>> getClasses() {
-    final Set<Class<?>> classes = new HashSet<Class<?>>();
-    // Need configure and security services
-    classes.add(ConfigureServiceRestImpl.class);
-    // classes.add(SecurityServiceRestImpl.class);
-
-    // Need transformer services
-    // classes.add(TransformServiceRestImpl.class);
-    classes.add(NdcServiceRestImpl.class);
-    classes
-        .add(com.wordnik.swagger.jersey.listing.ApiListingResourceJSON.class);
-    classes.add(
-        com.wordnik.swagger.jersey.listing.JerseyApiDeclarationProvider.class);
-    classes.add(
-        com.wordnik.swagger.jersey.listing.JerseyResourceListingProvider.class);
-    return classes;
-  }
-
-  /* see superclass */
-  @Override
-  public Set<Object> getSingletons() {
-    final Set<Object> instances = new HashSet<Object>();
-    instances.add(new JacksonFeature());
-    instances.add(new JsonProcessingFeature());
-    instances.add(new MultiPartFeature());
-    // Enable for LOTS of logging of HTTP requests
-    // instances.add(new LoggingFilter());
-    return instances;
-  }
 
 }

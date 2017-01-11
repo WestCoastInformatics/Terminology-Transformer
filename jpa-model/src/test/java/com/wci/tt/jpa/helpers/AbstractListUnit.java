@@ -33,19 +33,16 @@ public class AbstractListUnit<T> {
     T object2) throws Exception {
 
     assertTrue(list.getObjects().size() == 0);
-    assertTrue(list.getCount() == 0);
     assertTrue(list.getTotalCount() == 0);
 
     list.getObjects().add(object1);
     assertTrue(list.getObjects().size() == 1);
-    assertTrue(list.getCount() == 1);
     assertTrue(list.getTotalCount() == 0);
 
     assertFalse(list.contains(object2));
 
     list.getObjects().add(object2);
     assertTrue(list.getObjects().size() == 2);
-    assertTrue(list.getCount() == 2);
     assertTrue(list.getTotalCount() == 0);
 
     assertTrue(list.contains(object1));
@@ -62,12 +59,10 @@ public class AbstractListUnit<T> {
 
     list.getObjects().remove(object1);
     assertTrue(list.getObjects().size() == 1);
-    assertTrue(list.getCount() == 1);
     assertTrue(list.getTotalCount() == 5);
 
     list.getObjects().remove(object2);
     assertTrue(list.getObjects().size() == 0);
-    assertTrue(list.getCount() == 0);
     assertTrue(list.getTotalCount() == 5);
 
     List<T> list3 = new ArrayList<T>();
@@ -75,7 +70,6 @@ public class AbstractListUnit<T> {
     list3.add(object2);
     list.setObjects(list3);
     assertTrue(list.getObjects().size() == 2);
-    assertTrue(list.getCount() == 2);
     assertTrue(list.getTotalCount() == 5);
     assertTrue(list.equals(list2));
 
@@ -101,24 +95,16 @@ public class AbstractListUnit<T> {
     list3.add(object2);
 
     assertTrue(list.getObjects().size() == 2);
-    assertTrue(list.getCount() == 2);
 
     list3.remove(object1);
     list3.remove(object2);
     assertTrue(list.getObjects().size() == 0);
-    assertTrue(list.getCount() == 0);
     assertFalse(list.contains(object1));
 
     // Set underlying object to null then try to add an object
     list.setObjects(null);
     try {
       list.getObjects().add(object1);
-      fail("Expected exception did not occur.");
-    } catch (Exception e) {
-      // expected outcome
-    }
-    try {
-      list.getCount();
       fail("Expected exception did not occur.");
     } catch (Exception e) {
       // expected outcome
@@ -141,35 +127,26 @@ public class AbstractListUnit<T> {
     // add and remove null
     list.getObjects().add(null);
     assertTrue(list.getObjects().size() == 1);
-    assertTrue(list.getCount() == 1);
     list.getObjects().remove(null);
     assertTrue(list.getObjects().size() == 0);
-    assertTrue(list.getCount() == 0);
 
     // add the same thing multiple times and remove it multiple times
     list.getObjects().add(object1);
     assertTrue(list.getObjects().size() == 1);
-    assertTrue(list.getCount() == 1);
     list.getObjects().add(object1);
     assertTrue(list.getObjects().size() == 2);
-    assertTrue(list.getCount() == 2);
     list.getObjects().remove(object1);
     assertTrue(list.getObjects().size() == 1);
-    assertTrue(list.getCount() == 1);
     list.getObjects().remove(object1);
     assertTrue(list.getObjects().size() == 0);
-    assertTrue(list.getCount() == 0);
 
     // add once and remove multiple times
     list.getObjects().add(object1);
     assertTrue(list.getObjects().size() == 1);
-    assertTrue(list.getCount() == 1);
     list.getObjects().remove(object1);
     assertTrue(list.getObjects().size() == 0);
-    assertTrue(list.getCount() == 0);
     list.getObjects().remove(object1);
     assertTrue(list.getObjects().size() == 0);
-    assertTrue(list.getCount() == 0);
 
     // contains null
     assertFalse(list.contains(null));

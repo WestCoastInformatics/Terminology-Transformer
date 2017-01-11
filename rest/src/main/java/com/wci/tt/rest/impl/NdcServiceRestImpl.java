@@ -51,9 +51,10 @@ import com.wci.umls.server.model.content.Atom;
 import com.wci.umls.server.model.content.AtomClass;
 import com.wci.umls.server.rest.impl.RootServiceRestImpl;
 import com.wci.umls.server.services.SecurityService;
-import com.wordnik.swagger.annotations.Api;
-import com.wordnik.swagger.annotations.ApiOperation;
-import com.wordnik.swagger.annotations.ApiParam;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 
 /**
  * Implementation the REST Service for NDC-RXNORM transformations.
@@ -370,7 +371,7 @@ public class NdcServiceRestImpl extends RootServiceRestImpl
       }
       list.setTotalCount(list.getObjects().size());
       // Limit to 20 results
-      if (list.getCount() > 0) {
+      if (list.getObjects().size() > 0) {
         list.setObjects(list.getObjects().subList(0,
             Math.min(20, list.getObjects().size() - 1)));
       }

@@ -33,7 +33,7 @@ public class DataContextListJpa extends AbstractResultList<DataContext>
   /* see superclass */
   @Override
   public String toString() {
-    return "DataContextListJpa [DataContexts=" + getObjects() + ", getCount()="
-        + getCount() + "]";
+    return "DataContextListJpa [DataContexts=" + getObjects() + ", size="
+        + getObjects().size() + "]";
   }
 }

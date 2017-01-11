@@ -131,7 +131,7 @@ public class TransformTest extends RestIntegrationSupport {
     ScoredDataContextList results =
         transformService.identify(inputString, null, adminAuthToken);
     Logger.getLogger(getClass()).info("  results = " + results);
-    assertEquals(1, results.getCount());
+    assertEquals(1, results.getObjects().size());
     ScoredDataContext result = results.getObjects().get(0);
     assertEquals(null, result.getCustomer());
     assertEquals(null, result.getInfoModelClass());
@@ -147,7 +147,7 @@ public class TransformTest extends RestIntegrationSupport {
         transformService.identify(inputString, new DataContextJpa(),
             adminAuthToken);
     Logger.getLogger(getClass()).info("  results = " + results);
-    assertEquals(1, results.getCount());
+    assertEquals(1, results.getObjects().size());
     result = results.getObjects().get(0);
     assertEquals(null, result.getCustomer());
     assertEquals(null, result.getInfoModelClass());
@@ -162,7 +162,7 @@ public class TransformTest extends RestIntegrationSupport {
     results =
         transformService.identify(inputString, inputContext, adminAuthToken);
     Logger.getLogger(getClass()).info("  results = " + results);
-    assertEquals(1, results.getCount());
+    assertEquals(1, results.getObjects().size());
     result = results.getObjects().get(0);
     assertEquals(inputContext.getCustomer(), result.getCustomer());
     assertEquals(inputContext.getInfoModelClass(), result.getInfoModelClass());
@@ -213,7 +213,7 @@ public class TransformTest extends RestIntegrationSupport {
             adminAuthToken);
 
     Logger.getLogger(getClass()).info("  results = " + results);
-    assertEquals(1, results.getCount());
+    assertEquals(1, results.getObjects().size());
     ScoredDataContextTuple result = results.getObjects().get(0);
 
     assertEquals(inputString, result.getData());
@@ -229,7 +229,7 @@ public class TransformTest extends RestIntegrationSupport {
             adminAuthToken);
 
     Logger.getLogger(getClass()).info("  results = " + results);
-    assertEquals(1, results.getCount());
+    assertEquals(1, results.getObjects().size());
 
     result = results.getObjects().get(0);
     assertEquals(inputString, result.getData());
@@ -244,7 +244,7 @@ public class TransformTest extends RestIntegrationSupport {
             adminAuthToken);
 
     Logger.getLogger(getClass()).info("  results = " + results);
-    assertEquals(1, results.getCount());
+    assertEquals(1, results.getObjects().size());
 
     result = results.getObjects().get(0);
     assertEquals(inputString, result.getData());

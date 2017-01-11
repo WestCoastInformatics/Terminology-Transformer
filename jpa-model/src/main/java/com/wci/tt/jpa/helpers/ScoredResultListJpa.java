@@ -30,7 +30,7 @@ public class ScoredResultListJpa extends AbstractResultList<ScoredResult>
   @Override
   public String toString() {
     return "QualityResultListJpa [results=" + getObjects() + ", getCount()="
-        + getCount() + "]";
+        + ", size=" + getObjects().size() + "]";
   }
 
 }
