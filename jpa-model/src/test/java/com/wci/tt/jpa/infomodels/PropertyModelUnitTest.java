@@ -54,6 +54,7 @@ public class PropertyModelUnitTest extends JpaSupport {
   public void testModelGetSet() throws Exception {
     Logger.getLogger(getClass()).debug("TEST " + name.getMethodName());
     GetterSetterTester tester = new GetterSetterTester(object);
+    tester.exclude("properties");
     tester.test();
 
   }
