@@ -264,5 +264,10 @@ public class NdcHistoryModel implements InfoModel<NdcHistoryModel> {
     return "NdcHistoryModel [rxcui=" + rxcui + ", start=" + start + ", end="
         + end + "]";
   }
+  
+  @Override
+  public void checkProperties(Properties arg0) throws Exception {
+   // do nothing
+  }
 
 }

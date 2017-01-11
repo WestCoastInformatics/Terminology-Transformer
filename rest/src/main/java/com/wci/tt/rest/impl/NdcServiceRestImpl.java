@@ -56,8 +56,6 @@ import com.wci.umls.server.services.SecurityService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import io.swagger.annotations.Info;
-import io.swagger.annotations.SwaggerDefinition;
 
 /**
  * Implementation the REST Service for NDC-RXNORM transformations.
@@ -375,7 +373,7 @@ public class NdcServiceRestImpl extends RootServiceRestImpl
       }
       list.setTotalCount(list.getObjects().size());
       // Limit to 20 results
-      if (list.size() > 0) {
+      if (list.getObjects().size() > 0) {
         list.setObjects(list.getObjects().subList(0,
             Math.min(20, list.getObjects().size() - 1)));
       }
@@ -395,7 +393,7 @@ public class NdcServiceRestImpl extends RootServiceRestImpl
   @POST
   @Path("/rxcui/search")
   @ApiOperation(value = "Find RxNorm concept", notes = "Finds RxNorm concept matches for query", response = StringList.class)
-  public SearchResultList findConceptsByQuery(
+  public SearchResultList findConcepts(
     @ApiParam(value = "Query, e.g. 'aspirin'", required = true) @QueryParam("query") String query,
     @ApiParam(value = "Pfs Parameter, e.g. '{\"startIndex\":0, \"maxResults\":10}'", required = false) PfsParameterJpa pfs,
     @ApiParam(value = "Authorization token, e.g. 'guest'", required = true) @HeaderParam("Authorization") String authToken)
@@ -411,7 +409,7 @@ public class NdcServiceRestImpl extends RootServiceRestImpl
       if (ConfigUtility.isEmpty(query)) {
         return new SearchResultListJpa();
       }
-      return contentService.findConcepts("RXNORM",
+     return contentService.findConceptSearchResults("RXNORM",
           contentService.getTerminologyLatestVersion("RXNORM").getVersion(),
           Branch.ROOT, query, pfs);
 

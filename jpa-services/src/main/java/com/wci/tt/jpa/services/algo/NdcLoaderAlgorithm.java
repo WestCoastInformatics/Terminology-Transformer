@@ -69,9 +69,6 @@ public class NdcLoaderAlgorithm extends AbstractTerminologyLoaderAlgorithm {
   /** The loader. */
   private final String loader = "loader";
 
-  /** The published. */
-  private final WorkflowStatus published = WorkflowStatus.PUBLISHED;
-
   /** The concept map. */
   private Map<String, Long> conceptIdMap = new HashMap<>(10000);
 
@@ -353,7 +350,7 @@ public class NdcLoaderAlgorithm extends AbstractTerminologyLoaderAlgorithm {
 
       atom.setTerminologyId(fields[8]);
       atom.setTermType(fields[12].intern());
-      atom.setWorkflowStatus(published);
+      atom.setWorkflowStatus(WorkflowStatus.PUBLISHED);
 
       atom.setConceptId(fields[0]);
       atom.setCodeId("");
@@ -383,7 +380,7 @@ public class NdcLoaderAlgorithm extends AbstractTerminologyLoaderAlgorithm {
         cui.setTerminology(terminology);
         cui.setTerminologyId(fields[0]);
         cui.setVersion(version);
-        cui.setWorkflowStatus(published);
+        cui.setWorkflowStatus(WorkflowStatus.PUBLISHED);
       }
       cui.getAtoms().add(atom);
       prevCui = fields[0];
@@ -702,13 +699,17 @@ public class NdcLoaderAlgorithm extends AbstractTerminologyLoaderAlgorithm {
 
   @Override
   public ValidationResult checkPreconditions() throws Exception {
-    // n/a
-    return new ValidationResultJpa();
+    // unused
+    return null;
   }
 
   @Override
-  public void setProperties(Properties arg0) throws Exception {
-    // n/a
+  public void checkProperties(Properties properties) throws Exception {
+    // unused
   }
 
+  @Override
+  public void setProperties(Properties properties) throws Exception {
+    // unused
+  }
 }

@@ -205,5 +205,10 @@ public class DefaultInfoModel implements InfoModel<DefaultInfoModel> {
   public String toString() {
     return "DefaultInfoModel [code=" + code + ", term=" + term + "]";
   }
+  
+  @Override
+  public void checkProperties(Properties arg0) throws Exception {
+   // do nothing
+  }
 
 }

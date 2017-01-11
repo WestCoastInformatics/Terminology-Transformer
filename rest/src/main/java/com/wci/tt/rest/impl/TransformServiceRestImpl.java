@@ -47,8 +47,6 @@ import com.wci.umls.server.services.handlers.SourceDataHandler;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import io.swagger.annotations.Info;
-import io.swagger.annotations.SwaggerDefinition;
 
 /**
  * Class implementation the REST Service for Transform routines for
@@ -159,7 +157,7 @@ public class TransformServiceRestImpl extends RootServiceRestImpl
         tuples.getObjects().add(tuple);
       }
       Collections.sort(tuples.getObjects());
-      tuples.setTotalCount(tuples.size());
+      tuples.setTotalCount(tuples.getObjects().size());
 
       return tuples;
     } catch (Exception e) {
@@ -189,7 +187,7 @@ public class TransformServiceRestImpl extends RootServiceRestImpl
 
       final StringList list = new StringList();
       list.setObjects(service.getSpecialties());
-      list.setTotalCount(list.size());
+      list.setTotalCount(list.getObjects().size());
       return list;
     } catch (Exception e) {
       handleException(e, "get specialties");
@@ -216,7 +214,7 @@ public class TransformServiceRestImpl extends RootServiceRestImpl
 
       final StringList list = new StringList();
       list.setObjects(service.getSemanticTypes());
-      list.setTotalCount(list.size());
+      list.setTotalCount(list.getObjects().size());
       return list;
     } catch (Exception e) {
       handleException(e, "get stys");

@@ -295,12 +295,12 @@ public class NdcRestTest extends RestIntegrationSupport {
 
     StringList results = ndcService.autocomplete("247", "guest");
     Logger.getLogger(getClass()).info("  results = " + results);
-    assertEquals(20, results.size());
+    assertEquals(20, results.getObjects().size());
     assertEquals(33, results.getTotalCount());
 
     results = ndcService.autocomplete("asp", "guest");
     Logger.getLogger(getClass()).info("  results = " + results);
-    assertEquals(19, results.size());
+    assertEquals(19, results.getObjects().size());
     assertEquals(20, results.getTotalCount());
 
   }

@@ -32,7 +32,7 @@ public class NdcSourceDataHandler extends AbstractSourceDataHandler {
    * @throws Exception the exception
    */
   public NdcSourceDataHandler() throws Exception {
-    super();
+	super()
     // n/a
   }
 
@@ -152,6 +152,12 @@ public class NdcSourceDataHandler extends AbstractSourceDataHandler {
   public ValidationResult checkPreconditions() throws Exception {
     // n/a
     return new ValidationResultJpa();
+  }
+
+  @Override
+  public void checkProperties(Properties arg0) throws Exception {
+    // do nothing
+
   }
 
 }

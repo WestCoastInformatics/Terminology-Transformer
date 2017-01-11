@@ -204,8 +204,8 @@ public class NdcClientRest extends RootClientRest implements NdcServiceRest {
 
   /* see superclass */
   @Override
-  public SearchResultList findConceptsByQuery(String query, PfsParameterJpa pfs,
-    String authToken) throws Exception {
+  public SearchResultList findConcepts(String query,
+    PfsParameterJpa pfs, String authToken) throws Exception {
     Logger.getLogger(getClass()).debug("NDC Client - autocomplete - " + query);
     validateNotEmpty(query, "query");
 

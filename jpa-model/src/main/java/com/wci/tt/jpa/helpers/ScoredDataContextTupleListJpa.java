@@ -28,6 +28,6 @@ public class ScoredDataContextTupleListJpa
   @Override
   public String toString() {
     return "ScoredDataContextTupleListJpa [scoredDataContextTuple="
-        + getObjects() + ", getCount()=" + size() + "]";
+        + getObjects() + ", size=" + getObjects().size() + "]";
   }
 }

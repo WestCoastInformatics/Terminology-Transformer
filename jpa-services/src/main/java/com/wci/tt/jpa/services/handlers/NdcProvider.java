@@ -563,7 +563,8 @@ public class NdcProvider extends AbstractAcceptsHandler
       final List<ConceptJpa> list = handler.getQueryResults("RXNORM",
           service.getTerminologyLatestVersion("RXNORM").getVersion(),
           Branch.ROOT, "atoms.termType:NDC AND atoms.name:" + query, null,
-          ConceptJpa.class, null, totalCt, service.getEntityManager());
+          ConceptJpa.class, null, totalCt,
+          service.getEntityManager());
 
       // Should be a single matching concept
       if (list.size() == 1) {
@@ -654,7 +655,8 @@ public class NdcProvider extends AbstractAcceptsHandler
       final List<ConceptJpa> list = handler.getQueryResults("RXNORM",
           service.getTerminologyLatestVersion("RXNORM").getVersion(),
           Branch.ROOT, "atoms.termType:NDC AND atoms.codeId:" + splsetid, null,
-          ConceptJpa.class, null, totalCt, service.getEntityManager());
+          ConceptJpa.class, null, totalCt,
+          service.getEntityManager());
 
       // list will have each matching concept - e.g. from each version.
       if (list.size() > 0) {
@@ -859,6 +861,11 @@ public class NdcProvider extends AbstractAcceptsHandler
     public int compareTo(RxcuiNdcHistoryRecord o) {
       return (o.ndc + o.version).compareTo(ndc + version);
     }
+  }
+
+  @Override
+  public void checkProperties(Properties arg0) throws Exception {
+    // do nothing
   }
 
 }

@@ -338,4 +338,9 @@ public class RxcuiModel implements InfoModel<RxcuiModel> {
         + rxcuiName + ", history=" + history + ", splSetIds=" + splSetIds + "]";
   }
 
+  @Override
+  public void checkProperties(Properties arg0) throws Exception {
+   // do nothing
+  }
+
 }

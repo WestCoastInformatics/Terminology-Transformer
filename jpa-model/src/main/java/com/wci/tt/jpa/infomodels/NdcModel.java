@@ -416,5 +416,10 @@ public class NdcModel implements InfoModel<NdcModel> {
         + rxcui + ", rxcuiName=" + rxcuiName + ", ndc=" + ndc + ", history="
         + history + "]";
   }
+  
+  @Override
+  public void checkProperties(Properties arg0) throws Exception {
+   // do nothing
+  }
 
 }

@@ -11,8 +11,7 @@ import java.util.TimerTask;
 import javax.ws.rs.ApplicationPath;
 
 import org.apache.log4j.Logger;
-import org.glassfish.jersey.jackson.JacksonFeature;
-import org.glassfish.jersey.media.multipart.MultiPartFeature;
+import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.server.ResourceConfig;
 
 import com.fasterxml.jackson.module.jaxb.JaxbAnnotationModule;
@@ -23,7 +22,6 @@ import com.wci.umls.server.rest.impl.ObjectMapperProvider;
 import com.wci.umls.server.services.MetadataService;
 
 import io.swagger.jaxrs.config.BeanConfig;
-import io.swagger.util.Json;
 
 /**
  * Transformer application entry point (for jersey).
@@ -59,6 +57,15 @@ public class TransformerServerApplication extends ResourceConfig {
     register(io.swagger.jaxrs.listing.SwaggerSerializers.class);
 
     // Instantiate bean config
+    
+    // register REST implementations
+    register(NdcServiceRestImpl.class);
+    
+    // register swagger classes
+    register(io.swagger.jaxrs.listing.ApiListingResource.class);
+    register(io.swagger.jaxrs.listing.SwaggerSerializers.class);
+    
+    
     BeanConfig beanConfig = new BeanConfig();
     beanConfig.setTitle("Transformer API");
     beanConfig.setDescription("RESTful calls for transformer");
@@ -118,5 +125,6 @@ public class TransformerServerApplication extends ResourceConfig {
       }
     }
   }
+
 
 }
