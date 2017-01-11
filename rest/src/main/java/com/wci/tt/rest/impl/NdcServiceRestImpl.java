@@ -391,7 +391,7 @@ public class NdcServiceRestImpl extends RootServiceRestImpl
   @POST
   @Path("/rxcui/search")
   @ApiOperation(value = "Find RxNorm concept", notes = "Finds RxNorm concept matches for query", response = StringList.class)
-  public SearchResultList findConceptsByQuery(
+  public SearchResultList findConcepts(
     @ApiParam(value = "Query, e.g. 'aspirin'", required = true) @QueryParam("query") String query,
     @ApiParam(value = "Pfs Parameter, e.g. '{\"startIndex\":0, \"maxResults\":10}'", required = false) PfsParameterJpa pfs,
     @ApiParam(value = "Authorization token, e.g. 'guest'", required = true) @HeaderParam("Authorization") String authToken)
@@ -407,7 +407,7 @@ public class NdcServiceRestImpl extends RootServiceRestImpl
       if (query == null || query == null || query == null) {
         return new SearchResultListJpa();
       }
-      return contentService.findConceptsForQuery("RXNORM",
+     return contentService.findConceptSearchResults("RXNORM",
           contentService.getTerminologyLatestVersion("RXNORM").getVersion(),
           Branch.ROOT, query, pfs);
 

@@ -84,7 +84,7 @@ public interface NdcServiceRest {
    * @return the search result list
    * @throws Exception the exception
    */
-  public SearchResultList findConceptsByQuery(String query,
+  public SearchResultList findConcepts(String query,
     PfsParameterJpa pfs, String authToken) throws Exception;
 
   /**

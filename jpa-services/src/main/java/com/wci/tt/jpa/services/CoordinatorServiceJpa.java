@@ -510,7 +510,8 @@ public class CoordinatorServiceJpa extends ContentServiceJpa
     }
 
     // Step 3: Generate normalized content per accepted data contexts
-    List<ScoredResult> normalizedResults = normalize(inputStr, inputContext, false);
+    List<ScoredResult> normalizedResults =
+        normalize(inputStr, inputContext, false);
 
     final TransformRecord record = new TransformRecordJpa();
     record.setInputString(inputStr);
@@ -843,9 +844,9 @@ public class CoordinatorServiceJpa extends ContentServiceJpa
         .debug("Find transform records - " + query + ", " + pfs);
     final SearchHandler searchHandler = getSearchHandler(ConfigUtility.DEFAULT);
     final int[] totalCt = new int[1];
-    List<TransformRecordJpa> results = searchHandler.getQueryResults(null, null,
-        Branch.ROOT, query, null, TransformRecordJpa.class,
-        TransformRecordJpa.class, pfs, totalCt, getEntityManager());
+    List<TransformRecordJpa> results =
+        searchHandler.getQueryResults(null, null, Branch.ROOT, query, null,
+            TransformRecordJpa.class, pfs, totalCt, getEntityManager());
     TransformRecordList list = new TransformRecordListJpa();
     list.setTotalCount(totalCt[0]);
     list.getObjects().addAll(results);
@@ -874,8 +875,7 @@ public class CoordinatorServiceJpa extends ContentServiceJpa
   public void removeTypeKeyValue(Long typeKeyValueId) throws Exception {
     Logger.getLogger(getClass())
         .debug("Remove type, key, value - " + typeKeyValueId);
-    this.removeObject((TypeKeyValueJpa) getTypeKeyValue(typeKeyValueId),
-        TypeKeyValueJpa.class);
+    this.removeObject((TypeKeyValueJpa) getTypeKeyValue(typeKeyValueId));
   }
 
   /* see superclass */
@@ -893,9 +893,9 @@ public class CoordinatorServiceJpa extends ContentServiceJpa
     Logger.getLogger(getClass()).debug("Find type, key, values - " + query);
     final SearchHandler searchHandler = getSearchHandler(ConfigUtility.DEFAULT);
     final int[] totalCt = new int[1];
-    return new ArrayList<TypeKeyValue>(searchHandler.getQueryResults(null, null,
-        Branch.ROOT, query, null, TypeKeyValueJpa.class, TypeKeyValueJpa.class,
-        null, totalCt, getEntityManager()));
+    return new ArrayList<TypeKeyValue>(
+        searchHandler.getQueryResults(null, null, Branch.ROOT, query, null,
+            TypeKeyValueJpa.class, null, totalCt, getEntityManager()));
   }
 
   /* see superclass */

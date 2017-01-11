@@ -110,7 +110,6 @@ public class NdcSourceDataHandler extends AbstractSourceDataHandler {
     // n/a
   }
 
-
   /* see superclass */
   @Override
   public void cancel() {
@@ -146,14 +145,13 @@ public class NdcSourceDataHandler extends AbstractSourceDataHandler {
 
   @Override
   public ValidationResult checkPreconditions() throws Exception {
-    // TODO Auto-generated method stub
     return null;
   }
 
   @Override
   public void checkProperties(Properties arg0) throws Exception {
-    // TODO Auto-generated method stub
-    
+    // do nothing
+
   }
 
 }

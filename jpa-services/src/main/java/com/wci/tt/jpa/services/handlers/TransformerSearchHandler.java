@@ -169,8 +169,7 @@ public class TransformerSearchHandler implements SearchHandler {
   public List<Long> getIdResults(String arg0, String arg1, String arg2,
     String arg3, String arg4, Class<?> arg5, PfsParameter arg6, int[] arg7,
     EntityManager arg8) throws Exception {
-    // TODO Decide if this method is needed
-    return null;
+    throw new UnsupportedOperationException("get id results not yet supported");
   }
 
 }
