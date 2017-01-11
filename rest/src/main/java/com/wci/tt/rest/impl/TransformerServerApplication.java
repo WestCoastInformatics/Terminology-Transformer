@@ -11,7 +11,8 @@ import java.util.TimerTask;
 import javax.ws.rs.ApplicationPath;
 
 import org.apache.log4j.Logger;
-import org.glassfish.jersey.server.ResourceConfig;
+import org.glassfish.jersey.jackson.JacksonFeature;
+import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 
 import com.fasterxml.jackson.module.jaxb.JaxbAnnotationModule;
@@ -22,6 +23,7 @@ import com.wci.umls.server.rest.impl.ObjectMapperProvider;
 import com.wci.umls.server.services.MetadataService;
 
 import io.swagger.jaxrs.config.BeanConfig;
+import io.swagger.util.Json;
 
 /**
  * Transformer application entry point (for jersey).
