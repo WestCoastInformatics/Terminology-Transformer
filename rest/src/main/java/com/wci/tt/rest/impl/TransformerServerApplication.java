@@ -19,7 +19,11 @@ import com.fasterxml.jackson.module.jaxb.JaxbAnnotationModule;
 import com.wci.umls.server.helpers.ConfigUtility;
 import com.wci.umls.server.jpa.services.MetadataServiceJpa;
 import com.wci.umls.server.rest.impl.ConfigureServiceRestImpl;
+import com.wci.umls.server.rest.impl.ContentServiceRestImpl;
+import com.wci.umls.server.rest.impl.MetadataServiceRestImpl;
 import com.wci.umls.server.rest.impl.ObjectMapperProvider;
+import com.wci.umls.server.rest.impl.ProjectServiceRestImpl;
+import com.wci.umls.server.rest.impl.SecurityServiceRestImpl;
 import com.wci.umls.server.services.MetadataService;
 
 import io.swagger.jaxrs.config.BeanConfig;
@@ -49,7 +53,12 @@ public class TransformerServerApplication extends ResourceConfig {
         MultiPartFeature.class);
     Logger.getLogger(getClass()).info("TRANSFORMER APPLICATION START");
 
+    // register REST implementations
     register(ConfigureServiceRestImpl.class);
+    register(SecurityServiceRestImpl.class);
+    register(ProjectServiceRestImpl.class);
+    register(MetadataServiceRestImpl.class);
+    register(ContentServiceRestImpl.class);
 
     // Need transformer services
     register(NdcServiceRestImpl.class);
@@ -59,15 +68,6 @@ public class TransformerServerApplication extends ResourceConfig {
     register(io.swagger.jaxrs.listing.SwaggerSerializers.class);
 
     // Instantiate bean config
-    
-    // register REST implementations
-    register(NdcServiceRestImpl.class);
-    
-    // register swagger classes
-    register(io.swagger.jaxrs.listing.ApiListingResource.class);
-    register(io.swagger.jaxrs.listing.SwaggerSerializers.class);
-    
-    
     BeanConfig beanConfig = new BeanConfig();
     beanConfig.setTitle("Transformer API");
     beanConfig.setDescription("RESTful calls for transformer");

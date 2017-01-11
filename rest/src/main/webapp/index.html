@@ -41,6 +41,8 @@
 <!-- Library : Angular File Upload -->
 <script type="text/javascript"
   src="lib/angular-file-upload/angular-file-upload.min.js"></script>
+  <!-- Angular file upload script must be after angular.js -->
+<script src="lib/ng-file-upload/ng-file-upload.min.js"></script>
 <!-- Library: ngTable -->
 <script type="text/javascript" src="lib/ng-table/ng-table.min.js"></script>
 <link href="lib/ng-table/ng-table.css" rel="stylesheet">
@@ -57,6 +59,10 @@
 <script src="app/util/general/tabController.js"></script>
 <script src="app/util/highlight/highlightFilters.js"></script>
 <script src="app/util/project/projectService.js"></script>
+<script src="app/util/websocket/websocketService.js"></script>
+<script src="app/util/security/securityService.js"></script>
+<script src="app/util/content/contentService.js"></script>
+<script src="app/util/metadata/metadataService.js"></script>
 
 <!-- UTS page elements and controllers -->
 <script src="app/page/header/headerController.js"></script>
@@ -65,6 +71,10 @@
 <script src="app/page/license/licenseController.js"></script>
 <script src="app/page/login/loginController.js"></script>
 <script src="app/page/configure/configureController.js"></script>
+<script src="app/page/metadata/metadataController.js"></script>
+<script src="app/page/content/contentController.js"></script>
+<script src="app/page/admin/adminController.js"></script>
+<script src="app/page/terminology/terminologyController.js"></script>
 
 <!-- Transformer services and controllers -->
 <script src="app/page/ndc/ndcController.js"></script>
@@ -75,7 +85,10 @@
 <script src="app/component/log/log.js"></script>
 
 <!-- UTS utilities and misc directives -->
+<script src="app/page/header/headerDirective.js"></script>
+<script src="app/page/footer/footerDirective.js"></script>
 <script src="app/util/pager/pager.js"></script>
+<script src="app/util/highlight/highlightFilters.js"></script>
 </head>
 <body>
   <!--  Javascript detection -->
