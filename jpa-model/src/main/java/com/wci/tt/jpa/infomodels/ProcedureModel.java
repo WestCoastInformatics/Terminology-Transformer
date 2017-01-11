@@ -356,4 +356,8 @@ public class ProcedureModel implements InfoModel<ProcedureModel> {
         + ", qual=" + qual + "]";
   }
 
+  @Override
+  public void checkProperties(Properties arg0) throws Exception {
+    // n/a
+  }
 }

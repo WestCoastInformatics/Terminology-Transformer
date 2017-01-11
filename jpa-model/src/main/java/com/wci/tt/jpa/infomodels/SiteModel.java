@@ -244,4 +244,8 @@ public class SiteModel implements InfoModel<SiteModel> {
         + ", position=" + position + "]";
   }
 
+  @Override
+  public void checkProperties(Properties arg0) throws Exception {
+    // n/a
+  }
 }

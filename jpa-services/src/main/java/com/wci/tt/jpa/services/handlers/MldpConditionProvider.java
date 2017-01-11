@@ -6,6 +6,7 @@ package com.wci.tt.jpa.services.handlers;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 import org.apache.log4j.Logger;
 
@@ -221,5 +222,10 @@ public class MldpConditionProvider extends AbstractAcceptsHandler
 
     }
     return false;
+  }
+
+  @Override
+  public void checkProperties(Properties arg0) throws Exception {
+    // n/a
   }
 }

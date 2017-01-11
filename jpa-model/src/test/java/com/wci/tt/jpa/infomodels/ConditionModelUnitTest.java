@@ -12,14 +12,12 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.wci.tt.jpa.TestSupport;
+import com.wci.tt.jpa.JpaSupport;
 import com.wci.umls.server.helpers.CopyConstructorTester;
 import com.wci.umls.server.helpers.EqualsHashcodeTester;
 import com.wci.umls.server.helpers.GetterSetterTester;
-import com.wci.umls.server.helpers.TypeKeyValue;
-import com.wci.umls.server.jpa.helpers.IndexedFieldTester;
-import com.wci.umls.server.jpa.helpers.NullableFieldTester;
-import com.wci.umls.server.jpa.helpers.TypeKeyValueJpa;
+import com.wci.umls.server.helpers.ProxyTester;
+import com.wci.umls.server.helpers.XmlSerializationTester;
 
 /**
  * Unit testing for {@link ConditionModel}.

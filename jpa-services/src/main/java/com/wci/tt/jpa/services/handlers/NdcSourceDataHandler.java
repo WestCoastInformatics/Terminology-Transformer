@@ -32,7 +32,7 @@ public class NdcSourceDataHandler extends AbstractSourceDataHandler {
    * @throws Exception the exception
    */
   public NdcSourceDataHandler() throws Exception {
-	super()
+	super();
     // n/a
   }
 

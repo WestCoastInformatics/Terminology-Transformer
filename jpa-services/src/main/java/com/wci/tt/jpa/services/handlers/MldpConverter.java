@@ -177,4 +177,8 @@ public class MldpConverter extends AbstractAcceptsHandler
     // n/a - nothing opened
   }
 
+  @Override
+  public void checkProperties(Properties arg0) throws Exception {
+    // n/a
+  }
 }

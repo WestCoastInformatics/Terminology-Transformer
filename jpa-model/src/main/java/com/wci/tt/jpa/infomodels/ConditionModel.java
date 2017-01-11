@@ -363,4 +363,9 @@ public class ConditionModel implements InfoModel<ConditionModel> {
         + ", severity=" + severity + "]";
   }
 
+  @Override
+  public void checkProperties(Properties arg0) throws Exception {
+   // n/a    
+  }
+
 }
