@@ -42,13 +42,16 @@ import com.wci.umls.server.UserRole;
 import com.wci.umls.server.helpers.Branch;
 import com.wci.umls.server.helpers.SearchResultList;
 import com.wci.umls.server.helpers.StringList;
+import com.wci.umls.server.helpers.content.ConceptList;
 import com.wci.umls.server.jpa.content.ConceptJpa;
 import com.wci.umls.server.jpa.helpers.PfsParameterJpa;
+import com.wci.umls.server.jpa.helpers.SearchResultJpa;
 import com.wci.umls.server.jpa.helpers.SearchResultListJpa;
 import com.wci.umls.server.jpa.services.ContentServiceJpa;
 import com.wci.umls.server.jpa.services.SecurityServiceJpa;
 import com.wci.umls.server.model.content.Atom;
 import com.wci.umls.server.model.content.AtomClass;
+import com.wci.umls.server.model.content.Concept;
 import com.wci.umls.server.rest.impl.RootServiceRestImpl;
 import com.wci.umls.server.services.SecurityService;
 
@@ -407,10 +410,22 @@ public class NdcServiceRestImpl extends RootServiceRestImpl
       if (query == null || query == null || query == null) {
         return new SearchResultListJpa();
       }
-      return contentService.findConceptsForQuery("RXNORM",
+      ConceptList concepts = contentService.findConcepts("RXNORM",
           contentService.getTerminologyLatestVersion("RXNORM").getVersion(),
           Branch.ROOT, query, pfs);
 
+      SearchResultList searchResults = new SearchResultListJpa();
+      for (Concept concept : concepts.getObjects()) {
+        SearchResultJpa searchResult = new SearchResultJpa();
+        searchResult.setId(concept.getId());
+        searchResult.setTerminologyId(concept.getTerminologyId());
+        searchResult.setTerminology(concept.getTerminology());
+        searchResult.setVersion(concept.getVersion());
+        searchResult.setValue(concept.getName());
+        searchResult.setType(concept.getType());
+        searchResults.getObjects().add(searchResult);
+      }
+      return searchResults;
     } catch (Exception e) {
       handleException(e, "trying to find RxNorm concepts");
       return null;
