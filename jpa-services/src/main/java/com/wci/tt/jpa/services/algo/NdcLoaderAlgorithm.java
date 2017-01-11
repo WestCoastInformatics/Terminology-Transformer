@@ -9,12 +9,14 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
 
 import com.wci.tt.helpers.ScoredResult;
 import com.wci.tt.jpa.services.handlers.NdcNormalizer;
+import com.wci.umls.server.ValidationResult;
 import com.wci.umls.server.helpers.ConfigUtility;
 import com.wci.umls.server.helpers.FieldedStringTokenizer;
 import com.wci.umls.server.helpers.PrecedenceList;
@@ -33,6 +35,7 @@ import com.wci.umls.server.model.content.Concept;
 import com.wci.umls.server.model.meta.IdType;
 import com.wci.umls.server.model.meta.RootTerminology;
 import com.wci.umls.server.model.meta.Terminology;
+import com.wci.umls.server.model.workflow.WorkflowStatus;
 import com.wci.umls.server.services.RootService;
 import com.wci.umls.server.services.helpers.PushBackReader;
 
@@ -64,9 +67,6 @@ public class NdcLoaderAlgorithm extends AbstractTerminologyLoaderAlgorithm {
 
   /** The loader. */
   private final String loader = "loader";
-
-  /** The published. */
-  private final String published = "PUBLISHED";
 
   /** The concept map. */
   private Map<String, Long> conceptIdMap = new HashMap<>(10000);
@@ -246,7 +246,7 @@ public class NdcLoaderAlgorithm extends AbstractTerminologyLoaderAlgorithm {
       commitClearBegin();
 
       // Load the content
-      list = getDefaultPrecedenceList(getTerminology(), getVersion());
+      list = getPrecedenceList(getTerminology(), getVersion());
       loadMrconso();
 
       // Attributes
@@ -343,7 +343,7 @@ public class NdcLoaderAlgorithm extends AbstractTerminologyLoaderAlgorithm {
 
       atom.setTerminologyId(fields[8]);
       atom.setTermType(fields[12].intern());
-      atom.setWorkflowStatus(published);
+      atom.setWorkflowStatus(WorkflowStatus.PUBLISHED);
 
       atom.setConceptId(fields[0]);
       atom.setCodeId("");
@@ -373,7 +373,7 @@ public class NdcLoaderAlgorithm extends AbstractTerminologyLoaderAlgorithm {
         cui.setTerminology(terminology);
         cui.setTerminologyId(fields[0]);
         cui.setVersion(version);
-        cui.setWorkflowStatus(published);
+        cui.setWorkflowStatus(WorkflowStatus.PUBLISHED);
       }
       cui.getAtoms().add(atom);
       prevCui = fields[0];
@@ -688,18 +688,18 @@ public class NdcLoaderAlgorithm extends AbstractTerminologyLoaderAlgorithm {
   }
 
   @Override
-  public void computeTransitiveClosures() throws Exception {
-    // n/a - do nothing
+  public ValidationResult checkPreconditions() throws Exception {
+    // unused
+    return null;
   }
 
   @Override
-  public void computeTreePositions() throws Exception {
-    // n/a - do nothing
+  public void checkProperties(Properties properties) throws Exception {
+    // unused
   }
 
   @Override
-  public void computeExpressionIndexes() throws Exception {
-    // n/a - do nothing
+  public void setProperties(Properties properties) throws Exception {
+    // unused
   }
-
 }
