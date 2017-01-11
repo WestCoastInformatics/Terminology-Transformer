@@ -152,4 +152,9 @@ public class DefaultProvider extends AbstractAcceptsHandler
     // Initial setup until specific rules defined
     return providerEvidenceMap;
   }
+  
+  @Override
+  public void checkProperties(Properties arg0) throws Exception {
+   // do nothing
+  }
 }

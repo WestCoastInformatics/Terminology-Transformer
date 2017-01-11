@@ -98,5 +98,10 @@ public class NdcConverter extends AbstractAcceptsHandler
   public void close() throws Exception {
     // n/a - nothing opened
   }
+  
+  @Override
+  public void checkProperties(Properties arg0) throws Exception {
+   // do nothing
+  }
 
 }

@@ -852,5 +852,10 @@ public class NdcProvider extends AbstractAcceptsHandler
       return (o.ndc + o.version).compareTo(ndc + version);
     }
   }
+  
+  @Override
+  public void checkProperties(Properties arg0) throws Exception {
+   // do nothing
+  }
 
 }

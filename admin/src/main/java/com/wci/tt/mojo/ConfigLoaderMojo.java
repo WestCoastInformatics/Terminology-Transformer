@@ -11,11 +11,11 @@ import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 
-import com.wci.tt.helpers.TypeKeyValue;
-import com.wci.tt.jpa.helpers.TypeKeyValueJpa;
 import com.wci.tt.jpa.services.CoordinatorServiceJpa;
 import com.wci.tt.services.CoordinatorService;
 import com.wci.umls.server.helpers.FieldedStringTokenizer;
+import com.wci.umls.server.helpers.TypeKeyValue;
+import com.wci.umls.server.jpa.helpers.TypeKeyValueJpa;
 import com.wci.umls.server.services.handlers.ExceptionHandler;
 
 /**

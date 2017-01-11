@@ -10,11 +10,11 @@ import java.util.Set;
 import java.util.TreeMap;
 
 import com.wci.tt.DataContext;
-import com.wci.tt.helpers.TypeKeyValue;
 import com.wci.tt.jpa.services.CoordinatorServiceJpa;
 import com.wci.tt.services.CoordinatorService;
 import com.wci.tt.services.handlers.NormalizerHandler;
 import com.wci.umls.server.helpers.FieldedStringTokenizer;
+import com.wci.umls.server.helpers.TypeKeyValue;
 
 /**
  * Abstract implementation of {@link NormalizerHandler}.

@@ -202,5 +202,10 @@ public class NdcPropertiesListModel
   public String toString() {
     return "NdcPropertiesModelList [list=" + list + "]";
   }
+  
+  @Override
+  public void checkProperties(Properties arg0) throws Exception {
+   // do nothing
+  }
 
 }

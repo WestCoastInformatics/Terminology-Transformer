@@ -248,4 +248,10 @@ public class PropertyModel implements InfoModel<PropertyModel> {
       return null;
     }
   }
+  
+  @Override
+  public void checkProperties(Properties arg0) throws Exception {
+   // do nothing
+  }
+
 }

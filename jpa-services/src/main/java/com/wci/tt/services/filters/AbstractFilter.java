@@ -12,10 +12,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-import com.wci.tt.helpers.TypeKeyValue;
 import com.wci.tt.jpa.services.CoordinatorServiceJpa;
 import com.wci.tt.services.CoordinatorService;
 import com.wci.umls.server.helpers.ConfigUtility;
+import com.wci.umls.server.helpers.TypeKeyValue;
 
 /**
  * Abstract {@link Filter} to be used as a superclass.

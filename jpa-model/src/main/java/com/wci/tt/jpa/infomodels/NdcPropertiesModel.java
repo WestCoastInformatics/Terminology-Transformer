@@ -421,5 +421,10 @@ public class NdcPropertiesModel implements InfoModel<NdcPropertiesModel> {
         + ",ndc11=" + ndc11 + ", ndc10=" + ndc10 + ", ndc9=" + ndc9
         + ", splSetId=" + splSetId + ", propertyList=" + propertyList + "]";
   }
+  
+  @Override
+  public void checkProperties(Properties arg0) throws Exception {
+   // do nothing
+  }
 
 }

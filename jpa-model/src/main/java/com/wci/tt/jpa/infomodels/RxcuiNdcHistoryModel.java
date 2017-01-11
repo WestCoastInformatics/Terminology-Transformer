@@ -264,4 +264,10 @@ public class RxcuiNdcHistoryModel implements InfoModel<RxcuiNdcHistoryModel> {
         + "]";
   }
 
+  @Override
+  public void checkProperties(Properties arg0) throws Exception {
+    // do nothing
+    
+  }
+
 }
