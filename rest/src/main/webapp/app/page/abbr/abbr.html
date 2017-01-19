@@ -1,0 +1,86 @@
+<!-- Controlled by AbbrCtrl (in abbrController.js)  -->
+<div class="row">
+
+  <!-- Content -->
+  <div class="col-md-12 col-xs-12">
+    <!-- Abbreviation Management section -->
+
+    <h4
+      ng-show="user.applicationRole == 'ADMINISTRATOR' || user.applicationRole == 'USER'">Abbreviation
+      Management</h4>
+
+
+
+    <div class="row">
+      <div class="col-md-6">
+
+        <div class="row">
+
+          Select Type: <select ng-model="selected.abbrType"
+            ng-options="type as type for type in lists.abbrTypes"
+            ng-change="findAbbreviations()"></select>
+
+          <div pager paging="paging['abbr']"
+            count="selected.abbrs.totalCount"
+            callbacks="paging['abbr'].callbacks"></div>
+            
+            {{selected.abbrs.totalCount}}
+          <span class="btn btn-xs btn-primary pull-right"
+            ng-click="createAbbreviation()">Add</span>  
+
+        </div>
+        <table class="slim table table-hover" style="margin-top: 10px;"
+          ng-show="selected.abbrs.typeKeyValues.length > 0">
+          <thead>
+            <th>Abbreviation</th>
+            <th>Full Word</th>
+          <tbody>
+            <!-- table-hover makes use of the active class -->
+            <tr ng-class="{selected: abbr.id == selected.abbr.id}"
+              ng-repeat="abbr in selected.abbrs.typeKeyValues"
+              ng-click="setAbbreviation(abbr)">
+              <td class="col-md-3 col-xs-3">{{abbr.key}}</td>
+              <td class="col-md-9 col-xs-9">{{abbr.value}}</td>
+            </tr>
+          </tbody>
+        </table>
+
+      </div>
+      <div class="col-md-6" ng-show="selected.abbr">
+        <h5>
+          <span ng-show="!selected.abbr.id">Add</span><span
+            ng-show="selected.abbr.id">Edit</span> Abbreviation
+        </h5>
+        <table class="">
+          <tr class="row">
+            <td class="col-md-3">Abbr</td>
+            <td class="col-md-9"><textarea style="width: 100%;"
+                ng-model="selected.abbr.key"></textarea></td>
+          </tr>
+          <tr class="row">
+            <td class="col-md-3">Full Word</td>
+            <td class="col-md-9"><textarea style="width: 100%;"
+                ng-model="selected.abbr.value"></textarea></td>
+          </tr>
+          <tr class="row">
+            <td class="col-md-3"></td>
+            <td class="col-md-9"><span class="btn btn-xs btn-primary"
+              ng-click="addAbbreviation(selected.abbr)"
+              ng-show="!selected.abbr.id">Add</span> <span
+              class="btn btn-xs btn-primary"
+              ng-click="updateAbbreviation(selected.abbr)"
+              ng-show="selected.abbr.id">Update</span> <span
+              class="btn btn-xs btn-warning" ng-click="cancelAbbreviation()">Cancel</span><span
+              confirm="Are you sure?" ng-show="selected.abbr.id"
+              ng-click="removeAbbreviation(selected.abbr)"
+              class="btn btn-xs btn-danger pull-right">Remove</span></td>
+          </tr>
+        </table>
+
+
+        <pre>{{selected.abbr}}</pre>
+      </div>
+    </div>
+  </div>
+
+</div>

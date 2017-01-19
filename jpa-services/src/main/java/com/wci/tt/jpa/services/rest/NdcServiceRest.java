@@ -11,7 +11,10 @@ import com.wci.tt.jpa.infomodels.NdcPropertiesModel;
 import com.wci.tt.jpa.infomodels.RxcuiModel;
 import com.wci.umls.server.helpers.SearchResultList;
 import com.wci.umls.server.helpers.StringList;
+import com.wci.umls.server.helpers.TypeKeyValue;
+import com.wci.umls.server.helpers.TypeKeyValueList;
 import com.wci.umls.server.jpa.helpers.PfsParameterJpa;
+import com.wci.umls.server.jpa.helpers.TypeKeyValueJpa;
 
 /**
  * REST interface for handling NDC-RXNORM transformations.
@@ -110,5 +113,18 @@ public interface NdcServiceRest {
    */
   public List<RxcuiModel> getRxcuiInfoBatch(List<String> rxcuis,
     Boolean history, String authToken) throws Exception;
+
+  public TypeKeyValue addTypeKeyValue(TypeKeyValueJpa tkv, String authToken)
+    throws Exception;
+
+  public TypeKeyValue getTypeKeyValue(Long id, String authToken) throws Exception;
+
+  public void removeTypeKeyValue(Long id, String authToken) throws Exception;
+
+  public  TypeKeyValueList findTypeKeyValues(String query, PfsParameterJpa pfs,
+    String authToken) throws Exception;
+
+  public  void updateTypeKeyValue(TypeKeyValueJpa tkv, String authToken)
+    throws Exception;
 
 }

@@ -138,6 +138,17 @@ tsApp.run([
               });
             }
 
+            // Abbreviations page
+            if (appConfig['deploy.enabled.tabs']
+              && appConfig['deploy.enabled.tabs'].split(',').indexOf('abbr') != -1) {
+              console.debug('Route enabled: /abbr');
+              $routeProviderReference.when('/abbr', {
+                templateUrl : 'app/page/abbr/abbr.html',
+                controller : 'AbbrCtrl',
+                reloadOnSearch : false
+              });
+            }
+
             // Workflow page
             if (appConfig['deploy.enabled.tabs']
               && appConfig['deploy.enabled.tabs'].split(',').indexOf('workflow') != -1) {
@@ -195,6 +206,18 @@ tsApp.run([
               $routeProviderReference.when('/process', {
                 templateUrl : 'app/page/process/process.html',
                 controller : 'ProcessCtrl',
+                reloadOnSearch : false
+              });
+            }
+
+            // Abbreviations page
+
+            if (appConfig['deploy.enabled.tabs']
+              && appConfig['deploy.enabled.tabs'].split(',').indexOf('abbr') != -1) {
+              console.debug('Route enabled: /abbr');
+              $routeProviderReference.when('/abbr', {
+                templateUrl : 'app/page/abbr/abbr.html',
+                controller : 'AbbrCtrl',
                 reloadOnSearch : false
               });
             }

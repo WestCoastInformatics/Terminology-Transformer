@@ -50,7 +50,7 @@ public abstract class AbstractFilter {
       configMap.put(type, new HashMap<String, String>());
       final Map<String, String> keyValueMap = configMap.get(type);
       for (final TypeKeyValue tkv : service
-          .findTypeKeyValuesForQuery("type:" + type)) {
+          .findTypeKeyValuesForQuery("type:" + type, null).getObjects()) {
         keyValueMap.put(tkv.getKey(), tkv.getValue());
       }
 

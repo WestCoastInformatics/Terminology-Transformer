@@ -27,6 +27,8 @@ import com.wci.tt.jpa.services.rest.TransformServiceRest;
 import com.wci.umls.server.helpers.ConfigUtility;
 import com.wci.umls.server.helpers.SearchResultList;
 import com.wci.umls.server.helpers.StringList;
+import com.wci.umls.server.helpers.TypeKeyValue;
+import com.wci.umls.server.helpers.TypeKeyValueList;
 import com.wci.umls.server.jpa.helpers.PfsParameterJpa;
 import com.wci.umls.server.rest.client.RootClientRest;
 
@@ -283,5 +285,40 @@ public class NdcClientRest extends RootClientRest implements NdcServiceRest {
         });
     return list;
   }
+
+  @Override
+  public TypeKeyValue addTypeKeyValue(TypeKeyValue tkv, String authToken)
+    throws Exception {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+  @Override
+  public TypeKeyValue getTypeKeyValue(Long id, String authToken)
+    throws Exception {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+  @Override
+  public void updateTypeKeyValue(TypeKeyValue tkv, String authToken)
+    throws Exception {
+    // TODO Auto-generated method stub
+    
+  }
+
+  @Override
+  public void removeTypeKeyValue(Long id, String authToken) throws Exception {
+    // TODO Auto-generated method stub
+    
+  }
+
+  @Override
+  public TypeKeyValueList findTypeKeyValues(String query, PfsParameterJpa pfs,
+    String authToken) throws Exception {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
 
 }

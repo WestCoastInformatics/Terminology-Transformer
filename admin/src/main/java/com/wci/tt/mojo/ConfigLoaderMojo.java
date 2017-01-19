@@ -84,7 +84,7 @@ public class ConfigLoaderMojo extends AbstractMojo {
       // If reload, remove all with type
       if (reload) {
         for (final TypeKeyValue tkv : service
-            .findTypeKeyValuesForQuery("type:" + type)) {
+            .findTypeKeyValuesForQuery("type:" + type, null).getObjects()) {
           service.removeTypeKeyValue(tkv.getId());
         }
       }

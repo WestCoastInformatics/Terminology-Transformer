@@ -1,0 +1,135 @@
+// Administration controller
+tsApp.controller('AbbrCtrl', [
+  '$scope',
+  '$http',
+  '$location',
+  '$uibModal',
+  'gpService',
+  'utilService',
+  'tabService',
+  'configureService',
+  'securityService',
+  'metadataService',
+  'projectService',
+  'abbrService',
+  'ndcService',
+  function($scope, $http, $location, $uibModal, gpService, utilService, tabService,
+    configureService, securityService, metadataService, projectService, abbrService, ndcService) {
+    console.debug('configure AbbrCtrl');
+
+    // Set up tabs and controller
+    tabService.setShowing(true);
+    utilService.clearError();
+    $scope.user = securityService.getUser();
+    projectService.getUserHasAnyRole();
+    tabService.setSelectedTabByLabel('Abbr');
+
+    // Scope variables
+    $scope.selected = {
+      project : null,
+      terminology : null,
+      metadata : null,
+      abbr : null
+    }
+    $scope.lists = {
+      projects : [],
+      terminologies : [],
+      abbrs : [],
+      abbrTypes : [ 'labAbbr', 'medAbbr', 'conditionAbbr', 'procedureAbbr' ]
+    }
+    $scope.paging = {};
+    $scope.paging['abbr'] = utilService.getPaging();
+    $scope.paging['abbr'].sortField = 'key';
+    $scope.paging['abbr'].callbacks = {
+      getPagedList : findAbbreviations
+    };
+
+    $scope.findAbbreviations = function(abbr) {
+      findAbbreviations(abbr);
+    }
+    function findAbbreviations(abbr) {
+      if (!$scope.selected.abbrType) {
+        return;
+      }
+      if (abbr) {
+        $scope.selected.abbr = abbr;
+      }
+      abbrService.findAbbreviations($scope.paging['abbr'].filter, getPfs('abbr')).then(function(response) {
+        console.debug('abbreviations', response);
+        $scope.selected.abbrs = response;
+      })
+    }
+
+    function getPfs(type) {
+      var paging = $scope.paging[type];
+      console.debug( paging);
+      var pfs = {
+        startIndex : (paging.page - 1) * paging.pageSize,
+        maxResults : paging.pageSize,
+        sortField : paging.sortField,
+        ascending : paging.sortAscending,
+        queryRestriction : 'type:' + $scope.selected.abbrType
+
+      };
+      return pfs;
+    }
+
+    $scope.setAbbreviation = function(abbr) {
+      $scope.selected.abbr = abbr;
+    }
+    
+    $scope.createAbbreviation = function() {
+      var abbr = {
+        type: $scope.selected.abbrType,
+        key: null,
+        value: null
+      }
+      $scope.setAbbreviation(abbr);
+    }
+    
+    $scope.cancelAbbreviation = function() {
+      $scope.selected.abbr = null;
+    }
+
+    $scope.addAbbreviation = function(abbr) {
+      abbrService.addAbbreviation(abbr).then(function(newAbbr) {
+        $scope.selected.abbr = newAbbr;
+      });
+    }
+
+    $scope.updateAbbreviation = function(abbr) {
+      abbrService.updateAbbreviation(abbr).then(function() {
+        // do nothing
+      });
+    }
+    
+    $scope.removeAbbreviation = function(abbr) {
+      abbrService.removeAbbreviation(abbr.id).then(function() {
+        findAbbreviations();
+      });
+    }
+
+    //
+    // Initialize - DO NOT PUT ANYTHING AFTER THIS SECTION OTHER THAN CONFIG CHECK
+    //
+    $scope.initialize = function() {
+
+      $scope.findAbbreviations()
+    }
+
+    //
+    // Check that application is configured
+    //
+    configureService.isConfigured().then(function(isConfigured) {
+      if (!isConfigured) {
+        $location.path('/configure');
+      } else {
+        $scope.initialize();
+      }
+    });
+
+    // end
+
+  }
+
+]);

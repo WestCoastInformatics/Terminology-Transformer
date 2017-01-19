@@ -62,6 +62,10 @@ public class TransformerServerApplication extends ResourceConfig {
 
     // Need transformer services
     register(NdcServiceRestImpl.class);
+    register(TypeKeyValueRestImpl.class);
+    register(TransformServiceRestImpl.class);
+    
+    System.out.println("DEATH TO ECLIPSE");
 
     // register swagger classes
     register(io.swagger.jaxrs.listing.ApiListingResource.class);

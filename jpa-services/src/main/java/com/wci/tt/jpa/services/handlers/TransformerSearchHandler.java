@@ -56,8 +56,9 @@ public class TransformerSearchHandler implements SearchHandler {
       escapedQuery = escapedQuery.substring(1);
       escapedQuery = escapedQuery.substring(0, query.length() - 2);
     }
-    escapedQuery = "\"" + QueryParserBase.escape(escapedQuery) + "\"";
-
+    if (escapedQuery != null) {
+      escapedQuery = "\"" + QueryParserBase.escape(escapedQuery) + "\"";
+    }
     final String fixedQuery = query == null ? "" : query.replaceAll("\\/", " ");
     // Build a combined query with an OR between query typed and exact match
     String combinedQuery = null;
@@ -84,10 +85,10 @@ public class TransformerSearchHandler implements SearchHandler {
         combinedQuery =
             (sb.toString().isEmpty() ? "" : "(" + sb.toString() + ") OR ")
                 + normField + ":\"" + ConfigUtility.normalize(fixedQuery)
-                + "\"^2.0 OR " + literalField + ":" + escapedQuery + "^4.0";
+                + "\"^2.0 OR " + (escapedQuery != null ? literalField + ":" + escapedQuery + "^4.0" : "");
       } else {
         combinedQuery = "(" + fixedQuery + ") OR " + literalField + ":"
-            + escapedQuery + "^10.0";
+            + (escapedQuery != null ? escapedQuery + "^10.0" : null);
 
       }
     }
@@ -105,7 +106,9 @@ public class TransformerSearchHandler implements SearchHandler {
     StringBuilder finalQuery = new StringBuilder();
     if (fixedQuery.isEmpty()) {
       // Just use PFS and skip the leading "AND"
-      finalQuery.append(terminologyClause.substring(5));
+      if (terminologyClause.length() > 0) {
+        finalQuery.append(terminologyClause.substring(5));
+      }
     } else if (combinedQuery.contains(" OR ")) {
       // Use parens
       finalQuery.append("(").append(combinedQuery).append(")")
@@ -118,8 +121,8 @@ public class TransformerSearchHandler implements SearchHandler {
     FullTextQuery fullTextQuery = null;
     try {
       Logger.getLogger(getClass()).info("query = " + finalQuery);
-      // Logger.getLogger(getClass())
-      // .info("pfs.qr = " + (pfs != null ? pfs.getQueryRestriction() : ""));
+      Logger.getLogger(getClass())
+          .info("pfs.qr = " + (pfs != null ? pfs.getQueryRestriction() : ""));
       fullTextQuery = IndexUtility.applyPfsToLuceneQuery(clazz,
           finalQuery.toString(), pfs, manager);
     } catch (ParseException | IllegalArgumentException e) {
@@ -165,7 +168,7 @@ public class TransformerSearchHandler implements SearchHandler {
 
   @Override
   public void checkProperties(Properties arg0) throws Exception {
-   // do nothing
+    // do nothing
   }
 
   @Override

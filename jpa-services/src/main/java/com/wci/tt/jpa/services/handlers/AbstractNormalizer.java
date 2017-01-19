@@ -145,7 +145,7 @@ public abstract class AbstractNormalizer implements NormalizerHandler {
     try {
 
       for (final TypeKeyValue tvk : service
-          .findTypeKeyValuesForQuery("type:" + type)) {
+          .findTypeKeyValuesForQuery("type:" + type, null).getObjects()) {
         if (!acronyms.containsKey(tvk.getKey())) {
           acronyms.put(tvk.getKey(), new HashSet<String>(2));
         }
@@ -172,7 +172,7 @@ public abstract class AbstractNormalizer implements NormalizerHandler {
     try {
 
       for (final TypeKeyValue tvk : service
-          .findTypeKeyValuesForQuery("type:" + type)) {
+          .findTypeKeyValuesForQuery("type:" + type, null).getObjects()) {
         patterns.put(tvk.getKey(), tvk.getValue());
       }
     } catch (Exception e) {
