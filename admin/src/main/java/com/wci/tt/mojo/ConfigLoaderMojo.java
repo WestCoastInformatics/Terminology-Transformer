@@ -99,6 +99,15 @@ public class ConfigLoaderMojo extends AbstractMojo {
           throw new Exception(
               "Unexpected number of fields in config file: " + tokens.length);
         }
+        
+        if (tokens[0] == null || tokens[0].isEmpty()) {
+          throw new Exception("Empty key value in config file for line: " + line);
+        }
+        
+        // skip comments
+        if (tokens[0].startsWith("##")) {
+          continue;
+        }
 
         // First field is "key", second field is "value".
         TypeKeyValue tkv = new TypeKeyValueJpa();
