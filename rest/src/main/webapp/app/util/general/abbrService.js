@@ -1,26 +1,38 @@
 // Tab service
-var abbrUrl = 'rxnorm/';
-tsApp.service('abbrService', [ '$q', '$http', 'utilService', 'gpService', 'Upload',
+// TODO Change this to TransformRest or AbbrRest
+// NOTE: CRUD services for type key values use project endpoint
+// NOTE: File manipulations use transformer endpoint
+var abbrUrl = 'rxnorm';
+var projectUrl = 'project';
+tsApp.service('abbrService', [
+  '$q',
+  '$http',
+  'utilService',
+  'gpService',
+  'Upload',
   function($q, $http, utilService, gpService, Upload) {
 
     this.findAbbreviations = function(query, pfs) {
       var deferred = $q.defer();
 
       console.debug('find abbreviations', query, pfs);
+
       // Get projects
       gpService.increment();
-      $http.post(abbrUrl + 'tkv/find' + (query ? '?query=' + query + '*' : ''), pfs).then(
-      // success
-      function(response) {
-        gpService.decrement();
-        deferred.resolve(response.data);
-      },
-      // error
-      function(response) {
-        utilService.handleError(response);
-        gpService.decrement();
-        deferred.reject(response.data);
-      });
+      $http.post(
+        projectUrl + '/typeKeyValue/find' + (query ? '?query=' + query : ''), pfs)
+        .then(
+        // success
+        function(response) {
+          gpService.decrement();
+          deferred.resolve(response.data);
+        },
+        // error
+        function(response) {
+          utilService.handleError(response);
+          gpService.decrement();
+          deferred.reject(response.data);
+        });
       return deferred.promise;
     }
 
@@ -29,7 +41,7 @@ tsApp.service('abbrService', [ '$q', '$http', 'utilService', 'gpService', 'Uploa
 
       // Get projects
       gpService.increment();
-      $http.get(abbrUrl + 'tkv/' + id).then(
+      $http.get(projectUrl + '/typeKeyValue/' + id).then(
       // success
       function(response) {
         gpService.decrement();
@@ -49,7 +61,7 @@ tsApp.service('abbrService', [ '$q', '$http', 'utilService', 'gpService', 'Uploa
 
       // Get projects
       gpService.increment();
-      $http['delete'](abbrUrl + 'tkv/remove/' + id).then(
+      $http['delete'](projectUrl + '/typeKeyValue/remove/' + id).then(
       // success
       function(response) {
         gpService.decrement();
@@ -69,7 +81,7 @@ tsApp.service('abbrService', [ '$q', '$http', 'utilService', 'gpService', 'Uploa
 
       // Get projects
       gpService.increment();
-      $http.post(abbrUrl + 'tkv/update/', abbreviation).then(
+      $http.post(projectUrl + '/typeKeyValue/update/', abbreviation).then(
       // success
       function(response) {
         gpService.decrement();
@@ -89,7 +101,7 @@ tsApp.service('abbrService', [ '$q', '$http', 'utilService', 'gpService', 'Uploa
 
       // Get projects
       gpService.increment();
-      $http.put(abbrUrl + 'tkv/add/', abbreviation).then(
+      $http.put(projectUrl + '/typeKeyValue/add/', abbreviation).then(
       // success
       function(response) {
         gpService.decrement();
@@ -110,7 +122,7 @@ tsApp.service('abbrService', [ '$q', '$http', 'utilService', 'gpService', 'Uploa
       // Get projects
       gpService.increment();
       Upload.upload({
-        url : abbrUrl + 'import/' + type,
+        url : abbrUrl + '/import/' + type,
         data : {
           file : file
         }
@@ -137,7 +149,7 @@ tsApp.service('abbrService', [ '$q', '$http', 'utilService', 'gpService', 'Uploa
       // Get projects
       gpService.increment();
       Upload.upload({
-        url : abbrUrl + 'import/' + type + '/validate',
+        url : abbrUrl + '/import/' + type + '/validate',
         data : {
           file : file
         }
@@ -160,7 +172,7 @@ tsApp.service('abbrService', [ '$q', '$http', 'utilService', 'gpService', 'Uploa
       console.debug('exportAbbreviations');
       var deferred = $q.defer();
       gpService.increment()
-      $http.get(abbrUrl + 'export/' + type).then(
+      $http.get(abbrUrl + '/export/' + type).then(
       // Success
       function(response) {
         var blob = new Blob([ response.data ], {
@@ -176,7 +188,7 @@ tsApp.service('abbrService', [ '$q', '$http', 'utilService', 'gpService', 'Uploa
         document.body.appendChild(a);
         gpService.decrement();
         a.click();
-        
+
         deferred.resolve();
 
       },

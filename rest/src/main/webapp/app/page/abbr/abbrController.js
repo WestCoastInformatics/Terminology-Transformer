@@ -55,7 +55,18 @@ tsApp.controller('AbbrCtrl', [
       if (abbr) {
         $scope.selected.abbr = abbr;
       }
-      abbrService.findAbbreviations($scope.paging['abbr'].filter, getPfs('abbr')).then(function(response) {
+      var terms = $scope.paging['abbr'].filter ? $scope.paging['abbr'].filter.split(' ') : [];
+      
+      var localQuery = '';
+      angular.forEach(terms, function(term) {
+        var append = term.endsWith('"') ? '' : '*';
+        localQuery += 'key:' + term + append + ' OR value:' + term + + append + ' OR ';
+      });
+      if (localQuery.length > 0) {
+        localQuery = localQuery.substring(0, localQuery.length -3);
+      }
+      console.debug('localQuery', localQuery);
+      abbrService.findAbbreviations(localQuery, getPfs('abbr')).then(function(response) {
         console.debug('abbreviations', response);
         $scope.selected.abbrs = response;
       })
@@ -135,12 +146,16 @@ tsApp.controller('AbbrCtrl', [
       })
     }
     
-    $scope.clearImportFile = function() {
+    $scope.changeImportFile = function() {
       $scope.importAbbreviationsFileResults = null;
       $scope.validateAbbreviationsFileResults = null;
     }
- 
-
+    
+    $scope.cancelImport = function() {
+      $scope.selected.file = null;
+      $scope.changeImportFile();
+    }
+    
     //
     // Initialize - DO NOT PUT ANYTHING AFTER THIS SECTION OTHER THAN CONFIG CHECK
     //

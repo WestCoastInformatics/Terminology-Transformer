@@ -22,9 +22,10 @@
 
         <table class="slim table table-hover" style="margin-top: 10px;"
           ng-show="selected.abbrs.typeKeyValues.length > 0">
-          <thead>
+          <tr>
             <th>Abbreviation</th>
-            <th>Full Word</th>
+            <th>Expansion</th>
+          </tr>
           <tbody>
             <!-- table-hover makes use of the active class -->
             <tr ng-class="{selected: abbr.id == selected.abbr.id}"
@@ -58,7 +59,7 @@
                 ng-model="selected.abbr.key"></textarea></td>
           </tr>
           <tr class="row">
-            <td class="col-md-3">Full Word</td>
+            <td class="col-md-3">Expansion</td>
             <td class="col-md-9"><textarea style="width: 100%;"
                 ng-model="selected.abbr.value"></textarea></td>
           </tr>
@@ -77,71 +78,79 @@
           </tr>
         </table>
 
-        <h4>Import</h4>
-        <table class="table">
+        <div style="margin-top: 25px;">
+
+          <h4>Import</h4>
+          <table class="table">
+
+            <tr>
+              <td>Choose File</td>
+              <td>
+
+                <button type="file" ngf-select ng-model="selected.file"
+                  ng-change="changeImportFile()" name="file"
+                  ngf-pattern="selectedIoHandler.fileTypeFilter"
+                  ngf-max-size="10MB">Browse for File</button>
+              </td>
+              <td>
+                <div ngf-drop ng-model="selected.file" class="drop-box"
+                  ng-change="changeImportFile()" style="margin: 0px;"
+                  ngf-drag-over-class="'dragover'" ngf-max-size="10MB"
+                  ngf-pattern="selectedIoHandler.fileTypeFilter">Drop file
+                  here</div>
+
+              </td>
+            </tr>
+            <tr ng-show="selected.file">
+              <td>Selected File</td>
+              <td>{{selected.file.name}}</td>
+              <td><span class="btn btn-xs btn-primary"
+                ng-click="validateAbbreviationsFile()"
+                ng-show="!validateAbbreviationsFileResults">Validate</span> <span
+                class="btn btn-xs btn-primary"
+                ng-click="importAbbreviationsFile()"
+                ng-show="validateAbbreviationsFileResults && !importAbbreviationFileResults">Import</span>
+                &nbsp;<span class="btn btn-xs btn-warning" ng-click="cancelImport()"
+                ng-show="validateAbbreviationsFileResults || importAbbreviationsFileResults">Cancel</span></td>
+            </tr>
+          </table>
 
 
 
-          <tr>
-            <td>Choose File</td>
-            <td>
-
-              <button type="file" ngf-select ng-model="selected.file"
-                ng-change="clearImportFile()"
-                name="file" ngf-pattern="selectedIoHandler.fileTypeFilter"
-                ngf-max-size="10MB">Browse for File</button>
-            </td>
-            <td>
-              <div ngf-drop ng-model="selected.file" class="drop-box"
-                ng-change="clearImportFile()"
-                style="margin: 0px;" ngf-drag-over-class="'dragover'"
-                ngf-max-size="10MB"
-                ngf-pattern="selectedIoHandler.fileTypeFilter">Drop file
-                here</div>
-
-            </td>
-          </tr>
-          <tr ng-show="selected.file">
-            <td>Selected File</td>
-            <td>{{file.name}}</td>
-            <td><span class="btn btn-xs btn-primary"
-              ng-click="validateAbbreviationsFile()"
-              ng-show="!validateAbbreviationsFileResults">Validate</span> <span
-              class="btn btn-xs btn-primary"
-              ng-click="importAbbreviationsFile()"
-              ng-show="validateAbbreviationsFileResults && !importAbbreviationFileResults">Import</span></td>
-          </tr>
-        </table>
-        <div ng-show="validateAbbreviationsFileResults">
           <div ng-show="importAbbreviationsFileResults">
             <h4>Import Results</h4>
-            <div class="alert alert-success" ng-repeat="comment in importAbbreviationsFileResults.comments">{{comment}}</div>
+            <div class="alert alert-success"
+              ng-repeat="comment in importAbbreviationsFileResults.comments">{{comment}}</div>
             <div class="alert alert-danger "
               ng-repeat="error in importAbbreviationsFileResults.errors | orderBy:'+'">{{error}}</div>
             <div class="alert alert-warning"
               ng-repeat="warning in importAbbreviationsFileResults.warnings | orderBy:'+'">{{warning}}</div>
           </div>
-          <h4>File Validation</h4>
+          <div ng-show="validateAbbreviationsFileResults">
+            <h4>File Validation</h4>
 
-          <div class="alert alert-success"
-            ng-repeat="comment in validateAbbreviationsFileResults.comments">{{comment}}</div>
-          <div class="alert alert-danger "
-            ng-repeat="error in validateAbbreviationsFileResults.errors | orderBy:'+'">{{error}}</div>
-          <div class="alert alert-warning"
-            ng-repeat="warning in validateAbbreviationsFileResults.warnings | orderBy:'+'">{{warning}}
+            <div class="alert alert-success"
+              ng-repeat="comment in validateAbbreviationsFileResults.comments">{{comment}}</div>
+            <div class="alert alert-danger "
+              ng-repeat="error in validateAbbreviationsFileResults.errors | orderBy:'+'">{{error}}</div>
+            <div class="alert alert-warning"
+              ng-repeat="warning in validateAbbreviationsFileResults.warnings | orderBy:'+'">{{warning}}
 
+            </div>
           </div>
 
 
 
         </div>
 
-        <h4>Export</h4>
+        <div style="margin-top: 25px;">
+          <h4>Export</h4>
 
-        <span class="btn btn-xs btn-primary" ng-click="exportAbbreviations()">Export Abbreviations</span>
+          <span class="btn btn-xs btn-primary" ng-click="exportAbbreviations()">Export
+            Abbreviations</span>
+        </div>
       </div>
     </div>
   </div>
 
-</div>
 </div>

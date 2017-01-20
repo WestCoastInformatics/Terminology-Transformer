@@ -11,11 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -567,129 +565,6 @@ public class NdcServiceRestImpl extends RootServiceRestImpl
   // TODO All of these should be moved once register problem figured out
   //
 
-  @Override
-  @Path("/tkv/add")
-  @PUT
-  @ApiOperation(value = "Add a type key value", notes = "Adds a type key value object", response = TypeKeyValueJpa.class)
-  public TypeKeyValue addTypeKeyValue(
-    @ApiParam(value = "The type key value to add") TypeKeyValueJpa tkv,
-    @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
-    throws Exception {
-    Logger.getLogger(getClass()).info("RESTful call (TKV, PUT): / " + tkv);
-    final ProjectService projectService = new ProjectServiceJpa();
-    try {
-      authorizeApp(securityService, authToken, "find projects",
-          UserRole.VIEWER);
-      return projectService.addTypeKeyValue(tkv);
-    } catch (Exception e) {
-      handleException(e, "trying to get projects ");
-      return null;
-    } finally {
-      projectService.close();
-      securityService.close();
-    }
-  }
-
-  @Override
-  @Path("/tkv/{id}")
-  @GET
-  @ApiOperation(value = "Get a type key value", notes = "Gets a type key value object by id", response = TypeKeyValueJpa.class)
-  public TypeKeyValue getTypeKeyValue(
-    @ApiParam(value = "The type key value id, e.g. 1") @PathParam("id") Long id,
-    @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
-    throws Exception {
-    {
-      Logger.getLogger(getClass()).info("RESTful call (TKV, Get): / " + id);
-      final ProjectService projectService = new ProjectServiceJpa();
-      try {
-        authorizeApp(securityService, authToken, "find projects",
-            UserRole.VIEWER);
-        return projectService.getTypeKeyValue(id);
-      } catch (Exception e) {
-        handleException(e, "trying to get projects ");
-        return null;
-      } finally {
-        projectService.close();
-        securityService.close();
-      }
-    }
-  }
-
-  @Override
-  @Path("/tkv/update")
-  @POST
-  @ApiOperation(value = "Update a type key value", notes = "Updates a type key value object", response = TypeKeyValueJpa.class)
-
-  public void updateTypeKeyValue(
-    @ApiParam(value = "The type key value to add") TypeKeyValueJpa tkv,
-    @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
-    throws Exception {
-    Logger.getLogger(getClass())
-        .info("RESTful call (TKV, Update): /update " + tkv.toString());
-    final ProjectService projectService = new ProjectServiceJpa();
-    try {
-      authorizeApp(securityService, authToken, "find projects",
-          UserRole.VIEWER);
-      projectService.updateTypeKeyValue(tkv);
-    } catch (Exception e) {
-      handleException(e, "trying to get projects ");
-
-    } finally {
-      projectService.close();
-      securityService.close();
-    }
-
-  }
-
-  @Override
-  @Path("/tkv/remove/{id}")
-  @DELETE
-  @ApiOperation(value = "Removes a type key value", notes = "Removes a type key value object by id", response = TypeKeyValueJpa.class)
-
-  public void removeTypeKeyValue(
-    @ApiParam(value = "The type key value to remove") @PathParam("id") Long id,
-    @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
-    throws Exception {
-    Logger.getLogger(getClass()).info("RESTful call (TKV): /remove " + id);
-    final ProjectService projectService = new ProjectServiceJpa();
-    try {
-      authorizeApp(securityService, authToken, "find projects",
-          UserRole.VIEWER);
-      projectService.removeTypeKeyValue(id);
-    } catch (Exception e) {
-      handleException(e, "trying to get projects ");
-
-    } finally {
-      projectService.close();
-      securityService.close();
-    }
-
-  }
-
-  @Override
-  @Path("/tkv/find")
-  @POST
-  @ApiOperation(value = "Finds type key values", notes = "Finds type key value objects", response = TypeKeyValueJpa.class)
-  public TypeKeyValueList findTypeKeyValues(
-    @ApiParam(value = "Query", required = false) @QueryParam("query") String query,
-    @ApiParam(value = "PFS Parameter, e.g. '{ \"startIndex\":\"1\", \"maxResults\":\"5\" }'", required = false) PfsParameterJpa pfs,
-    @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
-    throws Exception {
-    Logger.getLogger(getClass())
-        .info("RESTful call (TKV): /find, " + query + " " + pfs);
-    final ProjectService projectService = new ProjectServiceJpa();
-    try {
-      authorizeApp(securityService, authToken, "find type key values",
-          UserRole.VIEWER);
-      return projectService.findTypeKeyValuesForQuery(query, pfs);
-    } catch (Exception e) {
-      handleException(e, "trying to find type key values ");
-      return null;
-    } finally {
-      projectService.close();
-      securityService.close();
-    }
-  }
 
   @Override
   @Path("/import/{type}")

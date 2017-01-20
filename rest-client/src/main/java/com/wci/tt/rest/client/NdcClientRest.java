@@ -30,10 +30,7 @@ import com.wci.umls.server.ValidationResult;
 import com.wci.umls.server.helpers.ConfigUtility;
 import com.wci.umls.server.helpers.SearchResultList;
 import com.wci.umls.server.helpers.StringList;
-import com.wci.umls.server.helpers.TypeKeyValue;
-import com.wci.umls.server.helpers.TypeKeyValueList;
 import com.wci.umls.server.jpa.helpers.PfsParameterJpa;
-import com.wci.umls.server.jpa.helpers.TypeKeyValueJpa;
 import com.wci.umls.server.rest.client.RootClientRest;
 
 /**
@@ -49,7 +46,7 @@ public class NdcClientRest extends RootClientRest implements NdcServiceRest {
    * Instantiates a {@link NdcClientRest} from the specified parameters.
    *
    * @param config the config
-   */
+   */ 
   public NdcClientRest(Properties config) {
     this.config = config;
   }
@@ -290,40 +287,6 @@ public class NdcClientRest extends RootClientRest implements NdcServiceRest {
     return list;
   }
 
-  @Override
-  public TypeKeyValue addTypeKeyValue(TypeKeyValueJpa tkv, String authToken)
-    throws Exception {
-    // TODO Auto-generated method stub
-    return null;
-  }
-
-  @Override
-  public TypeKeyValue getTypeKeyValue(Long id, String authToken)
-    throws Exception {
-    // TODO Auto-generated method stub
-    return null;
-  }
-
-  @Override
-  public void updateTypeKeyValue(TypeKeyValueJpa tkv, String authToken)
-    throws Exception {
-    // TODO Auto-generated method stub
-    
-  }
-
-  @Override
-  public void removeTypeKeyValue(Long id, String authToken) throws Exception {
-    // TODO Auto-generated method stub
-    
-  }
-
-  @Override
-  public TypeKeyValueList findTypeKeyValues(String query, PfsParameterJpa pfs,
-    String authToken) throws Exception {
-    // TODO Auto-generated method stub
-    return null;
-  }
-
 
   @Override
   public ValidationResult importAbbreviations(
@@ -337,6 +300,13 @@ public class NdcClientRest extends RootClientRest implements NdcServiceRest {
   public ValidationResult validateAbbreviationsFile(
     FormDataContentDisposition contentDispositionHeader, InputStream in,
     String type, String authToken) throws Exception {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+  @Override
+  public InputStream exportAbbreviationsFile(String type, String authToken)
+    throws Exception {
     // TODO Auto-generated method stub
     return null;
   }
