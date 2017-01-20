@@ -56,8 +56,9 @@ tsApp
                 this.tabs.push({
                   link: 'abbr',
                   label : 'Abbreviations',
-                  role : false
+                  role : 'USER'
                 })
+                break;
               case 'admin':
                 this.tabs.push({
                   link : 'admin',
@@ -102,6 +103,8 @@ tsApp
         this.setSelectedTabByLabel = function(label) {
           for (var i = 0; i < this.tabs.length; i++) {
             if (this.tabs[i].label === label) {
+              console.debug('FFFFFFFFFFFFFFFFFFFFF')
+            
               this.selectedTab = this.tabs[i];
               $location.path(this.selectedTab.link);
               break;

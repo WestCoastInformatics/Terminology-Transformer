@@ -20,9 +20,10 @@ tsApp.controller('AbbrCtrl', [
     // Set up tabs and controller
     tabService.setShowing(true);
     utilService.clearError();
+    tabService.setSelectedTabByLabel('Abbreviations');
     $scope.user = securityService.getUser();
     projectService.getUserHasAnyRole();
-    tabService.setSelectedTabByLabel('Abbr');
+
 
     // Scope variables
     $scope.selected = {
@@ -108,13 +109,44 @@ tsApp.controller('AbbrCtrl', [
         findAbbreviations();
       });
     }
+    
+    //
+    // Import/export
+    //
+    $scope.validateAbbreviationsFile = function() {
+      if (!$scope.selected.file) {
+        return;
+      }
+      abbrService.validateAbbreviationsFile($scope.selected.abbrType, $scope.selected.file).then(function(response) {
+        $scope.validateAbbreviationsFileResults = response;
+      })
+    }
+    
+    $scope.importAbbreviationsFile = function() {
+      abbrService.importAbbreviationsFile($scope.selected.abbrType, $scope.selected.file).then(function(response) {
+        $scope.importAbbreviationsFileResults = response;
+        $scope.findAbbreviations();
+      })
+    }
+    
+    $scope.exportAbbreviations = function() {
+      abbrService.exportAbbreviations($scope.selected.abbrType).then(function() {
+        // do nothing
+      })
+    }
+    
+    $scope.clearImportFile = function() {
+      $scope.importAbbreviationsFileResults = null;
+      $scope.validateAbbreviationsFileResults = null;
+    }
+ 
 
     //
     // Initialize - DO NOT PUT ANYTHING AFTER THIS SECTION OTHER THAN CONFIG CHECK
     //
     $scope.initialize = function() {
-
-      $scope.findAbbreviations()
+      securityService.saveTab($scope.user.userPreferences, '/abbr');
+      $scope.findAbbreviations();
     }
 
     //

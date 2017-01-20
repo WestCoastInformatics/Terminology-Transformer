@@ -8,7 +8,7 @@ tsApp.service('ndcService', [
   function($http, $q, gpService, utilService) {
     console.debug("configure ndcService");
 
-    $http.defaults.headers.common.Authorization = 'guest';
+  //  $http.defaults.headers.common.Authorization = 'guest';
 
     // do NOT show tabs
     // tabService.setShowing(false);

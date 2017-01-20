@@ -210,18 +210,6 @@ tsApp.run([
               });
             }
 
-            // Abbreviations page
-
-            if (appConfig['deploy.enabled.tabs']
-              && appConfig['deploy.enabled.tabs'].split(',').indexOf('abbr') != -1) {
-              console.debug('Route enabled: /abbr');
-              $routeProviderReference.when('/abbr', {
-                templateUrl : 'app/page/abbr/abbr.html',
-                controller : 'AbbrCtrl',
-                reloadOnSearch : false
-              });
-            }
-
             // Admin page
             if (appConfig['deploy.enabled.tabs']
               && appConfig['deploy.enabled.tabs'].split(',').indexOf('admin') != -1) {

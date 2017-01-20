@@ -1,14 +1,18 @@
 /*
- *    Copyright 2016 West Coast Informatics, LLC
+ *    Copyright 2015 West Coast Informatics, LLC
  */
 package com.wci.tt.jpa.services.rest;
 
+import java.io.InputStream;
 import java.util.List;
+
+import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 
 import com.wci.tt.jpa.infomodels.NdcModel;
 import com.wci.tt.jpa.infomodels.NdcPropertiesListModel;
 import com.wci.tt.jpa.infomodels.NdcPropertiesModel;
 import com.wci.tt.jpa.infomodels.RxcuiModel;
+import com.wci.umls.server.ValidationResult;
 import com.wci.umls.server.helpers.SearchResultList;
 import com.wci.umls.server.helpers.StringList;
 import com.wci.umls.server.helpers.TypeKeyValue;
@@ -87,8 +91,8 @@ public interface NdcServiceRest {
    * @return the search result list
    * @throws Exception the exception
    */
-  public SearchResultList findConcepts(String query,
-    PfsParameterJpa pfs, String authToken) throws Exception;
+  public SearchResultList findConcepts(String query, PfsParameterJpa pfs,
+    String authToken) throws Exception;
 
   /**
    * Gets the ndc info batch.
@@ -114,17 +118,89 @@ public interface NdcServiceRest {
   public List<RxcuiModel> getRxcuiInfoBatch(List<String> rxcuis,
     Boolean history, String authToken) throws Exception;
 
+  /**
+   * Adds the type key value.
+   *
+   * @param tkv the tkv
+   * @param authToken the auth token
+   * @return the type key value
+   * @throws Exception the exception
+   */
   public TypeKeyValue addTypeKeyValue(TypeKeyValueJpa tkv, String authToken)
     throws Exception;
 
-  public TypeKeyValue getTypeKeyValue(Long id, String authToken) throws Exception;
+  /**
+   * Returns the type key value.
+   *
+   * @param id the id
+   * @param authToken the auth token
+   * @return the type key value
+   * @throws Exception the exception
+   */
+  public TypeKeyValue getTypeKeyValue(Long id, String authToken)
+    throws Exception;
 
+  /**
+   * Removes the type key value.
+   *
+   * @param id the id
+   * @param authToken the auth token
+   * @throws Exception the exception
+   */
   public void removeTypeKeyValue(Long id, String authToken) throws Exception;
 
-  public  TypeKeyValueList findTypeKeyValues(String query, PfsParameterJpa pfs,
+  /**
+   * Find type key values.
+   *
+   * @param query the query
+   * @param pfs the pfs
+   * @param authToken the auth token
+   * @return the type key value list
+   * @throws Exception the exception
+   */
+  public TypeKeyValueList findTypeKeyValues(String query, PfsParameterJpa pfs,
     String authToken) throws Exception;
 
-  public  void updateTypeKeyValue(TypeKeyValueJpa tkv, String authToken)
+  /**
+   * Update type key value.
+   *
+   * @param tkv the tkv
+   * @param authToken the auth token
+   * @throws Exception the exception
+   */
+  public void updateTypeKeyValue(TypeKeyValueJpa tkv, String authToken)
+    throws Exception;
+
+  
+  /**
+   * Import abbreviations.
+   *
+   * @param contentDispositionHeader the content disposition header
+   * @param in the in
+   * @param type the type
+   * @param authToken the auth token
+   * @return the validation result
+   * @throws Exception the exception
+   */
+  public ValidationResult importAbbreviations(
+    FormDataContentDisposition contentDispositionHeader, InputStream in,
+    String type, String authToken) throws Exception;
+
+  /**
+   * Validate abbreviations file.
+   *
+   * @param contentDispositionHeader the content disposition header
+   * @param in the in
+   * @param type the type
+   * @param authToken the auth token
+   * @return the validation result
+   * @throws Exception the exception
+   */
+  public ValidationResult validateAbbreviationsFile(
+    FormDataContentDisposition contentDispositionHeader, InputStream in,
+    String type, String authToken) throws Exception;
+
+  public InputStream exportAbbreviationsFile(String type, String authToken)
     throws Exception;
 
 }
