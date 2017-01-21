@@ -4,6 +4,7 @@
 package com.wci.tt.rest.impl;
 
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
@@ -63,6 +64,7 @@ import com.wci.umls.server.jpa.services.ProjectServiceJpa;
 import com.wci.umls.server.jpa.services.SecurityServiceJpa;
 import com.wci.umls.server.model.content.Atom;
 import com.wci.umls.server.model.content.AtomClass;
+import com.wci.umls.server.model.workflow.WorkflowStatus;
 import com.wci.umls.server.rest.impl.RootServiceRestImpl;
 import com.wci.umls.server.services.ProjectService;
 import com.wci.umls.server.services.SecurityService;
@@ -565,7 +567,6 @@ public class NdcServiceRestImpl extends RootServiceRestImpl
   // TODO All of these should be moved once register problem figured out
   //
 
-
   @Override
   @Path("/import/{type}")
   @POST
@@ -580,106 +581,10 @@ public class NdcServiceRestImpl extends RootServiceRestImpl
     Logger.getLogger(getClass()).info("RESTful call (TKV): /import");
     final ProjectService projectService = new ProjectServiceJpa();
     try {
-      authorizeApp(securityService, authToken, "import abbreviations",
-          UserRole.VIEWER);
-      ValidationResult result = new ValidationResultJpa();
-      PushBackReader pbr = null;
-      try {
-
-        // Read from input stream
-
-        Reader reader = new InputStreamReader(in, "UTF-8");
-        pbr = new PushBackReader(reader);
-        int addedCt = 0;
-        int lineCt = 0;
-        PfsParameter pfs = new PfsParameterJpa();
-        pfs.setMaxResults(1);
-
-        projectService.setTransactionPerOperation(false);
-        projectService.beginTransaction();
-        String line = pbr.readLine();
-
-        // check for empty contents
-        if (line == null) {
-          throw new Exception("Empty file");
-        }
-
-        // skip header line if present
-        if (line.toLowerCase().startsWith("abbreviation")) {
-          lineCt++;
-          result.getComments().add("Skipped header line: " + line);
-          line = pbr.readLine();
-        }
-
-        // start processing
-        do {
-          lineCt++;
-          line = line.replace("[^S\t ", "");
-          final String fields[] = line.split("\t");
-
-          System.out.println("line " + lineCt);
-
-          if (fields.length == 2) {
-            System.out.println("  field 0: " + fields[0]);
-            System.out.println("  field 1: " + fields[1]);
-
-            // if fields valid
-            if (fields[0] != null && !fields[0].isEmpty() && fields[1] != null
-                && !fields[1].isEmpty()) {
-
-              // check for matches
-              final TypeKeyValueList matches =
-                  projectService.findTypeKeyValuesForQuery("type:\"" + type
-                      + "\"" + " AND key:\"" + fields[0] + "\"", pfs);
-              if (matches.getTotalCount() > 0) {
-                System.out.println("matches " + matches);
-                boolean valueMatched = false;
-                for (TypeKeyValue match : matches.getObjects()) {
-                  if (fields[1].equals(match.getValue())) {
-                    valueMatched = true;
-                  }
-                }
-                if (!valueMatched) {
-                  // add different expansion for same
-                  System.out.println("Adding " + fields[0] + " / " + fields[1]);
-                  projectService.addTypeKeyValue(
-                      new TypeKeyValueJpa(type, fields[0], fields[1]));
-                  addedCt++;
-                }
-
-              } else {
-                // add new abbreviation/expansion pair
-                System.out.println("Adding " + fields[0] + " / " + fields[1]);
-                projectService.addTypeKeyValue(
-                    new TypeKeyValueJpa(type, fields[0], fields[1]));
-                addedCt++;
-              }
-            } else {
-              // invalid line, do nothing
-            }
-          } else {
-            // invalid line, do nothing
-          }
-        } while ((line = pbr.readLine()) != null);
-
-        projectService.commit();
-        if (addedCt == 0) {
-          result.getWarnings().add("No abbreviations added.");
-        } else {
-          result.getComments()
-              .add("Successfully created " + addedCt + " abbreviations");
-        }
-        result.getWarnings().add("Skipped " + (lineCt - addedCt) + " lines");
-
-      } catch (Exception e) {
-        projectService.rollback();
-        result.addError("Unexpected error: " + e.getMessage());
-      } finally {
-        if (pbr != null) {
-          pbr.close();
-        }
-      }
-      return result;
+      final String username = authorizeApp(securityService, authToken,
+          "import abbreviations", UserRole.VIEWER);
+      projectService.setLastModifiedBy(username);
+      return importHelper(projectService, type, in, true);
     } catch (
 
     Exception e) {
@@ -707,88 +612,8 @@ public class NdcServiceRestImpl extends RootServiceRestImpl
     try {
       authorizeApp(securityService, authToken, "validate abbreviations file",
           UserRole.ADMINISTRATOR);
-      ValidationResult result = new ValidationResultJpa();
-      PushBackReader pbr = null;
-      try {
-
-        // Read from input stream
-        Reader reader = new InputStreamReader(in, "UTF-8");
-        pbr = new PushBackReader(reader);
-        int lineCt = 0;
-        PfsParameter pfs = new PfsParameterJpa();
-        pfs.setMaxResults(1);
-
-        String line = pbr.readLine();
-
-        // check for empty contents
-        if (line == null) {
-          throw new Exception("Empty file");
-        }
-
-        // skip header line if present
-        if (line.toLowerCase().startsWith("abbreviation")) {
-          lineCt++;
-          result.getComments().add("Skipped header line: " + line);
-          line = pbr.readLine();
-        }
-
-        // start processing
-        do {
-          lineCt++;
-          line = line.replace("[^S\t ", "");
-          final String fields[] = line.split("\t");
-
-          System.out.println("line " + lineCt);
-
-          if (fields.length == 2) {
-            System.out.println("  field 0: " + fields[0]);
-            System.out.println("  field 1: " + fields[1]);
-            if (fields[0] != null && !fields[0].isEmpty() && fields[1] != null
-                && !fields[1].isEmpty()) {
-              final TypeKeyValueList matches =
-                  projectService.findTypeKeyValuesForQuery("type:\"" + type
-                      + "\"" + " AND key:\"" + fields[0] + "\"", pfs);
-              if (matches.getTotalCount() > 0) {
-                System.out.println("matches " + matches);
-                for (TypeKeyValue match : matches.getObjects()) {
-                  if (fields[1].equals(match.getValue())) {
-                    result.getWarnings()
-                        .add("[Line " + lineCt
-                            + "] Duplicate Abbreviation/expansion pair: "
-                            + fields[0] + " / " + match.getValue());
-                  } else {
-                    result.getWarnings()
-                        .add("[Line " + lineCt + "] Abbreviation " + fields[0]
-                            + " already exists with expansion: "
-                            + match.getValue());
-                  }
-                }
-
-              }
-            } else {
-              result.getWarnings()
-                  .add("[Line " + lineCt + "] Incomplete line: " + line);
-            }
-          } else {
-            String fieldsStr = "";
-            for (int i = 0; i < fields.length; i++) {
-              fieldsStr += "[" + fields[i] + "] ";
-            }
-            result.getWarnings()
-                .add("[Line " + lineCt + "] Expected two fields " + lineCt
-                    + " but found " + fields.length + ": " + fieldsStr);
-          }
-        } while ((line = pbr.readLine()) != null);
-      } catch (Exception e) {
-        result.getErrors().add("Unexpected error: " + e.getMessage());
-      } finally {
-        if (pbr != null) {
-          pbr.close();
-        }
-      }
-
-      return result;
-
+      // NOTE: Do not set service lastModifiedBy/username here, no modifications
+      return importHelper(projectService, type, in, false);
     } catch (
 
     Exception e) {
@@ -846,5 +671,191 @@ public class NdcServiceRestImpl extends RootServiceRestImpl
       securityService.close();
     }
     return null;
+  }
+
+  public ValidationResult importHelper(ProjectService projectService,
+    String type, InputStream in, boolean executeImport) throws Exception {
+    ValidationResult result = new ValidationResultJpa();
+    PushBackReader pbr = null;
+    try {
+
+      if (executeImport) {
+        projectService.setTransactionPerOperation(false);
+        projectService.beginTransaction();
+      }
+
+      // Read from input stream
+      Reader reader = new InputStreamReader(in, "UTF-8");
+      pbr = new PushBackReader(reader);
+      int lineCt = 0;
+      int addedCt = 0;
+      int toAddCt = 0;
+      int errorCt = 0;
+      int dupPairCt = 0;
+      int dupKeyCt = 0;
+      int dupValCt = 0;
+      PfsParameter pfs = new PfsParameterJpa();
+
+      String line = pbr.readLine();
+
+      // check for empty contents
+      if (line == null) {
+        throw new Exception("Empty file");
+      }
+
+      // skip header line if present
+      if (line.toLowerCase().startsWith("abbreviation")) {
+        lineCt++;
+        result.getComments().add("Skipped header line: " + line);
+        line = pbr.readLine();
+      }
+
+      // start processing
+      do {
+        lineCt++;
+        line = line.replace("[^S\t ", "");
+        final String fields[] = line.split("\t");
+
+        // CHECK: exactly two fields
+        if (fields.length == 2) {
+
+          // CHECK: Both fields non-null and non-empty
+          if (fields[0] != null && !fields[0].isEmpty() && fields[1] != null
+              && !fields[1].isEmpty()) {
+
+            // check for type/pair matches
+            final TypeKeyValueList keyMatches =
+                projectService.findTypeKeyValuesForQuery(
+                    "type:\"" + type + "\"" + " AND key:\"" + fields[0] + "\"",
+                    pfs);
+
+            // check for exact match
+            boolean pairMatchFound = false;
+            if (keyMatches.getTotalCount() > 0) {
+              for (TypeKeyValue match : keyMatches.getObjects()) {
+                if (fields[1].equals(match.getValue())) {
+                  pairMatchFound = true;
+                  dupPairCt++;
+                  if (!executeImport) {
+                    result.getWarnings().add("Line " + lineCt + ": Duplicate: "
+                        + fields[0] + " / " + match.getValue());
+                  }
+                } else {
+                  if (!executeImport) {
+                    result.getWarnings()
+                        .add("Line " + lineCt + ": Abbreviation " + fields[0]
+                            + " already exists with expansion "
+                            + match.getValue());
+                  }
+                }
+              }
+
+              // increment duplicate key counter
+              dupKeyCt++;
+            }
+
+            // if validation, check for value match without key match
+            if (!executeImport) {
+
+              if (!pairMatchFound) {
+                toAddCt++;
+              }
+
+              // check for key match, pair not match
+              final TypeKeyValueList valueMatches =
+                  projectService.findTypeKeyValuesForQuery("type:\"" + type
+                      + "\"" + " AND value:\"" + fields[1] + "\"", null);
+              if (valueMatches.getTotalCount() > 0) {
+                for (TypeKeyValue match : keyMatches.getObjects()) {
+                  if (!fields[0].equals(match.getKey())) {
+                    result.getWarnings().add("Line " + lineCt + ": Expansion "
+                        + fields[1] + " exists for key " + fields[0]);
+                  }
+
+                }
+                dupValCt++;
+              }
+            }
+
+            // if import mode and no pair match found, add the new abbreviation
+            if (!pairMatchFound && executeImport) {
+              // add different expansion for same
+              System.out.println("Adding " + fields[0] + " / " + fields[1]);
+              TypeKeyValue typeKeyValue =
+                  new TypeKeyValueJpa(type, fields[0], fields[1]);
+              typeKeyValue.setWorkflowStatus(WorkflowStatus.NEW);
+              projectService.addTypeKeyValue(typeKeyValue);
+              addedCt++;
+            }
+          } else {
+            errorCt++;
+            if (!executeImport) {
+              result.getErrors()
+                  .add("Line " + lineCt + ": Incomplete line: " + line);
+            }
+          }
+        } else {
+          errorCt++;
+          if (!executeImport) {
+            String fieldsStr = "";
+            for (int i = 0; i < fields.length; i++) {
+              fieldsStr += "[" + fields[i] + "] ";
+            }
+            result.getErrors().add("Line " + lineCt + ": Expected two fields "
+                + lineCt + " but found " + fields.length + ": " + fieldsStr);
+          }
+        }
+      } while ((line = pbr.readLine()) != null);
+
+      if (executeImport) {
+        projectService.commit();
+      }
+
+      // aggregate results for validation
+      if (!executeImport) {
+        if (toAddCt > 0) {
+          result.getComments().add(toAddCt + " abbreviations will be added");
+        }
+        if (errorCt > 0) {
+          result.getErrors().add(errorCt + " lines in error");
+        }
+        if (dupPairCt > 0) {
+          result.getWarnings().add(dupPairCt + " duplicates");
+        }
+        if (dupKeyCt > 0) {
+          result.getWarnings()
+              .add(dupKeyCt + " existing abbreviations with new expansion");
+        }
+        if (dupValCt > 0) {
+          result.getWarnings()
+              .add(dupValCt + " existing expansions with new abbreviation");
+        }
+      }
+
+      // otherwise, aggregate results for import
+      else {
+        if (addedCt == 0) {
+          result.getWarnings().add("No abbreviations added.");
+        } else {
+          result.getComments().add(addedCt + " abbreviations added");
+        }
+        if (dupPairCt != 0) {
+          result.getWarnings().add(
+              dupPairCt + " duplicate abbreviation/expansion pairs skipped");
+        }
+        if (errorCt != 0) {
+          result.getErrors().add(errorCt + " lines with errors skipped");
+        }
+      }
+
+    } catch (Exception e) {
+      projectService.rollback();
+      result.getErrors().add("Unexpected error: " + e.getMessage());
+    } finally {
+      if (pbr != null) {
+        pbr.close();
+      }
+    }
+    return result;
   }
 }

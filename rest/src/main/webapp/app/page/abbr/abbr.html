@@ -10,15 +10,20 @@
         <h4
           ng-show="user.applicationRole == 'ADMINISTRATOR' || user.applicationRole == 'USER'">Abbreviations</h4>
 
-        Type: <select ng-model="selected.abbrType"
-          ng-options="type as type for type in lists.abbrTypes"
-          ng-change="findAbbreviations()"></select>
+        <div class="row">
 
+          Terminology: <select ng-model="selected.metadata.terminology"
+            ng-change="setTerminology(selected.metadata.terminology)"
+            ng-options="terminology as terminology.terminology for terminology in getViewableTerminologies() | orderBy:'terminology'">
+          </select> <span class="pull-right"> Status: <select
+            ng-options="status.key as status.value for status in lists.workflowStatus"
+            ng-model="paging['abbr'].workflowStatus"
+            ng-change="findAbbreviations()"></select>
+          </span>
+        </div>
 
         <div pager paging="paging['abbr']" count="selected.abbrs.totalCount"
           callbacks="paging['abbr'].callbacks" style="margin-top: 10px;"></div>
-
-
 
         <table class="slim table table-hover" style="margin-top: 10px;"
           ng-show="selected.abbrs.typeKeyValues.length > 0">
@@ -32,15 +37,18 @@
               ng-repeat="abbr in selected.abbrs.typeKeyValues"
               ng-click="setAbbreviation(abbr)">
               <td class="col-md-3 col-xs-3">{{abbr.key}}</td>
-              <td class="col-md-9 col-xs-9">{{abbr.value}}</td>
+              <td class="col-md-9 col-xs-9">{{abbr.value}} <span
+                class="alert-danger small" style="padding: 1px;"
+                ng-show="abbr.workflowStatus != 'PUBLISHED'">{{abbr.workflowStatus}}</span></td>
             </tr>
           </tbody>
         </table>
 
 
 
+
       </div>
-      <div class="col-md-6" ng-show="selected.abbrType">
+      <div class="col-md-6" ng-show="selected.metadata.terminology">
         <h4
           ng-show="user.applicationRole == 'ADMINISTRATOR' || user.applicationRole == 'USER'">Management</h4>
 
@@ -65,7 +73,8 @@
           </tr>
           <tr class="row">
             <td class="col-md-3"></td>
-            <td class="col-md-9"><span class="btn btn-xs btn-primary"
+            <td class="col-md-9" style="padding-top: 5px;"><span
+              class="btn btn-xs btn-primary"
               ng-click="addAbbreviation(selected.abbr)"
               ng-show="!selected.abbr.id">Add</span> <span
               class="btn btn-xs btn-primary"
@@ -88,13 +97,13 @@
               <td>
 
                 <button type="file" ngf-select ng-model="selected.file"
-                  ng-change="changeImportFile()" name="file"
-                  ngf-pattern="selectedIoHandler.fileTypeFilter"
-                  ngf-max-size="10MB">Browse for File</button>
+                  ng-change="clearImportResults()" name="file"
+                  ngf-pattern="lists.fileTypesFilter" ngf-max-size="10MB">Browse
+                  for File</button> {{lists.fileTypesFilter}}
               </td>
               <td>
                 <div ngf-drop ng-model="selected.file" class="drop-box"
-                  ng-change="changeImportFile()" style="margin: 0px;"
+                  ng-change="clearImportResults()" style="margin: 0px;"
                   ngf-drag-over-class="'dragover'" ngf-max-size="10MB"
                   ngf-pattern="selectedIoHandler.fileTypeFilter">Drop file
                   here</div>
@@ -103,15 +112,24 @@
             </tr>
             <tr ng-show="selected.file">
               <td>Selected File</td>
-              <td>{{selected.file.name}}</td>
-              <td><span class="btn btn-xs btn-primary"
-                ng-click="validateAbbreviationsFile()"
-                ng-show="!validateAbbreviationsFileResults">Validate</span> <span
+              <td>{{selected.file.name}}<br> <span
                 class="btn btn-xs btn-primary"
+                ng-click="validateAbbreviationsFile()"
+                ng-show="!validateAbbreviationsFileResults"
+                title="Validate file">Validate</span><span
+                class="btn btn-xs btn-success" ng-click="cancelImport()"
+                ng-show="validateAbbreviationsFileResults && importAbbreviationsFileResults"
+                title="">Completed</span> <span class="btn btn-xs btn-primary"
                 ng-click="importAbbreviationsFile()"
-                ng-show="validateAbbreviationsFileResults && !importAbbreviationFileResults">Import</span>
-                &nbsp;<span class="btn btn-xs btn-warning" ng-click="cancelImport()"
-                ng-show="validateAbbreviationsFileResults || importAbbreviationsFileResults">Cancel</span></td>
+                ng-show="validateAbbreviationsFileResults && !importAbbreviationsFileResults"
+                title="Import file">Import</span> &nbsp;<span
+                class="btn btn-xs btn-warning" ng-click="cancelImport()"
+                ng-show="validateAbbreviationsFileResults && !importAbbreviationsFileResults"
+                title="Cancel import">Cancel</span><span
+                class="btn btn-xs btn-success"
+                ng-show="validateAbbreviationsFileResults && importAbbreviationsFileResults"
+                title="">Completed</span></td>
+              <td></td>
             </tr>
           </table>
 

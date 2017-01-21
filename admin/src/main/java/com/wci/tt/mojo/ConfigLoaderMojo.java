@@ -16,6 +16,7 @@ import com.wci.tt.services.CoordinatorService;
 import com.wci.umls.server.helpers.FieldedStringTokenizer;
 import com.wci.umls.server.helpers.TypeKeyValue;
 import com.wci.umls.server.jpa.helpers.TypeKeyValueJpa;
+import com.wci.umls.server.model.workflow.WorkflowStatus;
 import com.wci.umls.server.services.handlers.ExceptionHandler;
 
 /**
@@ -80,6 +81,8 @@ public class ConfigLoaderMojo extends AbstractMojo {
       if (!file.exists()) {
         throw new Exception("Input file does not exist");
       }
+      
+      service.setLastModifiedBy("loader");
 
       // If reload, remove all with type
       if (reload) {
@@ -118,6 +121,7 @@ public class ConfigLoaderMojo extends AbstractMojo {
         } else {
           tkv.setValue("");
         }
+        tkv.setWorkflowStatus(WorkflowStatus.PUBLISHED);
         service.addTypeKeyValue(tkv);
       }
       in.close();

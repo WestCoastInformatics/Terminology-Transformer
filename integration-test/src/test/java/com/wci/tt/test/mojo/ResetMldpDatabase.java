@@ -157,7 +157,7 @@ public class ResetMldpDatabase {
     request.setGoals(Arrays.asList("clean", "install"));
     p = new Properties();
     p.setProperty("run.config.umls", System.getProperty("run.config.umls"));
-    p.setProperty("type", "labAbbr");
+    p.setProperty("type", "HKFT-LABS-ABBR");
     p.setProperty("input.file",
         "../config/mldp/src/main/resources/data/labs/labAbbr.txt");
     request.setProperties(p);
@@ -193,7 +193,7 @@ public class ResetMldpDatabase {
     request.setGoals(Arrays.asList("clean", "install"));
     p = new Properties();
     p.setProperty("run.config.umls", System.getProperty("run.config.umls"));
-    p.setProperty("type", "medAbbr");
+    p.setProperty("type", "HKFT-MEDS-ABBR");
     p.setProperty("input.file",
         "../config/mldp/src/main/resources/data/meds/medAbbr.txt");
     request.setProperties(p);
@@ -230,7 +230,7 @@ public class ResetMldpDatabase {
     request.setGoals(Arrays.asList("clean", "install"));
     p = new Properties();
     p.setProperty("run.config.umls", System.getProperty("run.config.umls"));
-    p.setProperty("type", "conditionAbbr");
+    p.setProperty("type", "HKFT-CONDITIONS-ABBR");
     p.setProperty("input.file",
         "../config/mldp/src/main/resources/data/conditions/conditionAbbr.txt");
     request.setProperties(p);
@@ -267,7 +267,7 @@ public class ResetMldpDatabase {
     request.setGoals(Arrays.asList("clean", "install"));
     p = new Properties();
     p.setProperty("run.config.umls", System.getProperty("run.config.umls"));
-    p.setProperty("type", "procedureAbbr");
+    p.setProperty("type", "HKFT-PROCEDURES-ABBR");
     p.setProperty("input.file",
         "../config/mldp/src/main/resources/data/procedures/procedureAbbr.txt");
     request.setProperties(p);
