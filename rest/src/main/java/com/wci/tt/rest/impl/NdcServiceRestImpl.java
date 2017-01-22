@@ -4,10 +4,7 @@
 package com.wci.tt.rest.impl;
 
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,8 +40,10 @@ import com.wci.tt.jpa.infomodels.NdcPropertiesListModel;
 import com.wci.tt.jpa.infomodels.NdcPropertiesModel;
 import com.wci.tt.jpa.infomodels.RxcuiModel;
 import com.wci.tt.jpa.services.CoordinatorServiceJpa;
+import com.wci.tt.jpa.services.handlers.DefaultAbbreviationHandler;
 import com.wci.tt.jpa.services.rest.NdcServiceRest;
 import com.wci.tt.services.CoordinatorService;
+import com.wci.tt.services.handlers.AbbreviationHandler;
 import com.wci.umls.server.UserRole;
 import com.wci.umls.server.ValidationResult;
 import com.wci.umls.server.helpers.Branch;
@@ -54,7 +53,6 @@ import com.wci.umls.server.helpers.SearchResultList;
 import com.wci.umls.server.helpers.StringList;
 import com.wci.umls.server.helpers.TypeKeyValue;
 import com.wci.umls.server.helpers.TypeKeyValueList;
-import com.wci.umls.server.jpa.ValidationResultJpa;
 import com.wci.umls.server.jpa.content.ConceptJpa;
 import com.wci.umls.server.jpa.helpers.PfsParameterJpa;
 import com.wci.umls.server.jpa.helpers.SearchResultListJpa;
@@ -64,11 +62,9 @@ import com.wci.umls.server.jpa.services.ProjectServiceJpa;
 import com.wci.umls.server.jpa.services.SecurityServiceJpa;
 import com.wci.umls.server.model.content.Atom;
 import com.wci.umls.server.model.content.AtomClass;
-import com.wci.umls.server.model.workflow.WorkflowStatus;
 import com.wci.umls.server.rest.impl.RootServiceRestImpl;
 import com.wci.umls.server.services.ProjectService;
 import com.wci.umls.server.services.SecurityService;
-import com.wci.umls.server.services.helpers.PushBackReader;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -580,17 +576,21 @@ public class NdcServiceRestImpl extends RootServiceRestImpl
     throws Exception {
     Logger.getLogger(getClass()).info("RESTful call (TKV): /import");
     final ProjectService projectService = new ProjectServiceJpa();
+    final AbbreviationHandler abbrHandler = new DefaultAbbreviationHandler();
     try {
       final String username = authorizeApp(securityService, authToken,
           "import abbreviations", UserRole.VIEWER);
       projectService.setLastModifiedBy(username);
-      return importHelper(projectService, type, in, true);
+      abbrHandler.setService(projectService);
+      return abbrHandler.importAbbreviationFile(type, in);
     } catch (
 
     Exception e) {
       handleException(e, "trying to import abbreviations ");
       return null;
     } finally {
+      // NOTE: No need to close, but included for future safety
+      abbrHandler.close();
       projectService.close();
       securityService.close();
     }
@@ -609,17 +609,21 @@ public class NdcServiceRestImpl extends RootServiceRestImpl
     throws Exception {
     Logger.getLogger(getClass()).info("RESTful call (TKV): /find");
     final ProjectService projectService = new ProjectServiceJpa();
+    final AbbreviationHandler abbrHandler = new DefaultAbbreviationHandler();
     try {
       authorizeApp(securityService, authToken, "validate abbreviations file",
           UserRole.ADMINISTRATOR);
-      // NOTE: Do not set service lastModifiedBy/username here, no modifications
-      return importHelper(projectService, type, in, false);
+      abbrHandler.setService(projectService);
+      return abbrHandler.validateAbbreviationFile(type, in);
+
     } catch (
 
     Exception e) {
       handleException(e, "trying to validate abbreviations file ");
       return null;
     } finally {
+      // NOTE: No need to close, but included for future safety
+      abbrHandler.close();
       projectService.close();
       securityService.close();
     }
@@ -636,226 +640,22 @@ public class NdcServiceRestImpl extends RootServiceRestImpl
     throws Exception {
     Logger.getLogger(getClass()).info("RESTful call (TKV): /find");
     final ProjectService projectService = new ProjectServiceJpa();
+    final AbbreviationHandler abbrHandler = new DefaultAbbreviationHandler();
     try {
       authorizeApp(securityService, authToken, "export abbreviations",
           UserRole.USER);
-
-      // Write a header
-      // Obtain members for refset,
-      // Write RF2 simple refset pattern to a StringBuilder
-      // wrap and return the string for that as an input stream
-
-      StringBuilder sb = new StringBuilder();
-      sb.append("abbreviation").append("\t");
-      sb.append("expansion").append("\t");
-      sb.append("\r\n");
-
-      // sort by key
-      PfsParameter pfs = new PfsParameterJpa();
-      pfs.setSortField("key");
-
-      TypeKeyValueList abbrs = projectService
-          .findTypeKeyValuesForQuery("type:\"" + type + "\"", pfs);
-      for (TypeKeyValue abbr : abbrs.getObjects()) {
-        if (!abbr.getKey().startsWith("##")) {
-          sb.append(abbr.getKey()).append("\t");
-          sb.append(abbr.getValue()).append("\t");
-          sb.append("\r\n");
-        }
-      }
-      return new ByteArrayInputStream(sb.toString().getBytes("UTF-8"));
+      abbrHandler.setService(projectService);
+      return abbrHandler.exportAbbreviationFile(type);
     } catch (Exception e) {
       handleException(e, "trying to export abbreviations");
+      return null;
     } finally {
+      // NOTE: No need to close, but included for future safety
+      abbrHandler.close();
       projectService.close();
       securityService.close();
     }
-    return null;
+
   }
 
-  public ValidationResult importHelper(ProjectService projectService,
-    String type, InputStream in, boolean executeImport) throws Exception {
-    ValidationResult result = new ValidationResultJpa();
-    PushBackReader pbr = null;
-    try {
-
-      if (executeImport) {
-        projectService.setTransactionPerOperation(false);
-        projectService.beginTransaction();
-      }
-
-      // Read from input stream
-      Reader reader = new InputStreamReader(in, "UTF-8");
-      pbr = new PushBackReader(reader);
-      int lineCt = 0;
-      int addedCt = 0;
-      int toAddCt = 0;
-      int errorCt = 0;
-      int dupPairCt = 0;
-      int dupKeyCt = 0;
-      int dupValCt = 0;
-      PfsParameter pfs = new PfsParameterJpa();
-
-      String line = pbr.readLine();
-
-      // check for empty contents
-      if (line == null) {
-        throw new Exception("Empty file");
-      }
-
-      // skip header line if present
-      if (line.toLowerCase().startsWith("abbreviation")) {
-        lineCt++;
-        result.getComments().add("Skipped header line: " + line);
-        line = pbr.readLine();
-      }
-
-      // start processing
-      do {
-        lineCt++;
-        line = line.replace("[^S\t ", "");
-        final String fields[] = line.split("\t");
-
-        // CHECK: exactly two fields
-        if (fields.length == 2) {
-
-          // CHECK: Both fields non-null and non-empty
-          if (fields[0] != null && !fields[0].isEmpty() && fields[1] != null
-              && !fields[1].isEmpty()) {
-
-            // check for type/pair matches
-            final TypeKeyValueList keyMatches =
-                projectService.findTypeKeyValuesForQuery(
-                    "type:\"" + type + "\"" + " AND key:\"" + fields[0] + "\"",
-                    pfs);
-
-            // check for exact match
-            boolean pairMatchFound = false;
-            if (keyMatches.getTotalCount() > 0) {
-              for (TypeKeyValue match : keyMatches.getObjects()) {
-                if (fields[1].equals(match.getValue())) {
-                  pairMatchFound = true;
-                  dupPairCt++;
-                  if (!executeImport) {
-                    result.getWarnings().add("Line " + lineCt + ": Duplicate: "
-                        + fields[0] + " / " + match.getValue());
-                  }
-                } else {
-                  if (!executeImport) {
-                    result.getWarnings()
-                        .add("Line " + lineCt + ": Abbreviation " + fields[0]
-                            + " already exists with expansion "
-                            + match.getValue());
-                  }
-                }
-              }
-
-              // increment duplicate key counter
-              dupKeyCt++;
-            }
-
-            // if validation, check for value match without key match
-            if (!executeImport) {
-
-              if (!pairMatchFound) {
-                toAddCt++;
-              }
-
-              // check for key match, pair not match
-              final TypeKeyValueList valueMatches =
-                  projectService.findTypeKeyValuesForQuery("type:\"" + type
-                      + "\"" + " AND value:\"" + fields[1] + "\"", null);
-              if (valueMatches.getTotalCount() > 0) {
-                for (TypeKeyValue match : keyMatches.getObjects()) {
-                  if (!fields[0].equals(match.getKey())) {
-                    result.getWarnings().add("Line " + lineCt + ": Expansion "
-                        + fields[1] + " exists for key " + fields[0]);
-                  }
-
-                }
-                dupValCt++;
-              }
-            }
-
-            // if import mode and no pair match found, add the new abbreviation
-            if (!pairMatchFound && executeImport) {
-              // add different expansion for same
-              System.out.println("Adding " + fields[0] + " / " + fields[1]);
-              TypeKeyValue typeKeyValue =
-                  new TypeKeyValueJpa(type, fields[0], fields[1]);
-              typeKeyValue.setWorkflowStatus(WorkflowStatus.NEW);
-              projectService.addTypeKeyValue(typeKeyValue);
-              addedCt++;
-            }
-          } else {
-            errorCt++;
-            if (!executeImport) {
-              result.getErrors()
-                  .add("Line " + lineCt + ": Incomplete line: " + line);
-            }
-          }
-        } else {
-          errorCt++;
-          if (!executeImport) {
-            String fieldsStr = "";
-            for (int i = 0; i < fields.length; i++) {
-              fieldsStr += "[" + fields[i] + "] ";
-            }
-            result.getErrors().add("Line " + lineCt + ": Expected two fields "
-                + lineCt + " but found " + fields.length + ": " + fieldsStr);
-          }
-        }
-      } while ((line = pbr.readLine()) != null);
-
-      if (executeImport) {
-        projectService.commit();
-      }
-
-      // aggregate results for validation
-      if (!executeImport) {
-        if (toAddCt > 0) {
-          result.getComments().add(toAddCt + " abbreviations will be added");
-        }
-        if (errorCt > 0) {
-          result.getErrors().add(errorCt + " lines in error");
-        }
-        if (dupPairCt > 0) {
-          result.getWarnings().add(dupPairCt + " duplicates");
-        }
-        if (dupKeyCt > 0) {
-          result.getWarnings()
-              .add(dupKeyCt + " existing abbreviations with new expansion");
-        }
-        if (dupValCt > 0) {
-          result.getWarnings()
-              .add(dupValCt + " existing expansions with new abbreviation");
-        }
-      }
-
-      // otherwise, aggregate results for import
-      else {
-        if (addedCt == 0) {
-          result.getWarnings().add("No abbreviations added.");
-        } else {
-          result.getComments().add(addedCt + " abbreviations added");
-        }
-        if (dupPairCt != 0) {
-          result.getWarnings().add(
-              dupPairCt + " duplicate abbreviation/expansion pairs skipped");
-        }
-        if (errorCt != 0) {
-          result.getErrors().add(errorCt + " lines with errors skipped");
-        }
-      }
-
-    } catch (Exception e) {
-      projectService.rollback();
-      result.getErrors().add("Unexpected error: " + e.getMessage());
-    } finally {
-      if (pbr != null) {
-        pbr.close();
-      }
-    }
-    return result;
-  }
 }
