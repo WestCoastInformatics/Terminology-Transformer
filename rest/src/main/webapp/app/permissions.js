@@ -14,7 +14,7 @@ tsApp.run([ 'securityService', function(securityService) {
     'REVIEWER' : false,
     'AUTHOR' : false,
     'EDITOR5' : false,
-    'ADMINISTRATOR' : false,
+    'ADMINISTRATOR' : true,
     'APP_USER' : true,
     'APP_ADMINISTRATOR' : true
   });
