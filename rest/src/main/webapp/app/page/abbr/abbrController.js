@@ -36,30 +36,38 @@ tsApp.controller('AbbrCtrl', [
       project : null,
       terminology : null,
       metadata : metadataService.getModel(),
-      abbr : null
+
+      // the abbreviation selected in the browse table
+      abbrViewed : null,
+
+      // the abbreviation selected for editing
+      abbrEdited : null,
+      
+      // edit/import/export tab selection
+      editTab : 'Edit'
     }
 
     $scope.lists = {
       projects : [],
       terminologies : [],
-      abbrs : [],
+      abbrsViewed : [],
+      abbrsReviewed : [],
       fileTypesFilter : '.txt,.csv',
       workflowStatus : [ {
         key : null,
-        value : 'Any'
+        label : 'Any'
       }, {
         key : 'PUBLISHED',
-        value : 'Accepted'
-      },{
+        label : 'Accepted'
+      }, {
         key : 'NEW',
-        value : 'New'
+        label : 'New'
       }, {
         key : 'NEEDS_REVIEW',
-        value : 'Needs Review'
+        label : 'Needs Review'
       } ]
     };
-    
-   
+
     $scope.paging = {};
     $scope.paging['abbr'] = utilService.getPaging();
     $scope.paging['abbr'].sortField = 'key';
@@ -125,16 +133,15 @@ tsApp.controller('AbbrCtrl', [
         return;
       }
       if (abbr) {
-        $scope.selected.abbr = abbr;
+        $scope.setAbbreviationReviewed
       }
       var term = $scope.paging['abbr'].filter;
       var query = term ? 'key:' + term + ' OR value:' + term : null;
       console.debug('query', query);
       abbrService.findAbbreviations(query, getPfs('abbr')).then(function(response) {
-        console.debug('abbreviations', response);
-        $scope.selected.abbrs = response;
 
-        console.debug('$scope.selected', $scope.selected);
+        $scope.lists.abbrsViewed = response;
+        console.debug('abbreviations', $scope.lists.abbrsViewed);
       })
     }
 
@@ -149,7 +156,7 @@ tsApp.controller('AbbrCtrl', [
         queryRestriction : null
       };
       if (type == 'abbr') {
-         var clauses = [];
+        var clauses = [];
         clauses.push('type:\"' + $scope.selected.metadata.terminology.preferredName + '-ABBR\"');
         if ($scope.paging['abbr'].workflowStatus) {
           clauses.push('workflowStatus:' + $scope.paging['abbr'].workflowStatus);
@@ -163,8 +170,16 @@ tsApp.controller('AbbrCtrl', [
       return pfs;
     }
 
-    $scope.setAbbreviation = function(abbr) {
-      $scope.selected.abbr = abbr;
+    $scope.setAbbreviationViewed = function(abbr) {
+      $scope.selected.editTab = 'Edit';
+      $scope.selected.abbrViewed = abbr;
+      $scope.selected.abbrEdited = angular.copy(abbr);
+      $scope.getReviewForAbbreviation($scope.selected.abbrEdited);
+
+    }
+
+    $scope.setAbbreviationEdited = function(abbr) {
+      $scope.selected.abbrEdited = abbr;
     }
 
     $scope.createAbbreviation = function() {
@@ -173,32 +188,83 @@ tsApp.controller('AbbrCtrl', [
         key : null,
         value : null
       }
-      $scope.setAbbreviation(abbr);
+      $scope.setAbbreviationEdited(abbr);
     }
-    
+
     $scope.cancelAbbreviation = function() {
-      $scope.selected.abbr = null;
+      $scope.selected.abbrEdited = null;
     }
-    
+
     $scope.addAbbreviation = function(abbr) {
       abbrService.addAbbreviation(abbr).then(function(newAbbr) {
         findAbbreviations();
-        $scope.selected.abbr = null;
+        $scope.setAbbreviationViewed(newAbbr);
+         
+        // get review for already-selected abbreviation
+        $scope.getReviewForAbbreviation($scope.selected.abbrReviewed);
+        $scope.selected.abbrEdited = null;
+        
+        // re-find abbreviations
+        findAbbreviations();
+
       });
     }
 
-   
     $scope.updateAbbreviation = function(abbr) {
       abbrService.updateAbbreviation(abbr).then(function() {
+        $scope.selected.abbrEdited = null;
+      
+        // get review for already-selected abbreviation
+        $scope.getReviewForAbbreviation($scope.selected.abbrReviewed);
+       
+        // re-find abbreviations
         findAbbreviations();
-        $scope.selected.abbr = null;
       });
     }
 
     $scope.removeAbbreviation = function(abbr) {
       abbrService.removeAbbreviation(abbr.id).then(function() {
-        $scope.selected.abbr = null;
+        $scope.selected.abbrEdited = null;
+        // get review for already-selected abbreviation
+        $scope.getReviewForAbbreviation($scope.selected.abbrReviewed);
+        
+        // re-find abbreviations
         findAbbreviations();
+      });
+    }
+
+    //
+    // Review functions
+    //
+
+    $scope.setReviewMode = function() {
+      $scope.paging['abbr'].workflowStatus = 'NEEDS_REVIEW';
+      $scope.findObservations();
+    }
+
+    $scope.getReviewForAbbreviation = function(abbr) {
+      if (!abbr) {
+        return;
+      }
+      $scope.selected.abbrReviewed = abbr;
+
+      abbrService.getReviewForAbbreviationId($scope.selected.abbrReviewed.id).then(
+        function(abbrReviews) {
+          $scope.lists.abbrsReviewed = abbrReviews;
+
+          // on review load, find and select for editing the viewed abbreviation in the review list
+          angular.forEach($scope.lists.abbrReviews, function(abbrReview) {
+            if (abbrReview.id == $scope.selected.abbrViewed.id) {
+              $scope.setAbbreviationEdited(abbrReview);
+            }
+          })
+        });
+    }
+
+    $scope.computeReviewStatuses = function() {
+      abbrService.computeReviewStatuses(
+        $scope.selected.metadata.terminology.preferredName + '-ABBR').then(function() {
+        $scope.findAbbreviations();
       });
     }
 
@@ -224,10 +290,10 @@ tsApp.controller('AbbrCtrl', [
           $scope.findAbbreviations();
         })
     };
-    
+
     $scope.exportAbbreviations = function() {
-      abbrService.exportAbbreviations($scope.selected.metadata.terminology.preferredName + '-ABBR').then(
-        function() {
+      abbrService.exportAbbreviations($scope.selected.metadata.terminology.preferredName + '-ABBR', $scope.selected.exportReadyOnly)
+        .then(function() {
           // do nothing
         })
     };
@@ -239,8 +305,17 @@ tsApp.controller('AbbrCtrl', [
 
     $scope.cancelImport = function() {
       $scope.selected.file = null;
-      $scope.changeImportFile();
+      $scope.clearImportResults();
     }
+
+    $scope.setNewMode = function() {
+      $scope.paging['abbr'].workflowStatus = 'NEW';
+      $scope.findAbbreviations();
+    }
+
+    // 
+    // Initialization
+    //
 
     // Wait for "terminologies" to load
     $scope.initMetadata = function() {

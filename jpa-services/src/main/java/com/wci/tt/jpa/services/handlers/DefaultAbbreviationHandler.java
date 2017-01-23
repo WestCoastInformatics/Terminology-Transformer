@@ -52,24 +52,26 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
   }
 
   /**
-   * Recurse helper function to compute potential conflicts in abbreviations
+   * Recurse helper function to compute potential reviews in abbreviations
    * 
    * @param abbrs
-   * @param conflicts
+   * @param reviews
    * @param service
    * @return
    * @throws Exception
    */
 
-  private Set<TypeKeyValue> getConflictsHelper(List<TypeKeyValue> abbrsToCheck,
-    Set<TypeKeyValue> computedConflicts) throws Exception {
+  private Set<TypeKeyValue> getReviewForAbbreviationHelper(
+    List<TypeKeyValue> abbrsToCheck, Set<TypeKeyValue> computedConflicts)
+    throws Exception {
 
-    // if computed conflicts is null, instantiate empty set
+    // if computed reviews is null, instantiate set from the abbreviations to
+    // check
     if (computedConflicts == null) {
-      computedConflicts = new HashSet<>();
+      computedConflicts = new HashSet<>(abbrsToCheck);
     }
 
-    // if no further abbreviations to process, return the passed conflicts list
+    // if no further abbreviations to process, return the passed reviews list
     if (abbrsToCheck == null || abbrsToCheck.size() == 0) {
       return computedConflicts;
     }
@@ -82,39 +84,45 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
     // this to be very big
     final List<String> clauses = new ArrayList<>();
     for (TypeKeyValue abbr : abbrsToCheck) {
-      clauses.add("key:\"" + abbr.getKey() + "\"");
-      clauses.add("value:\"" + abbr.getValue() + "\"");
+      // clause: key OR value matches for abbreviation not htis one
+      clauses.add("(NOT id:" + abbr.getId() + " AND (keySort:\"" + abbr.getKey()
+          + "\" OR value:\"" + abbr.getValue() + "\"))");
     }
 
-    String query = "type:\"" + type + "\" AND (";
+    String query = "";
     for (int i = 0; i < clauses.size(); i++) {
       query += clauses.get(i) + (i == clauses.size() - 1 ? "" : " OR ");
     }
-    query += ")";
+
+    PfsParameter pfs = new PfsParameterJpa();
+    pfs.setQueryRestriction("type:\"" + type + "\"");
 
     // get all matching results
     final List<TypeKeyValue> results =
-        service.findTypeKeyValuesForQuery(query, null).getObjects();
+        service.findTypeKeyValuesForQuery(query, pfs).getObjects();
 
-    // compute new results from results and conflicts
+    System.out.println("Matching results: " + results.size());
+
+    // compute new results from results and reviews
     final List<TypeKeyValue> newResults = new ArrayList<>(results);
     newResults.removeAll(computedConflicts);
 
-    // update conflicts from results
+    // update reviews from results
     computedConflicts.addAll(results);
 
-    // call with new results and updated conflicts
-    return getConflictsHelper(newResults, computedConflicts);
+    // call with new results and updated reviews
+    return getReviewForAbbreviationHelper(newResults, computedConflicts);
   }
 
   @Override
-  public TypeKeyValueList getConflicts(TypeKeyValue abbr) throws Exception {
+  public TypeKeyValueList getReviewForAbbreviation(TypeKeyValue abbr)
+    throws Exception {
 
-    Set<TypeKeyValue> conflicts = getConflictsHelper(
+    Set<TypeKeyValue> reviews = getReviewForAbbreviationHelper(
         new ArrayList<TypeKeyValue>(Arrays.asList(abbr)), null);
     TypeKeyValueList list = new TypeKeyValueListJpa();
-    list.setTotalCount(conflicts.size());
-    list.setObjects(new ArrayList<>(conflicts));
+    list.setTotalCount(reviews.size());
+    list.setObjects(new ArrayList<>(reviews));
     return list;
   }
 
@@ -132,7 +140,7 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
 
   @Override
   public boolean isHeaderLine(String line) {
-    return line != null && !line.toLowerCase().startsWith("abbreviation");
+    return line != null && line.toLowerCase().startsWith("abbreviation");
   }
 
   private ValidationResult importHelper(String type, InputStream in,
@@ -144,6 +152,14 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
       if (executeImport) {
         service.setTransactionPerOperation(false);
         service.beginTransaction();
+
+        // clear NEW status from all abbreviations
+        for (TypeKeyValue abbr : service
+            .findTypeKeyValuesForQuery("type:\"" + type + "\"", null)
+            .getObjects()) {
+          abbr.setWorkflowStatus(WorkflowStatus.PUBLISHED);
+          service.updateTypeKeyValue(abbr);
+        }
       }
 
       // Read from input stream
@@ -331,7 +347,8 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
   }
 
   @Override
-  public InputStream exportAbbreviationFile(String abbrType) throws Exception {
+  public InputStream exportAbbreviationFile(String abbrType, boolean readyOnly)
+    throws Exception {
     // Write a header
     // Obtain members for refset,
     // Write RF2 simple refset pattern to a StringBuilder
@@ -348,13 +365,41 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
     TypeKeyValueList abbrs =
         service.findTypeKeyValuesForQuery("type:\"" + abbrType + "\"", pfs);
     for (TypeKeyValue abbr : abbrs.getObjects()) {
-      if (!abbr.getKey().startsWith("##")) {
+      if (!readyOnly
+          || !WorkflowStatus.NEEDS_REVIEW.equals(abbr.getWorkflowStatus())) {
         sb.append(abbr.getKey()).append("\t");
         sb.append(abbr.getValue()).append("\t");
         sb.append("\r\n");
       }
     }
     return new ByteArrayInputStream(sb.toString().getBytes("UTF-8"));
+  }
+
+  @Override
+  public void computeAbbreviationStatuses(String abbrType) throws Exception {
+
+    service.setTransactionPerOperation(false);
+    service.beginTransaction();
+
+    // TODO Consider optimization (paged retrievals) if necessary
+    final TypeKeyValueList abbrs =
+        service.findTypeKeyValuesForQuery("type:\"" + abbrType + "\"", null);
+    for (final TypeKeyValue abbr : abbrs.getObjects()) {
+      final TypeKeyValueList reviews = getReviewForAbbreviation(abbr);
+
+      // NOTE getReviews always returns at least the abbreviation itself
+      if (reviews.size() > 1) {
+        System.out.println("  --> NEEDS REVIEW MARKED for " + abbr.getKey());
+        abbr.setWorkflowStatus(WorkflowStatus.NEEDS_REVIEW);
+        service.updateTypeKeyValue(abbr);
+      } else if (!WorkflowStatus.NEW.equals(abbr.getWorkflowStatus())) {
+        abbr.setWorkflowStatus(WorkflowStatus.PUBLISHED);
+        service.updateTypeKeyValue(abbr);
+      }
+    }
+
+    service.commit();
+
   }
 
 }

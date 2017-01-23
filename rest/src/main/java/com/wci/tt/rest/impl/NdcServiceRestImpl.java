@@ -3,15 +3,16 @@
  */
 package com.wci.tt.rest.impl;
 
-import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -48,7 +49,6 @@ import com.wci.umls.server.UserRole;
 import com.wci.umls.server.ValidationResult;
 import com.wci.umls.server.helpers.Branch;
 import com.wci.umls.server.helpers.ConfigUtility;
-import com.wci.umls.server.helpers.PfsParameter;
 import com.wci.umls.server.helpers.SearchResultList;
 import com.wci.umls.server.helpers.StringList;
 import com.wci.umls.server.helpers.TypeKeyValue;
@@ -62,6 +62,7 @@ import com.wci.umls.server.jpa.services.ProjectServiceJpa;
 import com.wci.umls.server.jpa.services.SecurityServiceJpa;
 import com.wci.umls.server.model.content.Atom;
 import com.wci.umls.server.model.content.AtomClass;
+import com.wci.umls.server.model.workflow.WorkflowStatus;
 import com.wci.umls.server.rest.impl.RootServiceRestImpl;
 import com.wci.umls.server.services.ProjectService;
 import com.wci.umls.server.services.SecurityService;
@@ -636,6 +637,7 @@ public class NdcServiceRestImpl extends RootServiceRestImpl
   @ApiOperation(value = "Export abbreviations", notes = "Exports abbreviations for type as comma or tab-delimited file", response = TypeKeyValueJpa.class)
   public InputStream exportAbbreviationsFile(
     @ApiParam(value = "Type of abbreviation, e.g. medAbbr", required = true) @PathParam("type") String type,
+    @ApiParam(value = "Flag to export only abbreviations not flagged for review", required = false) @QueryParam("readyOnly") boolean readyOnly,
     @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
     throws Exception {
     Logger.getLogger(getClass()).info("RESTful call (TKV): /find");
@@ -645,7 +647,7 @@ public class NdcServiceRestImpl extends RootServiceRestImpl
       authorizeApp(securityService, authToken, "export abbreviations",
           UserRole.USER);
       abbrHandler.setService(projectService);
-      return abbrHandler.exportAbbreviationFile(type);
+      return abbrHandler.exportAbbreviationFile(type, readyOnly);
     } catch (Exception e) {
       handleException(e, "trying to export abbreviations");
       return null;
@@ -656,6 +658,220 @@ public class NdcServiceRestImpl extends RootServiceRestImpl
       securityService.close();
     }
 
+  }
+  
+  @Override
+  @Path("/review/{type}/compute")
+  @POST
+  @ApiOperation(value = "Compute abbreviation review status", notes = "Recomputes review statuses for abbreviations of specified type")
+  public void computeReviewStatuses(
+    @ApiParam(value = "Type of abbreviation, e.g. medAbbr", required = true) @PathParam("type") String type,
+    @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
+    throws Exception {
+    Logger.getLogger(getClass()).info("RESTful call (TKV): /find");
+    final ProjectService projectService = new ProjectServiceJpa();
+    
+    final AbbreviationHandler abbrHandler = new DefaultAbbreviationHandler();
+    try {
+      final String username = authorizeApp(securityService, authToken, "export abbreviations",
+          UserRole.USER);
+      projectService.setLastModifiedBy(username);
+      abbrHandler.setService(projectService);
+      abbrHandler.computeAbbreviationStatuses(type);
+    } catch (Exception e) {
+      handleException(e, "trying to export abbreviations");
+     
+    } finally {
+      // NOTE: No need to close, but included for future safety
+      abbrHandler.close();
+      projectService.close();
+      securityService.close();
+    }
+  }
+  
+  @Override
+  @Path("/review/{id}")
+  @GET
+  @ApiOperation(value = "Retrieve review list for abbreviation", notes = "Retrieve list of abbreviations requiring review for a abbreviation by id")
+  public TypeKeyValueList getReviewForAbbreviation(
+    @ApiParam(value = "Id of abbreviation, e.g. 1", required = true) @PathParam("id") Long id,
+    @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
+    throws Exception {
+    Logger.getLogger(getClass()).info("RESTful call (TKV): /find");
+    final ProjectService projectService = new ProjectServiceJpa();
+    final AbbreviationHandler abbrHandler = new DefaultAbbreviationHandler();
+    try {
+      authorizeApp(securityService, authToken, "export abbreviations",
+          UserRole.USER);
+      abbrHandler.setService(projectService);
+      TypeKeyValue abbr = projectService.getTypeKeyValue(id);
+      return abbrHandler.getReviewForAbbreviation(abbr);
+    } catch (Exception e) {
+      handleException(e, "trying to export abbreviations");
+      return null;
+    } finally {
+      // NOTE: No need to close, but included for future safety
+      abbrHandler.close();
+      projectService.close();
+      securityService.close();
+    }
+  }
+  
+  @Override
+  @Path("/add")
+  @PUT
+  @ApiOperation(value = "Add a abbreviation", notes = "Adds a abbreviation object", response = TypeKeyValueJpa.class)
+  public TypeKeyValue addAbbreviation(
+    @ApiParam(value = "The abbreviation to add") TypeKeyValueJpa typeKeyValue,
+    @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
+    throws Exception {
+    Logger.getLogger(getClass())
+        .info("RESTful call (Project, PUT): / " + typeKeyValue);
+    final ProjectService projectService = new ProjectServiceJpa();
+    final AbbreviationHandler abbrHandler = new DefaultAbbreviationHandler();
+    try {
+      final String username = authorizeApp(securityService, authToken,
+          "add abbreviation", UserRole.VIEWER);
+      projectService.setLastModifiedBy(username);
+      
+      // check for review needed
+      // NOTE: Review always includes the abbreviation itself
+      abbrHandler.setService(projectService);
+      if (abbrHandler.getReviewForAbbreviation(typeKeyValue).getTotalCount() > 1) {
+        typeKeyValue.setWorkflowStatus(WorkflowStatus.NEEDS_REVIEW);
+      } else {
+        typeKeyValue.setWorkflowStatus(WorkflowStatus.PUBLISHED);
+      }
+      
+      System.out.println("add abbr: " + typeKeyValue);
+      
+      
+      return projectService.addTypeKeyValue(typeKeyValue);
+    } catch (Exception e) {
+      handleException(e, "trying to add abbreviation ");
+      return null;
+    } finally {
+      projectService.close();
+      securityService.close();
+    }
+  }
+
+  @Override
+  @Path("/{id}")
+  @GET
+  @ApiOperation(value = "Get a abbreviation", notes = "Gets a abbreviation object by id", response = TypeKeyValueJpa.class)
+  public TypeKeyValue getAbbreviation(
+    @ApiParam(value = "The abbreviation id, e.g. 1") @PathParam("id") Long id,
+    @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
+    throws Exception {
+    {
+      Logger.getLogger(getClass()).info("RESTful call (Project, Get): / " + id);
+      final ProjectService projectService = new ProjectServiceJpa();
+      try {
+        authorizeApp(securityService, authToken, "get abbreviation",
+            UserRole.VIEWER);
+        return projectService.getTypeKeyValue(id);
+      } catch (Exception e) {
+        handleException(e, "trying to get abbreviation ");
+        return null;
+      } finally {
+        projectService.close();
+        securityService.close();
+      }
+    }
+  }
+
+  @Override
+  @Path("/update")
+  @POST
+  @ApiOperation(value = "Update a abbreviation", notes = "Updates a abbreviation object", response = TypeKeyValueJpa.class)
+
+  public void updateAbbreviation(
+    @ApiParam(value = "The abbreviation to add") TypeKeyValueJpa typeKeyValue,
+    @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
+    throws Exception {
+    Logger.getLogger(getClass())
+        .info("RESTful call (Project, TypeKeyValue): /update "
+            + typeKeyValue.toString());
+    final ProjectService projectService = new ProjectServiceJpa();
+    final AbbreviationHandler abbrHandler = new DefaultAbbreviationHandler();
+    try {
+      final String username = authorizeApp(securityService, authToken,
+          "update abbreviation", UserRole.VIEWER);
+      projectService.setLastModifiedBy(username);
+      
+      // check for review needed
+      // NOTE: Review always includes the abbreviation itself
+      abbrHandler.setService(projectService);
+      if (abbrHandler.getReviewForAbbreviation(typeKeyValue).getTotalCount() > 1) {
+        typeKeyValue.setWorkflowStatus(WorkflowStatus.NEEDS_REVIEW);
+      } else {
+        typeKeyValue.setWorkflowStatus(WorkflowStatus.PUBLISHED);
+      }
+      
+      System.out.println("update abbr: " + typeKeyValue);
+      
+      projectService.updateTypeKeyValue(typeKeyValue);
+    } catch (Exception e) {
+      handleException(e, "trying to update abbreviation ");
+
+    } finally {
+      projectService.close();
+      securityService.close();
+    }
+
+  }
+
+  @Override
+  @Path("/remove/{id}")
+  @DELETE
+  @ApiOperation(value = "Removes a abbreviation", notes = "Removes a abbreviation object by id", response = TypeKeyValueJpa.class)
+
+  public void removeAbbreviation(
+    @ApiParam(value = "The abbreviation to remove") @PathParam("id") Long id,
+    @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
+    throws Exception {
+    Logger.getLogger(getClass())
+        .info("RESTful call (Project/TypeKeyValue): /remove " + id);
+    final ProjectService projectService = new ProjectServiceJpa();
+    try {
+      final String username = authorizeApp(securityService, authToken,
+          "remove abbreviation", UserRole.VIEWER);
+      projectService.setLastModifiedBy(username);
+      projectService.removeTypeKeyValue(id);
+    } catch (Exception e) {
+      handleException(e, "trying to remove abbreviation ");
+
+    } finally {
+      projectService.close();
+      securityService.close();
+    }
+
+  }
+
+  @Override
+  @Path("/find")
+  @POST
+  @ApiOperation(value = "Finds abbreviations", notes = "Finds abbreviation objects", response = TypeKeyValueJpa.class)
+  public TypeKeyValueList findAbbreviations(
+    @ApiParam(value = "Query", required = false) @QueryParam("query") String query,
+    @ApiParam(value = "PFS Parameter, e.g. '{ \"startIndex\":\"1\", \"maxResults\":\"5\" }'", required = false) PfsParameterJpa pfs,
+    @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
+    throws Exception {
+    Logger.getLogger(getClass())
+        .info("RESTful call (Project): /find, " + query + " " + pfs);
+    final ProjectService projectService = new ProjectServiceJpa();
+    try {
+      authorizeApp(securityService, authToken, "find abbreviations",
+          UserRole.VIEWER);
+      return projectService.findTypeKeyValuesForQuery(query, pfs);
+    } catch (Exception e) {
+      handleException(e, "trying to find abbreviations ");
+      return null;
+    } finally {
+      projectService.close();
+      securityService.close();
+    }
   }
 
 }

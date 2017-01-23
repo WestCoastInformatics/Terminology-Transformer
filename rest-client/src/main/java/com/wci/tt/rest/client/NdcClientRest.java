@@ -30,7 +30,10 @@ import com.wci.umls.server.ValidationResult;
 import com.wci.umls.server.helpers.ConfigUtility;
 import com.wci.umls.server.helpers.SearchResultList;
 import com.wci.umls.server.helpers.StringList;
+import com.wci.umls.server.helpers.TypeKeyValue;
+import com.wci.umls.server.helpers.TypeKeyValueList;
 import com.wci.umls.server.jpa.helpers.PfsParameterJpa;
+import com.wci.umls.server.jpa.helpers.TypeKeyValueJpa;
 import com.wci.umls.server.rest.client.RootClientRest;
 
 /**
@@ -305,7 +308,55 @@ public class NdcClientRest extends RootClientRest implements NdcServiceRest {
   }
 
   @Override
-  public InputStream exportAbbreviationsFile(String type, String authToken)
+  public InputStream exportAbbreviationsFile(String type, boolean readyOnly,
+    String authToken) throws Exception {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+  @Override
+  public TypeKeyValue addAbbreviation(TypeKeyValueJpa typeKeyValue,
+    String authToken) throws Exception {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+  @Override
+  public TypeKeyValue getAbbreviation(Long id, String authToken)
+    throws Exception {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+  @Override
+  public void updateAbbreviation(TypeKeyValueJpa typeKeyValue, String authToken)
+    throws Exception {
+    // TODO Auto-generated method stub
+    
+  }
+
+  @Override
+  public void removeAbbreviation(Long id, String authToken) throws Exception {
+    // TODO Auto-generated method stub
+    
+  }
+
+  @Override
+  public TypeKeyValueList findAbbreviations(String query, PfsParameterJpa pfs,
+    String authToken) throws Exception {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+  @Override
+  public void computeReviewStatuses(String type, String authToken)
+    throws Exception {
+    // TODO Auto-generated method stub
+    
+  }
+
+  @Override
+  public TypeKeyValueList getReviewForAbbreviation(Long id, String authToken)
     throws Exception {
     // TODO Auto-generated method stub
     return null;

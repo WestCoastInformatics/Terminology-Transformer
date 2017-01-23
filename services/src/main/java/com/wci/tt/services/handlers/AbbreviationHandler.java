@@ -34,24 +34,30 @@ public interface AbbreviationHandler extends Configurable {
    */
   public void setService(ProjectService service);
 
-  
   /**
    * Returns the conflicts.
    *
    * @param abbr the abbr
-   * @param service the service
    * @return the conflicts
+   * @throws Exception the exception
    */
-  public TypeKeyValueList getConflicts(TypeKeyValue abbr) throws Exception;
+  public TypeKeyValueList getReviewForAbbreviation(TypeKeyValue abbr) throws Exception;
+
+  /**
+   * Compute abbreviation statuses.
+   *
+   * @param abbrType the abbr type
+   * @throws Exception the exception
+   */
+  public void computeAbbreviationStatuses(String abbrType) throws Exception;
 
   /**
    * Validate abbreviation file.
    *
    * @param abbrType the abbr type
    * @param inFile the in file
-   * @param service the service
    * @return the validation result
-   * @throws Exception 
+   * @throws Exception the exception
    */
   public ValidationResult validateAbbreviationFile(String abbrType,
     InputStream inFile) throws Exception;
@@ -61,20 +67,29 @@ public interface AbbreviationHandler extends Configurable {
    *
    * @param abbrType the abbr type
    * @param inFile the in file
-   * @param service the service
    * @return the validation result
-   * @throws Exception 
+   * @throws Exception the exception
    */
   public ValidationResult importAbbreviationFile(String abbrType,
     InputStream inFile) throws Exception;
 
-  public InputStream exportAbbreviationFile(String abbrType) throws Exception;
-
+  /**
+   * Export abbreviation file.
+   *
+   * @param abbrType the abbr type
+   * @param excludeReview the exclude review
+   * @return the input stream
+   * @throws Exception the exception
+   */
+  public  InputStream exportAbbreviationFile(String abbrType, boolean excludeReview)
+      throws Exception;
   /**
    * Close any open resources on application shutdown.
    *
    * @throws Exception the exception
    */
   public void close() throws Exception;
+
+
 
 }

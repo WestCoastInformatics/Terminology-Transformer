@@ -361,6 +361,40 @@ public class AbbreviationRestImpl extends RootServiceRestImpl
     return null;
   }
 
+  @Override
+  public TypeKeyValue addAbbreviation(TypeKeyValueJpa typeKeyValue,
+    String authToken) throws Exception {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+  @Override
+  public TypeKeyValue getAbbreviation(Long id, String authToken)
+    throws Exception {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+  @Override
+  public void updateAbbreviation(TypeKeyValueJpa typeKeyValue, String authToken)
+    throws Exception {
+    // TODO Auto-generated method stub
+    
+  }
+
+  @Override
+  public void removeAbbreviation(Long id, String authToken) throws Exception {
+    // TODO Auto-generated method stub
+    
+  }
+
+  @Override
+  public TypeKeyValueList findAbbreviations(String query, PfsParameterJpa pfs,
+    String authToken) throws Exception {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
  
 
 }
