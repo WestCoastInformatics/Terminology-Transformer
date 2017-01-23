@@ -1,5 +1,17 @@
 <!-- Controlled by AbbrCtrl (in abbrController.js)  -->
 
+<style>
+.color-box {
+	width: 10px;
+	height: 10px;
+	display: inline-block;
+	border-radius: 2px;
+	background-color: #ccc;
+	left: 5px;
+	top: 5px;
+	vertical-align: center;
+}
+</style>
 <div class="row">
 
   <!-- Content -->
@@ -16,12 +28,14 @@
         Terminology: <select ng-model="selected.metadata.terminology"
           ng-change="setTerminology(selected.metadata.terminology)"
           ng-options="terminology as terminology.terminology for terminology in getViewableTerminologies() | orderBy:'terminology'">
-        </select> <span class="pull-right"> Status: <select
+        </select> <span class="pull-right"> <span class="color-box"
+          style="background-color: red;" ng-show="paging['abbr'].hasNeedsReview"
+          ng-click="toggleReviewMode()" title="Abbreviations need review">
+        </span> Status: <select
           ng-options="status.key as status.label for status in lists.workflowStatus"
           ng-model="paging['abbr'].workflowStatus"
           ng-change="findAbbreviations()"></select>
-        </span> <span class="pull-right" class="alert-primary"
-          ng-click="setReviewMode()" title="Abbreviations need review">&nbsp;</span>
+        </span></span>
 
 
 
@@ -42,10 +56,14 @@
               ng-repeat="abbr in lists.abbrsViewed.typeKeyValues"
               ng-click="setAbbreviationViewed(abbr)">
               <td class="col-md-3 col-xs-3">{{abbr.key}}</td>
-              <td><span title="Needs review" class="label label-danger"
-                ng-show="abbr.workflowStatus == 'NEEDS_REVIEW'">&nbsp;</span> <span
-                title="New" class="label label-success" style="width: 15px;"
-                ng-show="abbr.workflowStatus == 'NEW'">&nbsp;</span></td>
+              <td><span class="color-box"
+                style="background-color: red; margin-top: 5px;"
+                ng-show="abbr.workflowStatus == 'NEEDS_REVIEW'"
+                ng-click="setReviewMode()" title="Need review"></span><span
+                class="color-box"
+                style="background-color: green; margin-top: 5px;"
+                ng-show="abbr.workflowStatus == 'NEW'"
+                ng-click="setReviewMode()" title="New abbreviation"></span></td>
               </td>
               <td class="col-md-8 col-xs-8">{{abbr.value}}</td>
 
@@ -54,7 +72,7 @@
         </table>
 
         <btn style="margin-top:25px;" class="btn btn-xs btn-primary"
-          ng-click="computeReviewStatuses()">Recompute Reviews</btn>
+          ng-click="recomputeAllReviewStatuses">Recompute Reviews [DEBUG USE ONLY]</btn>
 
 
 
@@ -121,7 +139,7 @@
               ng-show="lists.abbrsReviewed.typeKeyValues.length > 0">
               <tr>
                 <th class="col-md-3">Abbreviation</th>
-<th></th>
+                <th></th>
                 <th class="col-md-9">Expansion</th>
               </tr>
               <tbody>
@@ -130,7 +148,9 @@
                   ng-repeat="abbr in lists.abbrsReviewed.typeKeyValues"
                   ng-click="setAbbreviationEdited(abbr)">
                   <td class="col-md-3">{{abbr.key}}</td>
-                  <td class="col-md-1"><i ng-show="selected.abbrEdited.id == abbr.id" class="muted glyphicon glyphicon-pencil" title="Editing"></i>
+                  <td class="col-md-1"><i
+                    ng-show="selected.abbrEdited.id == abbr.id"
+                    class="muted glyphicon glyphicon-pencil" title="Editing"></i>
                   <td class="col-md-8">{{abbr.value}}
                 </tr>
               </tbody>

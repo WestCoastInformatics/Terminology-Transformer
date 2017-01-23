@@ -101,7 +101,7 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
     final List<TypeKeyValue> results =
         service.findTypeKeyValuesForQuery(query, pfs).getObjects();
 
-    System.out.println("Matching results: " + results.size());
+    System.out.println("Matching results: " + results);
 
     // compute new results from results and reviews
     final List<TypeKeyValue> newResults = new ArrayList<>(results);
@@ -123,6 +123,7 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
     TypeKeyValueList list = new TypeKeyValueListJpa();
     list.setTotalCount(reviews.size());
     list.setObjects(new ArrayList<>(reviews));
+    System.out.println("Review results size: " + reviews.size());
     return list;
   }
 
@@ -378,6 +379,7 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
   @Override
   public void computeAbbreviationStatuses(String abbrType) throws Exception {
 
+    // TODO NOTE: This is a debug helper function only and not intended for actual use
     service.setTransactionPerOperation(false);
     service.beginTransaction();
 
@@ -401,5 +403,19 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
     service.commit();
 
   }
+  
+  @Override
+  public void updateWorkflowStatus(TypeKeyValue abbr) throws Exception {
+    // NOTE: Review always contains the abbreviation itself
+    if (getReviewForAbbreviation(abbr).getTotalCount() > 1) {
+      // set to NEEDS_REVIEW
+      abbr.setWorkflowStatus(WorkflowStatus.NEEDS_REVIEW);
+    } else {
+      // otherwise set to 
+      abbr.setWorkflowStatus(WorkflowStatus.PUBLISHED);
+    }
+  }
+ 
+
 
 }

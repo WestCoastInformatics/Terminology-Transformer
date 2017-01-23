@@ -9,6 +9,7 @@ import com.wci.umls.server.ValidationResult;
 import com.wci.umls.server.helpers.Configurable;
 import com.wci.umls.server.helpers.TypeKeyValue;
 import com.wci.umls.server.helpers.TypeKeyValueList;
+import com.wci.umls.server.model.workflow.WorkflowStatus;
 import com.wci.umls.server.services.ProjectService;
 
 /**
@@ -90,6 +91,13 @@ public interface AbbreviationHandler extends Configurable {
    */
   public void close() throws Exception;
 
-
+  /**
+   * Update workflow status.
+   *
+   * @param abbr the abbr
+   * @return the workflow status
+   * @throws Exception the exception
+   */
+  public void updateWorkflowStatus(TypeKeyValue abbr) throws Exception;
 
 }

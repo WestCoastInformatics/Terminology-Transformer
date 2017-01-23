@@ -659,28 +659,28 @@ public class NdcServiceRestImpl extends RootServiceRestImpl
     }
 
   }
-  
+
   @Override
   @Path("/review/{type}/compute")
   @POST
-  @ApiOperation(value = "Compute abbreviation review status", notes = "Recomputes review statuses for abbreviations of specified type")
+  @ApiOperation(value = "Compute abbreviations review status", notes = "Recomputes review statuses for abbreviations of specified type")
   public void computeReviewStatuses(
     @ApiParam(value = "Type of abbreviation, e.g. medAbbr", required = true) @PathParam("type") String type,
     @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
     throws Exception {
     Logger.getLogger(getClass()).info("RESTful call (TKV): /find");
     final ProjectService projectService = new ProjectServiceJpa();
-    
+
     final AbbreviationHandler abbrHandler = new DefaultAbbreviationHandler();
     try {
-      final String username = authorizeApp(securityService, authToken, "export abbreviations",
-          UserRole.USER);
+      final String username = authorizeApp(securityService, authToken,
+          "export abbreviations", UserRole.USER);
       projectService.setLastModifiedBy(username);
       abbrHandler.setService(projectService);
       abbrHandler.computeAbbreviationStatuses(type);
     } catch (Exception e) {
       handleException(e, "trying to export abbreviations");
-     
+
     } finally {
       // NOTE: No need to close, but included for future safety
       abbrHandler.close();
@@ -688,7 +688,7 @@ public class NdcServiceRestImpl extends RootServiceRestImpl
       securityService.close();
     }
   }
-  
+
   @Override
   @Path("/review/{id}")
   @GET
@@ -716,45 +716,7 @@ public class NdcServiceRestImpl extends RootServiceRestImpl
       securityService.close();
     }
   }
-  
-  @Override
-  @Path("/add")
-  @PUT
-  @ApiOperation(value = "Add a abbreviation", notes = "Adds a abbreviation object", response = TypeKeyValueJpa.class)
-  public TypeKeyValue addAbbreviation(
-    @ApiParam(value = "The abbreviation to add") TypeKeyValueJpa typeKeyValue,
-    @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
-    throws Exception {
-    Logger.getLogger(getClass())
-        .info("RESTful call (Project, PUT): / " + typeKeyValue);
-    final ProjectService projectService = new ProjectServiceJpa();
-    final AbbreviationHandler abbrHandler = new DefaultAbbreviationHandler();
-    try {
-      final String username = authorizeApp(securityService, authToken,
-          "add abbreviation", UserRole.VIEWER);
-      projectService.setLastModifiedBy(username);
-      
-      // check for review needed
-      // NOTE: Review always includes the abbreviation itself
-      abbrHandler.setService(projectService);
-      if (abbrHandler.getReviewForAbbreviation(typeKeyValue).getTotalCount() > 1) {
-        typeKeyValue.setWorkflowStatus(WorkflowStatus.NEEDS_REVIEW);
-      } else {
-        typeKeyValue.setWorkflowStatus(WorkflowStatus.PUBLISHED);
-      }
-      
-      System.out.println("add abbr: " + typeKeyValue);
-      
-      
-      return projectService.addTypeKeyValue(typeKeyValue);
-    } catch (Exception e) {
-      handleException(e, "trying to add abbreviation ");
-      return null;
-    } finally {
-      projectService.close();
-      securityService.close();
-    }
-  }
+
 
   @Override
   @Path("/{id}")
@@ -780,6 +742,35 @@ public class NdcServiceRestImpl extends RootServiceRestImpl
       }
     }
   }
+  
+
+  @Override
+  @Path("/add")
+  @PUT
+  @ApiOperation(value = "Add a abbreviation", notes = "Adds a abbreviation object", response = TypeKeyValueJpa.class)
+  public TypeKeyValue addAbbreviation(
+    @ApiParam(value = "The abbreviation to add") TypeKeyValueJpa typeKeyValue,
+    @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
+    throws Exception {
+    Logger.getLogger(getClass())
+        .info("RESTful call (Project, PUT): / " + typeKeyValue);
+    final ProjectService projectService = new ProjectServiceJpa();
+    final AbbreviationHandler abbrHandler = new DefaultAbbreviationHandler();
+    try {
+      final String username = authorizeApp(securityService, authToken,
+          "add abbreviation", UserRole.VIEWER);
+      projectService.setLastModifiedBy(username);
+      abbrHandler.setService(projectService);
+      abbrHandler.updateWorkflowStatus(typeKeyValue);
+      return projectService.addTypeKeyValue(typeKeyValue);
+    } catch (Exception e) {
+      handleException(e, "trying to add abbreviation ");
+      return null;
+    } finally {
+      projectService.close();
+      securityService.close();
+    }
+  }
 
   @Override
   @Path("/update")
@@ -799,22 +790,11 @@ public class NdcServiceRestImpl extends RootServiceRestImpl
       final String username = authorizeApp(securityService, authToken,
           "update abbreviation", UserRole.VIEWER);
       projectService.setLastModifiedBy(username);
-      
-      // check for review needed
-      // NOTE: Review always includes the abbreviation itself
       abbrHandler.setService(projectService);
-      if (abbrHandler.getReviewForAbbreviation(typeKeyValue).getTotalCount() > 1) {
-        typeKeyValue.setWorkflowStatus(WorkflowStatus.NEEDS_REVIEW);
-      } else {
-        typeKeyValue.setWorkflowStatus(WorkflowStatus.PUBLISHED);
-      }
-      
-      System.out.println("update abbr: " + typeKeyValue);
-      
+      abbrHandler.updateWorkflowStatus(typeKeyValue);
       projectService.updateTypeKeyValue(typeKeyValue);
     } catch (Exception e) {
       handleException(e, "trying to update abbreviation ");
-
     } finally {
       projectService.close();
       securityService.close();
