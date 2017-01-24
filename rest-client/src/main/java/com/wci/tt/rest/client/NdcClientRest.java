@@ -3,7 +3,6 @@
  */
 package com.wci.tt.rest.client;
 
-import java.io.InputStream;
 import java.net.URLEncoder;
 import java.util.List;
 import java.util.Properties;
@@ -17,7 +16,6 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status.Family;
 
 import org.apache.log4j.Logger;
-import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.wci.tt.jpa.infomodels.NdcModel;
@@ -26,14 +24,10 @@ import com.wci.tt.jpa.infomodels.NdcPropertiesModel;
 import com.wci.tt.jpa.infomodels.RxcuiModel;
 import com.wci.tt.jpa.services.rest.NdcServiceRest;
 import com.wci.tt.jpa.services.rest.TransformServiceRest;
-import com.wci.umls.server.ValidationResult;
 import com.wci.umls.server.helpers.ConfigUtility;
 import com.wci.umls.server.helpers.SearchResultList;
 import com.wci.umls.server.helpers.StringList;
-import com.wci.umls.server.helpers.TypeKeyValue;
-import com.wci.umls.server.helpers.TypeKeyValueList;
 import com.wci.umls.server.jpa.helpers.PfsParameterJpa;
-import com.wci.umls.server.jpa.helpers.TypeKeyValueJpa;
 import com.wci.umls.server.rest.client.RootClientRest;
 
 /**
@@ -288,85 +282,6 @@ public class NdcClientRest extends RootClientRest implements NdcServiceRest {
           // n/a
         });
     return list;
-  }
-
-
-  @Override
-  public ValidationResult importAbbreviations(
-    FormDataContentDisposition contentDispositionHeader, InputStream in,
-    String type, String authToken) throws Exception {
-    // TODO Auto-generated method stub
-    return null;
-  }
-
-  @Override
-  public ValidationResult validateAbbreviationsFile(
-    FormDataContentDisposition contentDispositionHeader, InputStream in,
-    String type, String authToken) throws Exception {
-    // TODO Auto-generated method stub
-    return null;
-  }
-
-  @Override
-  public InputStream exportAbbreviationsFile(String type, String delimiter, boolean readyOnly,
-    String authToken) throws Exception {
-    // TODO Auto-generated method stub
-    return null;
-  }
-
-  @Override
-  public TypeKeyValue addAbbreviation(TypeKeyValueJpa typeKeyValue,
-    String authToken) throws Exception {
-    // TODO Auto-generated method stub
-    return null;
-  }
-
-  @Override
-  public TypeKeyValue getAbbreviation(Long id, String authToken)
-    throws Exception {
-    // TODO Auto-generated method stub
-    return null;
-  }
-
-  @Override
-  public void updateAbbreviation(TypeKeyValueJpa typeKeyValue, String authToken)
-    throws Exception {
-    // TODO Auto-generated method stub
-    
-  }
-
-  @Override
-  public void removeAbbreviation(Long id, String authToken) throws Exception {
-    // TODO Auto-generated method stub
-    
-  }
-
-  @Override
-  public TypeKeyValueList findAbbreviations(String query, String type, PfsParameterJpa pfs,
-    String authToken) throws Exception {
-    // TODO Auto-generated method stub
-    return null;
-  }
-
-  @Override
-  public void computeReviewStatuses(String type, String authToken)
-    throws Exception {
-    // TODO Auto-generated method stub
-    
-  }
-
-  @Override
-  public TypeKeyValueList getReviewForAbbreviation(Long id, String authToken)
-    throws Exception {
-    // TODO Auto-generated method stub
-    return null;
-  }
-
-  @Override
-  public TypeKeyValueList getReviewForAbbreviations(List<Long> ids,
-    String authToken) throws Exception {
-    // TODO Auto-generated method stub
-    return null;
   }
 
 
