@@ -434,7 +434,7 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
   @Override
   public TypeKeyValueList filterResults(TypeKeyValueList list, String filter,
     PfsParameter pfs) throws Exception {
-    List filteredList = null;
+    List<TypeKeyValue> filteredList = null;
     switch (filter) {
       case "duplicateKey":
         filteredList = filterDuplicateKey(list.getObjects());
@@ -448,18 +448,16 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
       default:
         filteredList = list.getObjects();
     }
-    
-    // create paging-only PFS
-    PfsParameter lpfs = new PfsParameterJpa();
-    lpfs.setStartIndex(pfs.getStartIndex());
-    lpfs.setMaxResults(pfs.getMaxResults());
-    final int totalCt[] = new int[1];
-    filteredList = service.applyPfsToList(filteredList, TypeKeyValueJpa.class, totalCt, lpfs);
+
+    // simple paging only - filtering and query restriction already applied
+    int fromIndex = Math.min(pfs.getStartIndex(), filteredList.size());
+    int toIndex =
+        Math.min(fromIndex + pfs.getMaxResults(), filteredList.size());
     TypeKeyValueList results = new TypeKeyValueListJpa();
-    results.setTotalCount(totalCt[0]);
-    results.setObjects(filteredList);
+    results.setTotalCount(filteredList.size());
+    results.setObjects(filteredList.subList(fromIndex, toIndex));
     return results;
-    
+
   }
 
   //
@@ -468,10 +466,12 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
   private List<TypeKeyValue> filterDuplicateKey(List<TypeKeyValue> list) {
     final Map<String, List<TypeKeyValue>> map = new HashMap<>();
     for (final TypeKeyValue abbr : list) {
-      if (!map.containsKey(abbr.getKey())) {
-        map.put(abbr.getKey(), new ArrayList<>(Arrays.asList(abbr)));
-      } else {
-        map.get(abbr.getKey()).add(abbr);
+      if (abbr.getKey() != null && !abbr.getKey().isEmpty()) {
+        if (!map.containsKey(abbr.getKey())) {
+          map.put(abbr.getKey(), new ArrayList<>(Arrays.asList(abbr)));
+        } else {
+          map.get(abbr.getKey()).add(abbr);
+        }
       }
     }
     final List<TypeKeyValue> dupKeys = new ArrayList<>();
@@ -486,10 +486,13 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
   private List<TypeKeyValue> filterDuplicateValue(List<TypeKeyValue> list) {
     final Map<String, List<TypeKeyValue>> map = new HashMap<>();
     for (final TypeKeyValue abbr : list) {
-      if (!map.containsKey(abbr.getKey())) {
-        map.put(abbr.getValue(), new ArrayList<>(Arrays.asList(abbr)));
-      } else {
-        map.get(abbr.getValue()).add(abbr);
+      // NOTE: Catch values consisting of whitespace
+      if (abbr.getValue() != null && !abbr.getValue().trim().isEmpty()) {
+        if (!map.containsKey(abbr.getValue())) {
+          map.put(abbr.getValue(), new ArrayList<>(Arrays.asList(abbr)));
+        } else {
+          map.get(abbr.getValue()).add(abbr);
+        }
       }
     }
     final List<TypeKeyValue> results = new ArrayList<>();
@@ -504,7 +507,8 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
   private List<TypeKeyValue> filterBlankValue(List<TypeKeyValue> list) {
     final List<TypeKeyValue> results = new ArrayList<>();
     for (final TypeKeyValue abbr : list) {
-      if (abbr.getValue() == null || abbr.getValue().isEmpty()) {
+      // NOTE: Catch values consisting of whitespace
+      if (abbr.getValue() == null || abbr.getValue().trim().isEmpty()) {
         results.add(abbr);
       }
     }

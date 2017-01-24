@@ -872,7 +872,7 @@ public class NdcServiceRestImpl extends RootServiceRestImpl
     @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
     throws Exception {
     Logger.getLogger(getClass())
-        .info("RESTful call (Project): /find, " + query + " " + pfs);
+        .info("RESTful call (Project): /find, " + query + ", " + filter + ", " + pfs);
     final ProjectService projectService = new ProjectServiceJpa();
     try {
       authorizeApp(securityService, authToken, "find abbreviations",
@@ -882,14 +882,18 @@ public class NdcServiceRestImpl extends RootServiceRestImpl
       
       // if filter supplied, retrieve all results and pass to handler
       if (filter != null) {
+        System.out.println("applying filter: " + filter);
         PfsParameter lpfs = new PfsParameterJpa(pfs);
         lpfs.setMaxResults(-1);
         lpfs.setStartIndex(-1);
         list = projectService.findTypeKeyValuesForQuery(query, lpfs);
+        System.out.println("unpaged result size: " + list.getTotalCount());
         final AbbreviationHandler abbrHandler = new DefaultAbbreviationHandler();
         abbrHandler.setService(projectService);
         list = abbrHandler.filterResults(list, filter, pfs);
+        System.out.println("filtered list size: " + list.getTotalCount());
       } else {
+        System.out.println("no filter");
         list = projectService.findTypeKeyValuesForQuery(query, pfs);
       }
     
