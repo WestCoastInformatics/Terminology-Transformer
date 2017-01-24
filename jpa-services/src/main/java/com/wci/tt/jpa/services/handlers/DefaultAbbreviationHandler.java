@@ -12,9 +12,11 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import com.wci.tt.services.handlers.AbbreviationHandler;
 import com.wci.umls.server.ValidationResult;
+import com.wci.umls.server.helpers.ConfigUtility;
 import com.wci.umls.server.helpers.PfsParameter;
 import com.wci.umls.server.helpers.TypeKeyValue;
 import com.wci.umls.server.helpers.TypeKeyValueList;
@@ -228,7 +230,8 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
           continue;
         }
 
-        System.out.println("fields " + fields.length);
+        System.out
+            .println("line " + lineCt + ":  " + fields.length + " fields");
         for (int i = 0; i < fields.length; i++) {
           System.out.println("  " + i + ": " + fields[i]);
         }
@@ -310,23 +313,6 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
               newAbbrs.add(typeKeyValue);
               addedCt++;
             }
-          }
-
-          // check if key field empty (error)
-          else if (fields[1] == null || fields[1].trim().isEmpty()) {
-            errorCt++;
-            if (!executeImport) {
-              result.getErrors().add("Line " + lineCt + ": Key field empty");
-            }
-          }
-
-          // check if value field empty (ignored value)
-          else if (fields[1] == null || fields[1].trim().isEmpty()) {
-            ignoredCt++;
-            TypeKeyValue typeKeyValue =
-                new TypeKeyValueJpa(type, fields[0], null);
-            service.addTypeKeyValue(typeKeyValue);
-            newAbbrs.add(typeKeyValue);
           }
 
           else {
@@ -530,16 +516,23 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
         filteredList = list.getObjects();
     }
 
+    // TODO Use another lucene search based on retrieved ids
+    String query = ConfigUtility.composeQuery("OR", filteredList.stream()
+        .map(t -> "id:" + t.getId()).collect(Collectors.toList()));
+    
+    return service.findTypeKeyValuesForQuery(query, pfs);
+
     // simple paging only - filtering and query restriction already applied
-    int fromIndex = Math.min(pfs.getStartIndex(), filteredList.size());
+    /*int fromIndex = Math.min(pfs.getStartIndex(), filteredList.size());
     int toIndex =
         Math.min(fromIndex + pfs.getMaxResults(), filteredList.size());
     TypeKeyValueList results = new TypeKeyValueListJpa();
     results.setTotalCount(filteredList.size());
     results.setObjects(filteredList.subList(fromIndex, toIndex));
-    return results;
+    return results;*/
 
     // filter may distort pfs , reapply pfs
+    // TODO Try removing query restriction
     /*
      * int totalCt[] = new int[1]; filteredList =
      * service.applyPfsToList(filteredList, TypeKeyValue.class, totalCt, pfs);
