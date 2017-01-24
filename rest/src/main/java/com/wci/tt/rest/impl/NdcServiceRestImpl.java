@@ -98,6 +98,7 @@ public class NdcServiceRestImpl extends RootServiceRestImpl
    * @throws Exception the exception
    */
   public NdcServiceRestImpl() throws Exception {
+    System.out.println("********* NDC *************");
     securityService = new SecurityServiceJpa();
   }
 

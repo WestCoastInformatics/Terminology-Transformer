@@ -10,10 +10,8 @@ import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import com.wci.tt.services.handlers.AbbreviationHandler;
 import com.wci.umls.server.ValidationResult;
@@ -63,14 +61,14 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
    * @throws Exception
    */
 
-  private Set<TypeKeyValue> getReviewForAbbreviationsHelper(
-    List<TypeKeyValue> abbrsToCheck, Set<TypeKeyValue> computedConflicts)
+  private List<TypeKeyValue> getReviewForAbbreviationsHelper(
+    List<TypeKeyValue> abbrsToCheck, List<TypeKeyValue> computedConflicts)
     throws Exception {
 
     // if computed reviews is null, instantiate set from the abbreviations to
     // check
     if (computedConflicts == null) {
-      computedConflicts = new HashSet<>(abbrsToCheck);
+      computedConflicts = new ArrayList<>(abbrsToCheck);
     }
 
     // if no further abbreviations to process, return the passed reviews list
@@ -106,11 +104,24 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
     System.out.println("Matching results: " + results);
 
     // compute new results from results and reviews
-    final List<TypeKeyValue> newResults = new ArrayList<>(results);
-    newResults.removeAll(computedConflicts);
+    final List<TypeKeyValue> newResults = new ArrayList<>();
 
-    // update reviews from results
-    computedConflicts.addAll(results);
+    // check each result against already computed conflicts
+    // to update computed conflicts and determine which
+    // results are new
+    // NOTE: Check by id instead of set operations to catch duplicates
+    for (TypeKeyValue result : results) {
+      boolean exists = false;
+      for (TypeKeyValue conflict : computedConflicts) {
+        if (result.getId().equals(conflict.getId())) {
+          exists = true;
+        }
+      }
+      if (!exists) {
+        newResults.add(result);
+        computedConflicts.add(result);
+      }
+    }
 
     // call with new results and updated reviews
     return getReviewForAbbreviationsHelper(newResults, computedConflicts);
@@ -119,21 +130,22 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
   @Override
   public TypeKeyValueList getReviewForAbbreviation(TypeKeyValue abbr)
     throws Exception {
-    Set<TypeKeyValue> reviews = getReviewForAbbreviationsHelper(
+    List<TypeKeyValue> reviews = getReviewForAbbreviationsHelper(
         new ArrayList<>(Arrays.asList(abbr)), null);
     TypeKeyValueList list = new TypeKeyValueListJpa();
     list.setTotalCount(reviews.size());
-    list.setObjects(new ArrayList<>(reviews));
+    list.setObjects(reviews);
     return list;
   }
 
   @Override
   public TypeKeyValueList getReviewForAbbreviations(List<TypeKeyValue> abbrList)
     throws Exception {
-    Set<TypeKeyValue> reviews = getReviewForAbbreviationsHelper(abbrList, null);
+    List<TypeKeyValue> reviews =
+        getReviewForAbbreviationsHelper(abbrList, null);
     TypeKeyValueList list = new TypeKeyValueListJpa();
     list.setTotalCount(reviews.size());
-    list.setObjects(new ArrayList<>(reviews));
+    list.setObjects(reviews);
     System.out.println("Review results size: " + reviews.size());
     return list;
   }
@@ -212,7 +224,8 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
         final String fields[] = line.split("\t");
 
         // skip comment lines
-        if (fields[0] != null && fields[0].startsWith("##")) {
+        if (fields.length > 0 && fields[0] != null
+            && fields[0].startsWith("##")) {
           commentCt++;
           continue;
         }
@@ -317,13 +330,20 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
       } while ((line = pbr.readLine()) != null);
 
       // after all abbreviations loaded, apply workflow status and commit
+      // NOTE: Commit required for lucene index writing
       if (executeImport) {
+
+        service.commit();
+        service.beginTransaction();
         for (TypeKeyValue newAbbr : newAbbrs) {
+          System.out.println("Checking new abbr: " + newAbbr);
           if (getReviewForAbbreviation(newAbbr).size() > 1) {
+            System.out.println("  --> NEEDS REVIEW");
             newAbbr.setWorkflowStatus(WorkflowStatus.NEEDS_REVIEW);
           } else {
             newAbbr.setWorkflowStatus(WorkflowStatus.NEW);
           }
+          service.updateTypeKeyValue(newAbbr);
         }
         service.commit();
       }
@@ -370,7 +390,8 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
       }
 
     } catch (Exception e) {
-      service.rollback();
+      e.printStackTrace();
+
       result.getErrors().add("Unexpected error: " + e.getMessage());
     } finally {
       if (pbr != null) {
@@ -414,12 +435,11 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
   @Override
   public void computeAbbreviationStatuses(String abbrType) throws Exception {
 
-    // TODO NOTE: This is a debug helper function only and not intended for
+    // NOTE: This is a debug helper function only and not intended for
     // actual use
     service.setTransactionPerOperation(false);
     service.beginTransaction();
 
-    // TODO Consider optimization (paged retrievals) if necessary
     final TypeKeyValueList abbrs =
         service.findTypeKeyValuesForQuery("type:\"" + abbrType + "\"", null);
     for (final TypeKeyValue abbr : abbrs.getObjects()) {
@@ -467,6 +487,9 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
       case "blankValue":
         filteredList = filterBlankValue(list.getObjects());
         break;
+      case "duplicate":
+        filteredList = filterDuplicates(list.getObjects());
+        break;
       default:
         filteredList = list.getObjects();
     }
@@ -479,6 +502,16 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
     results.setTotalCount(filteredList.size());
     results.setObjects(filteredList.subList(fromIndex, toIndex));
     return results;
+
+    // filter may distort pfs , reapply pfs
+    /*
+     * int totalCt[] = new int[1]; filteredList =
+     * service.applyPfsToList(filteredList, TypeKeyValue.class, totalCt, pfs);
+     * 
+     * // construct results TypeKeyValueList results = new
+     * TypeKeyValueListJpa(); results.setTotalCount(totalCt[0]);
+     * results.setObjects(filteredList); return results;
+     */
 
   }
 
@@ -532,6 +565,28 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
       // NOTE: Catch values consisting of whitespace
       if (abbr.getValue() == null || abbr.getValue().trim().isEmpty()) {
         results.add(abbr);
+      }
+    }
+    return results;
+  }
+
+  private List<TypeKeyValue> filterDuplicates(List<TypeKeyValue> list) {
+
+    final Map<String, List<TypeKeyValue>> map = new HashMap<>();
+    for (final TypeKeyValue abbr : list) {
+      // NOTE: Catch values consisting of whitespace
+      String keyValueStr = abbr.getKey() + "\t" + abbr.getValue();
+      if (!map.containsKey(keyValueStr)) {
+        map.put(keyValueStr, new ArrayList<>(Arrays.asList(abbr)));
+      } else {
+        map.get(keyValueStr).add(abbr);
+      }
+    }
+
+    final List<TypeKeyValue> results = new ArrayList<>();
+    for (final String key : map.keySet()) {
+      if (map.get(key).size() > 1) {
+        results.addAll(map.get(key));
       }
     }
     return results;

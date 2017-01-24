@@ -41,6 +41,10 @@
         <div pager paging="paging['abbr']" count="lists.abbrsViewed.totalCount"
           callbacks="paging['abbr'].callbacks" style="margin-top: 10px;"></div>
 
+        <div class="alert alert-warning"
+          ng-show="lists.abbrsViewed.totalCount == 0">No results</div>
+
+
         <table class="slim table table-hover" style="margin-top: 10px;"
           ng-show="lists.abbrsViewed.typeKeyValues.length > 0">
           <tr>
@@ -57,6 +61,7 @@
           <tbody>
             <!-- table-hover makes use of the active class -->
             <tr ng-class="{selected: abbr.id == selected.abbrViewed.id}"
+              class="breakword"
               ng-repeat="abbr in lists.abbrsViewed.typeKeyValues"
               ng-click="setAbbreviationViewed(abbr)">
               <td class="col-md-3">{{abbr.key}}</td>
@@ -76,12 +81,10 @@
 
         <div>
           Additional Filter: <select ng-model="paging['abbr'].filterType"
-            ng-change="findAbbreviations()">
-            <option value="">None</option>
-            <option value="duplicateKey">Duplicate key</option>
-            <option value="duplicateValue">Duplicate expansion</option>
-            <option value="blankValue">Blank expansion</option>
-          </select> {{paging['abbr'].filterType}}
+            ng-change="findAbbreviations()"
+            ng-options="filterType.key as filterType.value for filterType in lists.filterTypes">
+
+          </select>
         </div>
         <btn style="margin-top:25px;" class="btn btn-xs btn-primary"
           ng-click="recomputeAllReviewStatuses()">Recompute Reviews [DEBUG
@@ -191,6 +194,9 @@
 
 
 
+
+
+
                   
                 </tr>
               </tbody>
@@ -273,9 +279,8 @@
               ng-click="exportAbbreviations()">Export Abbreviations</span>
             Delimiter: <select ng-model="selected.delimiter"
               ng-options="delimiter.key as delimiter.value for delimiter in lists.delimiters"></select><br>
-            <br>
-            <input type="checkbox" ng-model="selected.exportReadyOnly">
-            Skip abbbreviations needing review 
+            <br> <input type="checkbox" ng-model="selected.exportReadyOnly">
+            Skip abbbreviations needing review
           </div>
         </div>
       </div>

@@ -48,7 +48,7 @@ tsApp
 
           // edit/import/export tab selection
           editTab : 'Edit',
-          
+
           // delimiter for exports (default: tab)
           delimiter : '\t'
         }
@@ -72,17 +72,31 @@ tsApp
             key : 'NEEDS_REVIEW',
             label : 'Needs Review'
           } ],
-          delimiters: [
-            {
-              key : '\t',
-              value: 'Tab'
-            }, {
-              key : ',',
-              value : 'Comma'
-            }
-          ]
+          delimiters : [ {
+            key : '\t',
+            value : 'Tab'
+          }, {
+            key : ',',
+            value : 'Comma'
+          } ],
+          filterTypes : [ {
+            key : null,
+            value : 'None'
+          }, {
+            key : 'blankValue',
+            value : 'Blank expansion'
+          }, {
+            key : 'duplicate',
+            value : 'Duplicate'
+          }, {
+            key : 'duplicateKey',
+            value : 'Duplicate abbr'
+          }, {
+            key : 'duplicateValue',
+            value : 'Duplicate expansion'
+          } ]
         };
-        
+
         $scope.paging = {};
         $scope.paging['abbr'] = utilService.getPaging();
         $scope.paging['abbr'].sortField = 'key';
@@ -183,18 +197,18 @@ tsApp
             ascending : paging.sortAscending,
             queryRestriction : null
           };
-          
+
           // construct the query restriction clauses
           var clauses = [];
-          
+
           // first, restriction by type (required)
           clauses.push('type:\"' + $scope.selected.metadata.terminology.preferredName + '-ABBR\"');
-          
+
           // restriction by workflow status (optional)
           if ($scope.paging['abbr'].workflowStatus) {
             clauses.push('workflowStatus:' + $scope.paging[type].workflowStatus);
           }
-          
+
           // construct the query restriction
           pfs.queryRestriction = '';
           for (var i = 0; i < clauses.length; i++) {
@@ -297,7 +311,7 @@ tsApp
                   $scope.setAbbreviationEdited(abbrReview);
                 }
               });
-              
+
               // get paged list
               getPagedReview();
               deferred.resolve();
@@ -306,11 +320,13 @@ tsApp
             });
           return deferred.promise;
         }
-        
+
         // paging done client-side
         function getPagedReview() {
-          console.debug('getPagedReview', $scope.lists.abbrsReviewed.typeKeyValues, $scope.paging['review']);
-          $scope.lists.pagedReview = utilService.getPagedArray($scope.lists.abbrsReviewed.typeKeyValues, $scope.paging['review']);
+          console.debug('getPagedReview', $scope.lists.abbrsReviewed.typeKeyValues,
+            $scope.paging['review']);
+          $scope.lists.pagedReview = utilService.getPagedArray(
+            $scope.lists.abbrsReviewed.typeKeyValues, $scope.paging['review']);
         }
 
         // NOTE: Helper function intended for DEBUG use only
@@ -354,7 +370,7 @@ tsApp
             if (abbr.workflowStatus == 'NEEDS_REVIEW') {
               abbr.workflowStatus = 'NEW';
 
-              // skip checks to prevent NEEDS_REVIEW from being reapplied
+              // NOTE: skip checks to prevent NEEDS_REVIEW from being re-applied
               deferred.push(abbrService.updateAbbreviation(abbr, true));
             }
           })
@@ -391,8 +407,8 @@ tsApp
 
         $scope.exportAbbreviations = function() {
           abbrService.exportAbbreviations(
-            $scope.selected.metadata.terminology.preferredName + '-ABBR', $scope.selected.delimiter,
-            $scope.selected.exportReadyOnly).then(function() {
+            $scope.selected.metadata.terminology.preferredName + '-ABBR',
+            $scope.selected.delimiter, $scope.selected.exportReadyOnly).then(function() {
             // do nothing
           })
         };

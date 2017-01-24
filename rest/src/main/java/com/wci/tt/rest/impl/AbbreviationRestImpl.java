@@ -62,10 +62,7 @@ import io.swagger.annotations.SwaggerDefinition;
 public class AbbreviationRestImpl extends RootServiceRestImpl
     implements AbbreviationRest {
   
-  static {
-   ;
-  }
-
+  
   /** The security service. */
   private SecurityService securityService;
 
@@ -76,7 +73,7 @@ public class AbbreviationRestImpl extends RootServiceRestImpl
    */
   public AbbreviationRestImpl() throws Exception {
     securityService = new SecurityServiceJpa();
-    System.out.println("AbbreviationRestImpl: YAY ECLIPSE YAY");
+    System.out.println("********* ABBR *************");
   }
 
   @Override
