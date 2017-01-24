@@ -361,15 +361,19 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
   }
 
   @Override
-  public InputStream exportAbbreviationFile(String abbrType, boolean readyOnly)
+  public InputStream exportAbbreviationFile(String abbrType, String delimiter, boolean readyOnly)
     throws Exception {
+    
+    // if delimiter supplied, use it, otherwise use tab
+    String ldelimiter = delimiter == null ? "\t" : delimiter;
+    
     // Write a header
     // Obtain members for refset,
     // Write RF2 simple refset pattern to a StringBuilder
     // wrap and return the string for that as an input stream
     StringBuilder sb = new StringBuilder();
-    sb.append("abbreviation").append("\t");
-    sb.append("expansion").append("\t");
+    sb.append("abbreviation").append(ldelimiter);
+    sb.append("expansion").append(ldelimiter);
     sb.append("\r\n");
 
     // sort by key
@@ -381,8 +385,8 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
     for (TypeKeyValue abbr : abbrs.getObjects()) {
       if (!readyOnly
           || !WorkflowStatus.NEEDS_REVIEW.equals(abbr.getWorkflowStatus())) {
-        sb.append(abbr.getKey()).append("\t");
-        sb.append(abbr.getValue()).append("\t");
+        sb.append(abbr.getKey()).append(ldelimiter);
+        sb.append(abbr.getValue()).append(ldelimiter);
         sb.append("\r\n");
       }
     }

@@ -157,7 +157,7 @@ public interface NdcServiceRest {
    * @return the input stream
    * @throws Exception the exception
    */
-  public InputStream exportAbbreviationsFile(String type, boolean readyOnly,
+  public InputStream exportAbbreviationsFile(String type, String delimiter, boolean readyOnly,
     String authToken) throws Exception;
 
   /**
@@ -242,6 +242,7 @@ public interface NdcServiceRest {
    */
   public TypeKeyValueList getReviewForAbbreviations(List<Long> ids,
     String authToken) throws Exception;
+
 
 
 }

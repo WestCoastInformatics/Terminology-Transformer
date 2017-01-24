@@ -79,11 +79,12 @@ public interface AbbreviationHandler extends Configurable {
    * Export abbreviation file.
    *
    * @param abbrType the abbr type
+   * @param delimiter the delimiter
    * @param excludeReview the exclude review
    * @return the input stream
    * @throws Exception the exception
    */
-  public  InputStream exportAbbreviationFile(String abbrType, boolean excludeReview)
+  public  InputStream exportAbbreviationFile(String abbrType, String delimiter, boolean excludeReview)
       throws Exception;
   /**
    * Close any open resources on application shutdown.

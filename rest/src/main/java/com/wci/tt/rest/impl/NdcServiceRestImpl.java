@@ -638,6 +638,7 @@ public class NdcServiceRestImpl extends RootServiceRestImpl
   @ApiOperation(value = "Export abbreviations", notes = "Exports abbreviations for type as comma or tab-delimited file", response = TypeKeyValueJpa.class)
   public InputStream exportAbbreviationsFile(
     @ApiParam(value = "Type of abbreviation, e.g. medAbbr", required = true) @PathParam("type") String type,
+    @ApiParam(value = "Delimiter, e.g. \t", required = false) String delimiter,
     @ApiParam(value = "Flag to export only abbreviations not flagged for review", required = false) @QueryParam("readyOnly") boolean readyOnly,
     @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
     throws Exception {
@@ -648,7 +649,7 @@ public class NdcServiceRestImpl extends RootServiceRestImpl
       authorizeApp(securityService, authToken, "export abbreviations",
           UserRole.USER);
       abbrHandler.setService(projectService);
-      return abbrHandler.exportAbbreviationFile(type, readyOnly);
+      return abbrHandler.exportAbbreviationFile(type, delimiter, readyOnly);
     } catch (Exception e) {
       handleException(e, "trying to export abbreviations");
       return null;

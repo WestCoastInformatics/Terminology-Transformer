@@ -23,6 +23,7 @@ tsApp.service('abbrService', [
 
       // Get projects
       gpService.increment();
+      console.debug(' PFS: ' + pfs);
       $http.post(
         abbrUrl + '/find' + lquery, pfs)
         .then(
@@ -177,11 +178,11 @@ tsApp.service('abbrService', [
       return deferred.promise;
     }
 
-    this.exportAbbreviations = function(type, readyOnly) {
+    this.exportAbbreviations = function(type, delimiter, readyOnly) {
       console.debug('exportAbbreviations');
       var deferred = $q.defer();
       gpService.increment()
-      $http.get(abbrUrl + '/export/' + type + (readyOnly ? '?readyOnly=true' : '')).then(
+      $http.post(abbrUrl + '/export/' + type + (readyOnly ? '?readyOnly=true' : ''), delimiter).then(
       // Success
       function(response) {
         var blob = new Blob([ response.data ], {

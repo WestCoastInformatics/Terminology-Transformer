@@ -47,7 +47,10 @@ tsApp
           abbrEdited : null,
 
           // edit/import/export tab selection
-          editTab : 'Edit'
+          editTab : 'Edit',
+          
+          // delimiter for exports (default: tab)
+          delimiter : '\t'
         }
 
         $scope.lists = {
@@ -68,15 +71,30 @@ tsApp
           }, {
             key : 'NEEDS_REVIEW',
             label : 'Needs Review'
-          } ]
+          } ],
+          delimiters: [
+            {
+              key : '\t',
+              value: 'Tab'
+            }, {
+              key : ',',
+              value : 'Comma'
+            }
+          ]
         };
-
+        
         $scope.paging = {};
         $scope.paging['abbr'] = utilService.getPaging();
         $scope.paging['abbr'].sortField = 'key';
         $scope.paging['abbr'].workflowStatus = null;
         $scope.paging['abbr'].callbacks = {
           getPagedList : findAbbreviations
+        };
+        $scope.paging['review'] = utilService.getPaging();
+        $scope.paging['review'].sortField = 'key';
+        $scope.paging['review'].workflowStatus = null;
+        $scope.paging['review'].callbacks = {
+          getPagedList : getPagedReview
         };
 
         // Sets the terminololgy
@@ -138,23 +156,25 @@ tsApp
           if (abbr) {
             $scope.setAbbreviationViewed(abbr);
           }
-          var pfs = getPfs('abbr');
+          var pfs = prepAbbrPfs('abbr');
+          console.debug('pfs', pfs);
           // retrieval call
           abbrService.findAbbreviations($scope.paging['abbr'].filter,
-            $scope.paging['abbr'].typeFilter, pfs).then(function(response) {
+            $scope.paging['abbr'].filterType, pfs).then(function(response) {
             $scope.lists.abbrsViewed = response;
             console.debug('abbreviations', $scope.lists.abbrsViewed);
           });
 
           // truncated NEEDS_REVIEW call
+          pfs = prepAbbrPfs('abbr');
           pfs.maxResults = 0;
           abbrService.findAbbreviations('workflowStatus:NEEDS_REVIEW',
-            $scope.paging['abbr'].typeFilter, pfs).then(function(response) {
+            $scope.paging['abbr'].filterType, pfs).then(function(response) {
             $scope.paging['abbr'].hasNeedsReview = response.totalCount > 0;
           });
         }
 
-        function getPfs(type) {
+        function prepAbbrPfs(type) {
           var paging = $scope.paging[type];
           var pfs = {
             startIndex : (paging.page - 1) * paging.pageSize,
@@ -163,19 +183,24 @@ tsApp
             ascending : paging.sortAscending,
             queryRestriction : null
           };
-          if (type == 'abbr') {
-            var clauses = [];
-            clauses
-              .push('type:\"' + $scope.selected.metadata.terminology.preferredName + '-ABBR\"');
-            if ($scope.paging['abbr'].workflowStatus) {
-              clauses.push('workflowStatus:' + $scope.paging['abbr'].workflowStatus);
-            }
-            pfs.queryRestriction = '';
-            for (var i = 0; i < clauses.length; i++) {
-              pfs.queryRestriction += clauses[i] + (i < clauses.length - 1 ? ' AND ' : '');
-            }
-
+          
+          // construct the query restriction clauses
+          var clauses = [];
+          
+          // first, restriction by type (required)
+          clauses.push('type:\"' + $scope.selected.metadata.terminology.preferredName + '-ABBR\"');
+          
+          // restriction by workflow status (optional)
+          if ($scope.paging['abbr'].workflowStatus) {
+            clauses.push('workflowStatus:' + $scope.paging[type].workflowStatus);
           }
+          
+          // construct the query restriction
+          pfs.queryRestriction = '';
+          for (var i = 0; i < clauses.length; i++) {
+            pfs.queryRestriction += clauses[i] + (i < clauses.length - 1 ? ' AND ' : '');
+          }
+
           return pfs;
         }
 
@@ -272,11 +297,20 @@ tsApp
                   $scope.setAbbreviationEdited(abbrReview);
                 }
               });
+              
+              // get paged list
+              getPagedReview();
               deferred.resolve();
             }, function(error) {
               deferred.reject();
             });
           return deferred.promise;
+        }
+        
+        // paging done client-side
+        function getPagedReview() {
+          console.debug('getPagedReview', $scope.lists.abbrsReviewed.typeKeyValues, $scope.paging['review']);
+          $scope.lists.pagedReview = utilService.getPagedArray($scope.lists.abbrsReviewed.typeKeyValues, $scope.paging['review']);
         }
 
         // NOTE: Helper function intended for DEBUG use only
@@ -328,6 +362,7 @@ tsApp
           $q.all(deferred).then(function() {
             findAbbreviations();
             gpService.decrement();
+            $scope.lists.abbrsReviewed = null;
           });
         }
 
@@ -356,7 +391,7 @@ tsApp
 
         $scope.exportAbbreviations = function() {
           abbrService.exportAbbreviations(
-            $scope.selected.metadata.terminology.preferredName + '-ABBR',
+            $scope.selected.metadata.terminology.preferredName + '-ABBR', $scope.selected.delimiter,
             $scope.selected.exportReadyOnly).then(function() {
             // do nothing
           })
@@ -372,10 +407,27 @@ tsApp
           $scope.clearImportResults();
         }
 
-        $scope.setNewMode = function() {
-          $scope.paging['abbr'].workflowStatus = 'NEW';
-          $scope.findAbbreviations();
-        }
+        //
+        // Utility functions
+        // 
+
+        // Table sorting mechanism
+        $scope.setSortField = function(table, field, object) {
+          utilService.setSortField('' + table, field, $scope.paging);
+
+          // retrieve the correct table
+          if (table === 'abbr') {
+            findAbbreviations();
+          }
+          if (table === 'review') {
+            getPagedReview();
+          }
+        };
+
+        // Return up or down sort chars if sorted
+        $scope.getSortIndicator = function(table, field) {
+          return utilService.getSortIndicator('' + table, field, $scope.paging);
+        };
 
         // 
         // Initialization

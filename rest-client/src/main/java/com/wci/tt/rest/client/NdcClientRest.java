@@ -308,7 +308,7 @@ public class NdcClientRest extends RootClientRest implements NdcServiceRest {
   }
 
   @Override
-  public InputStream exportAbbreviationsFile(String type, boolean readyOnly,
+  public InputStream exportAbbreviationsFile(String type, String delimiter, boolean readyOnly,
     String authToken) throws Exception {
     // TODO Auto-generated method stub
     return null;

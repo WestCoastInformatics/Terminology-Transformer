@@ -41,15 +41,18 @@
         <div pager paging="paging['abbr']" count="lists.abbrsViewed.totalCount"
           callbacks="paging['abbr'].callbacks" style="margin-top: 10px;"></div>
 
-
-
         <table class="slim table table-hover" style="margin-top: 10px;"
           ng-show="lists.abbrsViewed.typeKeyValues.length > 0">
           <tr>
-            <th>Abbreviation</th>
+            <th ng-click="setSortField('abbr','key')">Abbreviation<span
+              ng-bind="getSortIndicator('abbr','key')"></span></th>
             <th></th>
-            <th>Expansion</th>
-            <th>Last Modified</th>
+            <th ng-click="setSortField('abbr','value')">Expansion<span
+              ng-bind="getSortIndicator('abbr','value')"></span></th>
+            <th ng-click="setSortField('abbr','lastModified')">Last
+              Modified<span
+              ng-bind="getSortIndicator('abbr','lastModified')"></span>
+            </th>
 
           </tr>
           <tbody>
@@ -72,14 +75,15 @@
           </tbody>
         </table>
 
-        Additional Filter: <select ng-model="paging['abbr'].filterType"
-          ng-change="findAbbreviations()">
-          <option value="">None</option>
-          <option value="duplicateKey">Duplicate key</option>
-          <option value="duplicateValue">Duplicate expansion</option>
-          <option value="blankValue">Blank expansion</option>
-        </select>
-
+        <div>
+          Additional Filter: <select ng-model="paging['abbr'].filterType"
+            ng-change="findAbbreviations()">
+            <option value="">None</option>
+            <option value="duplicateKey">Duplicate key</option>
+            <option value="duplicateValue">Duplicate expansion</option>
+            <option value="blankValue">Blank expansion</option>
+          </select> {{paging['abbr'].filterType}}
+        </div>
         <btn style="margin-top:25px;" class="btn btn-xs btn-primary"
           ng-click="recomputeAllReviewStatuses()">Recompute Reviews [DEBUG
         USE ONLY]</btn>
@@ -141,23 +145,29 @@
             ng-show="lists.abbrsReviewed && lists.abbrsReviewed.totalCount > 1">
             <h5>Review</h5>
 
-            <div pager paging="paging['abbrReview']"
-              count="lists.abbrsReviewed.totalCount"
-              callbacks="paging['abbrReview'].callbacks"
+            <div pager paging="paging['review']"
+              count="lists.pagedReview.totalCount"
+              callbacks="paging['review'].callbacks"
               style="margin-top: 10px;"></div>
 
             <table class="slim table table-hover" style="margin-top: 10px;"
-              ng-show="lists.abbrsReviewed.typeKeyValues.length > 0">
+              ng-show="lists.pagedReview.data.length > 0">
               <tr>
-                <th class="col-md-3">Abbreviation</th>
+                <th ng-click="setSortField('review','key')">Abbreviation<span
+                  ng-bind="getSortIndicator('review','key')"></span></th>
                 <th></th>
-                <th class="col-md-5">Expansion</th>
-                <th class="col-md-3">Last Modified</th>
+                <th ng-click="setSortField('review','value')">Expansion<span
+                  ng-bind="getSortIndicator('review','value')"></span></th>
+                <th ng-click="setSortField('review','lastModified')">Last
+                  Modified<span
+                  ng-bind="getSortIndicator('review','lastModified')"></span>
+                </th>
+
               </tr>
               <tbody>
                 <!-- table-hover makes use of the active class -->
                 <tr ng-class="{selected: abbr.id == selected.abbrEdited.id}"
-                  ng-repeat="abbr in lists.abbrsReviewed.typeKeyValues"
+                  ng-repeat="abbr in lists.pagedReview.data"
                   ng-click="setAbbreviationEdited(abbr)">
                   <td class="col-md-3"
                     ng-bind-html="abbr.key |
@@ -173,6 +183,12 @@
                     ng-bind-html="abbr.value |
                     highlightExact:selected.abbrEdited.value"></td>
                   <td class="col-md-3">{{abbr.lastModified | date:'short'}}
+
+
+
+
+
+
                   
                 </tr>
               </tbody>
@@ -252,7 +268,8 @@
           <div style="margin-top: 25px;">
             <h4>Export</h4>
             <span class="btn btn-xs btn-primary"
-              ng-click="exportAbbreviations()">Export Abbreviations</span><br>
+              ng-click="exportAbbreviations()">Export Abbreviations</span>
+              Delimiter: <select ng-model="selected.delimiter" ng-options="delimiter.key as delimiter.value for delimiter in lists.delimiters"></select>"             
             <br> <input type="checkbox" ng-model="selected.exportReadyOnly">
             Skip abbbreviations needing review
           </div>
