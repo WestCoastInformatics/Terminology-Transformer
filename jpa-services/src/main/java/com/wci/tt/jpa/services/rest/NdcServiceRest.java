@@ -3,16 +3,12 @@
  */
 package com.wci.tt.jpa.services.rest;
 
-import java.io.InputStream;
 import java.util.List;
-
-import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 
 import com.wci.tt.jpa.infomodels.NdcModel;
 import com.wci.tt.jpa.infomodels.NdcPropertiesListModel;
 import com.wci.tt.jpa.infomodels.NdcPropertiesModel;
 import com.wci.tt.jpa.infomodels.RxcuiModel;
-import com.wci.umls.server.ValidationResult;
 import com.wci.umls.server.helpers.SearchResultList;
 import com.wci.umls.server.helpers.StringList;
 import com.wci.umls.server.jpa.helpers.PfsParameterJpa;
@@ -114,46 +110,7 @@ public interface NdcServiceRest {
    */
   public List<RxcuiModel> getRxcuiInfoBatch(List<String> rxcuis,
     Boolean history, String authToken) throws Exception;
-  
-  // TODO Remove these once AbbreviationRestImpl picked up
-  
-  /**
-   * Import abbreviations.
-   *
-   * @param contentDispositionHeader the content disposition header
-   * @param in the in
-   * @param type the type
-   * @param authToken the auth token
-   * @return the validation result
-   * @throws Exception the exception
-   */
-  public ValidationResult importAbbreviations(
-    FormDataContentDisposition contentDispositionHeader, InputStream in,
-    String type, String authToken) throws Exception;
 
-  /**
-   * Validate abbreviations file.
-   *
-   * @param contentDispositionHeader the content disposition header
-   * @param in the in
-   * @param type the type
-   * @param authToken the auth token
-   * @return the validation result
-   * @throws Exception the exception
-   */
-  public ValidationResult validateAbbreviationsFile(
-    FormDataContentDisposition contentDispositionHeader, InputStream in,
-    String type, String authToken) throws Exception;
-
-  /**
-   * Export abbreviations file.
-   *
-   * @param type the type
-   * @param authToken the auth token
-   * @return the input stream
-   * @throws Exception the exception
-   */
-  public InputStream exportAbbreviationsFile(String type, String authToken)
-    throws Exception;
+  
 
 }

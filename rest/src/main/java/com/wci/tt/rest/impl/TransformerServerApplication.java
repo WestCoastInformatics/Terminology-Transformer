@@ -61,9 +61,8 @@ public class TransformerServerApplication extends ResourceConfig {
     register(ContentServiceRestImpl.class);
 
     // Need transformer services
+    register(AbbreviationRestImpl.class);
     register(NdcServiceRestImpl.class);
-    
-    System.out.println("TransformerServiceApplication: DEATH TO ECLIPSE");
 
     // register swagger classes
     register(io.swagger.jaxrs.listing.ApiListingResource.class);
@@ -129,6 +128,5 @@ public class TransformerServerApplication extends ResourceConfig {
       }
     }
   }
-
 
 }

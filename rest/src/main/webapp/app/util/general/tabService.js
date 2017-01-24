@@ -103,8 +103,7 @@ tsApp
         this.setSelectedTabByLabel = function(label) {
           for (var i = 0; i < this.tabs.length; i++) {
             if (this.tabs[i].label === label) {
-              console.debug('FFFFFFFFFFFFFFFFFFFFF')
-            
+           
               this.selectedTab = this.tabs[i];
               $location.path(this.selectedTab.link);
               break;

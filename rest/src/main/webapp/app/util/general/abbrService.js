@@ -2,7 +2,7 @@
 // TODO Change this to TransformRest or AbbrRest
 // NOTE: CRUD services for type key values use project endpoint
 // NOTE: File manipulations use transformer endpoint
-var abbrUrl = 'rxnorm';
+var abbrUrl = 'abbr';
 var projectUrl = 'project';
 tsApp.service('abbrService', [
   '$q',
@@ -12,15 +12,20 @@ tsApp.service('abbrService', [
   'Upload',
   function($q, $http, utilService, gpService, Upload) {
 
-    this.findAbbreviations = function(query, pfs) {
+    this.findAbbreviations = function(query, typeFilter, pfs) {
       var deferred = $q.defer();
 
-      console.debug('find abbreviations', query, pfs);
+      console.debug('find abbreviations', query, typeFilter, pfs);
+      
+      var lquery = (query ? '?query=' + utilService.prepQuery(query, false) : '')
+      + (typeFilter ? (query ? '&' : '?') + 'filter=' + typeFilter : '');
+      
 
       // Get projects
       gpService.increment();
+      console.debug(' PFS: ' + pfs);
       $http.post(
-        projectUrl + '/typeKeyValue/find' + (query ? '?query=' + query : ''), pfs)
+        abbrUrl + '/find' + lquery, pfs)
         .then(
         // success
         function(response) {
@@ -41,12 +46,13 @@ tsApp.service('abbrService', [
 
       // Get projects
       gpService.increment();
-      $http.get(projectUrl + '/typeKeyValue/' + id).then(
+      $http.get(abbrUrl + '/' + id).then(
       // success
       function(response) {
         gpService.decrement();
         deferred.resolve(response.data);
       },
+
       // error
       function(response) {
         utilService.handleError(response);
@@ -61,7 +67,7 @@ tsApp.service('abbrService', [
 
       // Get projects
       gpService.increment();
-      $http['delete'](projectUrl + '/typeKeyValue/remove/' + id).then(
+      $http['delete'](abbrUrl + '/remove/' + id).then(
       // success
       function(response) {
         gpService.decrement();
@@ -76,12 +82,16 @@ tsApp.service('abbrService', [
       return deferred.promise;
     }
 
-    this.updateAbbreviation = function(abbreviation) {
+    this.updateAbbreviation = function(abbreviation, useProjectService) {
       var deferred = $q.defer();
 
-      // Get projects
       gpService.increment();
-      $http.post(projectUrl + '/typeKeyValue/update/', abbreviation).then(
+
+      // if flag set, update type key value directly without additional checks
+      // abbreviation endpoint performs post-processing, which re-applies
+      // NEEDS_REVIEW on finishReview updates
+      $http.post(useProjectService ? projectUrl + '/typeKeyValue/update' : abbrUrl + '/update/',
+        abbreviation).then(
       // success
       function(response) {
         gpService.decrement();
@@ -101,7 +111,7 @@ tsApp.service('abbrService', [
 
       // Get projects
       gpService.increment();
-      $http.put(projectUrl + '/typeKeyValue/add/', abbreviation).then(
+      $http.put(abbrUrl + '/add/', abbreviation).then(
       // success
       function(response) {
         gpService.decrement();
@@ -168,11 +178,11 @@ tsApp.service('abbrService', [
       return deferred.promise;
     }
 
-    this.exportAbbreviations = function(type) {
+    this.exportAbbreviations = function(type, delimiter, readyOnly) {
       console.debug('exportAbbreviations');
       var deferred = $q.defer();
       gpService.increment()
-      $http.get(abbrUrl + '/export/' + type).then(
+      $http.post(abbrUrl + '/export/' + type + (readyOnly ? '?readyOnly=true' : ''), delimiter).then(
       // Success
       function(response) {
         var blob = new Blob([ response.data ], {
@@ -200,5 +210,59 @@ tsApp.service('abbrService', [
       });
       return deferred.promise;
     };
+
+    this.computeReviewStatuses = function(type) {
+      var deferred = $q.defer();
+
+      console.debug('compute review statuses', type);
+
+      // Get projects
+      gpService.increment();
+      $http.post(abbrUrl + '/review/' + type + '/compute').then(
+      // success
+      function(response) {
+        gpService.decrement();
+        deferred.resolve(response.data);
+      },
+      // error
+      function(response) {
+        utilService.handleError(response);
+        gpService.decrement();
+        deferred.reject(response.data);
+      });
+      return deferred.promise;
+    }
+
+    this.getReviewForAbbreviations = function(abbrs) {
+      var deferred = $q.defer();
+
+      console.debug('compute review statuses', abbrs);
+
+      if (!abbrs || abbrs.length == 0) {
+        deferred.reject('getReviewForAbbreviations: Bad argument');
+      } else {
+
+        // extract ids
+        var ids = abbrs.map(function(a) {
+          return a.id;
+        })
+
+        // Get projects
+        gpService.increment();
+        $http.post(abbrUrl + '/review', ids).then(
+        // success
+        function(response) {
+          gpService.decrement();
+          deferred.resolve(response.data);
+        },
+        // error
+        function(response) {
+          utilService.handleError(response);
+          gpService.decrement();
+          deferred.reject(response.data);
+        });
+      }
+      return deferred.promise;
+    }
 
   } ]);
