@@ -50,8 +50,7 @@
             <th ng-click="setSortField('abbr','value')">Expansion<span
               ng-bind="getSortIndicator('abbr','value')"></span></th>
             <th ng-click="setSortField('abbr','lastModified')">Last
-              Modified<span
-              ng-bind="getSortIndicator('abbr','lastModified')"></span>
+              Modified<span ng-bind="getSortIndicator('abbr','lastModified')"></span>
             </th>
 
           </tr>
@@ -147,8 +146,7 @@
 
             <div pager paging="paging['review']"
               count="lists.pagedReview.totalCount"
-              callbacks="paging['review'].callbacks"
-              style="margin-top: 10px;"></div>
+              callbacks="paging['review'].callbacks" style="margin-top: 10px;"></div>
 
             <table class="slim table table-hover" style="margin-top: 10px;"
               ng-show="lists.pagedReview.data.length > 0">
@@ -183,6 +181,10 @@
                     ng-bind-html="abbr.value |
                     highlightExact:selected.abbrEdited.value"></td>
                   <td class="col-md-3">{{abbr.lastModified | date:'short'}}
+
+
+
+
 
 
 
@@ -267,11 +269,13 @@
           <!-- Export section -->
           <div style="margin-top: 25px;">
             <h4>Export</h4>
-            <span class="btn btn-xs btn-primary"
+            <span class="btn btn-xs btn-primary" style="margin-right: 10px;"
               ng-click="exportAbbreviations()">Export Abbreviations</span>
-              Delimiter: <select ng-model="selected.delimiter" ng-options="delimiter.key as delimiter.value for delimiter in lists.delimiters"></select>"             
-            <br> <input type="checkbox" ng-model="selected.exportReadyOnly">
-            Skip abbbreviations needing review
+            Delimiter: <select ng-model="selected.delimiter"
+              ng-options="delimiter.key as delimiter.value for delimiter in lists.delimiters"></select><br>
+            <br>
+            <input type="checkbox" ng-model="selected.exportReadyOnly">
+            Skip abbbreviations needing review 
           </div>
         </div>
       </div>

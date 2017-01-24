@@ -631,7 +631,7 @@ public class NdcServiceRestImpl extends RootServiceRestImpl
     }
   }
 
-  @GET
+  @POST
   @Override
   @Produces("application/octet-stream")
   @Path("/export/{type}")

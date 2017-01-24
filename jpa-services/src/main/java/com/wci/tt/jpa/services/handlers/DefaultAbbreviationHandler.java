@@ -176,10 +176,13 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
         }
       }
 
+      List<TypeKeyValue> newAbbrs = new ArrayList<>();
+
       // Read from input stream
       Reader reader = new InputStreamReader(in, "UTF-8");
       pbr = new PushBackReader(reader);
       int lineCt = 0;
+      int commentCt = 0;
       int addedCt = 0;
       int toAddCt = 0;
       int errorCt = 0;
@@ -207,6 +210,12 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
         lineCt++;
         line = line.replace("[^S\t ", "");
         final String fields[] = line.split("\t");
+
+        // skip comment lines
+        if (fields[0] != null && fields[0].startsWith("##")) {
+          commentCt++;
+          continue;
+        }
 
         // CHECK: exactly two fields
         if (fields.length == 2) {
@@ -283,9 +292,8 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
               System.out.println("Adding " + fields[0] + " / " + fields[1]);
               TypeKeyValue typeKeyValue =
                   new TypeKeyValueJpa(type, fields[0], fields[1]);
-              typeKeyValue.setWorkflowStatus(keyOrValueMatchFound
-                  ? WorkflowStatus.NEEDS_REVIEW : WorkflowStatus.NEW);
               service.addTypeKeyValue(typeKeyValue);
+              newAbbrs.add(typeKeyValue);
               addedCt++;
             }
           } else {
@@ -308,7 +316,15 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
         }
       } while ((line = pbr.readLine()) != null);
 
+      // after all abbreviations loaded, apply workflow status and commit
       if (executeImport) {
+        for (TypeKeyValue newAbbr : newAbbrs) {
+          if (getReviewForAbbreviation(newAbbr).size() > 1) {
+            newAbbr.setWorkflowStatus(WorkflowStatus.NEEDS_REVIEW);
+          } else {
+            newAbbr.setWorkflowStatus(WorkflowStatus.NEW);
+          }
+        }
         service.commit();
       }
 
@@ -316,6 +332,10 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
       if (!executeImport) {
         if (toAddCt > 0) {
           result.getComments().add(toAddCt + " abbreviations will be added");
+        }
+        if (commentCt > 0) {
+          result.getComments()
+              .add(commentCt + " comment lines will be skipped");
         }
         if (errorCt > 0) {
           result.getErrors().add(errorCt + " lines in error");
@@ -361,20 +381,19 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
   }
 
   @Override
-  public InputStream exportAbbreviationFile(String abbrType, String delimiter, boolean readyOnly)
-    throws Exception {
-    
+  public InputStream exportAbbreviationFile(String abbrType, String delimiter,
+    boolean readyOnly) throws Exception {
+
     // if delimiter supplied, use it, otherwise use tab
     String ldelimiter = delimiter == null ? "\t" : delimiter;
-    
+
     // Write a header
     // Obtain members for refset,
     // Write RF2 simple refset pattern to a StringBuilder
     // wrap and return the string for that as an input stream
     StringBuilder sb = new StringBuilder();
     sb.append("abbreviation").append(ldelimiter);
-    sb.append("expansion").append(ldelimiter);
-    sb.append("\r\n");
+    sb.append("expansion").append("\r\n");
 
     // sort by key
     PfsParameter pfs = new PfsParameterJpa();
@@ -386,8 +405,7 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
       if (!readyOnly
           || !WorkflowStatus.NEEDS_REVIEW.equals(abbr.getWorkflowStatus())) {
         sb.append(abbr.getKey()).append(ldelimiter);
-        sb.append(abbr.getValue()).append(ldelimiter);
-        sb.append("\r\n");
+        sb.append(abbr.getValue()).append("\r\n");
       }
     }
     return new ByteArrayInputStream(sb.toString().getBytes("UTF-8"));
