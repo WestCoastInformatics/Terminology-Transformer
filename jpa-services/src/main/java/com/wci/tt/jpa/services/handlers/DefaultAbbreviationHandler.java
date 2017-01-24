@@ -101,8 +101,6 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
     final List<TypeKeyValue> results =
         service.findTypeKeyValuesForQuery(query, pfs).getObjects();
 
-    System.out.println("Matching results: " + results);
-
     // compute new results from results and reviews
     final List<TypeKeyValue> newResults = new ArrayList<>();
 
@@ -146,7 +144,6 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
     TypeKeyValueList list = new TypeKeyValueListJpa();
     list.setTotalCount(reviews.size());
     list.setObjects(reviews);
-    System.out.println("Review results size: " + reviews.size());
     return list;
   }
 
@@ -302,7 +299,6 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
             // if import mode and no pair match found, add the new abbreviation
             if (!pairMatchFound && executeImport) {
               // add different expansion for same
-              System.out.println("Adding " + fields[0] + " / " + fields[1]);
               TypeKeyValue typeKeyValue =
                   new TypeKeyValueJpa(type, fields[0], fields[1]);
               service.addTypeKeyValue(typeKeyValue);
@@ -336,9 +332,7 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
         service.commit();
         service.beginTransaction();
         for (TypeKeyValue newAbbr : newAbbrs) {
-          System.out.println("Checking new abbr: " + newAbbr);
           if (getReviewForAbbreviation(newAbbr).size() > 1) {
-            System.out.println("  --> NEEDS REVIEW");
             newAbbr.setWorkflowStatus(WorkflowStatus.NEEDS_REVIEW);
           } else {
             newAbbr.setWorkflowStatus(WorkflowStatus.NEW);
@@ -447,7 +441,6 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
 
       // NOTE getReviews always returns at least the abbreviation itself
       if (reviews.size() > 1) {
-        System.out.println("  --> NEEDS REVIEW MARKED for " + abbr.getKey());
         abbr.setWorkflowStatus(WorkflowStatus.NEEDS_REVIEW);
         service.updateTypeKeyValue(abbr);
       } else if (!WorkflowStatus.NEW.equals(abbr.getWorkflowStatus())) {

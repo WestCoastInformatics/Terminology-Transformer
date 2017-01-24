@@ -140,10 +140,6 @@ public class ConfigLoaderMojo extends AbstractMojo {
       }
       in.close();
 
-      System.out.println("lengths / value");
-      System.out.println("key  : " + keyLength + ": " + keyStr);
-      System.out.println("value: " + valueLength + ": " + valueStr);
-
       service.commit();
       getLog().info("Done ...");
 
