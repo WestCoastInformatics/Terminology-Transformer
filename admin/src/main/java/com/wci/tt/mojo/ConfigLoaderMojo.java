@@ -7,6 +7,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 
+import org.apache.log4j.Logger;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
@@ -81,7 +82,7 @@ public class ConfigLoaderMojo extends AbstractMojo {
       if (!file.exists()) {
         throw new Exception("Input file does not exist");
       }
-      
+
       service.setLastModifiedBy("loader");
 
       // If reload, remove all with type
@@ -91,6 +92,10 @@ public class ConfigLoaderMojo extends AbstractMojo {
           service.removeTypeKeyValue(tkv.getId());
         }
       }
+
+      int keyLength = 0;
+      int valueLength = 0;
+      String keyStr = null, valueStr = null;
 
       // Open file
       final BufferedReader in =
@@ -102,11 +107,11 @@ public class ConfigLoaderMojo extends AbstractMojo {
           throw new Exception(
               "Unexpected number of fields in config file: " + tokens.length);
         }
-        
+
         if (tokens[0] == null || tokens[0].isEmpty()) {
-          throw new Exception("Empty key value in config file for line: " + line);
+          throw new Exception("Malformed line: " + line);
         }
-        
+
         // skip comments
         if (tokens[0].startsWith("##")) {
           continue;
@@ -116,6 +121,15 @@ public class ConfigLoaderMojo extends AbstractMojo {
         TypeKeyValue tkv = new TypeKeyValueJpa();
         tkv.setType(type);
         tkv.setKey(tokens[0]);
+        if (tokens[0].length() > keyLength) {
+          keyLength = tokens[0].length();
+          keyStr = tokens[0];
+        }
+        if (tokens[1].length() > valueLength) {
+          valueLength = tokens[1].length();
+          valueStr = tokens[1];
+        }
+
         if (tokens.length > 1) {
           tkv.setValue(tokens[1]);
         } else {
@@ -126,17 +140,17 @@ public class ConfigLoaderMojo extends AbstractMojo {
       }
       in.close();
 
+      System.out.println("lengths / value");
+      System.out.println("key  : " + keyLength + ": " + keyStr);
+      System.out.println("value: " + valueLength + ": " + valueStr);
+
       service.commit();
       getLog().info("Done ...");
 
     } catch (Exception e) {
-      // Send email if something went wrong
-      try {
-        ExceptionHandler.handleException(e, "Error loading RF2 source data");
-      } catch (Exception e1) {
-        e1.printStackTrace();
-        throw new MojoFailureException(e.getMessage());
-      }
+      // pass error back
+      e.printStackTrace();
+      throw new MojoFailureException(e.getMessage());
 
     } finally {
       // Close service(s)

@@ -136,24 +136,22 @@ tsApp
             return;
           }
           if (abbr) {
-            $scope.setAbbreviationReviewed
+            $scope.setAbbreviationViewed(abbr);
           }
-          var term = $scope.paging['abbr'].filter;
-          var query = term ? 'key:' + term + ' OR value:' + term : null;
           var pfs = getPfs('abbr');
-
           // retrieval call
-          abbrService.findAbbreviations(query, getPfs('abbr')).then(function(response) {
+          abbrService.findAbbreviations($scope.paging['abbr'].filter,
+            $scope.paging['abbr'].typeFilter, pfs).then(function(response) {
             $scope.lists.abbrsViewed = response;
             console.debug('abbreviations', $scope.lists.abbrsViewed);
           });
 
           // truncated NEEDS_REVIEW call
           pfs.maxResults = 0;
-          abbrService.findAbbreviations('workflowStatus:NEEDS_REVIEW', pfs).then(
-            function(response) {
-              $scope.paging['abbr'].hasNeedsReview = response.totalCount > 0;
-            });
+          abbrService.findAbbreviations('workflowStatus:NEEDS_REVIEW',
+            $scope.paging['abbr'].typeFilter, pfs).then(function(response) {
+            $scope.paging['abbr'].hasNeedsReview = response.totalCount > 0;
+          });
         }
 
         function getPfs(type) {
@@ -184,13 +182,14 @@ tsApp
         $scope.setAbbreviationViewed = function(abbr) {
           $scope.selected.editTab = 'Edit';
           $scope.selected.abbrViewed = abbr;
-          $scope.selected.abbrEdited = angular.copy(abbr);
-          $scope.getReviewForAbbreviation($scope.selected.abbrEdited);
+          $scope.setAbbreviationEdited(abbr);
+          $scope.getReviewForAbbreviations(abbr);
 
         }
 
         $scope.setAbbreviationEdited = function(abbr) {
-          $scope.selected.abbrEdited = abbr;
+          // Copy object to prevent changes propagating before update invocation
+          $scope.selected.abbrEdited = angular.copy(abbr);
         }
 
         $scope.createAbbreviation = function() {
@@ -203,7 +202,7 @@ tsApp
         }
 
         $scope.cancelAbbreviation = function() {
-          $scope.selected.abbrEdited = null;
+          $scope.setAbbreviationEdited(null);
         }
 
         $scope.addAbbreviation = function(abbr) {
@@ -229,7 +228,7 @@ tsApp
           abbrService.removeAbbreviation(abbr.id).then(function() {
 
             // clear edited abbreviation
-            $scope.selected.abbrEdited = null;
+            $scope.setAbbreviationEdited(null);
 
             // perform all actions triggered by abbreviation change
             $scope.processAbbreviationChange();
@@ -246,14 +245,24 @@ tsApp
           $scope.findAbbreviations();
         }
 
-        $scope.getReviewForAbbreviation = function(abbr) {
+        $scope.getReviewForAbbreviations = function(abbr) {
           var deferred = $q.defer();
           if (!abbr) {
             deferred.reject();
           }
-          $scope.selected.abbrReviewed = abbr;
 
-          abbrService.getReviewForAbbreviationId($scope.selected.abbrReviewed.id).then(
+          // if starting abbreviation supplied, initialize list
+          if (abbr) {
+            console.debug('initializing from ', abbr);
+            $scope.lists.abbrsReviewed = {
+              'typeKeyValues' : [ abbr ],
+              'totalCount' : 1
+            };
+          } else {
+            console.debug('review from abbr list', $scope.lists.abbrsReviewed);
+          }
+
+          abbrService.getReviewForAbbreviations($scope.lists.abbrsReviewed.typeKeyValues).then(
             function(abbrReviews) {
               $scope.lists.abbrsReviewed = abbrReviews;
 
@@ -287,20 +296,39 @@ tsApp
 
           // check current review table for possible changes to other concepts
           angular.forEach($scope.lists.abbrsReviewed.typeKeyValues, function(abbr) {
-            // call update to force re-check
-            if (abbr.workflowStatus == 'NEEDS_REVIEW') {
+            // call update to force re-check (unless the currently edited abbreviation)
+            if (abbr.workflowStatus == 'NEEDS_REVIEW'
+              && (!$scope.selected.abbrEdited || $scope.selected.abbrEdited.id != abbr.id)) {
               deferred.push(abbrService.updateAbbreviation(abbr));
             }
           });
 
           // after all recomputation, get new review and perform new find
           $q.all(deferred).then(function() {
-            $scope.getReviewForAbbreviation($scope.selected.abbrReviewed);
+            $scope.getReviewForAbbreviations();
             findAbbreviations();
           }, function() {
-            $scope.getReviewForAbbreviation($scope.selected.abbrReviewed);
+            $scope.getReviewForAbbreviations();
             findAbbreviations();
           })
+        }
+
+        $scope.finishReview = function() {
+          var deferred = [];
+          gpService.increment();
+          angular.forEach($scope.lists.abbrsReviewed.typeKeyValues, function(abbr) {
+            if (abbr.workflowStatus == 'NEEDS_REVIEW') {
+              abbr.workflowStatus = 'NEW';
+
+              // skip checks to prevent NEEDS_REVIEW from being reapplied
+              deferred.push(abbrService.updateAbbreviation(abbr, true));
+            }
+          })
+          console.debug('deferred', deferred);
+          $q.all(deferred).then(function() {
+            findAbbreviations();
+            gpService.decrement();
+          });
         }
 
         //
@@ -359,7 +387,7 @@ tsApp
           metadataService.getTerminologies().then(
           // Success
           function(data) {
-       
+
             $scope.lists.terminologies = data.terminologies;
             // Load all terminologies upon controller load (unless already
             // loaded)
@@ -442,3 +470,14 @@ tsApp
       }
 
     ]);
+
+tsApp.filter('highlightExact', function($sce) {
+  return function(text, phrase) {
+    //  console.debug("higlightLabel", text, phrase);
+    var htext = text;
+    if (text && phrase && text == phrase) {
+      htext = '<span class="highlighted">' + text + '</span>';
+    }
+    return $sce.trustAsHtml(htext);
+  };
+})

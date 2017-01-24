@@ -209,7 +209,7 @@ public interface NdcServiceRest {
    * @return the type key value list
    * @throws Exception the exception
    */
-  public TypeKeyValueList findAbbreviations(String query, PfsParameterJpa pfs,
+  public TypeKeyValueList findAbbreviations(String query, String filter, PfsParameterJpa pfs,
     String authToken) throws Exception;
 
   /**
@@ -232,6 +232,16 @@ public interface NdcServiceRest {
   public TypeKeyValueList getReviewForAbbreviation(Long id, String authToken)
     throws Exception;
 
-  
+  /**
+   * Returns the review for abbreviations.
+   *
+   * @param abbrList the abbr list
+   * @param authToken the auth token
+   * @return the review for abbreviations
+   * @throws Exception the exception
+   */
+  public TypeKeyValueList getReviewForAbbreviations(List<Long> ids,
+    String authToken) throws Exception;
+
 
 }

@@ -3,6 +3,7 @@
 // NOTE: CRUD services for type key values use project endpoint
 // NOTE: File manipulations use transformer endpoint
 var abbrUrl = 'rxnorm';
+var projectUrl = 'project';
 tsApp.service('abbrService', [
   '$q',
   '$http',
@@ -11,15 +12,19 @@ tsApp.service('abbrService', [
   'Upload',
   function($q, $http, utilService, gpService, Upload) {
 
-    this.findAbbreviations = function(query, pfs) {
+    this.findAbbreviations = function(query, typeFilter, pfs) {
       var deferred = $q.defer();
 
-      console.debug('find abbreviations', query, pfs);
+      console.debug('find abbreviations', query, typeFilter, pfs);
+      
+      var lquery = (query ? '?query=' + utilService.prepQuery(query, false) : '')
+      + (typeFilter ? (query ? '&' : '?') + 'filter=' + typeFilter : '');
+      
 
       // Get projects
       gpService.increment();
       $http.post(
-        abbrUrl + '/find' + (query ? '?query=' + query : ''), pfs)
+        abbrUrl + '/find' + lquery, pfs)
         .then(
         // success
         function(response) {
@@ -46,6 +51,7 @@ tsApp.service('abbrService', [
         gpService.decrement();
         deferred.resolve(response.data);
       },
+
       // error
       function(response) {
         utilService.handleError(response);
@@ -75,12 +81,16 @@ tsApp.service('abbrService', [
       return deferred.promise;
     }
 
-    this.updateAbbreviation = function(abbreviation) {
+    this.updateAbbreviation = function(abbreviation, useProjectService) {
       var deferred = $q.defer();
 
-      // Get projects
       gpService.increment();
-      $http.post(abbrUrl + '/update/', abbreviation).then(
+
+      // if flag set, update type key value directly without additional checks
+      // abbreviation endpoint performs post-processing, which re-applies
+      // NEEDS_REVIEW on finishReview updates
+      $http.post(useProjectService ? projectUrl + '/typeKeyValue/update' : abbrUrl + '/update/',
+        abbreviation).then(
       // success
       function(response) {
         gpService.decrement();
@@ -199,7 +209,7 @@ tsApp.service('abbrService', [
       });
       return deferred.promise;
     };
-    
+
     this.computeReviewStatuses = function(type) {
       var deferred = $q.defer();
 
@@ -221,26 +231,36 @@ tsApp.service('abbrService', [
       });
       return deferred.promise;
     }
-    
-    this.getReviewForAbbreviationId = function(id) {
+
+    this.getReviewForAbbreviations = function(abbrs) {
       var deferred = $q.defer();
 
-      console.debug('compute review statuses', id);
+      console.debug('compute review statuses', abbrs);
 
-      // Get projects
-      gpService.increment();
-      $http.get(abbrUrl + '/review/' + id).then(
-      // success
-      function(response) {
-        gpService.decrement();
-        deferred.resolve(response.data);
-      },
-      // error
-      function(response) {
-        utilService.handleError(response);
-        gpService.decrement();
-        deferred.reject(response.data);
-      });
+      if (!abbrs || abbrs.length == 0) {
+        deferred.reject('getReviewForAbbreviations: Bad argument');
+      } else {
+
+        // extract ids
+        var ids = abbrs.map(function(a) {
+          return a.id;
+        })
+
+        // Get projects
+        gpService.increment();
+        $http.post(abbrUrl + '/review', ids).then(
+        // success
+        function(response) {
+          gpService.decrement();
+          deferred.resolve(response.data);
+        },
+        // error
+        function(response) {
+          utilService.handleError(response);
+          gpService.decrement();
+          deferred.reject(response.data);
+        });
+      }
       return deferred.promise;
     }
 

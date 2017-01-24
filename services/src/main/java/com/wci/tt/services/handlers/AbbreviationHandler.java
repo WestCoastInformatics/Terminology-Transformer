@@ -4,12 +4,13 @@
 package com.wci.tt.services.handlers;
 
 import java.io.InputStream;
+import java.util.List;
 
 import com.wci.umls.server.ValidationResult;
 import com.wci.umls.server.helpers.Configurable;
+import com.wci.umls.server.helpers.PfsParameter;
 import com.wci.umls.server.helpers.TypeKeyValue;
 import com.wci.umls.server.helpers.TypeKeyValueList;
-import com.wci.umls.server.model.workflow.WorkflowStatus;
 import com.wci.umls.server.services.ProjectService;
 
 /**
@@ -99,5 +100,25 @@ public interface AbbreviationHandler extends Configurable {
    * @throws Exception the exception
    */
   public void updateWorkflowStatus(TypeKeyValue abbr) throws Exception;
+
+  /**
+   * Returns the review for abbreviations.
+   *
+   * @param abbrList the abbr list
+   * @return the review for abbreviations
+   * @throws Exception the exception
+   */
+  public TypeKeyValueList getReviewForAbbreviations(List<TypeKeyValue> abbrList)
+    throws Exception;
+
+  /**
+   * Filter results.
+   *
+   * @param list the list
+   * @param filter the filter
+   * @return the type key value list
+   * @throws Exception 
+   */
+  public TypeKeyValueList filterResults(TypeKeyValueList list, String filter, PfsParameter pfs) throws Exception;
 
 }

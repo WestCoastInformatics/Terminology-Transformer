@@ -9,8 +9,10 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import com.wci.tt.services.handlers.AbbreviationHandler;
@@ -61,7 +63,7 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
    * @throws Exception
    */
 
-  private Set<TypeKeyValue> getReviewForAbbreviationHelper(
+  private Set<TypeKeyValue> getReviewForAbbreviationsHelper(
     List<TypeKeyValue> abbrsToCheck, Set<TypeKeyValue> computedConflicts)
     throws Exception {
 
@@ -111,15 +113,24 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
     computedConflicts.addAll(results);
 
     // call with new results and updated reviews
-    return getReviewForAbbreviationHelper(newResults, computedConflicts);
+    return getReviewForAbbreviationsHelper(newResults, computedConflicts);
   }
 
   @Override
   public TypeKeyValueList getReviewForAbbreviation(TypeKeyValue abbr)
     throws Exception {
+    Set<TypeKeyValue> reviews = getReviewForAbbreviationsHelper(
+        new ArrayList<>(Arrays.asList(abbr)), null);
+    TypeKeyValueList list = new TypeKeyValueListJpa();
+    list.setTotalCount(reviews.size());
+    list.setObjects(new ArrayList<>(reviews));
+    return list;
+  }
 
-    Set<TypeKeyValue> reviews = getReviewForAbbreviationHelper(
-        new ArrayList<TypeKeyValue>(Arrays.asList(abbr)), null);
+  @Override
+  public TypeKeyValueList getReviewForAbbreviations(List<TypeKeyValue> abbrList)
+    throws Exception {
+    Set<TypeKeyValue> reviews = getReviewForAbbreviationsHelper(abbrList, null);
     TypeKeyValueList list = new TypeKeyValueListJpa();
     list.setTotalCount(reviews.size());
     list.setObjects(new ArrayList<>(reviews));
@@ -158,8 +169,10 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
         for (TypeKeyValue abbr : service
             .findTypeKeyValuesForQuery("type:\"" + type + "\"", null)
             .getObjects()) {
-          abbr.setWorkflowStatus(WorkflowStatus.PUBLISHED);
-          service.updateTypeKeyValue(abbr);
+          if (WorkflowStatus.NEW.equals(abbr.getWorkflowStatus())) {
+            abbr.setWorkflowStatus(WorkflowStatus.PUBLISHED);
+            service.updateTypeKeyValue(abbr);
+          }
         }
       }
 
@@ -379,7 +392,8 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
   @Override
   public void computeAbbreviationStatuses(String abbrType) throws Exception {
 
-    // TODO NOTE: This is a debug helper function only and not intended for actual use
+    // TODO NOTE: This is a debug helper function only and not intended for
+    // actual use
     service.setTransactionPerOperation(false);
     service.beginTransaction();
 
@@ -403,7 +417,7 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
     service.commit();
 
   }
-  
+
   @Override
   public void updateWorkflowStatus(TypeKeyValue abbr) throws Exception {
     // NOTE: Review always contains the abbreviation itself
@@ -411,11 +425,90 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
       // set to NEEDS_REVIEW
       abbr.setWorkflowStatus(WorkflowStatus.NEEDS_REVIEW);
     } else {
-      // otherwise set to 
+      // otherwise set to
       abbr.setWorkflowStatus(WorkflowStatus.PUBLISHED);
     }
   }
- 
 
+  @SuppressWarnings("unchecked")
+  @Override
+  public TypeKeyValueList filterResults(TypeKeyValueList list, String filter,
+    PfsParameter pfs) throws Exception {
+    List filteredList = null;
+    switch (filter) {
+      case "duplicateKey":
+        filteredList = filterDuplicateKey(list.getObjects());
+        break;
+      case "duplicateValue":
+        filteredList = filterDuplicateValue(list.getObjects());
+        break;
+      case "blankValue":
+        filteredList = filterBlankValue(list.getObjects());
+        break;
+      default:
+        filteredList = list.getObjects();
+    }
+    
+    // create paging-only PFS
+    PfsParameter lpfs = new PfsParameterJpa();
+    lpfs.setStartIndex(pfs.getStartIndex());
+    lpfs.setMaxResults(pfs.getMaxResults());
+    final int totalCt[] = new int[1];
+    filteredList = service.applyPfsToList(filteredList, TypeKeyValueJpa.class, totalCt, lpfs);
+    TypeKeyValueList results = new TypeKeyValueListJpa();
+    results.setTotalCount(totalCt[0]);
+    results.setObjects(filteredList);
+    return results;
+    
+  }
+
+  //
+  // Filter functions separated for convenience/clarity
+  //
+  private List<TypeKeyValue> filterDuplicateKey(List<TypeKeyValue> list) {
+    final Map<String, List<TypeKeyValue>> map = new HashMap<>();
+    for (final TypeKeyValue abbr : list) {
+      if (!map.containsKey(abbr.getKey())) {
+        map.put(abbr.getKey(), new ArrayList<>(Arrays.asList(abbr)));
+      } else {
+        map.get(abbr.getKey()).add(abbr);
+      }
+    }
+    final List<TypeKeyValue> dupKeys = new ArrayList<>();
+    for (final String key : map.keySet()) {
+      if (map.get(key).size() > 1) {
+        dupKeys.addAll(map.get(key));
+      }
+    }
+    return dupKeys;
+  }
+
+  private List<TypeKeyValue> filterDuplicateValue(List<TypeKeyValue> list) {
+    final Map<String, List<TypeKeyValue>> map = new HashMap<>();
+    for (final TypeKeyValue abbr : list) {
+      if (!map.containsKey(abbr.getKey())) {
+        map.put(abbr.getValue(), new ArrayList<>(Arrays.asList(abbr)));
+      } else {
+        map.get(abbr.getValue()).add(abbr);
+      }
+    }
+    final List<TypeKeyValue> results = new ArrayList<>();
+    for (final String key : map.keySet()) {
+      if (map.get(key).size() > 1) {
+        results.addAll(map.get(key));
+      }
+    }
+    return results;
+  }
+
+  private List<TypeKeyValue> filterBlankValue(List<TypeKeyValue> list) {
+    final List<TypeKeyValue> results = new ArrayList<>();
+    for (final TypeKeyValue abbr : list) {
+      if (abbr.getValue() == null || abbr.getValue().isEmpty()) {
+        results.add(abbr);
+      }
+    }
+    return results;
+  }
 
 }

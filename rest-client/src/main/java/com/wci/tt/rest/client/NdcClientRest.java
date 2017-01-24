@@ -342,7 +342,7 @@ public class NdcClientRest extends RootClientRest implements NdcServiceRest {
   }
 
   @Override
-  public TypeKeyValueList findAbbreviations(String query, PfsParameterJpa pfs,
+  public TypeKeyValueList findAbbreviations(String query, String type, PfsParameterJpa pfs,
     String authToken) throws Exception {
     // TODO Auto-generated method stub
     return null;
@@ -358,6 +358,13 @@ public class NdcClientRest extends RootClientRest implements NdcServiceRest {
   @Override
   public TypeKeyValueList getReviewForAbbreviation(Long id, String authToken)
     throws Exception {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+  @Override
+  public TypeKeyValueList getReviewForAbbreviations(List<Long> ids,
+    String authToken) throws Exception {
     // TODO Auto-generated method stub
     return null;
   }

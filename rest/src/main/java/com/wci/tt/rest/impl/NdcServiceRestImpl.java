@@ -49,6 +49,7 @@ import com.wci.umls.server.UserRole;
 import com.wci.umls.server.ValidationResult;
 import com.wci.umls.server.helpers.Branch;
 import com.wci.umls.server.helpers.ConfigUtility;
+import com.wci.umls.server.helpers.PfsParameter;
 import com.wci.umls.server.helpers.SearchResultList;
 import com.wci.umls.server.helpers.StringList;
 import com.wci.umls.server.helpers.TypeKeyValue;
@@ -57,12 +58,12 @@ import com.wci.umls.server.jpa.content.ConceptJpa;
 import com.wci.umls.server.jpa.helpers.PfsParameterJpa;
 import com.wci.umls.server.jpa.helpers.SearchResultListJpa;
 import com.wci.umls.server.jpa.helpers.TypeKeyValueJpa;
+import com.wci.umls.server.jpa.helpers.TypeKeyValueListJpa;
 import com.wci.umls.server.jpa.services.ContentServiceJpa;
 import com.wci.umls.server.jpa.services.ProjectServiceJpa;
 import com.wci.umls.server.jpa.services.SecurityServiceJpa;
 import com.wci.umls.server.model.content.Atom;
 import com.wci.umls.server.model.content.AtomClass;
-import com.wci.umls.server.model.workflow.WorkflowStatus;
 import com.wci.umls.server.rest.impl.RootServiceRestImpl;
 import com.wci.umls.server.services.ProjectService;
 import com.wci.umls.server.services.SecurityService;
@@ -717,6 +718,36 @@ public class NdcServiceRestImpl extends RootServiceRestImpl
     }
   }
 
+  @Override
+  @Path("/review")
+  @POST
+  @ApiOperation(value = "Retrieve review list for abbreviations", notes = "Retrieve list of abbreviations requiring review for a list of abbreviations ids")
+  public TypeKeyValueList getReviewForAbbreviations(
+    @ApiParam(value = "List of abbreviation ids", required = true) List<Long> ids,
+    @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
+    throws Exception {
+    Logger.getLogger(getClass()).info("RESTful call (TKV): /find");
+    final ProjectService projectService = new ProjectServiceJpa();
+    final AbbreviationHandler abbrHandler = new DefaultAbbreviationHandler();
+    try {
+      authorizeApp(securityService, authToken, "export abbreviations",
+          UserRole.USER);
+      abbrHandler.setService(projectService);
+      List<TypeKeyValue> abbrs = new ArrayList<>();
+      for (Long id : ids) {
+        abbrs.add(projectService.getTypeKeyValue(id));
+      }
+      return abbrHandler.getReviewForAbbreviations(abbrs);
+    } catch (Exception e) {
+      handleException(e, "trying to export abbreviations");
+      return null;
+    } finally {
+      // NOTE: No need to close, but included for future safety
+      abbrHandler.close();
+      projectService.close();
+      securityService.close();
+    }
+  }
 
   @Override
   @Path("/{id}")
@@ -742,7 +773,6 @@ public class NdcServiceRestImpl extends RootServiceRestImpl
       }
     }
   }
-  
 
   @Override
   @Path("/add")
@@ -791,7 +821,9 @@ public class NdcServiceRestImpl extends RootServiceRestImpl
           "update abbreviation", UserRole.VIEWER);
       projectService.setLastModifiedBy(username);
       abbrHandler.setService(projectService);
-      abbrHandler.updateWorkflowStatus(typeKeyValue);
+      // TODO Decide whether we want update to change workflow status
+      // i.e. should updates be set to NEW or NEEDS_REVIEW?
+      // abbrHandler.updateWorkflowStatus(typeKeyValue);
       projectService.updateTypeKeyValue(typeKeyValue);
     } catch (Exception e) {
       handleException(e, "trying to update abbreviation ");
@@ -835,6 +867,7 @@ public class NdcServiceRestImpl extends RootServiceRestImpl
   @ApiOperation(value = "Finds abbreviations", notes = "Finds abbreviation objects", response = TypeKeyValueJpa.class)
   public TypeKeyValueList findAbbreviations(
     @ApiParam(value = "Query", required = false) @QueryParam("query") String query,
+    @ApiParam(value = "Filter type", required = false) @QueryParam("filter") String filter,
     @ApiParam(value = "PFS Parameter, e.g. '{ \"startIndex\":\"1\", \"maxResults\":\"5\" }'", required = false) PfsParameterJpa pfs,
     @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
     throws Exception {
@@ -844,7 +877,23 @@ public class NdcServiceRestImpl extends RootServiceRestImpl
     try {
       authorizeApp(securityService, authToken, "find abbreviations",
           UserRole.VIEWER);
-      return projectService.findTypeKeyValuesForQuery(query, pfs);
+
+      TypeKeyValueList list = null;
+      
+      // if filter supplied, retrieve all results and pass to handler
+      if (filter != null) {
+        PfsParameter lpfs = new PfsParameterJpa(pfs);
+        lpfs.setMaxResults(-1);
+        lpfs.setStartIndex(-1);
+        list = projectService.findTypeKeyValuesForQuery(query, lpfs);
+        final AbbreviationHandler abbrHandler = new DefaultAbbreviationHandler();
+        abbrHandler.setService(projectService);
+        list = abbrHandler.filterResults(list, filter, pfs);
+      } else {
+        list = projectService.findTypeKeyValuesForQuery(query, pfs);
+      }
+    
+      return list;
     } catch (Exception e) {
       handleException(e, "trying to find abbreviations ");
       return null;

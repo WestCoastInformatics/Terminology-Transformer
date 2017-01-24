@@ -30,7 +30,7 @@
           ng-options="terminology as terminology.terminology for terminology in getViewableTerminologies() | orderBy:'terminology'">
         </select> <span class="pull-right"> <span class="color-box"
           style="background-color: red;" ng-show="paging['abbr'].hasNeedsReview"
-          ng-click="toggleReviewMode()" title="Abbreviations need review">
+          ng-click="toggleReviewMode()" title="Some abbreviations need review">
         </span> Status: <select
           ng-options="status.key as status.label for status in lists.workflowStatus"
           ng-model="paging['abbr'].workflowStatus"
@@ -38,9 +38,10 @@
         </span></span>
 
 
-
         <div pager paging="paging['abbr']" count="lists.abbrsViewed.totalCount"
           callbacks="paging['abbr'].callbacks" style="margin-top: 10px;"></div>
+
+
 
         <table class="slim table table-hover" style="margin-top: 10px;"
           ng-show="lists.abbrsViewed.typeKeyValues.length > 0">
@@ -48,6 +49,7 @@
             <th>Abbreviation</th>
             <th></th>
             <th>Expansion</th>
+            <th>Last Modified</th>
 
           </tr>
           <tbody>
@@ -55,24 +57,33 @@
             <tr ng-class="{selected: abbr.id == selected.abbrViewed.id}"
               ng-repeat="abbr in lists.abbrsViewed.typeKeyValues"
               ng-click="setAbbreviationViewed(abbr)">
-              <td class="col-md-3 col-xs-3">{{abbr.key}}</td>
+              <td class="col-md-3">{{abbr.key}}</td>
               <td><span class="color-box"
                 style="background-color: red; margin-top: 5px;"
                 ng-show="abbr.workflowStatus == 'NEEDS_REVIEW'"
-                ng-click="setReviewMode()" title="Need review"></span><span
+                ng-click="setReviewMode()" title="Needs review"></span><span
                 class="color-box"
                 style="background-color: green; margin-top: 5px;"
-                ng-show="abbr.workflowStatus == 'NEW'"
-                ng-click="setReviewMode()" title="New abbreviation"></span></td>
+                ng-show="abbr.workflowStatus == 'NEW'" title="New abbreviation"></span></td>
               </td>
-              <td class="col-md-8 col-xs-8">{{abbr.value}}</td>
-
+              <td class="col-md-5">{{abbr.value}}</td>
+              <td class="col-md-3">{{abbr.lastModified | date:'short'}}
             </tr>
           </tbody>
         </table>
 
+        Additional Filter: <select ng-model="paging['abbr'].filterType"
+          ng-change="findAbbreviations()">
+          <option value="">None</option>
+          <option value="duplicateKey">Duplicate key</option>
+          <option value="duplicateValue">Duplicate expansion</option>
+          <option value="blankValue">Blank expansion</option>
+        </select>
+
         <btn style="margin-top:25px;" class="btn btn-xs btn-primary"
-          ng-click="recomputeAllReviewStatuses">Recompute Reviews [DEBUG USE ONLY]</btn>
+          ng-click="recomputeAllReviewStatuses()">Recompute Reviews [DEBUG
+        USE ONLY]</btn>
+
 
 
 
@@ -90,7 +101,7 @@
         </ul>
         <div ng-show="selected.editTab == 'Edit'">
 
-          <div ng-show="!selected.abbrEdited">
+          <div style="margin-top: 10px;">
             <span ng-click="createAbbreviation()" class="btn btn-xs btn-primary">Create
               New</span> or select from table
           </div>
@@ -100,7 +111,7 @@
           </h5>
           <table class="" ng-show="selected.abbrEdited">
             <tr class="row">
-              <td class="col-md-3">Abbr {{selected.abbrEdited.id}}</td>
+              <td class="col-md-3">Abbr</td>
               <td class="col-md-9"><textarea style="width: 100%;"
                   ng-model="selected.abbrEdited.key"></textarea></td>
             </tr>
@@ -140,21 +151,35 @@
               <tr>
                 <th class="col-md-3">Abbreviation</th>
                 <th></th>
-                <th class="col-md-9">Expansion</th>
+                <th class="col-md-5">Expansion</th>
+                <th class="col-md-3">Last Modified</th>
               </tr>
               <tbody>
                 <!-- table-hover makes use of the active class -->
-                <tr ng-class="{selected: abbr.id == selected.abbrViewed.id}"
+                <tr ng-class="{selected: abbr.id == selected.abbrEdited.id}"
                   ng-repeat="abbr in lists.abbrsReviewed.typeKeyValues"
                   ng-click="setAbbreviationEdited(abbr)">
-                  <td class="col-md-3">{{abbr.key}}</td>
-                  <td class="col-md-1"><i
-                    ng-show="selected.abbrEdited.id == abbr.id"
-                    class="muted glyphicon glyphicon-pencil" title="Editing"></i>
-                  <td class="col-md-8">{{abbr.value}}
+                  <td class="col-md-3"
+                    ng-bind-html="abbr.key |
+                    highlightExact:selected.abbrEdited.key"></td>
+                  <td class="col-md-1"><span class="color-box"
+                    style="background-color: red;"
+                    ng-show="abbr.workflowStatus == 'NEEDS_REVIEW'"
+                    uib-tooltip="Needs review"></span><span class="color-box"
+                    style="background-color: green; margin-top: 5px;"
+                    ng-show="abbr.workflowStatus == 'NEW'"
+                    title="New abbreviation"></span>
+                  <td class="col-md-5"
+                    ng-bind-html="abbr.value |
+                    highlightExact:selected.abbrEdited.value"></td>
+                  <td class="col-md-3">{{abbr.lastModified | date:'short'}}
+                  
                 </tr>
               </tbody>
             </table>
+
+            <button class="btn btn-xs btn-primary" title="Mark all resolved"
+              ng-click="finishReview()">Finish Review</button>
 
           </div>
         </div>
