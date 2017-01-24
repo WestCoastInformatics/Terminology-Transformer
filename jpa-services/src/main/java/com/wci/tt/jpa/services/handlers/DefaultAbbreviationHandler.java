@@ -192,6 +192,7 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
       pbr = new PushBackReader(reader);
       int lineCt = 0;
       int commentCt = 0;
+      int ignoredCt = 0;
       int addedCt = 0;
       int toAddCt = 0;
       int errorCt = 0;
@@ -227,12 +228,16 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
           continue;
         }
 
+        System.out.println("fields " + fields.length);
+        for (int i = 0; i < fields.length; i++) {
+          System.out.println("  " + i + ": " + fields[i]);
+        }
         // CHECK: exactly two fields
         if (fields.length == 2) {
 
           // CHECK: Both fields non-null and non-empty
-          if (fields[0] != null && !fields[0].isEmpty() && fields[1] != null
-              && !fields[1].isEmpty()) {
+          if (fields[0] != null && !fields[0].trim().isEmpty()
+              && fields[1] != null && !fields[1].trim().isEmpty()) {
 
             // check for type/pair matches
             final TypeKeyValueList keyMatches =
@@ -305,13 +310,33 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
               newAbbrs.add(typeKeyValue);
               addedCt++;
             }
-          } else {
+          }
+
+          // check if key field empty (error)
+          else if (fields[1] == null || fields[1].trim().isEmpty()) {
+            errorCt++;
+            if (!executeImport) {
+              result.getErrors().add("Line " + lineCt + ": Key field empty");
+            }
+          }
+
+          // check if value field empty (ignored value)
+          else if (fields[1] == null || fields[1].trim().isEmpty()) {
+            ignoredCt++;
+            TypeKeyValue typeKeyValue =
+                new TypeKeyValueJpa(type, fields[0], null);
+            service.addTypeKeyValue(typeKeyValue);
+            newAbbrs.add(typeKeyValue);
+          }
+
+          else {
             errorCt++;
             if (!executeImport) {
               result.getErrors()
                   .add("Line " + lineCt + ": Incomplete line: " + line);
             }
           }
+
         } else {
           errorCt++;
           if (!executeImport) {
@@ -332,9 +357,16 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
         service.commit();
         service.beginTransaction();
         for (TypeKeyValue newAbbr : newAbbrs) {
-          if (getReviewForAbbreviation(newAbbr).size() > 1) {
+          // if value empty, ignored value -- set demotion
+          if (newAbbr.getValue() == null) {
+            newAbbr.setWorkflowStatus(WorkflowStatus.DEMOTION);
+          }
+          // if review has greater than one element -- needs review
+          else if (getReviewForAbbreviation(newAbbr).size() > 1) {
             newAbbr.setWorkflowStatus(WorkflowStatus.NEEDS_REVIEW);
-          } else {
+          }
+          // default: set new
+          else {
             newAbbr.setWorkflowStatus(WorkflowStatus.NEW);
           }
           service.updateTypeKeyValue(newAbbr);
@@ -346,6 +378,10 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
       if (!executeImport) {
         if (toAddCt > 0) {
           result.getComments().add(toAddCt + " abbreviations will be added");
+        }
+        if (ignoredCt != 0) {
+          result.getComments().add(ignoredCt + " abbreviation "
+              + (ignoredCt == 1 ? "" : "s") + " marked as ignored");
         }
         if (commentCt > 0) {
           result.getComments()
@@ -372,7 +408,12 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
         if (addedCt == 0) {
           result.getWarnings().add("No abbreviations added.");
         } else {
-          result.getComments().add(addedCt + " abbreviations added");
+          result.getComments().add(addedCt + " abbreviation "
+              + (addedCt == 1 ? "" : "s") + " added");
+        }
+        if (ignoredCt != 0) {
+          result.getComments().add(ignoredCt + " abbreviation "
+              + (ignoredCt == 1 ? "" : "s") + " marked as ignored");
         }
         if (dupPairCt != 0) {
           result.getWarnings().add(
@@ -383,7 +424,9 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
         }
       }
 
-    } catch (Exception e) {
+    } catch (
+
+    Exception e) {
       e.printStackTrace();
 
       result.getErrors().add("Unexpected error: " + e.getMessage());

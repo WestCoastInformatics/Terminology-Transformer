@@ -61,7 +61,7 @@ tsApp
           fileTypesFilter : '.txt,.csv',
           workflowStatus : [ {
             key : null,
-            label : 'Any'
+            label : 'All Active'
           }, {
             key : 'PUBLISHED',
             label : 'Accepted'
@@ -71,6 +71,9 @@ tsApp
           }, {
             key : 'NEEDS_REVIEW',
             label : 'Needs Review'
+          }, {
+            key : 'DEMOTION',
+            label : 'Ignored'
           } ],
           delimiters : [ {
             key : '\t',
@@ -179,12 +182,16 @@ tsApp
             console.debug('abbreviations', $scope.lists.abbrsViewed);
           });
 
-          // truncated NEEDS_REVIEW call
+          // truncated NEEDS_REVIEW and NEW calls
           pfs = prepAbbrPfs('abbr');
           pfs.maxResults = 0;
           abbrService.findAbbreviations('workflowStatus:NEEDS_REVIEW',
             $scope.paging['abbr'].filterType, pfs).then(function(response) {
             $scope.paging['abbr'].hasNeedsReview = response.totalCount > 0;
+          });
+          abbrService.findAbbreviations('workflowStatus:NEW',
+            $scope.paging['abbr'].filterType, pfs).then(function(response) {
+            $scope.paging['abbr'].hasNew = response.totalCount > 0;
           });
         }
 
@@ -264,25 +271,48 @@ tsApp
         }
 
         $scope.removeAbbreviation = function(abbr) {
+          console.debug('remove abbreviation', abbr);
           abbrService.removeAbbreviation(abbr.id).then(function() {
 
             // clear edited abbreviation
             $scope.setAbbreviationEdited(null);
+            
+            console.debug('cycling over review list', $scope.lists.abbrsReviewed);
+            
+            // remove the abbreviation from the review list if present
+            for (var i = 0; i < $scope.lists.abbrsReviewed.typeKeyValues.length; i++) {
+              console.debug('checking', abbr.id, $scope.lists.abbrsReviewed.typeKeyValues[i].id)
+              if ($scope.lists.abbrsReviewed.typeKeyValues[i].id == abbr.id) {
+            
+                $scope.lists.abbrsReviewed.typeKeyValues.splice(i, 1);
+                console.debug('-> found, new list ', $scope.lists.abbrsReviewed);
+              }
+            }
 
             // perform all actions triggered by abbreviation change
             $scope.processAbbreviationChange();
           });
         }
-
+        
         //
-        // Review functions
+        // Display functions
         //
+        
+        $scope.toggleNewMode = function() {
+          $scope.paging['abbr'].workflowStatus = $scope.paging['abbr'].workflowStatus == 'NEW' ? null
+            : 'NEW';
+          $scope.findAbbreviations();
+        }
 
         $scope.toggleReviewMode = function() {
           $scope.paging['abbr'].workflowStatus = $scope.paging['abbr'].workflowStatus == 'NEEDS_REVIEW' ? null
             : 'NEEDS_REVIEW';
           $scope.findAbbreviations();
         }
+        //
+        // Review functions
+        //
+
 
         $scope.getReviewForAbbreviations = function(abbr) {
           var deferred = $q.defer();

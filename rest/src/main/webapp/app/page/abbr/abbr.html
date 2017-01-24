@@ -29,9 +29,11 @@
           ng-change="setTerminology(selected.metadata.terminology)"
           ng-options="terminology as terminology.terminology for terminology in getViewableTerminologies() | orderBy:'terminology'">
         </select> <span class="pull-right"> <span class="color-box"
-          style="background-color: red;" ng-show="paging['abbr'].hasNeedsReview"
-          ng-click="toggleReviewMode()" title="Some abbreviations need review">
-        </span> Status: <select
+          style="background-color: green;" ng-show="paging['abbr'].hasNew"
+          ng-click="toggleNewMode()" title="New abbreviations"></span>&nbsp;<span
+          class="color-box" style="background-color: red;"
+          ng-show="paging['abbr'].hasNeedsReview" ng-click="toggleReviewMode()"
+          title="Some abbreviations need review"> </span> Status: <select
           ng-options="status.key as status.label for status in lists.workflowStatus"
           ng-model="paging['abbr'].workflowStatus"
           ng-change="findAbbreviations()"></select>
@@ -184,6 +186,7 @@
                     ng-bind-html="abbr.value |
                     highlightExact:selected.abbrEdited.value"></td>
                   <td class="col-md-3">{{abbr.lastModified | date:'short'}}
+
 
 
 

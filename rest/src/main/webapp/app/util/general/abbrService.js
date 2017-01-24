@@ -2,7 +2,7 @@
 // TODO Change this to TransformRest or AbbrRest
 // NOTE: CRUD services for type key values use project endpoint
 // NOTE: File manipulations use transformer endpoint
-var abbrUrl = 'rxnorm';
+var abbrUrl = 'abbr';
 var projectUrl = 'project';
 tsApp.service('abbrService', [
   '$q',
