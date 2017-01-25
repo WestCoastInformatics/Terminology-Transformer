@@ -251,7 +251,7 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
         }
         
         // CHECK: Must be no more than two fields
-        if (fields.length > 2) {
+        else if (fields.length > 2) {
           errorCt++;
           if (!executeImport) {
             String fieldsStr = "";
@@ -378,6 +378,9 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
 
       // aggregate results for validation
       if (!executeImport) {
+        if (toAddCt == 0) {
+          result.getComments().add("No abbreviations will be added");
+        }
         if (toAddCt > 0) {
           result.getComments().add(toAddCt + " abbreviations will be added");
         }
