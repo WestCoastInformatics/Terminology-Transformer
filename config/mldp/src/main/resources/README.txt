@@ -17,7 +17,7 @@ egrep "\|(bodySite|laterality|position|approach|device|procedure|substance|condi
 touch procedures/parChd.txt
 
 
-SETUP 
+SETUP
 
 cd
 mkdir mldp
@@ -43,9 +43,28 @@ unzip code1/config/mldp/target/tt-config-mldp-*.zip -d config
 # create db
 echo "CREATE database mldpdb CHARACTER SET utf8 default collate utf8_unicode_ci;" | mysql
 
-# integration-test "reset"
+
+RESET MLDP DATABASE
+
+/bin/rm -rf /var/lib/tomcat8/work/Catalina/localhost/mldp-server-rest
+/bin/rm -rf /var/lib/tomcat8/webapps/mldp-server-rest
+/bin/rm -rf /var/lib/tomcat8/webapps/mldp-server-rest.war
+
+cd /home/ec2-tomcat/mldp/code2
+git pull
+mvn clean install
+
+cd /home/ec2-tomcat/mldp/code1
+git pull
+mvn clean install -Drun.config.label=mldp
+
+mysqlmldp < /home/ec2-tomcat/mldp/code1/admin/src/main/resources/truncate_all.sql
+/bin/rm -rf /home/ec2-tomcat/mldp/data/indexes/*
+
 cd /home/ec2-tomcat/mldp/code1/integration-test
 mvn clean install -Preset -DskipTests=false -Drun.config.umls=/home/ec2-tomcat/mldp/config/config.properties -Dmaven.home=/project/maven-current/bin/mvn
+
+/bin/cp -f ~/mldp/code1/rest/target/tt-rest*war /var/lib/tomcat8/webapps/mldp-server-rest.war
 
 
 
@@ -53,11 +72,13 @@ REDEPLOY INSTRUCTIONS
 
 cd /home/ec2-tomcat/mldp/code2
 git pull
+mvn clean install
+
+cd /home/ec2-tomcat/mldp/code1
+git pull
 mvn clean install -Drun.config.label=mldp
 
 /bin/rm -rf /var/lib/tomcat8/work/Catalina/localhost/mldp-server-rest
 /bin/rm -rf /var/lib/tomcat8/webapps/mldp-server-rest
-
 /bin/rm -rf /var/lib/tomcat8/webapps/mldp-server-rest.war
-/bin/cp -f ~/mldp/code2/rest/target/umls-server-rest*war /var/lib/tomcat8/webapps/mldp-server-rest.war
-
+/bin/cp -f ~/mldp/code1/rest/target/tt-rest*war /var/lib/tomcat8/webapps/mldp-server-rest.war
