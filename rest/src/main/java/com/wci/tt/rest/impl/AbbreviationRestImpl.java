@@ -98,7 +98,7 @@ public class AbbreviationRestImpl extends RootServiceRestImpl
     final AbbreviationHandler abbrHandler = new DefaultAbbreviationHandler();
     try {
       final String username = authorizeApp(securityService, authToken,
-          "import abbreviations", UserRole.VIEWER);
+          "import abbreviations", UserRole.USER);
       projectService.setLastModifiedBy(username);
       abbrHandler.setService(projectService);
       return abbrHandler.importAbbreviationFile(type, in);
@@ -131,7 +131,7 @@ public class AbbreviationRestImpl extends RootServiceRestImpl
     final AbbreviationHandler abbrHandler = new DefaultAbbreviationHandler();
     try {
       authorizeApp(securityService, authToken, "validate abbreviations file",
-          UserRole.ADMINISTRATOR);
+          UserRole.USER);
       abbrHandler.setService(projectService);
       return abbrHandler.validateAbbreviationFile(type, in);
 
@@ -281,7 +281,7 @@ public class AbbreviationRestImpl extends RootServiceRestImpl
       final ProjectService projectService = new ProjectServiceJpa();
       try {
         authorizeApp(securityService, authToken, "get abbreviation",
-            UserRole.VIEWER);
+            UserRole.USER);
         return projectService.getTypeKeyValue(id);
       } catch (Exception e) {
         handleException(e, "trying to get abbreviation ");
@@ -307,7 +307,7 @@ public class AbbreviationRestImpl extends RootServiceRestImpl
     final AbbreviationHandler abbrHandler = new DefaultAbbreviationHandler();
     try {
       final String username = authorizeApp(securityService, authToken,
-          "add abbreviation", UserRole.VIEWER);
+          "add abbreviation", UserRole.USER);
       projectService.setLastModifiedBy(username);
       abbrHandler.setService(projectService);
       abbrHandler.updateWorkflowStatus(typeKeyValue);
@@ -337,7 +337,7 @@ public class AbbreviationRestImpl extends RootServiceRestImpl
     final AbbreviationHandler abbrHandler = new DefaultAbbreviationHandler();
     try {
       final String username = authorizeApp(securityService, authToken,
-          "update abbreviation", UserRole.VIEWER);
+          "update abbreviation", UserRole.USER);
       projectService.setLastModifiedBy(username);
       abbrHandler.setService(projectService);
       // TODO Decide whether we want update to change workflow status
@@ -366,7 +366,7 @@ public class AbbreviationRestImpl extends RootServiceRestImpl
     final ProjectService projectService = new ProjectServiceJpa();
     try {
       final String username = authorizeApp(securityService, authToken,
-          "remove abbreviation", UserRole.VIEWER);
+          "remove abbreviation", UserRole.USER);
       projectService.setLastModifiedBy(username);
       projectService.removeTypeKeyValue(id);
     } catch (Exception e) {
@@ -392,7 +392,7 @@ public class AbbreviationRestImpl extends RootServiceRestImpl
     final ProjectService projectService = new ProjectServiceJpa();
     try {
       final String username = authorizeApp(securityService, authToken,
-          "remove abbreviation", UserRole.VIEWER);
+          "remove abbreviation", UserRole.USER);
       projectService.setLastModifiedBy(username);
       projectService.setTransactionPerOperation(false);
       projectService.beginTransaction();
@@ -425,7 +425,7 @@ public class AbbreviationRestImpl extends RootServiceRestImpl
     final ProjectService projectService = new ProjectServiceJpa();
     try {
       authorizeApp(securityService, authToken, "find abbreviations",
-          UserRole.VIEWER);
+          UserRole.USER);
 
       TypeKeyValueList list = null;
 

@@ -244,12 +244,12 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
           System.out.println("  " + i + ": " + fields[i]);
         }
         boolean pairMatchFound = false;
-        
+
         // CHECK: Must be fields
         if (fields.length == 0) {
           result.getErrors().add("Line " + lineCt + ": Empty line");
         }
-        
+
         // CHECK: Must be no more than two fields
         else if (fields.length > 2) {
           errorCt++;
@@ -261,16 +261,19 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
             result.getErrors()
                 .add("Line " + lineCt + ": Expected one or two fields " + lineCt
                     + " but found " + fields.length + ": " + fieldsStr);
-          };
+          }
+          ;
         }
 
         // CHECK: Key must be non-null and non-empty
         else if (fields[0] == null || fields[0].trim().isEmpty()) {
-          result.getErrors().add("Line " + lineCt + ": Key with null/empty value found");
+          result.getErrors()
+              .add("Line " + lineCt + ": Key with null/empty value found");
         }
 
         // CHECK: exactly one single field or two fields and
-        else if (fields.length == 1 || fields[1] == null || fields[1].trim().isEmpty()) {
+        else if (fields.length == 1 || fields[1] == null
+            || fields[1].trim().isEmpty()) {
           // if not empty, check for duplicate
           if (fields[0] != null && !fields[0].trim().isEmpty()) {
             // check for type/pair matches
@@ -349,7 +352,7 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
             addedCt++;
           }
 
-        } 
+        }
       } while ((line = pbr.readLine()) != null);
 
       // after all abbreviations loaded, apply workflow status and commit
@@ -544,10 +547,17 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
       default:
         filteredList = list.getObjects();
     }
-    String query = ConfigUtility.composeQuery("OR", filteredList.stream()
-        .map(t -> "id:" + t.getId()).collect(Collectors.toList()));
-    TypeKeyValueList results = service.findTypeKeyValuesForQuery(query, pfs);
-    System.out.println("results: " + results.getTotalCount());
+    System.out.println("filtered results: " + filteredList.size());
+    TypeKeyValueList results = null;
+    if (filteredList.size() == 0) {
+      results = new TypeKeyValueListJpa();
+    } else {
+      String query = ConfigUtility.composeQuery("OR", filteredList.stream()
+          .map(t -> "id:" + t.getId()).collect(Collectors.toList()));
+      results = service.findTypeKeyValuesForQuery(query, pfs);
+      System.out.println("results: " + results.getTotalCount());
+
+    }
     return results;
 
   }
@@ -600,7 +610,9 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
     final List<TypeKeyValue> results = new ArrayList<>();
     for (final TypeKeyValue abbr : list) {
       // NOTE: Catch values consisting of whitespace
+      System.out.println("Checking value " + abbr.getValue());
       if (abbr.getValue() == null || abbr.getValue().trim().isEmpty()) {
+        System.out.println("  BLANK");
         results.add(abbr);
       }
     }

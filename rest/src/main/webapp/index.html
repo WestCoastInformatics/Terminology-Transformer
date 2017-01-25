@@ -121,32 +121,34 @@
 
   <!-- Main container -->
   <div class="container-fluid">
-
     <div class="row">
-
-      <!-- Universal left padding -->
+      <!-- Universal left padding 
       <div class="col-md-1 col-xs-0"></div>
+      -->
 
-      <!-- Main body -->
-      <div class="col-md-10 col-xs-12">
+      <!-- Main body - use this style for additional spacing on the sides -->
+      <div class="col-md-12 col-xs-12">
+        <div class="col-md-12 col-xs-12">
+          <!-- Show global error message -->
+          <div ng-include src="'app/page/general/error.html'"></div>
+          <!-- Tab controller -->
+          <div ng-controller="TabCtrl">
 
-        <!-- Show global error message -->
-        <div ng-include src="'app/page/general/error.html'"></div>
-
-        <!-- Tab controller -->
-        <ul ng-show="isShowing()" class="nav nav-tabs" ng-controller="TabCtrl">
-          <li ng-show="isTabShowing(tab)" ng-class="tabClass(tab)"
-            ng-repeat="tab in tabs"><a ng-click="setSelectedTab(tab)">
-              {{tab.label}} </a></li>
-        </ul>
-
-
-        <!-- Application content -->
-        <div ng-view=""></div>
+            <ul ng-show="isShowing()" class="pointer nav nav-tabs">
+              <li ng-show="isTabShowing(tab)" ng-class="tabClass(tab)"
+                ng-repeat="tab in tabs"><a ng-click="setSelectedTab(tab)">
+                  {{tab.label}} </a></li>
+            </ul>
+          </div>
+          <!-- Application content -->
+          <div ng-view=""></div>
+        </div>
       </div>
 
-      <!-- Universal right padding -->
+      <!-- Universal right padding
       <div class="col-md-1 col-xs-0"></div>
+      -->
+
     </div>
   </div>
 
