@@ -74,9 +74,9 @@
                 class="color-box"
                 style="background-color: green; margin-top: 5px;"
                 ng-show="abbr.workflowStatus == 'NEW'" title="New abbreviation"></span></td>
-              </td>
+
               <td class="col-md-5">{{abbr.value}}</td>
-              <td class="col-md-3">{{abbr.lastModified | date:'short'}}
+              <td class="col-md-3">{{toDate(abbr.lastModified)}}</td>
             </tr>
           </tbody>
         </table>
@@ -185,22 +185,7 @@
                   <td class="col-md-5"
                     ng-bind-html="abbr.value |
                     highlightExact:selected.abbrEdited.value"></td>
-                  <td class="col-md-3">{{abbr.lastModified | date:'short'}}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                  
+                  <td class="col-md-3">{{toDate(abbr.lastModified)}}</td>
                 </tr>
               </tbody>
             </table>
@@ -279,11 +264,11 @@
           <div style="margin-top: 25px;">
             <h4>Export</h4>
             <span class="btn btn-xs btn-primary" style="margin-right: 10px;"
-              ng-click="exportAbbreviations()">Export Abbreviations</span>
-            Delimiter: <select ng-model="selected.delimiter"
-              ng-options="delimiter.key as delimiter.value for delimiter in lists.delimiters"></select><br>
+              ng-click="exportAbbreviations()">Export Abbreviations</span> <br>
             <br> <input type="checkbox" ng-model="selected.exportReadyOnly">
-            Skip abbbreviations needing review
+            Skip abbbreviations needing review<br>
+            <br> <input type="checkbox" ng-model="selected.exportAcceptNew">
+            Mark new abbreviations accepted
           </div>
         </div>
       </div>

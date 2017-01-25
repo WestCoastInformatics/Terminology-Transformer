@@ -43,7 +43,8 @@ public interface AbbreviationHandler extends Configurable {
    * @return the conflicts
    * @throws Exception the exception
    */
-  public TypeKeyValueList getReviewForAbbreviation(TypeKeyValue abbr) throws Exception;
+  public TypeKeyValueList getReviewForAbbreviation(TypeKeyValue abbr)
+    throws Exception;
 
   /**
    * Compute abbreviation statuses.
@@ -84,8 +85,9 @@ public interface AbbreviationHandler extends Configurable {
    * @return the input stream
    * @throws Exception the exception
    */
-  public  InputStream exportAbbreviationFile(String abbrType, String delimiter, boolean excludeReview)
-      throws Exception;
+  public InputStream exportAbbreviationFile(String abbrType, boolean acceptNew,
+    boolean readyOnly) throws Exception;
+
   /**
    * Close any open resources on application shutdown.
    *
@@ -118,8 +120,9 @@ public interface AbbreviationHandler extends Configurable {
    * @param list the list
    * @param filter the filter
    * @return the type key value list
-   * @throws Exception 
+   * @throws Exception
    */
-  public TypeKeyValueList filterResults(TypeKeyValueList list, String filter, PfsParameter pfs) throws Exception;
+  public TypeKeyValueList filterResults(TypeKeyValueList list, String filter,
+    PfsParameter pfs) throws Exception;
 
 }

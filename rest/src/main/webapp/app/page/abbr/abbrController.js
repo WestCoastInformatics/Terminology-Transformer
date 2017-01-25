@@ -47,10 +47,7 @@ tsApp
           abbrEdited : null,
 
           // edit/import/export tab selection
-          editTab : 'Edit',
-
-          // delimiter for exports (default: tab)
-          delimiter : '\t'
+          editTab : 'Edit'
         }
 
         $scope.lists = {
@@ -58,7 +55,7 @@ tsApp
           terminologies : [],
           abbrsViewed : [],
           abbrsReviewed : [],
-          fileTypesFilter : '.txt,.csv',
+          fileTypesFilter : '.txt',
           workflowStatus : [ {
             key : null,
             label : 'All Active'
@@ -74,13 +71,6 @@ tsApp
           }, {
             key : 'DEMOTION',
             label : 'Ignored'
-          } ],
-          delimiters : [ {
-            key : '\t',
-            value : 'Tab'
-          }, {
-            key : ',',
-            value : 'Comma'
           } ],
           filterTypes : [ {
             key : null,
@@ -104,6 +94,7 @@ tsApp
         $scope.paging['abbr'] = utilService.getPaging();
         $scope.paging['abbr'].sortField = 'key';
         $scope.paging['abbr'].workflowStatus = null;
+        $scope.paging['abbr'].filterType = null;
         $scope.paging['abbr'].callbacks = {
           getPagedList : findAbbreviations
         };
@@ -113,6 +104,9 @@ tsApp
         $scope.paging['review'].callbacks = {
           getPagedList : getPagedReview
         };
+        
+        // pass utility functions to scope
+        $scope.toDate = utilService.toDate;
 
         // Sets the terminololgy
         $scope.setTerminology = function(terminology) {

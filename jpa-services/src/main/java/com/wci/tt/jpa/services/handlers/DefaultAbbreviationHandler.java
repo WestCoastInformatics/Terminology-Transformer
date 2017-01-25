@@ -250,61 +250,36 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
 
             // check for exact match
             boolean pairMatchFound = false;
-            boolean keyOrValueMatchFound = false;
+
             if (keyMatches.getTotalCount() > 0) {
               for (TypeKeyValue match : keyMatches.getObjects()) {
                 if (fields[1].equals(match.getValue())) {
                   pairMatchFound = true;
                   dupPairCt++;
-                  if (!executeImport) {
-                    result.getWarnings().add("Line " + lineCt + ": Duplicate: "
-                        + fields[0] + " / " + match.getValue());
-                  }
-                } else {
-                  if (!executeImport) {
-                    result.getWarnings()
-                        .add("Line " + lineCt + ": Abbreviation " + fields[0]
-                            + " already exists with expansion "
-                            + match.getValue());
-                  }
                 }
               }
 
               // increment duplicate key counter if pair match not found
               if (!pairMatchFound) {
-                keyOrValueMatchFound = true;
                 dupKeyCt++;
               }
             }
 
-            // if validation, check for value match without key match
-            if (!executeImport) {
-
-              if (!pairMatchFound) {
-                toAddCt++;
-              }
+            // if no exact match found and validation, check for value match
+            // without key match
+            if (!pairMatchFound && !executeImport) {
+              toAddCt++;
 
               // check for key match, pair not match
               final TypeKeyValueList valueMatches =
                   service.findTypeKeyValuesForQuery("type:\"" + type + "\""
                       + " AND value:\"" + fields[1] + "\"", null);
               if (valueMatches.getTotalCount() > 0) {
-                for (TypeKeyValue match : keyMatches.getObjects()) {
-                  if (!fields[0].equals(match.getKey())) {
-                    result.getWarnings().add("Line " + lineCt + ": Expansion "
-                        + fields[1] + " exists for key " + fields[0]);
-                  }
-
-                }
-                // increment duplicate value count if pair match not found
-                if (!pairMatchFound) {
-                  keyOrValueMatchFound = true;
-                  dupValCt++;
-                }
+                dupValCt++;
               }
             }
 
-            // if import mode and no pair match found, add the new abbreviation
+            // if no exact match found and import, add the new abbreviation
             if (!pairMatchFound && executeImport) {
               // add different expansion for same
               TypeKeyValue typeKeyValue =
@@ -425,18 +400,15 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
   }
 
   @Override
-  public InputStream exportAbbreviationFile(String abbrType, String delimiter,
+  public InputStream exportAbbreviationFile(String abbrType, boolean acceptNew,
     boolean readyOnly) throws Exception {
-
-    // if delimiter supplied, use it, otherwise use tab
-    String ldelimiter = delimiter == null ? "\t" : delimiter;
 
     // Write a header
     // Obtain members for refset,
     // Write RF2 simple refset pattern to a StringBuilder
     // wrap and return the string for that as an input stream
     StringBuilder sb = new StringBuilder();
-    sb.append("abbreviation").append(ldelimiter);
+    sb.append("abbreviation").append("\t");
     sb.append("expansion").append("\r\n");
 
     // sort by key
@@ -448,7 +420,7 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
     for (TypeKeyValue abbr : abbrs.getObjects()) {
       if (!readyOnly
           || !WorkflowStatus.NEEDS_REVIEW.equals(abbr.getWorkflowStatus())) {
-        sb.append(abbr.getKey()).append(ldelimiter);
+        sb.append(abbr.getKey()).append("\t");
         sb.append(abbr.getValue()).append("\r\n");
       }
     }
@@ -494,7 +466,6 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
     }
   }
 
-  @SuppressWarnings("unchecked")
   @Override
   public TypeKeyValueList filterResults(TypeKeyValueList list, String filter,
     PfsParameter pfs) throws Exception {
@@ -515,32 +486,9 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
       default:
         filteredList = list.getObjects();
     }
-
-    // TODO Use another lucene search based on retrieved ids
     String query = ConfigUtility.composeQuery("OR", filteredList.stream()
         .map(t -> "id:" + t.getId()).collect(Collectors.toList()));
-    
     return service.findTypeKeyValuesForQuery(query, pfs);
-
-    // simple paging only - filtering and query restriction already applied
-    /*int fromIndex = Math.min(pfs.getStartIndex(), filteredList.size());
-    int toIndex =
-        Math.min(fromIndex + pfs.getMaxResults(), filteredList.size());
-    TypeKeyValueList results = new TypeKeyValueListJpa();
-    results.setTotalCount(filteredList.size());
-    results.setObjects(filteredList.subList(fromIndex, toIndex));
-    return results;*/
-
-    // filter may distort pfs , reapply pfs
-    // TODO Try removing query restriction
-    /*
-     * int totalCt[] = new int[1]; filteredList =
-     * service.applyPfsToList(filteredList, TypeKeyValue.class, totalCt, pfs);
-     * 
-     * // construct results TypeKeyValueList results = new
-     * TypeKeyValueListJpa(); results.setTotalCount(totalCt[0]);
-     * results.setObjects(filteredList); return results;
-     */
 
   }
 
