@@ -163,8 +163,9 @@ public class AbbreviationRestImpl extends RootServiceRestImpl
     final ProjectService projectService = new ProjectServiceJpa();
     final AbbreviationHandler abbrHandler = new DefaultAbbreviationHandler();
     try {
-      authorizeApp(securityService, authToken, "export abbreviations",
+      final String username = authorizeApp(securityService, authToken, "export abbreviations",
           UserRole.USER);
+      projectService.setLastModifiedBy(username);
       abbrHandler.setService(projectService);
       return abbrHandler.exportAbbreviationFile(type, acceptNew, readyOnly);
     } catch (Exception e) {

@@ -199,12 +199,12 @@ tsApp.service('abbrService', [
     }
 
     this.exportAbbreviations = function(type, acceptNew, readyOnly) {
-      console.debug('exportAbbreviations');
+      console.debug('exportAbbreviations', type, acceptNew, readyOnly);
       var deferred = $q.defer();
       gpService.increment()
       var queryParams = (readyOnly ? 'readyOnly=true' : '');
       queryParams += acceptNew ? (queryParams.length > 0 ? '&' : '') + 'acceptNew=true' : '';
-      $http.post(abbrUrl + '/export/' + type + (queryParams ? '?' + queryParams : ''), delimiter)
+      $http.post(abbrUrl + '/export/' + type + (queryParams ? '?' + queryParams : ''))
         .then(
         // Success
         function(response) {
