@@ -75,7 +75,14 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
 
     // if no further abbreviations to process, return the passed reviews list
     if (abbrsToCheck == null || abbrsToCheck.size() == 0) {
-      return computedConflicts;
+      // quality check -- remove any conflicts with null or strictly whitespace values
+      final List<TypeKeyValue> finalResults = new ArrayList<>();
+      for (final TypeKeyValue abbr : computedConflicts) {
+        if (abbr.getValue() != null && !abbr.getValue().trim().isEmpty()) {
+          finalResults.add(abbr);
+        }
+      }
+      return finalResults;
     }
 
     // type for convenience
@@ -475,7 +482,7 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
       abbr.setWorkflowStatus(WorkflowStatus.NEEDS_REVIEW);
     } else {
       // otherwise set to
-      abbr.setWorkflowStatus(WorkflowStatus.PUBLISHED);
+      abbr.setWorkflowStatus(WorkflowStatus.NEW);
     }
   }
 

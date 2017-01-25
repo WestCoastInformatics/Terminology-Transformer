@@ -341,7 +341,7 @@ public class AbbreviationRestImpl extends RootServiceRestImpl
       abbrHandler.setService(projectService);
       // TODO Decide whether we want update to change workflow status
       // i.e. should updates be set to NEW or NEEDS_REVIEW?
-      // abbrHandler.updateWorkflowStatus(typeKeyValue);
+      abbrHandler.updateWorkflowStatus(typeKeyValue);
       projectService.updateTypeKeyValue(typeKeyValue);
     } catch (Exception e) {
       handleException(e, "trying to update abbreviation ");
