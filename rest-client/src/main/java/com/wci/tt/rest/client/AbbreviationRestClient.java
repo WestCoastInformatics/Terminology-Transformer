@@ -53,9 +53,10 @@ public class AbbreviationRestClient extends RootClientRest
     return null;
   }
 
+
   @Override
-  public InputStream exportAbbreviationsFile(String type, String delimiter,
-    boolean readyOnly, String authToken) throws Exception {
+  public InputStream exportAbbreviationsFile(String type, boolean readyOnly,
+    boolean acceptNew, String authToken) throws Exception {
     // TODO Auto-generated method stub
     return null;
   }
@@ -113,6 +114,13 @@ public class AbbreviationRestClient extends RootClientRest
     String authToken) throws Exception {
     // TODO Auto-generated method stub
     return null;
+  }
+
+  @Override
+  public void removeAbbreviations(List<Long> ids, String authToken)
+    throws Exception {
+    // TODO Auto-generated method stub
+    
   }
 
 }

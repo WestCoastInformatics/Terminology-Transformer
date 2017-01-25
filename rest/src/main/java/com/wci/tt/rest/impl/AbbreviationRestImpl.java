@@ -356,7 +356,6 @@ public class AbbreviationRestImpl extends RootServiceRestImpl
   @Path("/remove/{id}")
   @DELETE
   @ApiOperation(value = "Removes a abbreviation", notes = "Removes a abbreviation object by id", response = TypeKeyValueJpa.class)
-
   public void removeAbbreviation(
     @ApiParam(value = "The abbreviation to remove") @PathParam("id") Long id,
     @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
@@ -369,6 +368,37 @@ public class AbbreviationRestImpl extends RootServiceRestImpl
           "remove abbreviation", UserRole.VIEWER);
       projectService.setLastModifiedBy(username);
       projectService.removeTypeKeyValue(id);
+    } catch (Exception e) {
+      handleException(e, "trying to remove abbreviation ");
+
+    } finally {
+      projectService.close();
+      securityService.close();
+    }
+
+  }
+  
+  @Override
+  @Path("/remove")
+  @POST
+  @ApiOperation(value = "Removes a abbreviation", notes = "Removes a abbreviation object by id", response = TypeKeyValueJpa.class)
+  public void removeAbbreviations(
+    @ApiParam(value = "The abbreviation to remove") List<Long> ids,
+    @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
+    throws Exception {
+    Logger.getLogger(getClass())
+        .info("RESTful call (Project/TypeKeyValue): /remove " + ids);
+    final ProjectService projectService = new ProjectServiceJpa();
+    try {
+      final String username = authorizeApp(securityService, authToken,
+          "remove abbreviation", UserRole.VIEWER);
+      projectService.setLastModifiedBy(username);
+      projectService.setTransactionPerOperation(false);
+      projectService.beginTransaction();
+      for (Long id : ids) {
+        projectService.removeTypeKeyValue(id);
+      }
+      projectService.commit();
     } catch (Exception e) {
       handleException(e, "trying to remove abbreviation ");
 

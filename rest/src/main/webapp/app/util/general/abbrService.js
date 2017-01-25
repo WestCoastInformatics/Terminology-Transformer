@@ -16,28 +16,25 @@ tsApp.service('abbrService', [
       var deferred = $q.defer();
 
       console.debug('find abbreviations', query, typeFilter, pfs);
-      
+
       var lquery = (query ? '?query=' + utilService.prepQuery(query, false) : '')
-      + (typeFilter ? (query ? '&' : '?') + 'filter=' + typeFilter : '');
-      
+        + (typeFilter ? (query ? '&' : '?') + 'filter=' + typeFilter : '');
 
       // Get projects
       gpService.increment();
       console.debug(' PFS: ' + pfs);
-      $http.post(
-        abbrUrl + '/find' + lquery, pfs)
-        .then(
-        // success
-        function(response) {
-          gpService.decrement();
-          deferred.resolve(response.data);
-        },
-        // error
-        function(response) {
-          utilService.handleError(response);
-          gpService.decrement();
-          deferred.reject(response.data);
-        });
+      $http.post(abbrUrl + '/find' + lquery, pfs).then(
+      // success
+      function(response) {
+        gpService.decrement();
+        deferred.resolve(response.data);
+      },
+      // error
+      function(response) {
+        utilService.handleError(response);
+        gpService.decrement();
+        deferred.reject(response.data);
+      });
       return deferred.promise;
     }
 
@@ -65,9 +62,32 @@ tsApp.service('abbrService', [
     this.removeAbbreviation = function(id) {
       var deferred = $q.defer();
 
+      console.debug('remove abbreviation', id);
       // Get projects
       gpService.increment();
       $http['delete'](abbrUrl + '/remove/' + id).then(
+      // success
+      function(response) {
+        gpService.decrement();
+        deferred.resolve(response.data);
+      },
+      // error
+      function(response) {
+        utilService.handleError(response);
+        gpService.decrement();
+        deferred.reject(response.data);
+      });
+      return deferred.promise;
+    }
+
+    this.removeAbbreviations = function(ids) {
+      var deferred = $q.defer();
+
+      console.debug('remove abbreviations', ids);
+
+      // Get projects
+      gpService.increment();
+      $http.post(abbrUrl + '/remove', ids).then(
       // success
       function(response) {
         gpService.decrement();
@@ -178,36 +198,39 @@ tsApp.service('abbrService', [
       return deferred.promise;
     }
 
-    this.exportAbbreviations = function(type, delimiter, readyOnly) {
+    this.exportAbbreviations = function(type, acceptNew, readyOnly) {
       console.debug('exportAbbreviations');
       var deferred = $q.defer();
       gpService.increment()
-      $http.post(abbrUrl + '/export/' + type + (readyOnly ? '?readyOnly=true' : ''), delimiter).then(
-      // Success
-      function(response) {
-        var blob = new Blob([ response.data ], {
-          type : ''
+      var queryParams = (readyOnly ? 'readyOnly=true' : '');
+      queryParams += acceptNew ? (queryParams.length > 0 ? '&' : '') + 'acceptNew=true' : '';
+      $http.post(abbrUrl + '/export/' + type + (queryParams ? '?' + queryParams : ''), delimiter)
+        .then(
+        // Success
+        function(response) {
+          var blob = new Blob([ response.data ], {
+            type : ''
+          });
+
+          // fake a file URL and download it
+          var fileURL = URL.createObjectURL(blob);
+          var a = document.createElement('a');
+          a.href = fileURL;
+          a.target = '_blank';
+          a.download = 'abbreviations.' + type + ".txt";
+          document.body.appendChild(a);
+          gpService.decrement();
+          a.click();
+
+          deferred.resolve();
+
+        },
+        // Error
+        function(response) {
+          utilService.handleError(response);
+          gpService.decrement();
+          deferred.reject(response.data);
         });
-
-        // fake a file URL and download it
-        var fileURL = URL.createObjectURL(blob);
-        var a = document.createElement('a');
-        a.href = fileURL;
-        a.target = '_blank';
-        a.download = 'abbreviations.' + type + ".txt";
-        document.body.appendChild(a);
-        gpService.decrement();
-        a.click();
-
-        deferred.resolve();
-
-      },
-      // Error
-      function(response) {
-        utilService.handleError(response);
-        gpService.decrement();
-        deferred.reject(response.data);
-      });
       return deferred.promise;
     };
 
@@ -236,7 +259,7 @@ tsApp.service('abbrService', [
     this.getReviewForAbbreviations = function(abbrs) {
       var deferred = $q.defer();
 
-      console.debug('compute review statuses', abbrs);
+      console.debug('get review for abbreviations', abbrs);
 
       if (!abbrs || abbrs.length == 0) {
         deferred.reject('getReviewForAbbreviations: Bad argument');

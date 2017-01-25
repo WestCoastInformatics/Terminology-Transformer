@@ -87,7 +87,24 @@ tsApp
           }, {
             key : 'duplicateValue',
             value : 'Duplicate expansion'
+          } ],
+          pageSizes : [ {
+            key : 10,
+            value : "10"
+          }, {
+            key : 20,
+            value : "20"
+          }, {
+            key : 50,
+            value : "50"
+          }, {
+            key : 100,
+            value : '100'
+          }, {
+            key : 200,
+            value : '200'
           } ]
+
         };
 
         $scope.paging = {};
@@ -95,6 +112,7 @@ tsApp
         $scope.paging['abbr'].sortField = 'key';
         $scope.paging['abbr'].workflowStatus = null;
         $scope.paging['abbr'].filterType = null;
+        $scope.paging['abbr'].pageSize = 10;
         $scope.paging['abbr'].callbacks = {
           getPagedList : findAbbreviations
         };
@@ -104,7 +122,7 @@ tsApp
         $scope.paging['review'].callbacks = {
           getPagedList : getPagedReview
         };
-        
+
         // pass utility functions to scope
         $scope.toDate = utilService.toDate;
 
@@ -177,16 +195,16 @@ tsApp
           });
 
           // truncated NEEDS_REVIEW and NEW calls
-          pfs = prepAbbrPfs('abbr');
-          pfs.maxResults = 0;
-          abbrService.findAbbreviations('workflowStatus:NEEDS_REVIEW',
-            $scope.paging['abbr'].filterType, pfs).then(function(response) {
-            $scope.paging['abbr'].hasNeedsReview = response.totalCount > 0;
-          });
-          abbrService.findAbbreviations('workflowStatus:NEW',
-            $scope.paging['abbr'].filterType, pfs).then(function(response) {
-            $scope.paging['abbr'].hasNew = response.totalCount > 0;
-          });
+          /*
+                     * pfs = prepAbbrPfs('abbr'); pfs.maxResults = 0;
+                     * abbrService.findAbbreviations('workflowStatus:NEEDS_REVIEW',
+                     * $scope.paging['abbr'].filterType, pfs).then(function(response) {
+                     * $scope.paging['abbr'].hasNeedsReview = response.totalCount > 0; });
+                     * abbrService .findAbbreviations('workflowStatus:NEW',
+                     * $scope.paging['abbr'].filterType, pfs).then( function(response) {
+                     * $scope.paging['abbr'].hasNew = response.totalCount > 0; });
+                     */
+
         }
 
         function prepAbbrPfs(type) {
@@ -264,34 +282,70 @@ tsApp
           });
         }
 
+        $scope.removeAbbreviations = function() {
+          var pfs = prepAbbrPfs('abbr');
+          pfs.startIndex = -1;
+          pfs.maxResults = -1;
+
+          abbrService.findAbbreviations($scope.paging['abbr'].filter,
+            $scope.paging['abbr'].filterType, pfs).then(function(response) {
+            var ids = response.typeKeyValues.map(function(t) {
+              return t.id;
+            });
+            abbrService.removeAbbreviations(ids).then(function() {
+              findAbbreviations();
+
+              // clear edited abbreviation
+              if ($scope.selected.abbrEdited && ids.indexOf($scope.selected.abbrEdited.id) != -1) {
+                $scope.setAbbreviationEdited(null);
+              }
+
+              console.debug('cycling over review list', $scope.lists.abbrsReviewed);
+
+              // remove the abbreviation from the review list if present
+              for (var i = 0; i < $scope.lists.abbrsReviewed.typeKeyValues.length; i++) {
+                console.debug('checking', ids, $scope.lists.abbrsReviewed.typeKeyValues[i].id)
+                if (ids.indexOf($scope.lists.abbrsReviewed.typeKeyValues[i].id) != -1) {
+
+                  $scope.lists.abbrsReviewed.typeKeyValues.splice(i--, 1);
+                  console.debug('-> found, new list ', $scope.lists.abbrsReviewed);
+                }
+              }
+
+              $scope.processAbbreviationChange();
+            });
+          });
+        }
+
         $scope.removeAbbreviation = function(abbr) {
           console.debug('remove abbreviation', abbr);
           abbrService.removeAbbreviation(abbr.id).then(function() {
 
             // clear edited abbreviation
             $scope.setAbbreviationEdited(null);
-            
+
             console.debug('cycling over review list', $scope.lists.abbrsReviewed);
-            
+
             // remove the abbreviation from the review list if present
             for (var i = 0; i < $scope.lists.abbrsReviewed.typeKeyValues.length; i++) {
               console.debug('checking', abbr.id, $scope.lists.abbrsReviewed.typeKeyValues[i].id)
               if ($scope.lists.abbrsReviewed.typeKeyValues[i].id == abbr.id) {
-            
+
                 $scope.lists.abbrsReviewed.typeKeyValues.splice(i, 1);
                 console.debug('-> found, new list ', $scope.lists.abbrsReviewed);
               }
             }
 
             // perform all actions triggered by abbreviation change
+            console.debug('REMOVE_ABBREVIATION: PROCESS ', $scope.lists.abbrsReviewed);
             $scope.processAbbreviationChange();
           });
         }
-        
+
         //
         // Display functions
         //
-        
+
         $scope.toggleNewMode = function() {
           $scope.paging['abbr'].workflowStatus = $scope.paging['abbr'].workflowStatus == 'NEW' ? null
             : 'NEW';
@@ -307,41 +361,42 @@ tsApp
         // Review functions
         //
 
-
         $scope.getReviewForAbbreviations = function(abbr) {
           var deferred = $q.defer();
-          if (!abbr) {
-            deferred.reject();
-          }
 
           // if starting abbreviation supplied, initialize list
           if (abbr) {
-            console.debug('initializing from ', abbr);
+            console.debug('getReviewForAbbreviations: iitializing from ', abbr);
             $scope.lists.abbrsReviewed = {
               'typeKeyValues' : [ abbr ],
               'totalCount' : 1
             };
           } else {
-            console.debug('review from abbr list', $scope.lists.abbrsReviewed);
+            console.debug('getReviewForAbbreviations from abbr list', $scope.lists.abbrsReviewed);
           }
 
-          abbrService.getReviewForAbbreviations($scope.lists.abbrsReviewed.typeKeyValues).then(
-            function(abbrReviews) {
-              $scope.lists.abbrsReviewed = abbrReviews;
+          if (!$scope.lists.abbrsReviewed) {
+            deferred.reject('No abbreviations');
+          } else {
 
-              // on review load, find and select for editing the viewed abbreviation in the review list
-              angular.forEach($scope.lists.abbrsReviewed.typeKeyValues, function(abbrReview) {
-                if (abbrReview.id == $scope.selected.abbrViewed.id) {
-                  $scope.setAbbreviationEdited(abbrReview);
-                }
+            abbrService.getReviewForAbbreviations($scope.lists.abbrsReviewed.typeKeyValues).then(
+              function(abbrReviews) {
+                $scope.lists.abbrsReviewed = abbrReviews;
+
+                // on review load, find and select for editing the viewed abbreviation in the review list
+                angular.forEach($scope.lists.abbrsReviewed.typeKeyValues, function(abbrReview) {
+                  if (abbrReview.id == $scope.selected.abbrViewed.id) {
+                    $scope.setAbbreviationEdited(abbrReview);
+                  }
+                });
+
+                // get paged list
+                getPagedReview();
+                deferred.resolve();
+              }, function(error) {
+                deferred.reject();
               });
-
-              // get paged list
-              getPagedReview();
-              deferred.resolve();
-            }, function(error) {
-              deferred.reject();
-            });
+          }
           return deferred.promise;
         }
 
@@ -432,7 +487,7 @@ tsApp
         $scope.exportAbbreviations = function() {
           abbrService.exportAbbreviations(
             $scope.selected.metadata.terminology.preferredName + '-ABBR',
-            $scope.selected.delimiter, $scope.selected.exportReadyOnly).then(function() {
+            $scope.selected.exportAcceptNew, $scope.selected.exportReadyOnly).then(function() {
             // do nothing
           })
         };

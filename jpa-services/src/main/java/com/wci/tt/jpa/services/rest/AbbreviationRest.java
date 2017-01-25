@@ -52,12 +52,13 @@ public interface AbbreviationRest {
    *
    * @param type the type
    * @param readyOnly the ready only flag
+   * @param acceptNew the accept new
    * @param authToken the auth token
    * @return the input stream
    * @throws Exception the exception
    */
-  public InputStream exportAbbreviationsFile(String type, String delimiter,
-    boolean readyOnly, String authToken) throws Exception;
+  public InputStream exportAbbreviationsFile(String type, 
+    boolean readyOnly, boolean acceptNew, String authToken) throws Exception;
 
   /**
    * Adds the abbreviation.
@@ -145,6 +146,15 @@ public interface AbbreviationRest {
     String authToken) throws Exception;
 
   /**
+   * Removes the abbreviations.
+   *
+   * @param ids the ids
+   * @param authToken the auth token
+   * @throws Exception the exception
+   */
+  public void removeAbbreviations(List<Long> ids, String authToken) throws Exception;
+
+  /**
    * Export abbreviations file.
    *
    * @param type the type
@@ -154,7 +164,6 @@ public interface AbbreviationRest {
    * @return the input stream
    * @throws Exception the exception
    */
-  public InputStream exportAbbreviationsFile(String type, boolean acceptNew,
-    boolean readyOnly, String authToken) throws Exception;
+  
 
 }

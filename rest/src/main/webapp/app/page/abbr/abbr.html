@@ -37,12 +37,21 @@
           ng-options="status.key as status.label for status in lists.workflowStatus"
           ng-model="paging['abbr'].workflowStatus"
           ng-change="findAbbreviations()"></select>
-        </span></span>
+        </span>
+        <div class="row">
+          <div class="col-md-8" pager paging="paging['abbr']"
+            count="lists.abbrsViewed.totalCount"
+            callbacks="paging['abbr'].callbacks" style="margin-top: 10px;"></div>
+          <div class="col-md-4" ng-show="lists.abbrsViewed.totalCount > 10"
+            style="float: right; margin-top: 10px;">
+            Page size: <select ng-model="paging['abbr'].pageSize"
+              title="Page Size"
+              ng-change="paging['abbr'].callbacks.getPagedList()"
+              ng-options="pageSize.key as pageSize.value for pageSize in lists.pageSizes">
 
-
-        <div pager paging="paging['abbr']" count="lists.abbrsViewed.totalCount"
-          callbacks="paging['abbr'].callbacks" style="margin-top: 10px;"></div>
-
+            </select>
+          </div>
+        </div>
         <div class="alert alert-warning"
           ng-show="lists.abbrsViewed.totalCount == 0">No results</div>
 
@@ -58,16 +67,18 @@
             <th ng-click="setSortField('abbr','lastModified')">Last
               Modified<span ng-bind="getSortIndicator('abbr','lastModified')"></span>
             </th>
-
+            <th><i class="noul glyphicon glyphicon-trash"
+              confirm="Are you sure you want to remove {{lists.abbrsViewed.totalCount}} abbreviations?"
+              ng-click="removeAbbreviations()"></i>
           </tr>
           <tbody>
             <!-- table-hover makes use of the active class -->
             <tr ng-class="{selected: abbr.id == selected.abbrViewed.id}"
               class="breakword"
               ng-repeat="abbr in lists.abbrsViewed.typeKeyValues"
-              ng-click="setAbbreviationViewed(abbr)">
-              <td class="col-md-3">{{abbr.key}}</td>
-              <td><span class="color-box"
+              >
+              <td class="col-md-3" ng-click="setAbbreviationViewed(abbr)">{{abbr.key}}</td>
+              <td ng-click="setAbbreviationViewed(abbr)"><span class="color-box"
                 style="background-color: red; margin-top: 5px;"
                 ng-show="abbr.workflowStatus == 'NEEDS_REVIEW'"
                 ng-click="setReviewMode()" title="Needs review"></span><span
@@ -75,8 +86,10 @@
                 style="background-color: green; margin-top: 5px;"
                 ng-show="abbr.workflowStatus == 'NEW'" title="New abbreviation"></span></td>
 
-              <td class="col-md-5">{{abbr.value}}</td>
-              <td class="col-md-3">{{toDate(abbr.lastModified)}}</td>
+              <td class="col-md-5" ng-click="setAbbreviationViewed(abbr)">{{abbr.value}}</td>
+              <td class="col-md-3" ng-click="setAbbreviationViewed(abbr)">{{toDate(abbr.lastModified)}}</td>
+              <td><i class="noul glyphicon glyphicon-trash"
+                ng-click="removeAbbreviation(abbr)"></i>
             </tr>
           </tbody>
         </table>
@@ -266,9 +279,9 @@
             <span class="btn btn-xs btn-primary" style="margin-right: 10px;"
               ng-click="exportAbbreviations()">Export Abbreviations</span> <br>
             <br> <input type="checkbox" ng-model="selected.exportReadyOnly">
-            Skip abbbreviations needing review<br>
-            <br> <input type="checkbox" ng-model="selected.exportAcceptNew">
-            Mark new abbreviations accepted
+            Skip abbbreviations needing review<br> <br> <input
+              type="checkbox" ng-model="selected.exportAcceptNew"> Mark
+            new abbreviations accepted
           </div>
         </div>
       </div>

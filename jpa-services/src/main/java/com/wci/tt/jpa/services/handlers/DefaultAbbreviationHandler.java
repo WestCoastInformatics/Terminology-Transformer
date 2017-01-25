@@ -402,6 +402,19 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
   @Override
   public InputStream exportAbbreviationFile(String abbrType, boolean acceptNew,
     boolean readyOnly) throws Exception {
+    
+    if (acceptNew) {
+      final TypeKeyValueList newAbbrs = service.findTypeKeyValuesForQuery("type:\"" + abbrType + "\" AND workflowStatus:NEW", null);
+      if (newAbbrs.size() > 0) {
+        service.setTransactionPerOperation(false);
+        service.beginTransaction();
+        for (TypeKeyValue abbr : newAbbrs.getObjects()) {
+          abbr.setWorkflowStatus(WorkflowStatus.PUBLISHED);
+          service.updateTypeKeyValue(abbr);
+        }
+        service.commit();
+      }
+    }
 
     // Write a header
     // Obtain members for refset,
@@ -488,7 +501,9 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
     }
     String query = ConfigUtility.composeQuery("OR", filteredList.stream()
         .map(t -> "id:" + t.getId()).collect(Collectors.toList()));
-    return service.findTypeKeyValuesForQuery(query, pfs);
+    TypeKeyValueList results =  service.findTypeKeyValuesForQuery(query, pfs);
+    System.out.println("results: " + results.getTotalCount());
+    return results;
 
   }
 
