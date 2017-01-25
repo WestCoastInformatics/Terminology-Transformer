@@ -75,7 +75,8 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
 
     // if no further abbreviations to process, return the passed reviews list
     if (abbrsToCheck == null || abbrsToCheck.size() == 0) {
-      // quality check -- remove any conflicts with null or strictly whitespace values
+      // quality check -- remove any conflicts with null or strictly whitespace
+      // values
       final List<TypeKeyValue> finalResults = new ArrayList<>();
       for (final TypeKeyValue abbr : computedConflicts) {
         if (abbr.getValue() != null && !abbr.getValue().trim().isEmpty()) {
@@ -242,80 +243,113 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
         for (int i = 0; i < fields.length; i++) {
           System.out.println("  " + i + ": " + fields[i]);
         }
-        // CHECK: exactly two fields
-        if (fields.length == 2) {
-
-          // CHECK: Both fields non-null and non-empty
-          if (fields[0] != null && !fields[0].trim().isEmpty()
-              && fields[1] != null && !fields[1].trim().isEmpty()) {
-
-            // check for type/pair matches
-            final TypeKeyValueList keyMatches =
-                service.findTypeKeyValuesForQuery(
-                    "type:\"" + type + "\"" + " AND key:\"" + fields[0] + "\"",
-                    pfs);
-
-            // check for exact match
-            boolean pairMatchFound = false;
-
-            if (keyMatches.getTotalCount() > 0) {
-              for (TypeKeyValue match : keyMatches.getObjects()) {
-                if (fields[1].equals(match.getValue())) {
-                  pairMatchFound = true;
-                  dupPairCt++;
-                }
-              }
-
-              // increment duplicate key counter if pair match not found
-              if (!pairMatchFound) {
-                dupKeyCt++;
-              }
-            }
-
-            // if no exact match found and validation, check for value match
-            // without key match
-            if (!pairMatchFound && !executeImport) {
-              toAddCt++;
-
-              // check for key match, pair not match
-              final TypeKeyValueList valueMatches =
-                  service.findTypeKeyValuesForQuery("type:\"" + type + "\""
-                      + " AND value:\"" + fields[1] + "\"", null);
-              if (valueMatches.getTotalCount() > 0) {
-                dupValCt++;
-              }
-            }
-
-            // if no exact match found and import, add the new abbreviation
-            if (!pairMatchFound && executeImport) {
-              // add different expansion for same
-              TypeKeyValue typeKeyValue =
-                  new TypeKeyValueJpa(type, fields[0], fields[1]);
-              service.addTypeKeyValue(typeKeyValue);
-              newAbbrs.add(typeKeyValue);
-              addedCt++;
-            }
-          }
-
-          else {
-            errorCt++;
-            if (!executeImport) {
-              result.getErrors()
-                  .add("Line " + lineCt + ": Incomplete line: " + line);
-            }
-          }
-
-        } else {
+        boolean pairMatchFound = false;
+        
+        // CHECK: Must be fields
+        if (fields.length == 0) {
+          result.getErrors().add("Line " + lineCt + ": Empty line");
+        }
+        
+        // CHECK: Must be no more than two fields
+        if (fields.length > 2) {
           errorCt++;
           if (!executeImport) {
             String fieldsStr = "";
             for (int i = 0; i < fields.length; i++) {
               fieldsStr += "[" + fields[i] + "] ";
             }
-            result.getErrors().add("Line " + lineCt + ": Expected two fields "
-                + lineCt + " but found " + fields.length + ": " + fieldsStr);
+            result.getErrors()
+                .add("Line " + lineCt + ": Expected one or two fields " + lineCt
+                    + " but found " + fields.length + ": " + fieldsStr);
+          };
+        }
+
+        // CHECK: Key must be non-null and non-empty
+        else if (fields[0] == null || fields[0].trim().isEmpty()) {
+          result.getErrors().add("Line " + lineCt + ": Key with null/empty value found");
+        }
+
+        // CHECK: exactly one single field or two fields and
+        else if (fields.length == 1 || fields[1] == null || fields[1].trim().isEmpty()) {
+          // if not empty, check for duplicate
+          if (fields[0] != null && !fields[0].trim().isEmpty()) {
+            // check for type/pair matches
+            final TypeKeyValueList keyMatches =
+                service.findTypeKeyValuesForQuery(
+                    "type:\"" + type + "\"" + " AND key:\"" + fields[0] + "\"",
+                    pfs);
+            for (TypeKeyValue keyMatch : keyMatches.getObjects()) {
+              if (keyMatch.getValue() == null
+                  || keyMatch.getValue().trim().isEmpty()) {
+                pairMatchFound = true;
+                dupPairCt++;
+              }
+            }
+            if (!pairMatchFound && executeImport) {
+              TypeKeyValue typeKeyValue =
+                  new TypeKeyValueJpa(type, fields[0], null);
+              service.addTypeKeyValue(typeKeyValue);
+              newAbbrs.add(typeKeyValue);
+              addedCt++;
+            }
+          } else {
+            result.getErrors()
+                .add("Line " + lineCt + ": Key with null/empty value found");
           }
         }
+        // CHECK: exactly two fields
+        else if (fields.length == 2) {
+
+          // CHECK: If value null, check for key match only
+
+          // CHECK: Check for exact pair matches, key matches, and value matches
+
+          // check for type/pair matches
+          final TypeKeyValueList keyMatches = service.findTypeKeyValuesForQuery(
+              "type:\"" + type + "\"" + " AND key:\"" + fields[0] + "\"", pfs);
+
+          // check for exact match
+          pairMatchFound = false;
+
+          if (keyMatches.getTotalCount() > 0) {
+            for (TypeKeyValue match : keyMatches.getObjects()) {
+              if (fields[1].equals(match.getValue())) {
+                pairMatchFound = true;
+                dupPairCt++;
+              }
+            }
+
+            // increment duplicate key counter if pair match not found
+            if (!pairMatchFound) {
+              dupKeyCt++;
+            }
+          }
+
+          // if no exact match found and validation, check for value match
+          // without key match
+          if (!pairMatchFound && !executeImport) {
+            toAddCt++;
+
+            // check for key match, pair not match
+            final TypeKeyValueList valueMatches =
+                service.findTypeKeyValuesForQuery("type:\"" + type + "\""
+                    + " AND value:\"" + fields[1] + "\"", null);
+            if (valueMatches.getTotalCount() > 0) {
+              dupValCt++;
+            }
+          }
+
+          // if no exact match found and import, add the new abbreviation
+          if (!pairMatchFound && executeImport) {
+            // add different expansion for same
+            TypeKeyValue typeKeyValue =
+                new TypeKeyValueJpa(type, fields[0], fields[1]);
+            service.addTypeKeyValue(typeKeyValue);
+            newAbbrs.add(typeKeyValue);
+            addedCt++;
+          }
+
+        } 
       } while ((line = pbr.readLine()) != null);
 
       // after all abbreviations loaded, apply workflow status and commit
@@ -409,9 +443,10 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
   @Override
   public InputStream exportAbbreviationFile(String abbrType, boolean acceptNew,
     boolean readyOnly) throws Exception {
-    
+
     if (acceptNew) {
-      final TypeKeyValueList newAbbrs = service.findTypeKeyValuesForQuery("type:\"" + abbrType + "\" AND workflowStatus:NEW", null);
+      final TypeKeyValueList newAbbrs = service.findTypeKeyValuesForQuery(
+          "type:\"" + abbrType + "\" AND workflowStatus:NEW", null);
       if (newAbbrs.size() > 0) {
         service.setTransactionPerOperation(false);
         service.beginTransaction();
@@ -508,7 +543,7 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
     }
     String query = ConfigUtility.composeQuery("OR", filteredList.stream()
         .map(t -> "id:" + t.getId()).collect(Collectors.toList()));
-    TypeKeyValueList results =  service.findTypeKeyValuesForQuery(query, pfs);
+    TypeKeyValueList results = service.findTypeKeyValuesForQuery(query, pfs);
     System.out.println("results: " + results.getTotalCount());
     return results;
 

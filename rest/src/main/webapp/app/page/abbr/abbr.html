@@ -75,10 +75,10 @@
             <!-- table-hover makes use of the active class -->
             <tr ng-class="{selected: abbr.id == selected.abbrViewed.id}"
               class="breakword"
-              ng-repeat="abbr in lists.abbrsViewed.typeKeyValues"
-              >
+              ng-repeat="abbr in lists.abbrsViewed.typeKeyValues">
               <td class="col-md-3" ng-click="setAbbreviationViewed(abbr)">{{abbr.key}}</td>
-              <td ng-click="setAbbreviationViewed(abbr)"><span class="color-box"
+              <td ng-click="setAbbreviationViewed(abbr)"><span
+                class="color-box"
                 style="background-color: red; margin-top: 5px;"
                 ng-show="abbr.workflowStatus == 'NEEDS_REVIEW'"
                 ng-click="setReviewMode()" title="Needs review"></span><span
@@ -154,9 +154,20 @@
             ng-show="lists.abbrsReviewed && lists.abbrsReviewed.totalCount > 1">
             <h5>Review</h5>
 
-            <div pager paging="paging['review']"
-              count="lists.pagedReview.totalCount"
-              callbacks="paging['review'].callbacks" style="margin-top: 10px;"></div>
+            <div class="row">
+              <div class="col-md-8" pager paging="paging['review']"
+                count="lists.abbrsReviewed.totalCount"
+                callbacks="paging['review'].callbacks" style="margin-top: 10px;"></div>
+              <div class="col-md-4" ng-show="lists.abbrsReviewed.totalCount > 10"
+                style="float: right; margin-top: 10px;">
+                Page size: <select ng-model="paging['review'].pageSize"
+                  title="Page Size"
+                  ng-change="paging['review'].callbacks.getPagedList()"
+                  ng-options="pageSize.key as pageSize.value for pageSize in lists.pageSizes">
+
+                </select>
+              </div>
+            </div>
 
             <table class="slim table table-hover" style="margin-top: 10px;"
               ng-show="lists.pagedReview.data.length > 0">
