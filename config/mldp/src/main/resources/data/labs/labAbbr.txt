@@ -526,8 +526,7 @@ pct	percent
 cea	carcinoembryonic antigen
 misc	miscellaneous
 d2+25-hydroxyvitamin	d2 25 hydroxy vitamin
-ifa	indirect fluorescent antibody
-	
+ifa	indirect fluorescent antibody	
 pmns	polymorphonuclear neutrophil
 pmn	polymorphonuclear neutrophil
 pmn's	polymorphonuclear neutrophil
@@ -550,8 +549,7 @@ epstein-barr	epstein barr
 esterase-ua	esterase
 k+	potassium
 k	potassium
-staph	staphylococcus
-	
+staph	staphylococcus	
 tpo	thyroid peroxidase
 exp	expiration
 iep	immunoelectrophores
@@ -609,8 +607,7 @@ bm	bone marrow
 bp	blood pressure
 &	and
 gravity-ua	gravity
-grav	gravity
-	
+grav	gravity	
 calcium-calculated	calcium
 ca	calcium
 ua	urinalysis
@@ -798,8 +795,7 @@ anf	atrial natriuretic factor
 anp	atrial natriuretic peptide
 anti-hav	Anti-Hepatitits A virus
 anti-hbc	Anti-Hepatitits B C virus
-anti-hcv	Anti-Hepatitits C virus
-	
+anti-hcv	Anti-Hepatitits C virus	
 apsac	anisoylated plasminogen streptokinase activator complex
 arg	arginine
 asca	anti saccharomyces cerevisiae antibodies
