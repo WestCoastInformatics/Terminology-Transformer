@@ -1,5 +1,5 @@
 /*
- *    Copyright 2016 West Coast Informatics, LLC
+ *    Copyright 2016 Fitgate Inc.
  */
 package com.wci.tt.rest.client;
 
@@ -19,13 +19,10 @@ import com.wci.umls.server.rest.client.RootClientRest;
 
 /**
  * Class calling the REST Service for Abbreviation handling for
- * {@link AbbreviationServiceRest}.
+ * {@link AbbreviationRest}.
  */
 public class AbbreviationRestClient extends RootClientRest
     implements AbbreviationRest {
-
-  /** The config. */
-  private Properties config = null;
 
   /**
    * Instantiates a {@link AbbreviationRestClient} from the specified
@@ -34,7 +31,7 @@ public class AbbreviationRestClient extends RootClientRest
    * @param config the config
    */
   public AbbreviationRestClient(Properties config) {
-    this.config = config;
+    // n/a
   }
 
   @Override
@@ -52,7 +49,6 @@ public class AbbreviationRestClient extends RootClientRest
     // TODO Auto-generated method stub
     return null;
   }
-
 
   @Override
   public InputStream exportAbbreviationsFile(String type, boolean readyOnly,
@@ -79,13 +75,13 @@ public class AbbreviationRestClient extends RootClientRest
   public void updateAbbreviation(TypeKeyValueJpa typeKeyValue, String authToken)
     throws Exception {
     // TODO Auto-generated method stub
-    
+
   }
 
   @Override
   public void removeAbbreviation(Long id, String authToken) throws Exception {
     // TODO Auto-generated method stub
-    
+
   }
 
   @Override
@@ -99,7 +95,7 @@ public class AbbreviationRestClient extends RootClientRest
   public void computeReviewStatuses(String type, String authToken)
     throws Exception {
     // TODO Auto-generated method stub
-    
+
   }
 
   @Override
@@ -120,7 +116,7 @@ public class AbbreviationRestClient extends RootClientRest
   public void removeAbbreviations(List<Long> ids, String authToken)
     throws Exception {
     // TODO Auto-generated method stub
-    
+
   }
 
 }

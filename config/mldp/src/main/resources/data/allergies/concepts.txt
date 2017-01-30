@@ -1,0 +1,2264 @@
+A5000001|allergen|5-HT>3< receptor antagonist|
+A5000002|allergen|A series prostaglandin|
+A5000003|allergen|Abacavir|
+A5000004|allergen|Acacia|
+A5000005|allergen|Acarbose|
+A5000006|allergen|Acebutolol|
+A5000007|allergen|Acemetacin|
+A5000008|allergen|Acenocoumarol|
+A5000009|allergen|Acetaminophen|
+A5000010|allergen|Acetazolamide|
+A5000011|allergen|Acetic acid|
+A5000012|allergen|Acetohexamide|
+A5000013|allergen|Acetylcholine chloride|
+A5000014|allergen|Acetylcysteine|
+A5000015|allergen|Acipimox|
+A5000016|allergen|Acitretin|
+A5000017|allergen|Aclarubicin|
+A5000018|allergen|Acorn Squash|
+A5000019|allergen|Acridine azo|
+A5000020|allergen|Acridine fluor yellow dye|
+A5000021|allergen|Acrivastine|
+A5000022|allergen|Activated charcoal|
+A5000023|allergen|Acyclovir|
+A5000024|allergen|Adenosine|
+A5000025|allergen|Adhesive agent|
+A5000026|allergen|Aerosolized antibiotics|
+A5000027|allergen|Aerosolized antivirals|
+A5000028|allergen|Agkistrodon serine proteinase|
+A5000029|allergen|Albendazole|
+A5000030|allergen|Albumin|
+A5000031|allergen|Albuterol|
+A5000032|allergen|Alclometasone|
+A5000033|allergen|Alcohol agent|
+A5000034|allergen|Alcohol disinfectant|
+A5000035|allergen|Alcohol metabolism modifier|
+A5000036|allergen|Alcuronium|
+A5000037|allergen|Aldehyde disinfectant|
+A5000038|allergen|Alder pollen|
+A5000039|allergen|Aldesleukin|
+A5000040|allergen|Aldosterone antagonist|
+A5000041|allergen|Alfentanil|
+A5000042|allergen|Alfuzosin|
+A5000043|allergen|Alginate|
+A5000044|allergen|Alkali-metal soap|
+A5000045|allergen|Alkylating agent|
+A5000046|allergen|Allergen extract vaccine|
+A5000047|allergen|Allopurinol|
+A5000048|allergen|Allylestrenol|
+A5000049|allergen|Almond|
+A5000050|allergen|Almond oil|
+A5000051|allergen|Alpha-adrenergic blocking agent|
+A5000052|allergen|Alpha-adrenoceptor agonist|
+A5000053|allergen|Alpha-glucoside inhibitor|
+A5000054|allergen|Alpha-lactalbumin|
+A5000055|allergen|Alpha-tocopherol|
+A5000056|allergen|Alprazolam|
+A5000057|allergen|Alteplase|
+A5000058|allergen|Alternaria alternata|
+A5000059|allergen|Aluminum|
+A5000060|allergen|Aluminum astringent|
+A5000061|allergen|Aluminum hydroxide|
+A5000062|allergen|Alverine|
+A5000063|allergen|Amantadine|
+A5000064|allergen|Amdinocillin|
+A5000065|allergen|Amdinocillin pivoxil|
+A5000066|allergen|Amidine disinfectant|
+A5000067|allergen|Amifostine|
+A5000068|allergen|Amikacin|
+A5000069|allergen|Amiloride|
+A5000070|allergen|Aminoglutethimide|
+A5000071|allergen|Aminoglycoside|
+A5000072|allergen|Aminophylline|
+A5000073|allergen|Aminoquinoline antimalarial|
+A5000074|allergen|Amiodarone|
+A5000075|allergen|Amitriptyline|
+A5000076|allergen|Amlodipine|
+A5000077|allergen|Amobarbital|
+A5000078|allergen|Amodiaquin|
+A5000079|allergen|Amorolfine|
+A5000080|allergen|Amoxapine|
+A5000081|allergen|Amoxicillin|
+A5000082|allergen|Amphotericin|
+A5000083|allergen|Ampicillin|
+A5000084|allergen|Amsacrine|
+A5000085|allergen|Anabolic steroid|
+A5000086|allergen|Analgesic|
+A5000087|allergen|Anchovy|
+A5000088|allergen|Androgen|
+A5000089|allergen|Anesthetic|
+A5000090|allergen|Angiotensin II receptor antagonist|
+A5000091|allergen|Angiotensin-converting enzyme inhibitor agent|
+A5000092|allergen|Animal dander|
+A5000093|allergen|Animal food product|
+A5000094|allergen|Animal hair|
+A5000095|allergen|Animal protein|
+A5000096|allergen|Anion exchange resin|
+A5000097|allergen|Anionic surfactant|
+A5000098|allergen|Anise|
+A5000099|allergen|Anistreplase|
+A5000100|allergen|Antacid|
+A5000101|allergen|Antazoline|
+A5000102|allergen|Anthelmintic|
+A5000103|allergen|Anthralin|
+A5000104|allergen|Anthraquinone laxative|
+A5000105|allergen|Anthrax vaccine|
+A5000106|allergen|Antiandrogen|
+A5000107|allergen|Antiarrhythmic agent|
+A5000108|allergen|Antibacterial agent|
+A5000109|allergen|Antibiotic antituberculosis agent|
+A5000110|allergen|Anticholinergic agent|
+A5000111|allergen|Anticholinesterase agent|
+A5000112|allergen|Anticoagulant|
+A5000113|allergen|Anticonvulsant|
+A5000114|allergen|Antidepressant|
+A5000115|allergen|Antidiuretic hormone agent|
+A5000116|allergen|Antidote|
+A5000117|allergen|Antidotes for pesticides|
+A5000118|allergen|Antifungal|
+A5000119|allergen|Antihistamine|
+A5000120|allergen|Anti-infective agent|
+A5000121|allergen|Antileprotic drug|
+A5000122|allergen|Antilipemic agent|
+A5000123|allergen|Antimalarial agent|
+A5000124|allergen|Antimetabolite|
+A5000125|allergen|Antimony antiprotozoal|
+A5000126|allergen|Antimuscarinic|
+A5000127|allergen|Antimycobacterial agent|
+A5000128|allergen|Antineoplastic agent|
+A5000129|allergen|Antiprotozoal agent|
+A5000130|allergen|Antipseudomonal penicillins|
+A5000131|allergen|Anti-psychotic agent|
+A5000132|allergen|Antiretroviral agent|
+A5000133|allergen|Antiserum|
+A5000134|allergen|Antispasmodic|
+A5000135|allergen|Antithrombin III|
+A5000136|allergen|Antithyroid agent|
+A5000137|allergen|Antituberculosis agent|
+A5000138|allergen|Antitussive agent|
+A5000139|allergen|Antivaricose agent|
+A5000140|allergen|Antiviral agent|
+A5000141|allergen|Apomorphine|
+A5000142|allergen|Apple|
+A5000143|allergen|Apple juice|
+A5000144|allergen|Apraclonidine|
+A5000145|allergen|Apricot|
+A5000146|allergen|Aprotinin|
+A5000147|allergen|Arachis oil|
+A5000148|allergen|Artichoke|
+A5000149|allergen|Artificial Sweetener|
+A5000150|allergen|Ascaris|
+A5000151|allergen|Ascorbic acid|
+A5000152|allergen|Asparagus|
+A5000153|allergen|Aspartame|
+A5000154|allergen|Aspergillus amstelodami|
+A5000155|allergen|Aspergillus flavus|
+A5000156|allergen|Aspergillus fumigatus|
+A5000157|allergen|Aspergillus terreus|
+A5000158|allergen|Aspergillus versicolor|
+A5000159|allergen|Aspirin|
+A5000160|allergen|Astemizole|
+A5000161|allergen|Atenolol|
+A5000162|allergen|Atorvastatin|
+A5000163|allergen|Atovaquone|
+A5000164|allergen|Atracurium|
+A5000165|allergen|Atropine|
+A5000166|allergen|Auranofin|
+A5000167|allergen|Aureobasidium pullulans|
+A5000168|allergen|Australian parrot droppings|
+A5000169|allergen|Australian parrot feathers|
+A5000170|allergen|Australian parrot serum proteins|
+A5000171|allergen|Australian pine pollen|
+A5000172|allergen|Autonomic agent|
+A5000173|allergen|Auxochromes|
+A5000174|allergen|Avocado|
+A5000175|allergen|Azapropazone|
+A5000176|allergen|Azatadine|
+A5000177|allergen|Azathioprine|
+A5000178|allergen|Azelaic acid|
+A5000179|allergen|Azelastine|
+A5000180|allergen|Azithromycin|
+A5000181|allergen|Azlocillin|
+A5000182|allergen|Azole antifungal|
+A5000183|allergen|Aztreonam|
+A5000184|allergen|Bacampicillin|
+A5000185|allergen|Baclofen|
+A5000186|allergen|Bahia grass pollen|
+A5000187|allergen|Bamboo Shoot|
+A5000188|allergen|Bambuterol|
+A5000189|allergen|Bamethan sulfate|
+A5000190|allergen|Banana|
+A5000191|allergen|Barbiturate antiepileptic|
+A5000192|allergen|Barbiturate sedative|
+A5000193|allergen|Barley|
+A5000194|allergen|Barley grass pollen|
+A5000195|allergen|Base Material|
+A5000196|allergen|Basil|
+A5000197|allergen|Bass|
+A5000198|allergen|Bay Leaf|
+A5000199|allergen|Bean|
+A5000200|allergen|Beclamide|
+A5000201|allergen|Beclomethasone|
+A5000202|allergen|Bee venom|
+A5000203|allergen|Beech pollen|
+A5000204|allergen|Beef|
+A5000205|allergen|Beef Meat|
+A5000206|allergen|Beer|
+A5000207|allergen|Beet|
+A5000208|allergen|Bell Pepper|
+A5000209|allergen|Belladonna alkaloid|
+A5000210|allergen|Benazepril|
+A5000211|allergen|Bendroflumethiazide|
+A5000212|allergen|Benethamine penicillin|
+A5000213|allergen|Benoxinate|
+A5000214|allergen|Benperidol|
+A5000215|allergen|Benserazide|
+A5000216|allergen|Bentonite|
+A5000217|allergen|Benzalkonium|
+A5000218|allergen|Benzimidazole anthelmintic|
+A5000219|allergen|Benzoates|
+A5000220|allergen|Benzocaine|
+A5000221|allergen|Benzodiazepine antagonist|
+A5000222|allergen|Benzodiazepine sedative|
+A5000223|allergen|Benzoic acid|
+A5000224|allergen|Benzoyl peroxide|
+A5000225|allergen|Benztropine|
+A5000226|allergen|Benzyl benzoate|
+A5000227|allergen|Bephenium|
+A5000228|allergen|Beractant|
+A5000229|allergen|Bermuda grass pollen|
+A5000230|allergen|Berry|
+A5000231|allergen|Beta-adrenoceptor agonist|
+A5000232|allergen|beta-blocking agent|
+A5000233|allergen|Betahistine|
+A5000234|allergen|Beta-lactalbumin|
+A5000235|allergen|Beta-lactoglobulin|
+A5000236|allergen|Betamethasone|
+A5000237|allergen|Betaxolol hydrochloride|
+A5000238|allergen|Bethanechol|
+A5000239|allergen|Bethanidine|
+A5000240|allergen|Bezafibrate|
+A5000241|allergen|Bicalutamide|
+A5000242|allergen|Biguanide antimalarial agent|
+A5000243|allergen|Biguanide disinfectant|
+A5000244|allergen|Biguanide oral hypoglycemic agent|
+A5000245|allergen|Biocide|
+A5000246|allergen|Biperiden|
+A5000247|allergen|Biphasic insulin|
+A5000248|allergen|Biphasic isophane insulin|
+A5000249|allergen|Bipyridine inotropic|
+A5000250|allergen|Birch pollen|
+A5000251|allergen|Bird|
+A5000252|allergen|Bisacodyl|
+A5000253|allergen|Bismuth subnitrate|
+A5000254|allergen|Bisoprolol|
+A5000255|allergen|Biting insect|
+A5000256|allergen|Black ant|
+A5000257|allergen|Black locust tree pollen|
+A5000258|allergen|Black pepper|
+A5000259|allergen|Black silk suture|
+A5000260|allergen|Black walnut|
+A5000261|allergen|Blackberry|
+A5000262|allergen|Blackjack oak pollen|
+A5000263|allergen|Bleomycin|
+A5000264|allergen|Blood derivative|
+A5000265|allergen|Blood group antibody D|
+A5000266|allergen|Bloodworm|
+A5000267|allergen|Blue Cheese|
+A5000268|allergen|Blue Mussel|
+A5000269|allergen|Blueberry|
+A5000270|allergen|Boiled Cows Milk|
+A5000271|allergen|Borate salt|
+A5000272|allergen|Boric acid|
+A5000273|allergen|Botrytis cinerea|
+A5000274|allergen|Botulinum antitoxin|
+A5000275|allergen|Brazil Nut|
+A5000276|allergen|Bretylium|
+A5000277|allergen|Brewers Yeast|
+A5000278|allergen|Brick Cheese|
+A5000279|allergen|Brie Cheese|
+A5000280|allergen|Brilliant green|
+A5000281|allergen|Broad spectrum penicillins|
+A5000282|allergen|Broccoli|
+A5000283|allergen|Bromazepam|
+A5000284|allergen|Bromegrass pollen|
+A5000285|allergen|Bromelains|
+A5000286|allergen|Bromhexine hydrochloride|
+A5000287|allergen|Bromocriptine|
+A5000288|allergen|Brompheniramine|
+A5000289|allergen|Bronchodilator|
+A5000290|allergen|Brussels sprout|
+A5000291|allergen|Buckwheat|
+A5000292|allergen|Budesonide|
+A5000293|allergen|Budgerigar feathers|
+A5000294|allergen|Bufexamac|
+A5000295|allergen|Buffalo Meat|
+A5000296|allergen|Bulk-forming laxative|
+A5000297|allergen|Bumble bee sting|
+A5000298|allergen|Bumblebee|
+A5000299|allergen|Bumetanide|
+A5000300|allergen|Bupivacaine|
+A5000301|allergen|Buprenorphine|
+A5000302|allergen|Buserelin|
+A5000303|allergen|Buspirone|
+A5000304|allergen|Busulfan|
+A5000305|allergen|Butobarbital|
+A5000306|allergen|Butriptyline|
+A5000307|allergen|Butterfly|
+A5000308|allergen|Butyrophenone derivative antipsychotic agent|
+A5000309|allergen|Cabbage|
+A5000310|allergen|Cabergoline|
+A5000311|allergen|Caffeine|
+A5000312|allergen|Calamine|
+A5000313|allergen|Calcipotriol|
+A5000314|allergen|Calcitonin|
+A5000315|allergen|Calcium channel blocker|
+A5000316|allergen|Calcium polystyrene sulfonate|
+A5000317|allergen|Calcium regulating agent|
+A5000318|allergen|Calcium regulating hormone|
+A5000319|allergen|Calcium sulfaloxate|
+A5000320|allergen|Camembert Cheese|
+A5000321|allergen|Camomile|
+A5000322|allergen|Canary grass reed pollen|
+A5000323|allergen|Candida albicans|
+A5000324|allergen|Cantaloupe|
+A5000325|allergen|Capreomycin|
+A5000326|allergen|Captopril|
+A5000327|allergen|Carambola|
+A5000328|allergen|Caraway Seed|
+A5000329|allergen|Carbachol|
+A5000330|allergen|Carbamate pesticide|
+A5000331|allergen|Carbamate pesticides|
+A5000332|allergen|Carbamate sedative|
+A5000333|allergen|Carbamazepine|
+A5000334|allergen|Carbapenem|
+A5000335|allergen|Carbaryl|
+A5000336|allergen|Carbenicillin|
+A5000337|allergen|Carbenoxolone|
+A5000338|allergen|Carbidopa|
+A5000339|allergen|Carbimazole|
+A5000340|allergen|Carbocisteine|
+A5000341|allergen|Carbomer-940|
+A5000342|allergen|Carbonic anhydrase inhibitor|
+A5000343|allergen|Carboplatin|
+A5000344|allergen|Carboprost|
+A5000345|allergen|Carboxymethylcellulose|
+A5000346|allergen|Cardamom|
+A5000347|allergen|Cardioplegic solution agent|
+A5000348|allergen|Cardiovascular agent|
+A5000349|allergen|Careless weed pollen|
+A5000350|allergen|Carfecillin|
+A5000351|allergen|Carisoprodol|
+A5000352|allergen|Carmustine|
+A5000353|allergen|Carob Bean|
+A5000354|allergen|Carrot|
+A5000355|allergen|Carteolol|
+A5000356|allergen|Carvedilol|
+A5000357|allergen|Cascara|
+A5000358|allergen|Casein|
+A5000359|allergen|Cashew nut|
+A5000360|allergen|Cashew Nut|
+A5000361|allergen|Castor Bean|
+A5000362|allergen|Castor oil|
+A5000363|allergen|Cat dander|
+A5000364|allergen|Cat epithelium|
+A5000365|allergen|Cat hair|
+A5000366|allergen|Cation exchange resin|
+A5000367|allergen|Cationic surfactant|
+A5000368|allergen|Cats|
+A5000369|allergen|Cattle dander|
+A5000370|allergen|Cattle epithelium|
+A5000371|allergen|Cattle hair|
+A5000372|allergen|Cauliflower|
+A5000373|allergen|Cefaclor|
+A5000374|allergen|Cefadroxil|
+A5000375|allergen|Cefamandole|
+A5000376|allergen|Cefixime|
+A5000377|allergen|Cefodizime|
+A5000378|allergen|Cefotaxime|
+A5000379|allergen|Cefoxitin|
+A5000380|allergen|Cefpirome|
+A5000381|allergen|Cefpodoxime|
+A5000382|allergen|Cefsulodin|
+A5000383|allergen|Ceftazidime|
+A5000384|allergen|Ceftibuten|
+A5000385|allergen|Ceftizoxime|
+A5000386|allergen|Ceftriaxone|
+A5000387|allergen|Cefuroxime|
+A5000388|allergen|Celery|
+A5000389|allergen|Celiprolol|
+A5000390|allergen|Cellulose sodium phosphate|
+A5000391|allergen|Cellulose-derived viscosity modifier|
+A5000392|allergen|Central alpha-adrenoceptor agonist|
+A5000393|allergen|Central nervous system agent|
+A5000394|allergen|Central stimulant|
+A5000395|allergen|Centrally acting appetite suppressant|
+A5000396|allergen|Cephalexin|
+A5000397|allergen|Cephalosporin -class of antibiotic-|
+A5000398|allergen|Cephalothin|
+A5000399|allergen|Cephamycin|
+A5000400|allergen|Cephazolin|
+A5000401|allergen|Cephradine|
+A5000402|allergen|Cetirizine|
+A5000403|allergen|Cetrimide|
+A5000404|allergen|Cetyl pyridinium|
+A5000405|allergen|Cheddar Cheese|
+A5000406|allergen|Cheese|
+A5000407|allergen|Cheese mold|
+A5000408|allergen|Chelating agent|
+A5000409|allergen|Chenodiol|
+A5000410|allergen|Cherry|
+A5000411|allergen|Chestnut tree pollen|
+A5000412|allergen|Chick pea|
+A5000413|allergen|Chicken droppings|
+A5000414|allergen|Chicken feathers|
+A5000415|allergen|Chicken meat|
+A5000416|allergen|Chili pepper|
+A5000417|allergen|Chives|
+A5000418|allergen|Chloral hydrate|
+A5000419|allergen|Chloral sedative|
+A5000420|allergen|Chlorambucil|
+A5000421|allergen|Chloramphenicol|
+A5000422|allergen|Chlordiazepoxide|
+A5000423|allergen|Chlorguanide|
+A5000424|allergen|Chlorhexidine|
+A5000425|allergen|Chlorinated phenol disinfectant|
+A5000426|allergen|Chlorinated solution agent|
+A5000427|allergen|Chlormezanone|
+A5000428|allergen|Chloroprocaine|
+A5000429|allergen|Chloroquine|
+A5000430|allergen|Chlorothiazide|
+A5000431|allergen|Chloroxylenol|
+A5000432|allergen|Chlorpheniramine|
+A5000433|allergen|Chlorpromazine|
+A5000434|allergen|Chlorpropamide|
+A5000435|allergen|Chlorprothixene|
+A5000436|allergen|Chlortalidone|
+A5000437|allergen|Chlortetracycline|
+A5000438|allergen|Chocolate|
+A5000439|allergen|Cholecalciferol|
+A5000440|allergen|Cholelitholytic AND/OR choleretic agent|
+A5000441|allergen|Cholestyramine|
+A5000442|allergen|Cholinesterase reactivator|
+A5000443|allergen|Chub Mackerel|
+A5000444|allergen|Chymotrypsin|
+A5000445|allergen|Ciclosporin|
+A5000446|allergen|Cilazapril|
+A5000447|allergen|Cimetidine|
+A5000448|allergen|Cinchona alkaloid|
+A5000449|allergen|Cinnamon|
+A5000450|allergen|Cinnarizine|
+A5000451|allergen|Cinoxacin|
+A5000452|allergen|Ciprofibrate|
+A5000453|allergen|Ciprofloxacin|
+A5000454|allergen|Cisapride|
+A5000455|allergen|Cisatracurium|
+A5000456|allergen|Cisplatin|
+A5000457|allergen|Citalopram|
+A5000458|allergen|Citrate|
+A5000459|allergen|Citrus|
+A5000460|allergen|Citrus fruit|
+A5000461|allergen|Cladosporium herbarum|
+A5000462|allergen|Clam|
+A5000463|allergen|Clarithromycin|
+A5000464|allergen|Class I antiarrhythmic agent|
+A5000465|allergen|Class II antiarrhythmic agent|
+A5000466|allergen|Class III antiarrhythmic agent|
+A5000467|allergen|Class IV antiarrhythmic agent|
+A5000468|allergen|Clavulanate potassium|
+A5000469|allergen|Clavulanic acid|
+A5000470|allergen|Clemastine|
+A5000471|allergen|Clindamycin|
+A5000472|allergen|Clioquinol|
+A5000473|allergen|Clobazam|
+A5000474|allergen|Clobetasol|
+A5000475|allergen|Clobetasone|
+A5000476|allergen|Clodronate disodium|
+A5000477|allergen|Clofazimine|
+A5000478|allergen|Clofibrate|
+A5000479|allergen|Clomethiazole|
+A5000480|allergen|Clomiphene|
+A5000481|allergen|Clomipramine|
+A5000482|allergen|Clomocycline|
+A5000483|allergen|Clonazepam|
+A5000484|allergen|Clonidine|
+A5000485|allergen|Clorazepate dipotassium|
+A5000486|allergen|Clostridium botulinum toxin|
+A5000487|allergen|Clotrimazole|
+A5000488|allergen|Clove|
+A5000489|allergen|Cloxacillin|
+A5000490|allergen|Clozapine|
+A5000491|allergen|Coagulation factor IX|
+A5000492|allergen|Coagulation factor V|
+A5000493|allergen|Coagulation factor VII|
+A5000494|allergen|Coagulation factor VIIa|
+A5000495|allergen|Coagulation factor VIII|
+A5000496|allergen|Coagulation factor XI|
+A5000497|allergen|Coagulation factor XIII|
+A5000498|allergen|Coagulation related substance|
+A5000499|allergen|Coal tar agent|
+A5000500|allergen|Coal tar bath agent|
+A5000501|allergen|Cocaine|
+A5000502|allergen|Cockleburr pollen|
+A5000503|allergen|Cockroach|
+A5000504|allergen|Cocoa|
+A5000505|allergen|Coconut|
+A5000506|allergen|Coconut oil|
+A5000507|allergen|Codeine|
+A5000508|allergen|Codfish|
+A5000509|allergen|Coffee|
+A5000510|allergen|Cola|
+A5000511|allergen|Colby Cheese|
+A5000512|allergen|Colchicine|
+A5000513|allergen|Colchicum alkaloid|
+A5000514|allergen|Colestipol|
+A5000515|allergen|Colfosceril|
+A5000516|allergen|Colistin|
+A5000517|allergen|Collagen|
+A5000518|allergen|Collodion|
+A5000519|allergen|Colony stimulating factor|
+A5000520|allergen|Colza|
+A5000521|allergen|Common ragweed pollen|
+A5000522|allergen|Conjugated estrogen|
+A5000523|allergen|Contact metal agent|
+A5000524|allergen|Contrast media|
+A5000525|allergen|Corn|
+A5000526|allergen|Corticosteroids and derivatives|
+A5000527|allergen|Corticotropic agent|
+A5000528|allergen|Cortisone|
+A5000529|allergen|Cosmetic material|
+A5000530|allergen|Cottonseed|
+A5000531|allergen|Cottonwood pollen|
+A5000532|allergen|Coumarin anticoagulant|
+A5000533|allergen|Cow dander|
+A5000534|allergen|Cows|
+A5000535|allergen|Cows Milk|
+A5000536|allergen|Crab|
+A5000537|allergen|Cranberry|
+A5000538|allergen|Cromolyn sodium|
+A5000539|allergen|Crotamiton|
+A5000540|allergen|Cucumber|
+A5000541|allergen|Cultivated corn pollen|
+A5000542|allergen|Cultivated cotton pollen|
+A5000543|allergen|Curry|
+A5000544|allergen|Curvularia lunata|
+A5000545|allergen|Cyanocobalamin|
+A5000546|allergen|Cyclacillin|
+A5000547|allergen|Cyclandelate|
+A5000548|allergen|Cyclizine|
+A5000549|allergen|Cyclobarbital|
+A5000550|allergen|Cyclofenil|
+A5000551|allergen|Cyclopenthiazide|
+A5000552|allergen|Cyclopentolate|
+A5000553|allergen|Cyclophosphamide|
+A5000554|allergen|Cycloserine|
+A5000555|allergen|Cyproheptadine|
+A5000556|allergen|Cyproterone|
+A5000557|allergen|Cyproterone acetate|
+A5000558|allergen|Cytarabine|
+A5000559|allergen|Cytotoxic antibiotic|
+A5000560|allergen|Dacarbazine|
+A5000561|allergen|Dactinomycin|
+A5000562|allergen|Dairy foods|
+A5000563|allergen|Dairy Product|
+A5000564|allergen|Dalteparin|
+A5000565|allergen|Danaparoid sodium|
+A5000566|allergen|Danazol|
+A5000567|allergen|Dandelion pollen|
+A5000568|allergen|Danthron|
+A5000569|allergen|Dantrolene|
+A5000570|allergen|Dapsone|
+A5000571|allergen|Darunavir|
+A5000572|allergen|Date|
+A5000573|allergen|Debrisoquine|
+A5000574|allergen|Decongestant|
+A5000575|allergen|Deferoxamine|
+A5000576|allergen|Dehydrocholic acid|
+A5000577|allergen|Demecarium|
+A5000578|allergen|Demeclocycline|
+A5000579|allergen|Dental restorative material|
+A5000580|allergen|Deoxyribonuclease|
+A5000581|allergen|Depolarizing agent|
+A5000582|allergen|Dequalinium|
+A5000583|allergen|Dermatophagoides farinae|
+A5000584|allergen|Dermatophagoides pteronyssimus|
+A5000585|allergen|Dermatophyte|
+A5000586|allergen|Desflurane|
+A5000587|allergen|Desipramine|
+A5000588|allergen|Desmopressin|
+A5000589|allergen|Desonide|
+A5000590|allergen|Desoximetasone|
+A5000591|allergen|Detergent|
+A5000592|allergen|Dexamethasone|
+A5000593|allergen|Dexfenfluramine|
+A5000594|allergen|Dextran|
+A5000595|allergen|Dextroamphetamine|
+A5000596|allergen|Dextromethorphan hydrobromide|
+A5000597|allergen|Dextromoramide|
+A5000598|allergen|Dextropropoxyphene|
+A5000599|allergen|Dextrothyroxine sodium|
+A5000600|allergen|Diagnostic dye|
+A5000601|allergen|Diagnostic substance|
+A5000602|allergen|Dialysis fluid|
+A5000603|allergen|Diamidine antiprotozoal|
+A5000604|allergen|Diazepam|
+A5000605|allergen|Diazoxide|
+A5000606|allergen|Dibromomannitol|
+A5000607|allergen|Dibrompropamidine isethionate|
+A5000608|allergen|Dibucaine|
+A5000609|allergen|Dichloralphenazone|
+A5000610|allergen|Dichloroacetamide antiprotozoal|
+A5000611|allergen|Dichlorphenamide|
+A5000612|allergen|Diclofenac|
+A5000613|allergen|Dicobalt edetate|
+A5000614|allergen|Dicyclomine|
+A5000615|allergen|Didanosine|
+A5000616|allergen|Dienestrol|
+A5000617|allergen|Dietary substance|
+A5000618|allergen|Diethyl ether|
+A5000619|allergen|Diethylcarbamazine|
+A5000620|allergen|Diethylpropion|
+A5000621|allergen|Diethylstilbestrol|
+A5000622|allergen|Diethylstilbestrol diphosphate|
+A5000623|allergen|Diflucortolone|
+A5000624|allergen|Digitalis glycoside|
+A5000625|allergen|Digitoxin|
+A5000626|allergen|Digoxin|
+A5000627|allergen|Digoxin immune fab|
+A5000628|allergen|Dihydrocodeine|
+A5000629|allergen|Dihydroergocornine|
+A5000630|allergen|Dihydroergocristine|
+A5000631|allergen|Dihydroergocryptine|
+A5000632|allergen|Dihydroergotamine mesylate|
+A5000633|allergen|Dill|
+A5000634|allergen|Diloxanide|
+A5000635|allergen|Diltiazem|
+A5000636|allergen|Dimenhydrinate|
+A5000637|allergen|Dimercaprol|
+A5000638|allergen|Dimethindene|
+A5000639|allergen|Dimethyl-ether propane|
+A5000640|allergen|Dimethylsulfoxide|
+A5000641|allergen|Dimeticone|
+A5000642|allergen|Dinoprost|
+A5000643|allergen|Dinoprostone|
+A5000644|allergen|Diphenhydramine|
+A5000645|allergen|Diphenylbutylpiperidine derivative antipsychotic agent|
+A5000646|allergen|Diphenylpyraline|
+A5000647|allergen|Diphosphonate|
+A5000648|allergen|Diphtheria antitoxin|
+A5000649|allergen|Diphtheria single antigen vaccine|
+A5000650|allergen|Diphtheria vaccine|
+A5000651|allergen|Dipipanone|
+A5000652|allergen|Dipivefrin|
+A5000653|allergen|Dipyridamole|
+A5000654|allergen|Dipyrone|
+A5000655|allergen|Direct acting anticoagulant|
+A5000656|allergen|Disinfectant dye|
+A5000657|allergen|Disinfectants|
+A5000658|allergen|Disodium pamidronate|
+A5000659|allergen|Disopyramide|
+A5000660|allergen|Distigmine|
+A5000661|allergen|Disulfiram|
+A5000662|allergen|Diuretic|
+A5000663|allergen|Dobutamine|
+A5000664|allergen|Docusate sodium|
+A5000665|allergen|Dog dander|
+A5000666|allergen|Dog epithelium|
+A5000667|allergen|Dog hair|
+A5000668|allergen|Dogs|
+A5000669|allergen|Domiphen|
+A5000670|allergen|Domperidone|
+A5000671|allergen|DOPA decarboxylase inhibitor|
+A5000672|allergen|Dopamine|
+A5000673|allergen|Dopamine agonist agent|
+A5000674|allergen|Dopexamine|
+A5000675|allergen|Dornase alfa|
+A5000676|allergen|Dosulepin|
+A5000677|allergen|Doxacurium|
+A5000678|allergen|Doxapram|
+A5000679|allergen|Doxazosin|
+A5000680|allergen|Doxepin|
+A5000681|allergen|Doxorubicin|
+A5000682|allergen|Doxycycline|
+A5000683|allergen|Droperidol|
+A5000684|allergen|Drostanolone propionate|
+A5000685|allergen|Drug|
+A5000686|allergen|Drug vehicle|
+A5000687|allergen|Duck droppings|
+A5000688|allergen|Duck feathers|
+A5000689|allergen|Duck Meat|
+A5000690|allergen|Dust|
+A5000691|allergen|Dust mite|
+A5000692|allergen|Dydrogesterone|
+A5000693|allergen|Dye|
+A5000694|allergen|E series prostaglandin|
+A5000695|allergen|Echinococcus|
+A5000696|allergen|Echothiophate|
+A5000697|allergen|Econazole|
+A5000698|allergen|Edam Cheese|
+A5000699|allergen|Edetate|
+A5000700|allergen|Edetate calcium disodium|
+A5000701|allergen|Edetate disodium|
+A5000702|allergen|Edetate trisodium|
+A5000703|allergen|Edrophonium|
+A5000704|allergen|Eel|
+A5000705|allergen|Egg|
+A5000706|allergen|Egg protein|
+A5000707|allergen|Egg white|
+A5000708|allergen|Egg yolk|
+A5000709|allergen|Eggplant|
+A5000710|allergen|Elder tree pollen|
+A5000711|allergen|Electrolyte anion|
+A5000712|allergen|Elm tree pollen|
+A5000713|allergen|Emepronium bromide|
+A5000714|allergen|Emollient|
+A5000715|allergen|Enalapril|
+A5000716|allergen|Enbucrilate|
+A5000717|allergen|Enflurane|
+A5000718|allergen|English plantain pollen|
+A5000719|allergen|English Walnut|
+A5000720|allergen|Enoxacin|
+A5000721|allergen|Enoxaparin|
+A5000722|allergen|Enoximone|
+A5000723|allergen|Environmental smoke|
+A5000724|allergen|Environmental substance|
+A5000725|allergen|Enzyme agent|
+A5000726|allergen|Ephedrine|
+A5000727|allergen|Epicoccus purpurascens|
+A5000728|allergen|Epirubicin|
+A5000729|allergen|Epoetin alfa|
+A5000730|allergen|Epoetin beta|
+A5000731|allergen|Epoprostenol|
+A5000732|allergen|Ergoline derivative|
+A5000733|allergen|Ergonovine|
+A5000734|allergen|Ergot alkaloid|
+A5000735|allergen|Ertapenem|
+A5000736|allergen|Erwinia asparaginase|
+A5000737|allergen|Erythromycin|
+A5000738|allergen|Erythropoietin|
+A5000739|allergen|Esmolol|
+A5000740|allergen|Estradiol|
+A5000741|allergen|Estramustine|
+A5000742|allergen|Estriol|
+A5000743|allergen|Estrogen|
+A5000744|allergen|Estrogen antagonist|
+A5000745|allergen|Estrone sulfate|
+A5000746|allergen|Etamsylate|
+A5000747|allergen|Ethacrynic acid|
+A5000748|allergen|Ethambutol|
+A5000749|allergen|Ethamivan|
+A5000750|allergen|Ethanolamine|
+A5000751|allergen|Ethinyl estradiol|
+A5000752|allergen|Ethoglucid|
+A5000753|allergen|Ethosuximide|
+A5000754|allergen|Ethyl alcohol|
+A5000755|allergen|Ethylene oxide|
+A5000756|allergen|Etidronate disodium|
+A5000757|allergen|Etodolac|
+A5000758|allergen|Etomidate|
+A5000759|allergen|Etoposide|
+A5000760|allergen|Etretinate|
+A5000761|allergen|Etynodiol diacetate|
+A5000762|allergen|Eucalyptus pollen|
+A5000763|allergen|Euroglyphus maynei|
+A5000764|allergen|Expectorant agent|
+A5000765|allergen|F series prostaglandin|
+A5000766|allergen|False ragweed pollen|
+A5000767|allergen|Famciclovir|
+A5000768|allergen|Famotidine|
+A5000769|allergen|Fat-soluble vitamin|
+A5000770|allergen|FD&C Red Dye|
+A5000771|allergen|Feathers|
+A5000772|allergen|Felbinac|
+A5000773|allergen|Felodipine|
+A5000774|allergen|Fenbufen|
+A5000775|allergen|Fenfluramine|
+A5000776|allergen|Fennel leaves|
+A5000777|allergen|Fennel seed|
+A5000778|allergen|Fenofibrate|
+A5000779|allergen|Fenoprofen|
+A5000780|allergen|Fenoterol|
+A5000781|allergen|Fentanyl|
+A5000782|allergen|Fenticonazole|
+A5000783|allergen|Fenugreek|
+A5000784|allergen|Ferret dander|
+A5000785|allergen|Ferret epithelium|
+A5000786|allergen|Ferret hair|
+A5000787|allergen|Ferrets|
+A5000788|allergen|Ferrous fumarate|
+A5000789|allergen|Ferrous gluconate|
+A5000790|allergen|Ferrous glycine sulfate|
+A5000791|allergen|Ferrous phosphate|
+A5000792|allergen|Ferrous salt agent|
+A5000793|allergen|Ferrous succinate|
+A5000794|allergen|Ferrous sulfate|
+A5000795|allergen|Feta Cheese|
+A5000796|allergen|Fibrate antihyperlipidemic|
+A5000797|allergen|Ficus sp pollen|
+A5000798|allergen|Field dust|
+A5000799|allergen|Filgrastim|
+A5000800|allergen|Finasteride|
+A5000801|allergen|Fire ants|
+A5000802|allergen|Firebush pollen|
+A5000803|allergen|First generation cephalosporin|
+A5000804|allergen|Fish|
+A5000805|allergen|Fish derived omega 3 fatty acid|
+A5000806|allergen|Fixed oil|
+A5000807|allergen|Flavoring agent|
+A5000808|allergen|Flavoxate|
+A5000809|allergen|Fleas|
+A5000810|allergen|Flecainide|
+A5000811|allergen|Flies|
+A5000812|allergen|Flosequinan|
+A5000813|allergen|Flower|
+A5000814|allergen|Flower and weed pollen|
+A5000815|allergen|Floxacillin|
+A5000816|allergen|Fluclorolone|
+A5000817|allergen|Fluconazole|
+A5000818|allergen|Flucytosine|
+A5000819|allergen|Fludarabine|
+A5000820|allergen|Fludrocortisone|
+A5000821|allergen|Flumazenil|
+A5000822|allergen|Flunisolide|
+A5000823|allergen|Flunitrazepam|
+A5000824|allergen|Fluocinolone|
+A5000825|allergen|Fluocinonide|
+A5000826|allergen|Fluocortolone|
+A5000827|allergen|Fluoride|
+A5000828|allergen|Fluorometholone|
+A5000829|allergen|Fluorouracil|
+A5000830|allergen|Fluoxetine|
+A5000831|allergen|Flupentixol|
+A5000832|allergen|Flupentixol decanoate|
+A5000833|allergen|Fluphenazine|
+A5000834|allergen|Fluphenazine decanoate|
+A5000835|allergen|Fluphenazine enanthate|
+A5000836|allergen|Flurandrenolide|
+A5000837|allergen|Flurazepam|
+A5000838|allergen|Flurbiprofen|
+A5000839|allergen|Fluspirilene|
+A5000840|allergen|Flutamide|
+A5000841|allergen|Fluticasone|
+A5000842|allergen|Fluvastatin|
+A5000843|allergen|Fluvoxamine|
+A5000844|allergen|Folic acid|
+A5000845|allergen|Folinic acid|
+A5000846|allergen|Food|
+A5000847|allergen|Food dye|
+A5000848|allergen|Food preservative|
+A5000849|allergen|Formaldehyde|
+A5000850|allergen|Formaldehyde catgut|
+A5000851|allergen|Formestane|
+A5000852|allergen|Foscarnet|
+A5000853|allergen|Fosfomycin|
+A5000854|allergen|Fosinopril|
+A5000855|allergen|Fourth generation cephalosporin|
+A5000856|allergen|Fowl|
+A5000857|allergen|Fragrant odor|
+A5000858|allergen|Fruit|
+A5000859|allergen|Fuller's earth|
+A5000860|allergen|Fungus|
+A5000861|allergen|Furosemide|
+A5000862|allergen|Fusarium culmorum|
+A5000863|allergen|Fusarium moniliforme|
+A5000864|allergen|Fusidic acid|
+A5000865|allergen|Gabapentin|
+A5000866|allergen|Gallamine|
+A5000867|allergen|gamma Benzene hexachloride|
+A5000868|allergen|gamma-Linolenic acid|
+A5000869|allergen|Ganciclovir|
+A5000870|allergen|Ganglion blocking agent|
+A5000871|allergen|Garlic|
+A5000872|allergen|Gastrointestinal agent|
+A5000873|allergen|Gauzes|
+A5000874|allergen|Gelatin|
+A5000875|allergen|Gemeprost|
+A5000876|allergen|Gemfibrozil|
+A5000877|allergen|General anesthetic|
+A5000878|allergen|Gentamicin|
+A5000879|allergen|Gentian violet|
+A5000880|allergen|Geranium pollen|
+A5000881|allergen|Gerbil dander|
+A5000882|allergen|Gerbil epithelium|
+A5000883|allergen|Gerbil hair|
+A5000884|allergen|Gerbils|
+A5000885|allergen|Gestonorone|
+A5000886|allergen|Gestrinone|
+A5000887|allergen|Giant ragweed tall pollen|
+A5000888|allergen|Ginger|
+A5000889|allergen|Glibornuride|
+A5000890|allergen|Gliclazide|
+A5000891|allergen|Glipizide|
+A5000892|allergen|Gliquidone|
+A5000893|allergen|Glucagon|
+A5000894|allergen|Glutaraldehyde|
+A5000895|allergen|Gluten|
+A5000896|allergen|Glyburide|
+A5000897|allergen|Glycerol|
+A5000898|allergen|Glycine|
+A5000899|allergen|Glycopyrrolate|
+A5000900|allergen|Glycyphagus domesticus|
+A5000901|allergen|Glymidine|
+A5000902|allergen|Gnat|
+A5000903|allergen|Goat dander|
+A5000904|allergen|Goat epithelium|
+A5000905|allergen|Goat hair|
+A5000906|allergen|Goats|
+A5000907|allergen|Gold sodium thiomalate|
+A5000908|allergen|Goldenrod pollen|
+A5000909|allergen|Gonad regulating hormone agent|
+A5000910|allergen|Gonadal hormone|
+A5000911|allergen|Gonadorelin|
+A5000912|allergen|Gonadotropin|
+A5000913|allergen|Goose droppings|
+A5000914|allergen|Goose feathers|
+A5000915|allergen|Goose Meat|
+A5000916|allergen|Goserelin|
+A5000917|allergen|Gouda Cheese|
+A5000918|allergen|Grain|
+A5000919|allergen|Grape|
+A5000920|allergen|Grapefruit|
+A5000921|allergen|Grass pollen|
+A5000922|allergen|Green Bean|
+A5000923|allergen|Green Coffee Bean|
+A5000924|allergen|Green nimitti midge|
+A5000925|allergen|Green Pepper|
+A5000926|allergen|Green Zucchini Squash|
+A5000927|allergen|Griseofulvin|
+A5000928|allergen|Guanethidine|
+A5000929|allergen|Guar gum|
+A5000930|allergen|Guava|
+A5000931|allergen|Guinea pig dander|
+A5000932|allergen|Guinea pig epithelium|
+A5000933|allergen|Guinea pig hair|
+A5000934|allergen|Guinea pigs|
+A5000935|allergen|H1 antihistamine|
+A5000936|allergen|Hackberry tree pollen|
+A5000937|allergen|Haddock|
+A5000938|allergen|Haemophilus influenzae type b vaccine|
+A5000939|allergen|Hake|
+A5000940|allergen|Halcinonide|
+A5000941|allergen|Halibut|
+A5000942|allergen|Halofantrine|
+A5000943|allergen|Haloperidol|
+A5000944|allergen|Haloperidol decanoate|
+A5000945|allergen|Halothane|
+A5000946|allergen|Hamster dander|
+A5000947|allergen|Hamster epithelium|
+A5000948|allergen|Hamster hair|
+A5000949|allergen|Hamsters|
+A5000950|allergen|Harvester ants|
+A5000951|allergen|Hazel nut tree pollen|
+A5000952|allergen|Hazelnut|
+A5000953|allergen|Helminthosporium halodes|
+A5000954|allergen|Hematologic agent|
+A5000955|allergen|Hemodialysis fluid|
+A5000956|allergen|Hemofiltration solution|
+A5000957|allergen|Hemostatic agent|
+A5000958|allergen|Heparin|
+A5000959|allergen|Heparinoid|
+A5000960|allergen|Hepatitis A virus vaccine|
+A5000961|allergen|Hepatitis b surface antigen immunoglobulin|
+A5000962|allergen|Hepatitis B virus vaccine|
+A5000963|allergen|Herbal medicine agent|
+A5000964|allergen|Heroin|
+A5000965|allergen|Herring|
+A5000966|allergen|Hetastarch|
+A5000967|allergen|Hexachlorophene|
+A5000968|allergen|Hexetidine|
+A5000969|allergen|Hickory Nut|
+A5000970|allergen|Hickory tree pollen|
+A5000971|allergen|Histamine H>2< antagonist|
+A5000972|allergen|HMG-CoA reductase inhibitor|
+A5000973|allergen|Homatropine|
+A5000974|allergen|Honey|
+A5000975|allergen|Honey bee|
+A5000976|allergen|Hops|Hormone|
+A5000978|allergen|Hornet venom|
+A5000979|allergen|Hornets|
+A5000980|allergen|Horse|
+A5000981|allergen|Horse dander|
+A5000982|allergen|Horse epithelium|
+A5000983|allergen|Horse hair|
+A5000984|allergen|Horsefly|
+A5000985|allergen|House dust|
+A5000986|allergen|House dust mite|
+A5000987|allergen|Hubbard squash|
+A5000988|allergen|Human immunoglobulin|
+A5000989|allergen|Human insulin|
+A5000990|allergen|Human interferon gamma-1b|
+A5000991|allergen|Hyaluronate sodium|
+A5000992|allergen|Hyaluronidase agent|
+A5000993|allergen|Hydralazine|
+A5000994|allergen|Hydrargaphen|
+A5000995|allergen|Hydrazide antituberculosis agent|
+A5000996|allergen|Hydrochlorothiazide|
+A5000997|allergen|Hydrocortisone|
+A5000998|allergen|Hydroflumethiazide|
+A5000999|allergen|Hydrogen peroxide|
+A5001000|allergen|Hydroxycarbamide|
+A5001001|allergen|Hydroxychloroquine|
+A5001002|allergen|Hydroxyethylcellulose|
+A5001003|allergen|Hydroxyprogesterone|
+A5001004|allergen|Hydroxyquinoline antiprotozoal|
+A5001005|allergen|Hydroxyzine|
+A5001006|allergen|Hyoscine butylbromide|
+A5001007|allergen|Hypotensive agent|
+A5001008|allergen|Hypothalamic or pituitary hormone|
+A5001009|allergen|Hypromellose|
+A5001010|allergen|I series prostaglandin|
+A5001011|allergen|Ibuprofen|
+A5001012|allergen|Ichthammol|
+A5001013|allergen|Idarubicin|
+A5001014|allergen|Idoxuridine|
+A5001015|allergen|Ifosfamide|
+A5001016|allergen|Imidapril|
+A5001017|allergen|Imidazole antifungal|
+A5001018|allergen|Imipenem|
+A5001019|allergen|Imipramine|
+A5001020|allergen|Immune enhancement agent|
+A5001021|allergen|Immunoglobulin|
+A5001022|allergen|Immunosuppressant|
+A5001023|allergen|Indanedione|
+A5001024|allergen|Indapamide|
+A5001025|allergen|Indirect acting anticoagulant|
+A5001026|allergen|Indometacin|
+A5001027|allergen|Indoramin|
+A5001028|allergen|Industrial methylated spirit|
+A5001029|allergen|Influenza split virion vaccine|
+A5001030|allergen|Influenza surface antigen vaccine|
+A5001031|allergen|Influenza virus vaccine|
+A5001032|allergen|Ingested additive|
+A5001033|allergen|Ingested animal|
+A5001034|allergen|Ingested plant|
+A5001035|allergen|Inosine pranobex|
+A5001036|allergen|Inositol|
+A5001037|allergen|Inositol niacinate|
+A5001038|allergen|Inotropic agent|
+A5001039|allergen|Insect protein|
+A5001040|allergen|Insulin|
+A5001041|allergen|Interferon|
+A5001042|allergen|Interferon alpha-2a|
+A5001043|allergen|Interferon alpha-2b|
+A5001044|allergen|Interferon-A-N1|
+A5001045|allergen|Intravenous nutrition agent|
+A5001046|allergen|Intravenous nutrition amino acid agent|
+A5001047|allergen|Intravenous nutrition carbohydrate agent|
+A5001048|allergen|Intravenous nutrition electrolyte agent|
+A5001049|allergen|Intravenous nutrition fat agent|
+A5001050|allergen|Intravenous nutrition trace element agent|
+A5001051|allergen|Intravenous nutrition vitamin agent|
+A5001052|allergen|Iodine|
+A5001053|allergen|Iodine catgut|
+A5001054|allergen|Iodine compound|
+A5001055|allergen|Iodized salt|
+A5001056|allergen|Iodized substance|
+A5001057|allergen|Iodoform agent|
+A5001058|allergen|Iodophore|
+A5001059|allergen|Ion exchange resin|
+A5001060|allergen|Ipecacuanha|
+A5001061|allergen|Ipratropium|
+A5001062|allergen|Iprindole|
+A5001063|allergen|Iproniazid|
+A5001064|allergen|Iris germanica extract|
+A5001065|allergen|Iron agent|
+A5001066|allergen|Iron sorbitol|
+A5001067|allergen|Isoaminile|
+A5001068|allergen|Isocarboxazid|
+A5001069|allergen|Isoconazole|
+A5001070|allergen|Isoetharine hydrochloride|
+A5001071|allergen|Isoflurane|
+A5001072|allergen|Isoniazid|
+A5001073|allergen|Isophane insulin|
+A5001074|allergen|Isoproterenol|
+A5001075|allergen|Isosorbide dinitrate|
+A5001076|allergen|Isosorbide mononitrate|
+A5001077|allergen|Isotretinoin|
+A5001078|allergen|Isoxsuprine|
+A5001079|allergen|Isradipine|
+A5001080|allergen|Italian cypress pollen|
+A5001081|allergen|Itraconazole|
+A5001082|allergen|Jack mackerel|
+A5001083|allergen|Japanese cedar pollen|
+A5001084|allergen|Johnson grass pollen|
+A5001085|allergen|June grass pollen|
+A5001086|allergen|Kanamycin|
+A5001087|allergen|Kaolin|
+A5001088|allergen|Ketamine|
+A5001089|allergen|Ketazolam|
+A5001090|allergen|Ketoconazole|
+A5001091|allergen|Ketoprofen|
+A5001092|allergen|Ketorolac|
+A5001093|allergen|Ketotifen|
+A5001094|allergen|Kidney bean|
+A5001095|allergen|Kingdom Plantae|
+A5001096|allergen|Kissing bugs|
+A5001097|allergen|Kiwi|
+A5001098|allergen|Labetalol|
+A5001099|allergen|Lachesine chloride|
+A5001100|allergen|Lacidipine|
+A5001101|allergen|Lactobacill acidophil vaccine|
+A5001102|allergen|Lactose|
+A5001103|allergen|Lactulose|
+A5001104|allergen|Lamb Meat|
+A5001105|allergen|Lamotrigine|
+A5001106|allergen|Lanatoside C|
+A5001107|allergen|Lansoprazole|
+A5001108|allergen|Latex|
+A5001109|allergen|Laxative|
+A5001110|allergen|L-Carnitine|
+A5001111|allergen|Legume|
+A5001112|allergen|Lemon|
+A5001113|allergen|Lenograstim|
+A5001114|allergen|Lentil|
+A5001115|allergen|Lepidoglyphus destructor|
+A5001116|allergen|Lettuce|
+A5001117|allergen|Leuprorelin|
+A5001118|allergen|Levamisole|
+A5001119|allergen|Levobunolol|
+A5001120|allergen|Levodopa|
+A5001121|allergen|Levofloxacin|
+A5001122|allergen|Levonorgestrel|
+A5001123|allergen|Levorphanol|
+A5001124|allergen|Lichen (plant)|
+A5001125|allergen|Lidocaine|
+A5001126|allergen|Lidoflazine|
+A5001127|allergen|Light|
+A5001128|allergen|Lilac pollen|
+A5001129|allergen|Lima Bean|
+A5001130|allergen|Lime|
+A5001131|allergen|Lime tree pollen|
+A5001132|allergen|Lincomycin|
+A5001133|allergen|Linden tree pollen|
+A5001134|allergen|Liothyronine sodium|
+A5001135|allergen|Liquor|
+A5001136|allergen|Liquorice|
+A5001137|allergen|Lisinopril|
+A5001138|allergen|Lithium|
+A5001139|allergen|Lithium carbonate|
+A5001140|allergen|Lithium citrate|
+A5001141|allergen|Live oak pollen|
+A5001142|allergen|Lobster|
+A5001143|allergen|Local anesthetic|
+A5001144|allergen|Lodoxamide|
+A5001145|allergen|Lofepramine|
+A5001146|allergen|Lofexidine|
+A5001147|allergen|Lomustine|
+A5001148|allergen|Loop diuretic|
+A5001149|allergen|Loperamide|
+A5001150|allergen|Loprazolam|
+A5001151|allergen|Loratadine|
+A5001152|allergen|Lorazepam|
+A5001153|allergen|Lormetazepam|
+A5001154|allergen|Losartan|
+A5001155|allergen|Lovage|
+A5001156|allergen|Loxapine|
+A5001157|allergen|Lubricant substance|
+A5001158|allergen|Lung surfactant|
+A5001159|allergen|Lupine seed|
+A5001160|allergen|Lymecycline|
+A5001161|allergen|Lypressin|
+A5001162|allergen|Lysozyme|
+A5001163|allergen|Lysuride|
+A5001164|allergen|Macadamia nut|
+A5001165|allergen|Mace Spice|
+A5001166|allergen|Mackerel|Macrolide (class of antibiotic|
+A5001168|allergen|Mafenide|
+A5001169|allergen|Magnesium sulfate|
+A5001170|allergen|Magnesium trisilicate|
+A5001171|allergen|Magnetic resonance imaging contrast medium agent|
+A5001172|allergen|Malathion|
+A5001173|allergen|Malt|
+A5001174|allergen|Mandarin orange|
+A5001175|allergen|Mandelic acid|
+A5001176|allergen|Mango|
+A5001177|allergen|Mannitol|
+A5001178|allergen|Maple Syrup|
+A5001179|allergen|Maple tree pollen|
+A5001180|allergen|Maprotiline|
+A5001181|allergen|Marine crustacean|
+A5001182|allergen|Marine mollusk|
+A5001183|allergen|Marjoram|
+A5001184|allergen|Material|
+A5001185|allergen|Mazindol|Measles|
+A5001187|allergen|Meat|
+A5001188|allergen|Mebendazole|
+A5001189|allergen|Mebeverine|
+A5001190|allergen|Mebhydrolin|
+A5001191|allergen|Mechlorethamine|
+A5001192|allergen|Meclizine hydrochloride|
+A5001193|allergen|Medazapam|
+A5001194|allergen|Medication|
+A5001195|allergen|Medicinal gold|
+A5001196|allergen|Medigoxin|
+A5001197|allergen|Medroxyprogesterone|
+A5001198|allergen|Mefenamic acid|
+A5001199|allergen|Mefloquine|
+A5001200|allergen|Mefruside|
+A5001201|allergen|Megestrol|
+A5001202|allergen|Meglitinide|
+A5001203|allergen|Megrim|
+A5001204|allergen|Melaleuca cajeput pollen|
+A5001205|allergen|Melon|
+A5001206|allergen|Melphalan|
+A5001207|allergen|Meningococcal polysaccharide vaccine|
+A5001208|allergen|Mepenzolate|
+A5001209|allergen|Meperidine|
+A5001210|allergen|Mephobarbital|
+A5001211|allergen|Meprobamate|
+A5001212|allergen|Meptazinol|
+A5001213|allergen|Mequitazine|
+A5001214|allergen|Mercaptopurine|
+A5001215|allergen|Mercurial diuretic|
+A5001216|allergen|Mercuric oxide|
+A5001217|allergen|Meropenem|
+A5001218|allergen|Mersalyl|
+A5001219|allergen|Mesalazine|
+A5001220|allergen|Mesna|
+A5001221|allergen|Mesquite pollen|
+A5001222|allergen|Mesterolone|
+A5001223|allergen|Mestranol|
+A5001224|allergen|Metallic cloth|
+A5001225|allergen|Metaproterenol|
+A5001226|allergen|Metaraminol|
+A5001227|allergen|Metformin|
+A5001228|allergen|Methacholine|
+A5001229|allergen|Methadone|
+A5001230|allergen|Methadone analog|
+A5001231|allergen|Methenamine hippurate|
+A5001232|allergen|Methicillin|
+A5001233|allergen|Methixene|
+A5001234|allergen|Methocarbamol|
+A5001235|allergen|Methohexital|
+A5001236|allergen|Methotrexate|
+A5001237|allergen|Methotrimeprazine|
+A5001238|allergen|Methoxamine|
+A5001239|allergen|Methyclothiazide|
+A5001240|allergen|Methylcysteine|
+A5001241|allergen|Methyldopa|
+A5001242|allergen|Methyl-Ethyl ketone solvent|
+A5001243|allergen|Methylphenidate|
+A5001244|allergen|Methylprednisolone|
+A5001245|allergen|Methyltestosterone|
+A5001246|allergen|Methyprylon|
+A5001247|allergen|Metipranolol|
+A5001248|allergen|Metoclopramide|
+A5001249|allergen|Metolazone|
+A5001250|allergen|Metoprolol|
+A5001251|allergen|Metronidazole|
+A5001252|allergen|Metyrosine|
+A5001253|allergen|Meunster Cheese|
+A5001254|allergen|Mexiletine|
+A5001255|allergen|Mezlocillin|
+A5001256|allergen|Mianserin|
+A5001257|allergen|Mice|
+A5001258|allergen|Miconazole|
+A5001259|allergen|Midazolam|
+A5001260|allergen|Midge|
+A5001261|allergen|Mifepristone|
+A5001262|allergen|Mildew|
+A5001263|allergen|Milk|
+A5001264|allergen|Millet|
+A5001265|allergen|Milrinone|
+A5001266|allergen|Mineral oil|
+A5001267|allergen|Mineral supplement|
+A5001268|allergen|Minocycline|
+A5001269|allergen|Minoxidil|
+A5001270|allergen|Misoprostol|
+A5001271|allergen|Mite|
+A5001272|allergen|Mitomycin|
+A5001273|allergen|Mitoxantrone|
+A5001274|allergen|Mivacurium|
+A5001275|allergen|Moclobemide|
+A5001276|allergen|Moexipril|
+A5001277|allergen|Mold|
+A5001278|allergen|Molgramostim|
+A5001279|allergen|Mometasone|
+A5001280|allergen|Monoamine oxidase inhibitor|
+A5001281|allergen|Monobactam|
+A5001282|allergen|Monosodium Glutamate|
+A5001283|allergen|Monterey Jack Cheese|
+A5001284|allergen|Moricizine|
+A5001285|allergen|Morphinan cough suppressant|
+A5001286|allergen|Morphinan opioid|
+A5001287|allergen|Morphine|
+A5001288|allergen|Mosquito|
+A5001289|allergen|Moth|
+A5001290|allergen|Motility stimulant|
+A5001291|allergen|Mountain cedar pollen|
+A5001292|allergen|Mouse dander|
+A5001293|allergen|Mouse epithelium|
+A5001294|allergen|Mouse hair|
+A5001295|allergen|Mouse serum proteins|
+A5001296|allergen|Mouse urine|
+A5001297|allergen|Moxalactam|
+A5001298|allergen|Mozzarella Cheese|
+A5001299|allergen|Mucolytic agent|
+A5001300|allergen|Mucor racemosus|
+A5001301|allergen|Mulberry tree pollen|
+A5001302|allergen|Multivitamin agent|
+A5001303|allergen|Mumps vaccine|
+A5001304|allergen|Mupirocin|
+A5001305|allergen|Mushroom|
+A5001306|allergen|Mussel|
+A5001307|allergen|Mustard|
+A5001308|allergen|Nabilone|
+A5001309|allergen|Nabumetone|
+A5001310|allergen|Nadolol|
+A5001311|allergen|Nafarelin|
+A5001312|allergen|Nafronyl|
+A5001313|allergen|Nalbuphine|
+A5001314|allergen|Nalidixic acid|
+A5001315|allergen|Naloxone|
+A5001316|allergen|Naltrexone|
+A5001317|allergen|Nandrolone|
+A5001318|allergen|Naphazoline|
+A5001319|allergen|Naproxen|
+A5001320|allergen|Natamycin|
+A5001321|allergen|Natural Sweetener|
+A5001322|allergen|Navy bean|
+A5001323|allergen|Nedocromil|
+A5001324|allergen|Nefazodone|
+A5001325|allergen|Nefopam|
+A5001326|allergen|Neomycin|
+A5001327|allergen|Neomycin B|
+A5001328|allergen|Neomycin sulfate|
+A5001329|allergen|Neostigmine|
+A5001330|allergen|Netilmicin|
+A5001331|allergen|Nettle pollen|
+A5001332|allergen|Neuromuscular blocking agent|
+A5001333|allergen|Neurospora sitophila|
+A5001334|allergen|Nevirapine|
+A5001335|allergen|Niacin|
+A5001336|allergen|Niacinamide|
+A5001337|allergen|Nicardipine|
+A5001338|allergen|Nickel|
+A5001339|allergen|Nickel compound|
+A5001340|allergen|Niclosamide|
+A5001341|allergen|Nicofuranose|
+A5001342|allergen|Nicorandil|
+A5001343|allergen|Nicotine agent|
+A5001344|allergen|Nicotinyl alcohol|
+A5001345|allergen|Nifedipine|
+A5001346|allergen|Nikethamide|
+A5001347|allergen|Nimodipine|
+A5001348|allergen|Nimorazole|
+A5001349|allergen|Nitrate-based vasodilating agent|
+A5001350|allergen|Nitrates|
+A5001351|allergen|Nitrazepam|
+A5001352|allergen|Nitrites|
+A5001353|allergen|Nitrofurantoin|
+A5001354|allergen|Nitrofurazone|
+A5001355|allergen|Nitrogen mustard derivative|
+A5001356|allergen|Nitroglycerin|
+A5001357|allergen|Nitroimidazole|
+A5001358|allergen|Nitrophenol|
+A5001359|allergen|Nitrosureas|
+A5001360|allergen|Nizatidine|
+A5001361|allergen|Nondepolarizing agent|
+A5001362|allergen|Non-food animal|
+A5001363|allergen|Non-food plant|
+A5001364|allergen|Non-ionic surfactant|
+A5001365|allergen|Non-medication chemical|
+A5001366|allergen|Non-opioid analgesic|
+A5001367|allergen|Nonoxynol|
+A5001368|allergen|Non-sedating antihistamine|
+A5001369|allergen|Non-selective beta-blocking agent|
+A5001370|allergen|Non-steroidal anti-inflammatory agent|
+A5001371|allergen|Norepinephrine|
+A5001372|allergen|Norethindrone|
+A5001373|allergen|Norfloxacin|
+A5001374|allergen|Nortriptyline|
+A5001375|allergen|Noscapine|
+A5001376|allergen|Noxythiolin|
+A5001377|allergen|Nut|
+A5001378|allergen|Nutmeg|
+A5001379|allergen|Nystatin|
+A5001380|allergen|Oak pollen|
+A5001381|allergen|Oat pollen cultivated|
+A5001382|allergen|Oats|
+A5001383|allergen|Octopus|
+A5001384|allergen|Octoxinol|
+A5001385|allergen|Octreotide|
+A5001386|allergen|Ofloxacin|
+A5001387|allergen|Oleo oil|
+A5001388|allergen|Olive oil|
+A5001389|allergen|Olive tree pollen|
+A5001390|allergen|Olsalazine|
+A5001391|allergen|Omeprazole|
+A5001392|allergen|Onion|
+A5001393|allergen|Opiate agonist|
+A5001394|allergen|Opiate antagonist|
+A5001395|allergen|Opium alkaloid|
+A5001396|allergen|Orange|
+A5001397|allergen|Orchard grass pollen|
+A5001398|allergen|Order Uredinales|
+A5001399|allergen|Order Ustilaginales|
+A5001400|allergen|Organochlorine pesticide|
+A5001401|allergen|Organophosphate insecticide|
+A5001402|allergen|Organophosphate pesticides|
+A5001403|allergen|Orphenadrine|
+A5001404|allergen|Orphenadrine citrate|
+A5001405|allergen|Orphenadrine hydrochloride|
+A5001406|allergen|Osage orange tree pollen|
+A5001407|allergen|Osmotic diuretic|
+A5001408|allergen|Ouabain|
+A5001409|allergen|Overcup oak pollen|
+A5001410|allergen|Oxatomide|
+A5001411|allergen|Oxazepam|
+A5001412|allergen|Oxedrine tartrate|
+A5001413|allergen|Ox-Eye daisy pollen|
+A5001414|allergen|Oxitropium|
+A5001415|allergen|Oxprenolol|
+A5001416|allergen|Oxtriphylline|
+A5001417|allergen|Oxybutynin|
+A5001418|allergen|Oxymetazoline|
+A5001419|allergen|Oxymetholone|
+A5001420|allergen|Oxypertine|
+A5001421|allergen|Oxyphenbutazone|
+A5001422|allergen|Oxytetracycline|
+A5001423|allergen|Oxytocin|
+A5001424|allergen|Oyster|
+A5001425|allergen|Paclitaxel|
+A5001426|allergen|Pancreatin|
+A5001427|allergen|Pancuronium|
+A5001428|allergen|Papaverine|
+A5001429|allergen|Papaya|
+A5001430|allergen|Paper mulberry tree pollen|
+A5001431|allergen|Paper wasp|
+A5001432|allergen|Paraffin|
+A5001433|allergen|Paraldehyde|
+A5001434|allergen|Parasympathomimetic agent|
+A5001435|allergen|Parietaria judaica pollen|
+A5001436|allergen|Parietaria officianalis pollen|
+A5001437|allergen|Parmesan cheese|
+A5001438|allergen|Paroxetine|
+A5001439|allergen|Parrot droppings|
+A5001440|allergen|Parrot feathers|
+A5001441|allergen|Parsley|
+A5001442|allergen|Passion fruit|
+A5001443|allergen|Pea|
+A5001444|allergen|Peach|
+A5001445|allergen|Peanut|
+A5001446|allergen|Pear|
+A5001447|allergen|Pecan|
+A5001448|allergen|Pecan tree pollen|
+A5001449|allergen|Pemoline|
+A5001450|allergen|Penbutolol|
+A5001451|allergen|Penicillamine|
+A5001452|allergen|Penicillin|
+A5001453|allergen|Penicillin G|
+A5001454|allergen|Penicillin G benzathine|
+A5001455|allergen|Penicillinase sensitive penicillins|
+A5001456|allergen|Penicillinase-resistant penicillin|
+A5001457|allergen|Penicillium brevicompactum|
+A5001458|allergen|Penicillium notatum|
+A5001459|allergen|Pentaerythritol tetranitrate|
+A5001460|allergen|Pentamidine|
+A5001461|allergen|Pentastarch|
+A5001462|allergen|Pentazocine|
+A5001463|allergen|Pentostatin|
+A5001464|allergen|Pentoxifylline|
+A5001465|allergen|Pepper oil|
+A5001466|allergen|Pepper tree pollen|
+A5001467|allergen|Peppermint oil|
+A5001468|allergen|Perch|
+A5001469|allergen|Perchloroethylene|
+A5001470|allergen|Perennial rye grass pollen|
+A5001471|allergen|Perfluorochemical|
+A5001472|allergen|Perfume|
+A5001473|allergen|Pergolide|
+A5001474|allergen|Pericyazine|
+A5001475|allergen|Perindopril|
+A5001476|allergen|Peripheral/cerebral vasodilator|
+A5001477|allergen|Peritoneal dialysis solution|
+A5001478|allergen|Permethrin|
+A5001479|allergen|Perphenazine|
+A5001480|allergen|Persimmon|
+A5001481|allergen|Pertussis vaccine|
+A5001482|allergen|Pesticide|
+A5001483|allergen|Pethidine analog|
+A5001484|allergen|Phenazocine|
+A5001485|allergen|Phenelzine|
+A5001486|allergen|Phenethicillin|
+A5001487|allergen|Phenindamine|
+A5001488|allergen|Phenindione|
+A5001489|allergen|Pheniramine|
+A5001490|allergen|Phenobarbital|
+A5001491|allergen|Phenol|
+A5001492|allergen|Phenolics|
+A5001493|allergen|Phenoperidine|
+A5001494|allergen|Phenothiazine|
+A5001495|allergen|Phenothiazine derivative antipsychotic agent|
+A5001496|allergen|Phenothrin|
+A5001497|allergen|Phenoxybenzamine|
+A5001498|allergen|Phenoxymethylpenicillin|
+A5001499|allergen|Phentermine|
+A5001500|allergen|Phentolamine|
+A5001501|allergen|Phenylbutazone|
+A5001502|allergen|Phenylephrine|
+A5001503|allergen|Phenylpropanolamine hydrochloride|
+A5001504|allergen|Phenytoin|
+A5001505|allergen|Pholcodine|
+A5001506|allergen|Phoma betae|
+A5001507|allergen|Phosphodiesterase 5 inhibitor|
+A5001508|allergen|Photoallergens|
+A5001509|allergen|Phthalylsulfathiazole|
+A5001510|allergen|Physostigmine|
+A5001511|allergen|Pickle|
+A5001512|allergen|Pigeon droppings|
+A5001513|allergen|Pigeon feathers|
+A5001514|allergen|Pilocarpine|
+A5001515|allergen|Pimozide|
+A5001516|allergen|Pindolol|
+A5001517|allergen|Pine needle oil|
+A5001518|allergen|Pine Nut|
+A5001519|allergen|Pineapple|
+A5001520|allergen|Pipenzolate|
+A5001521|allergen|Piperacillin|
+A5001522|allergen|Piperazine agent|
+A5001523|allergen|Piperidolate|
+A5001524|allergen|Pipotiazine|
+A5001525|allergen|Piracetam|
+A5001526|allergen|Pirbuterol|
+A5001527|allergen|Pirenzepine|
+A5001528|allergen|Piretanide|
+A5001529|allergen|Piroxicam|
+A5001530|allergen|Pistachio Nut|
+A5001531|allergen|Pivampicillin|
+A5001532|allergen|Plaice|
+A5001533|allergen|Plant extract|
+A5001534|allergen|Plant fiber|
+A5001535|allergen|Plant oil|
+A5001536|allergen|Plant secretions|
+A5001537|allergen|Plasma protein|
+A5001538|allergen|Plasma substitutes|
+A5001539|allergen|Plastic|
+A5001540|allergen|Plicamycin|
+A5001541|allergen|Plum|
+A5001542|allergen|Pneumococcal vaccine|
+A5001543|allergen|Podophyllotoxin|
+A5001544|allergen|Podophyllum resin|
+A5001545|allergen|Poldine|
+A5001546|allergen|Poliovirus vaccine|
+A5001547|allergen|Pollen|
+A5001548|allergen|Pollen extract|
+A5001549|allergen|Polyestradiol phosphate|
+A5001550|allergen|Polyethylene glycol|
+A5001551|allergen|Polymyxin B|
+A5001552|allergen|Polymyxins|
+A5001553|allergen|Polynoxylin|
+A5001554|allergen|Polysaccharide-iron complex|
+A5001555|allergen|Polythiazide|
+A5001556|allergen|Polyvinyl alcohol|
+A5001557|allergen|Ponderosa pine pollen|
+A5001558|allergen|Poplar tree pollen|
+A5001559|allergen|Poppy seed|
+A5001560|allergen|Poractant alfa|
+A5001561|allergen|Porcine calcitonin|
+A5001562|allergen|Pork|
+A5001563|allergen|Potassium|
+A5001564|allergen|Potassium canrenoate|
+A5001565|allergen|Potassium permanganate|
+A5001566|allergen|Potassium-sparing diuretic|
+A5001567|allergen|Potato|
+A5001568|allergen|Povidone iodine|
+A5001569|allergen|Practolol|
+A5001570|allergen|Pralidoxime|
+A5001571|allergen|Pravastatin|
+A5001572|allergen|Prazepam|
+A5001573|allergen|Prazosin|
+A5001574|allergen|Prednisolone|
+A5001575|allergen|Prednisone|
+A5001576|allergen|Prenylamine|
+A5001577|allergen|Prilocaine|
+A5001578|allergen|Primaquine|
+A5001579|allergen|Primidone|
+A5001580|allergen|Primrose pollen|
+A5001581|allergen|Privet tree pollen|
+A5001582|allergen|Probenecid|
+A5001583|allergen|Probucol|
+A5001584|allergen|Procainamide|
+A5001585|allergen|Procaine|
+A5001586|allergen|Procaine benzylpenicillin|
+A5001587|allergen|Procarbazine|
+A5001588|allergen|Prochlorperazine|
+A5001589|allergen|Procyclidine|
+A5001590|allergen|Progesterone|
+A5001591|allergen|Progestogen|
+A5001592|allergen|Prolintane|
+A5001593|allergen|Promazine|
+A5001594|allergen|Promestriene|
+A5001595|allergen|Promethazine|
+A5001596|allergen|Propafenone|
+A5001597|allergen|Propamidine isethionate|
+A5001598|allergen|Propantheline|
+A5001599|allergen|Propofol|
+A5001600|allergen|Propranolol|
+A5001601|allergen|Propylthiouracil|
+A5001602|allergen|Prostaglandin|
+A5001603|allergen|Prostaglandin PGE1|
+A5001604|allergen|Protamine|
+A5001605|allergen|Protamine zinc insulin|
+A5001606|allergen|Protirelin|
+A5001607|allergen|Proton pump inhibitor|
+A5001608|allergen|Protriptyline|
+A5001609|allergen|Provolone cheese|
+A5001610|allergen|Proxymetacaine|
+A5001611|allergen|Prune|
+A5001612|allergen|Pseudoephedrine|
+A5001613|allergen|Pulse vegetables|
+A5001614|allergen|Pumactant|
+A5001615|allergen|Pumpkin seed|
+A5001616|allergen|Pumpkin Squash|
+A5001617|allergen|Pyrantel|
+A5001618|allergen|Pyrazinamide|
+A5001619|allergen|Pyrethroid insecticide|
+A5001620|allergen|Pyridostigmine|
+A5001621|allergen|Pyrilamine|
+A5001622|allergen|Pyrimethamine|
+A5001623|allergen|Quaternary ammonium surfactant|
+A5001624|allergen|Quaternary pyridinium surfactant|
+A5001625|allergen|Quaternary quinolinium surfactant|
+A5001626|allergen|Queen palm pollen|
+A5001627|allergen|Quinacrine|
+A5001628|allergen|Quinagolide|
+A5001629|allergen|Quinapril|
+A5001630|allergen|Quinestradol|
+A5001631|allergen|Quinestrol|
+A5001632|allergen|Quinidine|
+A5001633|allergen|Quinine|
+A5001634|allergen|Quinolone|
+A5001635|allergen|Rabbit|
+A5001636|allergen|Rabbit dander|
+A5001637|allergen|Rabbit epithelium|
+A5001638|allergen|Rabbit hair|
+A5001639|allergen|Rabies vaccine|
+A5001640|allergen|Radiopharmaceutical agent|
+A5001641|allergen|Ragweed pollen|
+A5001642|allergen|Raisin|
+A5001643|allergen|Raloxifene|
+A5001644|allergen|Ramipril|
+A5001645|allergen|Ranitidine|
+A5001646|allergen|Rapacuronium bromide|
+A5001647|allergen|Raspberry|
+A5001648|allergen|Rat epithelium|
+A5001649|allergen|Rat serum proteins|
+A5001650|allergen|Rat urine|
+A5001651|allergen|Rats|
+A5001652|allergen|Rauwolfia alkaloid|
+A5001653|allergen|Razoxane|
+A5001654|allergen|Red food dye|
+A5001655|allergen|Red meat|
+A5001656|allergen|Red oak pollen|
+A5001657|allergen|Red Pepper|
+A5001658|allergen|Red skin potato|
+A5001659|allergen|Remifentanil|
+A5001660|allergen|Remoxipride|
+A5001661|allergen|Reproterol|
+A5001662|allergen|Retinoid|
+A5001663|allergen|Retroviral protease inhibitor|
+A5001664|allergen|Reverse transcriptase inhibitor|
+A5001665|allergen|Rhizopus nigricans|
+A5001666|allergen|Ribavirin|
+A5001667|allergen|Rice starch|
+A5001668|allergen|Rifabutin|
+A5001669|allergen|Rifampicin|
+A5001670|allergen|Rimiterol|
+A5001671|allergen|Risperidone|
+A5001672|allergen|Ritodrine|
+A5001673|allergen|Rocuronium|
+A5001674|allergen|Rodents|
+A5001675|allergen|Rose flower pollen|
+A5001676|allergen|Rosoxacin|
+A5001677|allergen|Rotavirus vaccine|
+A5001678|allergen|Rough marsh elder pollen|
+A5001679|allergen|Rough pigweed pollen|
+A5001680|allergen|Rubber|
+A5001681|allergen|Rubberized cloth|
+A5001682|allergen|Rubella vaccine|
+A5001683|allergen|Russian olive pollen|
+A5001684|allergen|Russian thistle pollen|
+A5001685|allergen|Rye|
+A5001686|allergen|Rye cultivated pollen|
+A5001687|allergen|Saccharin|
+A5001688|allergen|Salicylate|
+A5001689|allergen|Salmeterol|
+A5001690|allergen|Salmon|
+A5001691|allergen|Salmon calcitonin|
+A5001692|allergen|Salt cedar pollen|
+A5001693|allergen|Salt grass pollen|
+A5001694|allergen|Sardine|
+A5001695|allergen|Scale fish|
+A5001696|allergen|Scallop|
+A5001697|allergen|Scopolamine|
+A5001698|allergen|Scopolamine hydrobromide|
+A5001699|allergen|Scorpion venom|
+A5001700|allergen|Seafood|
+A5001701|allergen|Secobarbital|
+A5001702|allergen|Second generation cephalosporin|
+A5001703|allergen|Sedating antihistamine|
+A5001704|allergen|Sedative|
+A5001705|allergen|Seed|
+A5001706|allergen|Selective beta-1 adrenoceptor stimulants|
+A5001707|allergen|Selective beta-2 adrenoceptor stimulants|
+A5001708|allergen|Selective estrogen receptor modulator|
+A5001709|allergen|Selective serotonin re-uptake inhibitor|
+A5001710|allergen|Selegiline|
+A5001711|allergen|Senna|
+A5001712|allergen|Serpula lacrymans|
+A5001713|allergen|Sertraline|
+A5001714|allergen|Serum|
+A5001715|allergen|Sesame seed|
+A5001716|allergen|Sevoflurane|
+A5001717|allergen|Sheep epithelium|
+A5001718|allergen|Sheep sorrel pollen|
+A5001719|allergen|Sheep wool|
+A5001720|allergen|Shellfish|
+A5001721|allergen|Shrimp|
+A5001722|allergen|Shrimp product|
+A5001723|allergen|Silicone|
+A5001724|allergen|Silk|
+A5001725|allergen|Silver catgut|
+A5001726|allergen|Silver nitrate|
+A5001727|allergen|Silver sulfadiazine|
+A5001728|allergen|Similac|
+A5001729|allergen|Simvastatin|
+A5001730|allergen|Skeletal muscle relaxant|
+A5001731|allergen|Smallpox vaccine|
+A5001732|allergen|Smooth muscle relaxant|
+A5001733|allergen|Snail|
+A5001734|allergen|Soap|
+A5001735|allergen|Sodium fluoride|
+A5001736|allergen|Sodium fusidate|
+A5001737|allergen|Sodium iron edetate|
+A5001738|allergen|Sodium nitrite|
+A5001739|allergen|Sodium nitroprusside|
+A5001740|allergen|Sodium perborate|
+A5001741|allergen|Sodium picosulfate|
+A5001742|allergen|Sodium polystyrene sulfonate|
+A5001743|allergen|Sodium stibogluconate|
+A5001744|allergen|Sodium tetradecyl sulfate|
+A5001745|allergen|Sodium thiosulfate|
+A5001746|allergen|Solenopsis wagneri|
+A5001747|allergen|Somatropin|
+A5001748|allergen|Sotalol|
+A5001749|allergen|Soy|
+A5001750|allergen|Soy sauce|
+A5001751|allergen|Soya bean|
+A5001752|allergen|Soybean|
+A5001753|allergen|Spectinomycin|
+A5001754|allergen|Spice|
+A5001755|allergen|Spider venom|
+A5001756|allergen|Spiders|
+A5001757|allergen|Spinach|
+A5001758|allergen|Spiny lobster|
+A5001759|allergen|Spiny pigweed pollen|
+A5001760|allergen|Spironolactone|
+A5001761|allergen|Sporobolomyces roseus|
+A5001762|allergen|Squash|
+A5001763|allergen|Squid|
+A5001764|allergen|Stanozolol|
+A5001765|allergen|Stemphylium botryosum|
+A5001766|allergen|Stinging midge|
+A5001767|allergen|Storage mites|
+A5001768|allergen|Storage mites acarus|
+A5001769|allergen|Storage mites lepidoglypus|
+A5001770|allergen|Storage mites tyrophabus|
+A5001771|allergen|Strawberry|
+A5001772|allergen|Streptodornase preparation|
+A5001773|allergen|Streptokinase|
+A5001774|allergen|Streptokinase agent|
+A5001775|allergen|Streptomycin|
+A5001776|allergen|Streptomycin sulfate|
+A5001777|allergen|Substance|
+A5001778|allergen|Substituted amphetamine|
+A5001779|allergen|Succinylcholine|
+A5001780|allergen|Sucralfate|
+A5001781|allergen|Sufentanil|
+A5001782|allergen|Sugar|
+A5001783|allergen|Sulconazole|
+A5001784|allergen|Sulfacetamide|
+A5001785|allergen|Sulfadiazine|
+A5001786|allergen|Sulfadimethoxine|
+A5001787|allergen|Sulfaguanidine|
+A5001788|allergen|Sulfamethazine|
+A5001789|allergen|Sulfamethoxazole|
+A5001790|allergen|Sulfametopyrazine|
+A5001791|allergen|Sulfasalazine|
+A5001792|allergen|Sulfaurea|
+A5001793|allergen|Sulfinpyrazone|
+A5001794|allergen|Sulfiram|
+A5001795|allergen|Sulfisoxazole|
+A5001796|allergen|Sulfite and/or sulfite derivative|
+A5001797|allergen|Sulfites|
+A5001798|allergen|Sulfonamide|
+A5001799|allergen|Sulfonamide diuretic|
+A5001800|allergen|Sulfonamide-sulfonamide combination|
+A5001801|allergen|Sulfonylurea|
+A5001802|allergen|Sulfur|
+A5001803|allergen|Sulindac|
+A5001804|allergen|Sulpiride|
+A5001805|allergen|Sunflower Seed|
+A5001806|allergen|Sweet Chestnut|
+A5001807|allergen|Sweet gum pollen|
+A5001808|allergen|Sweet potato|
+A5001809|allergen|Sweet vernal grass pollen|
+A5001810|allergen|Sweeteners|
+A5001811|allergen|Swine epithelium|
+A5001812|allergen|Swiss cheese|
+A5001813|allergen|Swordfish|
+A5001814|allergen|Sycamore pollen|
+A5001815|allergen|Sympathomimetic agent|
+A5001816|allergen|Talampicillin|
+A5001817|allergen|Tamoxifen|
+A5001818|allergen|Tangerine|
+A5001819|allergen|Tape|
+A5001820|allergen|Tarragon|
+A5001821|allergen|Tazobactam|
+A5001822|allergen|Tea|
+A5001823|allergen|Teicoplanin|
+A5001824|allergen|Temafloxacin|
+A5001825|allergen|Temazepam|
+A5001826|allergen|Temocillin|
+A5001827|allergen|Tenoxicam|
+A5001828|allergen|Terazosin|
+A5001829|allergen|Terbinafine|
+A5001830|allergen|Terbutaline|
+A5001831|allergen|Terfenadine|
+A5001832|allergen|Teriparatide|
+A5001833|allergen|Terlipressin|
+A5001834|allergen|Termites|
+A5001835|allergen|Terodiline|
+A5001836|allergen|Terpene|
+A5001837|allergen|Testosterone|
+A5001838|allergen|Tetanus immunoglobulin|
+A5001839|allergen|Tetanus vaccine|
+A5001840|allergen|Tetrabenazine|
+A5001841|allergen|Tetracaine|
+A5001842|allergen|Tetracosactide|
+A5001843|allergen|Tetracyclic antidepressant|
+A5001844|allergen|Tetracycline|
+A5001845|allergen|Tetracycline hydrochloride|
+A5001846|allergen|Theophylline|
+A5001847|allergen|Thiabendazole|
+A5001848|allergen|Thiazide diuretic|
+A5001849|allergen|Thiazolidinedione|
+A5001850|allergen|Thiethylperazine|
+A5001851|allergen|Thioguanine|
+A5001852|allergen|Thiopentone|
+A5001853|allergen|Thioridazine|
+A5001854|allergen|Thiotepa|
+A5001855|allergen|Thiouracil|
+A5001856|allergen|Thiourea|
+A5001857|allergen|Thioxanthene derivative antipsychotic agent|
+A5001858|allergen|Third generation cephalosporin|
+A5001859|allergen|Thromboplastin|
+A5001860|allergen|Thyme|
+A5001861|allergen|Thymol|
+A5001862|allergen|Thymoxamine|
+A5001863|allergen|Thyroid hormone|
+A5001864|allergen|Thyrotropin releasing factor|
+A5001865|allergen|Thyroxine|
+A5001866|allergen|Tiaprofenic acid|
+A5001867|allergen|Tibolone|
+A5001868|allergen|Ticarcillin|
+A5001869|allergen|Timolol|
+A5001870|allergen|Timothy pollen|
+A5001871|allergen|Tinidazole|
+A5001872|allergen|Tinzaparin|
+A5001873|allergen|Tioconazole|
+A5001874|allergen|Tobacco|
+A5001875|allergen|Tobramycin|
+A5001876|allergen|Tocainide|
+A5001877|allergen|Tolazamide|
+A5001878|allergen|Tolbutamide|
+A5001879|allergen|Tolmetin|
+A5001880|allergen|Tolnaftate|
+A5001881|allergen|Tomato|
+A5001882|allergen|Topical salicylate|
+A5001883|allergen|Topical selenium|
+A5001884|allergen|Torsemide|
+A5001885|allergen|Tragacanth|
+A5001886|allergen|Tramadol|
+A5001887|allergen|Trandolapril|
+A5001888|allergen|Tranexamic acid|
+A5001889|allergen|Tranylcypromine|
+A5001890|allergen|Trazodone|
+A5001891|allergen|Tree of heaven pollen|
+A5001892|allergen|Tree pollen|
+A5001893|allergen|Tree resin|
+A5001894|allergen|Treosulfan|
+A5001895|allergen|Tretinoin|
+A5001896|allergen|Triamcinolone|
+A5001897|allergen|Triamterene|
+A5001898|allergen|Triarylmethane azo disinfectant dye|
+A5001899|allergen|Triazene antineoplastic|
+A5001900|allergen|Triazolam|
+A5001901|allergen|Triazole antifungal|
+A5001902|allergen|Trichloroethylene|
+A5001903|allergen|Trichoderma viridae|
+A5001904|allergen|Triclofos sodium|
+A5001905|allergen|Triclosan|
+A5001906|allergen|Tricyclic antidepressant|
+A5001907|allergen|Trientine|
+A5001908|allergen|Trifluoperazine|
+A5001909|allergen|Trifluperidol|
+A5001910|allergen|Trifluridine|
+A5001911|allergen|Trihexyphenidyl|
+A5001912|allergen|Trilostane|
+A5001913|allergen|Trimeprazine|
+A5001914|allergen|Trimethaphan|
+A5001915|allergen|Trimethoprim|
+A5001916|allergen|Trimipramine|
+A5001917|allergen|Tripotassium dicitratobismuthate|
+A5001918|allergen|Triprolidine|
+A5001919|allergen|Triptorelin|
+A5001920|allergen|Tropicamide|
+A5001921|allergen|Trout|
+A5001922|allergen|Tryptophan agent|
+A5001923|allergen|Tuberculin purified protein derivative|
+A5001924|allergen|Tubocurarine|
+A5001925|allergen|Tulip pollen|
+A5001926|allergen|Tulobuterol|
+A5001927|allergen|Tuna|
+A5001928|allergen|Turkey meat|
+A5001929|allergen|Turkey oak pollen|
+A5001930|allergen|Tyloxapol|
+A5001931|allergen|Typhoid polysaccharide vaccine|
+A5001932|allergen|Typhoid vaccine|
+A5001933|allergen|Typhoid whole cell vaccine|
+A5001934|allergen|Tyramine|
+A5001935|allergen|Ulcer healing agent|
+A5001936|allergen|Undecenoates|
+A5001937|allergen|Urea cream|
+A5001938|allergen|Uricosuric agent|
+A5001939|allergen|Urokinase|
+A5001940|allergen|Ursodiol|
+A5001941|allergen|Vaccine|Vaccine|
+A5001943|allergen|Valaciclovir|
+A5001944|allergen|Valproate sodium|
+A5001945|allergen|Vancomycin|
+A5001946|allergen|Vanilla|
+A5001947|allergen|Varicella-zoster virus antibody|
+A5001948|allergen|Vasoconstrictor|
+A5001949|allergen|Vasodilator|
+A5001950|allergen|Vecuronium|
+A5001951|allergen|Vegetable|
+A5001952|allergen|Velvet grass pollen|
+A5001953|allergen|Venlafaxine|
+A5001954|allergen|Venom|
+A5001955|allergen|Verapamil|
+A5001956|allergen|Vidarabine|
+A5001957|allergen|Vigabatrin|
+A5001958|allergen|Viloxazine|
+A5001959|allergen|Vinblastine|
+A5001960|allergen|Vinca alkaloid|
+A5001961|allergen|Vincristine|
+A5001962|allergen|Vindesine|
+A5001963|allergen|Viscosity modifier|
+A5001964|allergen|Vitamin|
+A5001965|allergen|Vitamin A|
+A5001966|allergen|Vitamin B|
+A5001967|allergen|Vitamin B>12a<|
+A5001968|allergen|Vitamin B1|
+A5001969|allergen|Vitamin B12|
+A5001970|allergen|Vitamin B6|
+A5001971|allergen|Vitamin D|
+A5001972|allergen|Vitamin K|
+A5001973|allergen|von Willebrand factor|
+A5001974|allergen|Wall pellitory pollen|
+A5001975|allergen|Walnut|
+A5001976|allergen|Walnut tree pollen|
+A5001977|allergen|Warfarin|
+A5001978|allergen|Wasp venom|
+A5001979|allergen|Wasps|
+A5001980|allergen|Water oak pollen|
+A5001981|allergen|Watermelon|
+A5001982|allergen|Water-soluble vitamin|
+A5001983|allergen|Weed pollen|
+A5001984|allergen|Western ragweed pollen|
+A5001985|allergen|Wheat|
+A5001986|allergen|Wheat pollen cultivated|
+A5001987|allergen|Wheat starch|
+A5001988|allergen|Whey|
+A5001989|allergen|White ash pollen|
+A5001990|allergen|White Bean|
+A5001991|allergen|White faced hornet|
+A5001992|allergen|White mulberry pollen|
+A5001993|allergen|White oak pollen|
+A5001994|allergen|White paraffin|
+A5001995|allergen|White pine pollen|
+A5001996|allergen|White zucchini squash|
+A5001997|allergen|Wild rye pollen|
+A5001998|allergen|Wild silk|
+A5001999|allergen|Willow oak pollen|
+A5002000|allergen|Willow pollen|
+A5002001|allergen|Wine|
+A5002002|allergen|Wood|
+A5002003|allergen|Wool|
+A5002004|allergen|Wool alcohols|
+A5002005|allergen|Wormwood pollen|
+A5002006|allergen|Xamoterol|
+A5002007|allergen|Xanthine agent|
+A5002008|allergen|Xanthine oxidase inhibitor|
+A5002009|allergen|Xipamide|
+A5002010|allergen|X-ray contrast media|
+A5002011|allergen|Xylometazoline|
+A5002012|allergen|Yam|
+A5002013|allergen|Yeast|
+A5002014|allergen|Yellow Food Dye|
+A5002015|allergen|Yellow hornet|
+A5002016|allergen|Yellow paraffin|
+A5002017|allergen|Yellow summer squash|
+A5002018|allergen|Yogurt|
+A5002019|allergen|Zalcitabine|
+A5002020|allergen|Zidovudine|
+A5002021|allergen|Zinc compound|
+A5002022|allergen|Zinc insulin|
+A5002023|allergen|Zolpidem|
+A5002024|allergen|Zopiclone|
+A5002025|allergen|Zuclopenthixol|
+A5002026|allergen|Zuclopenthixol decanoate|
+A5002027|severity|Moderate|
+A5002028|severity|Severe|
+A5002029|severity|Mild|
+A5002030|severity|Mild to moderate|
+A5002031|severity|Moderate to severe|
+A5002032|severity|Very severe|
+A5002033|severity|Moderate|
+A5002034|severity|Severe|
+A5002035|reaction|AV junctional (nodal) rhythm|
+A5002036|reaction|Abdominal pain|
+A5002037|reaction|Acute labyrinthitis|
+A5002038|reaction|Acute renal insufficiency|
+A5002039|reaction|Agitation|
+A5002040|reaction|Agranulocytosis|
+A5002041|reaction|Alopecia|
+A5002042|reaction|Anaphylaxis|
+A5002043|reaction|Anemia|
+A5002044|reaction|Angina|
+A5002045|reaction|Angioedema|
+A5002046|reaction|Anhedonia|
+A5002047|reaction|Anorexia|
+A5002048|reaction|Anorgasmia|
+A5002049|reaction|Anuria|
+A5002050|reaction|Anxiety|
+A5002051|reaction|Apnea|
+A5002052|reaction|Aptyalism|
+A5002053|reaction|Arthralgias|
+A5002054|reaction|Arthritis|
+A5002055|reaction|Asthma|
+A5002056|reaction|Ataxia|
+A5002057|reaction|Athetosis|
+A5002058|reaction|Auditory hallucination|
+A5002059|reaction|Bleeding|
+A5002060|reaction|Bloody diarhhea|
+A5002061|reaction|Bloody stools|
+A5002062|reaction|Blurred vision|
+A5002063|reaction|Bradycardia|
+A5002064|reaction|Bradypnea|
+A5002065|reaction|Breast engorgement|
+A5002066|reaction|Bronchoconstriction|
+A5002067|reaction|Bronchospasm|
+A5002068|reaction|Cardiac arrest|
+A5002069|reaction|Chest tightness|
+A5002070|reaction|Chest pain|
+A5002071|reaction|Cheyne-Stokes respiration|
+A5002072|reaction|Chills|
+A5002073|reaction|Chronic cough|
+A5002074|reaction|Chronic renal failure|
+A5002075|reaction|Coma|
+A5002076|reaction|Conduction disorder of the heart|
+A5002077|reaction|Confusion|
+A5002078|reaction|Conjunctival congestion|
+A5002079|reaction|Constipation|
+A5002080|reaction|Contact dermatitis|
+A5002081|reaction|Convulsions|
+A5002082|reaction|Cough|
+A5002083|reaction|Crackles|
+A5002084|reaction|Deafness|
+A5002085|reaction|Decreased neutrophil count|
+A5002086|reaction|Decreased leukocyte count|
+A5002087|reaction|Decreased libido|
+A5002088|reaction|Decreased renal function|
+A5002089|reaction|Delirium|
+A5002090|reaction|Delusion|
+A5002091|reaction|Depressive disorder|
+A5002092|reaction|Dermatitis|
+A5002093|reaction|Diaphoresis|
+A5002094|reaction|Diarrhea|
+A5002095|reaction|Diffuse paresthesia|
+A5002096|reaction|Diplopia|
+A5002097|reaction|Disturbed coordination|
+A5002098|reaction|Dizziness|
+A5002099|reaction|Drowsiness|
+A5002100|reaction|Dry nose|
+A5002101|reaction|Dry throat|
+A5002102|reaction|Dyskinesia|
+A5002103|reaction|Dyspepsia|
+A5002104|reaction|Dyspnea|
+A5002105|reaction|Dystonia|
+A5002106|reaction|Dysuria|
+A5002107|reaction|ECG changes|
+A5002108|reaction|Ecchymosis|
+A5002109|reaction|Eczema|
+A5002110|reaction|Edema|
+A5002111|reaction|Eosinophilia|
+A5002112|reaction|Epigastric distress|
+A5002113|reaction|Epistaxis|
+A5002114|reaction|Erythema|
+A5002115|reaction|Euphoria|
+A5002116|reaction|Excitation|
+A5002117|reaction|Expiratory wheeze|
+A5002118|reaction|Expired|
+A5002119|reaction|Eye swelling|
+A5002120|reaction|Face flushed|
+A5002121|reaction|Facial dyskinesia|
+A5002122|reaction|Fatigue|
+A5002123|reaction|Febrile seizure|
+A5002124|reaction|Feeling of Warmth|
+A5002125|reaction|Fever|
+A5002126|reaction|Flushing|
+A5002127|reaction|Galactorrhea|
+A5002128|reaction|Gastric ulcer|
+A5002129|reaction|Gastrointestinal reaction|
+A5002130|reaction|Gastrointestinal ulcer|
+A5002131|reaction|Generalized rash|
+A5002132|reaction|Generalized weakness|
+A5002133|reaction|Gingival hyperplasia|
+A5002134|reaction|Glaucoma|
+A5002135|reaction|Grand mal epilepsy|
+A5002136|reaction|Grand mal seizure|
+A5002137|reaction|Grand mal status epilepticus|
+A5002138|reaction|Gynecomastia|
+A5002139|reaction|Headache|
+A5002140|reaction|Hearing loss|
+A5002141|reaction|Heart block|
+A5002142|reaction|Hematuria|
+A5002143|reaction|Hepatitis|
+A5002144|reaction|Hospitalization|
+A5002145|reaction|Hyperkalemia|
+A5002146|reaction|Hyperphagia|
+A5002147|reaction|Hypertension|
+A5002148|reaction|Hypokalemia|
+A5002149|reaction|Hypoprothrombinemia|
+A5002150|reaction|Hypotension|
+A5002151|reaction|Hypoxia|
+A5002152|reaction|Inappropriate penile erection|
+A5002153|reaction|Increased dreaming|
+A5002154|reaction|Increased hemoglobin|
+A5002155|reaction|Increased lactate dehydrogenase|
+A5002156|reaction|Increased libido|
+A5002157|reaction|Insomnia|
+A5002158|reaction|Inspiratory wheeze|
+A5002159|reaction|Irritable|
+A5002160|reaction|Ischemia|
+A5002161|reaction|Itching of skin|
+A5002162|reaction|Itching eyes|
+A5002163|reaction|Watering eyes|
+A5002164|reaction|Jaundice|
+A5002165|reaction|Laryngeal edema|
+A5002166|reaction|Lethargy|
+A5002167|reaction|Leukocytosis|
+A5002168|reaction|Leukopenia|
+A5002169|reaction|Life-threatening illness|
+A5002170|reaction|Localized edema|
+A5002171|reaction|Malaise|
+A5002172|reaction|Male erectile disorder|
+A5002173|reaction|Medication not effective|
+A5002174|reaction|Miosis|
+A5002175|reaction|Myalgia|
+A5002176|reaction|Myocardial infarction|
+A5002177|reaction|Nasal congestion|
+A5002178|reaction|Nausea|
+A5002179|reaction|Vomiting|
+A5002180|reaction|Nephropathy|
+A5002181|reaction|Nervousness|
+A5002182|reaction|Neurological symptoms|
+A5002183|reaction|Neuropathy|
+A5002184|reaction|Neutropenia|
+A5002185|reaction|Nightmares|
+A5002186|reaction|Nocturnal cough|
+A5002187|reaction|Numbness|
+A5002188|reaction|Oliguria|
+A5002189|reaction|Optic atrophy|
+A5002190|reaction|Oral edema|
+A5002191|reaction|Oral allergy syndrome|
+A5002192|reaction|Oronasopharyngeal irritation|
+A5002193|reaction|Orthostatic hypotension|
+A5002194|reaction|Pain|
+A5002195|reaction|Palpitation|
+A5002196|reaction|Pancreatitis|
+A5002197|reaction|Pancytopenia|
+A5002198|reaction|Papular Rash|
+A5002199|reaction|Paresthesia|
+A5002200|reaction|Parkinsonian-Like syndrome|
+A5002201|reaction|Paroxysmal nocturnal dyspnea|
+A5002202|reaction|Permanently disabled|
+A5002203|reaction|Phlebitis|
+A5002204|reaction|Photoallergic dermatitis|
+A5002205|reaction|Photosensitivity|
+A5002206|reaction|Pneumothorax|
+A5002207|reaction|Postictal depression|
+A5002208|reaction|Premature cardiac complexes|
+A5002209|reaction|Priapism|
+A5002210|reaction|Productive cough|
+A5002211|reaction|Prolonged hospitalization|
+A5002212|reaction|Psychosis|
+A5002213|reaction|Ptosis of eyelid|
+A5002214|reaction|Pulmonary embolus|
+A5002215|reaction|Pulmonary eosinophilia|
+A5002216|reaction|Purpura|
+A5002217|reaction|Rash|
+A5002218|reaction|Renal insufficiency|
+A5002219|reaction|Respiratory arrest|
+A5002220|reaction|Respiratory distress|
+A5002221|reaction|Respiratory failure|
+A5002222|reaction|Retrograde ejaculation|
+A5002223|reaction|Rhinitis|
+A5002224|reaction|Rhinorrhea|
+A5002225|reaction|Rhonchi|
+A5002226|reaction|Rigors|
+A5002227|reaction|Shaking chills|
+A5002228|reaction|Sensory hallucination|
+A5002229|reaction|Serum Sickness|
+A5002230|reaction|Severe rash|
+A5002231|reaction|Sexual dysfunction|
+A5002232|reaction|Shivering|
+A5002233|reaction|Sinus bradycardia|
+A5002234|reaction|Sinusitis|
+A5002235|reaction|Sneezing|
+A5002236|reaction|Somatic Hallucination|
+A5002237|reaction|Speech disturbances|
+A5002238|reaction|Stevens-Johnson syndrome|
+A5002239|reaction|Stomatitis|
+A5002240|reaction|Swelling|
+A5002241|reaction|Swollen lips|
+A5002242|reaction|Syncope|
+A5002243|reaction|Tachycardia|
+A5002244|reaction|Tachypnea|
+A5002245|reaction|Tactile Hallucination|
+A5002246|reaction|Tearing|
+A5002247|reaction|Throat swelling|
+A5002248|reaction|Thrombocytopenia|
+A5002249|reaction|Tingling|
+A5002250|reaction|Tinnitus|
+A5002251|reaction|Toxic epidermal necrolysis|
+A5002252|reaction|Transient ST changes|
+A5002253|reaction|Tremors|
+A5002254|reaction|Unconsciousness|
+A5002255|reaction|Unknown|
+A5002256|reaction|Urinary frequency|
+A5002257|reaction|Urinary hesitancy|
+A5002258|reaction|Urinary incontinence|
+A5002259|reaction|Urinary retention|
+A5002260|reaction|Urticaria|
+A5002261|reaction|Uveitis|
+A5002262|reaction|Vasculitis|
+A5002263|reaction|Vertigo|
+A5002264|reaction|Visual disturbance|
+A5002265|reaction|Vomiting|
+A5002266|reaction|Weeping Skin|
+A5002267|reaction|Weight gain|
+A5002268|reaction|Wheezing|
