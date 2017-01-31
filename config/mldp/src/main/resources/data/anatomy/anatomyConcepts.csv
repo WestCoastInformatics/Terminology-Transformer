@@ -1,0 +1,3204 @@
+terminologyId,feature,name,termType,origId
+A305122,position,Deep,pt,795002
+A305123,position,Caudal,pt,3583002
+A305124,position,Peripheral,pt,14414005
+A305125,position,Juxta-posed,pt,18769003
+A305126,position,Superficial,pt,26283006
+A305127,position,Preaxial,pt,32400000
+A305128,position,Vertical,pt,33096000
+A305129,position,Efferent,pt,33843005
+A305130,position,Anterolateral,pt,37197008
+A305131,position,Longitudinal,pt,38717003
+A305132,position,Proximal,pt,40415009
+A305133,position,Apical,pt,43674008
+A305134,position,Distal,pt,46053002
+A305135,position,Lateral,pt,49370004
+A305136,position,Afferent,pt,49530007
+A305137,position,Basal,pt,57195005
+A305138,position,Postaxial,pt,60583000
+A305139,position,Segmental,pt,62372003
+A305140,position,Transverse,pt,62824007
+A305141,position,Contiguous,pt,65424008
+A305142,position,Extracellular,pt,69320009
+A305143,position,Common,pt,72906007
+A305144,position,Intracellular,pt,83167003
+A305145,position,Posterolateral,pt,90069004
+A305146,position,Long axis,pt,103339001
+A305147,position,Short axis,pt,103340004
+A305148,position,Off axis,pt,103341000
+A305149,position,Mid-longitudinal,pt,103342007
+A305150,position,Parasagittal,pt,103343002
+A305151,position,Marginal,pt,112233002
+A305152,position,Vertical long axis,pt,131185001
+A305153,position,Horizontal long axis,pt,131186000
+A305154,position,Anterior,pt,255549009
+A305155,position,Posterior,pt,255551008
+A305156,position,Dorsal,pt,255554000
+A305157,position,Medial,pt,255561001
+A305158,position,Mid,pt,255562008
+A305159,position,Mid-zone,pt,255563003
+A305160,position,Septal,pt,255584008
+A305161,position,Internal,pt,260521003
+A305162,position,Median,pt,260528009
+A305163,position,Anterior dorsal,pt,261045000
+A305164,position,Bicoronal,pt,261059007
+A305165,position,External,pt,261074009
+A305166,position,Inferior,pt,261089000
+A305167,position,Lower,pt,261122009
+A305168,position,Lower anterior,pt,261123004
+A305169,position,Mediolateral,pt,261129000
+A305170,position,Mural,pt,261136004
+A305171,position,Posterior dorsal,pt,261165005
+A305172,position,Upper,pt,261183002
+A305173,position,Upper anterior,pt,261184008
+A305174,position,Exteriorized,pt,261788001
+A305175,position,Foraminal,pt,263759007
+A305176,position,Separate,pt,263869007
+A305177,position,Ostium,pt,264114003
+A305178,position,Posterior pole,pt,264153007
+A305179,position,Superior,pt,264217000
+A305180,position,Orthotopic,pt,298107004
+A305181,position,Heterotopic,pt,298108009
+A305182,position,Ectopic,pt,298109001
+A305183,position,Low - site descriptor,pt,306766009
+A305184,position,High - site descriptor,pt,306767000
+A305185,position,Bottom,pt,421610009
+A305186,position,Top,pt,421812003
+A305187,position,Incisal,pt,710097009
+A305188,position,Occlusal,pt,710098004
+A305189,position,Mesial,pt,710099007
+A305190,position,Dorsoventral,pt,7.41E+11
+A305191,position,Dorsolateral,pt,7.61E+11
+A305192,position,Ventrolateral,pt,7.71E+11
+A305193,position,Palmar,pt,7.81E+11
+A305194,laterality,Left,pt,7771000
+A305195,laterality,Right and left,pt,51440002
+A305196,laterality,Unilateral left,pt,419161000
+A305197,laterality,Right,pt,24028007
+A305198,laterality,Unilateral right,pt,419465000
+A305199,bodySite,Thoracic,pt,51185008
+A305200,bodySite,Tooth,pt,38199008
+A305201,bodySite,Face,pt,89545001
+A305202,bodySite,Brain,pt,12738006
+A305203,bodySite,Metatarsal bone,pt,53884002
+A305204,bodySite,Joint,pt,39352004
+A305205,bodySite,Erythrocyte,pt,41898006
+A305206,bodySite,Eye,pt,81745001
+A305207,bodySite,Bone,pt,272673000
+A305208,bodySite,Foot,pt,56459004
+A305209,bodySite,Muscle structure of foot,pt,67240005
+A305210,bodySite,Skeletal muscle,pt,127954009
+A305211,bodySite,Hip joint,pt,24136001
+A305212,bodySite,Inguinal region,pt,26893007
+A305213,bodySite,Bronchial,pt,955009
+A305214,bodySite,Chest wall,pt,78904004
+A305215,bodySite,Skin of perioral region of face,pt,110488009
+A305216,bodySite,hymen,pt,27907006
+A305217,bodySite,Abdominal,pt,113345001
+A305218,bodySite,Pharyngeal,pt,54066008
+A305219,bodySite,Esophageal,pt,32849002
+A305220,bodySite,Stomach,pt,69695003
+A305221,bodySite,Small intestinal,pt,30315005
+A305222,bodySite,Central surface region of chest,pt,279233000
+A305223,bodySite,parasternal region,pt,91691001
+A305224,bodySite,Large intestinal,pt,14742008
+A305225,bodySite,Liver,pt,10200004
+A305226,bodySite,Gallbladder,pt,28231008
+A305227,bodySite,Pancreatic,pt,15776009
+A305228,bodySite,Anorectal,pt,281088000
+A305229,bodySite,genitourinary system,pt,21514008
+A305230,bodySite,Female genital,pt,53065001
+A305231,bodySite,Vulval,pt,45292006
+A305232,bodySite,nervous system,pt,25087005
+A305233,bodySite,Head,pt,69536005
+A305234,bodySite,Lip,pt,48477009
+A305235,bodySite,Cranial nerve,pt,25238003
+A305236,bodySite,cerebellopontine angle,pt,21362003
+A305237,bodySite,Kidney,pt,64033007
+A305238,bodySite,costovertebral angle of twelfth rib,pt,91773002
+A305239,bodySite,Urinary bladder,pt,89837001
+A305240,bodySite,Urethral,pt,13648007
+A305241,bodySite,Placental,pt,78067005
+A305242,bodySite,Breast,pt,76752008
+A305243,bodySite,musculoskeletal system,pt,26107004
+A305244,bodySite,Pleural,pt,3120008
+A305245,bodySite,Pleural cavity,pt,91381003
+A305246,bodySite,Brainstem,pt,15926001
+A305247,bodySite,Skin,pt,39937001
+A305248,bodySite,Thoracic spinal nerve root,pt,66828007
+A305249,bodySite,fontanel of skull,pt,79361005
+A305250,bodySite,immune system,pt,116003000
+A305251,bodySite,cervical vertebra,pt,84667006
+A305252,bodySite,Nasal,pt,45206002
+A305253,bodySite,Central nervous system space,pt,279107003
+A305254,bodySite,visual system,pt,49549006
+A305255,bodySite,Corneal,pt,28726007
+A305256,bodySite,Fetal,pt,55460000
+A305257,bodySite,Tonsillar structure (palatine),pt,75573002
+A305258,bodySite,Gingival,pt,113279002
+A305259,bodySite,Abdominal aorta,pt,7832008
+A305260,bodySite,apex of heart,pt,13383001
+A305261,bodySite,Meninges,pt,1231004
+A305262,bodySite,Scleral,pt,18619003
+A305263,bodySite,Choroidal,pt,68703001
+A305264,bodySite,Retinal,pt,5665001
+A305265,bodySite,central nervous system,pt,21483005
+A305266,bodySite,Periodontal tissues,pt,8711009
+A305267,bodySite,Colon,pt,71854001
+A305268,bodySite,Abdominal cavity,pt,52731004
+A305269,bodySite,alpha Cell of islet,pt,61028007
+A305270,bodySite,Conjunctival,pt,29445007
+A305271,bodySite,Peritoneum (serous membrane),pt,15425007
+A305272,bodySite,Nasopharyngeal,pt,71836000
+A305273,bodySite,Gastrointestinal tract,pt,122865005
+A305274,bodySite,Intestinal,pt,113276009
+A305275,bodySite,Bone and/or joint,pt,306721000
+A305276,bodySite,Scrotal,pt,20233005
+A305277,bodySite,Olfactory nerve,pt,11522000
+A305278,bodySite,lymph node of head and neck,pt,312501005
+A305279,bodySite,Apophysis,pt,65000005
+A305280,bodySite,Abdominal wall,pt,83908009
+A305281,bodySite,Cerebrovascular system,pt,28661005
+A305282,bodySite,Body organ,pt,113343008
+A305283,bodySite,Body cavity,pt,91806002
+A305284,bodySite,cochlear window,pt,28784008
+A305285,bodySite,Ear ossicle,pt,41845008
+A305286,bodySite,Thyroid,pt,69748006
+A305287,bodySite,Endocrine pancreatic,pt,78696007
+A305288,bodySite,Parathyroid,pt,111002
+A305289,bodySite,Adrenal,pt,23451007
+A305290,bodySite,Adrenal cortex,pt,68594002
+A305291,bodySite,Osteoid tissue,pt,39365008
+A305292,bodySite,Brain tissue,pt,280369009
+A305293,bodySite,Extradural space of brain,pt,244436004
+A305294,bodySite,Cerebral,pt,83678007
+A305295,bodySite,Connective tissue,pt,21793004
+A305296,bodySite,bursa,pt,13351007
+A305297,bodySite,Temporal lobe,pt,78277001
+A305298,bodySite,limbic gyrus,pt,279209006
+A305299,bodySite,Maxillary sinus,pt,15924003
+A305300,bodySite,Frontal sinus,pt,55060009
+A305301,bodySite,Ethmoid sinus,pt,54215007
+A305302,bodySite,Sphenoid sinus,pt,24999009
+A305303,bodySite,Lung,pt,39607008
+A305304,bodySite,respiratory system,pt,20139000
+A305305,bodySite,Spinal cerebrospinal fluid pathway,pt,280401006
+A305306,bodySite,lymphatic vessel,pt,83555006
+A305307,bodySite,Facial nerve,pt,56052001
+A305308,bodySite,Limb,pt,66019005
+A305309,bodySite,"teeth, gums, and supporting structures",pt,28035005
+A305310,bodySite,Nerve,pt,3057000
+A305311,bodySite,Biliary tract,pt,34707002
+A305312,bodySite,venous sinus,pt,80334009
+A305313,bodySite,Macula lutea,pt,82859000
+A305314,bodySite,Ciliary body,pt,29534007
+A305315,bodySite,Diaphragm,pt,5798000
+A305316,bodySite,Skin structure of eyelid,pt,51360009
+A305317,bodySite,Eyelid,pt,80243003
+A305318,bodySite,Heart,pt,80891009
+A305319,bodySite,Myocardium,pt,74281007
+A305320,bodySite,Cardiac valve,pt,17401000
+A305321,bodySite,Atrial,pt,59652004
+A305322,bodySite,Cardiac conducting system,pt,24964005
+A305323,bodySite,artery of extremity,pt,4146003
+A305324,bodySite,pelvic vein,pt,13152008
+A305325,bodySite,Nasal sinus,pt,2095001
+A305326,bodySite,Cardiac ventricular,pt,21814001
+A305327,bodySite,Dental arch,pt,4442007
+A305328,bodySite,Temporomandibular joint,pt,53620006
+A305329,bodySite,Submandibular salivary apparatus,pt,54019009
+A305330,bodySite,Nasolabial sulcus,pt,55785008
+A305331,bodySite,mucous membrane of lip,pt,59641005
+A305332,bodySite,Appendix,pt,66754008
+A305333,bodySite,Inguinal canal,pt,90785001
+A305334,bodySite,Umbilical,pt,78220002
+A305335,bodySite,Duodenal,pt,38848004
+A305336,bodySite,Ileal,pt,34516001
+A305337,bodySite,Bile duct,pt,28273000
+A305338,bodySite,Vesicoureteric junction,pt,261187001
+A305339,bodySite,Ureteric,pt,87953007
+A305340,bodySite,Sigmoid colon,pt,60184004
+A305341,bodySite,detrusor muscle of urinary bladder,pt,367607007
+A305342,bodySite,urethral meatus,pt,87528003
+A305343,bodySite,Tunica vaginalis,pt,12817009
+A305344,bodySite,Processus vaginalis peritonei,pt,50245004
+A305345,bodySite,Preputial,pt,17880006
+A305346,bodySite,Vas deferens,pt,57671007
+A305347,bodySite,Fallopian tube,pt,31435000
+A305348,bodySite,Ovarian,pt,15497006
+A305349,bodySite,layer of uterine wall,pt,272666005
+A305350,bodySite,Pelvic peritoneum,pt,72372004
+A305351,bodySite,Vaginal,pt,76784001
+A305352,bodySite,Uterine,pt,35039007
+A305353,bodySite,Cervix uteri,pt,71252005
+A305354,bodySite,Lacrimal canaliculus,pt,32401001
+A305355,bodySite,Body of uterus,pt,23952005
+A305356,bodySite,region of peritoneal cavity,pt,243971001
+A305357,bodySite,scapular region of back,pt,7874003
+A305358,bodySite,pelvis,pt,118645006
+A305359,bodySite,Gravid uterus,pt,9258009
+A305360,bodySite,Pelvic,pt,12921003
+A305361,bodySite,endocrine system,pt,113331007
+A305362,bodySite,Nail,pt,72651009
+A305363,bodySite,body of vertebra,pt,3572006
+A305364,bodySite,Joint structure of spine,pt,8983005
+A305365,bodySite,Finger,pt,7569003
+A305366,bodySite,Toe,pt,29707007
+A305367,bodySite,nail of great toe,pt,38790000
+A305368,bodySite,nail of thumb,pt,28274006
+A305369,bodySite,Hand joint,pt,40238009
+A305370,bodySite,Metacarpophalangeal joint,pt,70420003
+A305371,bodySite,Glenohumeral joint,pt,85537004
+A305372,bodySite,Sternoclavicular joint,pt,7844006
+A305373,bodySite,Elbow joint,pt,16953009
+A305374,bodySite,Wrist joint,pt,74670003
+A305375,bodySite,Sacroiliac joint,pt,39723000
+A305376,bodySite,Knee joint,pt,49076000
+A305377,bodySite,Ankle joint,pt,70258002
+A305378,bodySite,Subtalar joint,pt,127863007
+A305379,bodySite,First metatarsophalangeal joint,pt,27824001
+A305380,bodySite,Interphalangeal toe joint,pt,105584000
+A305381,bodySite,patellofemoral joint,pt,129160003
+A305382,bodySite,articular cartilage,pt,41052006
+A305383,bodySite,head of humerus,pt,81965001
+A305384,bodySite,joint of toe,pt,122477008
+A305385,bodySite,labrum of acetabulum,pt,88692004
+A305386,bodySite,Acromioclavicular joint,pt,85856004
+A305387,bodySite,Tibiofibular joint,pt,312815003
+A305388,bodySite,Talocalcaneonavicular joint,pt,27162001
+A305389,bodySite,Metatarsophalangeal joint structure of lesser toe,pt,312818001
+A305390,bodySite,synovial tissue of joint,pt,88928006
+A305391,bodySite,Cervical spinal cord,pt,54785003
+A305392,bodySite,Spinal cord,pt,2748008
+A305393,bodySite,cervical intervertebral disc,pt,68818006
+A305394,bodySite,thoracic intervertebral disc,pt,5261000
+A305395,bodySite,lumbar intervertebral disc,pt,23526008
+A305396,bodySite,acromion,pt,31934006
+A305397,bodySite,coracoid process of scapula,pt,8931003
+A305398,bodySite,flexor pollicis longus muscle tendon sheath,pt,24367005
+A305399,bodySite,extensor hallucis longus muscle tendon sheath,pt,87775001
+A305400,bodySite,peroneus longus muscle tendon sheath,pt,11865008
+A305401,bodySite,Peroneus brevis tendon sheath,pt,305039005
+A305402,bodySite,tendon of fibularis longus,pt,91322007
+A305403,bodySite,Skeletal muscle structure of back,pt,79112004
+A305404,bodySite,thenar space,pt,68350007
+A305405,bodySite,midpalmar space,pt,58841000
+A305406,bodySite,hypothenar space,pt,16666006
+A305407,bodySite,humerus,pt,85050009
+A305408,bodySite,patella,pt,64234005
+A305409,bodySite,capitulum of humerus,pt,53978004
+A305410,bodySite,head of radius,pt,50184001
+A305411,bodySite,head of femur,pt,2812003
+A305412,bodySite,talus,pt,67453005
+A305413,bodySite,Iris,pt,41296002
+A305414,bodySite,fundus of eye,pt,65784005
+A305415,bodySite,subvalvular aortic region,pt,19797000
+A305416,bodySite,Parasympathetic nervous system,pt,23424009
+A305417,bodySite,Female urethral,pt,25182001
+A305418,bodySite,Skin structure of perineum,pt,48014002
+A305419,bodySite,cranium,pt,89546000
+A305420,bodySite,phalanx of great toe,pt,18930002
+A305421,bodySite,Rectum,pt,34402009
+A305422,bodySite,Pituitary,pt,56329008
+A305423,bodySite,tarsometatarsal joint,pt,52741001
+A305424,bodySite,Skin structure of buttock,pt,22180002
+A305425,bodySite,Skin structure of interscapular region of back,pt,11482004
+A305426,bodySite,Skin structure of flank,pt,34284005
+A305427,bodySite,Thoracic outlet,pt,64172009
+A305428,bodySite,Brachial plexus,pt,36582005
+A305429,bodySite,Lens clear,pt,78076003
+A305430,bodySite,Visual pathway,pt,280951005
+A305431,bodySite,Oculomotor nerve,pt,56193007
+A305432,bodySite,Celiac nervous plexus,pt,4150005
+A305433,bodySite,mandibular teeth,pt,58280001
+A305434,bodySite,spine,pt,51282000
+A305435,bodySite,Forearm,pt,14975008
+A305436,bodySite,Thumb,pt,76505004
+A305437,bodySite,Tendon,pt,13024002
+A305438,bodySite,Carotid artery,pt,69105007
+A305439,bodySite,Skeletal muscle structure of head,pt,22688005
+A305440,bodySite,Infratemporal region,pt,26672007
+A305441,bodySite,Submental space,pt,122499000
+A305442,bodySite,infratemporal fossa,pt,69541002
+A305443,bodySite,Skin structure of elbow,pt,74757004
+A305444,bodySite,Skin structure of forearm,pt,5742000
+A305445,bodySite,Cerebellar,pt,113305005
+A305446,bodySite,Skin structure of breast,pt,82038008
+A305447,bodySite,Frontal bone,pt,74872008
+A305448,bodySite,Zygomatic bone,pt,13881006
+A305449,bodySite,Sphenoid bone,pt,73117003
+A305450,bodySite,Temporal bone,pt,60911003
+A305451,bodySite,nasal-orbit bony complex,pt,110529000
+A305452,bodySite,Bone marrow,pt,14016003
+A305453,bodySite,Mediastinal,pt,72410000
+A305454,bodySite,Pericardial mesothelium,pt,67300002
+A305455,bodySite,Synostosis,pt,1216008
+A305456,bodySite,internasal suture of skull,pt,81930001
+A305457,bodySite,Joint structure of suture of skull,pt,51863000
+A305458,bodySite,sphenofrontal suture of skull,pt,43772001
+A305459,bodySite,Interventricular septum,pt,589001
+A305460,bodySite,crown of tooth,pt,75628001
+A305461,bodySite,Perineal,pt,38864007
+A305462,bodySite,Nipple,pt,24142002
+A305463,bodySite,deciduous tooth,pt,21644001
+A305464,bodySite,Arterial,pt,51114001
+A305465,bodySite,Chorionic,pt,74439004
+A305466,bodySite,Laryngeal,pt,4596009
+A305467,bodySite,Dentin,pt,84540008
+A305468,bodySite,cementoenamel junction,pt,58592000
+A305469,bodySite,periapical tissue,pt,128472006
+A305470,bodySite,pulp of tooth,pt,26671000
+A305471,bodySite,Gingival attachment,pt,48328000
+A305472,bodySite,retromolar area of mouth,pt,85816001
+A305473,bodySite,gingival sulcus,pt,110597005
+A305474,bodySite,Oral soft tissues,pt,74336005
+A305475,bodySite,Jaw region,pt,661005
+A305476,bodySite,Pulmonary vascular,pt,281158006
+A305477,bodySite,coronoid process of mandible,pt,124002
+A305478,bodySite,muscle of mastication,pt,53894007
+A305479,bodySite,Alveolar ridge,pt,272661000
+A305480,bodySite,alveolus dentalis,pt,46141003
+A305481,bodySite,Tooth root,pt,85077000
+A305482,bodySite,Bifurcation of tooth,pt,110586005
+A305483,bodySite,Uvula palatina,pt,26140008
+A305484,bodySite,Tongue,pt,21974007
+A305485,bodySite,Salivary duct,pt,86961006
+A305486,bodySite,peritoneal mesothelium,pt,34073007
+A305487,bodySite,Mesentery,pt,89679009
+A305488,bodySite,Omentum,pt,27398004
+A305489,bodySite,Glans clitoridis,pt,6504002
+A305490,bodySite,Autonomic nervous system,pt,72167002
+A305491,bodySite,Neck,pt,45048000
+A305492,bodySite,Hip region,pt,29836001
+A305493,bodySite,Extrapyramidal system,pt,76375004
+A305494,bodySite,Oral cavity,pt,74262004
+A305495,bodySite,Muscle structure of pharynx,pt,60494004
+A305496,bodySite,Nail bed,pt,56820002
+A305497,bodySite,cranial nerve nucleus,pt,19465004
+A305498,bodySite,Globus pallidus,pt,14738005
+A305499,bodySite,Orbicularis oculi muscle,pt,56753004
+A305500,bodySite,Frontal lobe,pt,83251001
+A305501,bodySite,Occipital lobe,pt,31065004
+A305502,bodySite,Rhinencephalon,pt,91362006
+A305503,bodySite,cingulate gyrus,pt,25221002
+A305504,bodySite,Parietal lobe,pt,16630005
+A305505,bodySite,Erectile structure of penis,pt,279710000
+A305506,bodySite,Optic nerve,pt,18234004
+A305507,bodySite,optic radiation,pt,70105001
+A305508,bodySite,extraocular muscle,pt,67833000
+A305509,bodySite,Abdominal plexus,pt,263937002
+A305510,bodySite,Spinal cord root  ganglion,pt,108348009
+A305511,bodySite,Sweat gland,pt,10410005
+A305512,bodySite,cerebral vein,pt,68351006
+A305513,bodySite,intracranial artery,pt,127955005
+A305514,bodySite,Fourth ventricle,pt,35918002
+A305515,bodySite,Uncinate gyrus,pt,279213004
+A305516,bodySite,Periorbital region,pt,1711002
+A305517,bodySite,Chin,pt,30291003
+A305518,bodySite,Preauricular region,pt,56185007
+A305519,bodySite,Lacrimal sac,pt,3954005
+A305520,bodySite,Urinary system,pt,122489005
+A305521,bodySite,substantia propria of cornea,pt,50546002
+A305522,bodySite,Choroidal and/or retinal structures,pt,303295006
+A305523,bodySite,Vitreous body,pt,47538007
+A305524,bodySite,retinal artery,pt,27988004
+A305525,bodySite,central vein of the retina,pt,62869001
+A305526,bodySite,Skin of side of jaw,pt,244096008
+A305527,bodySite,condyloid process of mandible,pt,67183008
+A305528,bodySite,Tympanic membrane,pt,42859004
+A305529,bodySite,Mastoid,pt,59066005
+A305530,bodySite,articulations of auditory ossicles,pt,7999001
+A305531,bodySite,Cochlear,pt,80169004
+A305532,bodySite,Labyrinth,pt,302462009
+A305533,bodySite,Semicircular canal,pt,279726004
+A305534,bodySite,Blood vessel,pt,59820001
+A305535,bodySite,Nasal cavity,pt,279549004
+A305536,bodySite,Nasal turbinate,pt,46607005
+A305537,bodySite,nasal vestibule,pt,48446007
+A305538,bodySite,Alar cartilage,pt,360954005
+A305539,bodySite,Laryngeal cartilage,pt,36847003
+A305540,bodySite,Vocal cord,pt,46105003
+A305541,bodySite,interstitial tissue of lung,pt,113254000
+A305542,bodySite,Tracheobronchial,pt,91724006
+A305543,bodySite,Tracheal,pt,44567001
+A305544,bodySite,Endocardium,pt,37949006
+A305545,bodySite,Pulmonary valve,pt,39057004
+A305546,bodySite,sinoatrial node,pt,88210001
+A305547,bodySite,atrioventricular node,pt,25943004
+A305548,bodySite,Atrioventricular bundle,pt,345000
+A305549,bodySite,Ventricular conducting pathway,pt,277943000
+A305550,bodySite,Conducting pathway,pt,277941003
+A305551,bodySite,aortic bifurcation,pt,73166001
+A305552,bodySite,Artery of trunk,pt,308734009
+A305553,bodySite,Coronary artery,pt,41801008
+A305554,bodySite,Thoracic aorta,pt,113262008
+A305555,bodySite,"artery of head, neck  brain",pt,47990007
+A305556,bodySite,Great saphenous vein,pt,60734001
+A305557,bodySite,small saphenous vein,pt,26805005
+A305558,bodySite,Female genital vein,pt,312599000
+A305559,bodySite,Venous,pt,29092000
+A305560,bodySite,lymph node,pt,59441001
+A305561,bodySite,lymphatic vessel of perianal region,pt,312512005
+A305562,bodySite,Aortic,pt,15825003
+A305563,bodySite,Glomerulus,pt,68288006
+A305564,bodySite,Splenic,pt,78961009
+A305565,bodySite,Finger joint,pt,125682004
+A305566,bodySite,Parotid gland,pt,45289007
+A305567,bodySite,Lacrimal gland,pt,13561001
+A305568,bodySite,Oral mucous membrane,pt,113277000
+A305569,bodySite,mucous membrane of tongue,pt,8001006
+A305570,bodySite,Dentition,pt,245543004
+A305571,bodySite,angle of mouth,pt,23161009
+A305572,bodySite,Aortic valve,pt,34202007
+A305573,bodySite,Cardioesophageal junction,pt,25271004
+A305574,bodySite,Prostatic,pt,41216001
+A305575,bodySite,Anal,pt,53505006
+A305576,bodySite,mesenteric artery,pt,86570000
+A305577,bodySite,Intrahepatic biliary tract,pt,90140006
+A305578,bodySite,Pancreatic duct,pt,69930009
+A305579,bodySite,Duodenal papilla,pt,78540008
+A305580,bodySite,Sphincter of Oddi,pt,51807001
+A305581,bodySite,Rutherford Morrison's pouch,pt,243977002
+A305582,bodySite,Retroperitoneal compartment,pt,82849001
+A305583,bodySite,Renal pelvis,pt,25990002
+A305584,bodySite,Renal calyx,pt,2334006
+A305585,bodySite,Perirenal tissue,pt,47145004
+A305586,bodySite,Peritoneal cavity,pt,83670000
+A305587,bodySite,Renal collecting system,pt,279371005
+A305588,bodySite,periureteral tissue,pt,24577006
+A305589,bodySite,Urinary outflow,pt,279500006
+A305590,bodySite,neck of urinary bladder,pt,64344009
+A305591,bodySite,Perivesical tissue,pt,312505001
+A305592,bodySite,periurethral tissue,pt,52498007
+A305593,bodySite,Urethral sphincter,pt,277855007
+A305594,bodySite,Testis,pt,40689003
+A305595,bodySite,Penile,pt,18911002
+A305596,bodySite,Seminal vesicle,pt,64739004
+A305597,bodySite,Spermatic cord,pt,49957000
+A305598,bodySite,fimbria of fallopian tube,pt,22675007
+A305599,bodySite,Broad ligament,pt,34411009
+A305600,bodySite,horn of uterus,pt,88590001
+A305601,bodySite,Endometrial cavity,pt,52393002
+A305602,bodySite,product of conception,pt,26864007
+A305603,bodySite,Umbilical cord,pt,29870000
+A305604,bodySite,Pericardial,pt,76848001
+A305605,bodySite,pituitary pars tuberalis,pt,53909008
+A305606,bodySite,Adrenal medulla,pt,38254008
+A305607,bodySite,multiple endocrine glands,pt,77637002
+A305608,bodySite,infrapatellar fat pad,pt,88775003
+A305609,bodySite,cuticle of nail,pt,6620001
+A305610,bodySite,fascia,pt,84820005
+A305611,bodySite,Skin structure of interdigital space of foot,pt,47960000
+A305612,bodySite,Palm (region),pt,21547004
+A305613,bodySite,Skin of finger,pt,56213003
+A305614,bodySite,Hair follicle,pt,67290009
+A305615,bodySite,Lymphatic tissue,pt,181768009
+A305616,bodySite,Subcutaneous fatty tissue,pt,67769002
+A305617,bodySite,Skin structure of perianal area,pt,21308002
+A305618,bodySite,Skin structure of scrotum,pt,81992007
+A305619,bodySite,Soft tissues,pt,87784001
+A305620,bodySite,ligament of knee joint,pt,68010000
+A305621,bodySite,Elbow joint synovium,pt,280445006
+A305622,bodySite,Zygapophyseal joint,pt,81168003
+A305623,bodySite,metacarpophalangeal joint of finger,pt,125683009
+A305624,bodySite,ligament of shoulder joint,pt,50024002
+A305625,bodySite,Elbow region,pt,127949000
+A305626,bodySite,ligament of elbow joint,pt,87218006
+A305627,bodySite,Ligament of wrist and/or hand,pt,182396003
+A305628,bodySite,capsule of radiocarpal joint,pt,29005008
+A305629,bodySite,pelvic girdle,pt,281252001
+A305630,bodySite,ligament of pelvic girdle,pt,244605003
+A305631,bodySite,Periarticular bone structure of ankle joint,pt,305020000
+A305632,bodySite,ligament of foot,pt,123861005
+A305633,bodySite,Tendon sheath,pt,15434002
+A305634,bodySite,Knee joint synovium,pt,280448008
+A305635,bodySite,epiphysis,pt,43719000
+A305636,bodySite,Knee meniscus,pt,43653007
+A305637,bodySite,Shoulder region,pt,16982005
+A305638,bodySite,Genital,pt,71934003
+A305639,bodySite,clavicle,pt,51299004
+A305640,bodySite,Inframammary skin crease,pt,280386003
+A305641,bodySite,lymphatic system,pt,89890002
+A305642,bodySite,Cystic duct,pt,77452001
+A305643,bodySite,Umbilical region,pt,90290004
+A305644,bodySite,Renal tubule,pt,58471003
+A305645,bodySite,Lymphoid system,pt,122490001
+A305646,bodySite,Cauda equina,pt,7173007
+A305647,bodySite,Subconjunctival space,pt,280957009
+A305648,bodySite,palpebral fissure,pt,595000
+A305649,bodySite,Lacrimal caruncle,pt,43045000
+A305650,bodySite,semilunar fold of conjunctiva,pt,38798007
+A305651,bodySite,meibomian gland,pt,1110006
+A305652,bodySite,Lacrimal drainage,pt,280426002
+A305653,bodySite,lacrimal punctum,pt,54369006
+A305654,bodySite,bulbar conjunctiva,pt,1832000
+A305655,bodySite,Limbal conjunctiva,pt,280674006
+A305656,bodySite,palpebral conjunctiva,pt,15768007
+A305657,bodySite,Limbus corneae,pt,59952002
+A305658,bodySite,lens capsule,pt,77155007
+A305659,bodySite,blood vessel of retina,pt,28758002
+A305660,bodySite,Optic disc,pt,81016008
+A305661,bodySite,retinal vein,pt,85003000
+A305662,bodySite,Macula branch of retinal vein,pt,280929002
+A305663,bodySite,fovea centralis,pt,67046006
+A305664,bodySite,Pinna,pt,113327001
+A305665,bodySite,Incus,pt,35395007
+A305666,bodySite,Malleus,pt,34080009
+A305667,bodySite,Stapes,pt,22718006
+A305668,bodySite,Surface region of abdomen,pt,272615000
+A305669,bodySite,subcostal region,pt,279025007
+A305670,bodySite,Iliac fossa,pt,8412003
+A305671,bodySite,Lumbar region back,pt,52612000
+A305672,bodySite,quadratus lumborum muscle,pt,6001004
+A305673,bodySite,Ankle region,pt,344001
+A305674,bodySite,obturator nerve,pt,60272005
+A305675,bodySite,Spinal nerve root,pt,69733000
+A305676,bodySite,iliohypogastric nerve,pt,16523009
+A305677,bodySite,ilioinguinal nerve,pt,85752009
+A305678,bodySite,genitofemoral nerve,pt,12643008
+A305679,bodySite,Maxillofacial bone,pt,299978004
+A305680,bodySite,Trunk,pt,22943007
+A305681,bodySite,Systemic abdominal vein,pt,281475005
+A305682,bodySite,Airway,pt,89187006
+A305683,bodySite,Lung field,pt,34922002
+A305684,bodySite,brachial artery,pt,17137000
+A305685,bodySite,femoral artery,pt,7657000
+A305686,bodySite,radial artery,pt,45631007
+A305687,bodySite,Systemic arterial,pt,281159003
+A305688,bodySite,capillary blood vessel (organ),pt,20982000
+A305689,bodySite,jugular vein,pt,63190004
+A305690,bodySite,ulnar artery,pt,44984001
+A305691,bodySite,Areola,pt,29745008
+A305692,bodySite,Lactiferous duct,pt,64633006
+A305693,bodySite,Labium majus,pt,82462005
+A305694,bodySite,Bartholin's gland duct,pt,91686002
+A305695,bodySite,Clitoral,pt,65439009
+A305696,bodySite,Vaginal wall,pt,263355003
+A305697,bodySite,vaginal vault,pt,367611001
+A305698,bodySite,fornix of vagina,pt,41218000
+A305699,bodySite,Bartholin's gland,pt,87176006
+A305700,bodySite,amnion,pt,70847004
+A305701,bodySite,Uterine segment,pt,272665009
+A305702,bodySite,Uterine membrane,pt,280704004
+A305703,bodySite,Epididymis,pt,87644002
+A305704,bodySite,Glans penis,pt,60319009
+A305705,bodySite,bridge of nose,pt,17176004
+A305706,bodySite,mucous membrane of nose,pt,34508005
+A305707,bodySite,Nasal septum,pt,68426009
+A305708,bodySite,Little's area,pt,255571004
+A305709,bodySite,Adenoidal,pt,55940004
+A305710,bodySite,Frontoethmoid sinus,pt,306868000
+A305711,bodySite,Palatal,pt,72914001
+A305712,bodySite,Salivary,pt,75535001
+A305713,bodySite,Cricoarytenoid articulation,pt,12207006
+A305714,bodySite,Body orifice mucosa,pt,304629007
+A305715,bodySite,sphincter ani muscle,pt,41178004
+A305716,bodySite,Anal canal,pt,34381000
+A305717,bodySite,shaft of clavicle,pt,12981001
+A305718,bodySite,sternal end of clavicle,pt,58004002
+A305719,bodySite,acromial end of clavicle,pt,46087007
+A305720,bodySite,sternum,pt,56873002
+A305721,bodySite,rib,pt,113197003
+A305722,bodySite,scapula,pt,79601000
+A305723,bodySite,Skeletal muscle structure of trunk,pt,68230005
+A305724,bodySite,hand,pt,24097009
+A305725,bodySite,Tendon of intrinsic muscle of hand,pt,245140008
+A305726,bodySite,Digit of hand,pt,125685002
+A305727,bodySite,Tip of finger,pt,312543003
+A305728,bodySite,tibia,pt,12611008
+A305729,bodySite,Hallux,pt,78883009
+A305730,bodySite,Lesser toe,pt,282004003
+A305731,bodySite,Soft palate,pt,49460000
+A305732,bodySite,sternocleidomastoid muscle,pt,22823000
+A305733,bodySite,cervical vertebral column,pt,122494005
+A305734,bodySite,Intracranial vascular,pt,281138005
+A305735,bodySite,stapedius muscle,pt,81931002
+A305736,bodySite,cusp of aortic valve,pt,81797008
+A305737,bodySite,leaflet of mitral valve,pt,46807008
+A305738,bodySite,anulus fibrosus of mitral orifice,pt,65197004
+A305739,bodySite,Supraaortic valve area,pt,8128003
+A305740,bodySite,Pulmonary artery within lung,pt,128260003
+A305741,bodySite,Ventricular segment,pt,264257002
+A305742,bodySite,Optic axis,pt,39342003
+A305743,bodySite,hair of pubis,pt,75776007
+A305744,bodySite,hair of axilla,pt,75703003
+A305745,bodySite,Skin appendage,pt,7748002
+A305746,bodySite,Hypothalamic,pt,67923007
+A305747,bodySite,Cerebellar vermis,pt,58501004
+A305748,bodySite,trunk of pulmonary artery,pt,45341000
+A305749,bodySite,chordae tendineae of tricuspid valve,pt,52623001
+A305750,bodySite,muscular portion of interventricular septum,pt,5633004
+A305751,bodySite,descending thoracic aorta,pt,32672002
+A305752,bodySite,Intrathoracic systemic artery,pt,281468009
+A305753,bodySite,cortex of kidney,pt,50403003
+A305754,bodySite,Hard palate,pt,90228003
+A305755,bodySite,Mesothelium,pt,71400007
+A305756,bodySite,Scrotal wall,pt,279584000
+A305757,bodySite,Digestive organ,pt,49596003
+A305758,bodySite,Pulmonary artery,pt,81040000
+A305759,bodySite,Male perineal,pt,115984004
+A305760,bodySite,Cecum,pt,32713005
+A305761,bodySite,Male urethral,pt,82841003
+A305762,bodySite,Costovertebral joint,pt,81688003
+A305763,bodySite,Midcarpal joint,pt,35804008
+A305764,bodySite,perilunate joint,pt,264132003
+A305765,bodySite,Foot joint,pt,26552008
+A305766,bodySite,cribriform plate,pt,36743005
+A305767,bodySite,petrous part of temporal bone,pt,25516004
+A305768,bodySite,Nasoethmoid complex of bones,pt,181800009
+A305769,bodySite,neck of femur,pt,29627003
+A305770,bodySite,subcapital section of head of femur,pt,40363006
+A305771,bodySite,Fascial compartment of rectus abdominis,pt,312777006
+A305772,bodySite,Intrathoracic systemic vein,pt,281474009
+A305773,bodySite,membranous portion of interventricular septum,pt,56514005
+A305774,bodySite,ovarian vein,pt,976004
+A305775,bodySite,gum and supporting structure of tooth,pt,54308001
+A305776,bodySite,Pelvic epiphysis,pt,279996004
+A305777,bodySite,chordae tendineae of mitral valve,pt,113260000
+A305778,bodySite,shaft of radius,pt,47728000
+A305779,bodySite,Sublingual gland,pt,88481005
+A305780,bodySite,systemic vein of trunk,pt,281480001
+A305781,bodySite,Space of ventricular system of brain,pt,279245009
+A305782,bodySite,Loin (surface region),pt,243970000
+A305783,bodySite,Vena caval,pt,35532006
+A305784,bodySite,Cartilaginous tissue,pt,61496007
+A305785,bodySite,Head and neck,pt,774007
+A305786,bodySite,basilar artery,pt,59011009
+A305787,bodySite,conjunctival fornix,pt,276831007
+A305788,bodySite,Liver and/or biliary,pt,303270005
+A305789,bodySite,Brain dura mater,pt,28838006
+A305790,bodySite,Supraglottis,pt,119255006
+A305791,bodySite,Subglottis,pt,119254005
+A305792,bodySite,long process of incus,pt,29333002
+A305793,bodySite,Brain ventricle,pt,35764002
+A305794,bodySite,Oral hard tissue,pt,272660004
+A305795,bodySite,skin region,pt,20795001
+A305796,bodySite,cervical spine,pt,297166009
+A305797,bodySite,Metatarsophalangeal joint,pt,46658007
+A305798,bodySite,Corpus cavernosum,pt,9284003
+A305799,bodySite,Thoracic cavity,pt,43799004
+A305800,bodySite,calf of leg,pt,53840002
+A305801,bodySite,Joint structure of lumbosacral region of spine,pt,304916009
+A305802,bodySite,hair of scalp,pt,64013008
+A305803,bodySite,Thoracic spine,pt,122495006
+A305804,bodySite,Lumbar spine,pt,122496007
+A305805,bodySite,Wrist region,pt,8205005
+A305806,bodySite,Skin structure of cheek,pt,36141000
+A305807,bodySite,Knee region,pt,72696002
+A305808,bodySite,bundle branches,pt,59521009
+A305809,bodySite,dorsalis pedis artery,pt,86547008
+A305810,bodySite,Systemic venous,pt,360592004
+A305811,bodySite,Female perineal,pt,115983005
+A305812,bodySite,Labium minus,pt,32104003
+A305813,bodySite,Genital labium,pt,39117004
+A305814,bodySite,Subareolar region,pt,245525003
+A305815,bodySite,Uterine adnexae,pt,23043003
+A305816,bodySite,subclavian artery,pt,36765005
+A305817,bodySite,intracranial vein,pt,128320002
+A305818,bodySite,Subcutaneous tissue,pt,71966008
+A305819,bodySite,Cervical spine joint,pt,129167000
+A305820,bodySite,Lumbar spine joint,pt,8454000
+A305821,bodySite,Thumb joint,pt,125684003
+A305822,bodySite,thorax,pt,272710004
+A305823,bodySite,Popliteal fossa,pt,32361000
+A305824,bodySite,midtarsal joint,pt,129158000
+A305825,bodySite,beard,pt,367576007
+A305826,bodySite,Skin structure of scapular region of back,pt,45980000
+A305827,bodySite,lymphoreticular system,pt,245255009
+A305828,bodySite,Body region,pt,52530000
+A305829,bodySite,Skin structure of heel,pt,84607009
+A305830,bodySite,quadriceps femoris muscle,pt,21989003
+A305831,bodySite,Abdominal skin crease,pt,312518009
+A305832,bodySite,popliteal artery,pt,43899006
+A305833,bodySite,femur,pt,71341001
+A305834,bodySite,Hip joint synovium,pt,280447003
+A305835,bodySite,Cervical lymph node,pt,81105003
+A305836,bodySite,Axillary lymph node,pt,68171009
+A305837,bodySite,Inguinal lymph node,pt,8928004
+A305838,bodySite,epitrochlear lymph node,pt,28870006
+A305839,bodySite,Popliteal lymph node,pt,47471008
+A305840,bodySite,renal artery,pt,2841007
+A305841,bodySite,wrist and/or hand,pt,299706009
+A305842,bodySite,Tendon and/or tendon sheath,pt,59863003
+A305843,bodySite,palatine mucous membrane,pt,38525003
+A305844,bodySite,gingival mucous membrane,pt,102300001
+A305845,bodySite,mucous membrane of floor of mouth,pt,36152006
+A305846,bodySite,Jejunal,pt,21306003
+A305847,bodySite,Pulmonary venous,pt,122972007
+A305848,bodySite,Flank,pt,58602004
+A305849,bodySite,Ocular adnexa,pt,44888004
+A305850,bodySite,Femoral and/or popliteal artery structures,pt,299715002
+A305851,bodySite,Perianal surface region,pt,182350006
+A305852,bodySite,Iliac and/or femoral artery structures,pt,299716001
+A305853,bodySite,Fifth toe,pt,39915008
+A305854,bodySite,lumbar vertebra,pt,73903008
+A305855,bodySite,Thoracic duct,pt,1732005
+A305856,bodySite,nail of toe,pt,76578001
+A305857,bodySite,Skin structure of toe,pt,52034004
+A305858,bodySite,Skin structure of extremity,pt,116370005
+A305859,bodySite,Epigastric region,pt,27947004
+A305860,bodySite,Pelvic floor,pt,87770006
+A305861,bodySite,Skin structure of sacral region,pt,51027004
+A305862,bodySite,Hair appendage,pt,280829001
+A305863,bodySite,rectouterine pouch,pt,53843000
+A305864,bodySite,Vitreous and/or retinal structures,pt,312742006
+A305865,bodySite,amniotic cavity,pt,65022003
+A305866,bodySite,articulations of laryngeal cartilage,pt,63763002
+A305867,bodySite,Nasolacrimal duct,pt,15753006
+A305868,bodySite,Stomach wall,pt,75609008
+A305869,bodySite,Extrahepatic duct,pt,16014003
+A305870,bodySite,Endometrial,pt,2739003
+A305871,bodySite,Epiglottis,pt,61563008
+A305872,bodySite,Skin structure of chin,pt,23747009
+A305873,bodySite,Skin structure of scalp,pt,43067004
+A305874,bodySite,Skin structure of abdomen,pt,75093004
+A305875,bodySite,Skin structure of hip,pt,49812005
+A305876,bodySite,Vomer bone,pt,87166008
+A305877,bodySite,pisiform bone of hand,pt,19799002
+A305878,bodySite,Trapezoid bone,pt,85575004
+A305879,bodySite,soft tissues of inguinal region,pt,67350009
+A305880,bodySite,Skeletal muscle structure of abdomen,pt,28720001
+A305881,bodySite,abdominal viscus,pt,19203006
+A305882,bodySite,Oropharyngeal,pt,31389004
+A305883,bodySite,Hypopharyngeal,pt,81502006
+A305884,bodySite,Respiratory tract,pt,321667001
+A305885,bodySite,lesser curvature of stomach,pt,80085006
+A305886,bodySite,greater curvature of stomach,pt,89382009
+A305887,bodySite,Parietal peritoneum,pt,66475004
+A305888,bodySite,frenulum of foreskin,pt,46636005
+A305889,bodySite,Cerebral meninges,pt,8935007
+A305890,bodySite,thyroglossal duct,pt,42278009
+A305891,bodySite,occipital lymph node,pt,3916005
+A305892,bodySite,parotid lymph node,pt,10209003
+A305893,bodySite,facial lymph node,pt,48918001
+A305894,bodySite,submandibular lymph node,pt,59503006
+A305895,bodySite,submental lymph node,pt,46055009
+A305896,bodySite,mandibular lymph node,pt,155338003
+A305897,bodySite,submaxillary lymph node,pt,144127009
+A305898,bodySite,supraclavicular lymph node,pt,76838003
+A305899,bodySite,jugular lymph node,pt,58130000
+A305900,bodySite,retropharyngeal lymph node,pt,25683005
+A305901,bodySite,prelaryngeal lymph node,pt,74203007
+A305902,bodySite,delphian lymph node,pt,167664004
+A305903,bodySite,pretracheal lymph node,pt,168460001
+A305904,bodySite,Infraclavicular lymph node,pt,9659009
+A305905,bodySite,scalene lymph node,pt,81132008
+A305906,bodySite,lymph node of thorax,pt,47109002
+A305907,bodySite,prevertebral lymph node,pt,196446004
+A305908,bodySite,prepericardial lymph node,pt,196516004
+A305909,bodySite,intrapulmonary lymph node,pt,196662004
+A305910,bodySite,hilar lymph node,pt,53074004
+A305911,bodySite,"Tracheobronchial lymph node, located near carina",pt,89858007
+A305912,bodySite,paratracheal lymph node,pt,65690001
+A305913,bodySite,Supramammary lymph node,pt,62630005
+A305914,bodySite,esophageal lymph node,pt,11899006
+A305915,bodySite,Intercostal lymph node,pt,64038003
+A305916,bodySite,diaphragmatic lymph node,pt,196751009
+A305917,bodySite,innominate lymph node,pt,196821008
+A305918,bodySite,Gut-associated lymph node,pt,72381005
+A305919,bodySite,celiac lymph node,pt,47985009
+A305920,bodySite,juxtaintestinal lymph node,pt,279609001
+A305921,bodySite,hepatic lymph node,pt,61492009
+A305922,bodySite,cystic lymph node,pt,280556009
+A305923,bodySite,lymph node of epiploic foramen,pt,68878000
+A305924,bodySite,lymph node of lesser curvature of stomach,pt,279784003
+A305925,bodySite,lymph node of greater curvature of stomach,pt,76878005
+A305926,bodySite,lymph node ring of cardia of stomach,pt,279866008
+A305927,bodySite,gastro-omental lymph node,pt,83380007
+A305928,bodySite,pyloric lymph node,pt,24889003
+A305929,bodySite,suprapyloric lymph node,pt,280216006
+A305930,bodySite,subpyloric lymph node,pt,280314006
+A305931,bodySite,retropyloric lymph node,pt,280402004
+A305932,bodySite,pancreaticosplenic lymph node,pt,16050005
+A305933,bodySite,splenic lymph node,pt,280824006
+A305934,bodySite,pancreatic lymph node,pt,77778009
+A305935,bodySite,pancreaticoduodenal lymph node,pt,76659008
+A305936,bodySite,aortic lymph node,pt,35783009
+A305937,bodySite,renal hilar lymph node,pt,249708006
+A305938,bodySite,lumbar lymph node,pt,8334002
+A305939,bodySite,intestinal lymph node,pt,36251007
+A305940,bodySite,sigmoid lymph node,pt,30024008
+A305941,bodySite,ileocolic lymph node,pt,281676003
+A305942,bodySite,midcolic lymph node,pt,282031000
+A305943,bodySite,colic lymph node,pt,8356004
+A305944,bodySite,retroperitoneal lymph node,pt,91394001
+A305945,bodySite,"retroperitoneal region, excluding major organs",pt,129109004
+A305946,bodySite,prececal lymph node,pt,281765006
+A305947,bodySite,retrocecal lymph node,pt,281847004
+A305948,bodySite,appendicular lymph node,pt,46157003
+A305949,bodySite,Pelvic lymph node,pt,54268001
+A305950,bodySite,Subiliac lymph node,pt,113338001
+A305951,bodySite,interiliac lymph node,pt,279271008
+A305952,bodySite,obturator lymph node,pt,36086000
+A305953,bodySite,hypogastric lymph node,pt,69255009
+A305954,bodySite,gluteal lymph node,pt,80867000
+A305955,bodySite,sacral lymph node,pt,79926007
+A305956,bodySite,parametrial lymph node,pt,3243006
+A305957,bodySite,epigastric lymph node,pt,60965003
+A305958,bodySite,presymphysial lymph node,pt,6413002
+A305959,bodySite,uterine paracervical lymph node,pt,5394000
+A305960,bodySite,paravesicular lymph node,pt,1439000
+A305961,bodySite,prevesicular lymph node,pt,11740004
+A305962,bodySite,postvesicular lymph node,pt,278571002
+A305963,bodySite,paravaginal lymph node,pt,16228004
+A305964,bodySite,pararectal lymph node,pt,21875007
+A305965,bodySite,central axillary lymph node,pt,283001
+A305966,bodySite,pectoral axillary lymph node,pt,69691007
+A305967,bodySite,subscapular axillary lymph node,pt,12196003
+A305968,bodySite,paramammary lymph node,pt,368550005
+A305969,bodySite,cubital lymph node,pt,34775006
+A305970,bodySite,Prefemoral lymph node,pt,48193007
+A305971,bodySite,tibial lymph node,pt,80769008
+A305972,bodySite,fibular lymph node,pt,31171007
+A305973,bodySite,Lingual tonsil,pt,2048000
+A305974,bodySite,Lacrimal bone,pt,6229007
+A305975,bodySite,Sympathetic nervous system,pt,68365008
+A305976,bodySite,digestive system,pt,86762007
+A305977,bodySite,ilium,pt,22356005
+A305978,bodySite,Abdominal vascular,pt,281471001
+A305979,bodySite,Portal venous system,pt,86763002
+A305980,bodySite,cerebral cortex,pt,40146001
+A305981,bodySite,artery of neck,pt,119568004
+A305982,bodySite,Thigh,pt,68367000
+A305983,bodySite,phrenic nerve,pt,50230006
+A305984,bodySite,Lumbosacral plexus,pt,45272004
+A305985,bodySite,Palatine bone,pt,51283005
+A305986,bodySite,Nasal bone,pt,74386004
+A305987,bodySite,Hyoid bone,pt,21387005
+A305988,bodySite,Ethmoid bone,pt,52374004
+A305989,bodySite,Abdominal lymph node,pt,8568009
+A305990,bodySite,cardiovascular system,pt,113257007
+A305991,bodySite,suprasellar region,pt,15328005
+A305992,bodySite,Pineal,pt,45793000
+A305993,bodySite,retrobulbar part of optic nerve,pt,363655008
+A305994,bodySite,Smooth muscle (organ),pt,39822001
+A305995,bodySite,auricular appendage,pt,68786006
+A305996,bodySite,Digit,pt,82680008
+A305997,bodySite,integumentary system,pt,48075008
+A305998,bodySite,Periosteum,pt,33840008
+A305999,bodySite,Pontine,pt,49557009
+A306000,bodySite,iliac artery,pt,10293006
+A306001,bodySite,Facial nerve branch on face,pt,280280007
+A306002,bodySite,interscapular region of back,pt,3865001
+A306003,bodySite,tendon of finger,pt,29442005
+A306004,bodySite,basilar sinus,pt,75223001
+A306005,bodySite,renal vein,pt,56400007
+A306006,bodySite,Pulmonary alveolar,pt,113253006
+A306007,bodySite,Tunica intima of vein,pt,2436009
+A306008,bodySite,Thymus gland,pt,9875009
+A306009,bodySite,humeroulnar joint,pt,44034005
+A306010,bodySite,Tonsil and adenoid,pt,303337002
+A306011,bodySite,Subcutaneous tissue structure of face,pt,43163003
+A306012,bodySite,Cervical canal,pt,56739004
+A306013,bodySite,supraorbital nerve,pt,21874006
+A306014,bodySite,Yolk sac,pt,26190007
+A306015,bodySite,Trigeminal nerve,pt,27612005
+A306016,bodySite,Retrocecal space,pt,243988008
+A306017,bodySite,Hypochondriac region,pt,19695001
+A306018,bodySite,Intercostal artery,pt,281134007
+A306019,bodySite,lingual vein,pt,40880001
+A306020,bodySite,Auerbach's plexus,pt,69854003
+A306021,bodySite,Skin structure of supraorbital area,pt,48670002
+A306022,bodySite,sinus of Valsalva,pt,81128002
+A306023,bodySite,Lumbosacral region,pt,21492008
+A306024,bodySite,extensor pollicis longus muscle tendon sheath,pt,25509000
+A306025,bodySite,Bronchiole,pt,55214000
+A306026,bodySite,geniculate ganglion,pt,113312001
+A306027,bodySite,Cerebral white matter,pt,68523003
+A306028,bodySite,Glenoid,pt,46385009
+A306029,bodySite,neck of scapula,pt,63572008
+A306030,bodySite,Calcaneal tubercle,pt,82474009
+A306031,bodySite,Forehead,pt,52795006
+A306032,bodySite,oral region of face,pt,836005
+A306033,bodySite,femoral nerve,pt,113319005
+A306034,bodySite,Spinal cord tissue,pt,280408000
+A306035,bodySite,Heel,pt,76853006
+A306036,bodySite,Midbrain,pt,61962009
+A306037,bodySite,Nerve root,pt,40958000
+A306038,bodySite,Chondrocostal synchondrosis,pt,27756000
+A306039,bodySite,costal cartilage,pt,50016007
+A306040,bodySite,Thoracic cage,pt,60413009
+A306041,bodySite,brachiocephalic vein,pt,8887007
+A306042,bodySite,Spinal cord meninges,pt,75559006
+A306043,bodySite,Nigrostriate fibers,pt,40120000
+A306044,bodySite,Perichondrium,pt,11881003
+A306045,bodySite,Eustachian canal,pt,91207004
+A306046,bodySite,Base of skull,pt,31467002
+A306047,bodySite,Zygomatic arch,pt,51204001
+A306048,bodySite,Accessory nerve,pt,15119000
+A306049,bodySite,Vagus nerve,pt,88882009
+A306050,bodySite,Glossopharyngeal nerve,pt,21161002
+A306051,bodySite,nasociliary nerve,pt,34467001
+A306052,bodySite,Body part,pt,38866009
+A306053,bodySite,Alveolar process,pt,129143008
+A306054,bodySite,Hypoglossal nerve,pt,37899009
+A306055,bodySite,interstitial tissue of kidney,pt,50235001
+A306056,bodySite,ligament of hand,pt,123858009
+A306057,bodySite,hepatic vein,pt,8993003
+A306058,bodySite,ileocolic vein,pt,285463009
+A306059,bodySite,Hypogastric region,pt,11708003
+A306060,bodySite,hair of skin region,pt,256423008
+A306061,bodySite,Corpus callosum,pt,88442005
+A306062,bodySite,Buttock,pt,46862004
+A306063,bodySite,vertebral artery,pt,85234005
+A306064,bodySite,coccyx,pt,64688005
+A306065,bodySite,Venous structure of head and/or neck,pt,244390008
+A306066,bodySite,ileocolic artery,pt,120233009
+A306067,bodySite,Femoropopliteal vein,pt,105586003
+A306068,bodySite,angular gyrus,pt,59024009
+A306069,bodySite,nail root,pt,38671000
+A306070,bodySite,Mucocutaneous junction,pt,14811009
+A306071,bodySite,Carpometacarpal joint structure of thumb,pt,30099006
+A306072,bodySite,Sacrococcygeal region,pt,72143005
+A306073,bodySite,Tendon of rotator cuff of shoulder,pt,245100002
+A306074,bodySite,condyle of tibia,pt,17011001
+A306075,bodySite,flexor pollicis longus muscle tendon,pt,2600000
+A306076,bodySite,Dural sinus,pt,54944003
+A306077,bodySite,recurrent laryngeal nerve,pt,24227007
+A306078,bodySite,Leptomeninges,pt,66697007
+A306079,bodySite,Periungual skin,pt,280418005
+A306080,bodySite,Pyloric antrum,pt,66051006
+A306081,bodySite,Sweat gland duct,pt,28600009
+A306082,bodySite,Thoracic spinal cord,pt,50800009
+A306083,bodySite,Esophageal muscularis propria,pt,113281000
+A306084,bodySite,nucleus pulposus of intervertebral disc,pt,62217003
+A306085,bodySite,rectosigmoid junction,pt,49832006
+A306086,bodySite,substernal region,pt,33547000
+A306087,bodySite,Vitreous membrane,pt,64498009
+A306088,bodySite,navicular,pt,75772009
+A306089,bodySite,Lumbosacral spinal cord nerve root,pt,40475002
+A306090,bodySite,Skeletal muscle system,pt,79984008
+A306091,bodySite,ligament,pt,52082005
+A306092,bodySite,Cricothyroid articulation,pt,70023007
+A306093,bodySite,Cervical esophagus,pt,60075002
+A306094,bodySite,tarsal canal,pt,19567005
+A306095,bodySite,Shin,pt,78234002
+A306096,bodySite,Thyroid cartilage,pt,52940008
+A306097,bodySite,Vulval vein,pt,279975006
+A306098,bodySite,Lumbar spinal cord,pt,60051002
+A306099,bodySite,Cardiopulmonary circulatory system,pt,480000
+A306100,bodySite,Optic chiasma,pt,244453006
+A306101,bodySite,papillary muscle,pt,35054001
+A306102,bodySite,Lining of anal canal,pt,312578003
+A306103,bodySite,Cheek,pt,60819002
+A306104,bodySite,pterygoid muscle,pt,76738006
+A306105,bodySite,carotid sinus,pt,21479005
+A306106,bodySite,Splanchnic nerve,pt,264198001
+A306107,bodySite,Mediastinal lymph node,pt,62683002
+A306108,bodySite,Conjunctival sac,pt,10737006
+A306109,bodySite,Femoral canal,pt,4828007
+A306110,bodySite,Hepatic capsule,pt,48781005
+A306111,bodySite,radius,pt,62413002
+A306112,bodySite,ulna,pt,23416004
+A306113,bodySite,Embryonic,pt,667009
+A306114,bodySite,gastrointestinal subserosa,pt,6076005
+A306115,bodySite,mucous membrane of larynx,pt,71248005
+A306116,bodySite,Muscle tissue,pt,91727004
+A306117,bodySite,Preferential interatrial pathway,pt,277692009
+A306118,bodySite,Vestibular window,pt,3931001
+A306119,bodySite,ulnar tunnel,pt,59591000
+A306120,bodySite,Ischiorectal fossa,pt,32853000
+A306121,bodySite,Vestibulocochlear nerve,pt,8598002
+A306122,bodySite,"Brodmann areas 17 (striate cortex), 18 (parastriate cortex) and 19 (peristriate cortex) of the occipital lobe",pt,128330006
+A306123,bodySite,sacroiliac region,pt,1781007
+A306124,bodySite,transplanted kidney,pt,70948008
+A306125,bodySite,paraurethral gland,pt,367609005
+A306126,bodySite,myocardium of apex of heart,pt,47962008
+A306127,bodySite,Sternocostal joint,pt,23758000
+A306128,bodySite,Seminiferous tubule,pt,51722002
+A306129,bodySite,torcular Herophili,pt,2285001
+A306130,bodySite,lumbosacral vertebrae,pt,65098007
+A306131,bodySite,Sacral region back,pt,46452000
+A306132,bodySite,radial vein,pt,52359001
+A306133,bodySite,sphenopalatine ganglion,pt,68809009
+A306134,bodySite,base of heart,pt,60991002
+A306135,bodySite,myocardium of anteroseptal region,pt,20706007
+A306136,bodySite,fetal tunica vasculosa lentis,pt,74894000
+A306137,bodySite,Cervical sympathetic trunk,pt,280533000
+A306138,bodySite,brachiocephalic artery,pt,12691009
+A306139,bodySite,lunate bone,pt,52181001
+A306140,bodySite,myocardium of inferolateral region,pt,16239001
+A306141,bodySite,beta Cell of islet,pt,36565008
+A306142,bodySite,humeroradial joint,pt,65232003
+A306143,bodySite,multiple topographic sites,pt,51576004
+A306144,bodySite,Mammary lobule,pt,79802009
+A306145,bodySite,Joint of hallux,pt,280456006
+A306146,bodySite,Joint structure of shoulder region,pt,31398001
+A306147,bodySite,Gastrointestinal muscular layer,pt,51170002
+A306148,bodySite,scaphoid,pt,30518006
+A306149,bodySite,rectovaginal septum,pt,67262005
+A306150,bodySite,Primitive foregut,pt,1631005
+A306151,bodySite,Clivus,pt,69499003
+A306152,bodySite,hemorrhoidal plexus,pt,40724001
+A306153,bodySite,Scalp,pt,41695006
+A306154,bodySite,Enamel,pt,76993005
+A306155,bodySite,vault of skull,pt,10927008
+A306156,bodySite,Apocrine gland,pt,2789006
+A306157,bodySite,precordium,pt,46707002
+A306158,bodySite,adrenal artery,pt,89500000
+A306159,bodySite,Symphysis pubis,pt,82561000
+A306160,bodySite,Body cavity region,pt,272623003
+A306161,bodySite,Serous membrane,pt,75858005
+A306162,bodySite,Antihelix,pt,55881008
+A306163,bodySite,cerebral artery,pt,88556005
+A306164,bodySite,capitate bone,pt,82210006
+A306165,bodySite,base of metacarpal bone,pt,7160008
+A306166,bodySite,cavernous sinus,pt,18782006
+A306167,bodySite,medulla of kidney,pt,30737000
+A306168,bodySite,Premotor cortex,pt,90928005
+A306169,bodySite,Esophageal aperture of diaphragm,pt,280062008
+A306170,bodySite,Cloaca,pt,64582000
+A306171,bodySite,Cloacogenic zone,pt,263711007
+A306172,bodySite,tuberculum impar,pt,4861000
+A306173,bodySite,Decidua,pt,34863009
+A306174,bodySite,Vascular structure of intestine,pt,312577008
+A306175,bodySite,Skeletal muscle structure of neck,pt,81727001
+A306176,bodySite,Pia mater,pt,23180006
+A306177,bodySite,Skeletal muscle structure of thigh,pt,50092008
+A306178,bodySite,Synchondrosis,pt,336104003
+A306179,bodySite,ischium,pt,85710004
+A306180,bodySite,pubis,pt,66040006
+A306181,bodySite,Epithelium,pt,31610004
+A306182,bodySite,postcricoid region,pt,35806005
+A306183,bodySite,atlas,pt,14806007
+A306184,bodySite,Perineurium,pt,68661006
+A306185,bodySite,Interatrial septum,pt,58095006
+A306186,bodySite,mesonephric duct,pt,49222007
+A306187,bodySite,Dura mater,pt,18545000
+A306188,bodySite,Skeletal muscle structure of thorax,pt,15187006
+A306189,bodySite,Parietal bone,pt,24924006
+A306190,bodySite,Digestive tract,pt,51289009
+A306191,bodySite,thoracolumbar region of back,pt,6989001
+A306192,bodySite,Thenar region,pt,73077005
+A306193,bodySite,Skeletal system,pt,113192009
+A306194,bodySite,Thalamic,pt,42695009
+A306195,bodySite,xiphoid process of sternum,pt,20298003
+A306196,bodySite,Tenon's capsule,pt,77011004
+A306197,bodySite,head of metacarpal bone,pt,9498009
+A306198,bodySite,Skeletal muscle structure of perineum,pt,7295002
+A306199,bodySite,Joint structure of thoracolumbar region of spine,pt,76079001
+A306200,bodySite,articular disc of temporomandibular joint,pt,18948006
+A306201,bodySite,body of pancreas,pt,40133006
+A306202,bodySite,coccygeal glomus,pt,57760000
+A306203,bodySite,Glomus jugulare,pt,80595007
+A306204,bodySite,laryngeal aspect of aryepiglottic fold,pt,102294004
+A306205,bodySite,Main bronchus,pt,102297006
+A306206,bodySite,soft tissues of thorax,pt,31749008
+A306207,bodySite,axillary soft tissues,pt,83151009
+A306208,bodySite,tail of pancreas,pt,73239005
+A306209,bodySite,soft tissues of abdomen,pt,69778002
+A306210,bodySite,urachus,pt,14105008
+A306211,bodySite,mastoid cell,pt,57222008
+A306212,bodySite,Parietal pleura,pt,80338007
+A306213,bodySite,Waldeyer's ring,pt,17861009
+A306214,bodySite,Carotid body,pt,51345006
+A306215,bodySite,visceral pericardium,pt,6871001
+A306216,bodySite,parametrium,pt,45682005
+A306217,bodySite,periadrenal tissue,pt,33730004
+A306218,bodySite,rectovesical septum,pt,26921001
+A306219,bodySite,Visceral pleura,pt,81623005
+A306220,bodySite,Female genital organ,pt,127882003
+A306221,bodySite,carina,pt,28700002
+A306222,bodySite,round ligament of uterus,pt,50840003
+A306223,bodySite,vallecula of epiglottis,pt,42275007
+A306224,bodySite,axillary tail of breast,pt,38412008
+A306225,bodySite,Pars plicata,pt,30047009
+A306226,bodySite,retropharyngeal area,pt,83030008
+A306227,bodySite,intercostal muscle,pt,86419007
+A306228,bodySite,mesenteric vein,pt,128583004
+A306229,bodySite,muscularis of urinary bladder,pt,23614007
+A306230,bodySite,nervus intermedius,pt,30097008
+A306231,bodySite,Uveal tract,pt,74862005
+A306232,bodySite,aqueous humor,pt,87321005
+A306233,bodySite,Optic tract,pt,53238003
+A306234,bodySite,Ear lobule,pt,48800003
+A306235,bodySite,metaphysis,pt,33251002
+A306236,bodySite,Gastroduodenal junction,pt,264014000
+A306237,bodySite,Body system,pt,91689009
+A306238,bodySite,auditory system,pt,91159003
+A306239,bodySite,olfactory system,pt,47166007
+A306240,bodySite,anatomical reproductive system,pt,245500007
+A306241,bodySite,abdominal vein,pt,84421000
+A306242,bodySite,vein of thorax,pt,38809004
+A306243,bodySite,extremity,pt,48566001
+A306244,bodySite,Abdominal esophagus,pt,60865004
+A306245,bodySite,pyloric canal,pt,19987003
+A306246,bodySite,Auricular cartilage,pt,11691007
+A306247,bodySite,soft tissues of pelvis,pt,20159001
+A306248,bodySite,Hematopoietic system,pt,57171008
+A306249,bodySite,Lymphatic structure of abdomen,pt,86002004
+A306250,bodySite,pituitary fossa,pt,42575006
+A306251,bodySite,retina,pt,181171005
+A306252,bodySite,incudomallear articulation,pt,113329003
+A306253,bodySite,Cardiac septum,pt,10746000
+A306254,bodySite,Pelvic cavity female genital,pt,281906001
+A306255,bodySite,nail of finger,pt,91456000
+A306256,bodySite,frontal region of scalp,pt,244069005
+A306257,bodySite,Joint structure of shoulder girdle,pt,281415003
+A306258,bodySite,Articular cartilage of hand joint,pt,312559003
+A306259,bodySite,Capsular ligament of knee joint,pt,244636006
+A306260,bodySite,Articular cartilage of shoulder joint,pt,305028007
+A306261,bodySite,Articular cartilage of hip joint,pt,305031008
+A306262,bodySite,Articular cartilage of ankle and/or foot,pt,312561007
+A306263,bodySite,Articular cartilage of femoral head,pt,305054004
+A306264,bodySite,Periarticular bone structure of shoulder joint,pt,305015000
+A306265,bodySite,Shoulder joint synovium,pt,280444005
+A306266,bodySite,Sternoclavicular joint synovium,pt,312754006
+A306267,bodySite,Acromioclavicular joint synovium,pt,312743001
+A306268,bodySite,Wrist joint synovium,pt,280446007
+A306269,bodySite,Metacarpophalangeal joint synovium,pt,312750002
+A306270,bodySite,Sacroiliac joint synovium,pt,312753000
+A306271,bodySite,Tibiofibular joint synovium,pt,312757004
+A306272,bodySite,Ankle joint synovium,pt,280449000
+A306273,bodySite,Subtalar joint synovium,pt,312755007
+A306274,bodySite,Talocalcaneonavicular joint synovium,pt,312756008
+A306275,bodySite,First metatarsophalangeal joint synovium,pt,312745008
+A306276,bodySite,Metatarsophalangeal joint synovium of lesser toe,pt,312751003
+A306277,bodySite,Interphalangeal joint synovium of toe,pt,312747000
+A306278,bodySite,Thoracic region back,pt,304037003
+A306279,bodySite,Cervical nervous,pt,281247006
+A306280,bodySite,Tendon of extensor digitorum,pt,245126007
+A306281,bodySite,metacarpal,pt,36455000
+A306282,bodySite,pelvic region and/or thigh,pt,304692008
+A306283,bodySite,radius and/or ulna,pt,299701004
+A306284,bodySite,ankle and/or foot,pt,304691001
+A306285,bodySite,sacrum,pt,54735007
+A306286,bodySite,carpus,pt,83936004
+A306287,bodySite,phalanx of hand,pt,73696005
+A306288,bodySite,fibula,pt,87342007
+A306289,bodySite,calcaneum,pt,80144004
+A306290,bodySite,phalanx of foot,pt,89534004
+A306291,bodySite,cardiac vein,pt,85439003
+A306292,bodySite,Larynx and/or trachea cartilages,pt,312741004
+A306293,bodySite,Bladder and outflow,pt,303409005
+A306294,bodySite,Scaphotrapezium ligament,pt,182411006
+A306295,bodySite,Lunotriquetral ligament,pt,182412004
+A306296,bodySite,Scapholunate ligament,pt,182413009
+A306297,bodySite,plantaris muscle tendon,pt,90044004
+A306298,bodySite,ligament of joint,pt,123859001
+A306299,bodySite,ligament of head and neck,pt,244580001
+A306300,bodySite,Axillary vessel,pt,312538005
+A306301,bodySite,Radial vessel,pt,312540000
+A306302,bodySite,Ulnar vessel,pt,312541001
+A306303,bodySite,Radial nerve at wrist,pt,281426009
+A306304,bodySite,Joint structure of pelvic girdle,pt,127862002
+A306305,bodySite,pelvic and leg veins,pt,181397009
+A306306,bodySite,ligament of wrist joint,pt,123857004
+A306307,bodySite,tarsus,pt,108371006
+A306308,bodySite,Epiphysis of wrist and/or hand,pt,313040001
+A306309,bodySite,Mouth and/or pharynx structures,pt,312533001
+A306310,bodySite,Paraganglia,pt,33805007
+A306311,bodySite,Orbital complex of bones - roof,pt,181803006
+A306312,bodySite,frenulum linguae,pt,1159005
+A306313,bodySite,axis,pt,39976000
+A306314,bodySite,Joint structure of ankle and/or foot,pt,312816002
+A306315,bodySite,Shoulder girdle,pt,26444007
+A306316,bodySite,Anal stump,pt,279490003
+A306317,bodySite,Perineal vein,pt,312507009
+A306318,bodySite,Iliac vein,pt,244411005
+A306319,bodySite,Larynx and/or tracheal structures,pt,303417002
+A306320,bodySite,Synovial structure of elbow,pt,312679002
+A306321,bodySite,Synovial structure of wrist,pt,312673001
+A306322,bodySite,Synovial structure of hip,pt,312680004
+A306323,bodySite,Synovial structure of knee,pt,312675008
+A306324,bodySite,Synovial structure of ankle and/or foot,pt,312749002
+A306325,bodySite,Hand joint synovium,pt,312686005
+A306326,bodySite,Synovial structure of hand,pt,312674007
+A306327,bodySite,Intrinsic muscle of hand,pt,118497009
+A306328,bodySite,Skeletal muscle structure of pelvis,pt,102290008
+A306329,bodySite,Trigonal,pt,21740000
+A306330,bodySite,Articular cartilage of knee joint,pt,305032001
+A306331,bodySite,Muscle,pt,71616004
+A306332,bodySite,Eye region,pt,371398005
+A306333,bodySite,anogenital region,pt,263671009
+A306334,bodySite,Skin structure of trunk,pt,86381001
+A306335,bodySite,Vascular structure of penis,pt,363673006
+A306336,bodySite,Skin structure of sole of foot,pt,37136002
+A306337,bodySite,tendon and tendon sheath of foot,pt,88021003
+A306338,bodySite,Skin of penis,pt,35900000
+A306339,bodySite,Skin structure of knee,pt,63464009
+A306340,bodySite,Mouth region,pt,123851003
+A306341,bodySite,Skin structure of face,pt,73897004
+A306342,bodySite,ossicle of ear,pt,181184001
+A306343,bodySite,Skin structure of neck,pt,43081002
+A306344,bodySite,hard tissue of tooth,pt,128456003
+A306345,bodySite,exocrine pancreas,pt,20023005
+A306346,bodySite,Skin structure of pelvis,pt,82654007
+A306347,bodySite,Skin structure of anogenital region,pt,280158000
+A306348,bodySite,Intestinal mucous membrane,pt,68534000
+A306349,bodySite,Duodenal mucous membrane,pt,77763002
+A306350,bodySite,Small intestine mucous membrane,pt,4369007
+A306351,bodySite,Gastric mucous membrane,pt,78653002
+A306352,bodySite,Skin structure of umbilicus,pt,315003
+A306353,bodySite,tendon and tendon sheath of shoulder,pt,57039004
+A306354,bodySite,tendon and tendon sheath of elbow,pt,25612009
+A306355,bodySite,Skin structure of head and neck,pt,58308009
+A306356,bodySite,orbit proper,pt,363654007
+A306357,bodySite,Skin structure of foot,pt,60496002
+A306358,bodySite,Skin structure of hand,pt,33712006
+A306359,bodySite,Skin structure of axilla,pt,76261009
+A306360,bodySite,parenchyma of lung,pt,113255004
+A306361,bodySite,Body wall,pt,280542007
+A306362,bodySite,sole of foot,pt,57999000
+A306363,bodySite,dorsum of foot,pt,2402003
+A306364,bodySite,viscus,pt,362937008
+A306365,bodySite,Digital vein structure of the hand,pt,363578009
+A306366,bodySite,Nervous structure of trunk,pt,281248001
+A306367,bodySite,Venous structure of limb,pt,363575007
+A306368,bodySite,Ascending colon,pt,9040008
+A306369,bodySite,Skin structure of inguinal region,pt,39687006
+A306370,bodySite,Intrathoracic vascular,pt,304062003
+A306371,bodySite,Stomach and/or duodenal structures,pt,302184004
+A306372,bodySite,Pyloric structure of stomach,pt,280119005
+A306373,bodySite,trapezium,pt,71800003
+A306374,bodySite,Skin structure of ankle,pt,67269001
+A306375,bodySite,triangular bone,pt,80417002
+A306376,bodySite,Skin structure of thumb,pt,59354007
+A306377,bodySite,Wrist and hand structures,pt,307113009
+A306378,bodySite,ankle,pt,33696004
+A306379,bodySite,Female,pt,1086007
+A306380,bodySite,Muscularis propria,pt,86915006
+A306381,bodySite,Skin structure of head,pt,70762009
+A306382,bodySite,vein of trunk,pt,102299009
+A306383,bodySite,otoconia,pt,1610007
+A306384,bodySite,Retrocecal tissue,pt,78464007
+A306385,bodySite,Arachnoid,pt,75042008
+A306386,bodySite,wall of tympanic cavity,pt,70144009
+A306387,bodySite,Skin structure of jaw,pt,41935005
+A306388,bodySite,Major salivary gland,pt,119282003
+A306389,bodySite,Bony orbit,pt,110528008
+A306390,bodySite,Skin structure of interdigital space of hand,pt,73939002
+A306391,bodySite,Skin of eye region,pt,362916000
+A306392,bodySite,Skin structure of nose,pt,113179006
+A306393,bodySite,Optic nerve sheath,pt,66355007
+A306394,bodySite,Region of esophagus,pt,245404000
+A306395,bodySite,Tendon of hand,pt,118632007
+A306396,bodySite,renal medullary interstitial tissue,pt,12041006
+A306397,bodySite,Epidermis,pt,55988001
+A306398,bodySite,Terminal aorta,pt,12424003
+A306399,bodySite,allantois,pt,83575002
+A306400,bodySite,Oculomotor system,pt,373362007
+A306401,bodySite,Pupil,pt,392406005
+A306402,bodySite,Gonadal endocrine,pt,304041004
+A306403,bodySite,Salivary gland,pt,385294005
+A306404,bodySite,Hair,pt,386045008
+A306405,bodySite,lymph node of mesentery,pt,279795009
+A306406,bodySite,Skin AND subcutaneous tissue structure of trunk,pt,389072001
+A306407,bodySite,Skin AND subcutaneous tissue structure of neck,pt,389073006
+A306408,bodySite,Skin AND subcutaneous tissue structure of head,pt,389074000
+A306409,bodySite,"Ear, nose and throat",pt,385383008
+A306410,bodySite,Gray matter structure of central nervous system,pt,389081007
+A306411,bodySite,Ligament of thumb,pt,244627007
+A306412,bodySite,Eyebrow,pt,392262008
+A306413,bodySite,Clavicular region,pt,12928009
+A306414,bodySite,Sympathetic nerve,pt,90456006
+A306415,bodySite,Male genital,pt,90264002
+A306416,bodySite,Skin AND subcutaneous tissue,pt,127856007
+A306417,bodySite,Conjunctival and corneal surface,pt,363653001
+A306418,bodySite,Endocrine gland,pt,387910009
+A306419,bodySite,patellar tendon,pt,181699000
+A306420,bodySite,Cartilage tissue,pt,309312004
+A306421,bodySite,Portal vein,pt,32764006
+A306422,bodySite,Pelvic vascular,pt,281496003
+A306423,bodySite,Skin structure of epicanthal fold,pt,74824007
+A306424,bodySite,Vascular structure of kidney,pt,303402001
+A306425,bodySite,Ligament of sternum,pt,313060009
+A306426,bodySite,Blood vessel structure of skin,pt,397018003
+A306427,bodySite,Nose and nasopharynx,pt,400112001
+A306428,bodySite,small subcutaneous vein,pt,318634006
+A306429,bodySite,labial vein,pt,9305001
+A306430,bodySite,Skin structure of female genitalia,pt,19938000
+A306431,bodySite,Flexural skin crease,pt,280909003
+A306432,bodySite,Perianal region,pt,397158004
+A306433,bodySite,Esophageal mucous membrane,pt,82082004
+A306434,bodySite,Skin of digit,pt,279064005
+A306435,bodySite,Skin structure of pinna,pt,44737009
+A306436,bodySite,Nail plate,pt,314410003
+A306437,bodySite,Skin structure of shoulder,pt,76552005
+A306438,bodySite,Bronchopulmonary segment,pt,72674008
+A306439,bodySite,Sebaceous gland,pt,1028005
+A306440,bodySite,Pericardial sac,pt,24949005
+A306441,bodySite,vertebral region of back,pt,53418001
+A306442,bodySite,tendon of supraspinatus muscle,pt,5580002
+A306443,bodySite,Vaginal mucous membrane,pt,56508003
+A306444,bodySite,Skin structure of postauricular region,pt,24483006
+A306445,bodySite,Skin structure of preauricular region,pt,86719006
+A306446,bodySite,nail of digit of hand,pt,400133005
+A306447,bodySite,Microscopic skin vascular,pt,360599008
+A306448,bodySite,mucous membrane of oropharynx,pt,33044003
+A306449,bodySite,sweat gland of eyelid,pt,28323001
+A306450,bodySite,leaflet of tricuspid valve,pt,32427001
+A306451,bodySite,Urethra part,pt,119222001
+A306452,bodySite,intervertebral disc,pt,360499006
+A306453,bodySite,Adipose tissue,pt,55603005
+A306454,bodySite,Fetal part,pt,367570001
+A306455,bodySite,Fetal head,pt,54527006
+A306456,bodySite,Masseter muscle,pt,79368004
+A306457,bodySite,subregion of head,pt,406121007
+A306458,bodySite,vestibular system,pt,361533001
+A306459,bodySite,diencephalon,pt,87563008
+A306460,bodySite,Laryngeal muscle,pt,36514000
+A306461,bodySite,ductus arteriosus,pt,4432005
+A306462,bodySite,Coronary sinus,pt,90219004
+A306463,bodySite,Parietal region,pt,76332005
+A306464,bodySite,Transplanted skin,pt,13853000
+A306465,bodySite,Amputation stump,pt,38033009
+A306466,bodySite,Muscle structure of orbit,pt,304919002
+A306467,bodySite,Male genital organ,pt,127903009
+A306468,bodySite,Hair shaft,pt,37111008
+A306469,bodySite,Enthesis,pt,410054009
+A306470,bodySite,Neural tube,pt,60271003
+A306471,bodySite,Fibrous tissue,pt,34433006
+A306472,bodySite,soft tissues of trunk,pt,1490004
+A306473,bodySite,soft tissues of head,pt,127960009
+A306474,bodySite,soft tissues of neck,pt,127961008
+A306475,bodySite,Female genital tract,pt,413344004
+A306476,bodySite,lymphatic vessel of head,pt,144228007
+A306477,bodySite,Skin AND subcutaneous tissue structure of flank,pt,389071008
+A306478,bodySite,gastrointestinal tract mucous membrane,pt,410432002
+A306479,bodySite,Tibial vessel,pt,312532006
+A306480,bodySite,nerve plexus,pt,122455009
+A306481,bodySite,esophageal vein,pt,90895003
+A306482,bodySite,Subphrenic space,pt,243974009
+A306483,bodySite,Thoracic esophagus,pt,59609004
+A306484,bodySite,Esophageal sphincter,pt,277765007
+A306485,bodySite,metatarsal joint,pt,367586008
+A306486,bodySite,pars plana,pt,51082008
+A306487,bodySite,Tunica adventitia of artery,pt,113261001
+A306488,bodySite,lymphatic vessel of intestine,pt,360980006
+A306489,bodySite,yolk stalk,pt,41629008
+A306490,bodySite,jaw,pt,392081006
+A306491,bodySite,Application site,pt,39801007
+A306492,bodySite,fascia of rectus abdominis muscle,pt,72291002
+A306493,bodySite,soft tissues of head and neck,pt,34201000
+A306494,bodySite,soft tissues of orbit,pt,24736005
+A306495,bodySite,body of sternum,pt,52509009
+A306496,bodySite,cervical portion of sympathetic nervous system,pt,86034008
+A306497,bodySite,Nasal skeleton,pt,42650002
+A306498,bodySite,Cardiac wall,pt,272657006
+A306499,bodySite,Auditory pathway,pt,410727002
+A306500,bodySite,Nasal cartilage,pt,16178009
+A306501,bodySite,Eccrine gland,pt,2759004
+A306502,bodySite,Tragus,pt,59581006
+A306503,bodySite,Helix,pt,86153000
+A306504,bodySite,digestive system mucous membrane,pt,410433007
+A306505,bodySite,Mononuclear phagocyte system,pt,127908000
+A306506,bodySite,Intra-abdominal digestive,pt,281501002
+A306507,bodySite,levator ani muscle,pt,79349002
+A306508,bodySite,shaft of fibula,pt,113224005
+A306509,bodySite,shaft of tibia,pt,52687003
+A306510,bodySite,Skin structure of anus,pt,59112000
+A306511,bodySite,Orbital vein,pt,282047003
+A306512,bodySite,mesentery of colon,pt,33437000
+A306513,bodySite,Vascular structure of liver,pt,303410000
+A306514,bodySite,Subhepatic recess,pt,36051002
+A306515,bodySite,Systemic vascular,pt,281157001
+A306516,bodySite,Mucous membrane,pt,414781009
+A306517,bodySite,Branch of retinal vein,pt,280928005
+A306518,bodySite,umbilical cord stump,pt,60155008
+A306519,bodySite,Surface of prostate,pt,279694003
+A306520,bodySite,mucous membrane of anal canal,pt,46563004
+A306521,bodySite,intercondylar spine of tibia,pt,42824004
+A306522,bodySite,rotator cuff including muscles and tendons,pt,7885001
+A306523,bodySite,Urogenital diaphragm,pt,82360003
+A306524,bodySite,Skin of part of fingers and thumb,pt,281644008
+A306525,bodySite,Intracranial,pt,128319008
+A306526,bodySite,Lacrimal,pt,314802006
+A306527,bodySite,zygomatic and/or maxillary bone,pt,415647001
+A306528,bodySite,cochlear nerve,pt,113313006
+A306529,bodySite,Skin structure of thigh,pt,371305003
+A306530,bodySite,Linea alba,pt,280591001
+A306531,bodySite,arch of vertebra,pt,40265002
+A306532,bodySite,myocardium of ventricular septum,pt,83654002
+A306533,bodySite,Lymph nodes of multiple sites,pt,254198003
+A306534,bodySite,extensor tendon of finger,pt,368381000
+A306535,bodySite,Femoral epiphysis,pt,314625005
+A306536,bodySite,Extensor tendon of wrist,pt,118649000
+A306537,bodySite,Flexor tendon of wrist,pt,122497003
+A306538,bodySite,extrinsic larynx,pt,80478001
+A306539,bodySite,tendon and tendon sheath of hip,pt,79317002
+A306540,bodySite,Lip and/or palatal structures,pt,312900000
+A306541,bodySite,flexor tendon of finger,pt,368380004
+A306542,bodySite,flexor tendon of thumb,pt,368372006
+A306543,bodySite,extensor tendon of thumb,pt,368374007
+A306544,bodySite,Extensor pollicis tendon sheath,pt,314479007
+A306545,bodySite,extensor hallucis longus muscle tendon,pt,86539008
+A306546,bodySite,Tendon of peroneus brevis,pt,181722006
+A306547,bodySite,clavicle and/or scapula and/or humerus,pt,312776002
+A306548,bodySite,"rib, sternum and/or clavicle",pt,312563005
+A306549,bodySite,Skin  subcutaneous tissue structure of buttock,pt,416231004
+A306550,bodySite,Skin and subcutaneous tissue structure of pelvis,pt,417584008
+A306551,bodySite,Skin and subcutaneous tissue structure of scrotum,pt,417501003
+A306552,bodySite,Skin and subcutaneous tissue structure of shoulder region,pt,416771008
+A306553,bodySite,Skin and subcutaneous tissue structure of axilla,pt,416710001
+A306554,bodySite,Skin and subcutaneous tissue structure of ankle,pt,416283006
+A306555,bodySite,Skin and subcutaneous tissue structure of dorsum of foot,pt,416407007
+A306556,bodySite,Skin and subcutaneous tissue structure of foot,pt,417460003
+A306557,bodySite,Skin and subcutaneous tissue structure of sole of foot,pt,416177000
+A306558,bodySite,Skin and subcutaneous tissue structure of heel,pt,416927002
+A306559,bodySite,sternal region,pt,66419000
+A306560,bodySite,subvalvular mitral region,pt,416374003
+A306561,bodySite,Axial skeleton,pt,6834003
+A306562,bodySite,Sacral base,pt,417082000
+A306563,bodySite,sphenooccipital synchondrosis,pt,80746005
+A306564,bodySite,Skin and subcutaneous tissue structure of head and neck,pt,417461004
+A306565,bodySite,Skin and subcutaneous tissue structure of abdomen,pt,417352000
+A306566,bodySite,Skin and subcutaneous tissue structure of perineum,pt,416514007
+A306567,bodySite,Skin and subcutaneous tissue structure of genitalia,pt,416944003
+A306568,bodySite,Skin crease,pt,280385004
+A306569,bodySite,periorbital tissue,pt,80713004
+A306570,bodySite,Joint structure of digit,pt,400032002
+A306571,bodySite,Systemic artery of trunk,pt,244202008
+A306572,bodySite,ulnar nerve,pt,58696008
+A306573,bodySite,Intertarsal joint,pt,27949001
+A306574,bodySite,Primary palate,pt,359541001
+A306575,bodySite,skin and/or surface epithelium,pt,400199006
+A306576,bodySite,Vascular structure of limb,pt,281828002
+A306577,bodySite,uterine ligament,pt,17149004
+A306578,bodySite,Phalanx,pt,28641004
+A306579,bodySite,tendon sheath of finger,pt,50966004
+A306580,bodySite,Minor salivary gland,pt,87626005
+A306581,bodySite,maxillary buccal sulcus,pt,419755007
+A306582,bodySite,mandibular buccal sulcus,pt,420055006
+A306583,bodySite,Vascular structure of head,pt,281231009
+A306584,bodySite,Cilioretinal artery,pt,420097000
+A306585,bodySite,Subhyaloid region,pt,303297003
+A306586,bodySite,Abdominal cutaneous nerve,pt,280938000
+A306587,bodySite,Vitreous cavity,pt,26386000
+A306588,bodySite,central region of abdomen,pt,422314007
+A306589,bodySite,trigeminal ganglion,pt,36615005
+A306590,bodySite,lamina episcleralis,pt,10695007
+A306591,bodySite,serous cavity,pt,91809009
+A306592,bodySite,Gluteal sulcus,pt,89508007
+A306593,bodySite,Paratesticular,pt,415990002
+A306594,bodySite,Anatomical snuffbox,pt,278825003
+A306595,bodySite,Cardiac chamber,pt,91744000
+A306596,bodySite,Axillary region,pt,91470000
+A306597,bodySite,Ovarian endocrine,pt,304043001
+A306598,bodySite,Testicular endocrine,pt,304042006
+A306599,bodySite,ophthalmic nerve,pt,10056005
+A306600,bodySite,flexor digitorum tendon sheath,pt,410787000
+A306601,bodySite,subarachnoid space of brain,pt,33930006
+A306602,bodySite,Eyelash follicle,pt,280956000
+A306603,bodySite,great cerebral vein,pt,56341001
+A306604,bodySite,iliopsoas muscle,pt,68455001
+A306605,bodySite,tentorium cerebelli,pt,4566004
+A306606,bodySite,Arytenoid cartilage,pt,77578007
+A306607,bodySite,intrahepatic part of main portal vein,pt,34154005
+A306608,bodySite,trunk of portal vein,pt,74680004
+A306609,bodySite,extensor pollicis longus muscle tendon,pt,40717002
+A306610,bodySite,bursa of shoulder,pt,424857008
+A306611,bodySite,head of fifth metatarsal bone,pt,71822005
+A306612,bodySite,bursa of ankle and/or foot,pt,422811007
+A306613,bodySite,Skin structure of bridge of nose,pt,14292005
+A306614,bodySite,Skin structure of ala nasi,pt,68598004
+A306615,bodySite,Skin structure of nasolabial fold,pt,37108007
+A306616,bodySite,Skin structure of tip of nose,pt,79283007
+A306617,bodySite,"soft tissues of back, excluding neck",pt,371426004
+A306618,bodySite,subregion of trunk,pt,420473002
+A306619,bodySite,lacrimal gland duct,pt,417266007
+A306620,bodySite,Ramus of pubis,pt,182026003
+A306621,bodySite,coronoid process of ulna,pt,27807007
+A306622,bodySite,Submandibular triangle,pt,5713008
+A306623,bodySite,thoracic viscus,pt,27832009
+A306624,bodySite,Epiphysis of femoral head,pt,280038003
+A306625,bodySite,ventricular fold of larynx,pt,74761005
+A306626,bodySite,Cervical spinal nerve root,pt,79677002
+A306627,bodySite,tracheal cartilage,pt,17301001
+A306628,bodySite,Condyle of femur,pt,304912006
+A306629,bodySite,Pericardial cavity,pt,25489000
+A306630,bodySite,Interstitial tissue of myocardium,pt,7076002
+A306631,bodySite,Male mammary gland,pt,67770001
+A306632,bodySite,soft tissues of shoulder,pt,95939006
+A306633,bodySite,arch of foot,pt,9089003
+A306634,bodySite,sural nerve,pt,82097001
+A306635,bodySite,Intracranial subdural space,pt,7851002
+A306636,bodySite,bursa of olecranon,pt,424436005
+A306637,bodySite,small blood vessel (organ),pt,27915009
+A306638,bodySite,Ascending aorta,pt,54247002
+A306639,bodySite,epidural space,pt,30636001
+A306640,bodySite,facet joint of cervical spine,pt,427091002
+A306641,bodySite,Spinal nerve,pt,3169005
+A306642,bodySite,Synovial membrane,pt,64331004
+A306643,bodySite,flexor hallucis longus muscle tendon,pt,89110001
+A306644,bodySite,Sacrococcygeal region of spine,pt,297174005
+A306645,bodySite,Mucosa of hard palate,pt,245841005
+A306646,bodySite,piriformis muscle,pt,75699001
+A306647,bodySite,bronchial cartilage,pt,20826001
+A306648,bodySite,parenchyma of kidney,pt,29704000
+A306649,bodySite,Gonadal,pt,43174007
+A306650,bodySite,Skin of fingers and thumb,pt,244169007
+A306651,bodySite,condyle of humerus,pt,119551003
+A306652,bodySite,bursa of finger,pt,427110004
+A306653,bodySite,fascial compartment,pt,118509002
+A306654,bodySite,transplanted bone marrow,pt,77158009
+A306655,bodySite,tensor tympani muscle,pt,5942008
+A306656,bodySite,transplanted lung,pt,10047002
+A306657,bodySite,Transplant,pt,24486003
+A306658,bodySite,transplanted heart,pt,81510007
+A306659,bodySite,Hepatic artery,pt,76015000
+A306660,bodySite,transplanted liver,pt,3860006
+A306661,bodySite,umbilical artery,pt,50536004
+A306662,bodySite,Smooth muscle sphincter,pt,118253008
+A306663,bodySite,Subcutaneous fatty tissue of breast,pt,429572003
+A306664,bodySite,facet joint of thoracic spine,pt,428132006
+A306665,bodySite,tendon and tendon sheath of knee,pt,28354002
+A306666,bodySite,Fifth metatarsal,pt,301000
+A306667,bodySite,Sesamoid bone,pt,116608008
+A306668,bodySite,prepatellar bursa,pt,52349002
+A306669,bodySite,facet joint of lumbar spine,pt,428001008
+A306670,bodySite,subdural space of spinal region,pt,7712004
+A306671,bodySite,Cranial epidural space,pt,32778007
+A306672,bodySite,circumorbital skin,pt,26803003
+A306673,bodySite,transplanted endocrine pancreas,pt,21843009
+A306674,bodySite,Fibrocartilage,pt,91685003
+A306675,bodySite,Lumbosacral spinal cord,pt,63784007
+A306676,bodySite,Second metatarsal,pt,23468006
+A306677,bodySite,pudendal nerve,pt,54805005
+A306678,bodySite,Articular cartilage of elbow joint,pt,305029004
+A306679,bodySite,transplanted intestine,pt,90518008
+A306680,bodySite,Articular cartilage of wrist joint,pt,305030009
+A306681,bodySite,Skin structure of forehead,pt,68698007
+A306682,bodySite,Glabella skin,pt,244083007
+A306683,bodySite,Hindbrain,pt,303456008
+A306684,bodySite,Articular cartilage of femoral condyle,pt,305057006
+A306685,bodySite,Omental bursa,pt,113346000
+A306686,bodySite,Skin of hip and/or thigh,pt,304624002
+A306687,bodySite,60 to 69 percent of body surface,pt,91551007
+A306688,bodySite,Head of fibula,pt,22457002
+A306689,bodySite,Coronal gingiva,pt,50014005
+A306690,bodySite,Suprahyoid epiglottis,pt,277150000
+A306691,bodySite,body of talus,pt,13611003
+A306692,bodySite,Third metatarsal,pt,90431000
+A306693,bodySite,cuboid,pt,81012005
+A306694,bodySite,Skin structure of scalp and/or neck,pt,400056003
+A306695,bodySite,urinary tract proper,pt,431938005
+A306696,bodySite,Myometrial,pt,27232003
+A306697,bodySite,Joint structure of sacrococcygeal region of spine,pt,77208007
+A306698,bodySite,base of metatarsal bone,pt,119545008
+A306699,bodySite,Supratentorial brain,pt,222036002
+A306700,bodySite,Maxillary alveolus part,pt,373608004
+A306701,bodySite,arch of lumbar vertebra,pt,67186000
+A306702,bodySite,Floor of mouth,pt,36360002
+A306703,bodySite,sacrospinous ligament,pt,23937003
+A306704,bodySite,bursa of knee,pt,425038009
+A306705,bodySite,Descended testis,pt,416953005
+A306706,bodySite,Neck and chest,pt,417437006
+A306707,bodySite,Skin structure of wrist,pt,24785000
+A306708,bodySite,arch of thoracic vertebra,pt,50310005
+A306709,bodySite,lamina of lumbar vertebra,pt,30567008
+A306710,bodySite,Submandibular salivary gland,pt,385296007
+A306711,bodySite,sagittal suture of skull,pt,62169003
+A306712,bodySite,alveolar part of mandible,pt,415635007
+A306713,bodySite,70 to 79 percent of body surface,pt,75324005
+A306714,bodySite,Flexor aspect of wrist,pt,182261000
+A306715,bodySite,Spinal nerve root C4,pt,180972009
+A306716,bodySite,pelvic viscus,pt,8279000
+A306717,bodySite,Occipital bone,pt,31640002
+A306718,bodySite,Os of cervix,pt,314384000
+A306719,bodySite,neck of talus,pt,74335009
+A306720,bodySite,pharyngeal recess,pt,1849007
+A306721,bodySite,Skin structure of glans penis,pt,7991003
+A306722,bodySite,bursa of foot,pt,424339002
+A306723,bodySite,Sacral spine joint,pt,129169002
+A306724,bodySite,Infratentorial brain,pt,21031007
+A306725,bodySite,shaft of ulna,pt,21133008
+A306726,bodySite,ligament of ankle joint,pt,67211007
+A306727,bodySite,intercarpal joint,pt,43966005
+A306728,bodySite,intermediate cuneiform,pt,19193007
+A306729,bodySite,Aortic body,pt,75061007
+A306730,bodySite,Tonsillar fossa,pt,32163006
+A306731,bodySite,Infrahyoid epiglottis,pt,277151001
+A306732,bodySite,choroid plexus,pt,80621003
+A306733,bodySite,spinous process of lumbar vertebra,pt,113215001
+A306734,bodySite,subclavian vein,pt,9454009
+A306735,bodySite,midcervical section of neck of femur,pt,43778002
+A306736,bodySite,greater trochanter of femur,pt,30547004
+A306737,bodySite,body of cervical vertebra,pt,86666004
+A306738,bodySite,joint of sternum,pt,362912003
+A306739,bodySite,Female mammary gland,pt,91532001
+A306740,bodySite,Skin structure of chest,pt,74160004
+A306741,bodySite,Spinal canal,pt,61853006
+A306742,bodySite,bursa of hip,pt,423290005
+A306743,bodySite,Corpus penis,pt,75279004
+A306744,bodySite,lymph node of head,pt,13482005
+A306745,bodySite,celiac artery,pt,57850000
+A306746,bodySite,Innominate bone,pt,28254004
+A306747,bodySite,Ligament of shoulder and/or elbow,pt,182385006
+A306748,bodySite,lumbosacral joint,pt,77120005
+A306749,bodySite,Mandibular vestibule,pt,110571004
+A306750,bodySite,Neck of fibula,pt,182091004
+A306751,bodySite,bursa of ankle,pt,422429005
+A306752,bodySite,tendon of infraspinatus muscle,pt,59713001
+A306753,bodySite,Spinal nerve root C5,pt,180973004
+A306754,bodySite,intralobular bile duct,pt,15120006
+A306755,bodySite,Spinal nerve root C7,pt,180975006
+A306756,bodySite,Skin and subcutaneous tissue structure of forearm,pt,416433004
+A306757,bodySite,Popliteal vessel,pt,312531004
+A306758,bodySite,craniopharyngeal duct,pt,86394004
+A306759,bodySite,Fourth metatarsal,pt,88869001
+A306760,bodySite,ureteral orifice,pt,53180009
+A306761,bodySite,Sacral spinal nerve root,pt,128199003
+A306762,bodySite,Skin structure of temple,pt,244081009
+A306763,bodySite,Central portion of female breast,pt,110503000
+A306764,bodySite,Frontal subarachnoid space,pt,264009004
+A306765,bodySite,suspensory ligament of lens,pt,5128004
+A306766,bodySite,Spinal nerve root C6,pt,180974005
+A306767,bodySite,apex of urinary bladder,pt,69659006
+A306768,bodySite,Skin structure of helix,pt,79313003
+A306769,bodySite,Spinous process of axis,pt,181904004
+A306770,bodySite,spine and/or pelvis,pt,312769007
+A306771,bodySite,presacral region,pt,39703001
+A306772,bodySite,hamate,pt,28839003
+A306773,bodySite,Crural artery,pt,244336000
+A306774,bodySite,popliteal vein,pt,56849005
+A306775,bodySite,head and/or neck,pt,312779009
+A306776,bodySite,Percent of body surface,pt,123957003
+A306777,bodySite,Vestibular nerve,pt,81686004
+A306778,bodySite,zygomatic region of face,pt,8617001
+A306779,bodySite,soft tissues of buttock,pt,95941007
+A306780,bodySite,triceps tendon,pt,22525001
+A306781,bodySite,Skin structure of supratip of nose,pt,400203006
+A306782,bodySite,Ileocecal valve,pt,23153004
+A306783,bodySite,Pilosebaceous apparatus,pt,400090007
+A306784,bodySite,body of thoracic vertebra,pt,26849007
+A306785,bodySite,skeletal muscle of shoulder,pt,102288007
+A306786,bodySite,Ciliary muscle,pt,9668006
+A306787,bodySite,flexor muscle of forearm,pt,423127008
+A306788,bodySite,centrum of sacral vertebra,pt,95965005
+A306789,bodySite,Tarsal plate,pt,12173003
+A306790,bodySite,stroma of iris,pt,43845001
+A306791,bodySite,suspensory ligament of penis,pt,22076009
+A306792,bodySite,canal of Nuck,pt,35015002
+A306793,bodySite,pigmented layer of ciliary body,pt,10415000
+A306794,bodySite,Glottis,pt,1307006
+A306795,bodySite,Skin of knee and/or leg and/or ankle,pt,304625001
+A306796,bodySite,soft tissues of face,pt,95937008
+A306797,bodySite,arch of cervical vertebra,pt,84522009
+A306798,bodySite,costoxiphoid ligaments,pt,35982005
+A306799,bodySite,acetabulum,pt,37783008
+A306800,bodySite,Collateral ligament of interphalangeal joint of thumb,pt,182418000
+A306801,bodySite,lymphatic vessel of scalp,pt,54226001
+A306802,bodySite,90 percent of body surface or more,pt,91035006
+A306803,bodySite,Mandibular alveolus,pt,414650007
+A306804,bodySite,Spinal nerve root T1,pt,180977003
+A306805,bodySite,suprascapular nerve,pt,67376009
+A306806,bodySite,80 to 89 percent of body surface,pt,19738007
+A306807,bodySite,uterine serosa,pt,76195004
+A306808,bodySite,Joint structure of thoracic and/or lumbar spine,pt,304574006
+A306809,bodySite,Undescended testis,pt,127907005
+A306810,bodySite,Blade of scapula,pt,181917001
+A306811,bodySite,head of talus,pt,28269003
+A306812,bodySite,Carpometacarpal joint,pt,113237008
+A306813,bodySite,greater tuberosity of humerus,pt,58947000
+A306814,bodySite,junctional zone of base of tongue,pt,23263000
+A306815,bodySite,Apocrine sweat gland,pt,127855006
+A306816,bodySite,spinous process of cervical vertebra,pt,2305000
+A306817,bodySite,Joint of lesser toe,pt,280457002
+A306818,bodySite,Skeletal muscle structure of hip,pt,291816008
+A306819,bodySite,Hypophyseal diverticulum,pt,89718004
+A306820,bodySite,Intestinal villus,pt,23230007
+A306821,bodySite,Skeletal muscle structure of inguinal region,pt,277146007
+A306822,bodySite,Tendon of long head of biceps brachii,pt,245102005
+A306823,bodySite,great blood vessel (organ),pt,3711007
+A306824,bodySite,Lumbar spinal nerve root,pt,128198006
+A306825,bodySite,Ovarian follicle,pt,24162005
+A306826,bodySite,Cricoid cartilage,pt,8600008
+A306827,bodySite,cruciate ligaments of knee joint,pt,78928002
+A306828,bodySite,Palatine arch,pt,21294006
+A306829,bodySite,glomerular mesangium,pt,18602000
+A306830,bodySite,intersigmoid recess,pt,54590002
+A306831,bodySite,Vascular structure of spine,pt,303910005
+A306832,bodySite,bursa of elbow,pt,422976007
+A306833,bodySite,Dermis,pt,53534000
+A306834,bodySite,Epididymal duct,pt,88731002
+A306835,bodySite,Skin and subcutaneous tissue structure of elbow,pt,416345007
+A306836,bodySite,Joint structure of fourth cervical vertebra,pt,410735004
+A306837,bodySite,piriform recess,pt,6217003
+A306838,bodySite,Shafts of radius and/or ulna in combination,pt,181957003
+A306839,bodySite,Capsule of foot joint,pt,281705008
+A306840,bodySite,Iridociliary junction,pt,280876005
+A306841,bodySite,Anatomical neck humerus,pt,181936006
+A306842,bodySite,cusp of tooth,pt,89690004
+A306843,bodySite,intervertebral foramen,pt,113204006
+A306844,bodySite,Spinal nerve root T2,pt,180978008
+A306845,bodySite,flexor compartment of thigh,pt,410768006
+A306846,bodySite,Neck of metacarpal,pt,272697009
+A306847,bodySite,hypopharyngeal aspect of interarytenoid fold,pt,102295003
+A306848,bodySite,spine of scapula,pt,81309001
+A306849,bodySite,tendon of thumb,pt,368371004
+A306850,bodySite,Gastric fundus,pt,414003
+A306851,bodySite,Interphalangeal joint,pt,416599001
+A306852,bodySite,Skin structure of dorsum of foot,pt,22266000
+A306853,bodySite,perirectal tissue,pt,70853004
+A306854,bodySite,Sacroiliac ligament,pt,182432003
+A306855,bodySite,transplanted artery,pt,68273001
+A306856,bodySite,axillary artery,pt,67937003
+A306857,bodySite,Saphenous vein,pt,362072009
+A306858,bodySite,Spinal nerve root T6,pt,180982005
+A306859,bodySite,Endocervical,pt,36973007
+A306860,bodySite,hypopharyngeal aspect of aryepiglottic fold,pt,36088004
+A306861,bodySite,orbital plate of ethmoid bone,pt,5854009
+A306862,bodySite,Vascular structure of neck,pt,304061005
+A306863,bodySite,Flexor pollicis longus muscle,pt,82465007
+A306864,bodySite,tip of tongue,pt,73041003
+A306865,bodySite,Sciatic foramen,pt,280608008
+A306866,bodySite,Region of trachea,pt,314261005
+A306867,bodySite,Spinal nerve root C8,pt,180976007
+A306868,bodySite,Gastric corpus,pt,68560004
+A306869,bodySite,Ischial tuberosity,pt,69030007
+A306870,bodySite,spinous process of thoracic vertebra,pt,27539006
+A306871,bodySite,capsule of ankle joint,pt,2712006
+A306872,bodySite,Skin structure of calf of leg,pt,51059006
+A306873,bodySite,Radial collateral ligament of metacarpophalangeal joint of thumb,pt,304931000
+A306874,bodySite,Abdominal visceral artery,pt,244261004
+A306875,bodySite,Genital region,pt,182349006
+A306876,bodySite,Skin structure of eyebrow,pt,367577003
+A306877,bodySite,Spinal nerve root T3,pt,180979000
+A306878,bodySite,C3,pt,113205007
+A306879,bodySite,profunda femoris vein,pt,23438002
+A306880,bodySite,Outlet of bladder,pt,181423002
+A306881,bodySite,Commissure of lips,pt,83299001
+A306882,bodySite,Skin structure of lip,pt,88089004
+A306883,bodySite,First metatarsal,pt,20151003
+A306884,bodySite,Supraorbital area,pt,56493000
+A306885,bodySite,Joint structure of cervical and/or thoracic spine,pt,312821004
+A306886,bodySite,Skin structure of hypogastric region,pt,367578008
+A306887,bodySite,clivus ossis occipitalis,pt,52206001
+A306888,bodySite,Scrotal and testis structures,pt,297184006
+A306889,bodySite,paraurethral ducts,pt,53134007
+A306890,bodySite,collateral carpal radial ligament,pt,41728005
+A306891,bodySite,Metacarpophalangeal joint structure of thumb,pt,56310002
+A306892,bodySite,Interarytenoid fold,pt,105585004
+A306893,bodySite,Alveolar ridge mucous membrane,pt,5560003
+A306894,bodySite,trochlea of humerus,pt,89905001
+A306895,bodySite,Ligament of metacarpophalangeal joint of finger,pt,244628002
+A306896,bodySite,fundus uteri,pt,27485007
+A306897,bodySite,hilum of lung,pt,46750007
+A306898,bodySite,Joint structure of clavicle,pt,400198003
+A306899,bodySite,axillary vein,pt,68705008
+A306900,bodySite,Trabecular meshwork,pt,66731004
+A306901,bodySite,ligament of acromioclavicular joint,pt,56971001
+A306902,bodySite,Ulnar collateral ligament of metacarpophalangeal joint of finger,pt,304953003
+A306903,bodySite,Skin structure of fifth toe,pt,44419009
+A306904,bodySite,cervical spinal canal,pt,32308008
+A306905,bodySite,Centrilobular region of liver,pt,74052002
+A306906,bodySite,laryngeal aspect of interarytenoid fold,pt,102296002
+A306907,bodySite,greater sciatic foramen,pt,35623004
+A306908,bodySite,Skin structure of shin,pt,18096008
+A306909,bodySite,ampulla of Vater,pt,67109009
+A306910,bodySite,Skin structure of temporal region,pt,16621002
+A306911,bodySite,interstitial tissue of ovary,pt,17352004
+A306912,bodySite,Digital nerve of hand,pt,181015006
+A306913,bodySite,Tendon of trunk,pt,245078007
+A306914,bodySite,Tendon of head and neck,pt,245048003
+A306915,bodySite,splenic artery,pt,22083002
+A306916,bodySite,Femoral vein,pt,83419000
+A306917,bodySite,premaxillary bone,pt,95951008
+A306918,bodySite,Brain cerebrospinal fluid pathway,pt,280371009
+A306919,bodySite,Ligament of spine in thoracic region,pt,182370000
+A306920,bodySite,Pelvic cavity,pt,21844003
+A306921,bodySite,10 to 19 percent of body surface,pt,56244007
+A306922,bodySite,Atlantooccipital joint,pt,20292002
+A306923,bodySite,bile canaliculus,pt,87746007
+A306924,bodySite,Central trabecular septum,pt,263967008
+A306925,bodySite,Precerebral artery,pt,11281008
+A306926,bodySite,fascia of finger,pt,31180007
+A306927,bodySite,corniculate cartilage,pt,74241000
+A306928,bodySite,Radial nerve sensory branch,pt,181034006
+A306929,bodySite,lumbar spinal canal,pt,52225003
+A306930,bodySite,20 to 29 percent of body surface,pt,78777002
+A306931,bodySite,intracapsular section of neck of femur,pt,11128008
+A306932,bodySite,Abdominal and pelvic vascular,pt,304063008
+A306933,bodySite,Skin structure of popliteal fossa,pt,84507004
+A306934,bodySite,styloid process of radius,pt,21754008
+A306935,bodySite,joint of digit of hand,pt,304575007
+A306936,bodySite,tapetum of corpus callosum,pt,60105000
+A306937,bodySite,Retrobulbar space,pt,280954002
+A306938,bodySite,Vascular structure of head and/or neck,pt,281232002
+A306939,bodySite,cervical mucous membrane,pt,22916002
+A306940,bodySite,Skin and subcutaneous tissue structure of hand,pt,417448004
+A306941,bodySite,Muscle part,pt,119193006
+A306942,bodySite,interphalangeal joint of finger,pt,302534004
+A306943,bodySite,cochlear promontory of tympanic cavity,pt,53403002
+A306944,bodySite,soft tissues of hip,pt,95940008
+A306945,bodySite,cuneiform,pt,361016001
+A306946,bodySite,Pedicle of axis,pt,313345004
+A306947,bodySite,sublingual duct,pt,57901005
+A306948,bodySite,ala ossis ilii,pt,35143009
+A306949,bodySite,supracondylar part of humerus,pt,23409000
+A306950,bodySite,body of lumbar vertebra,pt,75002003
+A306951,bodySite,musculocutaneous nerve,pt,66667004
+A306952,bodySite,Skeletal muscle structure of head and neck,pt,314800003
+A306953,bodySite,Neck of humerus,pt,181926003
+A306954,bodySite,centrum of lumbar vertebra,pt,95963003
+A306955,bodySite,Skin structure of great toe,pt,50276005
+A306956,bodySite,L5,pt,49668003
+A306957,bodySite,Sacral vertebra,pt,87141009
+A306958,bodySite,maxillary labial sulcus,pt,417954005
+A306959,bodySite,Cardia,pt,62898002
+A306960,bodySite,50 to 59 percent of body surface,pt,76152003
+A306961,bodySite,mandibular labial sulcus,pt,418271003
+A306962,bodySite,commissure of larynx,pt,72691007
+A306963,bodySite,Collateral ligament of metacarpophalangeal joint of thumb,pt,182417005
+A306964,bodySite,epiploic foramen,pt,43975007
+A306965,bodySite,Spinal nerve root T8,pt,180984006
+A306966,bodySite,Extradural space of spinal cord,pt,263995008
+A306967,bodySite,Exocervical,pt,28349006
+A306968,bodySite,Skin structure of ear lobule,pt,2059009
+A306969,bodySite,neck of mandible,pt,49200000
+A306970,bodySite,ligament of radiocarpal joint,pt,46657002
+A306971,bodySite,Mucous membrane of bronchus,pt,30802009
+A306972,bodySite,Lumbar triangle,pt,280555008
+A306973,bodySite,Skin structure of back,pt,66643007
+A306974,bodySite,Ulnar collateral ligament of interphalangeal joint of thumb,pt,304955005
+A306975,bodySite,Radial collateral ligament of interphalangeal joint of thumb,pt,304954009
+A306976,bodySite,odontoid process of axis,pt,1172006
+A306977,bodySite,Parotid duct,pt,50292000
+A306978,bodySite,Subdural space of spinal cord,pt,244439006
+A306979,bodySite,Arch of atlas,pt,272708001
+A306980,bodySite,umbilical vein,pt,367567000
+A306981,bodySite,Postauricular region,pt,81124000
+A306982,bodySite,lingual papillae,pt,69070000
+A306983,bodySite,Ligament of finger,pt,182416001
+A306984,bodySite,Renal papilla,pt,32041000
+A306985,bodySite,ligament of hip joint,pt,41987009
+A306986,bodySite,parenchyma of pancreas,pt,371401008
+A306987,bodySite,Spinal epidural space,pt,54092001
+A306988,bodySite,Obturator foramen,pt,18943002
+A306989,bodySite,Skin structure of antitragus,pt,38407007
+A306990,bodySite,azygous vein,pt,72107004
+A306991,bodySite,basilar part of occipital bone,pt,33898000
+A306992,bodySite,interlobular bile duct,pt,83488001
+A306993,bodySite,gland of Montgomery,pt,51858004
+A306994,bodySite,frenulum labii,pt,7652006
+A306995,bodySite,Sphincter pupillae muscle,pt,8369000
+A306996,bodySite,Subepidermal region,pt,63034008
+A306997,bodySite,Serous membrane part,pt,119259000
+A306998,bodySite,pedicle of lumbar vertebra,pt,79785004
+A306999,bodySite,Subscapularis muscle,pt,90588001
+A307000,bodySite,nasopharyngeal surface of soft palate,pt,76786004
+A307001,bodySite,supracondylar part of femur,pt,44351006
+A307002,bodySite,Inlet muscular septum,pt,264038001
+A307003,bodySite,radial nerve,pt,8079007
+A307004,bodySite,hepatic artery proper,pt,18112008
+A307005,bodySite,Column of acetabulum,pt,263370002
+A307006,bodySite,Joint structure of third cervical vertebra,pt,410734000
+A307007,bodySite,telencephalon,pt,11628009
+A307008,bodySite,perihepatic region,pt,29055000
+A307009,bodySite,Nail bed of toe,pt,244200000
+A307010,bodySite,styloid process of ulna,pt,91361004
+A307011,bodySite,base of fifth metatarsal bone,pt,30980004
+A307012,bodySite,great toe,pt,310796001
+A307013,bodySite,Urinary bladder transitional epithelium,pt,25631003
+A307014,bodySite,soft tissues of perineum,pt,71321006
+A307015,bodySite,head of metatarsal bone,pt,119547000
+A307016,bodySite,falx cerebri,pt,80401008
+A307017,bodySite,Joint structure of first cervical vertebra,pt,410731008
+A307018,bodySite,Male,pt,10052007
+A307019,bodySite,Skin and subcutaneous tissue structure of wrist,pt,417480002
+A307020,bodySite,Tracheal mucous membrane,pt,660006
+A307021,bodySite,Hippocampal,pt,5366008
+A307022,bodySite,Linea semilunaris,pt,280592008
+A307023,bodySite,Skin structure of female perineum,pt,243991008
+A307024,bodySite,phalanx of thumb,pt,2550002
+A307025,bodySite,collateral carpal ulnar ligament,pt,22296005
+A307026,bodySite,Adductor of hip joint,pt,303803003
+A307027,bodySite,Spinal nerve root C1,pt,180969002
+A307028,bodySite,Urogenital sinus,pt,50961009
+A307029,bodySite,Ulnolunate ligament,pt,182407000
+A307030,bodySite,Pleural mesothelium,pt,31115005
+A307031,bodySite,Appendicular region,pt,261053008
+A307032,bodySite,lymphatic vessel of trunk,pt,314899009
+A307033,bodySite,Scapulothoracic joint,pt,264190008
+A307034,bodySite,ligament of tarsometatarsal joint,pt,51193008
+A307035,bodySite,zygomatic process of maxilla,pt,23224007
+A307036,bodySite,Celiac ganglion,pt,50534001
+A307037,bodySite,cuneiform cartilage,pt,35779009
+A307038,bodySite,Muscle of buttock,pt,102291007
+A307039,bodySite,ligament of metatarsophalangeal joint,pt,49720000
+A307040,bodySite,ligament of interphalangeal joint of foot,pt,63587003
+A307041,bodySite,uterosacral ligament,pt,91607008
+A307042,bodySite,manubrium,pt,37285002
+A307043,bodySite,gyrus of brain,pt,3964001
+A307044,bodySite,vertex of cornea,pt,41657001
+A307045,bodySite,apocrine sweat gland bearing skin of perianal area,pt,424827004
+A307046,bodySite,Splenic capsule,pt,46929006
+A307047,bodySite,Brain meningeal space,pt,280367006
+A307048,bodySite,Ileocecal junction,pt,264021000
+A307049,bodySite,Pectoralis major muscle,pt,60005003
+A307050,bodySite,Chorionic villi,pt,2049008
+A307051,bodySite,mandibular nerve,pt,1173001
+A307052,bodySite,Intercostal nerve,pt,362881004
+A307053,bodySite,ligament of midtarsal joint,pt,47246007
+A307054,bodySite,Intestinal wall,pt,360972004
+A307055,bodySite,roof of nasopharynx,pt,367596004
+A307056,bodySite,Skin and subcutaneous tissue structure of toe,pt,417138006
+A307057,bodySite,surgical neck of humerus,pt,66388000
+A307058,bodySite,Digital vessel,pt,312545005
+A307059,bodySite,interphalangeal joint of thumb,pt,115955008
+A307060,bodySite,Canine space,pt,416250004
+A307061,bodySite,transplanted vein,pt,49622001
+A307062,bodySite,Spinal artery,pt,244228006
+A307063,bodySite,Gartner's duct,pt,309054009
+A307064,bodySite,Joint structure of second cervical vertebra,pt,410732001
+A307065,bodySite,Joint structure of sixth cervical vertebra,pt,410737007
+A307066,bodySite,umbilical blood vessel,pt,408728001
+A307067,bodySite,Subpleural tissue,pt,68599007
+A307068,bodySite,rectovesical pouch,pt,85481009
+A307069,bodySite,Tunica intima of artery,pt,40022005
+A307070,bodySite,Sternocostal ligament,pt,313058007
+A307071,bodySite,Bulbourethral gland,pt,66997005
+A307072,bodySite,mucous membrane of accessory sinus,pt,51848003
+A307073,bodySite,Gastrocnemius muscle,pt,35616000
+A307074,bodySite,Glomerular capillaries,pt,79868006
+A307075,bodySite,Tibial plateau,pt,306783000
+A307076,bodySite,C4,pt,5329002
+A307077,bodySite,Tendon of forearm muscle,pt,278187006
+A307078,bodySite,Gastroepiploic artery,pt,261401008
+A307079,bodySite,Vertebral epiphysis,pt,279993007
+A307080,bodySite,retrocecal appendix,pt,80114002
+A307081,bodySite,Extensor of wrist joint,pt,303741000
+A307082,bodySite,phalanx of finger,pt,282823009
+A307083,bodySite,Aberrant adrenal tissue,pt,181128001
+A307084,bodySite,knee,pt,304679005
+A307085,bodySite,Spinal nerve root T9,pt,180985007
+A307086,bodySite,foliate papillae of tongue,pt,60692007
+A307087,bodySite,Tendon of hamstring muscle,pt,245184008
+A307088,bodySite,junctional region with oropharynx,pt,113280004
+A307089,bodySite,Urethral gland,pt,32061006
+A307090,bodySite,Skin and subcutaneous tissue structure of dorsum of hand,pt,416080001
+A307091,bodySite,elbow,pt,304678002
+A307092,bodySite,Large intestine mesentery,pt,245457004
+A307093,bodySite,lesser sciatic foramen,pt,18938009
+A307094,bodySite,Dermatome of cervical nerve,pt,244030004
+A307095,bodySite,Dermatome of sacral nerve,pt,244058007
+A307096,bodySite,abdominal organ,pt,272631008
+A307097,bodySite,Tendon of gastrocnemius,pt,245198000
+A307098,bodySite,ischial bursa,pt,129178008
+A307099,bodySite,Maxillary vestibule,pt,110570003
+A307100,bodySite,Glossoepiglottic fold,pt,279567006
+A307101,bodySite,Spinal nerve root S5,pt,180998003
+A307102,bodySite,Sagittal sinus,pt,244400002
+A307103,bodySite,sciatic nerve,pt,41519007
+A307104,bodySite,Lobe of liver,pt,245378000
+A307105,bodySite,long bone,pt,113193004
+A307106,bodySite,Hole in mesentery,pt,264837007
+A307107,bodySite,Triceps brachii muscle,pt,40284004
+A307108,bodySite,Prostatic duct,pt,34133003
+A307109,bodySite,Orbital complex of bones - floor,pt,181807007
+A307110,bodySite,head of ulna,pt,69472000
+A307111,bodySite,Ligament of jaw,pt,182479003
+A307112,bodySite,digital artery of hand,pt,40254007
+A307113,bodySite,Sublingual space,pt,122861001
+A307114,bodySite,"Mouth, esophagus and stomach structures",pt,312534007
+A307115,bodySite,Digital nerve in finger,pt,277897001
+A307116,bodySite,Biceps brachii muscle,pt,16225001
+A307117,bodySite,ulnar vein,pt,17623008
+A307118,bodySite,Floor of acetabulum,pt,263369003
+A307119,bodySite,neck of radius,pt,90212008
+A307120,bodySite,Splenic pulp,pt,13515001
+A307121,bodySite,Flexor of wrist joint,pt,303740004
+A307122,bodySite,hook of hamate bone,pt,35169003
+A307123,bodySite,Dermatome of thoracic nerve,pt,244039003
+A307124,bodySite,lymphatic vessel of mammary gland,pt,42135007
+A307125,bodySite,Aryepiglottic fold,pt,43545006
+A307126,bodySite,flexor tendon of foot,pt,118651001
+A307127,bodySite,long thoracic nerve,pt,42203004
+A307128,bodySite,fatty tissue of breast,pt,89749009
+A307129,bodySite,paraaortic body,pt,90769006
+A307130,bodySite,long head of biceps brachii muscle,pt,21940008
+A307131,bodySite,hip,pt,304907005
+A307132,bodySite,waist of scaphoid bone,pt,87861001
+A307133,bodySite,Iliofemoral ligament,pt,39691001
+A307134,bodySite,pars flaccida of tympanic membrane,pt,59781009
+A307135,bodySite,germinal center of lymph node,pt,16733004
+A307136,bodySite,Ependyma,pt,12766003
+A307137,bodySite,trochanteric section of femur,pt,367585007
+A307138,bodySite,Joint structure of head and neck,pt,280435009
+A307139,bodySite,sesamoid bone of hand,pt,56818000
+A307140,bodySite,Tympanic cavity,pt,51837005
+A307141,bodySite,Retromammary space,pt,245526002
+A307142,bodySite,extensor tendon of foot,pt,415638009
+A307143,bodySite,atrioventricular septum,pt,14692001
+A307144,bodySite,bursa of pelvis,pt,423613002
+A307145,bodySite,ureteropelvic junction,pt,32004001
+A307146,bodySite,Flexor of hip joint,pt,303800000
+A307147,bodySite,base of fifth metacarpal bone,pt,24960001
+A307148,bodySite,root of mesentery,pt,24626005
+A307149,bodySite,psoas bursa,pt,422622009
+A307150,bodySite,"lymphatic vessel of nose, face and lip",pt,60559008
+A307151,bodySite,flexor digitorum superficialis muscle of hand,pt,89895007
+A307152,bodySite,Neck of fifth metacarpal,pt,263475006
+A307153,bodySite,Sacral spinal cord,pt,11478001
+A307154,bodySite,Duodenal ampulla,pt,9999005
+A307155,bodySite,Iliac crest,pt,29850006
+A307156,bodySite,Vesicular ovarian follicle,pt,64104009
+A307157,bodySite,Laryngeal skeletal,pt,279506000
+A307158,bodySite,C6,pt,36054005
+A307159,bodySite,episcleral space,pt,57794003
+A307160,bodySite,intervillous space,pt,44605000
+A307161,bodySite,shaft of humerus,pt,20760004
+A307162,bodySite,ischiofemoral ligament,pt,28250008
+A307163,bodySite,olecranon,pt,371504003
+A307164,bodySite,Radial collateral ligament of metacarpophalangeal joint of finger,pt,304952008
+A307165,bodySite,interstitial tissue of urinary bladder,pt,89713008
+A307166,bodySite,subtrochanteric section of femur,pt,66336007
+A307167,bodySite,dorsum of tongue,pt,66938003
+A307168,bodySite,axillary nerve,pt,74858004
+A307169,bodySite,Rectus femoris muscle,pt,72226001
+A307170,bodySite,Buccal space,pt,261063000
+A307171,bodySite,Artery of circle of Willis,pt,181315000
+A307172,bodySite,scaphoid tubercle,pt,44848009
+A307173,bodySite,30 to 39 percent of body surface,pt,12423009
+A307174,bodySite,Third ventricle,pt,49841001
+A307175,bodySite,Iliac vessel,pt,312536009
+A307176,bodySite,Littré gland,pt,367610000
+A307177,bodySite,Palm of hand (surface region),pt,362747002
+A307178,bodySite,Regional skeletal muscle,pt,280440001
+A307179,bodySite,subendocardial myocardium,pt,58148009
+A307180,bodySite,chordae tendineae cordis,pt,102298001
+A307181,bodySite,molar tooth,pt,76928009
+A307182,bodySite,Pericecal region,pt,264134002
+A307183,bodySite,Skin and subcutaneous tissue structure of knee,pt,416130005
+A307184,bodySite,Skin AND subcutaneous tissue structure of scalp,pt,396549006
+A307185,bodySite,Spinal nerve root L3,pt,180991009
+A307186,bodySite,maxillary nerve,pt,91622003
+A307187,bodySite,Dorsum of hand (surface region),pt,362746006
+A307188,bodySite,Bone (tissue),pt,3138006
+A307189,bodySite,quadriceps tendon,pt,70567001
+A307190,bodySite,Recessus epitympanicus,pt,40881002
+A307191,bodySite,shaft of femur,pt,41111004
+A307192,bodySite,respiratory bronchiole,pt,200723008
+A307193,bodySite,Olfactory tract,pt,3960005
+A307194,bodySite,Dermatome of lumbar nerve,pt,244052008
+A307195,bodySite,Stratum corneum,pt,20281003
+A307196,bodySite,Skin and subcutaneous tissue structure of thumb,pt,416408002
+A307197,bodySite,anorectal junction,pt,57444000
+A307198,bodySite,filiform papillae of tongue,pt,368730008
+A307199,bodySite,base of first metacarpal bone,pt,62833009
+A307200,bodySite,Radioscapholunate ligament,pt,182404007
+A307201,bodySite,Spinal nerve root L5,pt,180993007
+A307202,bodySite,suprapatellar bursa,pt,75415000
+A307203,bodySite,paracolic region,pt,243979004
+A307204,bodySite,diaphragmatic pleura,pt,20728007
+A307205,bodySite,Mastoid antrum,pt,4906008
+A307206,bodySite,Spinal nerve root S3,pt,180996004
+A307207,bodySite,spongiose portion of urethra,pt,6375001
+A307208,bodySite,Peroneal tendon,pt,281349007
+A307209,bodySite,naris,pt,363538002
+A307210,bodySite,Tonsillar node,pt,261419004
+A307211,bodySite,Neck of first metacarpal,pt,181980006
+A307212,bodySite,Periarticular bone structure of elbow joint,pt,305016004
+A307213,bodySite,perisplenic region,pt,45173003
+A307214,bodySite,Interphalangeal joint of hand,pt,417259006
+A307215,bodySite,head of first metacarpal bone,pt,42913000
+A307216,bodySite,costal surface of lung,pt,528006
+A307217,bodySite,interlobar surfaces of lung,pt,88985007
+A307218,bodySite,Orbital portion of zygomatic bone,pt,110525006
+A307219,bodySite,Spinal nerve root L2,pt,180990005
+A307220,bodySite,Aponeurosis,pt,77680006
+A307221,bodySite,Skin structure of pinnal sulcus,pt,400025006
+A307222,bodySite,capsule of knee joint,pt,85655003
+A307223,bodySite,tendon of wrist,pt,426480008
+A307224,bodySite,lobe of lung,pt,31094006
+A307225,bodySite,Mesorectum,pt,245460006
+A307226,bodySite,Spinal nerve root L1,pt,180989001
+A307227,bodySite,Joint of fifth toe,pt,312762003
+A307228,bodySite,Corpus spongiosum,pt,25270003
+A307229,bodySite,ligament of sternoclavicular joint,pt,85499001
+A307230,bodySite,ramus of mandible,pt,23938008
+A307231,bodySite,Skin and subcutaneous tissue structure of finger,pt,417355003
+A307232,bodySite,tendon of gluteal region,pt,128499008
+A307233,bodySite,Spinal nerve root T12,pt,180988009
+A307234,bodySite,Spinal nerve root L4,pt,180992002
+A307235,bodySite,perirenal region,pt,243986007
+A307236,bodySite,tracheal membranous wall,pt,18554002
+A307237,bodySite,Metatarsophalangeal joint structure of fifth toe,pt,50133002
+A307238,bodySite,Henle's loop,pt,21694000
+A307239,bodySite,Trunk of brachial plexus,pt,278790007
+A307240,bodySite,Skin structure of zygomatic region,pt,33049008
+A307241,bodySite,rectus abdominis muscle,pt,31243008
+A307242,bodySite,Lymphocytic tissue,pt,6969002
+A307243,bodySite,Muscle structure of hand,pt,110540008
+A307244,bodySite,Spinal nerve root T11,pt,180987004
+A307245,bodySite,Skin and subcutaneous tissue structure of thigh,pt,416788001
+A307246,bodySite,Vertebral foramen,pt,280734009
+A307247,bodySite,Femur part,pt,119190009
+A307248,bodySite,Appendix of testis,pt,279601003
+A307249,bodySite,tendon of subscapularis muscle,pt,80108009
+A307250,bodySite,anulus fibrosus of tricuspid orifice,pt,113259005
+A307251,bodySite,Minor pelvis,pt,80266002
+A307252,bodySite,body of scapula,pt,52900002
+A307253,bodySite,Tendon of adductor longus,pt,245183002
+A307254,bodySite,root canal of tooth,pt,3262009
+A307255,bodySite,Spinal nerve root S2,pt,180995000
+A307256,bodySite,interdental papilla of gingiva,pt,9325002
+A307257,bodySite,Neck of finger metacarpal,pt,312778001
+A307258,bodySite,Sebaceous duct,pt,58201000
+A307259,bodySite,Central tendon of diaphragm,pt,50950001
+A307260,bodySite,buccal sulcus,pt,419133006
+A307261,bodySite,labial sulcus,pt,419500006
+A307262,bodySite,Masticator space,pt,122500009
+A307263,bodySite,Symphysis structure of mandible,pt,113236004
+A307264,bodySite,Conjunctival and/or corneal structures,pt,305089002
+A307265,bodySite,Skin and subcutaneous tissue structure of hip,pt,417368006
+A307266,bodySite,peroneal artery,pt,8821006
+A307267,bodySite,Skin over head of metatarsal bone,pt,244189008
+A307268,bodySite,body of mandible,pt,11048003
+A307269,bodySite,tibial tuberosity,pt,45879002
+A307270,bodySite,Epicondyle of humerus,pt,272693008
+A307271,bodySite,trochanteric bursa,pt,446003
+A307272,bodySite,subdural space of infratentorial region,pt,28355001
+A307273,bodySite,Flexor tendon of forearm,pt,245106008
+A307274,bodySite,Tendon of psoas muscle,pt,314478004
+A307275,bodySite,Medullary cavity of bone,pt,46535001
+A307276,bodySite,wisdom tooth,pt,59966007
+A307277,bodySite,Less than 10 percent of body surface,pt,113341005
+A307278,bodySite,preductal region of aortic arch,pt,75397005
+A307279,bodySite,labrum glenoidale,pt,86721001
+A307280,bodySite,cartilaginous centrum of thoracic vertebra,pt,95962008
+A307281,bodySite,Sweat pore,pt,36462009
+A307282,bodySite,permanent canine tooth,pt,421097009
+A307283,bodySite,Trophoblast,pt,25149004
+A307284,bodySite,Branch of retinal artery,pt,280914004
+A307285,bodySite,ligament of spine,pt,123860006
+A307286,bodySite,Pharynx and/or larynx structures,pt,312535008
+A307287,bodySite,respiratory system and/or intrathoracic,pt,312419003
+A307288,bodySite,rete testis,pt,14221007
+A307289,bodySite,Tracheobronchial lymph node,pt,245341003
+A307290,bodySite,corpus luteum of ovary,pt,19931006
+A307291,bodySite,subdeltoid bursa,pt,54242008
+A307292,bodySite,Spinal arachnoid,pt,3062004
+A307293,bodySite,Descending aorta,pt,281130003
+A307294,bodySite,Sweat gland bearing skin,pt,310887008
+A307295,bodySite,Subdural space,pt,54214006
+A307296,bodySite,Vascular structure of iris,pt,280891007
+A307297,bodySite,Epiphysis of iliac crest,pt,280007004
+A307298,bodySite,Shafts of tibia and/or fibula in combination,pt,182079008
+A307299,bodySite,Ulnar nerve at wrist,pt,244475008
+A307300,bodySite,metacarpal of finger,pt,312780007
+A307301,bodySite,Spinal dura mater,pt,37554007
+A307302,bodySite,Rectal mucous membrane,pt,15079008
+A307303,bodySite,isthmus of fallopian tube,pt,79281009
+A307304,bodySite,articular capsule,pt,32551008
+A307305,bodySite,ventricle of larynx,pt,1441004
+A307306,bodySite,Cecal mesentery,pt,261408002
+A307307,bodySite,Medulla oblongata,pt,26519002
+A307308,bodySite,suprarenal aorta,pt,1918003
+A307309,bodySite,Skin of interdigital web,pt,279065006
+A307310,bodySite,Spinal nerve root S1,pt,180994001
+A307311,bodySite,Radioscaphocapitate ligament,pt,182402006
+A307312,bodySite,Junction of hard and soft palate,pt,245783005
+A307313,bodySite,peritonsillar tissue,pt,1015003
+A307314,bodySite,gastroduodenal artery,pt,37274004
+A307315,bodySite,Spinal nerve root S4,pt,180997008
+A307316,bodySite,Articular system,pt,81087007
+A307317,bodySite,Tendon of back,pt,245079004
+A307318,bodySite,cystic vein,pt,90776001
+A307319,bodySite,valve of foramen ovale,pt,75847001
+A307320,bodySite,Intercondylar crest of tibia,pt,182068003
+A307321,bodySite,pedicle of fifth lumbar vertebra,pt,15849000
+A307322,bodySite,Peritubular tissue - Fallopian,pt,280468002
+A307323,bodySite,Abductor of hip joint,pt,303802008
+A307324,bodySite,Cerebral lobe,pt,314139009
+A307325,bodySite,eyelash,pt,85803001
+A307326,bodySite,shaft of first metacarpal bone,pt,37858003
+A307327,bodySite,cardiac valve cusp,pt,192747009
+A307328,bodySite,Substernal thyroid,pt,68726008
+A307329,bodySite,Ligament of spine in cervical region,pt,182359007
+A307330,bodySite,40 to 49 percent of body surface,pt,36849000
+A307331,bodySite,carotid bifurcation,pt,80272002
+A307332,bodySite,infrapatellar bursa,pt,21067000
+A307333,bodySite,diaphysis,pt,53394001
+A307334,bodySite,Pectoral region,pt,251007
+A307335,bodySite,Subcutaneous tissue structure of scalp,pt,6269008
+A307336,bodySite,Occipital extradural space,pt,261140008
+A307337,bodySite,retrocalcaneal bursa,pt,423898008
+A307338,bodySite,Cranial pia mater,pt,36405008
+A307339,bodySite,pontine artery,pt,369356009
+A307340,bodySite,straight sinus,pt,38745009
+A307341,bodySite,pericolic tissue,pt,84860006
+A307342,bodySite,Endolymphatic duct,pt,78539006
+A307343,bodySite,Colonic mucous membrane,pt,68502009
+A307344,bodySite,Nose surface region,pt,182324007
+A307345,bodySite,Ligament of ankle and/or foot,pt,304570002
+A307346,bodySite,Orbital fat,pt,363656009
+A307347,bodySite,Prostatic urethra,pt,71553001
+A307348,bodySite,lesser trochanter of femur,pt,55499008
+A307349,bodySite,periaortic tissue,pt,56494006
+A307350,bodySite,sigmoid sinus,pt,54110006
+A307351,bodySite,dome of urinary bladder,pt,367608002
+A307352,bodySite,Coccygeal region,pt,72153006
+A307353,bodySite,mucous membrane of urethra,pt,17135008
+A307354,bodySite,cartilaginous portion of Eustachian tube,pt,71013008
+A307355,bodySite,Periovarian tissue,pt,280466003
+A307356,bodySite,Skin of part of limb,pt,314403009
+A307357,bodySite,Skin of side of nose,pt,244089006
+A307358,bodySite,third metacarpal,pt,68440005
+A307359,bodySite,frontal process of maxilla,pt,62380005
+A307360,bodySite,hemiazygous vein,pt,25527002
+A307361,bodySite,canthus,pt,24658000
+A307362,bodySite,bursa of coracobrachialis muscle,pt,35854002
+A307363,bodySite,Skin of fingertip,pt,280424004
+A307364,bodySite,artery of hand,pt,277969006
+A307365,bodySite,Lingual thyroid,pt,129123002
+A307366,bodySite,centrum semiovale,pt,55438003
+A307367,bodySite,Skin structure of axillary fold,pt,399895007
+A307368,bodySite,gastric fundal gland,pt,40745008
+A307369,bodySite,Sympathetic trunk,pt,44909008
+A307370,bodySite,intraabdominal region,pt,123872000
+A307371,bodySite,otic ganglion,pt,113320004
+A307372,bodySite,mediastinal branch of descending thoracic aorta,pt,49403000
+A307373,bodySite,Lanugo hair,pt,9625005
+A307374,bodySite,vaginal canal,pt,48001003
+A307375,bodySite,Joint structure of seventh cervical vertebra,pt,410738002
+A307376,bodySite,penile vein,pt,16203007
+A307377,bodySite,arch of sacral vertebra,pt,102286006
+A307378,bodySite,Tunica intima,pt,8361002
+A307379,bodySite,intercostobrachial nerve,pt,39773002
+A307380,bodySite,intertrochanteric crest of femur,pt,37248005
+A307381,bodySite,submaxillary duct,pt,86391007
+A307382,bodySite,intermetatarsal bursa,pt,427260002
+A307383,bodySite,skin and/or mucosa of anogenital area,pt,399988002
+A307384,bodySite,Glandular structure of breast,pt,279009002
+A307385,bodySite,Ill-defined topographic site,pt,53452003
+A307386,bodySite,Nail bed of finger,pt,244199003
+A307387,bodySite,first sacral vertebra,pt,65985001
+A307388,bodySite,Iliolumbar ligament,pt,304928001
+A307389,bodySite,pericardium,pt,181295003
+A307390,bodySite,cortex of lens,pt,33347001
+A307391,bodySite,Ligament of spine in lumbar region,pt,182377002
+A307392,bodySite,C5,pt,36978003
+A307393,bodySite,thoracic spinal nerve,pt,263002
+A307394,bodySite,Brain part,pt,119235005
+A307395,bodySite,Skin of natal cleft,pt,311454008
+A307396,bodySite,intrinsic muscle compartment of hand,pt,410777004
+A307397,bodySite,Pelvic appendix,pt,128180007
+A307398,bodySite,pelvic peritoneal mesothelium,pt,400029000
+A307399,bodySite,lymphatic vessel of axilla,pt,423604004
+A307400,bodySite,osseous portion of Eustachian tube,pt,8251006
+A307401,bodySite,Joint structure of sacrum,pt,129168005
+A307402,bodySite,short bone,pt,21478002
+A307403,bodySite,Tibial intercondylar tubercle,pt,244698005
+A307404,bodySite,cervical paraspinous muscle group,pt,424913005
+A307405,bodySite,fascial compartment of neck,pt,264468000
+A307406,bodySite,Skin structure of antihelix,pt,33294007
+A307407,bodySite,Follicle of tooth,pt,110975002
+A307408,bodySite,Tibial vein,pt,181405005
+A307409,bodySite,Coracoclavicular ligament,pt,40827000
+A307410,bodySite,lymph nodes of body as a whole,pt,89524008
+A307411,bodySite,shaft of metatarsal,pt,119546009
+A307412,bodySite,Supratentorial brain part,pt,119243000
+A307413,bodySite,lamina of thoracic vertebra,pt,81137002
+A307414,bodySite,Nucleus dentatus,pt,279221005
+A307415,bodySite,supraclavicular region of neck,pt,77621008
+A307416,bodySite,Juxtaglomerular apparatus,pt,63303001
+A307417,bodySite,Wall of oropharynx,pt,314723006
+A307418,bodySite,mucous membrane of urinary bladder,pt,2682005
+A307419,bodySite,collateral radial ligament of elbow,pt,56399000
+A307420,bodySite,shaft of metacarpal,pt,66286004
+A307421,bodySite,pedicle of cervical vertebra,pt,35116004
+A307422,bodySite,all toes,pt,8671006
+A307423,bodySite,Zygomatic tripod,pt,110526007
+A307424,bodySite,Lymph node structure of trunk,pt,312502003
+A307425,bodySite,Body tissue,pt,85756007
+A307426,bodySite,bursa of hand,pt,425250005
+A307427,bodySite,wall of urinary bladder,pt,393006
+A307428,bodySite,dermal papilla,pt,89986003
+A307429,bodySite,suprachoroidal space,pt,3113001
+A307430,bodySite,postductal region of aortic arch,pt,60835009
+A307431,bodySite,base of patella,pt,24488002
+A307432,bodySite,cephalic vein,pt,20699002
+A307433,bodySite,first metacarpal,pt,4247003
+A307434,bodySite,ciliary ganglion,pt,49741006
+A307435,bodySite,Mucosa of soft palate,pt,245842003
+A307436,bodySite,basilic vein,pt,19715009
+A307437,bodySite,sensory nervous system,pt,272646001
+A307438,bodySite,Ulnar collateral ligament of metacarpophalangeal joint of thumb,pt,264497002
+A307439,bodySite,Nail bed of thumb,pt,181590007
+A307440,bodySite,maxillary tuberosity,pt,41151001
+A307441,bodySite,parasympathetic ganglion,pt,78094009
+A307442,bodySite,calcaneofibular ligament,pt,18206006
+A307443,bodySite,nerve fiber layer of retina,pt,45950005
+A307444,bodySite,Pubic ligament,pt,244606002
+A307445,bodySite,gastric vein,pt,110568007
+A307446,bodySite,fourth metacarpal,pt,65352000
+A307447,bodySite,Skin structure of root of nose,pt,400033007
+A307448,bodySite,Nervous structure of thorax,pt,359876006
+A307449,bodySite,bursa of wrist,pt,423972001
+A307450,bodySite,lamina of cervical vertebra,pt,48928005
+A307451,bodySite,ulnar collateral ligament of elbow,pt,113244004
+A307452,bodySite,paranasal sinus wall,pt,77220004
+A307453,bodySite,Skin structure of nipple,pt,54468004
+A307454,bodySite,angle of mandible,pt,11843008
+A307455,bodySite,second metacarpal,pt,81921009
+A307456,bodySite,neck of metatarsal bone,pt,423118007
+A307457,bodySite,intervertebral syndesmosis of C2 and C3,pt,410733006
+A307458,bodySite,Supraclavicular nerve,pt,280328000
+A307459,bodySite,Skin structure of malleolus,pt,419975006
+A307460,bodySite,skin and/or mucosa of vulva,pt,400119005
+A307461,bodySite,Joint structure of wrist and/or hand,pt,312758009
+A307462,bodySite,squamocolumnar junction of uterine cervix,pt,87948002
+A307463,bodySite,Posteromarginal tympanic membrane,pt,244504008
+A307464,bodySite,Epicranius muscle,pt,32376008
+A307465,bodySite,Cerebral peduncle,pt,36159002
+A307466,bodySite,serous capsule of liver,pt,48025006
+A307467,bodySite,Scalp and/or neck,pt,399913000
+A307468,bodySite,prepuce of clitoris,pt,13997000
+A307469,bodySite,spinous process of vertebra,pt,55678000
+A307470,bodySite,apex of patella,pt,87821002
+A307471,bodySite,sclera,pt,181163006
+A307472,bodySite,Soft tissue joint component,pt,244567004
+A307473,bodySite,Skin of canthus,pt,360913002
+A307474,bodySite,Thoracolumbar vertebrae,pt,110532002
+A307475,bodySite,Diffuse neuroendocrine,pt,280120004
+A307476,bodySite,Cerebellar peduncle,pt,9000002
+A307477,bodySite,Nephron,pt,54018001
+A307478,bodySite,central retinal artery,pt,76117006
+A307479,bodySite,Flexor tendon of hand,pt,422871001
+A307480,bodySite,Sacral plexus,pt,62397004
+A307481,bodySite,Skin and subcutaneous tissue structure of back,pt,417286006
+A307482,bodySite,Corpus striatum,pt,31428008
+A307483,bodySite,Interstitial tissue,pt,85293002
+A307484,bodySite,Pharyngeal space,pt,314725004
+A307485,bodySite,Skin structure of clavicular region,pt,91009005
+A307486,bodySite,Pelvic parasympathetic nerve,pt,181104003
+A307487,bodySite,subacromial bursa,pt,63424005
+A307488,bodySite,thoracic portion of sympathetic nervous system,pt,77804002
+A307489,bodySite,erythropoietic tissue,pt,52901003
+A307490,bodySite,Suprahepatic area,pt,243975005
+A307491,bodySite,Digital artery,pt,413991000
+A307492,bodySite,Synovial structure of shoulder region,pt,312678005
+A307493,bodySite,Appendix of head of epididymis,pt,279626007
+A307494,bodySite,Zygomatic,pt,415642007
+A307495,bodySite,Membranous urethra,pt,27003007
+A307496,bodySite,lymphatic vessel of abdomen,pt,397156000
+A307497,bodySite,Skin structure of male genitalia,pt,14225003
+A307498,bodySite,Cementum,pt,80541002
+A307499,bodySite,Ligament of temporomandibular joint,pt,127861009
+A307500,bodySite,Nasopharyngeal wall,pt,33539000
+A307501,bodySite,Glans penis and/or preputial structures,pt,312716006
+A307502,bodySite,parenchyma of liver,pt,127879008
+A307503,bodySite,midfacial bone,pt,415641000
+A307504,bodySite,forefoot,pt,272718006
+A307505,bodySite,Sacrotuberal ligament,pt,86366007
+A307506,bodySite,Sacral ligament,pt,314663002
+A307507,bodySite,Spinal nerve root T5,pt,180981003
+A307508,bodySite,compartment of forearm,pt,410776008
+A307509,bodySite,Plantar aponeurosis,pt,64799002
+A307510,bodySite,stellate ganglion,pt,33961002
+A307511,bodySite,ligament of sacrococcygeal joint,pt,76137005
+A307512,bodySite,cerebellar artery,pt,38608005
+A307513,bodySite,intervertebral space,pt,47886009
+A307514,bodySite,extensor tendon,pt,58948005
+A307515,bodySite,Subperiosteal orbital space,pt,280558005
+A307516,bodySite,intercostal vein,pt,16991009
+A307517,bodySite,Membranous labyrinth,pt,12705002
+A307518,bodySite,brachial vein,pt,20115005
+A307519,bodySite,periappendiceal tissue,pt,78942005
+A307520,bodySite,Skin structure of obverse of pinna,pt,399953002
+A307521,bodySite,Fauces,pt,367601008
+A307522,bodySite,infrarenal aorta,pt,28205006
+A307523,bodySite,Preseptal space of eyelid,pt,280568000
+A307524,bodySite,Side of chest,pt,182332004
+A307525,bodySite,Central tympanic membrane,pt,244503002
+A307526,bodySite,retroileal space,pt,72190007
+A307527,bodySite,germinal epithelium of ovary,pt,66319004
+A307528,bodySite,Spinal pia mater,pt,68847004
+A307529,bodySite,trabecula septomarginalis,pt,34753009
+A307530,bodySite,corpus albicans of ovary,pt,17995007
+A307531,bodySite,Hepatic lobule,pt,15878004
+A307532,bodySite,Outlet muscular septum,pt,264116001
+A307533,bodySite,Intrinsic wrist ligament,pt,182409002
+A307534,bodySite,vaginal muscularis,pt,50481003
+A307535,bodySite,Rectosigmoid,pt,81922002
+A307536,bodySite,Talofibular ligament,pt,244649001
+A307537,bodySite,pedicle of thoracic vertebra,pt,17448003
+A307538,bodySite,Articular cartilage of patella,pt,305069003
+A307539,bodySite,calcaneal tendon bursa,pt,48048001
+A307540,bodySite,Radiolunate ligament,pt,182403001
+A307541,bodySite,Brain and spinal cord,pt,389079005
+A307542,bodySite,myocardium of atrium,pt,17475005
+A307543,bodySite,Septum pellucidum,pt,70146006
+A307544,bodySite,flexor tendon,pt,77685001
+A307545,bodySite,Adductor pollicis muscle,pt,60114005
+A307546,bodySite,Joint structure of fifth cervical vertebra,pt,410736003
+A307547,bodySite,coracohumeral ligament,pt,55578007
+A307548,bodySite,periprostatic tissue,pt,37446007
+A307549,bodySite,Skin of part of pelvic region,pt,281730006
+A307550,bodySite,Spinal nerve root T10,pt,180986008
+A307551,bodySite,Attic of tympanic membrane,pt,263956007
+A307552,bodySite,parietal peritoneal mesothelium,pt,400189001
+A307553,bodySite,Subperiosteum,pt,80112003
+A307554,bodySite,Limbic system,pt,58590008
+A307555,bodySite,lymphatic vessel of neck,pt,168742000
+A307556,bodySite,Spinal nerve root T7,pt,180983000
+A307557,bodySite,submaxillary ganglion,pt,2421006
+A307558,bodySite,Periungual skin of toe,pt,280421007
+A307559,bodySite,all fingers,pt,70327001
+A307560,bodySite,Smooth muscle (tissue),pt,122447002
+A307561,bodySite,ligament of neck,pt,72579007
+A307562,bodySite,Extensor tendon of forearm,pt,245121002
+A307563,bodySite,tendon of toe,pt,68754001
+A307564,bodySite,Secundines,pt,63011004
+A307565,bodySite,Auricular region,pt,61942001
+A307566,bodySite,splenic vein,pt,35819009
+A307567,bodySite,Peripapillary retina,pt,280615000
+A307568,bodySite,Cervical plexus,pt,72260008
+A307569,bodySite,fifth metacarpal,pt,50939004
+A307570,bodySite,Plantar vessel,pt,312544009
+A307571,bodySite,Ligament of ovary,pt,279915004
+A307572,bodySite,palatine duct,pt,7742001
+A307573,bodySite,Spinal nerve root C2,pt,180970001
+A307574,bodySite,olfactory bulb,pt,113302008
+A307575,bodySite,gastric artery,pt,367600009
+A307576,bodySite,Digital nerve in thumb,pt,181046005
+A307577,bodySite,Spinal nerve root C3,pt,180971002
+A307578,bodySite,flexor digitorum profundus muscle of hand,pt,423541009
+A307579,bodySite,Subcutaneous tissue structure of neck,pt,81853001
+A307580,bodySite,Endocervical gland,pt,50515001
+A307581,bodySite,Region of breast,pt,279005008
+A307582,bodySite,Parasympathetic nerve,pt,78390006
+A307583,bodySite,alveolar process of maxilla,pt,415636008
+A307584,bodySite,Retinal arteriole,pt,303299000
+A307585,bodySite,Heart AND pericardium,pt,409708007
+A307586,bodySite,Duodenojejunal junction,pt,281074004
+A307587,bodySite,Ciliary epithelium,pt,280869000
+A307588,bodySite,extensor digitorum longus muscle of foot,pt,20497005
+A307589,bodySite,"Atrioventricular (non-mitral, non-tricuspid) valve",pt,279316009
+A307590,bodySite,iliotibial tract,pt,7480001
+A307591,bodySite,Spinal nerve root T4,pt,180980002
+A307592,bodySite,Skin structure of tragus,pt,79502000
+A307593,bodySite,arteriole,pt,28225005
+A307594,bodySite,Tracheal bronchus,pt,76914003
+A307595,bodySite,Neural fold,pt,361461009
+A307596,bodySite,Vulval vestibule,pt,23213005
+A307597,bodySite,Subcutaneous tissue structure of back,pt,4956003
+A307598,bodySite,Atrioventricular junction,pt,312212009
+A307599,bodySite,tendon of semimembranosus,pt,128509003
+A307600,bodySite,Extraembryonic membranes,pt,54134001
+A307601,bodySite,tendon of biceps femoris,pt,128508006
+A307602,bodySite,Skin of septum of nose,pt,244088003
+A307603,bodySite,uterine vein,pt,60028002
+A307604,bodySite,Skin structure of epigastric area,pt,30598005
+A307605,bodySite,psoas muscle,pt,36278009
+A307606,bodySite,penile artery,pt,282044005
+A307607,bodySite,Dorsalis pedis vein,pt,312515007
+A307608,bodySite,Intertrochanteric structure of femur,pt,360786007
+A307609,bodySite,Skin structure of labium majus,pt,128252004
+A307610,bodySite,Skin structure of labium minus,pt,128253009
+A307611,bodySite,Saphenous opening,pt,79908009
+A307612,bodySite,tendon of foot,pt,53870007
+A307613,bodySite,Lacrimal papilla,pt,82139002
+A307614,bodySite,Triangular fibrocartilage complex of the wrist,pt,122476004
+A307615,bodySite,Subcutaneous tissue structure of abdomen,pt,42972002
+A307616,bodySite,Skin structure of eyelid and periocular area,pt,399996007
+A307617,bodySite,Appendiceal lymphoid nodule,pt,45679000
+A307618,bodySite,Malleolar structure of tibia,pt,314796009
+A307619,bodySite,ulnocarpal meniscus homologue,pt,429886008
+A307620,bodySite,soft tissue of extremity,pt,430636002
+A307621,bodySite,Lumbar extradural space,pt,280399000
+A307622,bodySite,Cervical extradural space,pt,280397003
+A307623,bodySite,Glomerular arteriole,pt,360815005
+A307624,bodySite,elastic fibers of skin,pt,55696009
+A307625,bodySite,ovarian artery,pt,12052000
+A307626,bodySite,Skeletal muscle structure of chest wall,pt,372074006
+A307627,bodySite,subdural space of occipital region,pt,63521004
+A307628,bodySite,Perivesicular tissue of urinary bladder,pt,110626001
+A307629,bodySite,Skin of elbow and/or forearm and/or wrist,pt,303982006
+A307630,bodySite,Subcutaneous tissue structure of limb,pt,430613006
+A307631,bodySite,saphenous nerve,pt,61896001
+A307632,bodySite,Subcutaneous tissue structure of nuchal region,pt,3215002
+A307633,bodySite,Tooth surface,pt,245643006
+A307634,bodySite,Skin structure of male perineum,pt,243992001
+A307635,bodySite,Ear part,pt,119262002
+A307636,bodySite,Skin of iliac fossa,pt,181510006
+A307637,bodySite,apocrine sweat gland bearing skin of axilla,pt,422792007
+A307638,bodySite,apocrine sweat gland bearing skin of vulva,pt,423383003
+A307639,bodySite,cavernous vein of penis,pt,23591007
+A307640,bodySite,coracoacromial ligament,pt,69970002
+A307641,bodySite,parietal pericardium,pt,61067001
+A307642,bodySite,pancreatic interstitial tissue,pt,42459006
+A307643,bodySite,omphalomesenteric artery,pt,36972002
+A307644,bodySite,uterine artery,pt,91079009
+A307645,bodySite,Cartilaginous joint,pt,336003007
+A307646,bodySite,metatarsal region of foot,pt,1484003
+A307647,bodySite,Skin and subcutaneous tissue structure of chest,pt,416807002
+A307648,bodySite,Chiari network,pt,277725008
+A307649,bodySite,Sympathetic ganglion,pt,55139000
+A307650,bodySite,Peripharyngeal area,pt,86226005
+A307651,bodySite,Vascular structure of stomach,pt,422897007
+A307652,bodySite,vulvar mucous membrane,pt,81238000
+A307653,bodySite,Ligament of rib,pt,182480000
+A307654,bodySite,Tendon of deltoid,pt,312049005
+A307655,bodySite,Sternal skin,pt,244107007
+A307656,bodySite,pectineus muscle,pt,71875009
+A307657,bodySite,Plantar digital nerve,pt,181075004
+A307658,bodySite,Skin structure of supraclavicular region of neck,pt,76072005
+A307659,bodySite,peripancreatic tissue,pt,67232004
+A307660,bodySite,abdominal wall muscle,pt,195879000
+A307661,bodySite,apocrine sweat gland bearing skin of perineum,pt,425370002
+A307662,bodySite,Subcutaneous tissue structure of trunk,pt,39356001
+A307663,bodySite,pancreatic acinus,pt,20066003
+A307664,bodySite,valve of sinus,pt,89175004
+A307665,bodySite,Nail bed of digit of hand,pt,306865002
+A307666,bodySite,Malleolar structure of fibula,pt,360857004
+A307667,bodySite,temporal region of scalp,pt,181471002
+A307668,bodySite,trapezius muscle,pt,31764008
+A307669,bodySite,occipital region of scalp,pt,181486008
+A307670,bodySite,Anatomical or acquired body,pt,442083009
+A307671,bodySite,C7,pt,87391001
+A307672,bodySite,extensor digitorum pedis longus muscle tendon,pt,51120000
+A307673,bodySite,Tendon sheath of foot,pt,301895009
+A307674,bodySite,intertubercular synovial sheath of biceps brachii muscle,pt,59152003
+A307675,bodySite,"Extensor tendon sheath of forearm, wrist, hand",pt,280080004
+A307676,bodySite,Venous system,pt,119553000
+A307677,bodySite,coronal suture of skull,pt,29012004
+A307678,bodySite,Extensor carpi radialis longus tendon sheath,pt,280095002
+A307679,bodySite,Tendon of extensor carpi radialis longus,pt,245124005
+A307680,bodySite,small blood vessel of dermis,pt,77749008
+A307681,bodySite,"flexor tendon sheath of forearm, wrist, hand",pt,410788005
+A307682,bodySite,Extensor digitorum tendon sheath,pt,280100000
+A307683,bodySite,extensor digitorum pedis longus muscle tendon sheath,pt,85022009
+A307684,bodySite,tendon sheath of hand,pt,118631000
+A307685,bodySite,Muscle acting on wrist joint,pt,303739001
+A307686,bodySite,infraorbital nerve,pt,8161005
+A307687,bodySite,Articular cartilage of lunate,pt,305051007
+A307688,bodySite,Finger joint synovium,pt,280450000
+A307689,bodySite,Muscle acting on elbow joint,pt,303558007
+A307690,bodySite,muscle of forearm,pt,423313009
+A307691,bodySite,Toe joint synovium,pt,360796003
+A307692,bodySite,Foot joint synovium,pt,386096005
+A307693,bodySite,Submental triangle,pt,170887008
+A307694,bodySite,skeletal muscle of face,pt,25903009
+A307695,bodySite,Endosteum,pt,57487002
+A307696,bodySite,Subcutaneous tissue structure of head and neck,pt,22329008
+A307697,bodySite,peroneal vein,pt,71758008
+A307698,bodySite,ligament of midcarpal joint,pt,77030004
+A307699,bodySite,Collateral ligament of knee joint,pt,245935004
+A307700,bodySite,Intercarpal ligament,pt,244623006
+A307701,bodySite,Articular cartilage of body of talus,pt,305098004
+A307702,bodySite,Cervical spinal cord meninges,pt,303912002
+A307703,bodySite,Lumbar spinal cord meninges,pt,303948000
+A307704,bodySite,Thoracic spinal cord meninges,pt,303920000
+A307705,bodySite,Ulnar carpal complex ligament,pt,182400003
+A307706,bodySite,Preputial sac,pt,279716006
+A307707,bodySite,ligament of carpometacarpal joint,pt,368249006
+A307708,bodySite,Segment of cervical spinal cord,pt,278749009
+A307709,bodySite,Segment of lumbar spinal cord,pt,278751008
+A307710,bodySite,Skin of supraumbilical region,pt,181505007
+A307711,bodySite,conus medullaris,pt,32516000
+A307712,bodySite,Tendon of forearm and hand,pt,360496004
+A307713,bodySite,extensor carpi ulnaris muscle tendon,pt,83352005
+A307714,bodySite,vertebra,pt,420345000
+A307715,bodySite,flexor carpi radialis muscle tendon,pt,15862001
+A307716,bodySite,Metatarsophalangeal joint structure of second toe,pt,71721008
+A307717,bodySite,foramen ovale of heart,pt,77534003
+A307718,bodySite,Cerebellar cortex,pt,25991003
+A307719,bodySite,Gastric submucosa,pt,52459002
+A307720,bodySite,Atrioventricular valve,pt,11124005
+A307721,bodySite,maxillary tooth,pt,420393006
+A307722,bodySite,Cutaneous nerve of forearm,pt,361028009
+A307723,bodySite,mandibular tooth,pt,420730005
+A307724,bodySite,Tendon of flexor carpi ulnaris,pt,245111005
+A307725,bodySite,Tendon of extensor indicis,pt,245139006
+A307726,bodySite,foramen magnum,pt,24532009
+A307727,bodySite,bursa of patella,pt,424798005
+A307728,bodySite,Flexor digitorum longus muscle,pt,18010003
+A307729,bodySite,Truncal valve leaflet,pt,279327006
+A307730,bodySite,Truncal valve,pt,279317000
+A307731,bodySite,commissure of aortic valve,pt,46396001
+A307732,bodySite,Aberrant thyroid tissue,pt,181118005
+A307733,bodySite,subserous part of myometrium,pt,52077003
+A307734,bodySite,gallbladder fossa of liver,pt,69039008
+A307735,bodySite,Digital nerve,pt,300055000
+A307736,bodySite,Suprapulmonic valve area,pt,79142001
+A307737,bodySite,gastric foveola,pt,87206002
+A307738,bodySite,commissure of pulmonic valve,pt,27793006
+A307739,bodySite,Lumbar plexus,pt,16676009
+A307740,bodySite,Trabecular septum,pt,264236005
+A307741,bodySite,Trochanter of femur,pt,182047004
+A307742,bodySite,cusp of pulmonic valve,pt,31689007
+A307743,bodySite,Supraspinatus muscle,pt,6423006
+A307744,bodySite,fossa ovalis of heart,pt,51700009
+A307745,bodySite,ductus venosus,pt,367624001
+A307746,bodySite,anulus fibrosus of pulmonary artery,pt,90318009
+A307747,bodySite,Popliteus muscle,pt,15591009
+A307748,bodySite,Femoral lymph node,pt,310545001
+A307749,bodySite,ependyma of spinal cord,pt,17454002
+A307750,bodySite,ependyma of brain ventricle,pt,447216005
+A307751,bodySite,galea aponeurotica,pt,52719001
+A307752,bodySite,extraperitoneal space,pt,83137009
+A307753,bodySite,supramitral valve area,pt,69476002
+A307754,bodySite,intramural part of myometrium,pt,85210000
+A307755,bodySite,submucous part of myometrium,pt,77629005
+A307756,bodySite,Infraspinatus muscle,pt,72573008
+A307757,bodySite,aortic sinotubular junction,pt,443167003
+A307758,bodySite,suprahyoid region,pt,14056001
+A307759,bodySite,subchorionic space,pt,4352005
+A307760,bodySite,Subpulmonary area,pt,244380000
+A307761,bodySite,Abdomen and pelvis,pt,416949008
+A307762,bodySite,"Atrioventricular (non-mitral, non-tricuspid) valve leaflet",pt,244373002
+A307763,bodySite,anulus fibrosus of aorta,pt,77583004
+A307764,bodySite,tricuspid area,pt,33321005
+A307765,bodySite,Systemic circulatory system,pt,51840005
+A307766,bodySite,Subpericranial space,pt,450431008
+A307767,bodySite,spinal subarachnoid space,pt,85178008
+A307768,bodySite,pelvic organ,pt,303455007
+A307769,bodySite,Subarachnoid space,pt,35951006
+A307770,bodySite,meningeal space,pt,32111004
+A307771,bodySite,Temple region,pt,450718002
+A307772,bodySite,Surface region of back,pt,272612002
+A307773,bodySite,temporal region,pt,450721000
+A307774,bodySite,subpial space of neuraxis,pt,451031006
+A307775,bodySite,subpial space of brain,pt,451032004
+A307776,bodySite,subpial space of spinal cord,pt,451033009
+A307777,bodySite,Caudate nucleus,pt,11000004
+A307778,bodySite,putamen,pt,89278009
+A307779,bodySite,adenoid,pt,181199001
+A307780,bodySite,spleen,pt,181279003
+A307781,bodySite,cerebral gyrus,pt,279165009
+A307782,bodySite,abdomen,pt,302553009
+A307783,bodySite,palatine tonsil,pt,265787001
+A307784,bodySite,penis,pt,265793009
+A307785,bodySite,thyroid gland,pt,181117000
+A307786,bodySite,"oropharyngeal tonsil (lingual, palatine, pharyngeal)",pt,362594007
+A307787,bodySite,adrenal gland,pt,181127006
+A307788,bodySite,pituitary gland,pt,181125003
+A307789,bodySite,prostate,pt,181422007
+A307790,bodySite,cardiac ventricle,pt,277699000
+A307791,bodySite,ovary,pt,181464007
+A307792,bodySite,cisterna magna,pt,280391002
+A307793,bodySite,Fourth pharyngeal pouch,pt,76307008
+A307794,bodySite,third pharyngeal pouch,pt,79666008
+A307795,bodySite,Supraaortic branch of thoracic aorta,pt,361102009
+A307796,bodySite,Non-coronary systemic artery,pt,473448003
+A307797,bodySite,Non-coronary non-aorta systemic artery,pt,473450006
+A307798,bodySite,Cardiovascular structure of trunk,pt,281233007
+A307799,bodySite,Aortic tunica intima,pt,84206009
+A307800,bodySite,duct of bulbourethral gland,pt,84243006
+A307801,bodySite,ligamentum arteriosum,pt,2160002
+A307802,bodySite,Intrathoracic cardiovascular,pt,281467004
+A307803,bodySite,lamina dura of tooth socket,pt,450722007
+A307804,bodySite,pulmonary vein great vessel,pt,430757002
+A307805,bodySite,myocardium of ventricle,pt,7872004
+A307806,bodySite,Systemic venous pathway,pt,244406008
+A307807,bodySite,Pulmonary venous pathway,pt,264165006
+A307808,bodySite,Autonomic plexus,pt,10915005
+A307809,bodySite,Somatic nerve plexus,pt,609390000
+A307810,bodySite,Spleen part,pt,120613001
+A307811,bodySite,Glia,pt,58861006
+A307812,bodySite,Embryo,pt,609523007
+A307813,bodySite,nucleus of lens,pt,56707006
+A307814,bodySite,Ulnar nerve at elbow,pt,244472006
+A307815,bodySite,Plantar nerve,pt,181074000
+A307816,bodySite,Ulnar nerve branch,pt,272638002
+A307817,bodySite,Radial nerve branch,pt,272641006
+A307818,bodySite,nerve root and/or plexus,pt,609610009
+A307819,bodySite,sural nerve in calf,pt,609602008
+A307820,bodySite,pelvic region of trunk,pt,609617007
+A307821,bodySite,connective tissue of anorectal region,pt,609636002
+A307822,bodySite,Cardinal vein,pt,4703008
+A307823,bodySite,anal intersphincteric tissue,pt,609634004
+A307824,bodySite,pelvirectal compartment,pt,609632000
+A307825,bodySite,abdominal segment of trunk,pt,609616003
+A307826,bodySite,Connective tissue by site,pt,363043001
+A307827,bodySite,Maxillary torus,pt,244683008
+A307828,bodySite,mentalis muscle,pt,65930000
+A307829,bodySite,Neurocranium,pt,397319000
+A307830,bodySite,base of fourth metacarpal bone,pt,50210007
+A307831,bodySite,base of third metacarpal bone,pt,2306004
+A307832,bodySite,base of second metacarpal bone,pt,55398001
+A307833,bodySite,Paroophoron,pt,699004009
+A307834,bodySite,cerebral aqueduct,pt,80447000
+A307835,bodySite,sphincter urethrae muscle,pt,39498002
+A307836,bodySite,Joint structure of wrist region,pt,699026005
+A307837,bodySite,ligament of lumbosacral joint,pt,6828005
+A307838,bodySite,Pleural sac,pt,116006008
+A307839,bodySite,compartment of abdomen,pt,699592006
+A307840,bodySite,subdivision of abdominal compartment,pt,699595008
+A307841,bodySite,compartment of thorax,pt,699593001
+A307842,bodySite,stylohyoid ligament,pt,167063009
+A307843,bodySite,capsule of temporomandibular joint,pt,6074008
+A307844,bodySite,endolymphatic sac,pt,36214001
+A307845,bodySite,infraorbital region of face,pt,20595004
+A307846,bodySite,uterus,pt,181452004
+A307847,bodySite,Skin structure of coccygeal region,pt,22115004
+A307848,bodySite,maxillary teeth,pt,68137000
+A307849,bodySite,Skeletal ligament,pt,410743009
+A307850,bodySite,cricoarytenoid ligament,pt,699978005
+A307851,bodySite,Laryngeal ligament,pt,279508004
+A307852,bodySite,Long digital flexor tendon - Zone III,pt,245117009
+A307853,bodySite,Long digital flexor tendon - Zone IV,pt,245118004
+A307854,bodySite,Long digital flexor tendon - Zone I,pt,245115001
+A307855,bodySite,Long digital flexor tendon - Zone V,pt,245119007
+A307856,bodySite,ligament of thyroid cartilage,pt,699979002
+A307857,bodySite,cricothyroid ligament,pt,66150005
+A307858,bodySite,Long digital flexor tendon - Zone II,pt,245116000
+A307859,bodySite,Attachment of short head of biceps brachii to coracoid process,pt,699958002
+A307860,bodySite,Extracapsular ligament of temporomandibular joint,pt,244581002
+A307861,bodySite,Placental vessel,pt,280716005
+A307862,bodySite,Supraspinatus muscle and/or tendon,pt,700024003
+A307863,bodySite,Infraspinatus muscle and/or tendon,pt,700023009
+A307864,bodySite,genital organ,pt,700037000
+A307865,bodySite,Skeletal muscle structure of face,pt,700047002
+A307866,bodySite,stylomandibular ligament of temporomandibular joint,pt,53674000
+A307867,bodySite,Periarticular bone,pt,305014001
+A307868,bodySite,Subependymal region,pt,28080006
+A307869,bodySite,Segment of spinal cord,pt,278748001
+A307870,bodySite,lymphatic vessel of penis,pt,72753001
+A307871,bodySite,ora serrata of retina,pt,45040007
+A307872,bodySite,Calcaneocuboidal joint,pt,75069009
+A307873,bodySite,talonavicular joint,pt,127864001
+A307874,bodySite,lactating breast,pt,71377008
+A307875,bodySite,Branchial arch,pt,68959004
+A307876,bodySite,Vascular structure of abdominal organ,pt,312582001
+A307877,bodySite,centrum of cervical vertebra,pt,95959005
+A307878,bodySite,cartilaginous centrum of cervical vertebra,pt,95960000
+A307879,bodySite,supraoccipital bone,pt,156347001
+A307880,bodySite,nasal spine of frontal bone,pt,32181009
+A307881,bodySite,Cortex of bone,pt,87791003
+A307882,bodySite,interparietal bone,pt,95948001
+A307883,bodySite,Chromosome pair 9,pt,13526007
+A307884,bodySite,Chromosome pair 3,pt,113355002
+A307885,bodySite,sternebra,pt,367788006
+A307886,bodySite,Chromosome pair 10,pt,56332006
+A307887,bodySite,Chromosome pair 13,pt,55401003
+A307888,bodySite,presphenoidal bone,pt,156448007
+A307889,bodySite,permanent tooth,pt,37977002
+A307890,bodySite,Chromosome pair 20,pt,25610001
+A307891,bodySite,Chromosome pair 15,pt,71678009
+A307892,bodySite,squamous part of temporal bone,pt,91664003
+A307893,bodySite,greater wing of sphenoid bone,pt,37724000
+A307894,bodySite,basisphenoid bone,pt,156145000
+A307895,bodySite,cingulum dentis,pt,1997009
+A307896,bodySite,ocular blood vessel,pt,123846009
+A307897,bodySite,Female genitourinary system,pt,66014000
+A307898,bodySite,Male genitourinary system,pt,49917003
+A307899,bodySite,fetal bone of head,pt,95944004
+A307900,bodySite,valve of vein,pt,72139006
+A307901,bodySite,tympanic anulus,pt,156650007
+A307902,bodySite,Thyroglossal tract,pt,181120008
+A307903,bodySite,Great cardiac vein,pt,5928000
+A307904,bodySite,"Atrioventricular (non-mitral, non-tricuspid) valve papillary muscle",pt,279321007
+A307905,bodySite,lymphatic system of trunk,pt,281346000
+A307906,bodySite,physiologic cup of optic disc,pt,50472009
+A307907,bodySite,lymphatic system of neck,pt,69831007
+A307908,bodySite,Fissure of lung,pt,278983006
+A307909,bodySite,spermatogenic epithelium,pt,53472008
+A307910,bodySite,fetal cranial vault,pt,14709007
+A307911,bodySite,aortopulmonary septum,pt,1136004
+A307912,bodySite,Pectoral muscle,pt,81802002
+A307913,bodySite,interstitial cell of Leydig,pt,367715001
+A307914,bodySite,conus artery,pt,83186006
+A307915,bodySite,genital tubercle,pt,9770007
+A307916,bodySite,Nervous structure of head and neck,pt,281830000
+A307917,bodySite,cerebrum,pt,263353005
+A307918,bodySite,head of second metatarsal bone,pt,9677004
+A307919,bodySite,Chromosome,pt,91272006
+A307920,bodySite,Circular layer of gastric muscularis,pt,2746007
+A307921,bodySite,fetus,pt,83418008
+A307922,bodySite,Talus part,pt,119544007
+A307923,bodySite,Ejaculatory duct,pt,1511004
+A307924,bodySite,Great vein,pt,312335009
+A307925,bodySite,pelvic region of trunk of female,pt,699878009
+A307926,bodySite,Chromosome pair 6,pt,45202000
+A307927,bodySite,Arrector pili muscle,pt,1840006
+A307928,bodySite,Chromosome pair 14,pt,66933007
+A307929,bodySite,Sex chromosome,pt,32247007
+A307930,bodySite,Chromosome pair 2,pt,113354003
+A307931,bodySite,Chromosome pair 21,pt,43009003
+A307932,bodySite,Sex chromosome Y,pt,5421003
+A307933,bodySite,Chromosome pair 5,pt,12399004
+A307934,bodySite,fifth aortic arch,pt,91703001
+A307935,bodySite,fourth aortic arch,pt,91700003
+A307936,bodySite,Chromosome pair 8,pt,77826001
+A307937,bodySite,Chromosome pair 22,pt,79229009
+A307938,bodySite,Chromosome pair 18,pt,11698001
+A307939,bodySite,Chromosome pair 7,pt,70488008
+A307940,bodySite,Chromosome pair 17,pt,45201007
+A307941,bodySite,Chromosome pair 12,pt,17897000
+A307942,bodySite,Chromosome pair 11,pt,16312006
+A307943,bodySite,Chromosome pair 1,pt,46507000
+A307944,bodySite,Chromosome pair 4,pt,78901007
+A307945,bodySite,Chromosome pair 16,pt,39220001
+A307946,bodySite,Fourth toe,pt,80349001
+A307947,bodySite,Chromosome pair 19,pt,89959003
+A307948,bodySite,cartilaginous centrum of sacral vertebra,pt,102301002
+A307949,bodySite,cartilaginous centrum of lumbar vertebra,pt,95964009
+A307950,bodySite,dermatoglyphic patterns,pt,42235004
+A307951,bodySite,Branch of thoracic aorta,pt,181319006
+A307952,bodySite,fetal ossification center,pt,28377002
+A307953,bodySite,cardiac valve leaflet,pt,6530003
+A307954,bodySite,Plantar skin creases,pt,244192007
+A307955,bodySite,Part of male urethra,pt,425046005
+A307956,bodySite,Prosencephalon,pt,81861006
+A307957,bodySite,wing of sphenoid bone,pt,431490008
+A307958,bodySite,capillary of skin,pt,49094006
+A307959,bodySite,Organ of Corti,pt,67788009
+A307960,bodySite,valve of coronary sinus,pt,48955001
+A307961,bodySite,Mediastinal pulmonary artery,pt,128261004
+A307962,bodySite,Auricular tubercle,pt,62839008
+A307963,bodySite,Pelvic fascia,pt,9262003
+A307964,bodySite,foramen of Bochdalek,pt,89413009
+A307965,bodySite,foramen of Morgagni,pt,65766008
+A307966,bodySite,nail of index finger,pt,63288009
+A307967,bodySite,Neuromuscular junction,pt,31627007
+A307968,bodySite,incisor tooth,pt,78509001
+A307969,bodySite,commissure of mitral valve,pt,19198003
+A307970,bodySite,premolar tooth,pt,76424003
+A307971,bodySite,lambdoid suture of skull,pt,32170006
+A307972,bodySite,Fifth ray,pt,264470009
+A307973,bodySite,Fourth ray,pt,361389006
+A307974,bodySite,Third ray,pt,361388003
+A307975,bodySite,Second ray,pt,361387008
+A307976,bodySite,First ray,pt,264471008
+A307977,bodySite,Developing tooth,pt,90555008
+A307978,bodySite,Vascular structure of trunk,pt,306955007
+A307979,bodySite,Frontonasal process,pt,361486000
+A307980,bodySite,truncus arteriosus of fetus,pt,58140002
+A307981,bodySite,palatine process of maxilla,pt,63231007
+A307982,bodySite,Hyaloid canal,pt,19359003
+A307983,bodySite,Joint and/or tendon synovial,pt,312690007
+A307984,bodySite,primary vitreous,pt,36805002
+A307985,bodySite,paramesonephric duct,pt,26896004
+A307986,bodySite,Neurenteric canal,pt,361465000
+A307987,bodySite,adductor magnus muscle,pt,23087007
+A307988,bodySite,substance of lens,pt,35538005
+A307989,bodySite,Vascular structure of gastrointestinal tract,pt,703867009
+A307990,bodySite,Skeletal muscle and/or tendon,pt,699997005
+A307991,bodySite,Sex chromosome X,pt,72837006
+A307992,bodySite,frontal suture of skull,pt,74448009
+A307993,bodySite,pars interarticularis of axis,pt,705102002
+A307994,bodySite,pars interarticularis of lumbar vertebra,pt,705101009
+A307995,bodySite,skin and/or mucous membrane,pt,707862002
+A307996,bodySite,pars interarticularis of cervical vertebra,pt,705099002
+A307997,bodySite,roof of acetabulum,pt,79456009
+A307998,bodySite,skin and/or skin-associated mucous membrane,pt,707861009
+A307999,bodySite,bulbar urethra,pt,422637008
+A308000,bodySite,Little finger,pt,12406000
+A308001,bodySite,L3,pt,36470004
+A308002,bodySite,Sesamoid of wrist,pt,181969006
+A308003,bodySite,L1,pt,66794005
+A308004,bodySite,tunica albuginea of testis,pt,58552002
+A308005,bodySite,Pericardium part,pt,123862003
+A308006,bodySite,Extremity part,pt,120573002
+A308007,bodySite,phalanx of little finger,pt,24635003
+A308008,bodySite,shaft of second metacarpal bone,pt,65609007
+A308009,bodySite,pars interarticularis of thoracic vertebra,pt,705100005
+A308010,bodySite,pars interarticularis of vertebra,pt,705098005
+A308011,bodySite,Neck of second metacarpal,pt,263463001
+A308012,bodySite,Neck of third metacarpal,pt,263467000
+A308013,bodySite,shaft of third metacarpal bone,pt,64807000
+A308014,bodySite,skin between third and fourth fingers,pt,83673003
+A308015,bodySite,skin between second and third fingers,pt,37579005
+A308016,bodySite,hepatic acinus,pt,37424004
+A308017,bodySite,skin between thumb and second finger,pt,47239003
+A308018,bodySite,shaft of fifth metacarpal bone,pt,11052003
+A308019,bodySite,shaft of fourth metacarpal bone,pt,64554007
+A308020,bodySite,Radius part,pt,119188008
+A308021,bodySite,cerebellar hemisphere,pt,362411002
+A308022,bodySite,Cochlear canal,pt,279770008
+A308023,bodySite,cerebellum,pt,180924008
+A308024,bodySite,metatarsal,pt,302532000
+A308025,bodySite,Neck of fourth metacarpal,pt,263471002
+A308026,bodySite,L2,pt,14293000
+A308027,bodySite,frontozygomatic suture of skull,pt,1063000
+A308028,bodySite,First branchial arch,pt,15919001
+A308029,bodySite,Second branchial arch,pt,49070006
+A308030,bodySite,Tibia part,pt,119191008
+A308031,bodySite,L4,pt,11994002
+A308032,bodySite,sesamoid bone of foot,pt,58742003
+A308033,bodySite,phalanx of ring finger,pt,21219002
+A308034,bodySite,trachea,pt,181213009
+A308035,bodySite,larynx,pt,181212004
+A308036,bodySite,bronchus,pt,181215002
+A308037,bodySite,phalanx of index finger,pt,73913000
+A308038,bodySite,Small intestine part,pt,119213002
+A308039,bodySite,endocardium of mitral valve,pt,708080005
+A308040,bodySite,cerebral hemisphere,pt,278251007
+A308041,bodySite,sacral region,pt,182344001
+A308042,bodySite,Ulna Part,pt,119189000
+A308043,bodySite,lesser tuberosity of humerus,pt,4621004
+A308044,bodySite,ear,pt,1910005
+A308045,bodySite,tarsal bone,pt,108372004
+A308046,bodySite,Spinal cord part,pt,119404002
+A308047,bodySite,Thigh part,pt,123955006
+A308048,bodySite,permanent molar tooth,pt,421456005
+A308049,bodySite,Forefoot region of foot,pt,396956009
+A308050,bodySite,cranial cavity,pt,362883001
+A308051,bodySite,prostatic venous plexus,pt,29108008
+A308052,bodySite,bulb of penis,pt,52737000
+A308053,bodySite,mandibular incisor tooth,pt,442274007
+A308054,bodySite,Diaper area,pt,264104007
+A308055,bodySite,acinus of lung,pt,18012006
+A308056,bodySite,lumbosacral region of spine,pt,282024004
+A308057,bodySite,olivary body,pt,30890006
+A308058,bodySite,mandibular fossa,pt,708676001
+A308059,bodySite,Embryonic arterial,pt,60322006
+A308060,bodySite,Region of male urethra,pt,279450001
+A308061,bodySite,central portion of breast,pt,49058007
+A308062,bodySite,Dome of diaphragm,pt,244940004
+A308063,bodySite,Embryonic trigeminal artery,pt,361490003
+A308064,bodySite,Fetal hyaloid artery,pt,688000
+A308065,bodySite,Primitive cerebral artery,pt,360415004
+A308066,bodySite,Pro-atlantal intersegmental artery,pt,361493001
+A308067,bodySite,Embryonic otic artery,pt,361491004
+A308068,bodySite,Embryonic hypoglossal artery,pt,361492006
+A308069,bodySite,Indeterminate ventricle,pt,264029003
+A308070,bodySite,Skin of shaft of penis,pt,244118007
+A308071,bodySite,apex of nose,pt,81001005
+A308072,bodySite,Head part,pt,123850002
+A308073,bodySite,Skin part,pt,119181002
+A308074,bodySite,Epoophoron,pt,699003003
+A308075,bodySite,Pole of lens,pt,280630009
+A308076,bodySite,bronchial artery,pt,64468002
+A308077,bodySite,intrinsic laryngeal muscle,pt,38650005
+A308078,bodySite,Ectoderm,pt,63206006
+A308079,bodySite,lens,pt,181169005
+A308080,bodySite,"Back structure, excluding neck",pt,77568009
+A308081,bodySite,Skin of part of glans of penis,pt,281683005
+A308082,bodySite,Cuneonavicular joint,pt,89686001
+A308083,bodySite,Corpus callosum part,pt,709520006
+A308084,bodySite,nasopharynx,pt,181200003
+A308085,bodySite,Digestive tract part,pt,709519000
+A308086,bodySite,Eyelid part,pt,709293002
+A308087,bodySite,Lip part,pt,372197007
+A308088,bodySite,Bulbus cordis,pt,361525002
+A308089,bodySite,vertebral column,pt,44300000
+A308090,bodySite,scrotum,pt,265794003
+A308091,bodySite,Skin of part of foot,pt,281743006
+A308092,bodySite,Pulp of thumb,pt,280904008
+A308093,bodySite,Periungual skin of thumb,pt,280420008
+A308094,bodySite,fungiform papillae of tongue,pt,368732000
+A308095,bodySite,pharyngeal cavity,pt,2175005
+A308096,bodySite,sacral spine,pt,297169002
+A308097,bodySite,ischial tuberosity subregion of buttock region,pt,699636001
+A308098,bodySite,Cranial and facial bones,pt,110530005
+A308099,bodySite,cervical spinal nerve,pt,62378004
+A308100,bodySite,Muscle of hip AND thigh,pt,16500006
+A308101,bodySite,renal segment,pt,84924000
+A308102,bodySite,Mentolabial sulcus,pt,369002009
+A308103,bodySite,Wall of artery,pt,710863003
+A308104,bodySite,Mahaim fiber,pt,233921001
+A308105,bodySite,pubic tubercle,pt,79384003
+A308106,bodySite,thoracic paraspinous muscle group,pt,424072006
+A308107,bodySite,preputial gland,pt,45531002
+A308108,bodySite,Periungual skin of finger,pt,280419002
+A308109,bodySite,Bronchomediastinal lymphatic trunk,pt,279133006
+A308110,bodySite,apocrine sweat gland bearing skin,pt,424873002
+A308111,bodySite,Lymph node structure of limb,pt,312503008
+A308112,bodySite,pedicle of fourth cervical vertebra,pt,29597003
+A308113,bodySite,pedicle of fifth cervical vertebra,pt,71484001
+A308114,bodySite,body of ninth thoracic vertebra,pt,33766003
+A308115,bodySite,body of fourth thoracic vertebra,pt,86197001
+A308116,bodySite,pneumatic bone,pt,47173002
+A308117,bodySite,Popliteal region,pt,6902008
+A308118,bodySite,Epiphyseal plate of phalanx of finger,pt,711198007
+A308119,bodySite,Epiphyseal plate of metatarsal bone,pt,711192008
+A308120,bodySite,Epiphyseal plate of phalanx of thumb,pt,711199004
+A308121,bodySite,Epiphyseal plate of phalanx of great toe,pt,711200001
+A308122,bodySite,Epiphyseal plate of lesser toe,pt,711203004
+A308123,bodySite,Subcutaneous tissue structure of knee,pt,83820000
+A308124,bodySite,Skin structure of labium,pt,73058008
+A308125,bodySite,endocardium of aortic valve,pt,711570001
+A308126,bodySite,endocardium of pulmonary valve,pt,711572009
+A308127,bodySite,endocardium of cardiac valve,pt,711571002
+A308128,bodySite,endocardium of tricuspid valve,pt,711576007
+A308129,bodySite,Costotransverse joint,pt,57080006
+A308130,bodySite,Duodenal submucosa,pt,76519004
+A308131,bodySite,transcervical section of neck of femur,pt,367584006
+A308132,bodySite,Plantar digital nerve of web space,pt,277911000
+A308133,bodySite,tendon or attachment of biceps brachii,pt,699959005
+A308134,bodySite,bone marrow of vertebra,pt,361004007
+A308135,bodySite,bone marrow of tibia,pt,422111009
+A308136,bodySite,bone marrow of femur,pt,420902003
+A308137,bodySite,bone marrow of innominate bone,pt,420696005
+A308138,bodySite,wall of femoral artery,pt,711511008
+A308139,bodySite,wall of thoracic aorta,pt,711494004
+A308140,bodySite,"wall of artery of head, neck and/or brain",pt,711514000
+A308141,bodySite,wall of pulmonary artery,pt,711513006
+A308142,bodySite,wall of abdominal aorta,pt,711496002
+A308143,bodySite,wall of iliac artery,pt,711519005
+A308144,bodySite,wall of vertebral artery,pt,711517007
+A308145,bodySite,wall of aorta,pt,711493005
+A308146,bodySite,tubal end of ovary,pt,74240004
+A308147,bodySite,Embryonic branchial cleft,pt,360382006
+A308148,bodySite,interdigital space of foot,pt,14162009
+A308149,bodySite,capsule of shoulder joint,pt,43120001
+A308150,bodySite,female genital system subdivision,pt,699879001
+A308151,bodySite,Frontal region,pt,700036009
+A308152,bodySite,appendix epiploica,pt,73800007
+A308153,bodySite,bone marrow of shoulder girdle,pt,712937003
+A308154,bodySite,bone marrow of pelvis,pt,712936007
+A308155,bodySite,bone marrow of hand,pt,712942006
+A308156,bodySite,bone marrow of radius and/or ulna,pt,712895005
+A308157,bodySite,bone marrow of ankle and/or foot,pt,712923007
+A308158,bodySite,bone marrow of jaw,pt,712958009
+A308159,bodySite,bone marrow of cranium,pt,712962003
+A308160,bodySite,bone marrow of facial bone,pt,712964002
+A308161,bodySite,bone marrow of frontal bone,pt,712965001
+A308162,bodySite,bone marrow of nasal-orbit complex,pt,712967009
+A308163,bodySite,bone marrow of zygomatic bone,pt,712971007
+A308164,bodySite,bone marrow of sphenoid bone,pt,712968004
+A308165,bodySite,bone marrow of temporal bone,pt,712969007
+A308166,bodySite,bone marrow of maxilla,pt,712959001
+A308167,bodySite,bone marrow of mandible,pt,712966000
+A308168,bodySite,bone marrow of cervical vertebra,pt,712947000
+A308169,bodySite,bone marrow of thoracic vertebra,pt,712949002
+A308170,bodySite,bone marrow of lumbar vertebra,pt,712948005
+A308171,bodySite,bone marrow of sacrum,pt,712940003
+A308172,bodySite,bone marrow of coccyx,pt,712961005
+A308173,bodySite,bone marrow of clavicle,pt,712938008
+A308174,bodySite,bone marrow of scapula,pt,712939000
+A308175,bodySite,bone marrow of radius,pt,712896006
+A308176,bodySite,bone marrow of ulna,pt,712897002
+A308177,bodySite,bone marrow of carpal bone,pt,712892008
+A308178,bodySite,bone marrow of metacarpal,pt,712943001
+A308179,bodySite,bone marrow of phalanx of hand,pt,712944007
+A308180,bodySite,bone marrow of patella,pt,712963008
+A308181,bodySite,bone marrow of fibula,pt,712946009
+A308182,bodySite,bone marrow of calcaneum,pt,712951003
+A308183,bodySite,bone marrow of talus,pt,712894009
+A308184,bodySite,bone marrow of metatarsal bone,pt,712952005
+A308185,bodySite,bone marrow of phalanx of foot,pt,712954006
+A308186,bodySite,bone marrow of foot,pt,712953000
+A308187,bodySite,bone marrow of ankle,pt,712891001
+A308188,bodySite,bone marrow of pelvis and/or femur,pt,712934005
+A308189,bodySite,bone marrow of elbow,pt,712957004
+A308190,bodySite,bone marrow of knee,pt,712960006
+A308191,bodySite,Biceps brachii muscle and/or tendon,pt,699956003
+A308192,bodySite,wall of mesenteric artery,pt,711520004
+A308193,bodySite,wall of precerebral artery,pt,711515004
+A308194,bodySite,wall of renal artery,pt,713319001
+A308195,bodySite,wall of cerebral artery,pt,711521000
+A308196,bodySite,Index finger,pt,83738005
+A308197,bodySite,Skeletal muscle structure of limb,pt,713515006
+A308198,bodySite,Thoracolumbar region of spine,pt,297172009
+A308199,bodySite,lumbar spinal nerve,pt,77513005
+A308200,bodySite,sacral spinal nerve,pt,46315001
+A308201,bodySite,renal artery of transplanted kidney,pt,713824006
+A308202,bodySite,peroneal tendon sheath,pt,713857008
+A308203,bodySite,bone marrow of petrous bone,pt,712976002
+A308204,bodySite,hair follicle of occipital region of scalp,pt,714641003
+A308205,bodySite,duodenal gland,pt,714325007
+A308206,bodySite,craniofacial muscle,pt,714294001
+A308207,bodySite,muscle of tongue,pt,714292002
+A308208,bodySite,extensor of carpometacarpal joint of thumb,pt,714461001
+A308209,bodySite,intrinsic muscle of foot,pt,714379003
+A308210,bodySite,intrinsic muscle compartment of foot,pt,714475008
+A308211,bodySite,muscle acting on lumbar intervertebral joint,pt,714362009
+A308212,bodySite,periumbilical region,pt,714637002
+A308213,bodySite,Mucogingival junction,pt,245774000
+A308214,bodySite,hair follicle of scalp,pt,714639004
+A308215,bodySite,bursa of popliteus,pt,714744003
+A308216,bodySite,lumbosacral facet joint,pt,714289001
+A308217,bodySite,accessory coronary artery,pt,714761000
+A308218,bodySite,accessory ossicle of foot,pt,714765009
+A308219,bodySite,intervertebral syndesmosis of C7 and T1,pt,714807009
+A308220,bodySite,intervertebral syndesmosis of C3 and C4,pt,714798004
+A308221,bodySite,intervertebral syndesmosis of C4 and C5,pt,714801005
+A308222,bodySite,intervertebral syndesmosis of C5 and C6,pt,714803008
+A308223,bodySite,intervertebral syndesmosis of C6 and C7,pt,714805001
+A308224,bodySite,intervertebral syndesmosis of T12 and L1,pt,714833001
+A308225,bodySite,hypothalamic-pituitary-gonadal axis,pt,714839002
+A308226,bodySite,hypothalamic-pituitary-adrenal axis,pt,714837000
+A308227,bodySite,hypothalamic-pituitary-ovarian axis,pt,714841001
+A308228,bodySite,hypothalamic-pituitary-testicular axis,pt,714843003
+A308229,bodySite,bone marrow of orbital complex,pt,714983005
+A308230,bodySite,urinary organ,pt,714321003
+A308231,bodySite,bone marrow of forefoot,pt,714984004
+A308232,bodySite,muscle acting on ankle joint,pt,715017006
+A308233,bodySite,hair follicle of breast,pt,715147006
+A308234,bodySite,intervertebral disc of L5 and S1,pt,715056000
+A308235,bodySite,Jejunal mucous membrane,pt,88636004
+A308236,bodySite,Pituitary stalk,pt,188007004
+A308237,bodySite,Thyroid part,pt,362892003
+A308238,bodySite,Glomus,pt,63761000
+A308239,bodySite,glabella,pt,51136003
+A308240,bodySite,Skin structure of epicanthus tarsalis,pt,715650005
+A308241,bodySite,Skin structure of epicanthus inversus,pt,715648002
+A308242,bodySite,cortex of parietal lobe,pt,67601006
+A308243,bodySite,Regional lymph node,pt,312500006
+A308244,bodySite,Periodontal ligament,pt,245775004
+A308245,bodySite,peribronchial tissue,pt,54233001
+A308246,bodySite,lymphatic vessel of thorax,pt,1765002
+A308247,bodySite,lymphatic vessel of pelvis,pt,57699003
+A308248,bodySite,trochlea of femur,pt,11716007
+A308249,bodySite,small subcutaneous artery,pt,18658008
+A308250,bodySite,Neuroepithelial layer,pt,113324008
+A308251,bodySite,Esophageal part,pt,119211000
+A308252,bodySite,parietal foramen,pt,11240000
+A308253,bodySite,atrioventricular canal,pt,77469004
+A308254,bodySite,small intestine,pt,181250005
+A308255,bodySite,bone of wrist,pt,181960005
+A308256,bodySite,achilles tendon,pt,181705009
+A308257,bodySite,phalanx of little toe,pt,361806005
+A308258,bodySite,urethra,pt,302513006
+A308259,bodySite,phalanx of toe,pt,302533005
+A308260,bodySite,neuroretinal rim of optic disc,pt,4.31E+14
+A308261,bodySite,intervertebral ligament,pt,423935007
+A308262,bodySite,embryonic testis,pt,3481003
+A308263,bodySite,recurrent artery of Huebner,pt,369318008
+A308264,bodySite,Cerebellar meninges,pt,244427003
+A308265,bodySite,Male paraurethral tissue,pt,279487009
+A308266,bodySite,Skin structure of ischial tuberosity subregion of buttock region,pt,699903000
+A308267,bodySite,trapezoid ligament,pt,8942007
+A308268,bodySite,Capsular ligament of shoulder joint,pt,244614008
+A308269,bodySite,Synovial structure of ankle,pt,312676009
+A308270,bodySite,Skin structure of nuchal region,pt,4658004
+A308271,bodySite,phalanx of lesser toe,pt,711201002
+A308272,bodySite,muscle acting on hip joint,pt,715019009
+A308273,bodySite,capsule of metatarsophalangeal joint,pt,22854001
+A308274,bodySite,Venous structure of foot,pt,278015009
+A308275,bodySite,Capsule of intertarsal joint,pt,360795004
+A308276,bodySite,Articular cartilage of ankle joint,pt,305033006
+A308277,bodySite,coccygeal spine,pt,297170001
+A308278,bodySite,Temporomandibular joint synovium,pt,303405004
+A308279,bodySite,primitive sex cord,pt,25883008
+A308280,bodySite,Pes anserinus,pt,360767004
+A308281,bodySite,ligament of interphalangeal joint of hand,pt,368451007
+A308282,bodySite,adductor muscle,pt,44487003
+A308283,bodySite,calcaneal apophysis,pt,422562000
+A308284,bodySite,Fascia of hand,pt,181780001
+A305122,position,Profundis,sy,795002
+A305122,position,Profound,sy,795002
+A305122,position,Has depth,sy,795002
+A305122,position,With depth,sy,795002
+A305123,position,Caudad,sy,3583002
+A305125,position,Next to,sy,18769003
+A305125,position,Adjacent to,sy,18769003
+A305125,position,Juxta-,sy,18769003
+A305125,position,Adjacent,sy,18769003
+A305129,position,Going from,sy,33843005
+A305132,position,Near to,sy,40415009
+A305132,position,Neighbor of,sy,40415009
+A305134,position,Far from,sy,46053002
+A305136,position,Coming to,sy,49530007
+A305140,position,Transversal,sy,62824007
+A305151,position,Margin,sy,112233002
+A305151,position,Verge,sy,112233002
+A305151,position,Border,sy,112233002
+A305154,position,Front of,sy,255549009
+A305154,position,Ventral,sy,255549009
+A305154,position,Fore,sy,255549009
+A305155,position,Back of,sy,255551008
+A305156,position,Dx - Dorsal,sy,255554000
+A305161,position,Inner,sy,260521003
+A305161,position,Inside,sy,260521003
+A305162,position,Middle,sy,260528009
+A305162,position,Midline,sy,260528009
+A305165,position,Outside,sy,261074009
+A305165,position,Outer,sy,261074009
+A305194,laterality,Left lateral,sy,7771000
+A305194,laterality,Levo-,sy,7771000
+A305194,laterality,Left side,sy,7771000
+A305194,laterality,Lt - Left,sy,7771000
+A305195,laterality,Both,sy,51440002
+A305195,laterality,Both sides,sy,51440002
+A305195,laterality,Bilateral,sy,51440002
+A305197,laterality,Right lateral,sy,24028007
+A305197,laterality,Dextro,sy,24028007
+A305197,laterality,Rt - Right,sy,24028007
+A305197,laterality,Right side,sy,24028007

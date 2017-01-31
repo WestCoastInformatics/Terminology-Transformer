@@ -1,9 +1,0 @@
-abbreviation	expansion
-mga	milligram
-mm	millimeter2
-milli	millimeter2
-mlc	milliliter
-ms2	mass spectrometry
-a
-b	c	d
-
