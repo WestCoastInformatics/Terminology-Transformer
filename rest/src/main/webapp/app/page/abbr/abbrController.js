@@ -194,16 +194,18 @@ tsApp
             console.debug('abbreviations', $scope.lists.abbrsViewed);
           });
 
-          // truncated NEEDS_REVIEW and NEW calls
-          /*
-                     * pfs = prepAbbrPfs('abbr'); pfs.maxResults = 0;
-                     * abbrService.findAbbreviations('workflowStatus:NEEDS_REVIEW',
-                     * $scope.paging['abbr'].filterType, pfs).then(function(response) {
-                     * $scope.paging['abbr'].hasNeedsReview = response.totalCount > 0; });
-                     * abbrService .findAbbreviations('workflowStatus:NEW',
-                     * $scope.paging['abbr'].filterType, pfs).then( function(response) {
-                     * $scope.paging['abbr'].hasNew = response.totalCount > 0; });
-                     */
+          //truncated NEEDS_REVIEW and NEW calls
+          pfs = prepAbbrPfs('abbr');
+          pfs.maxResults = 0;
+          abbrService.findAbbreviations('workflowStatus:NEEDS_REVIEW',
+            $scope.paging['abbr'].filterType, pfs).then(function(response) {
+            $scope.paging['abbr'].hasNeedsReview = response.totalCount > 0;
+          });
+          abbrService
+            .findAbbreviations('workflowStatus:NEW', $scope.paging['abbr'].filterType, pfs).then(
+              function(response) {
+                $scope.paging['abbr'].hasNew = response.totalCount > 0;
+              });
 
         }
 
