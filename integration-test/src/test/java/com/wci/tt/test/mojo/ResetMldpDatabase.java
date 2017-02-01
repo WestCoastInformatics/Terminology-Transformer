@@ -19,6 +19,9 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.wci.umls.server.helpers.ConfigUtility;
+import com.wci.umls.server.jpa.ProjectJpa;
+import com.wci.umls.server.jpa.services.ProjectServiceJpa;
+import com.wci.umls.server.services.ProjectService;
 
 /**
  * A mechanism to reset to the stock dev database for MLDP work..
@@ -88,11 +91,27 @@ public class ResetMldpDatabase {
         "allergy", "anatomy", "condition", "immunization", "lab", "med", "procedure", "vital"
     };
     
+    ProjectService projectService = new ProjectServiceJpa();
+    
     // for each terminology
+    // - Create an editing project
     // - Load csv concepts file
     // - Load txt abbreviations file
     // - Load txt synonyms file
     for (String mldpTerminology : mldpTerminologies) {
+      
+      // create a project for the terminology
+      ProjectJpa project = new ProjectJpa();
+      project.setAutomationsEnabled(true);
+      project.setName("MLDP Project - " + mldpTerminology.substring(0, 1).toUpperCase() + mldpTerminology.substring(1));
+      project.setLanguage("en");
+      project.setDescription("Simple editing project for MLDP terminology " + mldpTerminology.substring(0, 1).toUpperCase() + mldpTerminology.substring(1));
+      project.setPublic(true);
+      project.setTerminology("MLDP-" + mldpTerminology.toUpperCase());
+      project.setVersion("latest");
+      
+      projectService.setLastModifiedBy("loader");
+      projectService.addProject(project);
       
       // load terminology
       request = new DefaultInvocationRequest();
@@ -145,6 +164,8 @@ public class ResetMldpDatabase {
       if (result.getExitCode() != 0) {
         throw result.getExecutionException();
       }
+      
+    
     }
 
     
