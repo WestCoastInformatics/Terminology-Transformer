@@ -1,0 +1,74 @@
+BCG	Bacillus Calmette Guerin
+vaccine	
+formula	
+unspecified formulation	
+WC-rBS	cholera vaccine
+WC-rBS	recombinant B-subunit of cholera toxin
+BivWC	cholera vaccine
+BivWC	bivalent killed whole-cell
+CMVIG	Cytomegalovirus immune globulin
+HB	Hepatitis type B
+HBR	hepatitis type B recombinant
+DT	Diphtheria, tetanus
+DTaP	
+IPV	inactive poliovirus
+Hib	Haemophilus influenzae type b
+HIB	Haemophilus influenzae type b
+HepB	Hepatitis type B
+Hep B	Hepatitis type B
+B	Type b
+HBIG	Hepatitis B Immune Globulin
+Hep	Hepatitis
+ped	Pediatric
+adol	Adolescent
+HIV	Human immunodeficiency virus
+HPV	Human papilloma virus
+virus	
+HbOC	?
+PRP-D	Polyribosylribitol Phosphate-Diphtheria Conjugate
+PRP-OMP	?
+PRP-T	?
+IG	Immune globulin
+m-val	monovalent
+m-val-split	monovalent split
+mv-whole	monovalent whole cell
+monoval	monovalent
+mv	monovalent
+tv	trivalent
+bv	bivalent
+tvs	trivalent split
+splt	split
+trival	trivalent
+bival	bivalent
+qval	quadravalent
+quad	quadravalent
+qsplit	quadravalent split
+qs	quadravalent split
+M/R	Measels, rubella
+ACWY	group a, group c, group y, W-135
+MCV4O	meningococcal oligosaccharide (groups A, C, Y and W-135) diphtheria toxoid
+MCV4P	meningococcal polysaccharide (groups A, C, Y and W-135) diphtheria toxoid
+MMR	Mumps Measles Rubella
+MMRV	Mumps Measles Rubella virus
+OPV	Oral poliovirus
+PCV	Pneumococcal 
+PCV 13	Pneumococcal 13-valent
+PCV 7	Pneumococcal 7-valent
+PCV 23	Pneumococcal 23-valent
+immun	immune globulin
+
+IMUNE	immune globulin
+
+IM	immune globulin
+
+RIG	Rabies immune globulin
+
+RSV-IGIV	Respiratory Syncytial Virus Immune Globulin, Intravenous
+RSV-MAb	Respiratory Syncytial Virus monoclonal antibody
+TIG	Tetanus immune globulin
+TST	tuberculin skin test
+TST-OT	tuberculin skin test; old tuberculin
+TST-PPD	tuberculin skin test; purified protein derivative
+ViCPs	Vi capsular polysaccharide
+VEE	Venezuelan equine encephalitis
+VZIG	varicella zoster immune globulin
