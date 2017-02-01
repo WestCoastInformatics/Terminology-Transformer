@@ -60,11 +60,37 @@ public class ResetMldpDatabase {
   public void test() throws Exception {
 
     // Load Simple terminology
-    InvocationRequest request = new DefaultInvocationRequest();
+    InvocationRequest request;
+    Properties p;
+
+    // recreate the database
+    request = new DefaultInvocationRequest();
+    request = new DefaultInvocationRequest();
+    request.setPomFile(new File("../admin/pom.xml"));
+    request.setProfiles(Arrays.asList("Updatedb"));
+    request.setGoals(Arrays.asList("clean", "install"));
+    p = new Properties();
+    p.setProperty("run.config.umls", System.getProperty("run.config.umls"));
+    p.setProperty("server", server);
+    p.setProperty("mode", "create");
+    request.setProperties(p);
+    request.setDebug(false);
+    DefaultInvoker invoker = new DefaultInvoker();
+    InvocationResult result = invoker.execute(request);
+    if (result.getExitCode() != 0) {
+      throw result.getExecutionException();
+    }
+
+    // List of MLDP terminologies
+    String[] mldpTerminologies = {
+        "allergy", "condition", "immunization", "lab", "med"
+    };
+
+    request = new DefaultInvocationRequest();
     request.setPomFile(new File("../admin/pom.xml"));
     request.setProfiles(Arrays.asList("Simple"));
     request.setGoals(Arrays.asList("clean", "install"));
-    Properties p = new Properties();
+    p = new Properties();
     p.setProperty("run.config.umls", System.getProperty("run.config.umls"));
     p.setProperty("server", server);
     p.setProperty("mode", "create");
@@ -185,7 +211,6 @@ public class ResetMldpDatabase {
       throw result.getExecutionException();
     }
 
-
     // Load meds acronym config files
     request = new DefaultInvocationRequest();
     request.setPomFile(new File("../admin/pom.xml"));
@@ -203,7 +228,6 @@ public class ResetMldpDatabase {
     if (result.getExitCode() != 0) {
       throw result.getExecutionException();
     }
-    
 
     // Load meds sy config files
     request = new DefaultInvocationRequest();
@@ -240,7 +264,6 @@ public class ResetMldpDatabase {
     if (result.getExitCode() != 0) {
       throw result.getExecutionException();
     }
-    
 
     // Load condition sy config files
     request = new DefaultInvocationRequest();
@@ -277,7 +300,6 @@ public class ResetMldpDatabase {
     if (result.getExitCode() != 0) {
       throw result.getExecutionException();
     }
-
 
     // Load procedure sy config files
     request = new DefaultInvocationRequest();
