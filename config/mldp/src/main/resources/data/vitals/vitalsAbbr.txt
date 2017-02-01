@@ -1,0 +1,18 @@
+abbreviation	expansion
+BMI	Body mass index
+BR	Breathing rate
+RESP	Respiratory rate
+RESPRATE	Respiratory rate
+HR	Heart rate
+BT	Body temperature
+HDCIRC	Head circumference
+HC	Head circumference
+BW	Body weight
+SAP	Systolic arterial pressure
+SBP	Systolic blood pressure
+SYSBP	Systolic blood pressure
+BP	Blood pressure
+bp	Blood pressure
+DAP	Diastolic arterial pressure
+DBP	Diastolic blood pressure
+DIABP	Diastolic blood pressure

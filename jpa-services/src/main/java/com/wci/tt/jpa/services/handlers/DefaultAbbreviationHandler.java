@@ -1,5 +1,5 @@
 /*
- *    Copyright 2016 West Coast Informatics, LLC
+ *    Copyright 2016 Fitgate Inc.
  */
 package com.wci.tt.jpa.services.handlers;
 
@@ -31,46 +31,49 @@ import com.wci.umls.server.services.helpers.PushBackReader;
 
 /**
  * Default implementation of {@link AbbreviationHandler} for handling
- * abbreviations
+ * abbreviations.
  */
 public class DefaultAbbreviationHandler extends AbstractConfigurable
     implements AbbreviationHandler {
 
+  /** The service. */
   private ProjectService service = null;
 
+  /* see superclass */
   @Override
   public String getName() {
     return "Default abbreviation handler";
   }
 
+  /* see superclass */
   @Override
   public void setService(ProjectService service) {
     this.service = service;
   }
 
+  /* see superclass */
   @Override
   public void close() throws Exception {
     // do nothing
   }
 
   /**
-   * Recurse helper function to compute potential reviews in abbreviations
-   * 
-   * @param abbrs
-   * @param reviews
-   * @param service
-   * @return
-   * @throws Exception
+   * Recurse helper function to compute potential reviews in abbreviations.
+   *
+   * @param abbrsToCheck the abbrs to check
+   * @param computedConflicts the computed conflicts
+   * @return the review for abbreviations helper
+   * @throws Exception the exception
    */
-
   private List<TypeKeyValue> getReviewForAbbreviationsHelper(
     List<TypeKeyValue> abbrsToCheck, List<TypeKeyValue> computedConflicts)
     throws Exception {
 
     // if computed reviews is null, instantiate set from the abbreviations to
     // check
-    if (computedConflicts == null) {
-      computedConflicts = new ArrayList<>(abbrsToCheck);
+    List<TypeKeyValue> lcomputedConflicts = computedConflicts;
+    if (lcomputedConflicts == null) {
+      lcomputedConflicts = new ArrayList<>(abbrsToCheck);
     }
 
     // if no further abbreviations to process, return the passed reviews list
@@ -78,7 +81,7 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
       // quality check -- remove any conflicts with null or strictly whitespace
       // values
       final List<TypeKeyValue> finalResults = new ArrayList<>();
-      for (final TypeKeyValue abbr : computedConflicts) {
+      for (final TypeKeyValue abbr : lcomputedConflicts) {
         if (abbr.getValue() != null && !abbr.getValue().trim().isEmpty()) {
           finalResults.add(abbr);
         }
@@ -120,21 +123,22 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
     // NOTE: Check by id instead of set operations to catch duplicates
     for (TypeKeyValue result : results) {
       boolean exists = false;
-      for (TypeKeyValue conflict : computedConflicts) {
+      for (TypeKeyValue conflict : lcomputedConflicts) {
         if (result.getId().equals(conflict.getId())) {
           exists = true;
         }
       }
       if (!exists) {
         newResults.add(result);
-        computedConflicts.add(result);
+        lcomputedConflicts.add(result);
       }
     }
 
     // call with new results and updated reviews
-    return getReviewForAbbreviationsHelper(newResults, computedConflicts);
+    return getReviewForAbbreviationsHelper(newResults, lcomputedConflicts);
   }
 
+  /* see superclass */
   @Override
   public TypeKeyValueList getReviewForAbbreviation(TypeKeyValue abbr)
     throws Exception {
@@ -146,6 +150,7 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
     return list;
   }
 
+  /* see superclass */
   @Override
   public TypeKeyValueList getReviewForAbbreviations(List<TypeKeyValue> abbrList)
     throws Exception {
@@ -157,23 +162,35 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
     return list;
   }
 
+  /* see superclass */
   @Override
   public ValidationResult validateAbbreviationFile(String abbrType,
     InputStream inFile) throws Exception {
     return this.importHelper(abbrType, inFile, false);
   }
 
+  /* see superclass */
   @Override
   public ValidationResult importAbbreviationFile(String abbrType,
     InputStream inFile) throws Exception {
     return this.importHelper(abbrType, inFile, true);
   }
 
+  /* see superclass */
   @Override
   public boolean isHeaderLine(String line) {
     return line != null && line.toLowerCase().startsWith("abbreviation");
   }
 
+  /**
+   * Import helper.
+   *
+   * @param type the type
+   * @param in the in
+   * @param executeImport the execute import
+   * @return the validation result
+   * @throws Exception the exception
+   */
   private ValidationResult importHelper(String type, InputStream in,
     boolean executeImport) throws Exception {
     ValidationResult result = new ValidationResultJpa();
@@ -262,7 +279,6 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
                 .add("Line " + lineCt + ": Expected one or two fields " + lineCt
                     + " but found " + fields.length + ": " + fieldsStr);
           }
-          ;
         }
 
         // CHECK: Key must be non-null and non-empty
@@ -446,6 +462,7 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
     return result;
   }
 
+  /* see superclass */
   @Override
   public InputStream exportAbbreviationFile(String abbrType, boolean acceptNew,
     boolean readyOnly) throws Exception {
@@ -488,6 +505,7 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
     return new ByteArrayInputStream(sb.toString().getBytes("UTF-8"));
   }
 
+  /* see superclass */
   @Override
   public void computeAbbreviationStatuses(String abbrType) throws Exception {
 
@@ -515,6 +533,7 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
 
   }
 
+  /* see superclass */
   @Override
   public void updateWorkflowStatus(TypeKeyValue abbr) throws Exception {
     // NOTE: Review always contains the abbreviation itself
@@ -527,6 +546,7 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
     }
   }
 
+  /* see superclass */
   @Override
   public TypeKeyValueList filterResults(TypeKeyValueList list, String filter,
     PfsParameter pfs) throws Exception {
@@ -563,8 +583,13 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
   }
 
   //
-  // Filter functions separated for convenience/clarity
-  //
+  /**
+   * Filter duplicate key.
+   *
+   * @param list the list
+   * @return the list
+   */
+  @SuppressWarnings("static-method")
   private List<TypeKeyValue> filterDuplicateKey(List<TypeKeyValue> list) {
     final Map<String, List<TypeKeyValue>> map = new HashMap<>();
     for (final TypeKeyValue abbr : list) {
@@ -585,6 +610,13 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
     return dupKeys;
   }
 
+  /**
+   * Filter duplicate value.
+   *
+   * @param list the list
+   * @return the list
+   */
+  @SuppressWarnings("static-method")
   private List<TypeKeyValue> filterDuplicateValue(List<TypeKeyValue> list) {
     final Map<String, List<TypeKeyValue>> map = new HashMap<>();
     for (final TypeKeyValue abbr : list) {
@@ -606,6 +638,13 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
     return results;
   }
 
+  /**
+   * Filter blank value.
+   *
+   * @param list the list
+   * @return the list
+   */
+  @SuppressWarnings("static-method")
   private List<TypeKeyValue> filterBlankValue(List<TypeKeyValue> list) {
     final List<TypeKeyValue> results = new ArrayList<>();
     for (final TypeKeyValue abbr : list) {
@@ -619,6 +658,13 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
     return results;
   }
 
+  /**
+   * Filter duplicates.
+   *
+   * @param list the list
+   * @return the list
+   */
+  @SuppressWarnings("static-method")
   private List<TypeKeyValue> filterDuplicates(List<TypeKeyValue> list) {
 
     final Map<String, List<TypeKeyValue>> map = new HashMap<>();

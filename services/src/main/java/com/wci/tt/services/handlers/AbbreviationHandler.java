@@ -1,5 +1,5 @@
 /*
- *    Copyright 2015 West Coast Informatics, LLC
+ *    Copyright 2016 Fitgate Inc.
  */
 package com.wci.tt.services.handlers;
 
@@ -80,8 +80,8 @@ public interface AbbreviationHandler extends Configurable {
    * Export abbreviation file.
    *
    * @param abbrType the abbr type
-   * @param delimiter the delimiter
-   * @param excludeReview the exclude review
+   * @param acceptNew the accept new
+   * @param readyOnly the ready only
    * @return the input stream
    * @throws Exception the exception
    */
@@ -99,7 +99,6 @@ public interface AbbreviationHandler extends Configurable {
    * Update workflow status.
    *
    * @param abbr the abbr
-   * @return the workflow status
    * @throws Exception the exception
    */
   public void updateWorkflowStatus(TypeKeyValue abbr) throws Exception;
@@ -119,8 +118,9 @@ public interface AbbreviationHandler extends Configurable {
    *
    * @param list the list
    * @param filter the filter
+   * @param pfs the pfs
    * @return the type key value list
-   * @throws Exception
+   * @throws Exception the exception
    */
   public TypeKeyValueList filterResults(TypeKeyValueList list, String filter,
     PfsParameter pfs) throws Exception;
