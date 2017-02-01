@@ -1,0 +1,3292 @@
+terminologyId,feature,name,termType
+A400001,procedure,Piercing,pt
+A400002,procedure,Transection,pt
+A400003,procedure,Manipulation,pt
+A400004,procedure,Shunt,pt
+A400005,procedure,Dissolution,pt
+A400006,procedure,Hyfrecation,pt
+A400007,procedure,Reconstruction,pt
+A400008,procedure,Introduction,pt
+A400009,procedure,Size reduction,pt
+A400010,procedure,Cryosurgery,pt
+A400011,procedure,Diathermy incision,pt
+A400012,procedure,Electrodestruction,pt
+A400013,procedure,Grafting,pt
+A400014,procedure,Devascularization,pt
+A400015,procedure,Ultrasound destruction,pt
+A400016,procedure,Replacement,pt
+A400017,procedure,Plastic operation,pt
+A400018,procedure,Resurfacing,pt
+A400019,procedure,Alloplastic grafting,pt
+A400020,procedure,Incision,pt
+A400021,procedure,Exploratory incision,pt
+A400022,procedure,Drilling,pt
+A400023,procedure,Dissection,pt
+A400024,procedure,Bisection,pt
+A400025,procedure,Bifurcation,pt
+A400026,procedure,Division,pt
+A400027,procedure,Excision,pt
+A400028,procedure,Osteoclasis,pt
+A400029,procedure,Removal,pt
+A400030,procedure,Transfixion,pt
+A400031,procedure,Evisceration,pt
+A400032,procedure,Enucleation,pt
+A400033,procedure,Trephination,pt
+A400034,procedure,Excision debridement,pt
+A400035,procedure,Incisional biopsy,pt
+A400036,procedure,Saucerization,pt
+A400037,procedure,Trimming,pt
+A400038,procedure,Shaving,pt
+A400039,procedure,Scraping,pt
+A400040,procedure,Filleting,pt
+A400041,procedure,Extirpation,pt
+A400042,procedure,Bypass,pt
+A400043,procedure,Reimplantation,pt
+A400044,procedure,Harvesting,pt
+A400045,procedure,Biopsy,pt
+A400046,procedure,Exenteration,pt
+A400047,procedure,Resection-recession,pt
+A400048,procedure,Flap reconstruction,pt
+A400049,procedure,Radial incision,pt
+A400050,procedure,Application of caustics,pt
+A400051,procedure,Z-plasty,pt
+A400052,procedure,Lengthening,pt
+A400053,procedure,Augmentation,pt
+A400054,procedure,Gluing,pt
+A400055,procedure,Advancement,pt
+A400056,procedure,Interrupted mass closure,pt
+A400057,procedure,Suspension and fixation,pt
+A400058,procedure,Marsupialization,pt
+A400059,procedure,Reinforcement,pt
+A400060,procedure,Closure,pt
+A400061,procedure,Layered closure,pt
+A400062,procedure,Oversewing,pt
+A400063,procedure,Closure by buckling,pt
+A400064,procedure,Chemical destruction,pt
+A400065,procedure,Cerclage,pt
+A400066,procedure,Ligation,pt
+A400067,procedure,Cryopexy,pt
+A400068,procedure,Plication,pt
+A400069,procedure,Construction,pt
+A400070,procedure,Bone-patellar tendon-bone reconstruction,pt
+A400071,procedure,Braided prosthetic ligament reconstruction,pt
+A400072,procedure,Fusion,pt
+A400073,procedure,Anchoring,pt
+A400074,procedure,Enlargement,pt
+A400075,procedure,Avulsion,pt
+A400076,procedure,Decortication,pt
+A400077,procedure,Stripping,pt
+A400078,procedure,Abrasion,pt
+A400079,procedure,Grinding,pt
+A400080,procedure,Coagulation,pt
+A400081,procedure,Obliteration,pt
+A400082,procedure,Cauterization,pt
+A400083,procedure,Fulguration,pt
+A400084,procedure,Electrodesiccation,pt
+A400085,procedure,Electrocoagulation,pt
+A400086,procedure,Septation,pt
+A400087,procedure,Diathermy excision,pt
+A400088,procedure,Crushing,pt
+A400089,procedure,Indirect anastomosis,pt
+A400090,procedure,Emulsification,pt
+A400091,procedure,Chemosurgery,pt
+A400092,procedure,Chemocautery,pt
+A400093,procedure,Photocoagulation,pt
+A400094,procedure,Electromagnetic fragmentation,pt
+A400095,procedure,Lecompte maneuver,pt
+A400096,procedure,Microsurgical anastomosis,pt
+A400097,procedure,Revascularization,pt
+A400098,procedure,Excision biopsy,pt
+A400099,procedure,Reattachment,pt
+A400100,procedure,extraction,pt
+A400101,procedure,Dilation and stretching,pt
+A400102,procedure,Bougienage,pt
+A400103,procedure,Loop diathermy excision,pt
+A400104,procedure,cataract aspiration,pt
+A400105,procedure,Electrolysis,pt
+A400106,procedure,Galvanism,pt
+A400107,procedure,Ultrasound fragmentation,pt
+A400108,procedure,Decompressive incision,pt
+A400109,procedure,Proximal anastomosis,pt
+A400110,procedure,Distal anastomosis,pt
+A400111,procedure,Reduction plasty,pt
+A400112,procedure,Enzyme destruction,pt
+A400113,procedure,Shave excision,pt
+A400114,procedure,Denervation,pt
+A400115,procedure,Microsurgical repair,pt
+A400116,procedure,Continuous mass closure,pt
+A400117,procedure,Brachytherapy,pt
+A400118,procedure,Open embolization,pt
+A400119,procedure,Cryoablation,pt
+A400120,procedure,Sealing,pt
+A400121,procedure,Double barrelled end-to-end anastomosis,pt
+A400122,procedure,Release,pt
+A400123,procedure,Scarification,pt
+A400124,procedure,Fragmentation,pt
+A400125,procedure,Wedge resection,pt
+A400126,procedure,Reexcision,pt
+A400127,procedure,Amputation,pt
+A400128,procedure,Intracapsular extraction,pt
+A400129,procedure,Cryocautery,pt
+A400130,procedure,Curettage,pt
+A400131,procedure,insertion,pt
+A400132,procedure,recession,pt
+A400133,procedure,transfer,pt
+A400134,procedure,Manual dilatation,pt
+A400135,procedure,Shortening,pt
+A400136,procedure,Block dissection,pt
+A400137,procedure,Exteriorization,pt
+A400138,procedure,decompression,pt
+A400139,procedure,Decompressive excision,pt
+A400140,procedure,Decompressive division,pt
+A400141,procedure,Elevation reduction,pt
+A400142,procedure,Debulking,pt
+A400143,procedure,Darning,pt
+A400144,procedure,Fixation,pt
+A400145,procedure,Imbrication,pt
+A400146,procedure,Microvascular anastomosis,pt
+A400147,procedure,Open reduction,pt
+A400148,procedure,Destruction,pt
+A400149,procedure,Disarticulation,pt
+A400150,procedure,Reduction,pt
+A400151,procedure,Stripping and ligation,pt
+A400152,procedure,Dilation repair,pt
+A400153,procedure,transplantation,pt
+A400154,procedure,Ablation,pt
+A400155,procedure,Open adjustment,pt
+A400156,procedure,Thermocautery,pt
+A400157,procedure,Anastomosis,pt
+A400158,procedure,Direct anastomosis,pt
+A400159,procedure,End-to-end anastomosis,pt
+A400160,procedure,End-to-side anastomosis,pt
+A400161,procedure,Roux-en-Y,pt
+A400162,procedure,Galvanocauterization,pt
+A400163,procedure,End-to-side anastomosis without tunnel,pt
+A400164,procedure,End-to-side anastomosis with tunnel,pt
+A400165,procedure,Side-to-side anastomosis,pt
+A400166,procedure,Terminalization,pt
+A400167,procedure,Osteotomy,pt
+A400168,procedure,Chemodissolution,pt
+A400169,procedure,Mass closure,pt
+A400170,procedure,Thermocoagulation,pt
+A400171,procedure,Semm thermal coagulation,pt
+A400172,procedure,Wolf thermal coagulation,pt
+A400173,procedure,Delamination,pt
+A400174,procedure,Hydrodelamination,pt
+A400175,procedure,Dilation,pt
+A400176,procedure,Ultrasonic dissection,pt
+A400177,procedure,Opening,pt
+A400178,procedure,Extracapsular extr,pt
+A400179,procedure,Fenestration,pt
+A400180,procedure,Refashioning,pt
+A400181,procedure,Ballistic fragmentation,pt
+A400182,procedure,Mechanical fragmentation,pt
+A400183,procedure,Electromagnetic pulse fragmentation,pt
+A400184,procedure,High intensity focused ultrasound,pt
+A400185,procedure,Discission,pt
+A400186,procedure,Keel repair,pt
+A400187,procedure,Slitting,pt
+A400188,procedure,Radioactive destruction,pt
+A400189,procedure,Patching,pt
+A400190,procedure,Keeling,pt
+A400191,procedure,Sequential anastomosis,pt
+A400192,procedure,Peeling,pt
+A400193,procedure,Shave biopsy,pt
+A400194,procedure,Repair,pt
+A400195,procedure,Mayo repair,pt
+A400196,procedure,Repair of recurrence,pt
+A400197,procedure,Wedge osteotomy,pt
+A400198,procedure,Fixation by wedging,pt
+A400199,procedure,Segmentation,pt
+A400200,procedure,Conduit anastomosis,pt
+A400201,procedure,Reservoir anastomosis,pt
+A400202,procedure,Soft tissue transfer,pt
+A400203,procedure,Transfer of bone block,pt
+A400204,procedure,Transposition,pt
+A400205,procedure,Side-to-end anastomosis,pt
+A401583,device,Neurostimulator electrode,pt
+A401584,device,Surgical suture,pt
+A401585,device,Pack,pt
+A401586,device,Gastric bubble,pt
+A401587,device,Prosthesis,pt
+A401588,device,T-tube,pt
+A401589,device,Pacemaker battery,pt
+A401590,device,Supporting suppository,pt
+A401591,device,Hodge's pessary,pt
+A401592,device,Ring suppository,pt
+A401593,device,Silicone gel implant,pt
+A401594,device,Appliance,pt
+A401595,device,Myoelectric arm,pt
+A401596,device,Body worn hearing aid,pt
+A401597,device,Urinary incontinence appliance,pt
+A401598,device,Bedpan,pt
+A401599,device,Commode,pt
+A401600,device,Urine bottle,pt
+A401601,device,Crutches,pt
+A401602,device,Walking stick,pt
+A401603,device,Bennett cast,pt
+A401604,device,Assistive equipment,pt
+A401605,device,Lift,pt
+A401606,device,Cervical collar,pt
+A401607,device,Body support,pt
+A401608,device,Corset,pt
+A401609,device,Brace,pt
+A401610,device,Orthotic device,pt
+A401611,device,Pressure garments,pt
+A401612,device,Special footwear,pt
+A401613,device,Seating,pt
+A401614,device,Mobility device,pt
+A401615,device,Wheelchair,pt
+A401616,device,Hoist,pt
+A401617,device,Pressure relief equipment,pt
+A401618,device,Ramp,pt
+A401619,device,Communication aid,pt
+A401620,device,Environmental control system,pt
+A401621,device,Computer equipment,pt
+A401622,device,Medical dressing,pt
+A401623,device,Cricothyroidotomy tube,pt
+A401624,device,Endobronchial blocker,pt
+A401625,device,Intraventricular pump,pt
+A401626,device,Vena cava valve prosthesis,pt
+A401627,device,Intraluminal vascular device,pt
+A401628,device,Conduit,pt
+A401629,device,Vascular cannula,pt
+A401630,device,Denture,pt
+A401631,device,Bridge - dental,pt
+A401632,device,Intraoral device,pt
+A401633,device,Functional orthodontic appliance - removable,pt
+A401634,device,Functional orthodontic appliance - fixed,pt
+A401635,device,Fixed orthodontic appliance,pt
+A401636,device,Fixed orthodontic retainer,pt
+A401637,device,Removable orthodontic retainer,pt
+A401638,device,Antireflux prosthesis,pt
+A401639,device,Shelf suppository,pt
+A401640,device,Peritoneal drain,pt
+A401641,device,Plaster cast,pt
+A401642,device,Ocular cosmetic shell,pt
+A401643,device,Optical near vision aid,pt
+A401644,device,Optical low vision aid,pt
+A401645,device,Spectacle near vision aid,pt
+A401646,device,Spectacle near telescope,pt
+A401647,device,Spectacle distance telescope,pt
+A401648,device,Integral spectacle distance telescope,pt
+A401649,device,Clip-on spectacle distance telescope,pt
+A401650,device,Non-optical low vision aid,pt
+A401651,device,Low vision aid,pt
+A401652,device,Electronic low vision aid,pt
+A401653,device,Closed circuit television,pt
+A401654,device,Ancillary low vision aid,pt
+A401655,device,Typoscope,pt
+A401656,device,Work board,pt
+A401657,device,Radio,pt
+A401658,device,Long cane,pt
+A401659,device,Mouth opening appliance,pt
+A401660,device,Impotence device,pt
+A401661,device,K-wire,pt
+A401662,device,Nephrostomy tube,pt
+A401663,device,Leg prosthesis,pt
+A401664,device,Down's incontinence apparatus,pt
+A401665,device,Gastrointestinal tube,pt
+A401666,device,Dental prosthesis,pt
+A401667,device,Footwear,pt
+A401668,device,Tilting disc prosthesis,pt
+A401669,device,Drug delivery reservoir,pt
+A401670,device,Feeding aid,pt
+A401671,device,Special bed,pt
+A401672,device,Telephone,pt
+A401673,device,Subperiosteal oral implant,pt
+A401674,device,Device,pt
+A401675,device,Transvenous electrode,pt
+A401676,device,Implantable defibrillator,pt
+A401677,device,Biliary stent,pt
+A401678,device,Chest drain,pt
+A401679,device,Cannula,pt
+A401680,device,Catheter,pt
+A401681,device,Holter valve,pt
+A401682,device,Tube,pt
+A401683,device,Ventricular shunt,pt
+A401684,device,Nasogastric tube,pt
+A401685,device,Valve of cerebroventricular shunt,pt
+A401686,device,Intravenous cardiac pacemaker system,pt
+A401687,device,Prosthetic bladder outlet collar,pt
+A401688,device,Endocardial pacemaker electrode,pt
+A401689,device,Cardiac pacemaker,pt
+A401690,device,Artificial urinary sphincter,pt
+A401691,device,Stent,pt
+A401692,device,Complete denture,pt
+A401693,device,Hearing aid,pt
+A401694,device,Valved tube,pt
+A401695,device,Ameroid,pt
+A401696,device,Cardiac implant,pt
+A401697,device,Biomedical device,pt
+A401698,device,Skull tongs,pt
+A401699,device,Tissue expander,pt
+A401700,device,Functional brace,pt
+A401701,device,Clamp,pt
+A401702,device,Halo brace,pt
+A401703,device,Surgical staple,pt
+A401704,device,Electrode,pt
+A401705,device,Feeding tube,pt
+A401706,device,Obstetric forceps,pt
+A401707,device,Shunt,pt
+A401708,device,Transilluminator,pt
+A401709,device,Implantable dental prosthesis,pt
+A401710,device,Binder,pt
+A401711,device,Suppository,pt
+A401712,device,Vascular catheter,pt
+A401713,device,Implanted drug delivery system,pt
+A401714,device,Baffle,pt
+A401715,device,Splint,pt
+A401716,device,Pump,pt
+A401717,device,Implant,pt
+A401718,device,Lead cable,pt
+A401719,device,Resuscitator,pt
+A401720,device,Endobronchial tube,pt
+A401721,device,Fogarty catheter,pt
+A401722,device,Nebulizer,pt
+A401723,device,Drain,pt
+A401724,device,Arm sling,pt
+A401725,device,Penrose drain,pt
+A401726,device,Extraconal orbital implant,pt
+A401727,device,Orthodontic band,pt
+A401728,device,Digestive endoscope,pt
+A401729,device,Ophthalmic prosthesis,pt
+A401730,device,Drug coated stent,pt
+A401731,device,Radioactive implant,pt
+A401732,device,Vascular device,pt
+A401733,device,Cast,pt
+A401734,device,Colostomy bag,pt
+A401735,device,Tourniquet,pt
+A401736,device,Tourniquet cuff,pt
+A401737,device,Multilayer compression bandage,pt
+A401738,device,Auditory implant,pt
+A401739,device,Feeding catheter,pt
+A401740,device,Mitral valve prosthesis,pt
+A401741,device,Cardiac assist implant,pt
+A401742,device,Michigan appliance,pt
+A401743,device,Nasoenteric tube,pt
+A401744,device,Umbrella device,pt
+A401745,device,Arteriovenous shunt - device,pt
+A401746,device,Wire instrument,pt
+A401747,device,Electronic monitor,pt
+A401748,device,Support stockings - garment,pt
+A401749,device,Wound packing material,pt
+A401750,device,Tubal prosthesis,pt
+A401751,device,Biliary T-tube,pt
+A401752,device,Applicator,pt
+A401753,device,Tracheostomy tube,pt
+A401754,device,Prosthetic implant,pt
+A401755,device,Cardiac pacemaker electrode,pt
+A401756,device,Subcutaneous reservoir,pt
+A401757,device,Biventricular assist device,pt
+A401758,device,Pernasal tube,pt
+A401759,device,Intravenous triggered cardiac pacemaker system,pt
+A401760,device,Interocclusal appliance,pt
+A401761,device,Orthodontic appliance,pt
+A401762,device,Contraceptive coil,pt
+A401763,device,Sling,pt
+A401764,device,Metal stent,pt
+A401765,device,Plastic stent,pt
+A401766,device,Orthodontic archwire,pt
+A401767,device,Plug,pt
+A401768,device,Traction unit,pt
+A401769,device,Vascular stent,pt
+A401770,device,Optical distance vision aid,pt
+A401771,device,Gastric balloon,pt
+A401772,device,Orbital floor implant,pt
+A401773,device,Ball and cage prosthesis,pt
+A401774,device,Testicular prosthesis,pt
+A401775,device,Bandage,pt
+A401776,device,Electrocardiographic monitor and recorder,pt
+A401777,device,Gastrostomy bag,pt
+A401778,device,Elastic bandage,pt
+A401779,device,Urinary catheter,pt
+A401780,device,Ligature,pt
+A401781,device,Orthopedic device,pt
+A401782,device,Ventriculopleural shunt,pt
+A401783,device,Ommaya reservoir,pt
+A401784,device,Prosthetic voice box,pt
+A401785,device,Gold weight,pt
+A401786,device,Stabilizing appliance,pt
+A401787,device,Valved cardiac conduit,pt
+A401788,device,Brighton epistaxis balloon,pt
+A401789,device,Catheter sheath,pt
+A401790,device,Zimmer splint,pt
+A401791,device,Orthodontic retainer,pt
+A401792,device,"Swan-Ganz catheter, device",pt
+A401793,device,Defibrillator,pt
+A401794,device,Ileostomy bag,pt
+A401795,device,Vacuum splint,pt
+A401796,device,Strap,pt
+A401797,device,Needle,pt
+A401798,device,Orthodontic lingual arch,pt
+A401799,device,Aids to daily living,pt
+A401800,device,Plug pack,pt
+A401801,device,Vena cava filter,pt
+A401802,device,Quill,pt
+A401803,device,Spectacle magnifier,pt
+A401804,device,Headband magnifier,pt
+A401805,device,Magnifier,pt
+A401806,device,Hickman catheter,pt
+A401807,device,Orbital implant,pt
+A401808,device,Orthodontic headgear,pt
+A401809,device,Intravenous fluid administration device,pt
+A401810,device,"Adhesive, bandage AND/OR suture",pt
+A401811,device,Vascular cross clamp,pt
+A401812,device,Removable orthodontic appliance,pt
+A401813,device,Automatic cardiac defibrillator,pt
+A401814,device,Silicone punctal plug,pt
+A401815,device,Intranasal splint,pt
+A401816,device,Ventricular assist device,pt
+A401817,device,Colonic prosthesis,pt
+A401818,device,Neonatal orthodontic appliance,pt
+A401819,device,Visual appliance,pt
+A401820,device,Cystostomy tube,pt
+A401821,device,Auditory appliance,pt
+A401822,device,Fixator,pt
+A401823,device,Rapid maxillary expansion appliance,pt
+A401824,device,Valved shunt,pt
+A401825,device,Denver shunt,pt
+A401826,device,Rod fixation system,pt
+A401827,device,Manual tourniquet,pt
+A401828,device,Total shoulder replacement prosthesis,pt
+A401829,device,Stimulator,pt
+A401830,device,Wound drain,pt
+A401831,device,Prosthetic valve,pt
+A401832,device,Biomedical equipment,pt
+A401833,device,Mesh,pt
+A401834,device,Soft Cast,pt
+A401835,device,Laser device,pt
+A401836,device,Collagen punctal plug,pt
+A401837,device,Pressure dressing,pt
+A401838,device,Metal device,pt
+A401839,device,Balloon dilatation catheter,pt
+A401840,device,Epidural catheter,pt
+A401841,device,Crown,pt
+A401842,device,Punctal plug,pt
+A401843,device,Continuous passive mobilization device,pt
+A401844,device,Subcutaneous cerebrospinal fluid reservoir,pt
+A401845,device,Crutchfield tongs,pt
+A401846,device,Molteno tube,pt
+A401847,device,Baerveldt tube shunt,pt
+A401848,device,Prosthetic chorda tendinae,pt
+A401849,device,Tympanic ventilation tube,pt
+A401850,device,Cerebrospinal fluid shunt valve,pt
+A401851,device,"Inlays, crowns and bridges",pt
+A401852,device,Intracoronary pressure guide wire,pt
+A401853,device,Intraconal orbital implant,pt
+A401854,device,Maxillofacial prosthesis/appliance,pt
+A401855,device,Intracochlear prosthesis,pt
+A401856,device,Communicator device,pt
+A401857,device,Talking books,pt
+A401858,device,Reservoir device,pt
+A401859,device,Extracochlear prosthesis,pt
+A401860,device,Chronic ambulatory peritoneal dialysis catheter,pt
+A401861,device,Bougie,pt
+A401862,device,Immobilizer,pt
+A401863,device,Interatrial baffle,pt
+A401864,device,Hearing aid battery,pt
+A401865,device,Rickham reservoir,pt
+A401866,device,"Temporary cardiac pacemaker, device",pt
+A401867,device,Partial denture,pt
+A401868,device,Guide help,pt
+A401869,device,Epicardial pacemaker electrode,pt
+A401870,device,Surgical band,pt
+A401871,device,Neuropacemaker device,pt
+A401872,device,Cervical contraceptive cap,pt
+A401873,device,Traction splint device,pt
+A401874,device,Clinical equipment and/or device,pt
+A401875,device,Loupes,pt
+A401876,device,Vascular prosthesis,pt
+A401877,device,Osseointegrated oral implant,pt
+A401878,device,Jejunostomy tube,pt
+A401879,device,Transosteal oral implant,pt
+A401880,device,Endosseous oral implant,pt
+A401881,device,Spacer,pt
+A401882,device,Flatus tube,pt
+A401883,device,Pacemaker pulse generator,pt
+A401884,device,Acupuncture needle,pt
+A401885,device,Adhesive,pt
+A401886,device,Shoulder spica,pt
+A401887,device,Peritoneal dialysis catheter,pt
+A401888,device,Tube drain,pt
+A401889,device,Stoma appliance,pt
+A401890,device,Artificial membrane,pt
+A401891,device,Halo cast,pt
+A401892,device,Suction equipment,pt
+A401893,device,"Permanent cardiac pacemaker, device",pt
+A401894,device,Recorder,pt
+A401895,device,Gardener-Wells tongs,pt
+A401896,device,Work clamp,pt
+A401897,device,Capsular tension ring,pt
+A401898,device,Task lighting,pt
+A401899,device,Self-retaining catheter,pt
+A401900,device,Intravitreal implant,pt
+A401901,device,Musculoskeletal implant,pt
+A401902,device,Headband telescope,pt
+A401903,device,Clip,pt
+A401904,device,Electric heating pad,pt
+A401905,device,Functional orthodontic appliance,pt
+A401906,device,Tampon,pt
+A401907,device,Stand magnifier,pt
+A401908,device,Suprapubic catheter,pt
+A401909,device,Submucosal oral implant,pt
+A401910,device,Safety equipment,pt
+A401911,device,Four layer compression bandaging,pt
+A401912,device,Indwelling urinary catheter,pt
+A401913,device,Silicone tubing for nasolacrimal intubation,pt
+A401914,device,"Cannula, tube AND/OR catheter",pt
+A401915,device,Bag,pt
+A401916,device,Le Veen shunt,pt
+A401917,device,Drug eluting stent,pt
+A401918,device,Cast brace,pt
+A401919,device,Adhesive tape,pt
+A401920,device,Plaster jacket,pt
+A401921,device,Dialysis catheter,pt
+A401922,device,Futura splint,pt
+A401923,device,Figure of eight plaster cast,pt
+A401924,device,Ventriculoperitoneal shunt,pt
+A401925,device,Antisyphon device,pt
+A401926,device,Vascular filter,pt
+A401927,device,Functional cast brace,pt
+A401928,device,Iridium wire,pt
+A401929,device,Cardiac pacemaker lead,pt
+A401930,device,"Body cast, shoulder to hips",pt
+A401931,device,Short arm splint,pt
+A401932,device,Sugar tong cast,pt
+A401933,device,Long arm splint,pt
+A401934,device,Back braces,pt
+A401935,device,Short leg splint,pt
+A401936,device,Ventriculoatrial shunt,pt
+A401937,device,Guide wire,pt
+A401938,device,Long leg splint,pt
+A401939,device,Drug administration device,pt
+A401940,device,Clubfoot cast,pt
+A401941,device,Custom speech aid prosthesis,pt
+A401942,device,Custom definitive obturator prosthesis,pt
+A401943,device,EEG electrode,pt
+A401944,device,Custom interim obturator prosthesis,pt
+A401945,device,Full arm cast,pt
+A401946,device,Intrauterine contraceptive device,pt
+A401947,device,Gastric electrical stimulator electrode,pt
+A401948,device,Custom surgical obturator prosthesis,pt
+A401949,device,Peritoneal catheter,pt
+A401950,device,Custom orbital prosthesis,pt
+A401951,device,Sensor device,pt
+A401952,device,Urinary collection bag,pt
+A401953,device,Peritoneovenous shunt,pt
+A401954,device,Instrument,pt
+A401955,device,Stoma bag,pt
+A401956,device,Artificial structure,pt
+A401957,device,Depth electroencephalogram electrode,pt
+A401958,device,Artificial fecal sphincter,pt
+A401959,device,Urogenital implant,pt
+A401960,device,Subdural electroencephalogram electrode,pt
+A401961,device,"Single chamber pulse generator, device",pt
+A401962,device,Thompsons prosthesis,pt
+A401963,device,"Dual chamber pacing cardioverter defibrillator pulse generator, device",pt
+A401964,device,Intermittent pneumatic compression stockings,pt
+A401965,device,Insulin pump,pt
+A401966,device,Sports mouth guard,pt
+A401967,device,"Dual chamber pulse generator, device",pt
+A401968,device,Bladder vibration stimulation device,pt
+A401969,device,Night mouth guard,pt
+A401970,device,Elastic adhesive bandage,pt
+A401971,device,Antithromboembolic stockings,pt
+A401972,device,Maxillary obturator,pt
+A401973,device,Stoma flange,pt
+A401974,device,Emesis basin,pt
+A401975,device,"Seton, device",pt
+A401976,device,Intravitreal implanted drug delivery system,pt
+A401977,device,Implantable epidural access system,pt
+A401978,device,Implantable intrathecal access system,pt
+A401979,device,Tenckhoff catheter,pt
+A401980,device,Foam dressing,pt
+A401981,device,Non-invasive blood pressure monitor,pt
+A401982,device,Personal protective equipment,pt
+A401983,device,Elastic hosiery,pt
+A401984,device,Microspinal catheter,pt
+A401985,device,Cerebrospinal fluid shunt tubing,pt
+A401986,device,Gauzes,pt
+A401987,device,Contraceptive device,pt
+A401988,device,Overbed trapeze device,pt
+A401989,device,Hemodialysis catheter,pt
+A401990,device,Nontunneled hemodialysis catheter,pt
+A401991,device,Plomb,pt
+A401992,device,Interposition shunt,pt
+A401993,device,Brachytherapy device,pt
+A401994,device,Implantable defibrillator leads,pt
+A401995,device,Dental or oral splint,pt
+A401996,device,Healing abutment,pt
+A401997,device,Manometer catheter,pt
+A401998,device,Infusion pump for enteral feeding,pt
+A401999,device,Endodontic dressing,pt
+A402000,device,Cardiac conduit,pt
+A402001,device,Truss,pt
+A402002,device,Gastric electrical stimulator,pt
+A402003,device,Implantable cardiac pacemaker,pt
+A402004,device,Orthopedic stretcher,pt
+A402005,device,Surgical intravascular shunt,pt
+A402006,device,Patient-activated electrocardiographic monitor and recording device,pt
+A402007,device,Implantable lesion localization marker,pt
+A402008,device,Focused rigidity cast,pt
+A402009,device,Incontinence appliance,pt
+A402010,device,Gastrojejunostomy tube,pt
+A402011,device,Implantable infusion pump,pt
+A402012,device,Continuous ambulatory peritoneal dialysis (CAPD) transfer set,pt
+A402013,device,Talking monitored dosage system,pt
+A402014,device,Monitored dosage system,pt
+A402015,device,Memory assistive training device,pt
+A402016,device,ITAP - Intraosseous transcutaneous amputation prosthesis,pt
+A402017,device,Bioabsorbable stent,pt
+A402018,device,Injectable tissue marker,pt
+A402019,device,Endobronchial valve,pt
+A402020,device,Tunneled peritoneal drain,pt
+A402021,device,Dental bridge abutment,pt
+A402022,device,Tunneled chest drain,pt
+A402023,device,"Semi-occlusive dressing, device",pt
+A402024,device,"Dry dressing, device",pt
+A402025,device,Vascular clamp,pt
+A402026,device,Non-vascular stent,pt
+A402027,device,Xenon arc photocoagulator,pt
+A402028,device,Fetoscope,pt
+A402029,device,Endoscope,pt
+A402030,device,"Ventriculoscope, device",pt
+A402031,device,"Microlaryngoscope, device",pt
+A402032,device,Rigid bronchoscope,pt
+A402033,device,Flexible bronchoscope,pt
+A402034,device,Dental scaler,pt
+A402035,device,Flexible endoscope,pt
+A402036,device,Snare,pt
+A402037,device,Rigid endoscope,pt
+A402038,device,Flexible sigmoidoscope,pt
+A402039,device,Rigid sigmoidoscope,pt
+A402040,device,Surgical patch,pt
+A402041,device,Percutaneous transluminal angioplasty balloon,pt
+A402042,device,Angioplasty catheter,pt
+A402043,device,Rigid cystoscope,pt
+A402044,device,Cystoscope,pt
+A402045,device,Flexible cystoscope,pt
+A402046,device,Urethroscope,pt
+A402047,device,Hysteroscope,pt
+A402048,device,Vacuum extractor,pt
+A402049,device,Prosthetic patch,pt
+A402050,device,Doppler device,pt
+A402051,device,Ambu bag,pt
+A402052,device,Oxygen mask,pt
+A402053,device,Dilator,pt
+A402054,device,Artificial conduit,pt
+A402055,device,Tuohy needle,pt
+A402056,device,Diathermy device,pt
+A402057,device,Rhinoscope,pt
+A402058,device,Bronchoscope,pt
+A402059,device,Radiofrequency controlled thermal probe,pt
+A402060,device,Hyperbaric chamber,pt
+A402061,device,Trephine,pt
+A402062,device,Temporary dental bridge,pt
+A402063,device,Sengstaken-Blakemore tube,pt
+A402064,device,Minnesota tube,pt
+A402065,device,Shock wave lithotripter,pt
+A402066,device,Mediastinoscope,pt
+A402067,device,Arthroscope,pt
+A402068,device,Probe,pt
+A402069,device,Tonometer,pt
+A402070,device,Applanation tonometer,pt
+A402071,device,Perimeter,pt
+A402072,device,Amsler chart,pt
+A402073,device,Treadmill,pt
+A402074,device,Ice bag,pt
+A402075,device,Whirlpool bath,pt
+A402076,device,Anoscope,pt
+A402077,device,Laryngoscope,pt
+A402078,device,Ophthalmoscope,pt
+A402079,device,Compressed spectral array,pt
+A402080,device,Gastroscope,pt
+A402081,device,YAG - laser,pt
+A402082,device,Directional coronary atherectomy device,pt
+A402083,device,Stethoscope,pt
+A402084,device,Ureteroscope,pt
+A402085,device,Bicycle ergometer,pt
+A402086,device,Bilirubin light,pt
+A402087,device,Vibrator,pt
+A402088,device,Esophagoscope,pt
+A402089,device,Flexible colonoscope,pt
+A402090,device,Thoracoscope,pt
+A402091,device,Alcohol sponge,pt
+A402092,device,Microscope,pt
+A402093,device,Proctoscope,pt
+A402094,device,Laparoscope,pt
+A402095,device,Fundus camera,pt
+A402096,device,Electromyographic monitor and recorder,pt
+A402097,device,Table,pt
+A402098,device,Physical restraint equipment,pt
+A402099,device,Air-conditioner,pt
+A402100,device,Culdoscope,pt
+A402101,device,Diagnostic imaging equipment,pt
+A402102,device,Physiologic monitoring system,pt
+A402103,device,Amnioscope,pt
+A402104,device,Operating microscope,pt
+A402105,device,Angioscope,pt
+A402106,device,Flexible fiberoptic laryngoscope,pt
+A402107,device,Harrington rod,pt
+A402108,device,Magnet,pt
+A402109,device,Syringe,pt
+A402110,device,Schiotz tonometer,pt
+A402111,device,Non-contact tonometer,pt
+A402112,device,Perkins applanation tonometer,pt
+A402113,device,Goldmann applanation tonometer,pt
+A402114,device,Colposcope,pt
+A402115,device,Bagolini striated glasses,pt
+A402116,device,Major amblyoscope,pt
+A402117,device,Sigmoidoscope,pt
+A402118,device,Binocular indirect ophthalmoscope,pt
+A402119,device,Wavefront analyzer,pt
+A402120,device,Holmium:YAG laser device,pt
+A402121,device,Microkeratome,pt
+A402122,device,Astigmatic dial,pt
+A402123,device,Diode pumped laser device,pt
+A402124,device,Tangent screen,pt
+A402125,device,Radiant heater,pt
+A402126,device,Flexible ureteroscope,pt
+A402127,device,Cryoprobe,pt
+A402128,device,Colonoscope,pt
+A402129,device,Rotablator,pt
+A402130,device,Stereotactic device,pt
+A402131,device,Cytology brush,pt
+A402132,device,Indirect ophthalmoscope,pt
+A402133,device,Rotational atherectomy device,pt
+A402134,device,Fine biopsy needle,pt
+A402135,device,Pipelle,pt
+A402136,device,Core biopsy needle,pt
+A402137,device,Vascular clip,pt
+A402138,device,Neville Barnes forceps,pt
+A402139,device,Suction catheter,pt
+A402140,device,Optical coherence tomography scanner,pt
+A402141,device,Medical balloon,pt
+A402142,device,Simpson forceps,pt
+A402143,device,Choledochoscope,pt
+A402144,device,Trocar,pt
+A402145,device,Embolization coil,pt
+A402146,device,Metal sound,pt
+A402147,device,Hot wire,pt
+A402148,device,Slit lamp biomicroscope,pt
+A402149,device,Carbon dioxide laser device,pt
+A402150,device,Lithotripter,pt
+A402151,device,Thermal ultrasound probe,pt
+A402152,device,Indirect goniolens,pt
+A402153,device,Punch,pt
+A402154,device,Blade plate,pt
+A402155,device,Doppler probe,pt
+A402156,device,Fiberoptic catheter,pt
+A402157,device,Esmarch bandage,pt
+A402158,device,Keratoscope,pt
+A402159,device,Thermal probe,pt
+A402160,device,Electrohydraulic lithotripter probe,pt
+A402161,device,Direct goniolens,pt
+A402162,device,Argon laser device,pt
+A402163,device,Surgical clip,pt
+A402164,device,Ion laser,pt
+A402165,device,"Intrauterine pressure catheter, device",pt
+A402166,device,Balloon septostomy catheter,pt
+A402167,device,Stripper,pt
+A402168,device,Surgical staple gun,pt
+A402169,device,Fiberoptic laryngoscope,pt
+A402170,device,Crosby capsule,pt
+A402171,device,Automated static perimeter,pt
+A402172,device,Barton's forceps,pt
+A402173,device,Dacron graft,pt
+A402174,device,Pneumatic tonometer,pt
+A402175,device,Ultrasonic lithotripter probe,pt
+A402176,device,Guillotine,pt
+A402177,device,Forceps,pt
+A402178,device,Microwave probe,pt
+A402179,device,Hall catheter,pt
+A402180,device,Kielland forceps,pt
+A402181,device,Septostomy blade,pt
+A402182,device,Mechanical exsanguinator,pt
+A402183,device,Loop diathermy device,pt
+A402184,device,Goldmann perimeter,pt
+A402185,device,Fallope ring,pt
+A402186,device,Plastibell,pt
+A402187,device,Wood's light,pt
+A402188,device,Angioplasty balloon catheter,pt
+A402189,device,Hemodialysis circuit,pt
+A402190,device,Potential acuity meter,pt
+A402191,device,Sanitary pad,pt
+A402192,device,Laser lithotripter,pt
+A402193,device,Ossicular prosthesis,pt
+A402194,device,Dynamic unilateral bar,pt
+A402195,device,Tru-cut needle,pt
+A402196,device,Static unilateral bar,pt
+A402197,device,Unilateral bar,pt
+A402198,device,Laser inferometer for potential acuity testing,pt
+A402199,device,Krypton laser device,pt
+A402200,device,Injector,pt
+A402201,device,Barostat,pt
+A402202,device,Bottle,pt
+A402203,device,Phacoemulsification machine,pt
+A402204,device,Cardiovascular endoscope,pt
+A402205,device,Direct needle,pt
+A402206,device,Temporary prosthesis,pt
+A402207,device,Confocal scanning laser ophthalmoscope,pt
+A402208,device,Integrated optical coherence tomography and scanning laser ophthalmoscope,pt
+A402209,device,Scanning laser ophthalmoscope,pt
+A402210,device,"Myeloscope, device",pt
+A402211,device,High speed rotablator,pt
+A402212,device,Cutting balloon angioplasty device,pt
+A402213,device,Rigid esophagoscope,pt
+A402214,device,Monitor,pt
+A402215,device,Rubin tube,pt
+A402216,device,Gastrointestinal biopsy device,pt
+A402217,device,Monocular indirect ophthalmoscope,pt
+A402218,device,Quinton tube,pt
+A402219,device,Direct ophthalmoscope,pt
+A402220,device,Self-retaining wire,pt
+A402221,device,Scanning laser polarimeter,pt
+A402222,device,Staple,pt
+A402223,device,Jackson cross-cylinder,pt
+A402224,device,Hypodermic needle,pt
+A402225,device,Surgical drill,pt
+A402226,device,Extracorporeal circuit equipment,pt
+A402227,device,Watson capsule,pt
+A402228,device,Prosthetic cardiac annuloplasty ring,pt
+A402229,device,Neodymium-YAG laser,pt
+A402230,device,Menghini needle,pt
+A402231,device,Suture needle,pt
+A402232,device,Low speed rotablator,pt
+A402233,device,Fluid filled catheter,pt
+A402234,device,Filiform bougie,pt
+A402235,device,Breath analyzer,pt
+A402236,device,Permanent prosthesis,pt
+A402237,device,Partial coherence interferometry biometer,pt
+A402238,device,Cold coagulator,pt
+A402239,device,Audiometric testing equipment,pt
+A402240,device,Vacuum aspirator,pt
+A402241,device,Curette,pt
+A402242,device,High intensity focused ultrasound probe,pt
+A402243,device,Retinoscope,pt
+A402244,device,Shock wave device,pt
+A402245,device,Venturi mask,pt
+A402246,device,Franzen needle,pt
+A402247,device,Extracorporeal shockwave device,pt
+A402248,device,Microscope slide,pt
+A402249,device,Culture plate,pt
+A402250,device,Mobile image intensifier,pt
+A402251,device,Blood glucose monitoring equipment,pt
+A402252,device,Stroboscope,pt
+A402253,device,Rigid ureteroscope,pt
+A402254,device,Ophthalmic endoscope,pt
+A402255,device,Mirror,pt
+A402256,device,Otoscope,pt
+A402257,device,Ultrasonic osteogenic stimulator,pt
+A402258,device,Nabeya capsule,pt
+A402259,device,Mesh-covered balloon,pt
+A402260,device,Thomas splint,pt
+A402261,device,"Urinary panendoscope, device",pt
+A402262,device,Pulse oximeter,pt
+A402263,device,Thermometer,pt
+A402264,device,Mechanical ventilator,pt
+A402265,device,Radiofrequency ablation device,pt
+A402266,device,Tympanic thermometer,pt
+A402267,device,Via U tube,pt
+A402268,device,Mask,pt
+A402269,device,Flexible fiberoptic endoscope,pt
+A402270,device,Ophthalmological equipment,pt
+A402271,device,Stone retrieval basket,pt
+A402272,device,Grasping forceps,pt
+A402273,device,Sialendoscope,pt
+A402274,device,Infrared probe,pt
+A402275,device,Cusco speculum,pt
+A402276,device,Swab,pt
+A402277,device,Pleuroscope,pt
+A402278,device,Patent ductus closure prosthesis,pt
+A402279,device,Thulium doped yttrium aluminum garnet laser device,pt
+A402280,device,Pulsed dye laser device,pt
+A402281,device,Suction drain,pt
+A402282,device,Extrication splint device,pt
+A402283,device,Dipstick,pt
+A402284,device,DCS plate,pt
+A402285,device,Semiconductor laser device,pt
+A402286,device,Indirect binocular laser ophthalmoscope,pt
+A402287,device,Cough culture plate,pt
+A402288,device,Walking aid,pt
+A402289,device,Condylar plate,pt
+A402290,device,Needle guide,pt
+A402291,device,Hooked wire,pt
+A402292,device,Robotic arm,pt
+A402293,device,"Ossicular prosthesis, total",pt
+A402294,device,Medical tuning fork,pt
+A402295,device,Rigid rhinoscope,pt
+A402296,device,Flexible fiberoptic rhinoscope,pt
+A402297,device,Irreversible electroporation system,pt
+A402298,device,Short spinal immobilization device,pt
+A402299,device,Nephroscope,pt
+A402300,device,Rigid tracheoscope,pt
+A402301,device,Urinary endoscope,pt
+A402302,device,Intravascular ultrasound device,pt
+A402303,substance,Seminal fluid,pt
+A402304,substance,Prostaglandin,pt
+A402305,substance,Oxygen,pt
+A402306,substance,Water,pt
+A402307,substance,Caustic,pt
+A402308,substance,Amalgam (silver) dental filling material,pt
+A402309,substance,Filling material,pt
+A402310,substance,Composite dental filling material,pt
+A402311,substance,Substance,pt
+A402312,substance,Helium,pt
+A402313,substance,Glass-ionomer dental cement,pt
+A402314,substance,Bleach,pt
+A402315,substance,Alcohol,pt
+A402316,substance,Methyl methacrylate,pt
+A402317,substance,Gaseous substance,pt
+A402318,substance,Hot water,pt
+A402319,substance,Paraffin,pt
+A402320,substance,Flurothyl,pt
+A402321,substance,Edrophonium chloride,pt
+A402322,substance,Carbon monoxide,pt
+A402323,substance,Carbon dioxide,pt
+A402324,substance,Mumps skin test antigen,pt
+A402325,substance,Trichophyton extract skin test,pt
+A402326,substance,Lymphokine,pt
+A402327,substance,Histoplasmin,pt
+A402328,substance,Erythropoietin,pt
+A402329,substance,Calcium hydroxide,pt
+A402330,substance,Lepromin,pt
+A402331,substance,Low carbohydrate food,pt
+A402332,substance,Low energy food,pt
+A402333,substance,Low salt food,pt
+A402334,substance,Low protein food,pt
+A402335,substance,Low saturated fat food,pt
+A402336,substance,Plasma,pt
+A402337,substance,Local anesthetic,pt
+A402338,substance,Blood material,pt
+A402339,substance,Steroid,pt
+A402340,substance,Blood,pt
+A402341,substance,Iron agent,pt
+A402342,substance,Enzyme agent,pt
+A402343,substance,Anesthetic,pt
+A402344,substance,General anesthetic,pt
+A402345,substance,Acetazolamide,pt
+A402346,substance,Isosorbide,pt
+A402347,substance,Aspirin,pt
+A402348,substance,Clostridium botulinum toxin,pt
+A402349,substance,Penicillin -class of antibiotic-,pt
+A402350,substance,Hemostatic agent,pt
+A402351,substance,Amobarbital,pt
+A402352,substance,Fluoride,pt
+A402353,substance,Contrast media,pt
+A402354,substance,Thrombolytic agent,pt
+A402355,substance,Surgical material,pt
+A402356,substance,Sedative,pt
+A402357,substance,Silicone plug,pt
+A402358,substance,Epinephrine,pt
+A402359,substance,Silver nitrate stain,pt
+A402360,substance,Autogenous bone graft material,pt
+A402361,substance,Drug or medicament,pt
+A402362,substance,Bone graft material,pt
+A402363,substance,Intravenous fluid,pt
+A402364,substance,Human skin graft material,pt
+A402365,substance,Flap,pt
+A402366,substance,Metal (material),pt
+A402367,substance,Antiplatelet agent,pt
+A402368,substance,Clopidogrel,pt
+A402369,substance,Angiotensin II receptor antagonist,pt
+A402370,substance,Angiotensin-converting enzyme inhibitor agent,pt
+A402371,substance,Cord blood stem cell fluid,pt
+A402372,substance,Autograft,pt
+A402373,substance,Rose bengal stain,pt
+A402374,substance,Fluorescein stain,pt
+A402375,substance,Skin flap,pt
+A402376,substance,Osseofasciocutaneous flap,pt
+A402377,substance,Anticoagulant,pt
+A402378,substance,Colostrum,pt
+A402379,substance,Breast milk,pt
+A402380,substance,Insulin,pt
+A402381,substance,Topical anesthetic,pt
+A402382,substance,Mucosal flap,pt
+A402383,substance,Hormone,pt
+A402384,substance,Anticonvulsant,pt
+A402385,substance,Subcutaneous pedicle flap,pt
+A402386,substance,Triamcinolone hexacetonide,pt
+A402387,substance,Anti-psychotic agent,pt
+A402388,substance,Nicotine,pt
+A402389,substance,Fluorouracil,pt
+A402390,substance,Atropine,pt
+A402391,substance,Lissamine green B stain,pt
+A402392,substance,Whole blood,pt
+A402393,substance,"Vaccine, immunoglobulin, AND/OR antiserum",pt
+A402394,substance,Lithium AND/OR lithium compound,pt
+A402395,substance,Amebicide,pt
+A402396,substance,Anthelmintic,pt
+A402397,substance,Antibacterial agent,pt
+A402398,substance,Allograft heart,pt
+A402399,substance,Allograft lung,pt
+A402400,substance,Xenograft heart,pt
+A402401,substance,Thyroid autograft,pt
+A402402,substance,Allograft cornea,pt
+A402403,substance,Antineoplastic agent,pt
+A402404,substance,Heart graft - material,pt
+A402405,substance,Free graft,pt
+A402406,substance,Autograft cornea,pt
+A402407,substance,Corneal graft material,pt
+A402408,substance,Ovary autograft,pt
+A402409,substance,Salicylate,pt
+A402410,substance,Vitamin,pt
+A402411,substance,beta-Blocking agent,pt
+A402412,substance,HMG-CoA reductase inhibitor,pt
+A402413,substance,Digoxin,pt
+A402414,substance,Nitroglycerin,pt
+A402415,substance,Calcium channel blocker,pt
+A402416,substance,Heparin,pt
+A402417,substance,Diuretic,pt
+A402418,substance,Antifilarial agent,pt
+A402419,substance,Antimalarial agent,pt
+A402420,substance,Air,pt
+A402421,substance,Sclerosing agent,pt
+A402422,substance,Antimicrobial substance,pt
+A402423,substance,Cryoprecipitate,pt
+A402424,substance,Sodium chloride solution,pt
+A402425,substance,Tissue graft - material,pt
+A402426,substance,Silastic,pt
+A402427,substance,Liver graft - material,pt
+A402428,substance,Cadaver allograft pancreas and duodenum,pt
+A402429,substance,Triamcinolone,pt
+A402430,substance,Feces,pt
+A402431,substance,Metal,pt
+A402432,substance,Pus,pt
+A402433,substance,Fetal and embryonic material,pt
+A402434,substance,Arterial graft to cited segment,pt
+A402435,substance,Radioactive isotope,pt
+A402436,substance,Urine,pt
+A402437,substance,Body fluid,pt
+A402438,substance,Bone marrow fluid,pt
+A402439,substance,Extravascular blood,pt
+A402440,substance,Cervical mucus,pt
+A402441,substance,Synthetic bone graft,pt
+A402442,substance,Methylene blue stain,pt
+A402443,substance,Poliovirus vaccine,pt
+A402444,substance,Pertussis vaccine,pt
+A402445,substance,Dental fluoride varnish,pt
+A402446,substance,Polytetrafluoroethylene,pt
+A402447,substance,Tetanus vaccine,pt
+A402448,substance,Diphtheria vaccine,pt
+A402449,substance,Cerebrospinal fluid,pt
+A402450,substance,Sebum,pt
+A402451,substance,Oxytocin,pt
+A402452,substance,Autograft kidney,pt
+A402453,substance,Haemophilus influenzae type b vaccine,pt
+A402454,substance,Tattoo dye,pt
+A402455,substance,Tetanus antitoxin,pt
+A402456,substance,Live donor allograft kidney,pt
+A402457,substance,Hepatitis B virus vaccine,pt
+A402458,substance,Botulinum antitoxin,pt
+A402459,substance,Respiratory secretion,pt
+A402460,substance,Prosthetic surgical material,pt
+A402461,substance,Bacterial vaccine,pt
+A402462,substance,Cerumen,pt
+A402463,substance,Sputum,pt
+A402464,substance,Dental wax - modeling or baseplate,pt
+A402465,substance,Rubella vaccine,pt
+A402466,substance,Measles vaccine,pt
+A402467,substance,Intestinal contents,pt
+A402468,substance,Estrogen,pt
+A402469,substance,Hydrocortisone acetate,pt
+A402470,substance,Mumps vaccine,pt
+A402471,substance,Surgical adhesive,pt
+A402472,substance,Analgesic,pt
+A402473,substance,Autograft pancreas,pt
+A402474,substance,Hepatitis A virus vaccine,pt
+A402475,substance,Coagulant,pt
+A402476,substance,Donor kidney graft,pt
+A402477,substance,Ethinyl estradiol,pt
+A402478,substance,Enzyme,pt
+A402479,substance,Paratyphoid vaccine,pt
+A402480,substance,Emollient,pt
+A402481,substance,Typhoid vaccine,pt
+A402482,substance,Ophthalmic viscoelastic agent,pt
+A402483,substance,Ascitic fluid,pt
+A402484,substance,Uroplastique,pt
+A402485,substance,Testosterone,pt
+A402486,substance,Streptokinase,pt
+A402487,substance,Mucosal graft,pt
+A402488,substance,Gonadorelin,pt
+A402489,substance,Antithrombin III,pt
+A402490,substance,Blood component,pt
+A402491,substance,Serum,pt
+A402492,substance,Skin autograft,pt
+A402493,substance,Radium,pt
+A402494,substance,Pericardial fluid,pt
+A402495,substance,Cytotoxic agent,pt
+A402496,substance,Xenograft kidney,pt
+A402497,substance,Body tissue patch material,pt
+A402498,substance,Pneumococcal polysaccharide vaccine,pt
+A402499,substance,Gas gangrene antitoxin,pt
+A402500,substance,Carmustine,pt
+A402501,substance,Albumin,pt
+A402502,substance,Blood group antibody D,pt
+A402503,substance,Fissure sealant material,pt
+A402504,substance,Hydrogen,pt
+A402505,substance,Dinoprostone,pt
+A402506,substance,Pancreas graft - material,pt
+A402507,substance,Toluidine blue stain,pt
+A402508,substance,Liquid substance,pt
+A402509,substance,Vitamin B12 - category,pt
+A402510,substance,Dye,pt
+A402511,substance,Pancreas graft - tail of pancreas,pt
+A402512,substance,Pancreas graft - whole organ,pt
+A402513,substance,Vascularized rib flap,pt
+A402514,substance,Collagen,pt
+A402515,substance,Allograft pancreas,pt
+A402516,substance,Allograft,pt
+A402517,substance,Chymopapain,pt
+A402518,substance,Calcitonin,pt
+A402519,substance,Gastrointestinal contents,pt
+A402520,substance,Graft,pt
+A402521,substance,Coagulation factor VIII,pt
+A402522,substance,Organic natural material,pt
+A402523,substance,Pedicle flap,pt
+A402524,substance,Bone cement,pt
+A402525,substance,Vaccine,pt
+A402526,substance,Immunologic agent,pt
+A402527,substance,Waxes,pt
+A402528,substance,Gold,pt
+A402529,substance,Dental material,pt
+A402530,substance,Cyanoacrylate,pt
+A402531,substance,Silicone oil,pt
+A402532,substance,Inactivated poliovirus vaccine,pt
+A402533,substance,Diagnostic substance,pt
+A402534,substance,Glue,pt
+A402535,substance,Tetanus immunoglobulin,pt
+A402536,substance,Diethylcarbamazine,pt
+A402537,substance,Cytotoxin,pt
+A402538,substance,Xenograft pancreas,pt
+A402539,substance,Vomitus,pt
+A402540,substance,Thrombin,pt
+A402541,substance,Pancreas graft - part organ,pt
+A402542,substance,Proton,pt
+A402543,substance,Alteplase,pt
+A402544,substance,Platelet component of blood,pt
+A402545,substance,Fluid containing hemopoietic stem cells,pt
+A402546,substance,Varicella virus vaccine,pt
+A402547,substance,Meningococcus vaccine,pt
+A402548,substance,Kidney graft - material,pt
+A402549,substance,Electrolyte,pt
+A402550,substance,Plague vaccine,pt
+A402551,substance,Syngeneic bone marrow fluid,pt
+A402552,substance,Tranquilizer,pt
+A402553,substance,Immunoglobulin,pt
+A402554,substance,Viral vaccine,pt
+A402555,substance,Dextran,pt
+A402556,substance,Phenol,pt
+A402557,substance,Diagnostic dye,pt
+A402558,substance,Botulism immunoglobulin,pt
+A402559,substance,Peripheral blood stem cell fluid,pt
+A402560,substance,Unrelated allogeneic bone marrow fluid,pt
+A402561,substance,Related allogeneic bone marrow fluid,pt
+A402562,substance,Japanese encephalitis virus vaccine,pt
+A402563,substance,Solid organ graft - material,pt
+A402564,substance,Chymotrypsin,pt
+A402565,substance,Cesium,pt
+A402566,substance,Vasopressin and derivatives,pt
+A402567,substance,Amniotic fluid,pt
+A402568,substance,Hydrocortisone,pt
+A402569,substance,Dental adhesive,pt
+A402570,substance,Pneumococcal vaccine,pt
+A402571,substance,Lyme disease vaccine,pt
+A402572,substance,Smallpox vaccine,pt
+A402573,substance,Syngraft,pt
+A402574,substance,Yellow fever vaccine,pt
+A402575,substance,Non-steroidal anti-inflammatory agent,pt
+A402576,substance,Cholera vaccine,pt
+A402577,substance,Rabies vaccine,pt
+A402578,substance,Autologous bone marrow fluid,pt
+A402579,substance,Allograft amniotic membrane,pt
+A402580,substance,Spleen graft - material,pt
+A402581,substance,Methotrexate,pt
+A402582,substance,Glucose,pt
+A402583,substance,Xenograft,pt
+A402584,substance,Anthrax vaccine,pt
+A402585,substance,Egg white,pt
+A402586,substance,Prostatic secretions,pt
+A402587,substance,Trypan blue stain,pt
+A402588,substance,Betamethasone,pt
+A402589,substance,Indocyanine green,pt
+A402590,substance,Cortisone,pt
+A402591,substance,Guanethidine,pt
+A402592,substance,Pentastarch,pt
+A402593,substance,Diphtheria antitoxin,pt
+A402594,substance,Psoralen,pt
+A402595,substance,Potassium chloride,pt
+A402596,substance,Human immunoglobulin,pt
+A402597,substance,Antitoxin,pt
+A402598,substance,Human papillomavirus vaccine,pt
+A402599,substance,Allogeneic bone graft material,pt
+A402600,substance,Sulfonylurea,pt
+A402601,substance,Antifungal,pt
+A402602,substance,Antiviral agent,pt
+A402603,substance,Anti-infective agent,pt
+A402604,substance,Mitomycin,pt
+A402605,substance,gamma globulin,pt
+A402606,substance,Allogeneic bone marrow fluid,pt
+A402607,substance,Cytomegalovirus antibody,pt
+A402608,substance,Microvascular transfer flap,pt
+A402609,substance,Attenuated Bacillus Calmette Guerin,pt
+A402610,substance,Influenza virus vaccine,pt
+A402611,substance,Methylprednisolone,pt
+A402612,substance,Rotavirus vaccine,pt
+A402613,substance,Bupivacaine,pt
+A402614,substance,Chelating agent,pt
+A402615,substance,Bronchodilator,pt
+A402616,substance,Small intestine contents,pt
+A402617,substance,Radiopharmaceutical agent,pt
+A402618,substance,Pedicle,pt
+A402619,substance,Folic acid,pt
+A402620,substance,Etonogestrel,pt
+A402621,substance,Pancreatic fluid,pt
+A402622,substance,Bile,pt
+A402623,substance,Aqueous humor,pt
+A402624,substance,Chemical,pt
+A402625,substance,Influenza A virus subtype H1N1 vaccine,pt
+A402626,substance,Calcium leucovorin,pt
+A402627,substance,Low molecular weight heparin,pt
+A402628,substance,Cutaneous fluid,pt
+A402629,substance,Flap with osseous tissue,pt
+A402630,substance,Vitamin D,pt
+A402631,substance,Teriparatide,pt
+A402632,substance,Spironolactone,pt
+A402633,substance,Allograft cancellous bone,pt
+A402634,substance,Ointment,pt
+A402635,substance,Collagen implant,pt
+A402636,substance,Digitalis glycoside,pt
+A402637,substance,Dacron,pt
+A402638,substance,Fibrin,pt
+A402639,substance,Growth factor,pt
+A402640,substance,^89^Strontium,pt
+A402641,substance,Pleural fluid,pt
+A402642,substance,Antimetabolite,pt
+A402643,substance,Phytonadione,pt
+A402644,substance,Vancomycin,pt
+A402645,substance,Urokinase,pt
+A402646,substance,Interferon,pt
+A402647,substance,Cosmetic material,pt
+A402648,substance,Antidepressant,pt
+A402649,substance,Mucolytic agent,pt
+A402650,substance,Warfarin,pt
+A402651,substance,^131^Iodine,pt
+A402652,substance,^32^Phosphorus,pt
+A402653,substance,Carvedilol,pt
+A402654,substance,Nebivolol,pt
+A402655,substance,Arterial blood,pt
+A402656,substance,Bisoprolol,pt
+A402657,substance,Free flap,pt
+A402658,substance,Ergonovine,pt
+A402659,substance,Parathyroid hormone agent,pt
+A402660,substance,Zoledronic acid,pt
+A402661,substance,Ibandronic acid,pt
+A402662,substance,Diphosphonate,pt
+A402663,substance,Denosumab,pt
+A402664,substance,Stimulant,pt
+A402665,substance,Incretin mimetic agent,pt
+A402666,substance,Venous blood,pt
+A402667,substance,Cadaver allograft kidney,pt
+A402668,substance,Phosphodiesterase 5 inhibitor,pt
+A402669,substance,Raloxifene,pt
+A402670,substance,Histamine H>2< antagonist,pt
+A402671,substance,Antiandrogen,pt
+A402672,substance,Immunosuppressant,pt
+A402673,substance,Skin allograft,pt
+A402674,substance,Autologous fluid containing hemopoietic stem cells,pt
+A402675,substance,Medroxyprogesterone acetate,pt
+A402676,substance,Nutritional supplement,pt
+A402677,substance,Hematopoietic factor,pt
+A402678,substance,Autologous fluid containing progenitor cells,pt
+A402679,substance,Progestogen,pt
+A402680,substance,Respiratory corticosteroid,pt
+A402681,substance,Formalin,pt
+A402682,substance,Autologous fat,pt
+A402683,substance,Unfractionated heparin,pt
+A402684,substance,Infliximab,pt
+A402685,substance,Mycophenolic acid,pt
+A402686,substance,Normal immunoglobulin human,pt
+A402687,substance,Etanercept,pt
+A402688,substance,Cyclophosphamide,pt
+A402689,substance,Azathioprine,pt
+A402690,substance,Hyaluronic acid,pt
+A402691,substance,Hexachlorophene,pt
+A402692,substance,Iron,pt
+A402693,substance,Meningococcal polysaccharide vaccine,pt
+A402694,substance,Meningococcal conjugate vaccine,pt
+A402695,substance,Acellular pertussis vaccine,pt
+A402696,substance,Dietary substance,pt
+A402697,substance,Conjunctival graft material,pt
+A402698,substance,Surfactant,pt
+A402699,substance,Pneumococcal conjugate vaccine,pt
+A402700,substance,Carbohydrate,pt
+A402701,substance,Trace element,pt
+A402702,substance,Mineral supplement,pt
+A402703,substance,Galactose,pt
+A402704,substance,Cholesterol,pt
+A402705,substance,Fat - dietary,pt
+A402706,substance,Dietary fiber,pt
+A402707,substance,Mineral - dietary,pt
+A402708,substance,Protein and protein derivatives - dietary,pt
+A402709,substance,Lactose,pt
+A402710,substance,Monounsaturated fat,pt
+A402711,substance,Polyunsaturated fat,pt
+A402712,substance,Saturated fat,pt
+A402713,substance,Trans fat,pt
+A402714,substance,Soluble fiber,pt
+A402715,substance,Insoluble fiber,pt
+A402716,substance,Boron,pt
+A402717,substance,Calcium,pt
+A402718,substance,Chloride salt,pt
+A402719,substance,Chromium,pt
+A402720,substance,Cobalt,pt
+A402721,substance,Copper,pt
+A402722,substance,Iodine,pt
+A402723,substance,Magnesium,pt
+A402724,substance,Manganese,pt
+A402725,substance,Molybdenum,pt
+A402726,substance,Phosphorus,pt
+A402727,substance,Potassium,pt
+A402728,substance,Selenium,pt
+A402729,substance,Sodium,pt
+A402730,substance,Sulfate salt,pt
+A402731,substance,Zinc,pt
+A402732,substance,Calcium salt,pt
+A402733,substance,Amino acid - dietary,pt
+A402734,substance,Arginine,pt
+A402735,substance,Glutamine,pt
+A402736,substance,Histidine,pt
+A402737,substance,Homocysteine,pt
+A402738,substance,Isoleucine,pt
+A402739,substance,Leucine,pt
+A402740,substance,Lysine,pt
+A402741,substance,Methionine,pt
+A402742,substance,Phenylalanine,pt
+A402743,substance,Threonine,pt
+A402744,substance,Tryptophan,pt
+A402745,substance,Tyramine,pt
+A402746,substance,Tyrosine,pt
+A402747,substance,Valine,pt
+A402748,substance,Casein,pt
+A402749,substance,Gluten,pt
+A402750,substance,Biotin,pt
+A402751,substance,Nicotinic acid and derivatives,pt
+A402752,substance,Pantothenic acid,pt
+A402753,substance,Riboflavin,pt
+A402754,substance,Vitamin B1,pt
+A402755,substance,Vitamin A,pt
+A402756,substance,Vitamin B6,pt
+A402757,substance,Ascorbic acid,pt
+A402758,substance,Vitamin E,pt
+A402759,substance,Vitamin K,pt
+A402760,substance,Sulfur,pt
+A402761,substance,Bioactive substance,pt
+A402762,substance,Plant stanol ester,pt
+A402763,substance,Plant sterol ester,pt
+A402764,substance,Soy protein,pt
+A402765,substance,Psyllium,pt
+A402766,substance,Beta glucan,pt
+A402767,substance,Non-nutritive food additive,pt
+A402768,substance,Ingestible alcohol,pt
+A402769,substance,Caffeine,pt
+A402770,substance,Rituximab,pt
+A402771,substance,Platelet rich plasma,pt
+A402772,substance,Barium compound,pt
+A402773,substance,Myocutaneous flap,pt
+A402774,substance,Negative contrast media,pt
+A402775,substance,Irrigating solution,pt
+A402776,substance,Latissimus dorsi flap,pt
+A402777,substance,Iodohippurate I^131^ sodium,pt
+A402778,substance,Xenon,pt
+A402779,substance,Vein graft material,pt
+A402780,substance,Temporalis flap,pt
+A402781,substance,Head and neck flap,pt
+A402782,substance,Ileal segment,pt
+A402783,substance,Pericardial patch,pt
+A402784,substance,Granulocyte antibody,pt
+A402785,substance,Deferoxamine,pt
+A402786,substance,Natural material,pt
+A402787,substance,Local skin flap,pt
+A402788,substance,Local flap,pt
+A402789,substance,Peritoneal dialysis solution,pt
+A402790,substance,Calcium radioisotope,pt
+A402791,substance,Ethyl alcohol,pt
+A402792,substance,Potassium AND/OR potassium compound,pt
+A402793,substance,Body tissue surgical material,pt
+A402794,substance,Indium radioisotope,pt
+A402795,substance,Free transverse rectus abdominus flap,pt
+A402796,substance,Iodine radioisotope,pt
+A402797,substance,Technetium Tc^99m^ sestamibi,pt
+A402798,substance,Estrogen antagonist,pt
+A402799,substance,Liquid nitrogen,pt
+A402800,substance,Adenosine,pt
+A402801,substance,Dipyridamole,pt
+A402802,substance,Distant flap,pt
+A402803,substance,Pedicle transverse rectus abdominus flap,pt
+A402804,substance,Dobutamine,pt
+A402805,substance,Technetium Tc^99^ N-substituted iminodiacetate,pt
+A402806,substance,Intrinsic factor,pt
+A402807,substance,Oil,pt
+A402808,substance,Sulfobromophthalein,pt
+A402809,substance,Transverse rectus abdominus flap,pt
+A402810,substance,Carbon radioisotope,pt
+A402811,substance,Iron radioisotope,pt
+A402812,substance,^60^Cobalt,pt
+A402813,substance,Vomerine flap,pt
+A402814,substance,Fluorine radioisotope,pt
+A402815,substance,^81^Rubidium,pt
+A402816,substance,Thallium radioisotope,pt
+A402817,substance,^123^Iodine,pt
+A402818,substance,Technetium radioisotope,pt
+A402819,substance,Gallium radioisotope,pt
+A402820,substance,Gallium^67^ citrate,pt
+A402821,substance,Metaiodobenzylguanidine[131I],pt
+A402822,substance,^201^Thallium,pt
+A402823,substance,Xylose,pt
+A402824,substance,Cardiovascular agent,pt
+A402825,substance,Metaiodobenzylguanidine[123I],pt
+A402826,substance,Radium radioisotope,pt
+A402827,substance,Technetium Tc^99m^ depreotide,pt
+A402828,substance,Iodocholesterol I^131^,pt
+A402829,substance,Ioflupane[123I],pt
+A402830,substance,Fluorodeoxyglucose F^18^,pt
+A402831,substance,Chromic phosphate P^32^,pt
+A402832,substance,Ammonia N^13^,pt
+A402833,substance,Chromium radioisotope,pt
+A402834,substance,^90^Yttrium,pt
+A402835,substance,^99m^Technetium,pt
+A402836,substance,Biological surgical material,pt
+A402837,substance,Tetracycline,pt
+A402838,substance,Silver nitrate,pt
+A402839,substance,Inert gas,pt
+A402840,substance,Talc,pt
+A402841,substance,Sucrose,pt
+A402842,substance,Skin graft material,pt
+A402843,substance,^111^Indium,pt
+A402844,substance,Fuchsin acid stain,pt
+A402845,substance,Indigo carmine stain,pt
+A402846,substance,Acid phosphatase bone isoenzyme,pt
+A402847,substance,Acid phosphatase stain,pt
+A402848,substance,Indophenol from naphthol stain,pt
+A402849,substance,Azure A stain,pt
+A402850,substance,Methylene violet stain,pt
+A402851,substance,Water soluble eosin stain,pt
+A402852,substance,Aldehyde fuchsin stain,pt
+A402853,substance,Bauer's chromic acid leucofuchsin stain,pt
+A402854,substance,Metanil yellow stain,pt
+A402855,substance,Immunofluorescent stain,pt
+A402856,substance,Congo red stain,pt
+A402857,substance,Janus green B stain,pt
+A402858,substance,Hematein stain,pt
+A402859,substance,Victoria blue B stain,pt
+A402860,substance,Silver stain,pt
+A402861,substance,Hematoxylin stain,pt
+A402862,substance,Insoluble berlin blue stain,pt
+A402863,substance,Kenacid blue R stain,pt
+A402864,substance,Giemsa stain,pt
+A402865,substance,Methyl green stain,pt
+A402866,substance,Light green SF stain,pt
+A402867,substance,Periodic acid Schiff stain,pt
+A402868,substance,Gallocyanine stain,pt
+A402869,substance,Leishman stain,pt
+A402870,substance,Acid fast stain,pt
+A402871,substance,Auramine stain,pt
+A402872,substance,Rhodamine stain,pt
+A402873,substance,Lacmoid stain,pt
+A402874,substance,Page blue G-90 stain,pt
+A402875,substance,Sudan black B stain,pt
+A402876,substance,Lissamine fast red B stain,pt
+A402877,substance,Ponceau S stain,pt
+A402878,substance,Modified trichrome stain,pt
+A402879,substance,Ponceau 3R stain,pt
+A402880,substance,Ponceau xylidine stain,pt
+A402881,substance,Alcohol soluble nigrosine stain,pt
+A402882,substance,Pontamine sky blue 5BX stain,pt
+A402883,substance,Patent blue V sodium salt stain,pt
+A402884,substance,Carbol fuchsin stain,pt
+A402885,substance,Fluorescent stain,pt
+A402886,substance,Alcian blue 8GX stain,pt
+A402887,substance,Butyrate esterase stain,pt
+A402888,substance,Cresyl echt violet stain,pt
+A402889,substance,Procion brilliant blue MRS stain,pt
+A402890,substance,Safranin stain,pt
+A402891,substance,Alizarin blue S stain,pt
+A402892,substance,Alizarin cyanine green stain,pt
+A402893,substance,Saffron stain,pt
+A402894,substance,Alizarin red S stain,pt
+A402895,substance,Permethrin stain,pt
+A402896,substance,Phloxin B stain,pt
+A402897,substance,Colloidal iron stain,pt
+A402898,substance,Sirius red F3B stain,pt
+A402899,substance,Prussian blue stain,pt
+A402900,substance,Acridine orange stain,pt
+A402901,substance,Cochineal stain,pt
+A402902,substance,Alizarin yellow GG stain,pt
+A402903,substance,Fast blue B salt stain,pt
+A402904,substance,Rosolic acid sodium salt stain,pt
+A402905,substance,Orcein stain,pt
+A402906,substance,Durazol red stain,pt
+A402907,substance,Malachite green stain,pt
+A402908,substance,Chrysoidine Y stain,pt
+A402909,substance,Diamond black stain,pt
+A402910,substance,Chrysoidine R stain,pt
+A402911,substance,Azure B stain,pt
+A402912,substance,Coriphosphine stain,pt
+A402913,substance,Gentian violet,pt
+A402914,substance,Erythrosin B stain,pt
+A402915,substance,Eriochrome blue black SE stain,pt
+A402916,substance,Crystal ponceau stain,pt
+A402917,substance,Alpha-naphthyl acetate esterase,pt
+A402918,substance,Brilliant orange stain,pt
+A402919,substance,Erythrosin Y stain,pt
+A402920,substance,Erie garnet stain,pt
+A402921,substance,Lissamine rhodamine stain,pt
+A402922,substance,Protargol S stain,pt
+A402923,substance,Fast blue RR salt stain,pt
+A402924,substance,Evans blue stain,pt
+A402925,substance,Ethyl-phenol,pt
+A402926,substance,Fuchsin basic stain,pt
+A402927,substance,Methyl violet 6B stain,pt
+A402928,substance,Fast blue BB salt stain,pt
+A402929,substance,Dibromofluorescein stain,pt
+A402930,substance,Lissamine fast yellow stain,pt
+A402931,substance,Pyronine B stain,pt
+A402932,substance,Methyl violet 2B stain,pt
+A402933,substance,Van Gieson stain,pt
+A402934,substance,Verhoeff's hematoxylin stain,pt
+A402935,substance,Ethyl violet stain,pt
+A402936,substance,Meldola blue stain,pt
+A402937,substance,Alkaline phosphatase stain,pt
+A402938,substance,Pyronine G stain,pt
+A402939,substance,Victoria blue 4R stain,pt
+A402940,substance,Hansel stain,pt
+A402941,substance,Auramine O stain,pt
+A402942,substance,Methyl green pyronin stain,pt
+A402943,substance,Soluble berlin blue stain,pt
+A402944,substance,India ink stain,pt
+A402945,substance,Spirit soluble aniline blue stain,pt
+A402946,substance,Azo black stain,pt
+A402947,substance,Phosphotungstic acid-hematoxylin stain,pt
+A402948,substance,Acriflavine stain,pt
+A402949,substance,Waxoline blue stain,pt
+A402950,substance,Martius yellow stain,pt
+A402951,substance,Alizarin yellow R stain,pt
+A402952,substance,Thionine stain,pt
+A402953,substance,Azocarmine G (GX) stain,pt
+A402954,substance,Cresyl violet stain,pt
+A402955,substance,Luxol fast blue stain,pt
+A402956,substance,Xylene cyanol FF stain,pt
+A402957,substance,Fast sulfon black F stain,pt
+A402958,substance,Fast red TR salt stain,pt
+A402959,substance,Solochrome cyanine R stain,pt
+A402960,substance,Solochrome azurine (BS) stain,pt
+A402961,substance,Solochrome black 6B stain,pt
+A402962,substance,Atebrin FS stain,pt
+A402963,substance,Alkali blue 6B stain,pt
+A402964,substance,Solochrome dark blue stain,pt
+A402965,substance,Azure C stain,pt
+A402966,substance,Potassium hydroxide stain,pt
+A402967,substance,Mucicarmine stain,pt
+A402968,substance,Technetium Tc^99m^ tetrofosmin,pt
+A402969,substance,Sunset yellow FCF stain,pt
+A402970,substance,Tartrazine stain,pt
+A402971,substance,Benzo fast scarlet stain,pt
+A402972,substance,Spirit soluble eosin stain,pt
+A402973,substance,Neutral red stain,pt
+A402974,substance,Auramine G stain,pt
+A402975,substance,Sudan blue stain,pt
+A402976,substance,Fast red ITR stain,pt
+A402977,substance,Fluorescein sodium stain,pt
+A402978,substance,Fast red B salt stain,pt
+A402979,substance,Sudan black stain,pt
+A402980,substance,Curcumin stain,pt
+A402981,substance,Fat red 7B stain,pt
+A402982,substance,Fast violet B salt stain,pt
+A402983,substance,Gram stain,pt
+A402984,substance,Thioflavine T stain,pt
+A402985,substance,Fast green FCF stain,pt
+A402986,substance,Sodium fluoride,pt
+A402987,substance,Fast garnet GBC salt stain,pt
+A402988,substance,Quinacrine fluorescent stain,pt
+A402989,substance,Thioflavine S stain,pt
+A402990,substance,Sudan II stain,pt
+A402991,substance,Wright stain,pt
+A402992,substance,Naphthol-AS-D-chloracetate esterase stain,pt
+A402993,substance,Fluorexon stain,pt
+A402994,substance,Rhodamine B stain,pt
+A402995,substance,Peroxidase stain,pt
+A402996,substance,Methylene violet stain (Bernthsen),pt
+A402997,substance,Naphthalene black 12B stain,pt
+A402998,substance,Naphthol green B stain,pt
+A402999,substance,Orange II stain,pt
+A403000,substance,May-Grunwald giemsa stain,pt
+A403001,substance,Naphthol yellow S stain,pt
+A403002,substance,Methyl orange stain,pt
+A403003,substance,Romanowsky stain,pt
+A403004,substance,Blue shade eosin stain,pt
+A403005,substance,Aniline blue stain,pt
+A403006,substance,Biebrich scarlet stain,pt
+A403007,substance,Sudan IV stain,pt
+A403008,substance,New fuchsin stain,pt
+A403009,substance,Chromic acid stain,pt
+A403010,substance,Brilliant crocein stain,pt
+A403011,substance,Orange G stain,pt
+A403012,substance,Pontamine sky blue 6BX stain,pt
+A403013,substance,Water soluble aniline blue stain,pt
+A403014,substance,Page blue 83 stain,pt
+A403015,substance,Brilliant cresyl blue stain,pt
+A403016,substance,Methyl blue stain,pt
+A403017,substance,Water soluble nigrosine stain,pt
+A403018,substance,Methyl red stain,pt
+A403019,substance,Chrome azurol S stain,pt
+A403020,substance,Sudan III stain,pt
+A403021,substance,Nuclear fast red stain,pt
+A403022,substance,Brazilin stain,pt
+A403023,substance,Oil red O stain,pt
+A403024,substance,Night blue stain,pt
+A403025,substance,Celestine blue B stain,pt
+A403026,substance,Vital new red stain,pt
+A403027,substance,Thionin stain,pt
+A403028,substance,Bismark brown R stain,pt
+A403029,substance,Nile blue stain,pt
+A403030,substance,Bismark brown Y stain,pt
+A403031,substance,Nitrazine yellow stain,pt
+A403032,substance,Alkali blue 5B (4B) stain,pt
+A403033,substance,Azophloxin stain,pt
+A403034,substance,Water soluble anthracene brown stain,pt
+A403035,substance,Chromotrope 2R stain,pt
+A403036,substance,Tropaeolin OO stain,pt
+A403037,substance,Carminic acid stain,pt
+A403038,substance,Terminal deoxynucleotidyl transferase stain,pt
+A403039,substance,Azorubin S stain,pt
+A403040,substance,Fouchet stain,pt
+A403041,substance,Carmine stain,pt
+A403042,substance,Carmoisine A stain,pt
+A403043,substance,Titan yellow stain,pt
+A403044,substance,Brilliant yellow stain,pt
+A403045,substance,Tropaeolin O stain,pt
+A403046,substance,Trichrome stain,pt
+A403047,substance,Class I antiarrhythmic agent,pt
+A403048,substance,Xenon radioisotope,pt
+A403049,substance,Krypton radioisotope,pt
+A403050,substance,Oxygen radioisotope,pt
+A403051,substance,Nitrogen radioisotope,pt
+A403052,substance,^75^Selenium,pt
+A403053,substance,Oxaliplatin,pt
+A403054,substance,Carboplatin,pt
+A403055,substance,Cesium radioisotope,pt
+A403056,substance,Iridium radioisotope,pt
+A403057,substance,Ethiodized oil,pt
+A403058,substance,Yttrium radioisotope,pt
+A403059,substance,Gold radioisotope,pt
+A403060,substance,Dental filling material,pt
+A403061,substance,Artificial graft - material,pt
+A403062,substance,Sodium pertechnetate Tc^99m^,pt
+A403063,substance,Cobalt radioisotope,pt
+A403064,substance,^51^Chromium,pt
+A403065,substance,Carbon^14^ triolein,pt
+A403066,substance,Sodium-[14C] glycocholate,pt
+A403067,substance,Carbon^14^ D-xylose,pt
+A403068,substance,Urea[14C],pt
+A403069,substance,^14^Carbon,pt
+A403070,substance,^177^Lutetium,pt
+A403071,substance,Autologous vein graft,pt
+A403072,substance,^125^Iodine,pt
+A403073,substance,^226^Radium,pt
+A403074,substance,^223^Radium,pt
+A403075,substance,Tobacco,pt
+A403076,substance,Technetium Tc^99m^ macroaggregated albumin,pt
+A403077,substance,^222^Radon,pt
+A403078,substance,Piperacillin + tazobactam,pt
+A403079,substance,Meropenem,pt
+A403080,substance,Free fasciocutaneous flap,pt
+A403081,substance,Pedicle fasciocutaneous flap,pt
+A403082,substance,Technetium Tc^99m^ aggregated albumin,pt
+A403083,substance,Posterior tibial flap,pt
+A403084,substance,Pectoralis major myocutaneous flap,pt
+A403085,substance,Pedicle fascial flap,pt
+A403086,substance,Sodium hypochlorite,pt
+A403087,substance,^67^Gallium,pt
+A403088,substance,^99^Technetium,pt
+A403089,substance,^18^Fluorine,pt
+A403090,substance,^68^Gallium,pt
+A403091,substance,Florbetapir F^18^,pt
+A403092,substance,Methylcellulose,pt
+A403093,substance,Carbohydrate food,pt
+A403094,substance,Multivitamin multimineral supplement,pt
+A403095,substance,Trace element supplementation,pt
+A403096,substance,Vitamin supplement,pt
+A403097,substance,Dietary fluid,pt
+A403098,substance,Protein food,pt
+A403099,substance,High carbohydrate food,pt
+A403100,substance,Low cholesterol food,pt
+A403101,substance,High energy food,pt
+A403102,substance,Fatty food,pt
+A403103,substance,Low fat food,pt
+A403104,substance,High monounsaturated fat food,pt
+A403105,substance,Low monounsaturated fat food,pt
+A403106,substance,High polyunsaturated fat food,pt
+A403107,substance,Low polyunsaturated fat food,pt
+A403108,substance,Low trans fat food,pt
+A403109,substance,High fiber food,pt
+A403110,substance,Low fiber food,pt
+A403111,substance,High soluble fiber food,pt
+A403112,substance,Low soluble fiber food,pt
+A403113,substance,High insoluble fiber food,pt
+A403114,substance,Low insoluble fiber food,pt
+A403115,substance,High calcium food,pt
+A403116,substance,Iron-rich food,pt
+A403117,substance,High potassium food,pt
+A403118,substance,Low potassium food,pt
+A403119,substance,High protein food,pt
+A403120,substance,Biotin supplement,pt
+A403121,substance,Folate supplement,pt
+A403122,substance,Niacin supplement,pt
+A403123,substance,Pantothenic acid supplement,pt
+A403124,substance,Riboflavin supplement,pt
+A403125,substance,Thiamin supplement,pt
+A403126,substance,Vitamin A supplement,pt
+A403127,substance,Vitamin B12 supplement,pt
+A403128,substance,Vitamin B6 supplement,pt
+A403129,substance,Vitamin C supplement,pt
+A403130,substance,Vitamin D supplement,pt
+A403131,substance,Vitamin E supplement,pt
+A403132,substance,Vitamin K supplement,pt
+A403133,substance,Boron supplement,pt
+A403134,substance,Calcium supplement,pt
+A403135,substance,Chloride supplement,pt
+A403136,substance,Chromium supplement,pt
+A403137,substance,Cobalt supplement,pt
+A403138,substance,Copper supplement,pt
+A403139,substance,Fluoride supplement,pt
+A403140,substance,Iodine supplement,pt
+A403141,substance,Iron supplement,pt
+A403142,substance,Magnesium supplement,pt
+A403143,substance,Manganese supplement,pt
+A403144,substance,Molybdenum supplement,pt
+A403145,substance,Phosphorus supplement,pt
+A403146,substance,Potassium supplement,pt
+A403147,substance,Selenium supplement,pt
+A403148,substance,Sodium supplement,pt
+A403149,substance,Sulfur supplement,pt
+A403150,substance,Zinc supplement,pt
+A403151,substance,Easy to chew food,pt
+A403152,substance,Liquidized food,pt
+A403153,substance,Medical beverage,pt
+A403154,substance,Medical food,pt
+A403155,substance,Enteral dietary supplement,pt
+A403156,substance,Intravenous nutrition agent,pt
+A403157,approach,Percutaneous,pt
+A403158,approach,Open,pt
+A403159,approach,Closed,pt
+A403160,approach,Left lateral oblique,pt
+A403161,approach,C1-C2 left oblique,pt
+A403162,approach,Right lateral oblique,pt
+A403163,approach,C1-C2 right oblique,pt
+A403164,approach,Medial oblique,pt
+A403165,approach,Oblique lateral,pt
+A403166,approach,Mandible X-ray - lateral oblique,pt
+A403167,approach,Anteroposterior left lateral decubitus,pt
+A403168,approach,C1-C2 left lateral,pt
+A403169,approach,Left true lateral,pt
+A403170,approach,Anteroposterior right lateral decubitus,pt
+A403171,approach,C1-C2 right lateral,pt
+A403172,approach,Right true lateral,pt
+A403173,approach,Lateral vertical beam,pt
+A403174,approach,Lateral horizontal beam,pt
+A403175,approach,Lateral inverted,pt
+A403176,approach,True lateral of mandible,pt
+A403177,approach,Frog lateral,pt
+A403178,approach,Erect lateral,pt
+A403179,approach,Anteroposterior inverted,pt
+A403180,approach,Rotated posteroanterior,pt
+A403181,approach,Posteroanterior 20 degree,pt
+A403182,approach,Posteroanterior in ulnar deviation,pt
+A403183,approach,Penetrated posteroanterior,pt
+A403184,approach,Lordotic,pt
+A403185,approach,Supine decubitus,pt
+A403186,approach,Decubitus,pt
+A403187,approach,Internal/external rotation,pt
+A403188,approach,45 degree,pt
+A403189,approach,Slit Towne's,pt
+A403190,approach,Reverse Towne's,pt
+A403191,approach,Slit 35 degree fronto-occipital,pt
+A403192,approach,Vertex,pt
+A403193,approach,Left Stenver's,pt
+A403194,approach,Right Stenver's,pt
+A403195,approach,Occipitofrontal,pt
+A403196,approach,Occipitomental,pt
+A403197,approach,Occipitomental - erect,pt
+A403198,approach,Occipitomental - tilted,pt
+A403199,approach,Occipitomental - prone,pt
+A403200,approach,Occipitomental - 15 degree,pt
+A403201,approach,Occipitomental - 30 degree,pt
+A403202,approach,Occipitomental - 45 degree,pt
+A403203,approach,Waters - 35 degree tilt to radiographic baseline,pt
+A403204,approach,Slit submentovertical,pt
+A403205,approach,Dental/oral,pt
+A403206,approach,Body - molar,pt
+A403207,approach,Body - premolar,pt
+A403208,approach,Ramus,pt
+A403209,approach,Bimolar,pt
+A403210,approach,Transpharyngeal,pt
+A403211,approach,Transmaxillary,pt
+A403212,approach,Dental panoramic,pt
+A403213,approach,Implant setting,pt
+A403214,approach,Segmental setting,pt
+A403215,approach,Axial view for sesamoid bones,pt
+A403216,approach,Brewerton's,pt
+A403217,approach,Harris Beath axial,pt
+A403218,approach,Intercondylar,pt
+A403219,approach,Judet,pt
+A403220,approach,Mortice,pt
+A403221,approach,Occlusal,pt
+A403222,approach,Projected oblique occlusal,pt
+A403223,approach,Lower true occlusal,pt
+A403224,approach,Power grip series,pt
+A403225,approach,Skyline,pt
+A403226,approach,Van Rosen,pt
+A403227,approach,Inferosuperior,pt
+A403228,approach,Apical,pt
+A403229,approach,Vertical,pt
+A403230,approach,Prone,pt
+A403231,approach,Supine,pt
+A403232,approach,Anterior,pt
+A403233,approach,Right posterior,pt
+A403234,approach,Left posterior,pt
+A403235,approach,Perorbital,pt
+A403236,approach,Optic foramen,pt
+A403237,approach,Lateral facial skeleton,pt
+A403238,approach,Macro,pt
+A403239,approach,Outlet,pt
+A403240,approach,Swimmer's,pt
+A403241,approach,Transthoracic,pt
+A403242,approach,Transcranial,pt
+A403243,approach,Posteroanterior,pt
+A403244,approach,Horizontal,pt
+A403245,approach,Erect,pt
+A403246,approach,Adduction,pt
+A403247,approach,TRUE,pt
+A403248,approach,Contralateral,pt
+A403249,approach,Posterior,pt
+A403250,approach,Abduction,pt
+A403251,approach,Transorbital,pt
+A403252,approach,Leonard-George,pt
+A403253,approach,Mayer,pt
+A403254,approach,Posterior emissive,pt
+A403255,approach,Nolke,pt
+A403256,approach,Hughston,pt
+A403257,approach,Oblique axial,pt
+A403258,approach,Miller,pt
+A403259,approach,Left posterior oblique,pt
+A403260,approach,Axillary tail mammography view,pt
+A403261,approach,Medial-lateral emissive,pt
+A403262,approach,Chassard-Lapin,pt
+A403263,approach,Pirie,pt
+A403264,approach,May,pt
+A403265,approach,Ischerwood,pt
+A403266,approach,Zanelli,pt
+A403267,approach,Clements,pt
+A403268,approach,Frontal,pt
+A403269,approach,Lewis,pt
+A403270,approach,Right posterior oblique,pt
+A403271,approach,Postero-anterior oblique,pt
+A403272,approach,Axial,pt
+A403273,approach,Causton,pt
+A403274,approach,Lateral,pt
+A403275,approach,Plantodorsal,pt
+A403276,approach,Fuchs,pt
+A403277,approach,Left anterior oblique emissive,pt
+A403278,approach,Right posterior oblique emissive,pt
+A403279,approach,Kuchendorf,pt
+A403280,approach,Gaynor-Hart,pt
+A403281,approach,Hsieh,pt
+A403282,approach,Oblique axial emissive,pt
+A403283,approach,Staunig,pt
+A403284,approach,Latero-medial oblique,pt
+A403285,approach,Cranio-caudal exaggerated medially,pt
+A403286,approach,Friedman,pt
+A403287,approach,Right anterior oblique emissive,pt
+A403288,approach,Tangential,pt
+A403289,approach,Eponymous,pt
+A403290,approach,Left lateral emissive,pt
+A403291,approach,Twining,pt
+A403292,approach,Teufel,pt
+A403293,approach,Holly,pt
+A403294,approach,West Point,pt
+A403295,approach,Frontal-oblique axial,pt
+A403296,approach,Left anterior oblique,pt
+A403297,approach,Left posterior oblique emissive,pt
+A403298,approach,Penner,pt
+A403299,approach,Albers-Schönberg,pt
+A403300,approach,Grashey,pt
+A403301,approach,Chamberlain,pt
+A403302,approach,Kandel,pt
+A403303,approach,Laquerriere-Pierquin,pt
+A403304,approach,Norgaard's,pt
+A403305,approach,Latero-medial oblique emissive,pt
+A403306,approach,Frontal oblique,pt
+A403307,approach,Cleavage mammography view,pt
+A403308,approach,Cranio-caudal,pt
+A403309,approach,Magnified,pt
+A403310,approach,Hough,pt
+A403311,approach,Lauenstein,pt
+A403312,approach,Ottonello,pt
+A403313,approach,Left lateral,pt
+A403314,approach,Lawrence,pt
+A403315,approach,Pawlow,pt
+A403316,approach,Oblique,pt
+A403317,approach,Left oblique,pt
+A403318,approach,Superolateral to inferomedial oblique,pt
+A403319,approach,Cranio-caudal exaggerated laterally,pt
+A403320,approach,Caudo-cranial,pt
+A403321,approach,Right lateral,pt
+A403322,approach,Henschen,pt
+A403323,approach,Judd,pt
+A403324,approach,Law,pt
+A403325,approach,Camp-Coventry,pt
+A403326,approach,Wigby-Taylor,pt
+A403327,approach,Arcelin,pt
+A403328,approach,Oblique caudo-cranial,pt
+A403329,approach,Kemp Harper,pt
+A403330,approach,Rhese,pt
+A403331,approach,Right oblique,pt
+A403332,approach,Alexander,pt
+A403333,approach,Titterington,pt
+A403334,approach,Acanthioparietal,pt
+A403335,approach,Settegast,pt
+A403336,approach,Cleaves,pt
+A403337,approach,Blackett-Healy,pt
+A403338,approach,Tarrant,pt
+A403339,approach,Lorenz,pt
+A403340,approach,Submentovertical,pt
+A403341,approach,Medial-lateral,pt
+A403342,approach,Beclere,pt
+A403343,approach,Exaggerated cranio-caudal,pt
+A403344,approach,Medio-lateral oblique emissive,pt
+A403345,approach,Towne's,pt
+A403346,approach,Parietoacanthial,pt
+A403347,approach,Sagittal-oblique axial emissive,pt
+A403348,approach,Hickey,pt
+A403349,approach,Cahoon,pt
+A403350,approach,Kasabach,pt
+A403351,approach,Fleischner,pt
+A403352,approach,Merchant,pt
+A403353,approach,Holmblad,pt
+A403354,approach,Oblique cranio-caudal,pt
+A403355,approach,Schüller,pt
+A403356,approach,Stecher,pt
+A403357,approach,Taylor,pt
+A403358,approach,Right lateral emissive,pt
+A403359,approach,Lateral-medial emissive,pt
+A403360,approach,Dunlap,pt
+A403361,approach,Lindblom,pt
+A403362,approach,Grandy,pt
+A403363,approach,Antero-posterior oblique,pt
+A403364,approach,Swanson,pt
+A403365,approach,Parieto-orbital,pt
+A403366,approach,Kovacs,pt
+A403367,approach,Clements-Nakayama,pt
+A403368,approach,Anterior emissive,pt
+A403369,approach,Sagittal-oblique axial,pt
+A403370,approach,Low-Beer,pt
+A403371,approach,Valdini,pt
+A403372,approach,Kurzbauer,pt
+A403373,approach,Dorsoplantar,pt
+A403374,approach,Haas,pt
+A403375,approach,Lilienfeld,pt
+A403376,approach,Broden,pt
+A403377,approach,Antero-posterior,pt
+A403378,approach,Stenver's,pt
+A403379,approach,Orbito-parietal,pt
+A403380,approach,Lateral-medial,pt
+A403381,approach,Chausse,pt
+A403382,approach,Right anterior oblique,pt
+A403383,approach,Caldwell,pt
+A403384,approach,Verticosubmental,pt
+A403385,approach,Nuclear medicine,pt
+A403386,approach,Bertel,pt
+A403387,approach,Pearson,pt
+A403388,approach,Medio-lateral oblique,pt
+A403389,approach,Lysholm,pt
+A403390,approach,Ferguson,pt
+A403391,approach,Cranial LAO,pt
+A403392,approach,Caudal LAO,pt
+A403393,approach,Cranial RAO,pt
+A403394,approach,Caudal RAO,pt
+A403395,approach,Rafert-Long,pt
+A403396,approach,Moore,pt
+A403397,approach,Apple,pt
+A403398,approach,Neer,pt
+A403399,approach,Burman,pt
+A403400,approach,Stryker,pt
+A403401,approach,Wolf,pt
+A403402,approach,Colcher-Sussman,pt
+A403403,approach,Rafer,pt
+A403404,approach,Hirtz Modification,pt
+A403405,approach,Eraso Modification,pt
+A403406,approach,Danelius-Miller,pt
+A403407,approach,Fisk,pt
+A403408,approach,Kite,pt
+A403409,approach,Robert,pt
+A403410,approach,Rosenberg,pt
+A403411,approach,Folio,pt
+A403412,approach,Garth,pt
+A403413,approach,Dorsopalmar,pt
+A403414,approach,Inferomedial to superolateral oblique view,pt
+A403415,approach,Dorso-ventral,pt
+A403416,approach,Mammography view,pt
+A403417,approach,Stereoscopic view,pt
+A403418,approach,Ventro-dorsal,pt
+A403419,approach,Axillary tissue mammography view,pt
+A403420,approach,Infra-mammary fold mammography view,pt
+A403421,approach,Right stereoscopic view,pt
+A403422,approach,Left stereoscopic view,pt
+A403423,approach,Stereoscopic view incremented from baseline,pt
+A403424,approach,Stereoscopic view decremented from baseline,pt
+A403425,approach,Limited,pt
+A403426,approach,Complete,pt
+A401584,device,Suture,sy
+A401584,device,Suture - object,sy
+A401584,device,Suture material,sy
+A401584,device,Surgical sutures,sy
+A401584,device,"Surgical suture, device",sy
+A401587,device,"Prosthesis, device",sy
+A401588,device,"T-tube, device",sy
+A401591,device,Hodge's suppository,sy
+A401591,device,Hodge pessary,sy
+A401606,device,Collar,sy
+A401606,device,"Cervical collar, device",sy
+A401610,device,Orthosis,sy
+A401615,device,WC - Wheelchair,sy
+A401615,device,Wch - Wheelchair,sy
+A401615,device,Wheelchair device,sy
+A401630,device,Dentures,sy
+A401630,device,False teeth,sy
+A401630,device,Prosthodontic appliances,sy
+A401630,device,"Denture, device",sy
+A401630,device,Removable denture,sy
+A401632,device,Intraoral appliance,sy
+A401635,device,Braces,sy
+A401641,device,POP - Plaster of Paris cast,sy
+A401641,device,"Plaster cast, device",sy
+A401645,device,Eyeglass near vision aid,sy
+A401646,device,Eyeglass near telescope,sy
+A401647,device,Eyeglass distance telescope,sy
+A401648,device,Integral eyeglass distance telescope,sy
+A401649,device,Clip-on eyeglass distance telescope,sy
+A401653,device,CCTV - Closed circuit television,sy
+A401661,device,Kirschner wire,sy
+A401663,device,"Leg prosthesis, device",sy
+A401664,device,Down incontinence apparatus,sy
+A401666,device,"Dental prosthesis, device",sy
+A401675,device,"Transvenous electrode, device",sy
+A401676,device,"Implantable defibrillator, device",sy
+A401679,device,"Cannula, device",sy
+A401680,device,"Catheter, device",sy
+A401681,device,"Holter valve, device",sy
+A401682,device,"Tube, device",sy
+A401683,device,Cerebrospinal fluid shunt,sy
+A401683,device,Cerebroventricular shunt,sy
+A401684,device,NG - Nasogastric tube,sy
+A401684,device,NGT - Nasogastric tube,sy
+A401684,device,"Nasogastric tube, device",sy
+A401689,device,Cardiac pacemaker implant,sy
+A401689,device,"Cardiac pacemaker, device",sy
+A401690,device,Artificial sphincter,sy
+A401690,device,AUS - Artificial urinary sphincter,sy
+A401691,device,"Stent, device",sy
+A401693,device,HA - Hearing aid,sy
+A401693,device,"Hearing aid, device",sy
+A401694,device,"Valved tube, device",sy
+A401697,device,Medical device,sy
+A401697,device,Clinical device,sy
+A401698,device,Skull calipers,sy
+A401698,device,"Skull tongs, device",sy
+A401699,device,"Tissue expander, device",sy
+A401701,device,"Clamp, device",sy
+A401702,device,Halo device,sy
+A401702,device,Halo system,sy
+A401704,device,"Electrode, device",sy
+A401705,device,"Feeding tube, device",sy
+A401708,device,"Transilluminator, device",sy
+A401709,device,"Implantable dental prosthesis, device",sy
+A401710,device,"Binder, device",sy
+A401711,device,"Pessary, device",sy
+A401714,device,"Baffle, device",sy
+A401715,device,"Splint, device",sy
+A401716,device,"Pump, device",sy
+A401717,device,Biomedical implant,sy
+A401717,device,Prosthesis or implant,sy
+A401717,device,"Implant, device",sy
+A401718,device,"Lead cable, device",sy
+A401719,device,"Resuscitator, device",sy
+A401721,device,"Fogarty catheter, device",sy
+A401723,device,"Drain, device",sy
+A401725,device,"Penrose drain, device",sy
+A401726,device,Extraconal implant,sy
+A401731,device,"Radioactive implant, device",sy
+A401732,device,Vascular surgery device,sy
+A401733,device,Cast device,sy
+A401735,device,"Tourniquet, device",sy
+A401739,device,"Feeding catheter, device",sy
+A401740,device,Prosthetic mitral valve,sy
+A401740,device,"Mitral valve prosthesis, device",sy
+A401742,device,Tanner appliance,sy
+A401744,device,Umbrella antiembolic device,sy
+A401745,device,AVS - Arteriovenous shunt,sy
+A401745,device,Arteriovenous shunt,sy
+A401747,device,"Electronic monitor, device",sy
+A401748,device,Surgical stockings,sy
+A401749,device,"Wound packing material, device",sy
+A401753,device,"Tracheostomy tube, device",sy
+A401754,device,Attached prosthetic device,sy
+A401754,device,Implanted prosthetic device,sy
+A401754,device,"Prosthetic implant, device",sy
+A401761,device,"Orthodontic appliance, device",sy
+A401763,device,"Sling, device",sy
+A401768,device,"Traction unit, device",sy
+A401771,device,"Gastric balloon, device",sy
+A401774,device,"Testicular prosthesis, device",sy
+A401775,device,"Bandage, device",sy
+A401776,device,Holter monitor,sy
+A401776,device,"Electrocardiographic monitor and recorder, device",sy
+A401778,device,"Elastic bandage, device",sy
+A401779,device,Bladder catheter,sy
+A401779,device,"Urinary catheter, device",sy
+A401780,device,Garrot,sy
+A401780,device,"Ligature, device",sy
+A401781,device,Orthopedic equipment,sy
+A401783,device,"Ommaya reservoir, device",sy
+A401786,device,"Stabilizing appliance, device",sy
+A401787,device,Valved conduit,sy
+A401793,device,Cardioverter,sy
+A401793,device,"Defibrillator, device",sy
+A401796,device,"Strap, device",sy
+A401797,device,"Needle, device",sy
+A401800,device,"Plug pack, device",sy
+A401803,device,Eyeglass magnifier,sy
+A401806,device,Hickman line,sy
+A401806,device,"Hickman catheter, device",sy
+A401810,device,"Adhesive/bandage/suture, device",sy
+A401822,device,Fixation device,sy
+A401823,device,RME - Rapid maxillary expansion appliance,sy
+A401829,device,"Stimulator, device",sy
+A401831,device,"Prosthetic valve, device",sy
+A401832,device,Clinical equipment,sy
+A401832,device,Medical equipment,sy
+A401834,device,"Soft Cast, device",sy
+A401835,device,Laser,sy
+A401837,device,"Pressure dressing, device",sy
+A401839,device,Balloon catheter,sy
+A401840,device,"Epidural catheter, device",sy
+A401841,device,Dental prosthetic crown,sy
+A401846,device,Molteno shunt,sy
+A401847,device,Baerveldt tube,sy
+A401849,device,Grommet,sy
+A401849,device,Ventilation tube,sy
+A401849,device,Tympanostomy tube,sy
+A401853,device,Intraconal ball implant,sy
+A401861,device,"Bougie, device",sy
+A401861,device,Endotracheal tube stylet,sy
+A401861,device,Endotracheal tube introducer,sy
+A401862,device,Orthopedic immobilizer,sy
+A401862,device,"Immobilizer, device",sy
+A401865,device,"Rickham reservoir, device",sy
+A401867,device,P/P - Partial denture,sy
+A401867,device,Part denture,sy
+A401867,device,RPD - Partial denture,sy
+A401867,device,Removable partial denture,sy
+A401874,device,Clinical equipment and devices,sy
+A401875,device,Telescopic spectacles,sy
+A401875,device,Telescopic eyeglasses,sy
+A401876,device,"Vascular prosthesis, device",sy
+A401878,device,"Jejunostomy tube, device",sy
+A401879,device,Transosteol oral implant,sy
+A401883,device,"Pacemaker pulse generator, device",sy
+A401884,device,"Acupuncture needle, device",sy
+A401885,device,Adhesive material,sy
+A401885,device,"Adhesive, device",sy
+A401890,device,"Artificial membrane, device",sy
+A401891,device,Halo jacket,sy
+A401891,device,"Body cast, halo type, device",sy
+A401894,device,Physiologic monitoring recorder,sy
+A401894,device,"Recorder, device",sy
+A401897,device,CTR - Capsular tension ring,sy
+A401897,device,Endocapsular tension ring,sy
+A401903,device,Clips,sy
+A401903,device,"Clip, device",sy
+A401904,device,"Electric heating pad, device",sy
+A401906,device,"Tampon, device",sy
+A401908,device,SPC - Suprapubic catheter,sy
+A401912,device,Indwelling bladder catheter,sy
+A401912,device,Permanent bladder catheter,sy
+A401912,device,"Indwelling urinary catheter, device",sy
+A401914,device,"Cannula/tube/catheter, device",sy
+A401915,device,"Bag, device",sy
+A401917,device,Drug eluding stent,sy
+A401919,device,"Adhesive tape, device",sy
+A401923,device,"Figure of eight plaster cast, device",sy
+A401924,device,Ventriculoperitoneal catheter,sy
+A401924,device,VP - Ventriculoperitoneal shunt,sy
+A401924,device,VP shunt,sy
+A401924,device,Ventriculoperitoneal shunt device,sy
+A401926,device,Intravascular screen,sy
+A401926,device,Intravascular filter,sy
+A401926,device,"Vascular filter, device",sy
+A401930,device,"Body cast, shoulder to hips, device",sy
+A401931,device,"Short arm splint, device",sy
+A401932,device,"Sugar tong cast, device",sy
+A401933,device,"Long arm splint, device",sy
+A401934,device,"Back braces, device",sy
+A401935,device,"Short leg splint, device",sy
+A401936,device,Ventriculoatrial catheter,sy
+A401938,device,"Long leg splint, device",sy
+A401940,device,"Clubfoot cast, device",sy
+A401943,device,Electroencephalogram electrode,sy
+A401945,device,Long arm cylinder,sy
+A401945,device,"Full arm cast, device",sy
+A401949,device,"Peritoneal catheter, device",sy
+A401952,device,"Urinary collection bag, device",sy
+A401954,device,Clinical instrument,sy
+A401954,device,"Instrument, device",sy
+A401956,device,"Artificial structure, device",sy
+A401964,device,Sequential compression device,sy
+A401965,device,"Insulin pump, device",sy
+A401966,device,Mouth guard,sy
+A401966,device,Gum shield,sy
+A401966,device,MG - Mouth guard,sy
+A401966,device,Mouth protector,sy
+A401966,device,BG - Bite guard,sy
+A401966,device,Bite guard,sy
+A401971,device,Antiembolic stockings,sy
+A401971,device,"Antithrombotic stockings, device",sy
+A401973,device,Stoma base plate,sy
+A401974,device,"Emesis basin, device",sy
+A401981,device,NIBP monitor,sy
+A401982,device,PPE-Personal protective equipment,sy
+A401984,device,Intrathecal catheter,sy
+A401994,device,"Implantable defibrillator leads, device",sy
+A401997,device,Manometry catheter,sy
+A402002,device,Gastric pacemaker,sy
+A402004,device,Orthopaedic stretcher,sy
+A402006,device,Patient-activated cardiac event recorder,sy
+A402016,device,Intraosseous transcutaneous amputation prosthesis,sy
+A402023,device,Semi-occlusive dressing,sy
+A402024,device,Dry dressing,sy
+A402028,device,Foetoscope,sy
+A402029,device,"Endoscope, device",sy
+A402030,device,Ventriculoscope,sy
+A402031,device,Microlaryngoscope,sy
+A402033,device,Fiberoptic bronchoscope,sy
+A402035,device,Fiberoptic endoscope,sy
+A402036,device,"Snare, device",sy
+A402040,device,Patch,sy
+A402041,device,"Percutaneous transluminal angioplasty balloon, device",sy
+A402044,device,"Cystoscope, device",sy
+A402045,device,Fiberoptic cystoscope,sy
+A402048,device,"Vacuum extractor, device",sy
+A402049,device,Synthetic patch,sy
+A402051,device,Self-inflating bag,sy
+A402053,device,"Dilator, device",sy
+A402055,device,Tuohy epidural needle,sy
+A402056,device,Diathermy equipment,sy
+A402057,device,"Rhinoscope, device",sy
+A402058,device,"Bronchoscope, device",sy
+A402060,device,"Hyperbaric chamber, device",sy
+A402061,device,"Trephine, device",sy
+A402067,device,"Arthroscope, device",sy
+A402068,device,"Probe, device",sy
+A402069,device,Ophthalmotonometer,sy
+A402071,device,Visual field machine,sy
+A402072,device,Amsler grid,sy
+A402073,device,"Treadmill, device",sy
+A402074,device,Cold pack,sy
+A402074,device,Ice pack,sy
+A402074,device,"Ice bag, device",sy
+A402075,device,"Whirlpool bath, device",sy
+A402076,device,"Anoscope, device",sy
+A402077,device,"Laryngoscope, device",sy
+A402079,device,CSA - Compressed spectral array,sy
+A402080,device,"Gastroscope, device",sy
+A402081,device,Yttrium-aluminum-garnet (YAG) laser,sy
+A402081,device,Yttrium-aluminum-garnet laser,sy
+A402082,device,DCA device,sy
+A402083,device,"Stethoscope, device",sy
+A402085,device,"Bicycle ergometer, device",sy
+A402086,device,Phototherapy unit,sy
+A402086,device,"Bilirubin light, device",sy
+A402087,device,"Vibrator, device",sy
+A402088,device,"Esophagoscope, device",sy
+A402091,device,"Alcohol sponge, device",sy
+A402092,device,"Microscope, device",sy
+A402093,device,"Proctoscope, device",sy
+A402094,device,"Laparoscope, device",sy
+A402095,device,Ocular fundus camera,sy
+A402096,device,"Electromyographic monitor and recorder, device",sy
+A402097,device,"Table, device",sy
+A402098,device,"Physical restraint equipment, device",sy
+A402100,device,"Culdoscope, device",sy
+A402102,device,"Physiologic monitoring system, device",sy
+A402103,device,"Amnioscope, device",sy
+A402104,device,"Operating microscope, device",sy
+A402107,device,"Harrington rod, device",sy
+A402108,device,"Magnet, device",sy
+A402109,device,"Syringe, device",sy
+A402111,device,Air-puff tonometer,sy
+A402111,device,Noncontact tonometer,sy
+A402114,device,"Colposcope, device",sy
+A402115,device,SGls - Striated glasses,sy
+A402115,device,BGls - Bagolini glasses,sy
+A402119,device,Wavefront aberrometer,sy
+A402120,device,Ho:YAG laser,sy
+A402120,device,Holmium-YAG laser,sy
+A402120,device,Holmium doped yttrium aluminum garnet laser device,sy
+A402123,device,Diode pumped laser,sy
+A402124,device,Campimeter,sy
+A402128,device,"Colonoscope, device",sy
+A402131,device,"Cytology brush, device",sy
+A402134,device,"Fine biopsy needle, device",sy
+A402136,device,"Core biopsy needle, device",sy
+A402137,device,"Vascular clip, device",sy
+A402139,device,"Suction catheter, device",sy
+A402141,device,"Medical balloon, device",sy
+A402144,device,Trocar device,sy
+A402145,device,Gianturco coil,sy
+A402145,device,"Embolization coil, device",sy
+A402148,device,Biomicroscope,sy
+A402148,device,Slit lamp,sy
+A402149,device,CO>2< laser,sy
+A402149,device,CO2 laser,sy
+A402149,device,Carbon dioxide laser,sy
+A402150,device,"Lithotripter, device",sy
+A402153,device,"Punch, device",sy
+A402162,device,Argon ion laser,sy
+A402162,device,Argon laser,sy
+A402162,device,Argon gas laser device,sy
+A402163,device,"Surgical clip, device",sy
+A402164,device,Ion gas laser device,sy
+A402165,device,IUPC,sy
+A402165,device,Intrauterine pressure catheter,sy
+A402167,device,"Stripper, device",sy
+A402172,device,Barton forceps,sy
+A402176,device,"Guillotine, device",sy
+A402177,device,"Forceps, device",sy
+A402187,device,"Wood's light, device",sy
+A402187,device,"Wood light, device",sy
+A402188,device,"Angioplasty balloon catheter, device",sy
+A402190,device,PAM - Potential acuity meter,sy
+A402191,device,"Sanitary pad, device",sy
+A402192,device,Pulsed dye lithotripter,sy
+A402198,device,Laser inferometer,sy
+A402199,device,Krypton gas laser,sy
+A402199,device,Krypton laser,sy
+A402199,device,Krypton gas laser device,sy
+A402200,device,"Injector, device",sy
+A402202,device,"Bottle, device",sy
+A402208,device,CSLO + OCT,sy
+A402208,device,OCT Ophthalmoscope,sy
+A402208,device,OCT-SLO,sy
+A402208,device,Optical coherence tomography and scanning laser ophthalmoscope,sy
+A402210,device,Myeloscope,sy
+A402212,device,CBA device,sy
+A402214,device,Monitors,sy
+A402214,device,"Monitor, device",sy
+A402222,device,"Staple, device",sy
+A402224,device,"Hypodermic needle, device",sy
+A402225,device,Orthopedic drill,sy
+A402225,device,"Surgical drill, device",sy
+A402229,device,Nd-YAG laser,sy
+A402229,device,Neodymium doped yttrium aluminum garnet laser device,sy
+A402229,device,Neodymium-yttrium-aluminum-garnet laser,sy
+A402235,device,"Breath analyzer, device",sy
+A402237,device,Laser interference biometer,sy
+A402237,device,Optical biometer,sy
+A402242,device,HIFU - High intensity focused ultrasound probe,sy
+A402255,device,"Mirror, device",sy
+A402256,device,Auroscope,sy
+A402256,device,"Otoscope, device",sy
+A402262,device,Oxygen saturation analyzer,sy
+A402262,device,SpO2 oxygen saturation monitor,sy
+A402263,device,"Thermometer, device",sy
+A402264,device,Artificial ventilator,sy
+A402264,device,Mechanical respirator,sy
+A402269,device,"Flexible fiberoptic endoscope, device",sy
+A402271,device,"Stone retrieval basket, device",sy
+A402279,device,Tm:YAG laser,sy
+A402279,device,Thulium-YAG laser,sy
+A402280,device,Pulsed dye laser,sy
+A402284,device,Dynamic condylar screw (DCS) plate,sy
+A402284,device,Dynamic condylar screw plate,sy
+A402285,device,Diode laser device,sy
+A402285,device,Diode laser,sy
+A402290,device,"Needle guide, device",sy
+A402292,device,"Robotic arm, device",sy
+A402294,device,"Medical tuning fork, device",sy
+A402298,device,Kendrick extrication device,sy
+A402298,device,KED - Kendrick extrication device,sy
+A402302,device,IVUS device,sy
+A402303,substance,Semen,sy
+A402304,substance,PG - Prostaglandin,sy
+A402305,substance,Chemical oxygen,sy
+A402305,substance,Elemental oxygen,sy
+A402305,substance,O>2<,sy
+A402305,substance,O2 - Oxygen,sy
+A402306,substance,H2O - Water,sy
+A402308,substance,Amalgam,sy
+A402311,substance,Substances,sy
+A402312,substance,He - Helium,sy
+A402313,substance,Polyalkenoate dental cement,sy
+A402313,substance,GIC - Glass-ionomer cement,sy
+A402317,substance,Gas,sy
+A402320,substance,Indoklon,sy
+A402320,substance,Hexafluorodiethyl ether,sy
+A402320,substance,Flurotyl,sy
+A402322,substance,Carbon monoxide gas,sy
+A402322,substance,CO - Carbon monoxide,sy
+A402323,substance,Carbon dioxide gas,sy
+A402323,substance,Carbonic anhydride,sy
+A402323,substance,Carbonic acid gas,sy
+A402323,substance,CO2 - Carbon dioxide,sy
+A402328,substance,EPO - Erythropoietin,sy
+A402329,substance,Lime water,sy
+A402329,substance,Ca(OH) - Calcium hydroxide,sy
+A402332,substance,Low calorie food,sy
+A402332,substance,Slimming food,sy
+A402333,substance,Low sodium food,sy
+A402344,substance,General anesthetic agents,sy
+A402347,substance,Acetylsalicylic acid,sy
+A402348,substance,Botulism toxin,sy
+A402348,substance,Botulinum toxin,sy
+A402348,substance,Botulin toxin,sy
+A402349,substance,Penicillin,sy
+A402351,substance,Amylobarbitone,sy
+A402352,substance,Fluoride ion,sy
+A402353,substance,Radiographic contrast material,sy
+A402353,substance,Radiopaque agent,sy
+A402358,substance,Epinephrine preparation,sy
+A402360,substance,Bone autograft,sy
+A402361,substance,Drug,sy
+A402362,substance,Bone graft,sy
+A402363,substance,IV fluid,sy
+A402363,substance,Fluid for intravenous administration,sy
+A402365,substance,Flaps,sy
+A402371,substance,Fluid containing cord blood derived stem cells,sy
+A402372,substance,Autoplast,sy
+A402372,substance,Autologous graft,sy
+A402372,substance,Autogenous graft,sy
+A402372,substance,Autochthonous graft,sy
+A402374,substance,Fluorescein,sy
+A402374,substance,Fluorescein acid,sy
+A402375,substance,Skin flap autograft,sy
+A402376,substance,Osseofasciocutaneous,sy
+A402378,substance,First milk,sy
+A402378,substance,Foremilk,sy
+A402379,substance,BM - Breast milk,sy
+A402379,substance,Human milk,sy
+A402379,substance,Mother's milk,sy
+A402383,substance,Endocrine substance,sy
+A402385,substance,Subcutaneous pedicle,sy
+A402387,substance,Antipsychotic agent,sy
+A402389,substance,5-Fluorouracil,sy
+A402389,substance,5-FU,sy
+A402391,substance,Lissamine green B,sy
+A402391,substance,Kiton green S,sy
+A402391,substance,Wool green S,sy
+A402391,substance,Pontacyl green S,sy
+A402394,substance,Lithium and its derivatives,sy
+A402397,substance,Antibacterial,sy
+A402398,substance,Cardiac allograft,sy
+A402411,substance,Beta-adrenoceptor blocking agent,sy
+A402412,substance,Statins,sy
+A402412,substance,3-hydroxy-3-methylglutaryl coenzyme A reductase inhibitor,sy
+A402412,substance,3-Hydroxy-3-methylglutaryl-coenzyme A (HMG-CoA) reductase inhibitor,sy
+A402412,substance,3-Hydroxy-3-methylglutaryl-coenzyme A reductase inhibitor,sy
+A402414,substance,Glyceryl trinitrate,sy
+A402414,substance,Nitroglycerol,sy
+A402424,substance,Saline,sy
+A402425,substance,Tissue graft,sy
+A402425,substance,Transplant graft,sy
+A402430,substance,Stool,sy
+A402430,substance,Dung,sy
+A402433,substance,Foetal and embryonic material,sy
+A402435,substance,Radioisotope,sy
+A402435,substance,Radionuclides,sy
+A402440,substance,Cervical secretions,sy
+A402442,substance,Methylene blue,sy
+A402446,substance,PTFE - Polytetrafluoroethylene,sy
+A402446,substance,Paratetrafluoroethylene,sy
+A402446,substance,Teflon,sy
+A402447,substance,Tetanus toxoid,sy
+A402449,substance,CSF - Cerebrospinal fluid,sy
+A402449,substance,Spinal fluid,sy
+A402458,substance,Botulism antitoxin,sy
+A402460,substance,Prosthetic material,sy
+A402462,substance,Wax,sy
+A402462,substance,Earwax,sy
+A402463,substance,Expectoration,sy
+A402465,substance,German measles vaccine,sy
+A402466,substance,Rubeola virus vaccine,sy
+A402466,substance,Measles live virus vaccine,sy
+A402477,substance,Ethinylestradiol,sy
+A402488,substance,Gonadorelin agent,sy
+A402489,substance,Heparin cofactor I,sy
+A402489,substance,Antithrombin II,sy
+A402497,substance,Patch,sy
+A402500,substance,BCNU,sy
+A402502,substance,Blood group antibody Rh>o<,sy
+A402502,substance,Blood group antibody Rh1,sy
+A402502,substance,Anti D,sy
+A402502,substance,Rho D immunoglobulin,sy
+A402503,substance,FS - Fissure sealant material,sy
+A402504,substance,H - Hydrogen,sy
+A402504,substance,H2 - Hydrogen,sy
+A402505,substance,PGE>2< preparation,sy
+A402505,substance,Prostaglandin E>2< preparation,sy
+A402505,substance,Prostaglandin E2,sy
+A402507,substance,Toluidine blue,sy
+A402507,substance,Tolonium chloride,sy
+A402507,substance,Toluidine blue O,sy
+A402508,substance,Fluid,sy
+A402508,substance,Liquid,sy
+A402510,substance,Stain,sy
+A402516,substance,Homologous graft,sy
+A402516,substance,Allogeneic graft,sy
+A402516,substance,Homograft,sy
+A402518,substance,Thyrocalcitonin,sy
+A402518,substance,CT - Calcitonin,sy
+A402521,substance,AHG,sy
+A402521,substance,Factor VIII,sy
+A402521,substance,AHF,sy
+A402521,substance,Platelet cofactor I,sy
+A402521,substance,Antihemophilic factor A,sy
+A402521,substance,Antihemophilic factor,sy
+A402521,substance,Antihemophilic globulin,sy
+A402528,substance,Au - Gold,sy
+A402532,substance,Inactivated poliomyelitis vaccine,sy
+A402532,substance,Pol/Vac (inact),sy
+A402536,substance,Hetrazan,sy
+A402537,substance,Cytotoxic substance,sy
+A402539,substance,Vomit,sy
+A402540,substance,Fibrinogenase,sy
+A402542,substance,Hydrogen ion,sy
+A402542,substance,H^+^,sy
+A402542,substance,Protons,sy
+A402543,substance,Tissue-type plasminogen activator preparation,sy
+A402543,substance,t-PA preparation,sy
+A402543,substance,rt-PA preparation,sy
+A402552,substance,Tranquilizer drug,sy
+A402553,substance,Igs - Immunoglobulins,sy
+A402556,substance,Carbolic acid,sy
+A402556,substance,Phenic acid,sy
+A402556,substance,Oxybenzene,sy
+A402556,substance,Hydroxybenzene,sy
+A402556,substance,Phenylic acid,sy
+A402559,substance,Fluid containing peripheral blood stem cells,sy
+A402564,substance,Chymotrypsin A and B,sy
+A402567,substance,Liquor,sy
+A402567,substance,AF - Amniotic fluid,sy
+A402568,substance,Cortisol,sy
+A402572,substance,Var/Vac,sy
+A402573,substance,Isograft,sy
+A402573,substance,Syngeneic graft,sy
+A402573,substance,Isogeneic graft,sy
+A402581,substance,Amethopterin,sy
+A402581,substance,MTX - Methotrexate,sy
+A402582,substance,D-glucose,sy
+A402582,substance,Dextrose,sy
+A402583,substance,Heterologous graft,sy
+A402583,substance,Heterograft,sy
+A402583,substance,Heteroplastic graft,sy
+A402583,substance,Xg - Xenograft,sy
+A402587,substance,Trypan blue,sy
+A402587,substance,Congo blue 3B,sy
+A402587,substance,Direct blue 14,sy
+A402590,substance,Compound E,sy
+A402593,substance,Diphtheria immunoglobulin,sy
+A402601,substance,Antifungal agent,sy
+A402603,substance,Anti-infectives,sy
+A402604,substance,Mitomycin-C,sy
+A402604,substance,MMC-Mitomycin-C,sy
+A402607,substance,Cytomegalovirus immunoglobulin,sy
+A402610,substance,Influenza vaccine,sy
+A402610,substance,FLU - Influenza vaccine,sy
+A402616,substance,Chyme,sy
+A402618,substance,Pedicles,sy
+A402619,substance,Pteroylmonoglutamic acid,sy
+A402619,substance,Lactobacillus casei factor,sy
+A402619,substance,Vitamin B>c<,sy
+A402619,substance,Folate,sy
+A402619,substance,FA - Folic acid,sy
+A402626,substance,Calcium folinate,sy
+A402629,substance,Bone flap,sy
+A402630,substance,Calciotropic hormone,sy
+A402640,substance,Strontium 89,sy
+A402640,substance,Sr89 - Strontium 89,sy
+A402643,substance,Vitamin K>1<,sy
+A402643,substance,Phytomenadione,sy
+A402645,substance,Urokinase preparation,sy
+A402645,substance,Urokinase agent,sy
+A402645,substance,Urinary plasminogen activator,sy
+A402645,substance,U-plasminogen activator,sy
+A402651,substance,Iodine 131,sy
+A402651,substance,I131 - Iodine 131,sy
+A402652,substance,Phosphorus 32,sy
+A402652,substance,P32 - Phosphorus 32,sy
+A402657,substance,Free tissue flap,sy
+A402658,substance,Ergometrine,sy
+A402660,substance,Zoledronate,sy
+A402662,substance,Biphosphonate,sy
+A402666,substance,VB - Venous blood,sy
+A402668,substance,PDE 5 inhibitor,sy
+A402679,substance,Progestational hormone,sy
+A402679,substance,Progestagen,sy
+A402685,substance,Mycophenolate,sy
+A402688,substance,CPM,sy
+A402688,substance,CTX,sy
+A402688,substance,CYT,sy
+A402691,substance,Hexachlorophane,sy
+A402692,substance,Fe - Iron,sy
+A402692,substance,ferric ion,sy
+A402699,substance,Streptococcus pneumoniae conjugate vaccine,sy
+A402700,substance,Saccharide,sy
+A402714,substance,Soluble dietary fiber,sy
+A402715,substance,Insoluble dietary fiber,sy
+A402716,substance,B - Boron,sy
+A402717,substance,Ca - Calcium,sy
+A402718,substance,Chloride,sy
+A402718,substance,Cl - Chloride,sy
+A402719,substance,Cr - Chromium,sy
+A402720,substance,Co - Cobalt,sy
+A402721,substance,Cu - Copper,sy
+A402723,substance,Mg - Magnesium,sy
+A402724,substance,Mn - Manganese,sy
+A402725,substance,Mo - Molybdenum,sy
+A402727,substance,K - Potassium,sy
+A402728,substance,Se - Selenium,sy
+A402729,substance,Na - Sodium,sy
+A402731,substance,Zn - Zinc,sy
+A402734,substance,L-Arginine,sy
+A402735,substance,Gln - Glutamine,sy
+A402735,substance,Levoglutamide,sy
+A402735,substance,L-Glutamine,sy
+A402736,substance,L-Histidine,sy
+A402737,substance,L-Homocysteine,sy
+A402738,substance,Ile - Isoleucine,sy
+A402738,substance,L-Isoleucine,sy
+A402739,substance,L-Leucine,sy
+A402740,substance,L-Lysine,sy
+A402742,substance,PHE - Phenylalanine,sy
+A402742,substance,L-Phenylalanine,sy
+A402743,substance,L-Threonine,sy
+A402744,substance,L-Tryptophan,sy
+A402746,substance,L-Tyrosine,sy
+A402747,substance,L-Valine,sy
+A402750,substance,Vitamin H,sy
+A402750,substance,Coenzyme R,sy
+A402752,substance,Vitamin B5,sy
+A402752,substance,Vitamin B>5<,sy
+A402752,substance,Pantothenate,sy
+A402753,substance,Vitamin B>2<,sy
+A402753,substance,Vitamin B2,sy
+A402753,substance,Riboflavine,sy
+A402754,substance,Thiamine,sy
+A402754,substance,Anti-beriberi factor,sy
+A402754,substance,Vitamin B>1<,sy
+A402755,substance,Retinol,sy
+A402756,substance,Vitamin B>6<,sy
+A402757,substance,Vitamin C,sy
+A402757,substance,VITC - Ascorbic acid,sy
+A402757,substance,L-Ascorbic acid,sy
+A402757,substance,Ascorbate,sy
+A402758,substance,VITE - Tocopherol,sy
+A402758,substance,Tocopherol,sy
+A402760,substance,Brimstone,sy
+A402764,substance,Soya protein,sy
+A402765,substance,Ispaghula,sy
+A402768,substance,Drinking alcohol,sy
+A402773,substance,Myocutaneous,sy
+A402776,substance,Latissimus dorsi muscle flap,sy
+A402778,substance,Xe - Xenon,sy
+A402780,substance,Temporalis muscle flap,sy
+A402781,substance,Head and neck flap unspecified,sy
+A402782,substance,IS - Ileal segment,sy
+A402784,substance,Anti granulocyte antibody,sy
+A402785,substance,Desferrioxamine,sy
+A402788,substance,Local tissue flap,sy
+A402791,substance,EtOH - Alcohol,sy
+A402791,substance,EtOH - Ethanol,sy
+A402791,substance,Ethanol,sy
+A402792,substance,Potassium and its derivatives,sy
+A402795,substance,Free TRAM flap,sy
+A402798,substance,Antiestrogen,sy
+A402799,substance,LN - Liquid nitrogen,sy
+A402802,substance,Distant tissue flap,sy
+A402803,substance,Pedicle TRAM flap,sy
+A402805,substance,Tc^99^ labeled HIDA,sy
+A402806,substance,IF - Intrinsic factor,sy
+A402808,substance,Bromosulfophthalein,sy
+A402812,substance,Co60 - Cobalt 60,sy
+A402812,substance,Cobalt 60,sy
+A402817,substance,I123 - Iodine 123,sy
+A402817,substance,Iodine 123,sy
+A402820,substance,Gallium citrate [67-Ga],sy
+A402821,substance,Iobenguane [131I],sy
+A402823,substance,D-xylose,sy
+A402830,substance,Fludeoxyglucose F 18,sy
+A402830,substance,2 Fluoro 2 deoxy d glucose F 18,sy
+A402834,substance,Yttrium 90,sy
+A402834,substance,Y90 - Yttrium 90,sy
+A402836,substance,Biograft,sy
+A402840,substance,Talcum,sy
+A402840,substance,Talcum powder,sy
+A402840,substance,Native hydrous magnesium silicate,sy
+A402840,substance,Talc dusting powder,sy
+A402844,substance,Fuchsin acid,sy
+A402844,substance,Acid magenta,sy
+A402844,substance,Acid fuchsin,sy
+A402844,substance,Rubin S,sy
+A402844,substance,Acid rubin,sy
+A402844,substance,Acid violet 19,sy
+A402845,substance,Indigo carmine,sy
+A402845,substance,Soluble indigo blue,sy
+A402845,substance,Sodium indigotindisulfonate stain,sy
+A402845,substance,Sodium indigo-disulfonate stain,sy
+A402846,substance,Tartrate-resistant acid phosphatase,sy
+A402846,substance,TRAP - Tartrate-resistant acid phosphatase,sy
+A402846,substance,Type 5 acid phosphatase,sy
+A402848,substance,Indophenol from naphthol,sy
+A402848,substance,Indophenol blue,sy
+A402849,substance,Azur A,sy
+A402849,substance,Dimethyl thionin,sy
+A402849,substance,Azure A,sy
+A402850,substance,Methylene violet,sy
+A402851,substance,Water soluble eosin,sy
+A402851,substance,Tetrabromofluorescein sodium,sy
+A402852,substance,Aldehyde fuchsin,sy
+A402853,substance,Bauer's chromic acid leucofuchsin,sy
+A402853,substance,Bauer chromic acid leucofuchsin stain,sy
+A402854,substance,Metanil yellow,sy
+A402854,substance,Tropaeolin G,sy
+A402854,substance,Acid yellow 36,sy
+A402855,substance,Immunofluorescent,sy
+A402856,substance,Congo red,sy
+A402856,substance,Direct red 28,sy
+A402856,substance,Cotton red,sy
+A402857,substance,Janus green,sy
+A402857,substance,Janus green B,sy
+A402858,substance,Hematein,sy
+A402859,substance,Victoria blue B,sy
+A402859,substance,Basic blue 26,sy
+A402860,substance,Silver,sy
+A402861,substance,Hematoxylin,sy
+A402861,substance,Natural black 1,sy
+A402862,substance,Insoluble berlin blue,sy
+A402862,substance,Insoluble prussian blue,sy
+A402863,substance,Kenacid blue R,sy
+A402863,substance,Milling blue 2BR,sy
+A402864,substance,Giemsa,sy
+A402865,substance,Methyl green,sy
+A402865,substance,Basic blue 20,sy
+A402866,substance,Light green SF,sy
+A402866,substance,Acid green,sy
+A402866,substance,Acid green G,sy
+A402866,substance,Lissamine green SF,sy
+A402867,substance,PAS - Periodic acid Schiff stain,sy
+A402867,substance,Periodic acid schiff,sy
+A402868,substance,Gallocyanine,sy
+A402869,substance,Leishman,sy
+A402870,substance,Acid fast,sy
+A402872,substance,Rhodamine,sy
+A402873,substance,Lacmoid,sy
+A402874,substance,Page blue G-90,sy
+A402874,substance,Coomassie brilliant blue G250,sy
+A402874,substance,Xylene brilliant cyanine G,sy
+A402875,substance,Sudan black B,sy
+A402875,substance,Solvent black 3,sy
+A402876,substance,Lissamine fast red B,sy
+A402877,substance,Ponceau S,sy
+A402878,substance,Ryan-blue formulation,sy
+A402878,substance,Ryan-blue stain,sy
+A402878,substance,Modified trichrome,sy
+A402879,substance,Ponceau 3R,sy
+A402879,substance,Ponceau RR,sy
+A402879,substance,Acid red 18,sy
+A402880,substance,Ponceau xylidine,sy
+A402880,substance,Xylidine red,sy
+A402881,substance,Alcohol soluble nigrosine,sy
+A402882,substance,Pontamine sky blue 5BX,sy
+A402882,substance,Niagara blue 4B,sy
+A402883,substance,Patent blue V sodium salt,sy
+A402883,substance,Erioglaucine,sy
+A402883,substance,Erioglaucine supra,sy
+A402883,substance,Disulfine blue V,sy
+A402883,substance,Sulfon blue,sy
+A402884,substance,Carbolfuchsin,sy
+A402885,substance,Fluorescent,sy
+A402886,substance,Alcian blue 8GX,sy
+A402886,substance,Alcian blue stain,sy
+A402886,substance,Alcian blue,sy
+A402887,substance,Alpha naphthyl butyrate esterase,sy
+A402887,substance,Butyrate esterase,sy
+A402887,substance,ANBE - Alpha naphthyl butyrate esterase stain,sy
+A402887,substance,Butyrate-esterase stain,sy
+A402888,substance,Cresyl echt violet,sy
+A402889,substance,Procion brilliant blue MRS,sy
+A402890,substance,Safranin,sy
+A402890,substance,Safranine O stain,sy
+A402890,substance,Safranine O,sy
+A402890,substance,Cotton red,sy
+A402890,substance,Gossypimine,sy
+A402891,substance,Alizarin blue S,sy
+A402892,substance,Alizarin cyanine green,sy
+A402893,substance,Saffron,sy
+A402894,substance,Alizarin red S,sy
+A402894,substance,Mordant red 3,sy
+A402894,substance,Alizarin carmine,sy
+A402895,substance,Permethrin,sy
+A402896,substance,Phloxin B,sy
+A402896,substance,Water soluble cyanosin,sy
+A402896,substance,Water soluble magdala red,sy
+A402896,substance,Tetrabromotetrachloro-fluorescein sodium salt,sy
+A402897,substance,Colloidal iron,sy
+A402898,substance,Sirius red F3B,sy
+A402898,substance,Pontamine fast red 7BLN,sy
+A402898,substance,Chlorantine fast red 7BLN,sy
+A402898,substance,Direct red 80,sy
+A402899,substance,Potassium ferrocyanide,sy
+A402899,substance,Prussian blue,sy
+A402900,substance,Acridine orange,sy
+A402900,substance,Euchrysine,sy
+A402900,substance,Basic orange 14,sy
+A402901,substance,Cochineal,sy
+A402902,substance,Alizarin yellow GG,sy
+A402902,substance,Mordant yellow 1,sy
+A402903,substance,Fast blue B salt,sy
+A402903,substance,Diazo blue B salt,sy
+A402903,substance,Blue salt BNS,sy
+A402903,substance,Naphthanil diazo blue B,sy
+A402904,substance,Rosolic acid sodium salt,sy
+A402904,substance,Water soluble aurine,sy
+A402904,substance,Water soluble corollin,sy
+A402905,substance,Orcein,sy
+A402906,substance,Durazol red,sy
+A402906,substance,Chlorantine fast red,sy
+A402906,substance,Chlorantine fast red 5B,sy
+A402907,substance,Malachite green,sy
+A402907,substance,Victoria green B,sy
+A402907,substance,China green,sy
+A402907,substance,Basic green 4,sy
+A402908,substance,Chrysoidine Y,sy
+A402908,substance,Chrysoidine orange,sy
+A402908,substance,Basic orange 2,sy
+A402909,substance,Diamond black,sy
+A402909,substance,Eriochrome black A,sy
+A402909,substance,Mordant black 1,sy
+A402910,substance,Chrysoidine R,sy
+A402910,substance,Cotton orange,sy
+A402910,substance,Basic orange 1,sy
+A402911,substance,Azur B,sy
+A402911,substance,Trimethyl thionin,sy
+A402911,substance,Azure B,sy
+A402912,substance,Coriphosphine,sy
+A402913,substance,Basic violet 3,sy
+A402913,substance,Crystal violet,sy
+A402913,substance,Methylrosaniline chloride,sy
+A402913,substance,Methyl violet 10B stain,sy
+A402914,substance,Erythrosin B,sy
+A402914,substance,Iodo-eosin,sy
+A402914,substance,Bluish erythrosin,sy
+A402914,substance,Tetra-iodofluorescein sodium salt,sy
+A402914,substance,Erythrosine,sy
+A402914,substance,FD and C red 3,sy
+A402915,substance,Eriochrome blue black SE,sy
+A402915,substance,Eriochrome blue SE,sy
+A402915,substance,Plasmocorinth B,sy
+A402916,substance,Crystal ponceau,sy
+A402917,substance,ANAE,sy
+A402918,substance,Brilliant orange,sy
+A402919,substance,Erythrosin Y,sy
+A402919,substance,Di-iodofluorescein,sy
+A402919,substance,Yellowish erythrosin,sy
+A402920,substance,Erie garnet,sy
+A402920,substance,Congo corinth,sy
+A402921,substance,Lissamine rhodamine,sy
+A402921,substance,Xylene red B,sy
+A402921,substance,Phloxin rhodamine,sy
+A402921,substance,Kiton rhodamine B,sy
+A402922,substance,Silver proteinate stain,sy
+A402922,substance,Protargol S,sy
+A402922,substance,Silver proteinate,sy
+A402923,substance,Fast blue RR salt,sy
+A402924,substance,Evans blue,sy
+A402924,substance,Diazol pure blue,sy
+A402924,substance,Direct blue 58,sy
+A402926,substance,Fuchsin basic,sy
+A402926,substance,Magenta basic,sy
+A402926,substance,Diamant fuchsin,sy
+A402926,substance,Basic fuchsin,sy
+A402926,substance,Brilliant fuchsin,sy
+A402927,substance,Methyl violet 6B,sy
+A402928,substance,Fast blue BB salt,sy
+A402928,substance,Fast blue BN salt,sy
+A402929,substance,Dibromofluorescein,sy
+A402930,substance,Lissamine fast yellow,sy
+A402931,substance,Pyronine B,sy
+A402932,substance,Methyl violet 2B,sy
+A402933,substance,Van Gieson,sy
+A402934,substance,Verhoeff's hematoxylin,sy
+A402934,substance,Verhoeff hematoxylin stain,sy
+A402935,substance,Ethyl violet,sy
+A402935,substance,Basic violet 4,sy
+A402936,substance,Meldola blue,sy
+A402936,substance,Phenylene blue,sy
+A402938,substance,Pyronine G,sy
+A402938,substance,Pyronine Y,sy
+A402939,substance,Victoria blue 4R,sy
+A402939,substance,Basic blue 8,sy
+A402940,substance,Hansel's stain,sy
+A402941,substance,Auramine O,sy
+A402941,substance,Basic yellow 2,sy
+A402942,substance,Methyl green pyronin,sy
+A402943,substance,Soluble prussian blue,sy
+A402943,substance,Soluble berlin blue,sy
+A402944,substance,India ink,sy
+A402945,substance,Spirit soluble aniline blue,sy
+A402945,substance,Spirit blue,sy
+A402945,substance,Poirier's blue,sy
+A402945,substance,Light blue,sy
+A402945,substance,Lyon's blue,sy
+A402945,substance,Opal blue,sy
+A402946,substance,Azo black,sy
+A402946,substance,Chlorazol black E,sy
+A402947,substance,PTAH - Mallory's phosphotungstic acid hematoxylin,sy
+A402947,substance,Phosphotungstic acid-hematoxylin,sy
+A402948,substance,Trypaflavine FS,sy
+A402949,substance,Waxoline blue,sy
+A402950,substance,Martius yellow,sy
+A402950,substance,Manchester yellow,sy
+A402950,substance,Acid yellow 24,sy
+A402951,substance,Alizarin yellow G,sy
+A402951,substance,Alizarin yellow R,sy
+A402951,substance,Mordant orange 1,sy
+A402952,substance,Thionine,sy
+A402952,substance,Lauth's violet,sy
+A402953,substance,Azocarmine G (GX),sy
+A402954,substance,Cresyl violet,sy
+A402955,substance,Luxol fast blue,sy
+A402956,substance,Xylene cyanol FF,sy
+A402957,substance,Fast sulfon black F,sy
+A402958,substance,Fast red TR salt,sy
+A402958,substance,Fast red TRN salt,sy
+A402959,substance,Solochrome cyanine R,sy
+A402959,substance,Eriochrome cyanine R,sy
+A402959,substance,Chrome blue 3R,sy
+A402959,substance,Chromoxane cyanine R,sy
+A402960,substance,Solochrome azurine (BS),sy
+A402960,substance,Pure blue B,sy
+A402960,substance,Brilliant blue B,sy
+A402960,substance,Chrome fast blue B,sy
+A402961,substance,Solochrome black 6B,sy
+A402961,substance,Chrome blue black 2B,sy
+A402961,substance,Eriochrome blue black B,sy
+A402961,substance,Mordant black 17,sy
+A402962,substance,Atebrin FS,sy
+A402963,substance,Alkali blue 6B,sy
+A402964,substance,Solochrome dark blue,sy
+A402964,substance,Eriochrome blue black R,sy
+A402964,substance,Calcon,sy
+A402965,substance,Azur C,sy
+A402965,substance,Methyl thionin,sy
+A402965,substance,Azure C,sy
+A402966,substance,KOH stain,sy
+A402967,substance,Mucicarmine,sy
+A402967,substance,"Carmine, alum lake",sy
+A402969,substance,Sunset yellow FCF,sy
+A402969,substance,Sunset yellow,sy
+A402969,substance,FD and C yellow 6,sy
+A402970,substance,Tartrazine,sy
+A402970,substance,Acid yellow 23,sy
+A402970,substance,FD and C yellow 5,sy
+A402971,substance,Benzo fast scarlet,sy
+A402972,substance,Spirit soluble eosin,sy
+A402972,substance,Ethyl eosin,sy
+A402973,substance,Neutral red,sy
+A402973,substance,Neophosphine,sy
+A402973,substance,Toluylene red,sy
+A402974,substance,Auramine G,sy
+A402975,substance,Sudan blue,sy
+A402976,substance,Fast red ITR,sy
+A402976,substance,Fast red LTR salt,sy
+A402977,substance,Uranin,sy
+A402977,substance,Fluorescein sodium,sy
+A402978,substance,Fast red B salt,sy
+A402978,substance,Echtrotsalz B,sy
+A402979,substance,Sudan black,sy
+A402980,substance,Curcumin,sy
+A402981,substance,Fat red 7B,sy
+A402981,substance,Sudan red 7B,sy
+A402982,substance,Fast violet B salt,sy
+A402982,substance,Violet BN salt,sy
+A402984,substance,Thioflavine T,sy
+A402985,substance,Fast green FCF,sy
+A402985,substance,Food green 3,sy
+A402987,substance,Fast garnet GBC salt,sy
+A402987,substance,Garnet salt GBC,sy
+A402988,substance,Quinacrine fluorescent,sy
+A402988,substance,Fluorescent quinacrine,sy
+A402989,substance,Thioflavine S,sy
+A402989,substance,Thioflavine-S,sy
+A402990,substance,Sudan II,sy
+A402990,substance,Sudan orange,sy
+A402990,substance,Solvent orange 7,sy
+A402991,substance,Wright,sy
+A402992,substance,Naphthol-AS-D-chloracetate esterase,sy
+A402993,substance,Fluorexon,sy
+A402993,substance,Calcein,sy
+A402994,substance,Rhodamine B,sy
+A402994,substance,Brilliant rhodamine B,sy
+A402994,substance,Rosazeine B,sy
+A402995,substance,Peroxidase,sy
+A402996,substance,Methylene violet (Bernthsen),sy
+A402996,substance,Bernthsen's methylene violet,sy
+A402997,substance,Naphthalene black 12B,sy
+A402997,substance,Naphthol blue black,sy
+A402997,substance,Amido black 10B,sy
+A402997,substance,Pontacyl blue black SX,sy
+A402997,substance,Amidoschwarz,sy
+A402997,substance,Acid black 1,sy
+A402998,substance,Naphthol green B,sy
+A402998,substance,Martius green,sy
+A402998,substance,Acid green 1,sy
+A402999,substance,Orange II,sy
+A402999,substance,Tropaeolin OOO No. 2,sy
+A402999,substance,Acid orange 7,sy
+A403000,substance,May-Grunwald giemsa,sy
+A403001,substance,Naphthol yellow S,sy
+A403001,substance,Acid yellow S,sy
+A403001,substance,Naphthalene yellow,sy
+A403001,substance,Acid yellow 1,sy
+A403002,substance,Methyl orange,sy
+A403002,substance,Helianthin,sy
+A403002,substance,Acid orange 52,sy
+A403003,substance,Romanowsky,sy
+A403004,substance,Blue shade eosin,sy
+A403004,substance,Eosin BA-BN,sy
+A403005,substance,Aniline blue,sy
+A403006,substance,Biebrich scarlet,sy
+A403006,substance,Ponceau B,sy
+A403006,substance,Brilliant ponceau S,sy
+A403006,substance,Imperial scarlet,sy
+A403006,substance,Acid red 66,sy
+A403007,substance,Sudan IV,sy
+A403007,substance,Scarlet R,sy
+A403007,substance,Sudan red,sy
+A403007,substance,Fat ponceau,sy
+A403007,substance,Fett ponceau,sy
+A403007,substance,Solvent red 24,sy
+A403007,substance,Scharlach R,sy
+A403008,substance,New fuchsin,sy
+A403008,substance,Magenta III,sy
+A403008,substance,New magenta,sy
+A403008,substance,Basic violet 2,sy
+A403010,substance,Brilliant crocein,sy
+A403011,substance,Orange G,sy
+A403011,substance,Acid orange 10,sy
+A403012,substance,Pontamine sky blue 6BX,sy
+A403012,substance,Chicago blue 6B,sy
+A403013,substance,Water soluble aniline blue,sy
+A403013,substance,Hofmann's blue,sy
+A403013,substance,Soluble blue,sy
+A403013,substance,Water blue,sy
+A403013,substance,Cotton blue,sy
+A403013,substance,China blue,sy
+A403014,substance,Page blue 83,sy
+A403014,substance,Coomassie brilliant blue R250,sy
+A403015,substance,Brilliant cresyl blue,sy
+A403015,substance,Cresyl blue BBS,sy
+A403016,substance,Methyl blue,sy
+A403016,substance,Soluble blue 8B,sy
+A403016,substance,Water blue 6B extra P,sy
+A403016,substance,Helvetia blue,sy
+A403016,substance,Acid blue 93,sy
+A403017,substance,Water soluble nigrosine,sy
+A403017,substance,Aniline blue black,sy
+A403018,substance,Methyl red,sy
+A403018,substance,Acid red 2,sy
+A403019,substance,Chrome azurol S,sy
+A403019,substance,Chrome azurol red,sy
+A403020,substance,Sudan III,sy
+A403020,substance,Solvent red 23,sy
+A403021,substance,Nuclear fast red,sy
+A403021,substance,Calcium red,sy
+A403021,substance,Kernechrot,sy
+A403021,substance,Helio fast rubin BBL,sy
+A403022,substance,Brazilin,sy
+A403023,substance,Oil red O,sy
+A403023,substance,Solvent red 27,sy
+A403024,substance,Night blue,sy
+A403025,substance,Mordant blue 14,sy
+A403025,substance,Celestine blue,sy
+A403026,substance,Vital new red,sy
+A403026,substance,Pontamine fast pink,sy
+A403026,substance,Chlorazol fast pink BK,sy
+A403027,substance,Thionin,sy
+A403028,substance,Bismark brown R,sy
+A403028,substance,Vesuvine brown,sy
+A403029,substance,Nile blue,sy
+A403030,substance,Bismark brown Y,sy
+A403030,substance,Vesuvine,sy
+A403030,substance,Phenylene brown,sy
+A403031,substance,Nitrazine yellow,sy
+A403031,substance,Nitrazol yellow,sy
+A403032,substance,Alkali blue 5B (4B),sy
+A403033,substance,Azophloxin,sy
+A403033,substance,Azogeranin B,sy
+A403033,substance,Red 2G,sy
+A403034,substance,Water soluble anthracene brown,sy
+A403034,substance,Anthragallol,sy
+A403035,substance,Chromotrope 2R,sy
+A403035,substance,Acid phloxin GR,sy
+A403035,substance,Azofuchsin 4C,sy
+A403035,substance,Acid red 29,sy
+A403036,substance,Tropaeolin OO,sy
+A403036,substance,Acid orange 5,sy
+A403037,substance,Carminic acid,sy
+A403038,substance,TdT stain,sy
+A403038,substance,Terminal deoxynucleotidyl transferase,sy
+A403039,substance,Azorubin S,sy
+A403039,substance,Amaranth,sy
+A403039,substance,Naphthol red S,sy
+A403039,substance,Naphthylamine red,sy
+A403039,substance,Acid red 27,sy
+A403040,substance,Fouchet's reagent,sy
+A403041,substance,Carmine,sy
+A403042,substance,Carmoisine A,sy
+A403042,substance,alpha-Naphthol red,sy
+A403042,substance,Chromogen,sy
+A403042,substance,Chromotrope FB,sy
+A403042,substance,Acid red 14,sy
+A403042,substance,Carmoisine,sy
+A403043,substance,Titan yellow,sy
+A403043,substance,Thiazole yellow,sy
+A403043,substance,Clayton yellow,sy
+A403044,substance,Brilliant yellow,sy
+A403045,substance,Tropaeolin O,sy
+A403045,substance,Acid orange 6,sy
+A403045,substance,Sulfo orange,sy
+A403046,substance,Wheatley's stain,sy
+A403046,substance,Wheatley's formulation,sy
+A403046,substance,Wheatley stain,sy
+A403046,substance,Wheatly stain,sy
+A403061,substance,Prosthetic graft,sy
+A403061,substance,Artificial graft,sy
+A403069,substance,Carbon 14,sy
+A403069,substance,C14 - Carbon 14,sy
+A403072,substance,Iodine 125,sy
+A403072,substance,I125 - Iodine 125,sy
+A403073,substance,Radium 226,sy
+A403073,substance,Ra226 - Radium 226,sy
+A403077,substance,Rn222 - Radon 222,sy
+A403077,substance,Radon 222,sy
+A403101,substance,High calorie food,sy
+A403101,substance,Energy dense food,sy
+A403102,substance,High fat food,sy
+A403112,substance,Low soluble fibre food,sy
+A403114,substance,Low insoluble fibre food,sy
+A403149,substance,sulphur supplement,sy
+A403152,substance,Pureed food,sy
+A403152,substance,Blended food,sy
+A308367,condition,Burn,pt
+A308368,condition,Contusion,pt
+A308392,condition,Abscess,pt
+A308911,condition,Pustule,pt
+A309407,condition,Sarcoma,pt
+A309409,condition,Fibroma,pt
+A309449,condition,Neuroblastoma,pt
+A309480,condition,Medulloblastoma,pt
+A309489,condition,Chondrosarcoma,pt
+A309490,condition,Ependymoma,pt
+A309491,condition,Seminoma,pt
+A309493,condition,Leiomyosarcoma,pt
+A309497,condition,Neuroma,pt
+A309498,condition,Oligodendroglioma,pt
+A309502,condition,Thymoma,pt
+A309511,condition,Azotemia,pt
+A309799,condition,Hemorrhoids,pt
+A310044,condition,Hematoma,pt
+A310045,condition,Calculus,pt
+A310047,condition,Wound,pt
+A310048,condition,Defect,pt
+A310049,condition,Cataract,pt
+A310050,condition,Perforation,pt
+A310053,condition,Fracture,pt
+A310056,condition,Sequestrum,pt
+A310057,condition,Stricture,pt
+A310058,condition,Obstruction,pt
+A310059,condition,Hemorrhage,pt
+A310060,condition,Coarctation,pt
+A310061,condition,Rupture,pt
+A310062,condition,Contracture,pt
+A310063,condition,Nodule,pt
+A310065,condition,Neoplasm,pt
+A310067,condition,Scar,pt
+A310068,condition,Avulsion,pt
+A310069,condition,Aneurysm,pt
+A310070,condition,Diverticulum,pt
+A310071,condition,Atheroma,pt
+A310072,condition,Cyst,pt
+A310074,condition,Laceration,pt
+A310075,condition,Polyp,pt
+A310077,condition,Deformity,pt
+A310078,condition,Adhesion,pt
+A310081,condition,Inversion,pt
+A310083,condition,Thrombus,pt
+A310086,condition,Deposition,pt
+A310087,condition,Stoma,pt
+A310089,condition,Ulcer,pt
+A310097,condition,Blister,pt
+A310100,condition,Syrinx,pt
+A310111,condition,Fusion,pt
+A310117,condition,Embolus,pt
+A310120,condition,Hernia,pt
+A310139,condition,Furuncle,pt
+A310144,condition,Granuloma,pt
+A310146,condition,Hematocele,pt
+A310148,condition,Hydrocele,pt
+A310150,condition,Empyema,pt
+A310151,condition,Hamartoma,pt
+A310156,condition,Seroma,pt
+A310158,condition,Pseudocyst,pt
+A310160,condition,Glioma,pt
+A310161,condition,Torsion,pt
+A310167,condition,Protrusion,pt
+A310170,condition,Osteophyte,pt
+A310174,condition,Separation,pt
+A310177,condition,Dehiscence,pt
+A310179,condition,Keloid,pt
+A310180,condition,Eschar,pt
+A310181,condition,Myxoma,pt
+A310183,condition,Fissure,pt
+A310189,condition,Pannus,pt
+A310192,condition,Epulis,pt
+A310194,condition,Necrosis,pt
+A310196,condition,Telangiectasis,pt
+A310198,condition,Synechia,pt
+A310199,condition,Edema,pt
+A310200,condition,Extravasation,pt
+A310201,condition,Bulging,pt
+A310204,condition,Fold,pt
+A310206,condition,Sinus,pt
+A310212,condition,Entrapment,pt
+A310213,condition,Subluxation,pt
+A310227,condition,Degeneration,pt
+A310235,condition,Lymphocyst,pt
+A310240,condition,Neovascularization,pt
+A310247,condition,Osteochondroma,pt
+A310255,condition,Neurilemoma,pt
+A310258,condition,Bezoar,pt
+A310261,condition,Lesion,pt
+A310264,condition,Damage,pt

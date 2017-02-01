@@ -1,0 +1,404 @@
+A600001,vaccine,Adenovirus,pt
+A600002,vaccine,Allergen extract,pt
+A600003,vaccine,Animal gamma globulin,pt
+A600004,vaccine,Anthrax,pt
+A600005,vaccine,Bacillus Calmette Guerin,pt
+A600006,vaccine,Bee venom,pt
+A600007,vaccine,Bordetella,pt
+A600008,vaccine,Botulinum toxoid,pt
+A600009,vaccine,Bronchitis,pt
+A600010,vaccine,Brucella,pt
+A600011,vaccine,Canine coronavirus,pt
+A600012,vaccine,Cat allergy,pt
+A600013,vaccine,Chlamydia psittaci,pt
+A600014,vaccine,Cholera,pt
+A600015,vaccine,Clostridium botulinum toxin agent,pt
+A600016,vaccine,Cytomegalovirus,pt
+A600017,vaccine,Dengue fever,pt
+A600018,vaccine,Diphtheria,pt
+A600019,vaccine,Dog allergy,pt
+A600020,vaccine,Flea antigen,pt
+A600021,vaccine,flu virus,pt
+A600022,vaccine,Haemophilus,pt
+A600023,vaccine,Haemophilus influenzae,pt
+A600024,vaccine,Hantavirus,pt
+A600025,vaccine,Hepatits,pt
+A600026,vaccine,herpes simplex,pt
+A600027,vaccine,Horse dander allergy,pt
+A600028,vaccine,House dust allergy,pt
+A600029,vaccine,House mite allergy,pt
+A600030,vaccine,human immunodeficiency virus,pt
+A600031,vaccine,Human papillomavirus,pt
+A600031,vaccine,Human papilloma virus,sy
+A600032,vaccine,Human rabies,pt
+A600033,vaccine,Human-Bovine Reassortant Rotavirus,pt
+A600034,vaccine,Influenza,pt
+A600035,vaccine,Japanese encephalitis,pt
+A600036,vaccine,Junin virus,pt
+A600037,vaccine,Lactobacill acidophil,pt
+A600038,vaccine,Leishmaniasis,pt
+A600039,vaccine,Leprosy,pt
+A600040,vaccine,Leptospira,pt
+A600041,vaccine,Lyme disease,pt
+A600042,vaccine,Malaria,pt
+A600043,vaccine,Measles,pt
+A600044,vaccine,Melanoma,pt
+A600045,vaccine,Meningitis,pt
+A600046,vaccine,meningococcal,pt
+A600047,vaccine,Parainfluenza,pt
+A600048,vaccine,Paratyphoid,pt
+A600049,vaccine,Parvovirus,pt
+A600050,vaccine,Pertussis,pt
+A600051,vaccine,Plague,pt
+A600052,vaccine,Pneumococcal,pt
+A600053,vaccine,Poliomyelitis,pt
+A600054,vaccine,Poliovirus,pt
+A600055,vaccine,Poliovirus,pt
+A600056,vaccine,Q fever,pt
+A600057,vaccine,Rabies,pt
+A600058,vaccine,Respiratory Syncytial Virus,pt
+A600059,vaccine,Rheumatic fever,pt
+A600060,vaccine,Rho(D),pt
+A600061,vaccine,Rickettsial,pt
+A600062,vaccine,Rift Valley fever,pt
+A600063,vaccine,Rocky Mountain spotted fever,pt
+A600064,vaccine,Rotavirus,pt
+A600065,vaccine,Rubella,pt
+A600066,vaccine,Smallpox,pt
+A600067,vaccine,Staphylococcus bacterio lysate,pt
+A600068,vaccine,Streptococcus,pt
+A600069,vaccine,Swine influenza virus,pt
+A600070,vaccine,Tetanus,pt
+A600071,vaccine,Tick-borne encephalitis,pt
+A600072,vaccine,Tuberculosis,pt
+A600073,vaccine,Tularemia,pt
+A600074,vaccine,Typhoid,pt
+A600075,vaccine,Typhus,pt
+A600076,vaccine,Varicella,pt
+A600077,vaccine,Venezuelan equine encephalitis,pt
+A600078,vaccine,Wasp venom,pt
+A600079,vaccine,West Nile virus,pt
+A600080,vaccine,Yellow fever,pt
+A600081,vaccine,Zoster,pt
+A600082,brand,Shanchol,pt
+A600083,brand,ACAM2000,pt
+A600084,brand,ACEL IMUNE,pt
+A600084,brand,ACELIMUNE,sy
+A600084,brand,ACEL-IMUNE,sy
+A600085,brand,AS03,pt
+A600085,brand,Adjuvant System 03,sy
+A600086,brand,ActHIB,pt
+A600087,brand,Adacel,pt
+A600088,brand,Afluria,pt
+A600089,brand,Agriflu,pt
+A600090,brand,Attenuvax,pt
+A600091,brand,Bexsero,pt
+A600092,brand,Biavax II,pt
+A600093,brand,Boostrix,pt
+A600094,brand,Certiva,pt
+A600095,brand,Cervarix,pt
+A600096,brand,Comvax,pt
+A600097,brand,covaxis,pt
+A600098,brand,Daptacel,pt
+A600099,brand,Decavac,pt
+A600100,brand,Dryvax,pt
+A600101,brand,Engerix B,pt
+A600102,brand,Fluarix,pt
+A600103,brand,Flublok,pt
+A600104,brand,Flucelvax,pt
+A600105,brand,Flulaval,pt
+A600106,brand,FluLaval,pt
+A600107,brand,Flumist,pt
+A600108,brand,FluMist,pt
+A600109,brand,Fluvirin,pt
+A600110,brand,Fluzone,pt
+A600111,brand,Gardasil,pt
+A600111,brand,Gardasil 9,sy
+A600112,brand,Havrix,pt
+A600113,brand,HBVax,pt
+A600113,brand,HB-VAX,sy
+A600113,brand,H-B-VAX,sy
+A600114,brand,Hiberix,pt
+A600115,brand,HibTITER,pt
+A600116,brand,Imovax,pt
+A600117,brand,Infanrix,pt
+A600118,brand,Ipol,pt
+A600119,brand,Ixiaro,pt
+A600120,brand,Je-Vax,pt
+A600121,brand,Kinrix,pt
+A600122,brand,Menactra,pt
+A600123,brand,MenHibrix,pt
+A600124,brand,Menomune A/C/Y/W-135,pt
+A600125,brand,Menveo,pt
+A600126,brand,Meruvax II,pt
+A600127,brand,M-M-R II,pt
+A600128,brand,M-R-Vax II,pt
+A600129,brand,Mumpsvax,pt
+A600130,brand,Omnihib,pt
+A600130,brand,OmniHIB,sy
+A600131,brand,PCV-13,pt
+A600132,brand,Pediarix,pt
+A600133,brand,Pedvax HIB,pt
+A600133,brand,PedvaxHIB,sy
+A600134,brand,Pentacel,pt
+A600134,brand,PENTACEL DTaP-IPV-Hib vaccine,sy
+A600135,brand,Pneumovax 23|PPSV23,pt
+A600136,brand,Prevenar,pt
+A600136,brand,Prevenar13,sy
+A600136,brand,Prevenar 13,sy
+A600136,brand,Prevnar,sy
+A600137,brand,Prohibit,pt
+A600138,brand,ProQuad,pt
+A600139,brand,Quadracel,pt
+A600140,brand,RabAvert,pt
+A600141,brand,Recombivax,pt
+A600141,brand,Recombivax HB,sy
+A600141,brand,Recombivax HBR,sy
+A600141,brand,Recombivax-HB,sy
+A600142,brand,Rotarix,pt
+A600143,brand,RotaTeq,pt
+A600144,brand,TE Anatoxal Berna,pt
+A600145,brand,Tenivac,pt
+A600146,brand,triaxis,pt
+A600147,brand,Tripedia,pt
+A600148,brand,Twinrix,pt
+A600149,brand,Typhim Vi,pt
+A600149,brand,Typhim Vi,sy
+A600150,brand,Vaqta,pt
+A600151,brand,Varivax,pt
+A600152,brand,Vivotif,pt
+A600153,brand,YF-Vax,pt
+A600154,brand,Zostavax,pt
+A600155,formulation,13-valent,pt
+A600156,formulation,14-valent,pt
+A600157,formulation,23-valent,pt
+A600158,formulation,7-valent,pt
+A600159,formulation,9-valent,pt
+A600160,formulation,acellular,pt
+A600161,formulation,adjuvant,pt
+A600162,formulation,adsorbed,pt
+A600163,formulation,attenuated,pt
+A600164,formulation,bivalent,pt
+A600165,formulation,capsular,pt
+A600166,formulation,chick-embryo,pt
+A600167,formulation,conjugate,pt
+A600168,formulation,high dose,pt
+A600169,formulation,immune globulin,pt
+A600170,formulation,inactivated,pt
+A600171,formulation,intravenous,pt
+A600172,formulation,killed,pt
+A600173,formulation,live,pt
+A600174,formulation,monoclonal antibody,pt
+A600175,formulation,monovalent,pt
+A600176,formulation,oligosaccharide,pt
+A600177,formulation,pentavalent,pt
+A600178,formulation,polysaccharide,pt
+A600179,formulation,polyvalent,pt
+A600180,formulation,preservative free,pt
+A600181,formulation,quadravalent,pt
+A600182,formulation,recombinant,pt
+A600183,formulation,split,pt
+A600184,formulation,surface antigen,pt
+A600185,formulation,surface antigen sub-unit,pt
+A600186,formulation,surface antigen virosome,pt
+A600187,formulation,tetravalent,pt
+A600188,formulation,toxoid,pt
+A600189,formulation,trivalent,pt
+A600190,formulation,unadjuvanted,pt
+A600191,formulation,whole,sy
+A600191,formulation,whole cell,pt
+A600192,strain,B-Florida-4-2006,pt
+A600193,strain,1990-1991,pt
+A600193,strain,1990-91,sy
+A600193,strain,90-91,sy
+A600194,strain,2004-2005,pt
+A600194,strain,2004-05,sy
+A600194,strain,5-Apr,sy
+A600195,strain,2005-2006,pt
+A600195,strain,2005-06,sy
+A600195,strain,6-May,sy
+A600196,strain,2006-2007,pt
+A600196,strain,2006-07,sy
+A600196,strain,7-Jun,sy
+A600197,strain,2007-2008,pt
+A600197,strain,2007-08,sy
+A600197,strain,8-Jul,sy
+A600198,strain,2008-2009,pt
+A600198,strain,2008-09,sy
+A600198,strain,9-Aug,sy
+A600199,strain,2009-2010,pt
+A600199,strain,2009-10,sy
+A600199,strain,10-Sep,sy
+A600201,strain,2010-2011,pt
+A600201,strain,2010-11,sy
+A600201,strain,11-Oct,sy
+A600202,strain,2011-2012,pt
+A600202,strain,2011-12,sy
+A600202,strain,12-Nov,sy
+A600204,strain,2012-2013,pt
+A600204,strain,2012-13,sy
+A600204,strain,13-Dec,sy
+A600207,strain,2013-2014,pt
+A600207,strain,2013-14,sy
+A600207,strain,13-14,sy
+A600210,strain,2014-2015,pt
+A600210,strain,2014-15,sy
+A600210,strain,14-15,sy
+A600211,strain,2015-2016,pt
+A600211,strain,2015-16,sy
+A600211,strain,15-16,sy
+A600212,strain,2016-2017,pt
+A600212,strain,2016-17,sy
+A600212,strain,16-17,sy
+A600213,strain,H3N2,pt
+A600214,strain,A/Vietnam/1203/2004,pt
+A600215,strain,A-Brisbane-10-2007 (H3N2)-like,pt
+A600216,strain,A-Brisbane-59-2007 (H1N1),pt
+A600217,strain,A-Brisbane-59-2007 (H1N1)-like,pt
+A600218,strain,"A-Brisbane-59-2007, IVR-148 (H1N1)",pt
+A600219,strain,A-California-07-2009 X-179A (H1N1),pt
+A600220,strain,A-California-07-2009 X-181 (H1N1),pt
+A600221,strain,A-California-7-2009 (H1N1),pt
+A600222,strain,A-California-7-2009 (H1N1)-like,pt
+A600223,strain,A-Christchurch-16-2010 NIB-74 (H1N1),pt
+A600224,strain,A-H1N1 (A-Brisbane-59-2007),pt
+A600225,strain,A-H3N2 (A-Uruguay-716-2007),pt
+A600226,strain,Anatoxal Berna,pt
+A600227,strain,A-Perth-16-2009,pt
+A600228,strain,A-South Dakota-6-2007 (H1N1) ,pt
+A600229,strain,A-Texas-50-2012 (H3N2)-like,pt
+A600230,strain,A-Uruguay -716-2007 (H3N2),pt
+A600231,strain,A-Uruguay-716-2007 (H3N2),pt
+A600232,strain,"A-Uruguay-716-2007, NYMC X-175C (H3N2)",pt
+A600233,strain,A-Victoria-210-2009 X-187 (H3N2),pt
+A600234,strain,A-Victoria-361-2011 (H3N2)-like,pt
+A600235,strain,A-Perth-16-2009,pt
+A600236,strain,B-Brisbane-60-2008,pt
+A600237,strain,B-Brisbane-60-2008-like,pt
+A600238,strain,B-Florida-4-2006,pt
+A600239,strain,B-Florida-4-2006-like,pt
+A600240,strain,B-Massachusetts-2-2012-like,pt
+A600241,strain,B-Wisconsin-1-2010-like,pt
+A600242,strain,CVD 103-HgR,pt
+A600243,strain,Enders' attenuated Edmonston strain,pt
+A600244,strain,Group A,pt
+A600244,strain,Serogroup B,sy
+A600245,strain,Group B,pt
+A600245,strain,Serogroup B,sy
+A600246,strain,Group C,pt
+A600246,strain,Serogroup C,sy
+A600247,strain,Group W-135,pt
+A600247,strain,Serogroup W-135,sy
+A600248,strain,Group Y,pt
+A600248,strain,Serogroup Y,sy
+A600249,strain,H1N1,pt
+A600250,strain,H1N1 2009,pt
+A600251,strain,H1N1-09,pt
+A600252,strain,H5N1,pt
+A600253,strain,H5N1-1203,pt
+A600254,strain,II,pt
+A600255,strain,Jeryl Lynn Strain,pt
+A600256,strain,New York City Board of Health Vaccinia Strain,pt
+A600257,strain,Non-US,pt
+A600258,strain,Ross strain,pt
+A600259,strain,serotype 14,pt
+A600260,strain,serotype 18C,pt
+A600261,strain,serotype 19A,pt
+A600262,strain,serotype 19F,pt
+A600263,strain,serotype 23F,pt
+A600264,strain,serotype 3,pt
+A600265,strain,serotype 4,pt
+A600266,strain,serotype 5,pt
+A600267,strain,serotype 6A,pt
+A600268,strain,serotype 6B,pt
+A600269,strain,serotype 7F,pt
+A600270,strain,serotype 9V,pt
+A600271,strain,Strain G1,pt
+A600272,strain,Strain G2,pt
+A600273,strain,Strain G3,pt
+A600274,strain,Strain G4,pt
+A600275,strain,Strain HM175,pt
+A600276,strain,Strain P1A[8],pt
+A600277,strain,subtype H1N1v-like,pt
+A600278,strain,tv 2015-16,pt
+A600279,strain,type 10A,pt
+A600280,strain,type 11,pt
+A600281,strain,type 11A,pt
+A600282,strain,type 12F,pt
+A600283,strain,type 14,pt
+A600284,strain,type 15B,pt
+A600285,strain,type 16,pt
+A600286,strain,type 17F,pt
+A600287,strain,type 18,pt
+A600288,strain,type 18C,pt
+A600289,strain,type 19A,pt
+A600290,strain,type 19F,pt
+A600291,strain,type 2,pt
+A600292,strain,type 20,pt
+A600293,strain,type 22F,pt
+A600294,strain,type 23F,pt
+A600295,strain,type 3,pt
+A600296,strain,type 31,pt
+A600297,strain,type 33,pt
+A600298,strain,type 33F,pt
+A600299,strain,type 45,pt
+A600300,strain,type 52,pt
+A600301,strain,type 58,pt
+A600302,strain,type 6,pt
+A600303,strain,type 6B,pt
+A600304,strain,type 7F,pt
+A600305,strain,type 9N,pt
+A600306,strain,type 9V,pt
+A600307,strain,type A,pt
+A600308,strain,type B,pt
+A600309,strain,type C,pt
+A600310,strain,type D,pt
+A600311,strain,type E,pt
+A600312,strain,type F,pt
+A600313,strain,type G,pt
+A600314,strain,type 1,pt
+A600315,strain,type 2,pt
+A600316,strain,type 3,pt
+A600317,strain,type 4,pt
+A600318,strain,type 5,pt
+A600319,strain,type 6,pt
+A600320,strain,type 7,pt
+A600321,strain,type 8,pt
+A600322,strain,type 9,pt
+A600323,strain,VI,pt
+A600324,strain,Wistar RA 27-3 Strain,pt
+A600325,route,oral,pt
+A600326,route,intradermal,pt
+A600327,route,intravenous,pt
+A600328,route,parenteral,pt
+A600329,ageRange,pediatric,pt
+A600330,ageRange,adolescent,pt
+A600331,ageRange,adult,pt
+A600332,ageRange,infant,pt
+A600333,ageRange,18 yr +,pt
+A600333,ageRange,18 yr and up,sy
+A600333,ageRange,18 yr up,sy
+A600333,ageRange,18 yr+,sy
+A600333,ageRange,18 yrs up,sy
+A600338,ageRange,18 yrs-64 yrs,pt
+A600340,ageRange,3 yr +,pt
+A600340,ageRange,36 mos +,sy
+A600340,ageRange,36 mos and up,sy
+A600340,ageRange,36 mos up,sy
+A600340,ageRange,36 mos+,sy
+A600344,ageRange,4 yr +,pt
+A600344,ageRange,4 yr up,sy
+A600346,ageRange,5 yr +,pt
+A600346,ageRange,5 yr and up,sy
+A600346,ageRange,5 yr+,sy
+A600349,ageRange,6 mos +,pt
+A600349,ageRange,6 mos up,sy
+A600349,ageRange,6 mos+,sy
+A600352,ageRange,60 yr +,pt
+A600352,ageRange,60 yrs up,sy
+A600352,ageRange,60 yrs+,sy
+A600355,ageRange,65 yr +,pt
+A600355,ageRange,65 yr and up,sy
+A600355,ageRange,65 yr+,sy
+A600355,ageRange,65 yrs+,sy
+A600359,ageRange,9 yr +,pt
