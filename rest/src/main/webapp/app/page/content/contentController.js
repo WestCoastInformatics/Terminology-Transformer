@@ -16,9 +16,13 @@ tsApp
       'metadataService',
       'projectService',
       'contentService',
+      'editService',
       function($scope, $http, $q, $location, $uibModal, gpService, utilService, tabService,
-        configureService, securityService, metadataService, projectService, contentService) {
+        configureService, securityService, metadataService, projectService, contentService,
+        editService) {
         console.debug('configure ComponentCtrl');
+        
+        // TODO Change this to SimpleEdit or something similar, don't duplicate content
 
         // Set up tabs and controller
         tabService.setShowing(true);
@@ -26,6 +30,10 @@ tsApp
         tabService.setSelectedTabByLabel('Content');
         $scope.user = securityService.getUser();
         projectService.getUserHasAnyRole();
+
+        // always enable simple editing
+        // TODO Consider additional config for this, or move to appConfig.js
+        editService.enableEditing();
 
         $scope.selected = {
           metadata : metadataService.getModel(),
@@ -103,6 +111,31 @@ tsApp
           getPagedList : getPagedReview
         };
 
+        $scope.configureCallbacks = function() {
+
+          //
+          // Local scope functions pertaining to component retrieval
+          //
+          $scope.callbacks = {
+            getComponent : $scope.setComponentEdited,
+          };
+
+          //
+          // Component report callbacks
+          //
+
+          // add content callbacks for special content retrieval (relationships,
+          // mappings, etc.)
+          utilService.extendCallbacks($scope.callbacks, contentService.getCallbacks());
+
+          // add simple editing callbacks if enabled
+          if (editService.canEdit()) {
+            console.debug('CAN EDIT');
+            utilService.extendCallbacks($scope.callbacks, editService.getCallbacks());
+          }
+
+        };
+
         // pass utility functions to scope
         $scope.toDate = utilService.toDate;
 
@@ -135,18 +168,6 @@ tsApp
             $scope.lists.componentsViewed = response;
             console.debug('components', $scope.lists.componentsViewed);
           });
-
-          // truncated NEEDS_REVIEW and NEW calls
-          /*
-                     * pfs = prepComponentPfs('component'); pfs.maxResults = 0;
-                     * contentService.findComponents('workflowStatus:NEEDS_REVIEW',
-                     * $scope.paging['component'].filterType, pfs).then(function(response) {
-                     * $scope.paging['component'].hasNeedsReview = response.totalCount > 0; });
-                     * contentService .findComponents('workflowStatus:NEW',
-                     * $scope.paging['component'].filterType, pfs).then( function(response) {
-                     * $scope.paging['component'].hasNew = response.totalCount > 0; });
-                     */
-
         }
 
         function prepComponentPfs(type) {
@@ -494,7 +515,7 @@ tsApp
           // Success
           function(termData) {
 
-            projectService.getProjectsForUser(  $scope.user).then(function(projectData) {
+            projectService.getProjectsForUser($scope.user).then(function(projectData) {
               console.debug('*** results', projectData);
               $scope.lists.projects = projectData.projects;
               $scope.lists.terminologies = termData.terminologies;
@@ -589,6 +610,7 @@ tsApp
         $scope.initialize = function() {
           securityService.saveTab($scope.user.userPreferences, '/content');
           $scope.initMetadata();
+          $scope.configureCallbacks();
         }
 
         //

@@ -36,7 +36,8 @@
           ng-click="toggleReviewMode()" title="Some components need review">
         </span> Status: <select
           ng-options="status.key as status.label for status in lists.workflowStatus"
-          ng-model="paging['component'].workflowStatus" ng-change="findComponents()"></select>
+          ng-model="paging['component'].workflowStatus"
+          ng-change="findComponents()"></select>
         </span>
         <div class="row">
           <div class="col-md-8" pager paging="paging['component']"
@@ -73,7 +74,8 @@
           </tr>
           <tbody>
             <!-- table-hover makes use of the active class -->
-            <tr ng-class="{selected: component.id == selected.componentViewed.id}"
+            <tr
+              ng-class="{selected: component.id == selected.componentViewed.id}"
               class="breakword"
               ng-repeat="component in lists.componentsViewed.results">
               <td class="col-md-3" ng-click="setComponentViewed(component)">{{component.terminologyId}}</td>
@@ -84,10 +86,13 @@
                 ng-click="setReviewMode()" title="Needs review"></span><span
                 class="color-box"
                 style="background-color: green; margin-top: 5px;"
-                ng-show="component.workflowStatus == 'NEW'" title="New component"></span></td>
+                ng-show="component.workflowStatus == 'NEW'"
+                title="New component"></span></td>
 
               <td class="col-md-3" ng-click="setComponentViewed(component)">{{component.value}}</td>
               <td class="col-md-3" ng-click="setComponentViewed(component)">TODO
+
+
               
               <td><i class="noul glyphicon glyphicon-trash"
                 ng-click="removeComponent(component)"></i>
@@ -112,6 +117,8 @@
             ng-click="selected.editTab = 'Import';"><a>Import</a></li>
           <li ng-class="{active : selected.editTab == 'Export'}"
             ng-click="selected.editTab = 'Export';"><a>Export</a></li>
+          <li ng-class="{active : selected.editTab == 'QA'}"
+            ng-click="selected.editTab = 'Export';"><a>QA</a></li>
         </ul>
         <div ng-show="selected.editTab == 'Edit'">
 
@@ -123,9 +130,9 @@
             <span ng-show="!selected.componentEdited.id">Add</span><span
               ng-show="selected.componentEdited.id">Edit</span> Component
           </h5>
-          
-           <div report selected="selected" lists="lists" callbacks="callbacks"></div>
-            
+
+          <div report selected="selected" lists="lists" callbacks="callbacks"></div>
+
 
           <!-- Review section  -->
           <div
@@ -265,6 +272,9 @@
               type="checkbox" ng-model="selected.exportAcceptNew"> Mark
             new components accepted
           </div>
+        </div>
+        <div ng-show="selected.editTab == 'Export'">
+          <span class="label label-warning" style="padding:5px;">TODO</span>
         </div>
       </div>
     </div>
