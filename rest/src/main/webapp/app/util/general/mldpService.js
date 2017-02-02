@@ -2,9 +2,9 @@
 // TODO Change this to TransformRest or AbbrRest
 // NOTE: CRUD services for type key values use project endpoint
 // NOTE: File manipulations use transformer endpoint
-var abbrUrl = 'abbr';
+var mldpUrl = 'mldp';
 var projectUrl = 'project';
-tsApp.service('abbrService', [
+tsApp.service('mldpService', [
   '$q',
   '$http',
   'utilService',
@@ -23,7 +23,7 @@ tsApp.service('abbrService', [
       // Get projects
       gpService.increment();
       console.debug(' PFS: ' + pfs);
-      $http.post(abbrUrl + '/find' + lquery, pfs).then(
+      $http.post(mldpUrl + '/abbr/find' + lquery, pfs).then(
       // success
       function(response) {
         gpService.decrement();
@@ -43,7 +43,7 @@ tsApp.service('abbrService', [
 
       // Get projects
       gpService.increment();
-      $http.get(abbrUrl + '/' + id).then(
+      $http.get(mldpUrl + '/abbr/' + id).then(
       // success
       function(response) {
         gpService.decrement();
@@ -65,7 +65,7 @@ tsApp.service('abbrService', [
       console.debug('remove abbreviation', id);
       // Get projects
       gpService.increment();
-      $http['delete'](abbrUrl + '/remove/' + id).then(
+      $http['delete'](mldpUrl + '/abbr/remove/' + id).then(
       // success
       function(response) {
         gpService.decrement();
@@ -87,7 +87,7 @@ tsApp.service('abbrService', [
 
       // Get projects
       gpService.increment();
-      $http.post(abbrUrl + '/remove', ids).then(
+      $http.post(mldpUrl + '/abbr/remove', ids).then(
       // success
       function(response) {
         gpService.decrement();
@@ -110,7 +110,7 @@ tsApp.service('abbrService', [
       // if flag set, update type key value directly without additional checks
       // abbreviation endpoint performs post-processing, which re-applies
       // NEEDS_REVIEW on finishReview updates
-      $http.post(useProjectService ? projectUrl + '/typeKeyValue/update' : abbrUrl + '/update/',
+      $http.post(useProjectService ? projectUrl + '/typeKeyValue/update' : mldpUrl + '/abbr/update/',
         abbreviation).then(
       // success
       function(response) {
@@ -131,7 +131,7 @@ tsApp.service('abbrService', [
 
       // Get projects
       gpService.increment();
-      $http.put(abbrUrl + '/add/', abbreviation).then(
+      $http.put(mldpUrl + '/abbr/add/', abbreviation).then(
       // success
       function(response) {
         gpService.decrement();
@@ -152,7 +152,7 @@ tsApp.service('abbrService', [
       // Get projects
       gpService.increment();
       Upload.upload({
-        url : abbrUrl + '/import/' + type,
+        url : mldpUrl + '/abbr/import/' + type,
         data : {
           file : file
         }
@@ -179,7 +179,7 @@ tsApp.service('abbrService', [
       // Get projects
       gpService.increment();
       Upload.upload({
-        url : abbrUrl + '/import/' + type + '/validate',
+        url : mldpUrl + '/abbr/import/' + type + '/validate',
         data : {
           file : file
         }
@@ -204,7 +204,7 @@ tsApp.service('abbrService', [
       gpService.increment()
       var queryParams = (readyOnly ? 'readyOnly=true' : '');
       queryParams += acceptNew ? (queryParams.length > 0 ? '&' : '') + 'acceptNew=true' : '';
-      $http.post(abbrUrl + '/export/' + type + (queryParams ? '?' + queryParams : ''))
+      $http.post(mldpUrl + '/abbr/export/' + type + (queryParams ? '?' + queryParams : ''))
         .then(
         // Success
         function(response) {
@@ -241,7 +241,7 @@ tsApp.service('abbrService', [
 
       // Get projects
       gpService.increment();
-      $http.post(abbrUrl + '/review/' + type + '/compute').then(
+      $http.post(mldpUrl + '/abbr/review/' + type + '/compute').then(
       // success
       function(response) {
         gpService.decrement();
@@ -272,7 +272,7 @@ tsApp.service('abbrService', [
 
         // Get projects
         gpService.increment();
-        $http.post(abbrUrl + '/review', ids).then(
+        $http.post(mldpUrl + '/abbr/review', ids).then(
         // success
         function(response) {
           gpService.decrement();

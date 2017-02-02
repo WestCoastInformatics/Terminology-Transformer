@@ -15,10 +15,9 @@ tsApp
       'securityService',
       'metadataService',
       'projectService',
-      'abbrService',
-      'ndcService',
+      'mldpService',
       function($scope, $http, $q, $location, $uibModal, gpService, utilService, tabService,
-        configureService, securityService, metadataService, projectService, abbrService, ndcService) {
+        configureService, securityService, metadataService, projectService, mldpService) {
         console.debug('configure AbbrCtrl');
 
         // Set up tabs and controller
@@ -188,7 +187,7 @@ tsApp
           var pfs = prepAbbrPfs('abbr');
           console.debug('pfs', pfs);
           // retrieval call
-          abbrService.findAbbreviations($scope.paging['abbr'].filter,
+          mldpService.findAbbreviations($scope.paging['abbr'].filter,
             $scope.paging['abbr'].filterType, pfs).then(function(response) {
             $scope.lists.abbrsViewed = response;
             console.debug('abbreviations', $scope.lists.abbrsViewed);
@@ -197,11 +196,11 @@ tsApp
           //truncated NEEDS_REVIEW and NEW calls
           pfs = prepAbbrPfs('abbr');
           pfs.maxResults = 0;
-          abbrService.findAbbreviations('workflowStatus:NEEDS_REVIEW',
+          mldpService.findAbbreviations('workflowStatus:NEEDS_REVIEW',
             $scope.paging['abbr'].filterType, pfs).then(function(response) {
             $scope.paging['abbr'].hasNeedsReview = response.totalCount > 0;
           });
-          abbrService
+          mldpService
             .findAbbreviations('workflowStatus:NEW', $scope.paging['abbr'].filterType, pfs).then(
               function(response) {
                 $scope.paging['abbr'].hasNew = response.totalCount > 0;
@@ -266,7 +265,7 @@ tsApp
         }
 
         $scope.addAbbreviation = function(abbr) {
-          abbrService.addAbbreviation(abbr).then(function(newAbbr) {
+          mldpService.addAbbreviation(abbr).then(function(newAbbr) {
             findAbbreviations();
             $scope.setAbbreviationViewed(newAbbr);
 
@@ -277,7 +276,7 @@ tsApp
         }
 
         $scope.updateAbbreviation = function(abbr) {
-          abbrService.updateAbbreviation(abbr).then(function() {
+          mldpService.updateAbbreviation(abbr).then(function() {
 
             // perform all actions triggered by abbreviation change
             $scope.processAbbreviationChange();
@@ -289,12 +288,12 @@ tsApp
           pfs.startIndex = -1;
           pfs.maxResults = -1;
 
-          abbrService.findAbbreviations($scope.paging['abbr'].filter,
+          mldpService.findAbbreviations($scope.paging['abbr'].filter,
             $scope.paging['abbr'].filterType, pfs).then(function(response) {
             var ids = response.typeKeyValues.map(function(t) {
               return t.id;
             });
-            abbrService.removeAbbreviations(ids).then(function() {
+            mldpService.removeAbbreviations(ids).then(function() {
               findAbbreviations();
 
               // clear edited abbreviation
@@ -321,7 +320,7 @@ tsApp
 
         $scope.removeAbbreviation = function(abbr) {
           console.debug('remove abbreviation', abbr);
-          abbrService.removeAbbreviation(abbr.id).then(function() {
+          mldpService.removeAbbreviation(abbr.id).then(function() {
 
             // clear edited abbreviation
             $scope.setAbbreviationEdited(null);
@@ -381,7 +380,7 @@ tsApp
             deferred.reject('No abbreviations');
           } else {
 
-            abbrService.getReviewForAbbreviations($scope.lists.abbrsReviewed.typeKeyValues).then(
+            mldpService.getReviewForAbbreviations($scope.lists.abbrsReviewed.typeKeyValues).then(
               function(abbrReviews) {
                 $scope.lists.abbrsReviewed = abbrReviews;
 
@@ -413,7 +412,7 @@ tsApp
         // NOTE: Helper function intended for DEBUG use only
         // recomputes workflow status for ALL abbreviations in type
         $scope.recomputeAllReviewStatuses = function() {
-          abbrService.computeReviewStatuses(
+          mldpService.computeReviewStatuses(
             $scope.selected.metadata.terminology.preferredName + '-ABBR').then(function() {
             $scope.findAbbreviations();
           });
@@ -430,7 +429,7 @@ tsApp
             // call update to force re-check (unless the currently edited abbreviation)
             if (abbr.workflowStatus == 'NEEDS_REVIEW'
               && (!$scope.selected.abbrEdited || $scope.selected.abbrEdited.id != abbr.id)) {
-              deferred.push(abbrService.updateAbbreviation(abbr));
+              deferred.push(mldpService.updateAbbreviation(abbr));
             }
           });
 
@@ -452,7 +451,7 @@ tsApp
               abbr.workflowStatus = 'NEW';
 
               // NOTE: skip checks to prevent NEEDS_REVIEW from being re-applied
-              deferred.push(abbrService.updateAbbreviation(abbr, true));
+              deferred.push(mldpService.updateAbbreviation(abbr, true));
             }
           })
           console.debug('deferred', deferred);
@@ -470,7 +469,7 @@ tsApp
           if (!$scope.selected.file) {
             return;
           }
-          abbrService.validateAbbreviationsFile(
+          mldpService.validateAbbreviationsFile(
             $scope.selected.metadata.terminology.preferredName + '-ABBR', $scope.selected.file)
             .then(function(response) {
               $scope.validateAbbreviationsFileResults = response;
@@ -478,7 +477,7 @@ tsApp
         }
 
         $scope.importAbbreviationsFile = function() {
-          abbrService.importAbbreviationsFile(
+          mldpService.importAbbreviationsFile(
             $scope.selected.metadata.terminology.preferredName + '-ABBR', $scope.selected.file)
             .then(function(response) {
               $scope.importAbbreviationsFileResults = response;
@@ -487,7 +486,7 @@ tsApp
         };
 
         $scope.exportAbbreviations = function() {
-          abbrService.exportAbbreviations(
+          mldpService.exportAbbreviations(
             $scope.selected.metadata.terminology.preferredName + '-ABBR',
             $scope.selected.exportAcceptNew, $scope.selected.exportReadyOnly).then(function() {
             // do nothing
