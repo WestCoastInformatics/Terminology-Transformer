@@ -448,16 +448,16 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
         }
       }
 
-    } catch (
-
-    Exception e) {
+    } catch (    Exception e) {
       e.printStackTrace();
-
+      service.rollback();
       result.getErrors().add("Unexpected error: " + e.getMessage());
     } finally {
       if (pbr != null) {
         pbr.close();
       }
+
+      service.close();
     }
     return result;
   }
