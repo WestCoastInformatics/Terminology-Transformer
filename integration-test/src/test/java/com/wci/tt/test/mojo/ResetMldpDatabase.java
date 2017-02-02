@@ -5,6 +5,8 @@
 package com.wci.tt.test.mojo;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.Arrays;
 import java.util.Properties;
 
@@ -18,6 +20,9 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import com.wci.tt.jpa.services.algo.TerminologySimpleCsvLoaderAlgorithm;
+import com.wci.tt.jpa.services.handlers.DefaultAbbreviationHandler;
+import com.wci.tt.services.handlers.AbbreviationHandler;
 import com.wci.umls.server.helpers.ConfigUtility;
 import com.wci.umls.server.jpa.ProjectJpa;
 import com.wci.umls.server.jpa.services.ProjectServiceJpa;
@@ -70,9 +75,8 @@ public class ResetMldpDatabase {
 
     // recreate the database
     request = new DefaultInvocationRequest();
-    request = new DefaultInvocationRequest();
     request.setPomFile(new File("../admin/pom.xml"));
-    request.setProfiles(Arrays.asList("Updatedb"));
+    request.setProfiles(Arrays.asList("Createdb"));
     request.setGoals(Arrays.asList("clean", "install"));
     p = new Properties();
     p.setProperty("run.config.umls", System.getProperty("run.config.umls"));
@@ -88,87 +92,67 @@ public class ResetMldpDatabase {
 
     // List of MLDP terminologies
     String[] mldpTerminologies = {
-        "allergy", "anatomy", "condition", "immunization", "lab", "med", "procedure", "vital"
+        "allergy", "anatomy", "condition", "immunization", "lab", "med",
+        "procedure", "vital"
     };
-    
+
     ProjectService projectService = new ProjectServiceJpa();
-    
+
     // for each terminology
     // - Create an editing project
     // - Load csv concepts file
     // - Load txt abbreviations file
     // - Load txt synonyms file
     for (String mldpTerminology : mldpTerminologies) {
-      
+
       // create a project for the terminology
       ProjectJpa project = new ProjectJpa();
       project.setAutomationsEnabled(true);
-      project.setName("MLDP Project - " + mldpTerminology.substring(0, 1).toUpperCase() + mldpTerminology.substring(1));
+      project.setName(
+          "MLDP Project - " + mldpTerminology.substring(0, 1).toUpperCase()
+              + mldpTerminology.substring(1));
       project.setLanguage("en");
-      project.setDescription("Simple editing project for MLDP terminology " + mldpTerminology.substring(0, 1).toUpperCase() + mldpTerminology.substring(1));
+      project.setDescription("Simple editing project for MLDP terminology "
+          + mldpTerminology.substring(0, 1).toUpperCase()
+          + mldpTerminology.substring(1));
       project.setPublic(true);
       project.setTerminology("MLDP-" + mldpTerminology.toUpperCase());
       project.setVersion("latest");
-      
+
       projectService.setLastModifiedBy("loader");
       projectService.addProject(project);
-      
-      // load terminology
-      request = new DefaultInvocationRequest();
-      request.setPomFile(new File("../admin/pom.xml"));
-      request.setProfiles(Arrays.asList("Simple"));
-      request.setGoals(Arrays.asList("clean", "install"));
-      p = new Properties();
-      p.setProperty("run.config.umls", System.getProperty("run.config.umls"));
-      p.setProperty("terminology", "HKFT-" + mldpTerminology.toUpperCase());
-      p.setProperty("version", "latest");
-      p.setProperty("input.dir", "../config/mldp/src/main/resources/data/" + mldpTerminology + "/" + mldpTerminology + "Concepts.csv");
-      request.setProperties(p);
-      request.setDebug(false);
-      if (result.getExitCode() != 0) {
-        throw result.getExecutionException();
-      }
-      
-      // Load .txt Abbreviations File
-      request = new DefaultInvocationRequest();
-      request.setPomFile(new File("../admin/pom.xml"));
-      request.setProfiles(Arrays.asList("LoadConfig"));
-      request.setGoals(Arrays.asList("clean", "install"));
-      p = new Properties();
-      p.setProperty("run.config.umls", System.getProperty("run.config.umls"));
-      p.setProperty("type", "HKFT-" + mldpTerminology.toUpperCase() + "-ABBR");
-      p.setProperty("input.file",
-          "../config/mldp/src/main/resources/data/" + mldpTerminology + "/" + mldpTerminology + "Abbr.txt");
-      request.setProperties(p);
-      request.setDebug(false);
-      invoker = new DefaultInvoker();
-      result = invoker.execute(request);
-      if (result.getExitCode() != 0) {
-        throw result.getExecutionException();
-      }
-      
-      // Load  .txt Synonyms File
-      request = new DefaultInvocationRequest();
-      request.setPomFile(new File("../admin/pom.xml"));
-      request.setProfiles(Arrays.asList("LoadConfig"));
-      request.setGoals(Arrays.asList("clean", "install"));
-      p = new Properties();
-      p.setProperty("run.config.umls", System.getProperty("run.config.umls"));
-      p.setProperty("type", "HKFT-" + mldpTerminology.toUpperCase() + "-SY");
-      p.setProperty("input.file",
-          "../config/mldp/src/main/resources/data/" + mldpTerminology + "/" + mldpTerminology + "Sy.txt");
-      request.setProperties(p);
-      request.setDebug(false);
-      invoker = new DefaultInvoker();
-      result = invoker.execute(request);
-      if (result.getExitCode() != 0) {
-        throw result.getExecutionException();
-      }
-      
-    
-    }
 
-    
+      // load terminology
+      TerminologySimpleCsvLoaderAlgorithm termAlgo =
+          new TerminologySimpleCsvLoaderAlgorithm();
+      termAlgo.setTerminology("MLDP-" + mldpTerminology.toUpperCase());
+      termAlgo.setVersion("latest");
+      termAlgo.setAssignIdentifiersFlag(true);
+      termAlgo.setInputFile("../config/mldp/src/main/resources/data/"
+          + mldpTerminology + "/" + mldpTerminology + "Concepts.csv");
+      termAlgo.setReleaseVersion("latest");
+      termAlgo.setLastModifiedBy("loader");
+      termAlgo.setProject(project);
+      termAlgo.compute();
+
+      // load synonyms file
+
+      InputStream inStream =
+          new FileInputStream("../config/mldp/src/main/resources/data/"
+              + mldpTerminology + "/" + mldpTerminology + "Sy.txt");
+      AbbreviationHandler abbrHandler = new DefaultAbbreviationHandler();
+      abbrHandler.setService(projectService);
+      abbrHandler.importAbbreviationFile(
+          "MLDP-" + mldpTerminology.toUpperCase() + "-SY", inStream);
+
+      // load abbreviations file
+      inStream = new FileInputStream("../config/mldp/src/main/resources/data/"
+          + mldpTerminology + "/" + mldpTerminology + "Abbr.txt");
+      abbrHandler = new DefaultAbbreviationHandler();
+      abbrHandler.setService(projectService);
+      abbrHandler.importAbbreviationFile(
+          "MLDP-" + mldpTerminology.toUpperCase() + "-ABBR", inStream);
+    }
 
   }
 
