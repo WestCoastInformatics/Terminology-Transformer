@@ -3,6 +3,7 @@
  */
 package com.wci.tt.jpa.services.algo;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileReader;
 import java.io.InputStream;
@@ -26,7 +27,11 @@ import com.wci.umls.server.helpers.Branch;
 import com.wci.umls.server.helpers.ConfigUtility;
 import com.wci.umls.server.helpers.FieldedStringTokenizer;
 import com.wci.umls.server.helpers.KeyValuePair;
+import com.wci.umls.server.helpers.PfsParameter;
 import com.wci.umls.server.helpers.PrecedenceList;
+import com.wci.umls.server.helpers.TypeKeyValue;
+import com.wci.umls.server.helpers.TypeKeyValueList;
+import com.wci.umls.server.helpers.content.ConceptList;
 import com.wci.umls.server.jpa.AlgorithmParameterJpa;
 import com.wci.umls.server.jpa.ReleaseInfoJpa;
 import com.wci.umls.server.jpa.ValidationResultJpa;
@@ -34,12 +39,14 @@ import com.wci.umls.server.jpa.algo.AbstractTerminologyLoaderAlgorithm;
 import com.wci.umls.server.jpa.content.AtomJpa;
 import com.wci.umls.server.jpa.content.ConceptJpa;
 import com.wci.umls.server.jpa.content.SemanticTypeComponentJpa;
+import com.wci.umls.server.jpa.helpers.PfsParameterJpa;
 import com.wci.umls.server.jpa.helpers.PrecedenceListJpa;
 import com.wci.umls.server.jpa.meta.LanguageJpa;
 import com.wci.umls.server.jpa.meta.RootTerminologyJpa;
 import com.wci.umls.server.jpa.meta.SemanticTypeJpa;
 import com.wci.umls.server.jpa.meta.TermTypeJpa;
 import com.wci.umls.server.jpa.meta.TerminologyJpa;
+import com.wci.umls.server.jpa.services.ContentServiceJpa;
 import com.wci.umls.server.model.content.Atom;
 import com.wci.umls.server.model.content.Component;
 import com.wci.umls.server.model.content.Concept;
@@ -55,6 +62,7 @@ import com.wci.umls.server.model.meta.TermTypeStyle;
 import com.wci.umls.server.model.meta.Terminology;
 import com.wci.umls.server.model.meta.UsageType;
 import com.wci.umls.server.model.workflow.WorkflowStatus;
+import com.wci.umls.server.services.ContentService;
 import com.wci.umls.server.services.RootService;
 import com.wci.umls.server.services.handlers.IdentifierAssignmentHandler;
 import com.wci.umls.server.services.helpers.PushBackReader;
@@ -562,6 +570,50 @@ public class TerminologySimpleCsvLoaderAlgorithm
 
   public void setKeepFileIdsFlag(boolean keepFileIds) {
     this.keepFileIds = keepFileIds;
+  }
+
+  public void export(String terminology, String version, boolean acceptNew,
+    boolean readyOnly) {
+   
+    ContentService service = new ContentServiceJpa();
+      if (acceptNew) {
+        // TODO Check for NEW workflowstatus
+        final ConceptList concepts = service.findConcepts(terminology, version, Branch.ROOT, "workflowStatus:NEW", null);
+        if (concepts.getTotalCount() > 0) {
+          service.setTransactionPerOperation(false);
+          service.beginTransaction();
+          for (Concept concept : concepts.getObjects()) {
+            concept.setWorkflowStatus(WorkflowStatus.PUBLISHED);
+            service.updateConcept(concept);
+          }
+          service.commit();
+        }
+      }
+
+      // Write a header
+      // Obtain members for refset,
+      // Write RF2 simple refset pattern to a StringBuilder
+      // wrap and return the string for that as an input stream
+      StringBuilder sb = new StringBuilder();
+      sb.append("abbreviation").append("\t");
+      sb.append("expansion").append("\r\n");
+
+      // sort by key
+      PfsParameter pfs = new PfsParameterJpa();
+      pfs.setSortField("key");
+
+      TypeKeyValueList abbrs =
+          service.findTypeKeyValuesForQuery("type:\"" + abbrType + "\"", pfs);
+      for (TypeKeyValue abbr : abbrs.getObjects()) {
+        if (!readyOnly
+            || !WorkflowStatus.NEEDS_REVIEW.equals(abbr.getWorkflowStatus())) {
+          sb.append(abbr.getKey()).append("\t");
+          sb.append(abbr.getValue()).append("\r\n");
+        }
+      }
+      return new ByteArrayInputStream(sb.toString().getBytes("UTF-8"));
+    }
+    
   }
 
 }

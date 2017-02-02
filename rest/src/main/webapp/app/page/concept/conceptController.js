@@ -1,7 +1,7 @@
-// Administration controller
+// Simple Edit view controller
 tsApp
   .controller(
-    'ContentCtrl',
+    'ConceptCtrl',
     [
       '$scope',
       '$http',
@@ -20,14 +20,12 @@ tsApp
       function($scope, $http, $q, $location, $uibModal, gpService, utilService, tabService,
         configureService, securityService, metadataService, projectService, contentService,
         editService) {
-        console.debug('configure ComponentCtrl');
-        
-        // TODO Change this to SimpleEdit or something similar, don't duplicate content
-
+        console.debug('configure ConceptCtrl');
+       
         // Set up tabs and controller
         tabService.setShowing(true);
         utilService.clearError();
-        tabService.setSelectedTabByLabel('Content');
+        tabService.setSelectedTabByLabel('Concepts');
         $scope.user = securityService.getUser();
         projectService.getUserHasAnyRole();
 
@@ -112,12 +110,13 @@ tsApp
         };
 
         $scope.configureCallbacks = function() {
+          console.debug('*** CONFIGURE CALLBACKS ***');
 
           //
           // Local scope functions pertaining to component retrieval
           //
           $scope.callbacks = {
-            getComponent : $scope.setComponentEdited,
+            getComponent : $scope.setComponentEditedFromSearchResult,
           };
 
           //
@@ -163,7 +162,7 @@ tsApp
 
           contentService.findComponentsAsList($scope.paging['component'].filter,
             $scope.selected.metadata.terminology.organizingClassType,
-            $scope.selected.metadata.terminology.preferredName,
+            $scope.selected.metadata.terminology.terminology,
             $scope.selected.metadata.terminology.version, searchParams).then(function(response) {
             $scope.lists.componentsViewed = response;
             console.debug('components', $scope.lists.componentsViewed);
@@ -184,7 +183,7 @@ tsApp
           var clauses = [];
 
           // first, restriction by type (required)
-          clauses.push('type:\"' + $scope.selected.metadata.terminology.preferredName + '-ABBR\"');
+          clauses.push('type:\"' + $scope.selected.metadata.terminology.terminology + '-ABBR\"');
 
           // restriction by workflow status (optional)
           if ($scope.paging['component'].workflowStatus) {
@@ -204,11 +203,15 @@ tsApp
           console.debug('set component', component);
           $scope.selected.editTab = 'Edit';
           $scope.selected.componentViewed = component;
-          $scope.setComponentEdited(component);
+          $scope.setComponentEditedFromSearchResult(component);
 
         }
+        
+        $scope.setComponentEdited = function(component) {
+          $scope.selected.component = component;
+        }
 
-        $scope.setComponentEdited = function(searchResult) {
+        $scope.setComponentEditedFromSearchResult = function(searchResult) {
           // NOTE: findConcepts returns search result, need to retrieve
           // NOTE: UMLS TermServer report uses "selected" structure instead of component directly
           contentService.getComponent(searchResult, $scope.selected.project.id).then(
@@ -220,15 +223,19 @@ tsApp
 
         $scope.createComponent = function() {
           var component = {
-            type : $scope.selected.metadata.terminology.preferredName + '-ABBR',
-            key : null,
-            value : null
+            type : $scope.selected.metadata.terminology.organizingClassType,
+            terminologyId : null,
+            terminology : $scope.selected.metadata.terminology.terminology,
+            version : $scope.selected.metadata.terminology.version,
+            name : '(New Concept)',
+            atoms: [],
+            semanticTypes : []
           }
           $scope.setComponentEdited(component);
         }
 
         $scope.cancelComponent = function() {
-          $scope.setComponentEdited(null);
+          $scope.setComponentEditedFromSearchResult(null);
         }
 
         $scope.addComponent = function(component) {
@@ -268,7 +275,7 @@ tsApp
                   // clear edited component
                   if ($scope.selected.componentEdited
                     && ids.indexOf($scope.selected.componentEdited.id) != -1) {
-                    $scope.setComponentEdited(null);
+                    $scope.setComponentEditedFromSearchResult(null);
                   }
 
                   console.debug('cycling over review list', $scope.lists.componentsReviewed);
@@ -295,7 +302,7 @@ tsApp
             function() {
 
               // clear edited component
-              $scope.setComponentEdited(null);
+              $scope.setComponentEditedFromSearchResult(null);
 
               console.debug('cycling over review list', $scope.lists.componentsReviewed);
 
@@ -363,7 +370,7 @@ tsApp
                   angular.forEach($scope.lists.componentsReviewed.typeKeyValues, function(
                     componentReview) {
                     if (componentReview.id == $scope.selected.componentViewed.id) {
-                      $scope.setComponentEdited(componentReview);
+                      $scope.setComponentEditedFromSearchResult(componentReview);
                     }
                   });
 
@@ -389,7 +396,7 @@ tsApp
         // recomputes workflow status for ALL components in type
         $scope.recomputeAllReviewStatuses = function() {
           contentService.computeReviewStatuses(
-            $scope.selected.metadata.terminology.preferredName + '-ABBR').then(function() {
+            $scope.selected.metadata.terminology.terminology + '-ABBR').then(function() {
             $scope.findComponents();
           });
         }
@@ -444,32 +451,16 @@ tsApp
         //
         // Import/export
         //
-        $scope.validateComponentsFile = function() {
-          if (!$scope.selected.file) {
-            return;
-          }
-          contentService.validateComponentsFile(
-            $scope.selected.metadata.terminology.preferredName + '-ABBR', $scope.selected.file)
-            .then(function(response) {
-              $scope.validateComponentsFileResults = response;
-            })
-        }
+       
 
-        $scope.importComponentsFile = function() {
-          contentService.importComponentsFile(
-            $scope.selected.metadata.terminology.preferredName + '-ABBR', $scope.selected.file)
-            .then(function(response) {
-              $scope.importComponentsFileResults = response;
-              $scope.findComponents();
-            })
+        $scope.importComponents = function() {
+          mldpService.importComponents($scope.selected.project.id, $scope.selected.file).then(function() {
+            findConcepts();
+          })
         };
 
         $scope.exportComponents = function() {
-          contentService.exportComponents(
-            $scope.selected.metadata.terminology.preferredName + '-ABBR',
-            $scope.selected.exportAcceptNew, $scope.selected.exportReadyOnly).then(function() {
-            // do nothing
-          })
+         window.alert('todo')
         };
 
         $scope.clearImportResults = function() {
@@ -574,9 +565,15 @@ tsApp
           console.debug('**** Set Terminology ****', terminology, $scope.lists)
           // Set shared model (may already be set)
           metadataService.setTerminology(terminology);
+          
+          // get all metadata for this terminology
+          metadataService.getAllMetadata(terminology.terminology, terminology.version).then(function(data) {
+            console.debug('All Metadata', data);
+            metadataService.setModel(data);
+          });
 
-          // get the semantic types for this terminology
-          metadataService.getSemanticTypes(terminology.preferredName, terminology.version).then(
+          // get the semantic types for this terminolog y
+          metadataService.getSemanticTypes(terminology.terminology, terminology.version).then(
             function(stys) {
               $scope.lists.stys = stys;
             });

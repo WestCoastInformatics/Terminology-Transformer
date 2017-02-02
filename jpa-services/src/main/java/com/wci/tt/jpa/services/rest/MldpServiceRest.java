@@ -170,6 +170,19 @@ public interface MldpServiceRest {
     FormDataContentDisposition contentDispositionHeader, InputStream in,
     Long projectId, boolean keepIds, String authToken) throws Exception;
 
+  /**
+   * Export concepts file.
+   *
+   * @param projectId the project id
+   * @param acceptNew the accept new
+   * @param readyOnly the ready only
+   * @param authToken the auth token
+   * @return the input stream
+   * @throws Exception the exception
+   */
+  public InputStream exportConceptsFile(Long projectId, boolean acceptNew,
+    boolean readyOnly, String authToken) throws Exception;
+
   
 
 }

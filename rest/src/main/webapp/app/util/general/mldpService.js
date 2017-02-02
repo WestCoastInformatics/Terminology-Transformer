@@ -287,5 +287,30 @@ tsApp.service('mldpService', [
       }
       return deferred.promise;
     }
+    
+    this.importComponents = function(projectId, file) {
+      var deferred = $q.defer();
+
+      // Get projects
+      gpService.increment();
+      Upload.upload({
+        url : mldpUrl + '/concept/import?' + projectId,
+        data : {
+          file : file
+        }
+      }).then(
+      // success
+      function(response) {
+        gpService.decrement();
+        deferred.resolve(response.data);
+      },
+      // error
+      function(response) {
+        utilService.handleError(response);
+        gpService.decrement();
+        deferred.reject(response.data);
+      });
+      return deferred.promise;
+    }
 
   } ]);

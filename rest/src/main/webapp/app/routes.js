@@ -12,8 +12,9 @@ tsApp.run([
   'appConfig',
   'tabService',
   'utilService',
+  '$route',
   function configureRoutes($rootScope, $location, $q, configureService, securityService, appConfig,
-    tabService, utilService) {
+    tabService, utilService, $route) {
 
     console.debug('Configuring routes');
 
@@ -162,41 +163,14 @@ tsApp.run([
 
             // Edit page
             if (appConfig['deploy.enabled.tabs']
-              && appConfig['deploy.enabled.tabs'].split(',').indexOf('edit') != -1) {
-              console.debug('Route enabled: /edit');
-              $routeProviderReference.when('/edit', {
-                templateUrl : 'app/page/edit/edit.html',
-                controller : 'EditCtrl',
+              && appConfig['deploy.enabled.tabs'].split(',').indexOf('concept') != -1) {
+              console.debug('Route enabled: /concept');
+              $routeProviderReference.when('/concept', {
+                templateUrl : 'app/page/concept/concept.html',
+                controller : 'ConceptCtrl',
                 reloadOnSearch : false
               });
 
-              console.debug('Route enabled: /edit/semantic-types');
-              $routeProviderReference.when('/edit/semantic-types', {
-                templateUrl : 'app/page/edit/semantic-types/semanticTypesWindow.html',
-                controller : 'SemanticTypesCtrl',
-                reloadOnSearch : false
-              });
-
-              console.debug('Route enabled: /edit/atoms');
-              $routeProviderReference.when('/edit/atoms', {
-                templateUrl : 'app/page/edit/atoms/atomsWindow.html',
-                controller : 'AtomsCtrl',
-                reloadOnSearch : false
-              });
-
-              console.debug('Route enabled: /edit/relationships');
-              $routeProviderReference.when('/edit/relationships', {
-                templateUrl : 'app/page/edit/relationships/relationshipsWindow.html',
-                controller : 'RelationshipsCtrl',
-                reloadOnSearch : false
-              });
-
-              console.debug('Route enabled: /contexts');
-              $routeProviderReference.when('/contexts', {
-                templateUrl : 'app/page/edit/contexts/contextsWindow.html',
-                controller : 'ContextsCtrl',
-                reloadOnSearch : false
-              });
             }
 
             // Process page
@@ -307,6 +281,8 @@ tsApp.run([
 
             // Now that enabled tabs exists, initialize it
             tabService.initEnabledTabs();
+            
+            console.debug('Routes', $route.routes);
             deferred.resolve();
           }, function(data) {
             deferred.reject(data);
@@ -318,7 +294,7 @@ tsApp.run([
 
     // Create an initial route change to start it all
     $routeProviderReference.otherwise({
-      redirectTo : '/'
+      redirectTo : '/content'
     });
 
   }

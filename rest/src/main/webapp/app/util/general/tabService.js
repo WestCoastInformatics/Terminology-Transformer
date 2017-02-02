@@ -38,6 +38,13 @@ tsApp
                   role : false
                 });
                 break;
+              case 'concept':
+                this.tabs.push({
+                  link : 'concept',
+                  label : 'Concepts',
+                  role : false
+                });
+                break;
               case 'terminology':
                 this.tabs.push({
                   link : 'terminology',

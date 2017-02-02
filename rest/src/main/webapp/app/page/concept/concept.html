@@ -130,6 +130,10 @@
             <span ng-show="!selected.componentEdited.id">Add</span><span
               ng-show="selected.componentEdited.id">Edit</span> Component
           </h5>
+          
+          {{selected.component}}
+          <hr>
+
 
           <div report selected="selected" lists="lists" callbacks="callbacks"></div>
 
@@ -174,7 +178,7 @@
                 <tr
                   ng-class="{selected: component.id == selected.componentEdited.id}"
                   ng-repeat="component in lists.pagedReview.data"
-                  ng-click="setComponentEdited(component)">
+                  ng-click="setComponentEditedFromSearchResult(component)">
                   <td class="col-md-3"
                     ng-bind-html="component.key |
                     highlightExact:selected.componentEdited.key"></td>
