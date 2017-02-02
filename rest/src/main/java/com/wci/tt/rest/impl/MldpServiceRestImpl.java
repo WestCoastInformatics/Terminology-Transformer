@@ -52,16 +52,16 @@ import io.swagger.annotations.SwaggerDefinition;
  * 
  * Includes hibernate tags for MEME database.
  */
-@Path("/abbr")
-@Api(value = "/abbr")
-@SwaggerDefinition(info = @Info(description = "Abbreviation Operations", title = "Abbreviation Operations", version = "1.0.0"))
+@Path("/mldp")
+@Api(value = "/mldp")
+@SwaggerDefinition(info = @Info(description = "MLDP-specific Operations", title = "MLDP-specific Operations", version = "1.0.0"))
 @Consumes({
     MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML
 })
 @Produces({
     MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML
 })
-public class AbbreviationRestImpl extends RootServiceRestImpl
+public class MldpServiceRestImpl extends RootServiceRestImpl
     implements AbbreviationRest {
   
   
@@ -69,11 +69,11 @@ public class AbbreviationRestImpl extends RootServiceRestImpl
   private SecurityService securityService;
 
   /**
-   * Instantiates an empty {@link AbbreviationRestImpl}.
+   * Instantiates an empty {@link MldpServiceRestImpl}.
    *
    * @throws Exception the exception
    */
-  public AbbreviationRestImpl() throws Exception {
+  public MldpServiceRestImpl() throws Exception {
     securityService = new SecurityServiceJpa();
     System.out.println("********* ABBR *************");
   }

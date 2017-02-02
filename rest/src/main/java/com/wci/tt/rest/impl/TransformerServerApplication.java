@@ -61,7 +61,7 @@ public class TransformerServerApplication extends ResourceConfig {
     register(ContentServiceRestImpl.class);
 
     // Need transformer services
-    register(AbbreviationRestImpl.class);
+    register(MldpServiceRestImpl.class);
     register(NdcServiceRestImpl.class);
 
     // register swagger classes
