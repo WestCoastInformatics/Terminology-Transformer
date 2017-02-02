@@ -93,8 +93,7 @@ public class ConfigLoaderMojo extends AbstractMojo {
 
       int keyLength = 0;
       int valueLength = 0;
-      String keyStr = null, valueStr = null;
-
+  
       // Open file
       final BufferedReader in =
           new BufferedReader(new FileReader(new File(inputFile)));
@@ -121,11 +120,9 @@ public class ConfigLoaderMojo extends AbstractMojo {
         tkv.setKey(tokens[0]);
         if (tokens[0].length() > keyLength) {
           keyLength = tokens[0].length();
-          keyStr = tokens[0];
         }
         if (tokens[1].length() > valueLength) {
           valueLength = tokens[1].length();
-          valueStr = tokens[1];
         }
 
         if (tokens.length > 1) {
