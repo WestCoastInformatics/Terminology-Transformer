@@ -17,7 +17,7 @@ import com.wci.umls.server.jpa.helpers.TypeKeyValueJpa;
 /**
  * Lists a transform routines available via a REST service.
  */
-public interface AbbreviationRest {
+public interface MldpServiceRest {
 
   /**
    * Import abbreviations.
@@ -105,6 +105,7 @@ public interface AbbreviationRest {
    * Find abbreviations.
    *
    * @param query the query
+   * @param filter the filter
    * @param pfs the pfs
    * @param authToken the auth token
    * @return the type key value list
@@ -137,7 +138,7 @@ public interface AbbreviationRest {
   /**
    * Returns the review for abbreviations.
    *
-   * @param abbrList the abbr list
+   * @param ids the ids
    * @param authToken the auth token
    * @return the review for abbreviations
    * @throws Exception the exception
@@ -155,15 +156,20 @@ public interface AbbreviationRest {
   public void removeAbbreviations(List<Long> ids, String authToken) throws Exception;
 
   /**
-   * Export abbreviations file.
+   * Import concepts file.
    *
-   * @param type the type
-   * @param acceptNew the accept new
-   * @param readyOnly the ready only
+   * @param contentDispositionHeader the content disposition header
+   * @param in the in
+   * @param projectId the project id
+   * @param keepIds the keep ids
    * @param authToken the auth token
-   * @return the input stream
+   * @return the validation result
    * @throws Exception the exception
    */
+  public void importConceptsFile(
+    FormDataContentDisposition contentDispositionHeader, InputStream in,
+    Long projectId, boolean keepIds, String authToken) throws Exception;
+
   
 
 }

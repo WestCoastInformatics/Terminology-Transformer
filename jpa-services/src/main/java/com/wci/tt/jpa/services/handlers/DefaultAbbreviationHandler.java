@@ -14,6 +14,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.apache.log4j.Logger;
+
 import com.wci.tt.services.handlers.AbbreviationHandler;
 import com.wci.umls.server.ValidationResult;
 import com.wci.umls.server.helpers.ConfigUtility;
@@ -39,6 +41,9 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
   /** The service. */
   private ProjectService service = null;
 
+  /** Whether to check review status on import */
+  private boolean reviewFlag = true;
+
   /* see superclass */
   @Override
   public String getName() {
@@ -49,6 +54,11 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
   @Override
   public void setService(ProjectService service) {
     this.service = service;
+  }
+
+  @Override
+  public void setReviewFlag(boolean reviewFlag) {
+    this.reviewFlag = reviewFlag;
   }
 
   /* see superclass */
@@ -166,6 +176,7 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
   @Override
   public ValidationResult validateAbbreviationFile(String abbrType,
     InputStream inFile) throws Exception {
+    Logger.getLogger(getClass()).info("Validate abbreviation file");
     return this.importHelper(abbrType, inFile, false);
   }
 
@@ -173,6 +184,7 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
   @Override
   public ValidationResult importAbbreviationFile(String abbrType,
     InputStream inFile) throws Exception {
+    Logger.getLogger(getClass()).info("Import abbreviation file");
     return this.importHelper(abbrType, inFile, true);
   }
 
@@ -197,21 +209,6 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
     PushBackReader pbr = null;
     try {
 
-      if (executeImport) {
-        service.setTransactionPerOperation(false);
-        service.beginTransaction();
-
-        // clear NEW status from all abbreviations
-        for (TypeKeyValue abbr : service
-            .findTypeKeyValuesForQuery("type:\"" + type + "\"", null)
-            .getObjects()) {
-          if (WorkflowStatus.NEW.equals(abbr.getWorkflowStatus())) {
-            abbr.setWorkflowStatus(WorkflowStatus.PUBLISHED);
-            service.updateTypeKeyValue(abbr);
-          }
-        }
-      }
-
       List<TypeKeyValue> newAbbrs = new ArrayList<>();
 
       // Read from input stream
@@ -232,7 +229,13 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
 
       // check for empty contents
       if (line == null) {
-        throw new Exception("Empty file");
+        return result;
+      }
+
+      // if execute, prepare services and existing
+      if (executeImport) {
+        service.setTransactionPerOperation(false);
+        service.beginTransaction();
       }
 
       // skip header line if present
@@ -371,28 +374,32 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
         }
       } while ((line = pbr.readLine()) != null);
 
-      // after all abbreviations loaded, apply workflow status and commit
-      // NOTE: Commit required for lucene index writing
+      // after all abbreviations loaded and if review indicated
+      // apply workflow status and commit
+      // NOTE: Must commit first to allow lucene searching
       if (executeImport) {
 
         service.commit();
-        service.beginTransaction();
-        for (TypeKeyValue newAbbr : newAbbrs) {
-          // if value empty, ignored value -- set demotion
-          if (newAbbr.getValue() == null) {
-            newAbbr.setWorkflowStatus(WorkflowStatus.DEMOTION);
+
+        if (reviewFlag) {
+          service.beginTransaction();
+          for (TypeKeyValue newAbbr : newAbbrs) {
+            // if value empty, ignored value -- set demotion
+            if (newAbbr.getValue() == null) {
+              newAbbr.setWorkflowStatus(WorkflowStatus.DEMOTION);
+            }
+            // if review has greater than one element -- needs review
+            else if (getReviewForAbbreviation(newAbbr).size() > 1) {
+              newAbbr.setWorkflowStatus(WorkflowStatus.NEEDS_REVIEW);
+            }
+            // default: set new
+            else {
+              newAbbr.setWorkflowStatus(WorkflowStatus.NEW);
+            }
+            service.updateTypeKeyValue(newAbbr);
           }
-          // if review has greater than one element -- needs review
-          else if (getReviewForAbbreviation(newAbbr).size() > 1) {
-            newAbbr.setWorkflowStatus(WorkflowStatus.NEEDS_REVIEW);
-          }
-          // default: set new
-          else {
-            newAbbr.setWorkflowStatus(WorkflowStatus.NEW);
-          }
-          service.updateTypeKeyValue(newAbbr);
+          service.commit();
         }
-        service.commit();
       }
 
       // aggregate results for validation
@@ -448,16 +455,15 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
         }
       }
 
-    } catch (    Exception e) {
+    } catch (Exception e) {
       e.printStackTrace();
+      Logger.getLogger(getClass()).info("Rolling back transaction");
       service.rollback();
       result.getErrors().add("Unexpected error: " + e.getMessage());
     } finally {
       if (pbr != null) {
         pbr.close();
       }
-
-      service.close();
     }
     return result;
   }

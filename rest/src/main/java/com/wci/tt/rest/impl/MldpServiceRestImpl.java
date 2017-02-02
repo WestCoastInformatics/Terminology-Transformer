@@ -23,8 +23,9 @@ import org.apache.log4j.Logger;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 
+import com.wci.tt.jpa.services.algo.TerminologySimpleCsvLoaderAlgorithm;
 import com.wci.tt.jpa.services.handlers.DefaultAbbreviationHandler;
-import com.wci.tt.jpa.services.rest.AbbreviationRest;
+import com.wci.tt.jpa.services.rest.MldpServiceRest;
 import com.wci.tt.jpa.services.rest.TransformServiceRest;
 import com.wci.tt.services.handlers.AbbreviationHandler;
 import com.wci.umls.server.UserRole;
@@ -62,7 +63,7 @@ import io.swagger.annotations.SwaggerDefinition;
     MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML
 })
 public class MldpServiceRestImpl extends RootServiceRestImpl
-    implements AbbreviationRest {
+    implements MldpServiceRest {
   
   
   /** The security service. */
@@ -83,7 +84,7 @@ public class MldpServiceRestImpl extends RootServiceRestImpl
   //
 
   @Override
-  @Path("/import/{type}")
+  @Path("/abbr/import/{type}")
   @POST
   @Consumes(MediaType.MULTIPART_FORM_DATA)
   @ApiOperation(value = "Import abbreviations", notes = "Import abbreviations of single type from comma or tab-delimited file", response = TypeKeyValueJpa.class)
@@ -116,7 +117,7 @@ public class MldpServiceRestImpl extends RootServiceRestImpl
   }
 
   @Override
-  @Path("/import/{type}/validate")
+  @Path("/abbr/import/{type}/validate")
   @POST
   @Consumes(MediaType.MULTIPART_FORM_DATA)
   @ApiOperation(value = "Validate abbreviations import file", notes = "Validates abbreviations from comma or tab-delimited file", response = TypeKeyValueJpa.class)
@@ -151,7 +152,7 @@ public class MldpServiceRestImpl extends RootServiceRestImpl
   @POST
   @Override
   @Produces("application/octet-stream")
-  @Path("/export/{type}")
+  @Path("/abbr/export/{type}")
   @ApiOperation(value = "Export abbreviations", notes = "Exports abbreviations for type as comma or tab-delimited file", response = TypeKeyValueJpa.class)
   public InputStream exportAbbreviationsFile(
     @ApiParam(value = "Type of abbreviation, e.g. medAbbr", required = true) @PathParam("type") String type,
@@ -181,7 +182,7 @@ public class MldpServiceRestImpl extends RootServiceRestImpl
   }
 
   @Override
-  @Path("/review/{type}/compute")
+  @Path("/abbr/review/{type}/compute")
   @POST
   @ApiOperation(value = "Compute abbreviations review status", notes = "Recomputes review statuses for abbreviations of specified type")
   public void computeReviewStatuses(
@@ -210,7 +211,7 @@ public class MldpServiceRestImpl extends RootServiceRestImpl
   }
 
   @Override
-  @Path("/review/{id}")
+  @Path("abbr//review/{id}")
   @GET
   @ApiOperation(value = "Retrieve review list for abbreviation", notes = "Retrieve list of abbreviations requiring review for a abbreviation by id")
   public TypeKeyValueList getReviewForAbbreviation(
@@ -238,7 +239,7 @@ public class MldpServiceRestImpl extends RootServiceRestImpl
   }
 
   @Override
-  @Path("/review")
+  @Path("/abbr/review")
   @POST
   @ApiOperation(value = "Retrieve review list for abbreviations", notes = "Retrieve list of abbreviations requiring review for a list of abbreviations ids")
   public TypeKeyValueList getReviewForAbbreviations(
@@ -269,7 +270,7 @@ public class MldpServiceRestImpl extends RootServiceRestImpl
   }
 
   @Override
-  @Path("/{id}")
+  @Path("/abbr/{id}")
   @GET
   @ApiOperation(value = "Get a abbreviation", notes = "Gets a abbreviation object by id", response = TypeKeyValueJpa.class)
   public TypeKeyValue getAbbreviation(
@@ -294,7 +295,7 @@ public class MldpServiceRestImpl extends RootServiceRestImpl
   }
 
   @Override
-  @Path("/add")
+  @Path("/abbr/add")
   @PUT
   @ApiOperation(value = "Add a abbreviation", notes = "Adds a abbreviation object", response = TypeKeyValueJpa.class)
   public TypeKeyValue addAbbreviation(
@@ -322,7 +323,7 @@ public class MldpServiceRestImpl extends RootServiceRestImpl
   }
 
   @Override
-  @Path("/update")
+  @Path("/abbr/update")
   @POST
   @ApiOperation(value = "Update a abbreviation", notes = "Updates a abbreviation object", response = TypeKeyValueJpa.class)
 
@@ -354,7 +355,7 @@ public class MldpServiceRestImpl extends RootServiceRestImpl
   }
 
   @Override
-  @Path("/remove/{id}")
+  @Path("/abbr/remove/{id}")
   @DELETE
   @ApiOperation(value = "Removes a abbreviation", notes = "Removes a abbreviation object by id", response = TypeKeyValueJpa.class)
   public void removeAbbreviation(
@@ -380,7 +381,7 @@ public class MldpServiceRestImpl extends RootServiceRestImpl
   }
   
   @Override
-  @Path("/remove")
+  @Path("/abbr/remove")
   @POST
   @ApiOperation(value = "Removes a abbreviation", notes = "Removes a abbreviation object by id", response = TypeKeyValueJpa.class)
   public void removeAbbreviations(
@@ -411,7 +412,7 @@ public class MldpServiceRestImpl extends RootServiceRestImpl
   }
 
   @Override
-  @Path("/find")
+  @Path("/abbr/find")
   @POST
   @ApiOperation(value = "Finds abbreviations", notes = "Finds abbreviation objects", response = TypeKeyValueJpa.class)
   public TypeKeyValueList findAbbreviations(
@@ -452,6 +453,45 @@ public class MldpServiceRestImpl extends RootServiceRestImpl
       securityService.close();
     }
   }
+  
+  //
+  // Concept import/export/validation
+  //
+  @Override
+  @Path("/concept/import")
+  @POST
+  @Consumes(MediaType.MULTIPART_FORM_DATA)
+  @ApiOperation(value = "Import abbreviations", notes = "Import abbreviations of single type from comma or tab-delimited file", response = TypeKeyValueJpa.class)
+  public void importConceptsFile(
+    @ApiParam(value = "Form data header", required = true) @FormDataParam("file") FormDataContentDisposition contentDispositionHeader,
+    @ApiParam(value = "Content of definition file", required = true) @FormDataParam("file") InputStream in,
+    @ApiParam(value = "Project id, e.g. 3", required = true) @QueryParam("projectId") Long projectId,
+    @ApiParam(value = "Whether to keep file ids or assign new", required = false) @QueryParam("keepIds") boolean keepIds,
+    @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
+    throws Exception {
+    Logger.getLogger(getClass()).info("RESTful call (TKV): /import");
+    final ProjectService projectService = new ProjectServiceJpa();
+    try {
+      final String username = authorizeApp(securityService, authToken,
+          "import abbreviations", UserRole.USER);
+      projectService.setLastModifiedBy(username);
+      TerminologySimpleCsvLoaderAlgorithm algo = new TerminologySimpleCsvLoaderAlgorithm();
+      algo.setAssignIdentifiersFlag(true);
+      algo.setInputStream(in);
+      algo.setLastModifiedBy(username);
+      algo.setKeepFileIdsFlag(keepIds);
+      algo.compute();
+    } catch (
+
+    Exception e) {
+      handleException(e, "trying to import abbreviations ");
+    } finally {
+      // NOTE: No need to close, but included for future safety
+      projectService.close();
+      securityService.close();
+    }
+  }
+
  
 
 }
