@@ -4,16 +4,10 @@
  */
 package com.wci.tt.test.mojo;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
-import java.util.Arrays;
 import java.util.Properties;
 
-import org.apache.maven.shared.invoker.DefaultInvocationRequest;
-import org.apache.maven.shared.invoker.DefaultInvoker;
-import org.apache.maven.shared.invoker.InvocationRequest;
-import org.apache.maven.shared.invoker.InvocationResult;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -23,8 +17,10 @@ import org.junit.Test;
 import com.wci.tt.jpa.services.algo.TerminologySimpleCsvLoaderAlgorithm;
 import com.wci.tt.jpa.services.handlers.DefaultAbbreviationHandler;
 import com.wci.tt.services.handlers.AbbreviationHandler;
+import com.wci.umls.server.helpers.Branch;
 import com.wci.umls.server.helpers.ConfigUtility;
 import com.wci.umls.server.jpa.ProjectJpa;
+import com.wci.umls.server.jpa.services.MetadataServiceJpa;
 import com.wci.umls.server.jpa.services.ProjectServiceJpa;
 import com.wci.umls.server.services.ProjectService;
 
@@ -67,28 +63,13 @@ public class ResetMldpDatabase {
   @Test
   public void test() throws Exception {
 
-    // Load Simple terminology
-    InvocationRequest request;
-    Properties p;
-    DefaultInvoker invoker;
-    InvocationResult result;
+    // re-create the database
+    Properties config = ConfigUtility.getConfigProperties();
+    config.setProperty("hibernate.hbm2ddl.auto", "create");
 
-    // recreate the database
-    request = new DefaultInvocationRequest();
-    request.setPomFile(new File("../admin/pom.xml"));
-    request.setProfiles(Arrays.asList("Createdb"));
-    request.setGoals(Arrays.asList("clean", "install"));
-    p = new Properties();
-    p.setProperty("run.config.umls", System.getProperty("run.config.umls"));
-    p.setProperty("server", server);
-    p.setProperty("mode", "create");
-    request.setProperties(p);
-    request.setDebug(false);
-    invoker = new DefaultInvoker();
-    result = invoker.execute(request);
-    if (result.getExitCode() != 0) {
-      throw result.getExecutionException();
-    }
+    // Trigger a JPA event
+    new MetadataServiceJpa().close();
+    config.setProperty("hibernate.hbm2ddl.auto", "update");
 
     // List of MLDP terminologies
     String[] mldpTerminologies = {
@@ -118,6 +99,7 @@ public class ResetMldpDatabase {
       project.setPublic(true);
       project.setTerminology("MLDP-" + mldpTerminology.toUpperCase());
       project.setVersion("latest");
+      project.setBranch(Branch.ROOT);
 
       projectService.setLastModifiedBy("loader");
       projectService.addProject(project);
