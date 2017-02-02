@@ -21,6 +21,7 @@ import org.apache.log4j.Logger;
 import com.wci.umls.server.AlgorithmParameter;
 import com.wci.umls.server.ReleaseInfo;
 import com.wci.umls.server.ValidationResult;
+import com.wci.umls.server.helpers.Branch;
 import com.wci.umls.server.helpers.ConfigUtility;
 import com.wci.umls.server.helpers.FieldedStringTokenizer;
 import com.wci.umls.server.helpers.KeyValuePair;
@@ -71,6 +72,8 @@ public class TerminologySimpleCsvLoaderAlgorithm
 
   /** The date. */
   private final Date date = new Date();
+  
+  private String branch;
 
   /** The concepts file name. */
   private String conceptsFile;
@@ -120,6 +123,8 @@ public class TerminologySimpleCsvLoaderAlgorithm
     setLastModifiedFlag(false);
     // Turn off action handling
     setMolecularActionFlag(false);
+    
+    this.branch = getProject() == null && getProject().getBranch() == null ? Branch.ROOT : getProject().getBranch();
 
     // Check the input directory
     File inputDirFile = new File(getInputFile());
@@ -166,7 +171,7 @@ public class TerminologySimpleCsvLoaderAlgorithm
     // Clear concept cache
 
     logInfo("Log component stats");
-    final Map<String, Integer> stats = getComponentStats(null, null, null);
+    final Map<String, Integer> stats = getComponentStats(terminology.getTerminology(), terminology.getVersion(), branch);
     final List<String> statsList = new ArrayList<>(stats.keySet());
     Collections.sort(statsList);
     for (final String key : statsList) {
@@ -194,7 +199,7 @@ public class TerminologySimpleCsvLoaderAlgorithm
 
     String line = null;
     int objectCt = 0;
-
+  
     final PushBackReader reader =
         new PushBackReader(new FileReader(new File(conceptsFile)));
     final String[] fields = new String[4];
@@ -205,8 +210,8 @@ public class TerminologySimpleCsvLoaderAlgorithm
       line = line.replace("\r", "");
       FieldedStringTokenizer.split(line, ",", 4, fields);
 
-      if (!ConfigUtility.isEmpty(fields[23])) {
-        types.add(fields[2]);
+      if (!ConfigUtility.isEmpty(fields[1])) {
+        types.add(fields[1]);
       }
     }
     reader.close();
@@ -216,6 +221,7 @@ public class TerminologySimpleCsvLoaderAlgorithm
 
       final SemanticType sty = new SemanticTypeJpa();
       sty.setAbbreviation(type);
+      sty.setBranch(branch);
       sty.setDefinition("");
       sty.setExample("");
       sty.setExpandedForm(type);
@@ -267,6 +273,7 @@ public class TerminologySimpleCsvLoaderAlgorithm
     // Languages (ENG)
     final Language lat = new LanguageJpa();
     lat.setAbbreviation("en");
+    lat.setBranch(branch);
     lat.setExpandedForm("English");
     lat.setTimestamp(date);
     lat.setLastModified(date);
@@ -282,6 +289,7 @@ public class TerminologySimpleCsvLoaderAlgorithm
     // Term types (PT, SY)
     TermType tty = new TermTypeJpa();
     tty.setAbbreviation("PT");
+    tty.setBranch(branch);
     tty.setExpandedForm("Preferred term");
     tty.setTimestamp(date);
     tty.setLastModified(date);
@@ -306,6 +314,7 @@ public class TerminologySimpleCsvLoaderAlgorithm
 
     // Precedence List PT, SY
     final PrecedenceList list = new PrecedenceListJpa();
+    list.setBranch(branch);
     list.setTerminology(getTerminology());
     list.setVersion(getVersion());
     list.setLastModified(date);
@@ -348,9 +357,7 @@ public class TerminologySimpleCsvLoaderAlgorithm
 
       line = line.replace("\r", "");
       final String[] fields = FieldedStringTokenizer.split(line, ",");
-      
-      System.out.println("line: " + line);
-      System.out.println("  fields: " + fields.length);
+   
 
       // Field Description
       // 0 conceptid
