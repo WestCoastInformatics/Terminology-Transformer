@@ -157,7 +157,9 @@ tsApp
 
           var searchParams = {
             page : $scope.paging['component'].page,
-            pageSize : $scope.paging['component'].pageSize
+            pageSize : $scope.paging['component'].pageSize,
+            sortField : $scope.paging['component'].sortField,
+            ascending : $scope.paging['component'].sortAscending
           }
 
           contentService.findComponentsAsList($scope.paging['component'].filter,
