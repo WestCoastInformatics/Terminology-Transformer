@@ -1,30 +1,30 @@
-terminologyId,feature,name,termType,origId
-A700001,vital,Respiratory rate,pt,9279-1
-A700001,vital,Breathing rate,sy,9279-2
-A700001,vital,Respiratory frequency,sy,9279-3
-A700001,vital,Respiration rate,sy,9279-4
-A700001,vital,Breath rate,sy,9279-5
-A700001,vital,Rate of respiration,sy,9279-6
-A700002,vital,Heart rate,pt,8867-4
-A700002,vital,Cardiac rate,sy,8867-4
-A700003,vital,Oxygen saturation,pt,59408-5
-A700004,vital,Body temperature,pt,8310-5
-A700005,vital,Body height,pt,8302-2
-A700005,vital,Height,sy,8302-2
-A700006,vital,Body length,pt,8306-3
-A700006,vital,Length of body,ps,8306-3
-A700007,vital,Head circumference,pt,8287-5
-A700007,vital,Occipital-frontal circumference,sy,8287-5
-A700008,vital,Body weight,pt,29463-7
-A700008,vital,Weight,sy,29463-7
-A700009,vital,Body mass index,pt,39156-5
-A700009,vital,Quetelet Index,pt,39156-5
-A700009,vital,Quetelet's Index,pt,39156-5
-A700010,vital,Blood pressure,pt,55284-4
-A700010,vital,Blood pressure systolic and diastolic,sy,55284-4
-A700011,vital,Systolic blood pressure,pt,8480-6
-A700011,vital,Systolic pressure,sy,8480-6
-A700011,vital,Systolic arterial pressure,sy,8480-6
-A700012,vital,Diastolic blood pressure,pt,8462-4
-A700012,vital,Diastolic pressure,sy,8462-4
-A700012,vital,Diastolic arterial pressure,sy,8462-4
+terminologyId,feature,name,termType
+A700001,vital,Respiratory rate,pt
+A700001,vital,Breathing rate,sy
+A700001,vital,Respiratory frequency,sy
+A700001,vital,Respiration rate,sy
+A700001,vital,Breath rate,sy
+A700001,vital,Rate of respiration,sy
+A700002,vital,Heart rate,pt
+A700002,vital,Cardiac rate,sy
+A700003,vital,Oxygen saturation,pt
+A700004,vital,Body temperature,pt
+A700005,vital,Body height,pt
+A700005,vital,Height,sy
+A700006,vital,Body length,pt
+A700006,vital,Length of body,ps
+A700007,vital,Head circumference,pt
+A700007,vital,Occipital-frontal circumference,sy
+A700008,vital,Body weight,pt
+A700008,vital,Weight,sy
+A700009,vital,Body mass index,pt
+A700009,vital,Quetelet Index,pt
+A700009,vital,Quetelet's Index,pt
+A700010,vital,Blood pressure,pt
+A700010,vital,Blood pressure systolic and diastolic,sy
+A700011,vital,Systolic blood pressure,pt
+A700011,vital,Systolic pressure,sy
+A700011,vital,Systolic arterial pressure,sy
+A700012,vital,Diastolic blood pressure,pt
+A700012,vital,Diastolic pressure,sy
+A700012,vital,Diastolic arterial pressure,sy

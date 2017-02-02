@@ -974,7 +974,7 @@ A5000973,allergen,Homatropine,pt
 A5000974,allergen,Honey,pt
 A5000975,allergen,Honey bee,pt
 A5000976,allergen,Hops,pt
-A5000977,allergen,Hormone, synthetic hormone substitute or hormone antagonist,pt
+A5000977,allergen,"Hormone, synthetic hormone substitute or hormone antagonist",pt
 A5000978,allergen,Hornet venom,pt
 A5000979,allergen,Hornets,pt
 A5000980,allergen,Horse,pt
@@ -1164,7 +1164,7 @@ A5001163,allergen,Lysuride,pt
 A5001164,allergen,Macadamia nut,pt
 A5001165,allergen,Mace Spice,pt
 A5001166,allergen,Mackerel,pt
-A5001167,allergen,Macrolide (class of antibiotic, substance),pt
+A5001167,allergen,"Macrolide (class of antibiotic, substance)",pt
 A5001168,allergen,Mafenide,pt
 A5001169,allergen,Magnesium sulfate,pt
 A5001170,allergen,Magnesium trisilicate,pt
@@ -1183,7 +1183,7 @@ A5001182,allergen,Marine mollusk,pt
 A5001183,allergen,Marjoram,pt
 A5001184,allergen,Material,pt
 A5001185,allergen,Mazindol,pt
-A5001186,allergen,Measles, mumps and rubella vaccine,pt
+A5001186,allergen,"Measles, mumps and rubella vaccine",pt
 A5001187,allergen,Meat,pt
 A5001188,allergen,Mebendazole,pt
 A5001189,allergen,Mebeverine,pt
@@ -1939,7 +1939,7 @@ A5001938,allergen,Uricosuric agent,pt
 A5001939,allergen,Urokinase,pt
 A5001940,allergen,Ursodiol,pt
 A5001941,allergen,Vaccine,pt
-A5001942,allergen,Vaccine, immunoglobulin, AND/OR antiserum,pt
+A5001942,allergen,"Vaccine, immunoglobulin, AND/OR antiserum",pt
 A5001943,allergen,Valaciclovir,pt
 A5001944,allergen,Valproate sodium,pt
 A5001945,allergen,Vancomycin,pt
