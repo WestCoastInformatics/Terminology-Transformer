@@ -29,8 +29,6 @@ import com.wci.umls.server.helpers.FieldedStringTokenizer;
 import com.wci.umls.server.helpers.KeyValuePair;
 import com.wci.umls.server.helpers.PfsParameter;
 import com.wci.umls.server.helpers.PrecedenceList;
-import com.wci.umls.server.helpers.TypeKeyValue;
-import com.wci.umls.server.helpers.TypeKeyValueList;
 import com.wci.umls.server.helpers.content.ConceptList;
 import com.wci.umls.server.jpa.AlgorithmParameterJpa;
 import com.wci.umls.server.jpa.ReleaseInfoJpa;
@@ -131,7 +129,7 @@ public class TerminologySimpleCsvLoaderAlgorithm
     logInfo("  terminology = " + getTerminology());
     logInfo("  version = " + getVersion());
     logInfo("  inputFile = " + getInputFile());
-    
+
     final ValidationResult precheck = checkPreconditions();
     if (!precheck.isValid()) {
       Logger.getLogger(getClass()).error("Compute failed preconditions:");
@@ -572,48 +570,53 @@ public class TerminologySimpleCsvLoaderAlgorithm
     this.keepFileIds = keepFileIds;
   }
 
-  public void export(String terminology, String version, boolean acceptNew,
-    boolean readyOnly) {
-   
+  public ByteArrayInputStream export(String terminology, String version,
+    boolean acceptNew, boolean readyOnly) throws Exception {
+
     ContentService service = new ContentServiceJpa();
-      if (acceptNew) {
-        // TODO Check for NEW workflowstatus
-        final ConceptList concepts = service.findConcepts(terminology, version, Branch.ROOT, "workflowStatus:NEW", null);
-        if (concepts.getTotalCount() > 0) {
-          service.setTransactionPerOperation(false);
-          service.beginTransaction();
-          for (Concept concept : concepts.getObjects()) {
-            concept.setWorkflowStatus(WorkflowStatus.PUBLISHED);
-            service.updateConcept(concept);
-          }
-          service.commit();
+    if (acceptNew) {
+      final ConceptList concepts = service.findConcepts(terminology, version,
+          Branch.ROOT, "workflowStatus:NEW", null);
+      if (concepts.getTotalCount() > 0) {
+        service.setTransactionPerOperation(false);
+        service.beginTransaction();
+        for (Concept concept : concepts.getObjects()) {
+          concept.setWorkflowStatus(WorkflowStatus.PUBLISHED);
+          service.updateConcept(concept);
         }
+        service.commit();
       }
-
-      // Write a header
-      // Obtain members for refset,
-      // Write RF2 simple refset pattern to a StringBuilder
-      // wrap and return the string for that as an input stream
-      StringBuilder sb = new StringBuilder();
-      sb.append("abbreviation").append("\t");
-      sb.append("expansion").append("\r\n");
-
-      // sort by key
-      PfsParameter pfs = new PfsParameterJpa();
-      pfs.setSortField("key");
-
-      TypeKeyValueList abbrs =
-          service.findTypeKeyValuesForQuery("type:\"" + abbrType + "\"", pfs);
-      for (TypeKeyValue abbr : abbrs.getObjects()) {
-        if (!readyOnly
-            || !WorkflowStatus.NEEDS_REVIEW.equals(abbr.getWorkflowStatus())) {
-          sb.append(abbr.getKey()).append("\t");
-          sb.append(abbr.getValue()).append("\r\n");
-        }
-      }
-      return new ByteArrayInputStream(sb.toString().getBytes("UTF-8"));
     }
-    
+
+    // Write a header
+    // Obtain members for refset,
+    // Write RF2 simple refset pattern to a StringBuilder
+    // wrap and return the string for that as an input stream
+    StringBuilder sb = new StringBuilder();
+    sb.append("abbreviation").append("\t");
+    sb.append("expansion").append("\r\n");
+
+    // sort by key
+    PfsParameter pfs = new PfsParameterJpa();
+    pfs.setSortField("key");
+
+    ConceptList concepts =
+        service.findConcepts(terminology, version, Branch.ROOT, null, null);
+    for (Concept concept : concepts.getObjects()) {
+      if (!readyOnly
+          || !WorkflowStatus.NEEDS_REVIEW.equals(concept.getWorkflowStatus())) {
+        for (Atom atom : concept.getAtoms()) {
+          sb.append(concept.getTerminologyId());
+          if (concept.getSemanticTypes() == null || concept.getSemanticTypes().size() == 0) {
+            throw new Exception("Concept " + concept.getTerminologyId() + " does not have semantic type");
+          }
+          sb.append(concept.getSemanticTypes().get(0).getSemanticType());
+          sb.append(atom.getName());
+          sb.append(atom.getTermType());
+        }
+      }
+    }
+    return new ByteArrayInputStream(sb.toString().getBytes("UTF-8"));
   }
 
 }
