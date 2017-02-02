@@ -7,7 +7,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 
-import org.apache.log4j.Logger;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
@@ -18,7 +17,6 @@ import com.wci.umls.server.helpers.FieldedStringTokenizer;
 import com.wci.umls.server.helpers.TypeKeyValue;
 import com.wci.umls.server.jpa.helpers.TypeKeyValueJpa;
 import com.wci.umls.server.model.workflow.WorkflowStatus;
-import com.wci.umls.server.services.handlers.ExceptionHandler;
 
 /**
  * Used to for loading/reloading configuration data.
