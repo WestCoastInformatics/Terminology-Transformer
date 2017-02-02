@@ -258,12 +258,7 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
           continue;
         }
 
-        System.out
-            .println("line " + lineCt + ":  " + fields.length + " fields");
-        for (int i = 0; i < fields.length; i++) {
-          System.out.println("  " + i + ": " + fields[i]);
-        }
-        boolean pairMatchFound = false;
+       boolean pairMatchFound = false;
 
         // CHECK: Must be fields
         if (fields.length == 0) {
@@ -378,10 +373,15 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
       // apply workflow status and commit
       // NOTE: Must commit first to allow lucene searching
       if (executeImport) {
+        
+        Logger.getLogger(getClass()).info("Commiting " + addedCt + " new abbreviations...");
 
         service.commit();
+        
+        Logger.getLogger(getClass()).info("  Done.");
 
         if (reviewFlag) {
+          Logger.getLogger(getClass()).info("Checking review status for new abbreviations");
           service.beginTransaction();
           for (TypeKeyValue newAbbr : newAbbrs) {
             // if value empty, ignored value -- set demotion
@@ -573,7 +573,6 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
       default:
         filteredList = list.getObjects();
     }
-    System.out.println("filtered results: " + filteredList.size());
     TypeKeyValueList results = null;
     if (filteredList.size() == 0) {
       results = new TypeKeyValueListJpa();
@@ -581,8 +580,7 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
       String query = ConfigUtility.composeQuery("OR", filteredList.stream()
           .map(t -> "id:" + t.getId()).collect(Collectors.toList()));
       results = service.findTypeKeyValuesForQuery(query, pfs);
-      System.out.println("results: " + results.getTotalCount());
-
+  
     }
     return results;
 
@@ -655,7 +653,6 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
     final List<TypeKeyValue> results = new ArrayList<>();
     for (final TypeKeyValue abbr : list) {
       // NOTE: Catch values consisting of whitespace
-      System.out.println("Checking value " + abbr.getValue());
       if (abbr.getValue() == null || abbr.getValue().trim().isEmpty()) {
         System.out.println("  BLANK");
         results.add(abbr);

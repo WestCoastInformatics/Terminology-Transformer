@@ -6,6 +6,8 @@ package com.wci.tt.test.mojo;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
 import org.apache.log4j.Logger;
@@ -18,12 +20,18 @@ import org.junit.Test;
 import com.wci.tt.jpa.services.algo.TerminologySimpleCsvLoaderAlgorithm;
 import com.wci.tt.jpa.services.handlers.DefaultAbbreviationHandler;
 import com.wci.tt.services.handlers.AbbreviationHandler;
+import com.wci.umls.server.Project;
+import com.wci.umls.server.User;
+import com.wci.umls.server.UserRole;
 import com.wci.umls.server.helpers.Branch;
 import com.wci.umls.server.helpers.ConfigUtility;
 import com.wci.umls.server.jpa.ProjectJpa;
+import com.wci.umls.server.jpa.UserJpa;
 import com.wci.umls.server.jpa.services.MetadataServiceJpa;
 import com.wci.umls.server.jpa.services.ProjectServiceJpa;
+import com.wci.umls.server.jpa.services.SecurityServiceJpa;
 import com.wci.umls.server.services.ProjectService;
+import com.wci.umls.server.services.SecurityService;
 
 /**
  * A mechanism to reset to the stock dev database for MLDP work..
@@ -82,7 +90,40 @@ public class ResetMldpDatabase {
         "procedure", "vital"
     };
 
+    SecurityService securityService = new SecurityServiceJpa();
     ProjectService projectService = new ProjectServiceJpa();
+    
+    // shared variables
+    InputStream inStream;
+    AbbreviationHandler abbrHandler;
+    Project project;
+    
+    final Map<User, UserRole> userRoleMap= new HashMap<>();
+    
+    // add admin, user, and viewer users
+    User admin = new UserJpa();
+    admin.setApplicationRole(UserRole.ADMINISTRATOR);
+    admin.setName("Administrator");
+    admin.setUserName("admin");
+    admin.setEmail("");
+    admin = securityService.addUser(admin);
+    User user = new UserJpa();
+    user.setApplicationRole(UserRole.USER);
+    user.setName("User");
+    user.setUserName("user");
+    user.setEmail("");
+    user = securityService.addUser(user);
+    User viewer = new UserJpa();
+    viewer.setApplicationRole(UserRole.VIEWER);
+    viewer.setName("Viewer");
+    viewer.setUserName("viewer");
+    viewer.setEmail("");
+    viewer = securityService.addUser(viewer);
+    
+    userRoleMap.put(admin, UserRole.ADMINISTRATOR);
+    userRoleMap.put(user, UserRole.USER);
+    userRoleMap.put(viewer, UserRole.VIEWER);
+    
 
     // for each terminology
     // - Create an editing project
@@ -95,7 +136,7 @@ public class ResetMldpDatabase {
           .info("Creating project for terminology " + mldpTerminology);
 
       // create a project for the terminology
-      ProjectJpa project = new ProjectJpa();
+      project = new ProjectJpa();
       project.setAutomationsEnabled(true);
       project.setName(
           "MLDP Project - " + mldpTerminology.substring(0, 1).toUpperCase()
@@ -108,7 +149,7 @@ public class ResetMldpDatabase {
       project.setTerminology("MLDP-" + mldpTerminology.toUpperCase());
       project.setVersion("latest");
       project.setBranch(Branch.ROOT);
-
+      project.setUserRoleMap(userRoleMap);
       projectService.setLastModifiedBy("loader");
       projectService.addProject(project);
 
@@ -131,9 +172,7 @@ public class ResetMldpDatabase {
       termAlgo.setProject(project);
       termAlgo.compute();
 
-      // common variables for abbr/syns
-      InputStream inStream;
-      AbbreviationHandler abbrHandler;
+     
 
       // load abbreviations file
       Logger.getLogger(getClass())
