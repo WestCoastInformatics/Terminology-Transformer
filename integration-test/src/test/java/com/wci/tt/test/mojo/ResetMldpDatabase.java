@@ -8,6 +8,7 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.Properties;
 
+import org.apache.log4j.Logger;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -62,9 +63,13 @@ public class ResetMldpDatabase {
   @SuppressWarnings("static-method")
   @Test
   public void test() throws Exception {
+    
+
+    // output identifier handler
+    Logger.getLogger(getClass()).info("DEFAULT id assignment handler: "
+        + config.getProperty("identifier.assignment.handler.DEFAULT.class"));
 
     // re-create the database
-    Properties config = ConfigUtility.getConfigProperties();
     config.setProperty("hibernate.hbm2ddl.auto", "create");
 
     // Trigger a JPA event
@@ -86,6 +91,9 @@ public class ResetMldpDatabase {
     // - Load txt synonyms file
     for (String mldpTerminology : mldpTerminologies) {
 
+      Logger.getLogger(getClass())
+          .info("Creating project for terminology " + mldpTerminology);
+
       // create a project for the terminology
       ProjectJpa project = new ProjectJpa();
       project.setAutomationsEnabled(true);
@@ -105,6 +113,12 @@ public class ResetMldpDatabase {
       projectService.addProject(project);
 
       // load terminology
+      Logger.getLogger(getClass())
+          .info("Loading terminology " + mldpTerminology);
+      Logger.getLogger(getClass())
+          .info("  File: " + "../config/mldp/src/main/resources/data/"
+              + mldpTerminology + "/" + mldpTerminology + "Concepts.csv");
+
       TerminologySimpleCsvLoaderAlgorithm termAlgo =
           new TerminologySimpleCsvLoaderAlgorithm();
       termAlgo.setTerminology("MLDP-" + mldpTerminology.toUpperCase());
@@ -117,23 +131,42 @@ public class ResetMldpDatabase {
       termAlgo.setProject(project);
       termAlgo.compute();
 
-      // load synonyms file
-
-      InputStream inStream =
-          new FileInputStream("../config/mldp/src/main/resources/data/"
-              + mldpTerminology + "/" + mldpTerminology + "Sy.txt");
-      AbbreviationHandler abbrHandler = new DefaultAbbreviationHandler();
-      abbrHandler.setService(projectService);
-      abbrHandler.importAbbreviationFile(
-          "MLDP-" + mldpTerminology.toUpperCase() + "-SY", inStream);
+      // common variables for abbr/syns
+      InputStream inStream;
+      AbbreviationHandler abbrHandler;
 
       // load abbreviations file
+      Logger.getLogger(getClass())
+          .info("Loading abbreviations for terminology " + mldpTerminology);
+      Logger.getLogger(getClass())
+          .info("  File: " + "../config/mldp/src/main/resources/data/"
+              + mldpTerminology + "/" + mldpTerminology + "Abbr.txt");
+
       inStream = new FileInputStream("../config/mldp/src/main/resources/data/"
           + mldpTerminology + "/" + mldpTerminology + "Abbr.txt");
       abbrHandler = new DefaultAbbreviationHandler();
       abbrHandler.setService(projectService);
+      abbrHandler.setReviewFlag(false);
       abbrHandler.importAbbreviationFile(
           "MLDP-" + mldpTerminology.toUpperCase() + "-ABBR", inStream);
+
+      // load synonyms file
+      // TODO Commented out for now, out of scope
+      // Logger.getLogger(getClass())
+      // .info("Loading synonyms for terminology " + mldpTerminology);
+      // Logger.getLogger(getClass())
+      // .info(" File: " + "../config/mldp/src/main/resources/data/"
+      // + mldpTerminology + "/" + mldpTerminology + "Sy.txt");
+      //
+      // inStream = new
+      // FileInputStream("../config/mldp/src/main/resources/data/"
+      // + mldpTerminology + "/" + mldpTerminology + "Sy.txt");
+      // abbrHandler = new DefaultAbbreviationHandler();
+      // abbrHandler.setService(projectService);
+      // abbrHandler.setReviewFlag(false);
+      // abbrHandler.importAbbreviationFile(
+      // "MLDP-" + mldpTerminology.toUpperCase() + "-SY", inStream);
+
     }
 
   }

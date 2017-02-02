@@ -5,6 +5,7 @@ package com.wci.tt.jpa.services.algo;
 
 import java.io.File;
 import java.io.FileReader;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -72,11 +73,15 @@ public class TerminologySimpleCsvLoaderAlgorithm
 
   /** The date. */
   private final Date date = new Date();
-  
-  private String branch;
+
+  /** The branch. */
+  private String branch = null;
 
   /** The concepts file name. */
-  private String conceptsFile;
+  private String inputFile = null;
+
+  /** The input file stream. */
+  private InputStream inputStream = null;
 
   /** Whether to keep file ids or compute new ids . */
   private boolean keepFileIds = false;
@@ -89,12 +94,20 @@ public class TerminologySimpleCsvLoaderAlgorithm
     super();
   }
 
-  public void setInputFile(String conceptsFile) {
-    this.conceptsFile = conceptsFile;
+  public void setInputFile(String inputFile) {
+    this.inputFile = inputFile;
   }
 
   public String getInputFile() {
-    return this.conceptsFile;
+    return this.inputFile;
+  }
+
+  public void setInputStream(InputStream inputStream) {
+    this.inputStream = inputStream;
+  }
+
+  public InputStream getInputStream() {
+    return this.inputStream;
   }
 
   /**
@@ -110,6 +123,15 @@ public class TerminologySimpleCsvLoaderAlgorithm
     logInfo("  terminology = " + getTerminology());
     logInfo("  version = " + getVersion());
     logInfo("  inputFile = " + getInputFile());
+    
+    final ValidationResult precheck = checkPreconditions();
+    if (!precheck.isValid()) {
+      Logger.getLogger(getClass()).error("Compute failed preconditions:");
+      for (String error : precheck.getErrors()) {
+        Logger.getLogger(getClass()).error("  " + error);
+      }
+      throw new Exception("Failed preconditions");
+    }
 
     // Set the "release version"
     setReleaseVersion(ConfigUtility.DATE_FORMAT.format(date));
@@ -123,8 +145,9 @@ public class TerminologySimpleCsvLoaderAlgorithm
     setLastModifiedFlag(false);
     // Turn off action handling
     setMolecularActionFlag(false);
-    
-    this.branch = getProject() == null && getProject().getBranch() == null ? Branch.ROOT : getProject().getBranch();
+
+    this.branch = getProject() == null && getProject().getBranch() == null
+        ? Branch.ROOT : getProject().getBranch();
 
     // Check the input directory
     File inputDirFile = new File(getInputFile());
@@ -171,7 +194,8 @@ public class TerminologySimpleCsvLoaderAlgorithm
     // Clear concept cache
 
     logInfo("Log component stats");
-    final Map<String, Integer> stats = getComponentStats(terminology.getTerminology(), terminology.getVersion(), branch);
+    final Map<String, Integer> stats = getComponentStats(
+        terminology.getTerminology(), terminology.getVersion(), branch);
     final List<String> statsList = new ArrayList<>(stats.keySet());
     Collections.sort(statsList);
     for (final String key : statsList) {
@@ -199,9 +223,9 @@ public class TerminologySimpleCsvLoaderAlgorithm
 
     String line = null;
     int objectCt = 0;
-  
+
     final PushBackReader reader =
-        new PushBackReader(new FileReader(new File(conceptsFile)));
+        new PushBackReader(new FileReader(new File(inputFile)));
     final String[] fields = new String[4];
 
     final Set<String> types = new HashSet<>();
@@ -353,11 +377,9 @@ public class TerminologySimpleCsvLoaderAlgorithm
 
     // read list of atoms
     while ((line = reader.readLine()) != null) {
-     
 
       line = line.replace("\r", "");
       final String[] fields = FieldedStringTokenizer.split(line, ",");
-   
 
       // Field Description
       // 0 conceptid
@@ -410,7 +432,7 @@ public class TerminologySimpleCsvLoaderAlgorithm
       }
 
       addConcept(concept);
- 
+
       // commit periodically
       logAndCommit(++objectCt, RootService.logCt, RootService.commitCt);
 
@@ -447,7 +469,14 @@ public class TerminologySimpleCsvLoaderAlgorithm
   /* see superclass */
   @Override
   public ValidationResult checkPreconditions() throws Exception {
-    return new ValidationResultJpa();
+    ValidationResult result = new ValidationResultJpa();
+    if (inputStream == null && inputFile == null) {
+      result.getErrors().add("Neither input file nor input stream set");
+    }
+    if (inputStream != null && inputFile != null) {
+      result.getErrors().add("Both input file and input stream set");
+    }
+    return result;
   }
 
   /* see superclass */

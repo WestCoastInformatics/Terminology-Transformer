@@ -1,5 +1,5 @@
 /*
- *    Copyright 2016 Fitgate Inc.
+ *    Copyright 2015 West Coast Informatics, LLC
  */
 package com.wci.tt.services.handlers;
 
@@ -124,5 +124,12 @@ public interface AbbreviationHandler extends Configurable {
    */
   public TypeKeyValueList filterResults(TypeKeyValueList list, String filter,
     PfsParameter pfs) throws Exception;
+
+  /**
+   * Sets flag whether to check review status of imported content.
+   *
+   * @param reviewFlag the review flag
+   */
+  public void setReviewFlag(boolean reviewFlag);
 
 }

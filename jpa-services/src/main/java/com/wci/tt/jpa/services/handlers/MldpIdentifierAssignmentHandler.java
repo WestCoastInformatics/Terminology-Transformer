@@ -68,18 +68,19 @@ public class MldpIdentifierAssignmentHandler extends AbstractConfigurable
                 + "  and version = :version ");
         query.setParameter("terminology", concept.getTerminology());
         query.setParameter("version", concept.getVersion());
-        final Long conceptId2 =
-            new Long(query.getSingleResult().toString()); 
-        conceptId = conceptId2 != null ? conceptId2 : conceptId;
+        String result = (String) query.getSingleResult();
+        if (result != null) {
+          conceptId = Long.valueOf(result);
+        }
       } catch (NoResultException e) {
-        conceptId = 1001L;
+        // do nothing, use conceptId above
       } finally {
         service.close();
       }
       // Set the maxConceptId
       maxConceptId = conceptId;
       Logger.getLogger(getClass())
-          .info("Initializing max CUI = " + maxConceptId);
+          .info("Initializing max concept id = " + maxConceptId);
     }
     final long result = ++maxConceptId;
     return Long.toString(result);
