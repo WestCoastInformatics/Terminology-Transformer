@@ -30,6 +30,10 @@ public class ConceptNameUniqueWithinFeature extends AbstractValidationCheck {
   public ValidationResult validate(Concept c) {
     ValidationResult result = new ValidationResultJpa();
     ContentService contentService = null;
+
+    if (c.getName() == null || c.getName().isEmpty()) {
+      return result;
+    }
     try {
       contentService = new ContentServiceJpa();
 
@@ -40,12 +44,12 @@ public class ConceptNameUniqueWithinFeature extends AbstractValidationCheck {
         for (SemanticTypeComponent sty1 : c.getSemanticTypes()) {
           for (SemanticTypeComponent sty2 : concept.getSemanticTypes()) {
             if (sty1.getSemanticType().equals(sty2.getSemanticType())) {
-              result.addError("Concept name not unique within feature " + sty2.getSemanticType()
-                  + ", duplicated on concept " + concept.getTerminologyId());
+              result.addError("Concept name not unique within feature "
+                  + sty2.getSemanticType() + ", duplicated on concept "
+                  + concept.getTerminologyId());
             }
           }
         }
-
       }
     } catch (Exception e) {
       // do nothing

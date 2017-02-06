@@ -30,6 +30,10 @@ public class ConceptNameUniqueAcrossFeatures extends AbstractValidationCheck {
   public ValidationResult validate(Concept c) {
     ValidationResult result = new ValidationResultJpa();
     ContentService contentService = null;
+    
+    if (c.getName() == null || c.getName().isEmpty()) {
+      return result;
+    }
     try {
       contentService = new ContentServiceJpa();
 
