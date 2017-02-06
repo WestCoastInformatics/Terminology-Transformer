@@ -56,13 +56,9 @@ PCV 13	Pneumococcal 13-valent
 PCV 7	Pneumococcal 7-valent
 PCV 23	Pneumococcal 23-valent
 immun	immune globulin
-
 IMUNE	immune globulin
-
 IM	immune globulin
-
 RIG	Rabies immune globulin
-
 RSV-IGIV	Respiratory Syncytial Virus Immune Globulin, Intravenous
 RSV-MAb	Respiratory Syncytial Virus monoclonal antibody
 TIG	Tetanus immune globulin
