@@ -3,7 +3,9 @@
  */
 package com.wci.tt.jpa.services.validation;
 
+import java.util.HashSet;
 import java.util.Properties;
+import java.util.Set;
 
 import com.wci.umls.server.ValidationResult;
 import com.wci.umls.server.helpers.content.ConceptList;
@@ -66,6 +68,18 @@ public class ConceptTerminologyIdUnique extends AbstractValidationCheck {
     }
 
     return result;
+  }
+  
+  @Override
+  public Set<Long> validateConcepts(Set<Long> conceptIds, String terminology, String version, ContentService service) throws Exception {
+    final Set<Long> failedConceptIds = new HashSet<>();
+    for (final Long id : conceptIds) {
+      final Concept concept = service.getConcept(id);
+      if (!validate(concept).isValid()) {
+        failedConceptIds.add(id);
+      }
+    }
+    return failedConceptIds;
   }
 
   /* see superclass */
