@@ -25,12 +25,13 @@ import com.wci.umls.server.User;
 import com.wci.umls.server.UserRole;
 import com.wci.umls.server.helpers.Branch;
 import com.wci.umls.server.helpers.ConfigUtility;
+import com.wci.umls.server.helpers.PrecedenceList;
 import com.wci.umls.server.jpa.ProjectJpa;
 import com.wci.umls.server.jpa.UserJpa;
+import com.wci.umls.server.jpa.algo.LuceneReindexAlgorithm;
 import com.wci.umls.server.jpa.services.MetadataServiceJpa;
-import com.wci.umls.server.jpa.services.ProjectServiceJpa;
 import com.wci.umls.server.jpa.services.SecurityServiceJpa;
-import com.wci.umls.server.services.ProjectService;
+import com.wci.umls.server.services.MetadataService;
 import com.wci.umls.server.services.SecurityService;
 
 /**
@@ -71,18 +72,24 @@ public class ResetMldpDatabase {
   @SuppressWarnings("static-method")
   @Test
   public void test() throws Exception {
-    
 
     // output identifier handler
     Logger.getLogger(getClass()).info("DEFAULT id assignment handler: "
         + config.getProperty("identifier.assignment.handler.DEFAULT.class"));
+  
 
-    // re-create the database
+    // re-create the database by triggering a JPA event
+    Logger.getLogger(getClass()).info("Re-creating database...");
     config.setProperty("hibernate.hbm2ddl.auto", "create");
-
-    // Trigger a JPA event
     new MetadataServiceJpa().close();
     config.setProperty("hibernate.hbm2ddl.auto", "update");
+    Logger.getLogger(getClass()).info("  Done.");
+    
+    // clear index
+    Logger.getLogger(getClass()).info("Clearing lucene indexes...");
+    LuceneReindexAlgorithm luceneAlgo = new LuceneReindexAlgorithm();
+    luceneAlgo.reset();
+    Logger.getLogger(getClass()).info("  Done.");
 
     // List of MLDP terminologies
     String[] mldpTerminologies = {
@@ -90,16 +97,17 @@ public class ResetMldpDatabase {
         "procedure", "vital"
     };
 
-    SecurityService securityService = new SecurityServiceJpa();
-    ProjectService projectService = new ProjectServiceJpa();
-    
+    final SecurityService securityService = new SecurityServiceJpa();
+    final MetadataService service = new MetadataServiceJpa();
+
     // shared variables
     InputStream inStream;
     AbbreviationHandler abbrHandler;
     Project project;
-    
-    final Map<User, UserRole> userRoleMap= new HashMap<>();
-    
+
+    Logger.getLogger(getClass()).info("Creating default users...");
+    final Map<User, UserRole> userRoleMap = new HashMap<>();
+
     // add admin, user, and viewer users
     User admin = new UserJpa();
     admin.setApplicationRole(UserRole.ADMINISTRATOR);
@@ -119,11 +127,11 @@ public class ResetMldpDatabase {
     viewer.setUserName("viewer");
     viewer.setEmail("");
     viewer = securityService.addUser(viewer);
-    
+
     userRoleMap.put(admin, UserRole.ADMINISTRATOR);
     userRoleMap.put(user, UserRole.USER);
     userRoleMap.put(viewer, UserRole.VIEWER);
-    
+    Logger.getLogger(getClass()).info("  Done.");
 
     // for each terminology
     // - Create an editing project
@@ -132,26 +140,10 @@ public class ResetMldpDatabase {
     // - Load txt synonyms file
     for (String mldpTerminology : mldpTerminologies) {
 
-      Logger.getLogger(getClass())
-          .info("Creating project for terminology " + mldpTerminology);
-
-      // create a project for the terminology
-      project = new ProjectJpa();
-      project.setAutomationsEnabled(true);
-      project.setName(
-          "MLDP Project - " + mldpTerminology.substring(0, 1).toUpperCase()
-              + mldpTerminology.substring(1));
-      project.setLanguage("en");
-      project.setDescription("Simple editing project for MLDP terminology "
-          + mldpTerminology.substring(0, 1).toUpperCase()
-          + mldpTerminology.substring(1));
-      project.setPublic(true);
-      project.setTerminology("MLDP-" + mldpTerminology.toUpperCase());
-      project.setVersion("latest");
-      project.setBranch(Branch.ROOT);
-      project.setUserRoleMap(userRoleMap);
-      projectService.setLastModifiedBy("loader");
-      projectService.addProject(project);
+  
+      final String terminology = "HKFT-" + mldpTerminology.toUpperCase();
+      final String version = "latest";
+      final String loaderUser = "loader";
 
       // load terminology
       Logger.getLogger(getClass())
@@ -160,19 +152,16 @@ public class ResetMldpDatabase {
           .info("  File: " + "../config/mldp/src/main/resources/data/"
               + mldpTerminology + "/" + mldpTerminology + "Concepts.csv");
 
-      TerminologySimpleCsvLoaderAlgorithm termAlgo =
+      final TerminologySimpleCsvLoaderAlgorithm termAlgo =
           new TerminologySimpleCsvLoaderAlgorithm();
-      termAlgo.setTerminology("MLDP-" + mldpTerminology.toUpperCase());
-      termAlgo.setVersion("latest");
+      termAlgo.setTerminology(terminology);
+      termAlgo.setVersion(version);
       termAlgo.setAssignIdentifiersFlag(true);
       termAlgo.setInputFile("../config/mldp/src/main/resources/data/"
           + mldpTerminology + "/" + mldpTerminology + "Concepts.csv");
-      termAlgo.setReleaseVersion("latest");
-      termAlgo.setLastModifiedBy("loader");
-      termAlgo.setProject(project);
+      termAlgo.setReleaseVersion(version);
+      termAlgo.setLastModifiedBy(loaderUser);
       termAlgo.compute();
-
-     
 
       // load abbreviations file
       Logger.getLogger(getClass())
@@ -184,13 +173,13 @@ public class ResetMldpDatabase {
       inStream = new FileInputStream("../config/mldp/src/main/resources/data/"
           + mldpTerminology + "/" + mldpTerminology + "Abbr.txt");
       abbrHandler = new DefaultAbbreviationHandler();
-      abbrHandler.setService(projectService);
+      abbrHandler.setService(service);
       abbrHandler.setReviewFlag(false);
       abbrHandler.importAbbreviationFile(
-          "MLDP-" + mldpTerminology.toUpperCase() + "-ABBR", inStream);
+          "HKFT-" + mldpTerminology.toUpperCase() + "-ABBR", inStream);
 
       // load synonyms file
-      // TODO Commented out for now, out of scope
+      // TODO Commented out for now, out of scope and time-consuming
       // Logger.getLogger(getClass())
       // .info("Loading synonyms for terminology " + mldpTerminology);
       // Logger.getLogger(getClass())
@@ -206,6 +195,27 @@ public class ResetMldpDatabase {
       // abbrHandler.importAbbreviationFile(
       // "MLDP-" + mldpTerminology.toUpperCase() + "-SY", inStream);
 
+      // create a project for the terminology
+      Logger.getLogger(getClass())
+      .info("Creating project for terminology " + mldpTerminology);
+
+      project = new ProjectJpa();
+      project.setAutomationsEnabled(true);
+      project.setName("MLDP Project - " + terminology);
+      project.setLanguage("en");
+      project.setDescription(
+          "Simple editing project for MLDP terminology " + terminology);
+      project.setPublic(true);
+      project.setTerminology(terminology);
+      project.setVersion(version);
+      project.setBranch(Branch.ROOT);
+      project.setUserRoleMap(userRoleMap);
+      service.setLastModifiedBy(loaderUser);
+
+      PrecedenceList precedenceList =
+          service.getPrecedenceList(terminology, version);
+      project.setPrecedenceList(precedenceList);
+      service.addProject(project);
     }
 
   }
