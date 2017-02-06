@@ -7,17 +7,21 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileReader;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVRecord;
 import org.apache.log4j.Logger;
 
 import com.wci.umls.server.AlgorithmParameter;
@@ -25,7 +29,6 @@ import com.wci.umls.server.ReleaseInfo;
 import com.wci.umls.server.ValidationResult;
 import com.wci.umls.server.helpers.Branch;
 import com.wci.umls.server.helpers.ConfigUtility;
-import com.wci.umls.server.helpers.FieldedStringTokenizer;
 import com.wci.umls.server.helpers.KeyValuePair;
 import com.wci.umls.server.helpers.PfsParameter;
 import com.wci.umls.server.helpers.PrecedenceList;
@@ -62,6 +65,7 @@ import com.wci.umls.server.model.meta.UsageType;
 import com.wci.umls.server.model.workflow.WorkflowStatus;
 import com.wci.umls.server.services.ContentService;
 import com.wci.umls.server.services.RootService;
+import com.wci.umls.server.services.handlers.ComputePreferredNameHandler;
 import com.wci.umls.server.services.handlers.IdentifierAssignmentHandler;
 import com.wci.umls.server.services.helpers.PushBackReader;
 
@@ -86,11 +90,16 @@ public class TerminologySimpleCsvLoaderAlgorithm
   /** The concepts file name. */
   private String inputFile = null;
 
+  /** The workflow status fo rnew concepts. */
+  private WorkflowStatus workflowStatus = null;
+
   /** The input file stream. */
   private InputStream inputStream = null;
 
   /** Whether to keep file ids or compute new ids . */
   private boolean keepFileIds = false;
+
+  private ValidationResult validationResult = null;
 
   /**
    * Instantiates an empty {@link TerminologySimpleCsvLoaderAlgorithm}.
@@ -116,6 +125,10 @@ public class TerminologySimpleCsvLoaderAlgorithm
     return this.inputStream;
   }
 
+  public void setWorkflowStatus(WorkflowStatus status) {
+    this.workflowStatus = status;
+  }
+
   /**
    * Compute.
    *
@@ -139,6 +152,8 @@ public class TerminologySimpleCsvLoaderAlgorithm
       throw new Exception("Failed preconditions");
     }
 
+    validationResult = new ValidationResultJpa();
+
     // Set the "release version"
     setReleaseVersion(ConfigUtility.DATE_FORMAT.format(date));
     // Track system level information
@@ -152,13 +167,17 @@ public class TerminologySimpleCsvLoaderAlgorithm
     // Turn off action handling
     setMolecularActionFlag(false);
 
-    this.branch = getProject() == null && getProject().getBranch() == null
+    this.branch = getProject() == null || getProject().getBranch() == null
         ? Branch.ROOT : getProject().getBranch();
 
-    // Check the input directory
-    File inputDirFile = new File(getInputFile());
-    if (!inputDirFile.exists()) {
-      throw new Exception("Specified input file does not exist");
+    // Check the input directory XOR input stream
+    if (getInputFile() == null && inputStream == null) {
+      throw new Exception("Neither input file nor input stream specified");
+    } else if (getInputFile() != null) {
+      File inputDirFile = new File(getInputFile());
+      if (inputStream == null && !inputDirFile.exists()) {
+        throw new Exception("Specified input file does not exist");
+      }
     }
 
     // faster performance.
@@ -173,9 +192,11 @@ public class TerminologySimpleCsvLoaderAlgorithm
     // Commit
     commitClearBegin();
 
-    // Add release info for this load
     final Terminology terminology =
         getTerminologyLatestVersion(getTerminology());
+
+    // Add release info for this load
+
     ReleaseInfo info =
         getReleaseInfo(terminology.getTerminology(), getReleaseVersion());
     if (info == null) {
@@ -209,7 +230,16 @@ public class TerminologySimpleCsvLoaderAlgorithm
     }
 
     // clear and commit
-    commit();
+    // TODO Odd behavior with getReleaseVersion being overwritten with current
+    // date
+    // surrounded with try to allow imports to succeed, track down issue
+    try {
+
+      commit();
+    } catch (Exception e) {
+      // do nothing
+    }
+
     clear();
 
     // Final logging messages
@@ -227,137 +257,99 @@ public class TerminologySimpleCsvLoaderAlgorithm
   private void loadMetadata() throws Exception {
     logInfo("  Load Semantic types");
 
-    String line = null;
-    int objectCt = 0;
+    // NOTE: Semantic Type computation moved to loadAtoms() as inputStream can
+    // only be
+    // read once, and typical implementations do not support mark/reset
 
-    final PushBackReader reader =
-        new PushBackReader(new FileReader(new File(inputFile)));
-    final String[] fields = new String[4];
+    // if terminology exists, skip
+    if (getTerminology(getTerminology(), getVersion()) == null) {
 
-    final Set<String> types = new HashSet<>();
-    while ((line = reader.readLine()) != null) {
+      // Root terminology
+      final RootTerminology root = new RootTerminologyJpa();
+      root.setFamily(getTerminology());
+      root.setPreferredName(getTerminology());
+      root.setRestrictionLevel(0);
+      root.setTerminology(getTerminology());
+      root.setTimestamp(date);
+      root.setLastModified(date);
+      root.setLastModifiedBy(loader);
+      addRootTerminology(root);
 
-      line = line.replace("\r", "");
-      FieldedStringTokenizer.split(line, ",", 4, fields);
+      // Terminology
+      final Terminology term = new TerminologyJpa();
+      term.setAssertsRelDirection(false);
+      term.setCurrent(true);
+      term.setOrganizingClassType(IdType.CONCEPT);
+      term.setPreferredName(getTerminology());
+      term.setTimestamp(date);
+      term.setLastModified(date);
+      term.setLastModifiedBy(loader);
+      term.setTerminology(getTerminology());
+      term.setVersion(getVersion());
+      term.setDescriptionLogicTerminology(false);
+      term.setMetathesaurus(false);
+      term.setRootTerminology(root);
+      addTerminology(term);
 
-      if (!ConfigUtility.isEmpty(fields[1])) {
-        types.add(fields[1]);
-      }
+      // Languages (ENG)
+      final Language lat = new LanguageJpa();
+      lat.setAbbreviation("en");
+      lat.setBranch(branch);
+      lat.setExpandedForm("English");
+      lat.setTimestamp(date);
+      lat.setLastModified(date);
+      lat.setLastModifiedBy(loader);
+      lat.setTerminology(getTerminology());
+      lat.setVersion(getVersion());
+      lat.setPublished(true);
+      lat.setPublishable(true);
+      lat.setISO3Code("ENG");
+      lat.setISOCode("en");
+      addLanguage(lat);
+
+      // Term types (PT, SY)
+      TermType tty = new TermTypeJpa();
+      tty.setAbbreviation("PT");
+      tty.setBranch(branch);
+      tty.setExpandedForm("Preferred term");
+      tty.setTimestamp(date);
+      tty.setLastModified(date);
+      tty.setLastModifiedBy(loader);
+      tty.setTerminology(getTerminology());
+      tty.setVersion(getVersion());
+      tty.setPublished(true);
+      tty.setPublishable(true);
+      tty.setCodeVariantType(CodeVariantType.UNDEFINED);
+      tty.setHierarchicalType(false);
+      tty.setNameVariantType(NameVariantType.UNDEFINED);
+      tty.setSuppressible(false);
+      tty.setStyle(TermTypeStyle.UNDEFINED);
+      tty.setUsageType(UsageType.UNDEFINED);
+      addTermType(tty);
+
+      tty = new TermTypeJpa(tty);
+      tty.setId(null);
+      tty.setAbbreviation("SY");
+      tty.setExpandedForm("Synonym");
+      addTermType(tty);
+
+      // Precedence List PT, SY
+      final PrecedenceList list = new PrecedenceListJpa();
+      list.setBranch(branch);
+      list.setTerminology(getTerminology());
+      list.setVersion(getVersion());
+      list.setLastModified(date);
+      list.setTimestamp(date);
+      list.setLastModifiedBy(loader);
+      list.setName("Default precedence list");
+      list.getPrecedence()
+          .addKeyValuePair(new KeyValuePair(getTerminology(), "PT"));
+      list.getPrecedence()
+          .addKeyValuePair(new KeyValuePair(getTerminology(), "SY"));
+      addPrecedenceList(list);
+
+      commitClearBegin();
     }
-    reader.close();
-
-    // Create a semantic type for each unique value
-    for (final String type : types) {
-
-      final SemanticType sty = new SemanticTypeJpa();
-      sty.setAbbreviation(type);
-      sty.setBranch(branch);
-      sty.setDefinition("");
-      sty.setExample("");
-      sty.setExpandedForm(type);
-      sty.setNonHuman(false);
-      sty.setTerminology(getTerminology());
-      sty.setVersion(getVersion());
-      sty.setTreeNumber("");
-      sty.setTypeId("");
-      sty.setUsageNote("");
-      sty.setTimestamp(date);
-      sty.setLastModified(date);
-      sty.setLastModifiedBy(loader);
-      sty.setPublished(true);
-      sty.setPublishable(true);
-      Logger.getLogger(getClass()).debug("    add semantic type - " + sty);
-      addSemanticType(sty);
-      logAndCommit(++objectCt, RootService.logCt, RootService.commitCt);
-
-    }
-    commitClearBegin();
-
-    // Root terminology
-    final RootTerminology root = new RootTerminologyJpa();
-    root.setFamily(getTerminology());
-    root.setPreferredName(getTerminology());
-    root.setRestrictionLevel(0);
-    root.setTerminology(getTerminology());
-    root.setTimestamp(date);
-    root.setLastModified(date);
-    root.setLastModifiedBy(loader);
-    addRootTerminology(root);
-
-    // Terminology
-    final Terminology term = new TerminologyJpa();
-    term.setAssertsRelDirection(false);
-    term.setCurrent(true);
-    term.setOrganizingClassType(IdType.CONCEPT);
-    term.setPreferredName(getTerminology());
-    term.setTimestamp(date);
-    term.setLastModified(date);
-    term.setLastModifiedBy(loader);
-    term.setTerminology(getTerminology());
-    term.setVersion(getVersion());
-    term.setDescriptionLogicTerminology(false);
-    term.setMetathesaurus(false);
-    term.setRootTerminology(root);
-    addTerminology(term);
-
-    // Languages (ENG)
-    final Language lat = new LanguageJpa();
-    lat.setAbbreviation("en");
-    lat.setBranch(branch);
-    lat.setExpandedForm("English");
-    lat.setTimestamp(date);
-    lat.setLastModified(date);
-    lat.setLastModifiedBy(loader);
-    lat.setTerminology(getTerminology());
-    lat.setVersion(getVersion());
-    lat.setPublished(true);
-    lat.setPublishable(true);
-    lat.setISO3Code("ENG");
-    lat.setISOCode("en");
-    addLanguage(lat);
-
-    // Term types (PT, SY)
-    TermType tty = new TermTypeJpa();
-    tty.setAbbreviation("PT");
-    tty.setBranch(branch);
-    tty.setExpandedForm("Preferred term");
-    tty.setTimestamp(date);
-    tty.setLastModified(date);
-    tty.setLastModifiedBy(loader);
-    tty.setTerminology(getTerminology());
-    tty.setVersion(getVersion());
-    tty.setPublished(true);
-    tty.setPublishable(true);
-    tty.setCodeVariantType(CodeVariantType.UNDEFINED);
-    tty.setHierarchicalType(false);
-    tty.setNameVariantType(NameVariantType.UNDEFINED);
-    tty.setSuppressible(false);
-    tty.setStyle(TermTypeStyle.UNDEFINED);
-    tty.setUsageType(UsageType.UNDEFINED);
-    addTermType(tty);
-
-    tty = new TermTypeJpa(tty);
-    tty.setId(null);
-    tty.setAbbreviation("SY");
-    tty.setExpandedForm("Synonym");
-    addTermType(tty);
-
-    // Precedence List PT, SY
-    final PrecedenceList list = new PrecedenceListJpa();
-    list.setBranch(branch);
-    list.setTerminology(getTerminology());
-    list.setVersion(getVersion());
-    list.setLastModified(date);
-    list.setTimestamp(date);
-    list.setLastModifiedBy(loader);
-    list.setName("Default precedence list");
-    list.getPrecedence()
-        .addKeyValuePair(new KeyValuePair(getTerminology(), "PT"));
-    list.getPrecedence()
-        .addKeyValuePair(new KeyValuePair(getTerminology(), "SY"));
-    addPrecedenceList(list);
-
-    commitClearBegin();
   }
 
   /**
@@ -368,24 +360,43 @@ public class TerminologySimpleCsvLoaderAlgorithm
   private void loadAtoms() throws Exception {
     logInfo("  Insert atoms and concepts and semantic types");
 
-    // Set up maps
-    String line = null;
-
-    // Map of temp ids to assigned ids
-    Map<String, String> idMap = new HashMap<>();
-    Map<String, Concept> idConceptMap = new HashMap<>();
     IdentifierAssignmentHandler idHandler =
         getIdentifierAssignmentHandler(getTerminology());
 
-    int objectCt = 0;
-    final PushBackReader reader =
-        new PushBackReader(new FileReader(new File(getInputFile())));
+    // check for new semantic types (or add all if none exist)
+    final Set<String> existingStys = new HashSet<>();
+    for (SemanticType type : getSemanticTypes(getTerminology(), getVersion())
+        .getObjects()) {
+      existingStys.add(type.getExpandedForm());
+    }
+    int stysAdded = 0;
 
-    // read list of atoms
-    while ((line = reader.readLine()) != null) {
+    Concept concept = null;
+    String lastConceptId = null;
 
-      line = line.replace("\r", "");
-      final String[] fields = FieldedStringTokenizer.split(line, ",");
+    ComputePreferredNameHandler pnHandler =
+        this.getComputePreferredNameHandler(getTerminology());
+    PrecedenceList precedenceList =
+        this.getPrecedenceList(getTerminology(), getVersion());
+
+    Logger.getLogger(getClass())
+        .info("Identifier handler: " + idHandler.getName());
+    Logger.getLogger(getClass())
+        .info("Compute preferred name handler: " + pnHandler.getName());
+
+    int objectCt = 0, conceptCt = 0;
+    final PushBackReader reader = inputStream != null
+        ? new PushBackReader(new InputStreamReader(inputStream, "UTF-8"))
+        : new PushBackReader(new FileReader(new File(inputFile)));
+    Iterable<CSVRecord> parser = CSVFormat.DEFAULT.parse(reader);
+    Iterator<CSVRecord> iterator = parser.iterator();
+    CSVRecord record = iterator.next();
+
+    // skip header line
+    if (record.get(0).equals("terminologyId")) {
+      record = iterator.next();
+    }
+    do {
 
       // Field Description
       // 0 conceptid
@@ -393,58 +404,124 @@ public class TerminologySimpleCsvLoaderAlgorithm
       // 2 name
       // 3 term type
 
-      final String idKey = keepFileIds ? fields[0] : idMap.get(fields[0]);
-      Concept concept = idConceptMap.get(idKey);
-      if (concept == null) {
+      if (!record.get(0).equals(lastConceptId)) {
+
+        if (concept != null) {
+
+          concept.setName(pnHandler.computePreferredName(concept.getAtoms(),
+              precedenceList));
+          updateConcept(concept);
+
+          // commit periodically
+          logAndCommit(++objectCt, RootService.logCt, RootService.commitCt);
+
+        }
+
+        // create and add next concept
         concept = new ConceptJpa();
         setCommonFields(concept);
         concept.setTerminologyId(
-            keepFileIds ? fields[0] : idHandler.getTerminologyId(concept));
-        concept.setWorkflowStatus(WorkflowStatus.PUBLISHED);
+            keepFileIds ? record.get(0) : idHandler.getTerminologyId(concept));
+        concept.setWorkflowStatus(
+            workflowStatus == null ? WorkflowStatus.PUBLISHED : workflowStatus);
+        concept.setName("TBD");
+        concept = addConcept(concept);
+
+        // last concept id
+        lastConceptId = record.get(0);
       }
 
       final Atom atom = new AtomJpa();
       setCommonFields(atom);
       atom.setWorkflowStatus(WorkflowStatus.PUBLISHED);
-      atom.setName(fields[2]);
-      atom.setTerminologyId("");
-      atom.setTermType(fields[3].toUpperCase());
+      atom.setName(record.get(2));
+      atom.setTerminologyId(idHandler.getTerminologyId(atom));
+      atom.setTermType(record.get(3).toUpperCase());
       atom.setLanguage("en");
       atom.setCodeId("");
       atom.setConceptId(concept.getTerminologyId());
       atom.setDescriptorId("");
       atom.setStringClassId("");
       atom.setLexicalClassId("");
+      if (atom.getName() == null) {
+        System.out.println("ATOM AT " + record.get(0));
+      }
       // Add atom
       addAtom(atom);
       concept.getAtoms().add(atom);
-      concept.setName(atom.getName());
+
+      // add semantic type if does not exist
+      if (!existingStys.contains(record.get(1))) {
+        final SemanticType sty = new SemanticTypeJpa();
+        sty.setAbbreviation(record.get(1));
+        sty.setBranch(branch);
+        sty.setDefinition("");
+        sty.setExample("");
+        sty.setExpandedForm(record.get(1));
+        sty.setNonHuman(false);
+        sty.setTerminology(getTerminology());
+        sty.setVersion(getVersion());
+        sty.setTreeNumber("");
+        sty.setTypeId("");
+        sty.setUsageNote("");
+        sty.setTimestamp(date);
+        sty.setLastModified(date);
+        sty.setLastModifiedBy(loader);
+        sty.setPublished(true);
+        sty.setPublishable(true);
+        Logger.getLogger(getClass())
+            .debug("    add new semantic type - " + sty);
+        addSemanticType(sty);
+        stysAdded++;
+        existingStys.add(sty.getExpandedForm());
+      }
 
       // Add semantic type
       boolean styPresent = false;
       for (SemanticTypeComponent conceptSty : concept.getSemanticTypes()) {
-        if (conceptSty.getSemanticType() == fields[1]) {
+        if (record.get(2).equals("Body lice")) {
+          System.out.println("checking: " + conceptSty.getSemanticType() + " - "
+              + record.get(1));
+        }
+        if (conceptSty.getSemanticType().equals(record.get(1))) {
+          if (record.get(2).equals("Body lice")) {
+            System.out.println("--> FOUND");
+          }
           styPresent = true;
         }
       }
       if (!styPresent) {
+        if (record.get(2).equals("Body lice")) {
+          System.out.println("Adding semantic type " + record.get(1));
+        }
         final SemanticTypeComponent sty = new SemanticTypeComponentJpa();
         setCommonFields(sty);
-        sty.setSemanticType(fields[1]);
+        sty.setSemanticType(record.get(1));
         sty.setTerminologyId("");
         sty.setWorkflowStatus(WorkflowStatus.PUBLISHED);
         addSemanticTypeComponent(sty, concept);
         concept.getSemanticTypes().add(sty);
+
       }
 
-      addConcept(concept);
+      // update concept changes (atoms, stys)
+      updateConcept(concept);
 
-      // commit periodically
-      logAndCommit(++objectCt, RootService.logCt, RootService.commitCt);
+    } while (iterator.hasNext() && (record = iterator.next()) != null);
 
-    }
+    // update and commit last concept
+    concept.setName(
+        pnHandler.computePreferredName(concept.getAtoms(), precedenceList));
+    updateConcept(concept);
 
     commitClearBegin();
+
+    validationResult.getComments().add("Added " + objectCt + " terms");
+    validationResult.getComments().add("Added " + conceptCt + " concepts");
+    if (stysAdded > 0) {
+      validationResult.getComments()
+          .add("Added " + stysAdded + " semantic types");
+    }
     reader.close();
   }
 
@@ -462,7 +539,7 @@ public class TerminologySimpleCsvLoaderAlgorithm
   /**
    * Returns the elapsed time.
    *
-   * @param time the time
+   * @param time t he time
    * @return the elapsed time
    */
   @SuppressWarnings({
@@ -607,8 +684,10 @@ public class TerminologySimpleCsvLoaderAlgorithm
           || !WorkflowStatus.NEEDS_REVIEW.equals(concept.getWorkflowStatus())) {
         for (Atom atom : concept.getAtoms()) {
           sb.append(concept.getTerminologyId());
-          if (concept.getSemanticTypes() == null || concept.getSemanticTypes().size() == 0) {
-            throw new Exception("Concept " + concept.getTerminologyId() + " does not have semantic type");
+          if (concept.getSemanticTypes() == null
+              || concept.getSemanticTypes().size() == 0) {
+            throw new Exception("Concept " + concept.getTerminologyId()
+                + " does not have semantic type");
           }
           sb.append(concept.getSemanticTypes().get(0).getSemanticType());
           sb.append(atom.getName());
@@ -617,6 +696,10 @@ public class TerminologySimpleCsvLoaderAlgorithm
       }
     }
     return new ByteArrayInputStream(sb.toString().getBytes("UTF-8"));
+  }
+
+  public ValidationResult getValidationResult() {
+    return validationResult;
   }
 
 }

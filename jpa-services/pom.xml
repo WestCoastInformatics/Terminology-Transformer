@@ -1,61 +1,66 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
 
-  <!-- Module Metadata -->
-  <parent>
-    <groupId>com.wcinformatics.tt</groupId>
-    <artifactId>tt-parent</artifactId>
-    <version>1.3.0-SNAPSHOT</version>
-    <relativePath>../parent</relativePath>
-  </parent>
+	<!-- Module Metadata -->
+	<parent>
+		<groupId>com.wcinformatics.tt</groupId>
+		<artifactId>tt-parent</artifactId>
+		<version>1.3.0-SNAPSHOT</version>
+		<relativePath>../parent</relativePath>
+	</parent>
 
-  <artifactId>tt-jpa-services</artifactId>
-  <name>WCI Terminology Transformer Project JPA service implementations</name>
-  <description>JPA-enabled implementations of services.</description>
+	<artifactId>tt-jpa-services</artifactId>
+	<name>WCI Terminology Transformer Project JPA service implementations</name>
+	<description>JPA-enabled implementations of services.</description>
 
-  <!-- Declare Project Dependency Versions -->
-  <dependencies>
+	<!-- Declare Project Dependency Versions -->
+	<dependencies>
 
-    <!-- Model interfaces. -->
-    <dependency>
-      <groupId>com.wcinformatics.tt</groupId>
-      <artifactId>tt-model</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.wcinformatics.tt</groupId>
-      <artifactId>tt-jpa-model</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.wcinformatics.tt</groupId>
-      <artifactId>tt-services</artifactId>
-    </dependency>
+		<!-- Model interfaces. -->
+		<dependency>
+			<groupId>com.wcinformatics.tt</groupId>
+			<artifactId>tt-model</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.wcinformatics.tt</groupId>
+			<artifactId>tt-jpa-model</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.wcinformatics.tt</groupId>
+			<artifactId>tt-services</artifactId>
+		</dependency>
 
-    <dependency>
-      <groupId>com.wcinformatics.umls.server</groupId>
-      <artifactId>term-server-model</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.wcinformatics.umls.server</groupId>
-      <artifactId>term-server-services</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.wcinformatics.umls.server</groupId>
-      <artifactId>term-server-jpa-model</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.wcinformatics.umls.server</groupId>
-      <artifactId>term-server-jpa-services</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.wcinformatics.umls.server</groupId>
-      <artifactId>term-server-rest</artifactId>
-      <classifier>classes</classifier>
-      <type>jar</type>
-    </dependency>
-    
-  </dependencies>
+		<dependency>
+			<groupId>com.wcinformatics.umls.server</groupId>
+			<artifactId>term-server-model</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.wcinformatics.umls.server</groupId>
+			<artifactId>term-server-services</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.wcinformatics.umls.server</groupId>
+			<artifactId>term-server-jpa-model</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.wcinformatics.umls.server</groupId>
+			<artifactId>term-server-jpa-services</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.wcinformatics.umls.server</groupId>
+			<artifactId>term-server-rest</artifactId>
+			<classifier>classes</classifier>
+			<type>jar</type>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-csv</artifactId>
+			<version>1.3</version>
+		</dependency>
+
+	</dependencies>
 
 
 </project>
