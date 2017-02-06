@@ -40,7 +40,7 @@ public class ConceptTerminologyIdUnique extends AbstractValidationCheck {
       contentService = new ContentServiceJpa();
 
       ConceptList concepts = null;
-
+      
       // check terminology id
       concepts = contentService.findConcepts(c.getTerminology(), c.getVersion(),
           c.getBranch(),

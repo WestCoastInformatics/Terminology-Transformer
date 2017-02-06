@@ -13,6 +13,7 @@ import com.wci.umls.server.helpers.TypeKeyValue;
 import com.wci.umls.server.helpers.TypeKeyValueList;
 import com.wci.umls.server.jpa.helpers.PfsParameterJpa;
 import com.wci.umls.server.jpa.helpers.TypeKeyValueJpa;
+import com.wci.umls.server.model.workflow.WorkflowStatus;
 
 /**
  * Lists a transform routines available via a REST service.
@@ -182,6 +183,19 @@ public interface MldpServiceRest {
    */
   public InputStream exportConcepts(Long projectId, boolean acceptNew,
     boolean readyOnly, String authToken) throws Exception;
+
+  /**
+   * Put concepts in workflow.
+   * NOTE: Temporary API prior to implementations of proper workflow
+   *
+   * @param conceptIds the concept ids
+   * @param workflowStatus the workflow status
+   * @param authToken the auth token
+   * @throws Exception the exception
+   */
+  public void putConceptsInWorkflow(List<Long> conceptIds,
+    WorkflowStatus workflowStatus, String authToken) throws Exception;
+
 
   
 }

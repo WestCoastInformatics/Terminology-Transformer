@@ -52,7 +52,11 @@ tsApp
           conceptEdited : null,
 
           // edit/import/export tab selection
-          editTab : 'Edit'
+          editTab : 'Edit',
+
+          // the QA check to run
+          check : null
+
         }
 
         $scope.lists = {
@@ -102,12 +106,6 @@ tsApp
         $scope.paging['concept'].callbacks = {
           getPagedList : findConcepts
         };
-        $scope.paging['review'] = utilService.getPaging();
-        $scope.paging['review'].sortField = 'key';
-        $scope.paging['review'].workflowStatus = null;
-        $scope.paging['review'].callbacks = {
-          getPagedList : getPagedReview
-        };
 
         $scope.configureCallbacks = function() {
           console.debug('*** CONFIGURE CALLBACKS ***');
@@ -115,8 +113,11 @@ tsApp
           //
           // Local scope functions pertaining to concept retrieval
           //
+
+          // when callbacks wish to retrieve component, assume a change has occurred
+          // see directives atoms.js and semanticTypes.js for use of callback
           $scope.callbacks = {
-            getComponent : setConceptEdited
+            getComponent : processConceptChange
           };
 
           //
@@ -215,31 +216,42 @@ tsApp
 
         }
 
+        // on concept change, re-set the edited concept and perform search
         function processConceptChange() {
           if ($scope.selected.component) {
             setConceptEdited($scope.selected.component);
           }
+          findConcepts();
         }
 
         function setConceptEdited(concept) {
+          console.debug('CALLBACK: ', concept);
           $scope.setConceptEdited(concept);
         }
         $scope.setConceptEdited = function(concept) {
+
+          console.debug('SET EDITED: ', concept);
+
+          $scope.selected.review = null;
 
           // NOTE: UMLS TermServer report uses "component" instead of "concept"
           // NOTE: Always re-retrieve concept for up-to-date state
           contentService.getConcept(concept.id, $scope.selected.project.id).then(
             function(response) {
+              console.debug('response', response);
               $scope.selected.component = response;
-              contentService.validateConcept($scope.selected.project.id, concept, null).then(
-                function(response) {
-                  $scope.selected.review = response;
+              contentService.validateConcept($scope.selected.project.id, response, null).then(
+                function(review) {
+                  $scope.selected.review = review;
                 });
             }, function(error) {
               console.error('error', error);
             });
-
         }
+
+        //
+        // Concept CRUD functions
+        //
 
         $scope.createConcept = function() {
           var concept = {
@@ -251,32 +263,29 @@ tsApp
             atoms : [],
             semanticTypes : []
           }
-          editService.addConcept($scope.selected.project.id, null, concept).then(
-            function(newConcept) {
-              $scope.setConceptEdited(newConcept);
-            })
+          editService.addConcept($scope.selected.project.id, concept).then(function(newConcept) {
+            $scope.setConceptEdited(newConcept);
+          })
         }
 
         $scope.cancelConcept = function() {
           $scope.setConceptEdited(null);
         }
 
-        $scope.addConcept = function(concept) {
-          contentService.addConcept(concept).then(function(newConcept) {
-            findConcepts();
-            $scope.setConceptViewed(newConcept);
-
-            // perform all actions triggered by concept change
+        $scope.updateConcept = function(concept) {
+          editService.updateConcept($scope.selected.project.id, concept).then(function() {
             $scope.processConceptChange();
-
-          });
+          })
         }
 
-        $scope.updateConcept = function(concept) {
-          contentService.updateConcept(concept).then(function() {
+        $scope.removeConcept = function(concept) {
+          console.debug('remove concept', concept);
+          editService.removeConcept($scope.selected.project.id, concept.id).then(function() {
+            if ($scope.conceptEdited && $scope.conceptEdited.id == concept.id) {
+              $scope.conceptEdited = null;
+            }
+            processConceptChange();
 
-            // perform all actions triggered by concept change
-            $scope.processConceptChange();
           });
         }
 
@@ -285,7 +294,7 @@ tsApp
           pfs.startIndex = -1;
           pfs.maxResults = -1;
 
-          contentService.removeConcepts(ids)
+          editService.removeConcepts($scope.selected.project.id, ids)
             .then(
               function() {
 
@@ -296,20 +305,8 @@ tsApp
                   $scope.selected.component = null;
                 }
                 // perform all actions triggered by concept change
-                $scope.refreshConceptEdited();
+                $scope.processConceptChange();
               });
-        }
-
-        $scope.removeConcept = function(concept) {
-          console.debug('remove concept', concept);
-          editService.removeConcept($scope.selected.project.id, concept.id).then(function() {
-            if ($scope.conceptEdited && $scope.conceptEdited.id == concept.id) {
-              $scope.conceptEdited = null;
-            } else {
-              processConceptChange();
-            }
-          });
-
         }
 
         //
@@ -327,94 +324,10 @@ tsApp
             : 'NEEDS_REVIEW';
           $scope.findConcepts();
         }
+
         //
-        // Review functions
+        // Validation and Review
         //
-
-        $scope.getReviewForConcepts = function(concept) {
-          var deferred = $q.defer();
-
-          // if starting concept supplied, initialize list
-          if (concept) {
-            console.debug('getReviewForConcepts: iitializing from ', concept);
-            $scope.lists.conceptsReviewed = {
-              'typeKeyValues' : [ concept ],
-              'totalCount' : 1
-            };
-          } else {
-            console.debug('getReviewForConcepts from concept list', $scope.lists.conceptsReviewed);
-          }
-
-          if (!$scope.lists.conceptsReviewed) {
-            deferred.reject('No concepts');
-          } else {
-
-            contentService.getReviewForConcepts($scope.lists.conceptsReviewed.typeKeyValues).then(
-              function(conceptReviews) {
-                $scope.lists.conceptsReviewed = conceptReviews;
-
-                // on review load, find and select for editing the viewed concept in the review list
-                angular.forEach($scope.lists.conceptsReviewed.typeKeyValues,
-                  function(conceptReview) {
-                    if (conceptReview.id == $scope.selected.conceptViewed.id) {
-                      $scope.setConceptEditedFromSearchResult(conceptReview);
-                    }
-                  });
-
-                // get paged list
-                getPagedReview();
-                deferred.resolve();
-              }, function(error) {
-                deferred.reject();
-              });
-          }
-          return deferred.promise;
-        }
-
-        // paging done client-side
-        function getPagedReview() {
-          console.debug('getPagedReview', $scope.lists.conceptsReviewed.typeKeyValues,
-            $scope.paging['review']);
-          $scope.lists.pagedReview = utilService.getPagedArray(
-            $scope.lists.conceptsReviewed.typeKeyValues, $scope.paging['review']);
-        }
-
-        // NOTE: Helper function intended for DEBUG use only
-        // recomputes workflow status for ALL concepts in type
-        $scope.recomputeAllReviewStatuses = function() {
-          contentService.computeReviewStatuses(
-            $scope.selected.metadata.terminology.terminology + '-ABBR').then(function() {
-            $scope.findConcepts();
-          });
-        }
-
-        // recompute review status for all items currently in graph other than currently edited
-        // intended for use after add, update, or remove
-        $scope.processConceptChange = function() {
-
-          var deferred = [];
-
-          // check current review table for possible changes to other concepts
-          angular
-            .forEach(
-              $scope.lists.conceptsReviewed.typeKeyValues,
-              function(concept) {
-                // call update to force re-check (unless the currently edited concept)
-                if (concept.workflowStatus == 'NEEDS_REVIEW'
-                  && (!$scope.selected.conceptEdited || $scope.selected.conceptEdited.id != concept.id)) {
-                  deferred.push(contentService.updateConcept(concept));
-                }
-              });
-
-          // after all recomputation, get new review and perform new find
-          $q.all(deferred).then(function() {
-            $scope.getReviewForConcepts();
-            findConcepts();
-          }, function() {
-            $scope.getReviewForConcepts();
-            findConcepts();
-          })
-        }
 
         $scope.finishReview = function() {
           var deferred = [];
@@ -423,8 +336,16 @@ tsApp
             if (concept.workflowStatus == 'NEEDS_REVIEW') {
               concept.workflowStatus = 'NEW';
 
+              angular.forEach(concept.atoms, function(atom) {
+                if (atom.workflowStatus == 'NEEDS_REVIEW') {
+                  atom.workflowStatus = 'NEW';
+                  deferred.push(editService
+                    .updateAtom($scope.selected.project.id, concept.id, atom));
+                }
+              })
+
               // NOTE: skip checks to prevent NEEDS_REVIEW from being re-applied
-              deferred.push(contentService.updateConcept(concept, true));
+              deferred.push(editService.updateConcept(concept, true));
             }
           })
           console.debug('deferred', deferred);
@@ -433,6 +354,16 @@ tsApp
             gpService.decrement();
             $scope.lists.conceptsReviewed = null;
           });
+        }
+
+        $scope.performChecks = function() {
+          if (!$scope.selected.check) {
+            return;
+          }
+          contentService.validateConcepts($scope.selected.project.id, null,
+            $scope.selected.check ? $scope.selected.check : null).then(function(response) {
+            console.debug('validateConcepts results', response);
+          })
         }
 
         //
@@ -474,9 +405,6 @@ tsApp
           // retrieve the correct table
           if (table === 'concept') {
             findConcepts();
-          }
-          if (table === 'review') {
-            getPagedReview();
           }
         };
 

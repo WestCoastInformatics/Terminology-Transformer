@@ -92,6 +92,8 @@
 
 
 
+
+
               
               <td class="col-md-1"><i
                 class="noul glyphicon glyphicon-trash"
@@ -126,16 +128,18 @@
             <span ng-click="createConcept()" class="btn btn-xs btn-primary">Create
               New</span> or select from table
           </div>
-          <h5 ng-show="selected.conceptEdited">
-            <span ng-show="!selected.conceptEdited.id">Add</span><span
-              ng-show="selected.conceptEdited.id">Edit</span> Concept
+
+          <h5 ng-show="selected.component">
+            <span ng-show="!selected.component.id">Add</span><span
+              ng-show="selected.component.id">Edit</span> Concept
           </h5>
 
           <div report selected="selected" lists="lists" callbacks="callbacks"></div>
 
 
           <!-- Review section  -->
-          <div ng-show="selected.review.errors.length > 0 || selected.review.warnings.length > 0 || selected.review.comments.length > 0">
+          <div
+            ng-show="selected.component.workflowStatus == 'NEEDS_REVIEW' || selected.review.errors.length > 0 || selected.review.warnings.length > 0 || selected.review.comments.length > 0">
             <h5>Review</h5>
 
             <div ng-repeat="error in selected.review.errors"
@@ -145,7 +149,7 @@
             <div ng-repeat="comment in selected.review.comments"
               class="alert alert-success">{{comment}}</div>
 
-            <button class="btn btn-xs btn-primary" title="Mark all resolved"
+            <button class="btn btn-xs btn-primary" title="Mark resolved"
               ng-click="finishReview()">Finish Review</button>
 
           </div>
@@ -222,18 +226,18 @@
           </div>
         </div>
         <div ng-show="selected.editTab == 'QA'">
-          <h4>Concept QA</h4>
+          <h4>Run Single Check</h4>
 
           <select ng-model="selected.check"
             ng-options="check as check for check in selected.project.validationChecks"></select>
           <button ng-show="selected.check" class="btn btn-primary btn-xs"
-            ng-click="runCheck()">Perform Check</button>
+            title="Run selected check on all concepts in project"
+            ng-click="performChecks(selected.check)">Perform Check</button>
 
-          <button class="btn btn-primary btn-xs" ng-click="runChecks()"
-            title="Run all available checks on all concepts">Perform
-            All Checks</button>
-
-          <hr>
+          <h4>Run All Checks</h4>
+          <button class="btn btn-primary btn-xs" ng-click="performChecks()"
+            title="Run all available checks on all concepts in project">Perform
+            Checks</button>
 
 
         </div>
