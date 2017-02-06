@@ -66,8 +66,7 @@ public class MldpIdentifierAssignmentHandler extends AbstractConfigurable
       try {
         final javax.persistence.Query query = service.getEntityManager()
             .createQuery("select max(cast(terminologyId as long)) from ConceptJpa");
-        query.setParameter("terminology", concept.getTerminology());
-        query.setParameter("version", concept.getVersion());
+       
         Long result = (Long) query.getSingleResult();
         if (result != null) {
           conceptId = result;
@@ -125,8 +124,7 @@ public class MldpIdentifierAssignmentHandler extends AbstractConfigurable
       try {
         final javax.persistence.Query query = service.getEntityManager()
             .createQuery("select max(cast(terminologyId as long)) from AtomJpa");
-        query.setParameter("terminology", atom.getTerminology());
-        query.setParameter("version", atom.getVersion());
+      
         Long result = (Long) query.getSingleResult();
         if (result != null) {
           atomId = result;
@@ -283,13 +281,6 @@ public class MldpIdentifierAssignmentHandler extends AbstractConfigurable
   @Override
   public void logAndCommit(int objectCt, int logCt, int commitCt)
     throws Exception {
-    throw new UnsupportedOperationException();
-  }
-
-  /* see superclass */
-  @Override
-  public void logAndCommit(String preMessage, int objectCt, int logCt,
-    int commitCt) throws Exception {
     throw new UnsupportedOperationException();
   }
 
