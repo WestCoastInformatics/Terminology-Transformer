@@ -43,10 +43,12 @@ public class MldpIdentifierAssignmentHandler extends AbstractConfigurable
   /** The max concept id. */
   private long maxConceptId = -1;
 
+  private long maxAtomId = -1;
+
   /* see superclass */
   @Override
   public void setProperties(Properties p) throws Exception {
-   // do nothing
+    // do nothing
   }
 
   /* see superclass */
@@ -57,20 +59,18 @@ public class MldpIdentifierAssignmentHandler extends AbstractConfigurable
       return concept.getTerminologyId();
     }
 
-    long conceptId = 1001;
+    long conceptId = 1000L;
     // If this is the first time this is called, lookup max ID from the database
     if (maxConceptId == -1) {
       final ContentServiceJpa service = new ContentServiceJpa();
       try {
         final javax.persistence.Query query = service.getEntityManager()
-            .createQuery("select max(terminologyId) from ConceptJpa "
-                + "where terminology = :terminology "
-                + "  and version = :version ");
+            .createQuery("select max(cast(terminologyId as long)) from ConceptJpa");
         query.setParameter("terminology", concept.getTerminology());
         query.setParameter("version", concept.getVersion());
-        String result = (String) query.getSingleResult();
+        Long result = (Long) query.getSingleResult();
         if (result != null) {
-          conceptId = Long.valueOf(result);
+          conceptId = result;
         }
       } catch (NoResultException e) {
         // do nothing, use conceptId above
@@ -113,7 +113,36 @@ public class MldpIdentifierAssignmentHandler extends AbstractConfigurable
   /* see superclass */
   @Override
   public String getTerminologyId(Atom atom) throws Exception {
-    return atom == null ? null : atom.getTerminologyId();
+    // Unpublishable atoms don't get assigned ids
+    if (!atom.isPublishable()) {
+      return atom.getTerminologyId();
+    }
+
+    long atomId = 1000;
+    // If this is the first time this is called, lookup max ID from the database
+    if (maxAtomId == -1) {
+      final ContentServiceJpa service = new ContentServiceJpa();
+      try {
+        final javax.persistence.Query query = service.getEntityManager()
+            .createQuery("select max(cast(terminologyId as long)) from AtomJpa");
+        query.setParameter("terminology", atom.getTerminology());
+        query.setParameter("version", atom.getVersion());
+        Long result = (Long) query.getSingleResult();
+        if (result != null) {
+          atomId = result;
+        }
+      } catch (NoResultException e) {
+        // do nothing, use atomId above
+      } finally {
+        service.close();
+      }
+      // Set the maxConceptId
+      maxAtomId = atomId;
+      Logger.getLogger(getClass())
+          .info("Initializing max atom id = " + maxAtomId);
+    }
+    final long result = ++maxAtomId;
+    return Long.toString(result);
   }
 
   /* see superclass */
@@ -180,7 +209,8 @@ public class MldpIdentifierAssignmentHandler extends AbstractConfigurable
   @Override
   public String getTerminologyId(SemanticTypeComponent semanticTypeComponent,
     Concept concept) throws Exception {
-    return semanticTypeComponent == null ? null : semanticTypeComponent.getTerminologyId();
+    return semanticTypeComponent == null ? null
+        : semanticTypeComponent.getTerminologyId();
   }
 
   /* see superclass */
@@ -210,9 +240,8 @@ public class MldpIdentifierAssignmentHandler extends AbstractConfigurable
   /* see superclass */
   @Override
   public String getName() {
-    return "MLDP Id Assignment Algorithm";
+    return "MLDP Id Assignment Handler";
   }
-
 
   /* see superclass */
   @Override
@@ -263,11 +292,11 @@ public class MldpIdentifierAssignmentHandler extends AbstractConfigurable
     int commitCt) throws Exception {
     throw new UnsupportedOperationException();
   }
-  
+
   /* see superclass */
   @Override
-  public void silentIntervalCommit(int objectCt, int logCt,
-    int commitCt) throws Exception {
+  public void silentIntervalCommit(int objectCt, int logCt, int commitCt)
+    throws Exception {
     throw new UnsupportedOperationException();
   }
 
@@ -279,5 +308,5 @@ public class MldpIdentifierAssignmentHandler extends AbstractConfigurable
   @Override
   public void setTransactionPerOperation(boolean arg0) throws Exception {
     throw new UnsupportedOperationException();
-  }  
+  }
 }
