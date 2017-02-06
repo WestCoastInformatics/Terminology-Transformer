@@ -110,7 +110,8 @@ tsApp.service('mldpService', [
       // if flag set, update type key value directly without additional checks
       // abbreviation endpoint performs post-processing, which re-applies
       // NEEDS_REVIEW on finishReview updates
-      $http.post(useProjectService ? projectUrl + '/typeKeyValue/update' : mldpUrl + '/abbr/update/',
+      $http.post(
+        useProjectService ? projectUrl + '/typeKeyValue/update' : mldpUrl + '/abbr/update/',
         abbreviation).then(
       // success
       function(response) {
@@ -204,33 +205,32 @@ tsApp.service('mldpService', [
       gpService.increment()
       var queryParams = (readyOnly ? 'readyOnly=true' : '');
       queryParams += acceptNew ? (queryParams.length > 0 ? '&' : '') + 'acceptNew=true' : '';
-      $http.post(mldpUrl + '/abbr/export/' + type + (queryParams ? '?' + queryParams : ''))
-        .then(
-        // Success
-        function(response) {
-          var blob = new Blob([ response.data ], {
-            type : ''
-          });
-
-          // fake a file URL and download it
-          var fileURL = URL.createObjectURL(blob);
-          var a = document.createElement('a');
-          a.href = fileURL;
-          a.target = '_blank';
-          a.download = 'abbreviations.' + type + ".txt";
-          document.body.appendChild(a);
-          gpService.decrement();
-          a.click();
-
-          deferred.resolve();
-
-        },
-        // Error
-        function(response) {
-          utilService.handleError(response);
-          gpService.decrement();
-          deferred.reject(response.data);
+      $http.post(mldpUrl + '/abbr/export/' + type + (queryParams ? '?' + queryParams : '')).then(
+      // Success
+      function(response) {
+        var blob = new Blob([ response.data ], {
+          type : ''
         });
+
+        // fake a file URL and download it
+        var fileURL = URL.createObjectURL(blob);
+        var a = document.createElement('a');
+        a.href = fileURL;
+        a.target = '_blank';
+        a.download = 'abbreviations.' + type + ".txt";
+        document.body.appendChild(a);
+        gpService.decrement();
+        a.click();
+
+        deferred.resolve();
+
+      },
+      // Error
+      function(response) {
+        utilService.handleError(response);
+        gpService.decrement();
+        deferred.reject(response.data);
+      });
       return deferred.promise;
     };
 
@@ -287,14 +287,16 @@ tsApp.service('mldpService', [
       }
       return deferred.promise;
     }
-    
-    this.importComponents = function(projectId, file) {
+
+    this.importConcepts = function(projectId, file) {
       var deferred = $q.defer();
+      
+      console.debug('importConcepts', projectId, file);
 
       // Get projects
       gpService.increment();
       Upload.upload({
-        url : mldpUrl + '/concept/import?' + projectId,
+        url : mldpUrl + '/concept/import?projectId=' + projectId,
         data : {
           file : file
         }
@@ -312,5 +314,41 @@ tsApp.service('mldpService', [
       });
       return deferred.promise;
     }
+
+    this.exportConcepts = function(project, acceptNew, readyOnly) {
+      console.debug('exportConcepts', project, acceptNew, readyOnly);
+      var deferred = $q.defer();
+      gpService.increment()
+
+      $http.post(
+        mldpUrl + '/concept/export?projectId=' + project.id + (acceptNew ? '&acceptNew=true' : '')
+          + (readyOnly ? '&readyOnly=true' : '')).then(
+      // Success
+      function(response) {
+        var blob = new Blob([ response.data ], {
+          type : ''
+        });
+
+        // fake a file URL and download it
+        var fileURL = URL.createObjectURL(blob);
+        var a = document.createElement('a');
+        a.href = fileURL;
+        a.target = '_blank';
+        a.download = 'concepts.' + project.terminology + ".txt";
+        document.body.appendChild(a);
+        gpService.decrement();
+        a.click();
+
+        deferred.resolve();
+
+      },
+      // Error
+      function(response) {
+        utilService.handleError(response);
+        gpService.decrement();
+        deferred.reject(response.data);
+      });
+      return deferred.promise;
+    };
 
   } ]);

@@ -1,4 +1,4 @@
-<!-- Controlled by ComponentCtrl (in componentController.js)  -->
+<!-- Controlled by ConceptCtrl (in conceptController.js)  -->
 
 <style>
 .color-box {
@@ -16,95 +16,95 @@
 
   <!-- Content -->
   <div class="col-md-12 col-xs-12">
-    <!-- Component Management section -->
+    <!-- Concept Management section -->
 
     <div class="row">
       <div class="col-md-6">
         <h3
-          ng-show="user.applicationRole == 'ADMINISTRATOR' || user.applicationRole == 'USER'">Components
-          ({{lists.componentsViewed.totalCount}})</h3>
+          ng-show="user.applicationRole == 'ADMINISTRATOR' || user.applicationRole == 'USER'">Concepts
+          ({{lists.conceptsViewed.totalCount}})</h3>
 
 
         Terminology: <select ng-model="selected.metadata.terminology"
           ng-change="setTerminology(selected.metadata.terminology)"
           ng-options="terminology as terminology.terminology for terminology in getViewableTerminologies() | orderBy:'terminology'">
         </select> <span class="pull-right"> <span class="color-box"
-          style="background-color: green;" ng-show="paging['component'].hasNew"
-          ng-click="toggleNewMode()" title="New components"></span>&nbsp;<span
+          style="background-color: green;" ng-show="paging['concept'].hasNew"
+          ng-click="toggleNewMode()" title="New concepts"></span>&nbsp;<span
           class="color-box" style="background-color: red;"
-          ng-show="paging['component'].hasNeedsReview"
-          ng-click="toggleReviewMode()" title="Some components need review">
+          ng-show="paging['concept'].hasNeedsReview"
+          ng-click="toggleReviewMode()" title="Some concepts need review">
         </span> Status: <select
           ng-options="status.key as status.label for status in lists.workflowStatus"
-          ng-model="paging['component'].workflowStatus"
-          ng-change="findComponents()"></select>
+          ng-model="paging['concept'].workflowStatus" ng-change="findConcepts()"></select>
         </span>
         <div class="row">
-          <div class="col-md-8" pager paging="paging['component']"
-            count="lists.componentsViewed.totalCount"
-            callbacks="paging['component'].callbacks" style="margin-top: 10px;"></div>
-          <div class="col-md-4" ng-show="lists.componentsViewed.totalCount > 10"
+          <div class="col-md-8" pager paging="paging['concept']"
+            count="lists.conceptsViewed.totalCount"
+            callbacks="paging['concept'].callbacks" style="margin-top: 10px;"></div>
+          <div class="col-md-4" ng-show="lists.conceptsViewed.totalCount > 10"
             style="float: right; margin-top: 10px;">
-            Page size: <select ng-model="paging['component'].pageSize"
+            Page size: <select ng-model="paging['concept'].pageSize"
               title="Page Size"
-              ng-change="paging['component'].callbacks.getPagedList()"
+              ng-change="paging['concept'].callbacks.getPagedList()"
               ng-options="pageSize.key as pageSize.value for pageSize in lists.pageSizes">
 
             </select>
           </div>
         </div>
         <div class="alert alert-warning"
-          ng-show="lists.componentsViewed.totalCount == 0">No results</div>
+          ng-show="lists.conceptsViewed.totalCount == 0">No results</div>
 
 
         <table class="slim table table-hover" style="margin-top: 10px;"
-          ng-show="lists.componentsViewed.results.length > 0">
+          ng-show="lists.conceptsViewed.concepts.length > 0">
           <tr>
-            <th ng-click="setSortField('component','terminologyId')">Id<span
-              ng-bind="getSortIndicator('component','terminologyId')"></span></th>
+            <th ng-click="setSortField('concept','terminologyId')">Id<span
+              ng-bind="getSortIndicator('concept','terminologyId')"></span></th>
             <th></th>
-            <th ng-click="setSortField('component','name')">Name<span
-              ng-bind="getSortIndicator('component','name')"></span></th>
-            <th ng-click="setSortField('component','semanticTypes.semanticType')">{{selected.metadata.semanticTypesLabel}}<span
-              ng-bind="getSortIndicator('component','semanticTypes.semanticType')"></span></th>
+            <th ng-click="setSortField('concept','name')">Name<span
+              ng-bind="getSortIndicator('concept','name')"></span></th>
+            <th ng-click="setSortField('concept','semanticTypes.semanticType')">{{selected.metadata.semanticTypesLabel}}<span
+              ng-bind="getSortIndicator('concept','semanticTypes.semanticType')"></span></th>
 
             <th><i class="noul glyphicon glyphicon-trash"
-              confirm="Are you sure you want to remove {{lists.componentsViewed.totalCount}} components?"
-              ng-click="removeComponents()"></i>
+              confirm="Are you sure you want to remove {{lists.conceptsViewed.totalCount}} concepts?"
+              ng-click="removeConcepts()"></i>
           </tr>
           <tbody>
             <!-- table-hover makes use of the active class -->
-            <tr
-              ng-class="{selected: component.id == selected.componentViewed.id}"
+            <tr ng-class="{selected: concept.id == selected.conceptViewed.id}"
               class="breakword"
-              ng-repeat="component in lists.componentsViewed.results">
-              <td class="col-md-3" ng-click="setComponentViewed(component)">{{component.terminologyId}}</td>
-              <td ng-click="setComponentViewed(component)"><span
+              ng-repeat="concept in lists.conceptsViewed.concepts">
+              <td class="col-md-2" ng-click="setConceptViewed(concept)">{{concept.terminologyId}}</td>
+              <td class="col-md-1" ng-click="setConceptViewed(concept)"><span
                 class="color-box"
                 style="background-color: red; margin-top: 5px;"
-                ng-show="component.workflowStatus == 'NEEDS_REVIEW'"
+                ng-show="concept.workflowStatus == 'NEEDS_REVIEW'"
                 ng-click="setReviewMode()" title="Needs review"></span><span
                 class="color-box"
                 style="background-color: green; margin-top: 5px;"
-                ng-show="component.workflowStatus == 'NEW'"
-                title="New component"></span></td>
+                ng-show="concept.workflowStatus == 'NEW'" title="New concept"></span></td>
 
-              <td class="col-md-3" ng-click="setComponentViewed(component)">{{component.value}}</td>
-              <td class="col-md-3" ng-click="setComponentViewed(component)">TODO
+              <td class="col-md-5" ng-click="setConceptViewed(concept)">{{concept.name}}</td>
+              <td class="col-md-3" ng-click="setConceptViewed(concept)">{{concept.semanticTypes[0].semanticType}}
+
+
 
 
               
-              <td><i class="noul glyphicon glyphicon-trash"
-                ng-click="removeComponent(component)"></i>
+              <td class="col-md-1"><i
+                class="noul glyphicon glyphicon-trash"
+                ng-click="removeConcept(concept)"></i>
             </tr>
           </tbody>
         </table>
 
-        <div ng-show="lists.filterTypes.length > 0">
-          Additional Filter: <select ng-model="paging['component'].filterType"
-            ng-change="findComponents()"
-            ng-options="filterType.key as filterType.value for filterType in lists.filterTypes">
 
+        <div ng-show="lists.filterTypes.length > 0">
+          Additional Filter: <select ng-model="paging['concept'].filterType"
+            ng-change="findConcepts()"
+            ng-options="filterType.key as filterType.value for filterType in lists.filterTypes">
           </select>
         </div>
       </div>
@@ -118,84 +118,32 @@
           <li ng-class="{active : selected.editTab == 'Export'}"
             ng-click="selected.editTab = 'Export';"><a>Export</a></li>
           <li ng-class="{active : selected.editTab == 'QA'}"
-            ng-click="selected.editTab = 'Export';"><a>QA</a></li>
+            ng-click="selected.editTab = 'QA';"><a>QA</a></li>
         </ul>
         <div ng-show="selected.editTab == 'Edit'">
 
           <div style="margin-top: 14px;">
-            <span ng-click="createComponent()" class="btn btn-xs btn-primary">Create
+            <span ng-click="createConcept()" class="btn btn-xs btn-primary">Create
               New</span> or select from table
           </div>
-          <h5 ng-show="selected.componentEdited">
-            <span ng-show="!selected.componentEdited.id">Add</span><span
-              ng-show="selected.componentEdited.id">Edit</span> Component
+          <h5 ng-show="selected.conceptEdited">
+            <span ng-show="!selected.conceptEdited.id">Add</span><span
+              ng-show="selected.conceptEdited.id">Edit</span> Concept
           </h5>
-          
-          {{selected.component}}
-          <hr>
-
 
           <div report selected="selected" lists="lists" callbacks="callbacks"></div>
 
 
           <!-- Review section  -->
-          <div
-            ng-show="lists.componentsReviewed && lists.componentsReviewed.totalCount > 1">
+          <div ng-show="selected.review.errors.length > 0 || selected.review.warnings.length > 0 || selected.review.comments.length > 0">
             <h5>Review</h5>
 
-            <div class="row">
-              <div class="col-md-8" pager paging="paging['review']"
-                count="lists.componentsReviewed.totalCount"
-                callbacks="paging['review'].callbacks" style="margin-top: 10px;"></div>
-              <div class="col-md-4"
-                ng-show="lists.componentsReviewed.totalCount > 10"
-                style="float: right; margin-top: 10px;">
-                Page size: <select ng-model="paging['review'].pageSize"
-                  title="Page Size"
-                  ng-change="paging['review'].callbacks.getPagedList()"
-                  ng-options="pageSize.key as pageSize.value for pageSize in lists.pageSizes">
-
-                </select>
-              </div>
-            </div>
-
-            <table class="slim table table-hover" style="margin-top: 10px;"
-              ng-show="lists.pagedReview.data.length > 0">
-              <tr>
-                <th ng-click="setSortField('review','key')">Component<span
-                  ng-bind="getSortIndicator('review','key')"></span></th>
-                <th></th>
-                <th ng-click="setSortField('review','value')">Expansion<span
-                  ng-bind="getSortIndicator('review','value')"></span></th>
-                <th ng-click="setSortField('review','lastModified')">Last
-                  Modified<span
-                  ng-bind="getSortIndicator('review','lastModified')"></span>
-                </th>
-
-              </tr>
-              <tbody>
-                <!-- table-hover makes use of the active class -->
-                <tr
-                  ng-class="{selected: component.id == selected.componentEdited.id}"
-                  ng-repeat="component in lists.pagedReview.data"
-                  ng-click="setComponentEditedFromSearchResult(component)">
-                  <td class="col-md-3"
-                    ng-bind-html="component.key |
-                    highlightExact:selected.componentEdited.key"></td>
-                  <td class="col-md-1"><span class="color-box"
-                    style="background-color: red;"
-                    ng-show="component.workflowStatus == 'NEEDS_REVIEW'"
-                    uib-tooltip="Needs review"></span><span class="color-box"
-                    style="background-color: green; margin-top: 5px;"
-                    ng-show="component.workflowStatus == 'NEW'"
-                    title="New component"></span>
-                  <td class="col-md-5"
-                    ng-bind-html="component.value |
-                    highlightExact:selected.componentEdited.value"></td>
-                  <td class="col-md-3">{{toDate(component.lastModified)}}</td>
-                </tr>
-              </tbody>
-            </table>
+            <div ng-repeat="error in selected.review.errors"
+              class="alert alert-danger">{{error}}</div>
+            <div ng-repeat="warning in selected.review.warnings"
+              class="alert alert-warning">{{warning}}</div>
+            <div ng-repeat="comment in selected.review.comments"
+              class="alert alert-success">{{comment}}</div>
 
             <button class="btn btn-xs btn-primary" title="Mark all resolved"
               ng-click="finishReview()">Finish Review</button>
@@ -227,40 +175,36 @@
               <tr ng-show="selected.file">
                 <td>Selected File</td>
                 <td>{{selected.file.name}}<br> <span
-                  class="btn btn-xs btn-primary"
-                  ng-click="validateComponentsFile()"
-                  ng-show="!validateComponentsFileResults" title="Validate file">Validate</span><span
                   class="btn btn-xs btn-success" ng-click="cancelImport()"
-                  ng-show="validateComponentsFileResults && importComponentsFileResults"
-                  title="">Completed</span> <span class="btn btn-xs btn-primary"
-                  ng-click="importComponentsFile()"
-                  ng-show="validateComponentsFileResults && !importComponentsFileResults"
-                  title="Import file">Import</span> &nbsp;<span
-                  class="btn btn-xs btn-warning" ng-click="cancelImport()"
-                  ng-show="validateComponentsFileResults && !importComponentsFileResults"
+                  ng-show="importConceptsFileResults" title="">Completed</span>
+                  <span class="btn btn-xs btn-primary"
+                  ng-click="importConceptsFile()"
+                  ng-show="!importConceptsFileResults" title="Import file">Import</span>
+                  &nbsp;<span class="btn btn-xs btn-warning"
+                  ng-click="cancelImport()" ng-show="!importConceptsFileResults"
                   title="Cancel import">Cancel</span>
                 <td></td>
               </tr>
             </table>
 
-            <div ng-show="importComponentsFileResults">
+            <div ng-show="importConceptsFileResults">
               <h4>Import Results</h4>
               <div class="alert alert-success"
-                ng-repeat="comment in importComponentsFileResults.comments">{{comment}}</div>
+                ng-repeat="comment in importConceptsFileResults.comments">{{comment}}</div>
               <div class="alert alert-danger "
-                ng-repeat="error in importComponentsFileResults.errors | orderBy:'+'">{{error}}</div>
+                ng-repeat="error in importConceptsFileResults.errors | orderBy:'+'">{{error}}</div>
               <div class="alert alert-warning"
-                ng-repeat="warning in importComponentsFileResults.warnings | orderBy:'+'">{{warning}}</div>
+                ng-repeat="warning in importConceptsFileResults.warnings | orderBy:'+'">{{warning}}</div>
             </div>
-            <div ng-show="validateComponentsFileResults">
+            <div ng-show="validateConceptsFileResults">
               <h4>File Validation</h4>
 
               <div class="alert alert-success"
-                ng-repeat="comment in validateComponentsFileResults.comments">{{comment}}</div>
+                ng-repeat="comment in validateConceptsFileResults.comments">{{comment}}</div>
               <div class="alert alert-danger "
-                ng-repeat="error in validateComponentsFileResults.errors | orderBy:'+'">{{error}}</div>
+                ng-repeat="error in validateConceptsFileResults.errors | orderBy:'+'">{{error}}</div>
               <div class="alert alert-warning"
-                ng-repeat="warning in validateComponentsFileResults.warnings | orderBy:'+'">{{warning}}
+                ng-repeat="warning in validateConceptsFileResults.warnings | orderBy:'+'">{{warning}}
               </div>
             </div>
           </div>
@@ -270,15 +214,28 @@
           <div style="margin-top: 25px;">
             <h4>Export</h4>
             <span class="btn btn-xs btn-primary" style="margin-right: 10px;"
-              ng-click="exportComponents()">Export Components</span> <br> <br>
+              ng-click="exportConcepts()">Export Concepts</span> <br> <br>
             <input type="checkbox" ng-model="selected.exportReadyOnly">
             Skip abbbreviations needing review<br> <br> <input
               type="checkbox" ng-model="selected.exportAcceptNew"> Mark
-            new components accepted
+            new concepts accepted
           </div>
         </div>
-        <div ng-show="selected.editTab == 'Export'">
-          <span class="label label-warning" style="padding:5px;">TODO</span>
+        <div ng-show="selected.editTab == 'QA'">
+          <h4>Concept QA</h4>
+
+          <select ng-model="selected.check"
+            ng-options="check as check for check in selected.project.validationChecks"></select>
+          <button ng-show="selected.check" class="btn btn-primary btn-xs"
+            ng-click="runCheck()">Perform Check</button>
+
+          <button class="btn btn-primary btn-xs" ng-click="runChecks()"
+            title="Run all available checks on all concepts">Perform
+            All Checks</button>
+
+          <hr>
+
+
         </div>
       </div>
     </div>

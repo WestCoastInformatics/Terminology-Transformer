@@ -17,11 +17,12 @@ tsApp
       'projectService',
       'contentService',
       'editService',
+      'mldpService',
       function($scope, $http, $q, $location, $uibModal, gpService, utilService, tabService,
         configureService, securityService, metadataService, projectService, contentService,
-        editService) {
+        editService, mldpService) {
         console.debug('configure ConceptCtrl');
-       
+
         // Set up tabs and controller
         tabService.setShowing(true);
         utilService.clearError();
@@ -30,12 +31,11 @@ tsApp
         projectService.getUserHasAnyRole();
 
         // always enable simple editing
-        // TODO Consider additional config for this, or move to appConfig.js
         editService.enableEditing();
 
         $scope.selected = {
           metadata : metadataService.getModel(),
-          component : null,
+          concept : null,
           project : null
         };
 
@@ -45,11 +45,11 @@ tsApp
           terminology : null,
           metadata : metadataService.getModel(),
 
-          // the component selected in the browse table
-          componentViewed : null,
+          // the concept selected in the browse table
+          conceptViewed : null,
 
-          // the component selected for editing
-          componentEdited : null,
+          // the concept selected for editing
+          conceptEdited : null,
 
           // edit/import/export tab selection
           editTab : 'Edit'
@@ -58,9 +58,9 @@ tsApp
         $scope.lists = {
           projects : [],
           terminologies : [],
-          componentsViewed : [],
-          componentsReviewed : [],
-          fileTypesFilter : '.txt',
+          conceptsViewed : [],
+          conceptsReviewed : [],
+          fileTypesFilter : '.csv',
           workflowStatus : [ {
             key : null,
             label : 'All Active'
@@ -94,13 +94,13 @@ tsApp
         };
 
         $scope.paging = {};
-        $scope.paging['component'] = utilService.getPaging();
-        $scope.paging['component'].sortField = 'terminologyId';
-        $scope.paging['component'].workflowStatus = null;
-        $scope.paging['component'].filterType = null;
-        $scope.paging['component'].pageSize = 10;
-        $scope.paging['component'].callbacks = {
-          getPagedList : findComponents
+        $scope.paging['concept'] = utilService.getPaging();
+        $scope.paging['concept'].sortField = 'terminologyId';
+        $scope.paging['concept'].workflowStatus = null;
+        $scope.paging['concept'].filterType = null;
+        $scope.paging['concept'].pageSize = 10;
+        $scope.paging['concept'].callbacks = {
+          getPagedList : findConcepts
         };
         $scope.paging['review'] = utilService.getPaging();
         $scope.paging['review'].sortField = 'key';
@@ -113,14 +113,14 @@ tsApp
           console.debug('*** CONFIGURE CALLBACKS ***');
 
           //
-          // Local scope functions pertaining to component retrieval
+          // Local scope functions pertaining to concept retrieval
           //
           $scope.callbacks = {
-            getComponent : $scope.setComponentEditedFromSearchResult,
+            getComponent : setConceptEdited
           };
 
           //
-          // Component report callbacks
+          // Concept report callbacks
           //
 
           // add content callbacks for special content retrieval (relationships,
@@ -138,40 +138,50 @@ tsApp
         // pass utility functions to scope
         $scope.toDate = utilService.toDate;
 
-        $scope.findComponents = function(component) {
-          findComponents(component);
+        $scope.findConcepts = function(concept) {
+          findConcepts(concept);
         }
-        function findComponents(component) {
+        function findConcepts(concept) {
           if (!$scope.selected.metadata.terminology) {
             return;
           }
-          if (component) {
-            $scope.setComponentViewed(component);
+          if (concept) {
+            $scope.setConceptViewed(concept);
           }
-          var pfs = prepComponentPfs('component');
-          console.debug('pfs', pfs);
-          // retrieval call
-          // findComponentsAsList = function(queryStr, type, terminology, version, searchParams) {
+          var searchParams = prepConceptPfs('concept');
 
-          console.debug('findComponents', $scope.paging['component'], $scope.selected);
+          console.debug('findConcepts', searchParams);
 
-          var searchParams = {
-            page : $scope.paging['component'].page,
-            pageSize : $scope.paging['component'].pageSize,
-            sortField : $scope.paging['component'].sortField,
-            ascending : $scope.paging['component'].sortAscending
-          }
-
-          contentService.findComponentsAsList($scope.paging['component'].filter,
-            $scope.selected.metadata.terminology.organizingClassType,
+          contentService.getConceptsForQuery($scope.paging['concept'].filter,
             $scope.selected.metadata.terminology.terminology,
-            $scope.selected.metadata.terminology.version, searchParams).then(function(response) {
-            $scope.lists.componentsViewed = response;
-            console.debug('components', $scope.lists.componentsViewed);
-          });
+            $scope.selected.metadata.terminology.version, $scope.selected.project.id, searchParams)
+            .then(function(response) {
+              $scope.lists.conceptsViewed = response;
+              console.debug('concepts', $scope.lists.conceptsViewed);
+            });
+
+          //  truncated NEEDS_REVIEW and NEW calls
+          searchParams = prepConceptPfs('concept');
+          searchParams.maxResults = 0;
+          searchParams.queryRestriction = 'workflowStatus:NEEDS_REVIEW';
+          contentService.getConceptsForQuery($scope.paging['concept'].filter,
+            $scope.selected.metadata.terminology.terminology,
+            $scope.selected.metadata.terminology.version, $scope.selected.project.id, searchParams)
+            .then(function(response) {
+              $scope.paging['concept'].hasNeedsReview = response.totalCount > 0;
+            });
+          searchParams = prepConceptPfs('concept');
+          searchParams.maxResults = 0;
+          searchParams.queryRestriction = 'workflowStatus:NEW';
+          contentService.getConceptsForQuery($scope.paging['concept'].filter,
+            $scope.selected.metadata.terminology.terminology,
+            $scope.selected.metadata.terminology.version, $scope.selected.project.id, searchParams)
+            .then(function(response) {
+              $scope.paging['concept'].hasNew = response.totalCount > 0;
+            });
         }
 
-        function prepComponentPfs(type) {
+        function prepConceptPfs(type) {
           var paging = $scope.paging[type];
           var pfs = {
             startIndex : (paging.page - 1) * paging.pageSize,
@@ -181,148 +191,125 @@ tsApp
             queryRestriction : null
           };
 
-          // construct the query restriction clauses
-          var clauses = [];
-
-          // first, restriction by type (required)
-          clauses.push('type:\"' + $scope.selected.metadata.terminology.terminology + '-ABBR\"');
-
-          // restriction by workflow status (optional)
-          if ($scope.paging['component'].workflowStatus) {
-            clauses.push('workflowStatus:' + $scope.paging[type].workflowStatus);
+          switch ($scope.paging['concept'].workflowStatus) {
+          case 'PUBLISHED':
+            pfs.queryRestriction = 'workflowStatus:PUBLISHED';
+            break;
+          case 'NEW':
+            pfs.queryRestriction = 'workflowStatus:NEW';
+            break;
+          case 'NEEDS_REVIEW':
+            pfs.queryRestriction = 'workflowStatus:NEEDS_REVIEW';
+            break;
+          default:
+            // do nothing
           }
-
-          // construct the query restriction
-          pfs.queryRestriction = '';
-          for (var i = 0; i < clauses.length; i++) {
-            pfs.queryRestriction += clauses[i] + (i < clauses.length - 1 ? ' AND ' : '');
-          }
-
           return pfs;
         }
 
-        $scope.setComponentViewed = function(component) {
-          console.debug('set component', component);
+        $scope.setConceptViewed = function(concept) {
+          console.debug('set concept', concept);
           $scope.selected.editTab = 'Edit';
-          $scope.selected.componentViewed = component;
-          $scope.setComponentEditedFromSearchResult(component);
+          $scope.selected.conceptViewed = concept;
+          $scope.setConceptEdited(concept);
 
         }
-        
-        $scope.setComponentEdited = function(component) {
-          $scope.selected.component = component;
+
+        function processConceptChange() {
+          if ($scope.selected.component) {
+            setConceptEdited($scope.selected.component);
+          }
         }
 
-        $scope.setComponentEditedFromSearchResult = function(searchResult) {
-          // NOTE: findConcepts returns search result, need to retrieve
-          // NOTE: UMLS TermServer report uses "selected" structure instead of component directly
-          contentService.getComponent(searchResult, $scope.selected.project.id).then(
-            function(component) {
-              console.debug('edited component', component);
-              $scope.selected.component = component;
-            })
+        function setConceptEdited(concept) {
+          $scope.setConceptEdited(concept);
+        }
+        $scope.setConceptEdited = function(concept) {
+
+          // NOTE: UMLS TermServer report uses "component" instead of "concept"
+          // NOTE: Always re-retrieve concept for up-to-date state
+          contentService.getConcept(concept.id, $scope.selected.project.id).then(
+            function(response) {
+              $scope.selected.component = response;
+              contentService.validateConcept($scope.selected.project.id, concept, null).then(
+                function(response) {
+                  $scope.selected.review = response;
+                });
+            }, function(error) {
+              console.error('error', error);
+            });
+
         }
 
-        $scope.createComponent = function() {
-          var component = {
+        $scope.createConcept = function() {
+          var concept = {
             type : $scope.selected.metadata.terminology.organizingClassType,
             terminologyId : null,
             terminology : $scope.selected.metadata.terminology.terminology,
             version : $scope.selected.metadata.terminology.version,
             name : '(New Concept)',
-            atoms: [],
+            atoms : [],
             semanticTypes : []
           }
-          $scope.setComponentEdited(component);
+          editService.addConcept($scope.selected.project.id, null, concept).then(
+            function(newConcept) {
+              $scope.setConceptEdited(newConcept);
+            })
         }
 
-        $scope.cancelComponent = function() {
-          $scope.setComponentEditedFromSearchResult(null);
+        $scope.cancelConcept = function() {
+          $scope.setConceptEdited(null);
         }
 
-        $scope.addComponent = function(component) {
-          contentService.addComponent(component).then(function(newComponent) {
-            findComponents();
-            $scope.setComponentViewed(newComponent);
+        $scope.addConcept = function(concept) {
+          contentService.addConcept(concept).then(function(newConcept) {
+            findConcepts();
+            $scope.setConceptViewed(newConcept);
 
-            // perform all actions triggered by component change
-            $scope.processComponentChange();
+            // perform all actions triggered by concept change
+            $scope.processConceptChange();
 
           });
         }
 
-        $scope.updateComponent = function(component) {
-          contentService.updateComponent(component).then(function() {
+        $scope.updateConcept = function(concept) {
+          contentService.updateConcept(concept).then(function() {
 
-            // perform all actions triggered by component change
-            $scope.processComponentChange();
+            // perform all actions triggered by concept change
+            $scope.processConceptChange();
           });
         }
 
-        $scope.removeComponents = function() {
-          var pfs = prepComponentPfs('component');
+        $scope.removeConcepts = function(ids) {
+          var pfs = prepConceptPfs('concept');
           pfs.startIndex = -1;
           pfs.maxResults = -1;
 
-          contentService.findComponents($scope.paging['component'].filter,
-            $scope.paging['component'].filterType, pfs).then(
-            function(response) {
-              var ids = response.typeKeyValues.map(function(t) {
-                return t.id;
+          contentService.removeConcepts(ids)
+            .then(
+              function() {
+
+                // if no ids specified (remove all) or in list, clear edited
+                if (!ids
+                  || ($scope.selected.conceptEdited && ids
+                    .indexOf($scope.selected.conceptEdited.id) != -1)) {
+                  $scope.selected.component = null;
+                }
+                // perform all actions triggered by concept change
+                $scope.refreshConceptEdited();
               });
-              contentService.removeComponents(ids).then(
-                function() {
-                  findComponents();
-
-                  // clear edited component
-                  if ($scope.selected.componentEdited
-                    && ids.indexOf($scope.selected.componentEdited.id) != -1) {
-                    $scope.setComponentEditedFromSearchResult(null);
-                  }
-
-                  console.debug('cycling over review list', $scope.lists.componentsReviewed);
-
-                  // remove the component from the review list if present
-                  for (var i = 0; i < $scope.lists.componentsReviewed.typeKeyValues.length; i++) {
-                    console.debug('checking', ids,
-                      $scope.lists.componentsReviewed.typeKeyValues[i].id)
-                    if (ids.indexOf($scope.lists.componentsReviewed.typeKeyValues[i].id) != -1) {
-
-                      $scope.lists.componentsReviewed.typeKeyValues.splice(i--, 1);
-                      console.debug('-> found, new list ', $scope.lists.componentsReviewed);
-                    }
-                  }
-
-                  $scope.processComponentChange();
-                });
-            });
         }
 
-        $scope.removeComponent = function(component) {
-          console.debug('remove component', component);
-          contentService.removeComponent(component.id).then(
-            function() {
+        $scope.removeConcept = function(concept) {
+          console.debug('remove concept', concept);
+          editService.removeConcept($scope.selected.project.id, concept.id).then(function() {
+            if ($scope.conceptEdited && $scope.conceptEdited.id == concept.id) {
+              $scope.conceptEdited = null;
+            } else {
+              processConceptChange();
+            }
+          });
 
-              // clear edited component
-              $scope.setComponentEditedFromSearchResult(null);
-
-              console.debug('cycling over review list', $scope.lists.componentsReviewed);
-
-              // remove the component from the review list if present
-              for (var i = 0; i < $scope.lists.componentsReviewed.typeKeyValues.length; i++) {
-                console.debug('checking', component.id,
-                  $scope.lists.componentsReviewed.typeKeyValues[i].id)
-                if ($scope.lists.componentsReviewed.typeKeyValues[i].id == component.id) {
-
-                  $scope.lists.componentsReviewed.typeKeyValues.splice(i, 1);
-                  console.debug('-> found, new list ', $scope.lists.componentsReviewed);
-                }
-              }
-
-              // perform all actions triggered by component change
-              console.debug('REMOVE_ABBREVIATION: PROCESS ', $scope.lists.componentsReviewed);
-              $scope.processComponentChange();
-            });
         }
 
         //
@@ -330,144 +317,145 @@ tsApp
         //
 
         $scope.toggleNewMode = function() {
-          $scope.paging['component'].workflowStatus = $scope.paging['component'].workflowStatus == 'NEW' ? null
+          $scope.paging['concept'].workflowStatus = $scope.paging['concept'].workflowStatus == 'NEW' ? null
             : 'NEW';
-          $scope.findComponents();
+          $scope.findConcepts();
         }
 
         $scope.toggleReviewMode = function() {
-          $scope.paging['component'].workflowStatus = $scope.paging['component'].workflowStatus == 'NEEDS_REVIEW' ? null
+          $scope.paging['concept'].workflowStatus = $scope.paging['concept'].workflowStatus == 'NEEDS_REVIEW' ? null
             : 'NEEDS_REVIEW';
-          $scope.findComponents();
+          $scope.findConcepts();
         }
         //
         // Review functions
         //
 
-        $scope.getReviewForComponents = function(component) {
+        $scope.getReviewForConcepts = function(concept) {
           var deferred = $q.defer();
 
-          // if starting component supplied, initialize list
-          if (component) {
-            console.debug('getReviewForComponents: iitializing from ', component);
-            $scope.lists.componentsReviewed = {
-              'typeKeyValues' : [ component ],
+          // if starting concept supplied, initialize list
+          if (concept) {
+            console.debug('getReviewForConcepts: iitializing from ', concept);
+            $scope.lists.conceptsReviewed = {
+              'typeKeyValues' : [ concept ],
               'totalCount' : 1
             };
           } else {
-            console.debug('getReviewForComponents from component list',
-              $scope.lists.componentsReviewed);
+            console.debug('getReviewForConcepts from concept list', $scope.lists.conceptsReviewed);
           }
 
-          if (!$scope.lists.componentsReviewed) {
-            deferred.reject('No components');
+          if (!$scope.lists.conceptsReviewed) {
+            deferred.reject('No concepts');
           } else {
 
-            contentService.getReviewForComponents($scope.lists.componentsReviewed.typeKeyValues)
-              .then(
-                function(componentReviews) {
-                  $scope.lists.componentsReviewed = componentReviews;
+            contentService.getReviewForConcepts($scope.lists.conceptsReviewed.typeKeyValues).then(
+              function(conceptReviews) {
+                $scope.lists.conceptsReviewed = conceptReviews;
 
-                  // on review load, find and select for editing the viewed component in the review list
-                  angular.forEach($scope.lists.componentsReviewed.typeKeyValues, function(
-                    componentReview) {
-                    if (componentReview.id == $scope.selected.componentViewed.id) {
-                      $scope.setComponentEditedFromSearchResult(componentReview);
+                // on review load, find and select for editing the viewed concept in the review list
+                angular.forEach($scope.lists.conceptsReviewed.typeKeyValues,
+                  function(conceptReview) {
+                    if (conceptReview.id == $scope.selected.conceptViewed.id) {
+                      $scope.setConceptEditedFromSearchResult(conceptReview);
                     }
                   });
 
-                  // get paged list
-                  getPagedReview();
-                  deferred.resolve();
-                }, function(error) {
-                  deferred.reject();
-                });
+                // get paged list
+                getPagedReview();
+                deferred.resolve();
+              }, function(error) {
+                deferred.reject();
+              });
           }
           return deferred.promise;
         }
 
         // paging done client-side
         function getPagedReview() {
-          console.debug('getPagedReview', $scope.lists.componentsReviewed.typeKeyValues,
+          console.debug('getPagedReview', $scope.lists.conceptsReviewed.typeKeyValues,
             $scope.paging['review']);
           $scope.lists.pagedReview = utilService.getPagedArray(
-            $scope.lists.componentsReviewed.typeKeyValues, $scope.paging['review']);
+            $scope.lists.conceptsReviewed.typeKeyValues, $scope.paging['review']);
         }
 
         // NOTE: Helper function intended for DEBUG use only
-        // recomputes workflow status for ALL components in type
+        // recomputes workflow status for ALL concepts in type
         $scope.recomputeAllReviewStatuses = function() {
           contentService.computeReviewStatuses(
             $scope.selected.metadata.terminology.terminology + '-ABBR').then(function() {
-            $scope.findComponents();
+            $scope.findConcepts();
           });
         }
 
         // recompute review status for all items currently in graph other than currently edited
         // intended for use after add, update, or remove
-        $scope.processComponentChange = function() {
+        $scope.processConceptChange = function() {
 
           var deferred = [];
 
-          // check current review table for possible changes to other components
+          // check current review table for possible changes to other concepts
           angular
             .forEach(
-              $scope.lists.componentsReviewed.typeKeyValues,
-              function(component) {
-                // call update to force re-check (unless the currently edited component)
-                if (component.workflowStatus == 'NEEDS_REVIEW'
-                  && (!$scope.selected.componentEdited || $scope.selected.componentEdited.id != component.id)) {
-                  deferred.push(contentService.updateComponent(component));
+              $scope.lists.conceptsReviewed.typeKeyValues,
+              function(concept) {
+                // call update to force re-check (unless the currently edited concept)
+                if (concept.workflowStatus == 'NEEDS_REVIEW'
+                  && (!$scope.selected.conceptEdited || $scope.selected.conceptEdited.id != concept.id)) {
+                  deferred.push(contentService.updateConcept(concept));
                 }
               });
 
           // after all recomputation, get new review and perform new find
           $q.all(deferred).then(function() {
-            $scope.getReviewForComponents();
-            findComponents();
+            $scope.getReviewForConcepts();
+            findConcepts();
           }, function() {
-            $scope.getReviewForComponents();
-            findComponents();
+            $scope.getReviewForConcepts();
+            findConcepts();
           })
         }
 
         $scope.finishReview = function() {
           var deferred = [];
           gpService.increment();
-          angular.forEach($scope.lists.componentsReviewed.typeKeyValues, function(component) {
-            if (component.workflowStatus == 'NEEDS_REVIEW') {
-              component.workflowStatus = 'NEW';
+          angular.forEach($scope.lists.conceptsReviewed.typeKeyValues, function(concept) {
+            if (concept.workflowStatus == 'NEEDS_REVIEW') {
+              concept.workflowStatus = 'NEW';
 
               // NOTE: skip checks to prevent NEEDS_REVIEW from being re-applied
-              deferred.push(contentService.updateComponent(component, true));
+              deferred.push(contentService.updateConcept(concept, true));
             }
           })
           console.debug('deferred', deferred);
           $q.all(deferred).then(function() {
-            findComponents();
+            findConcepts();
             gpService.decrement();
-            $scope.lists.componentsReviewed = null;
+            $scope.lists.conceptsReviewed = null;
           });
         }
 
         //
         // Import/export
         //
-       
 
-        $scope.importComponents = function() {
-          mldpService.importComponents($scope.selected.project.id, $scope.selected.file).then(function() {
-            findConcepts();
-          })
+        $scope.importConceptsFile = function() {
+          mldpService.importConcepts($scope.selected.project.id, $scope.selected.file).then(
+            function() {
+              findConcepts();
+            })
         };
 
-        $scope.exportComponents = function() {
-         window.alert('todo')
+        $scope.exportConceptsFile = function() {
+          mldpService.exportConcepts($scope.selected.project, $scope.selected.exportAcceptNew,
+            $scope.selected.exportReadyOnly).then(function() {
+            // do nothing
+          });
         };
 
         $scope.clearImportResults = function() {
-          $scope.importComponentsFileResults = null;
-          $scope.validateComponentsFileResults = null;
+          $scope.importConceptsFileResults = null;
+          $scope.validateConceptsFileResults = null;
         }
 
         $scope.cancelImport = function() {
@@ -484,8 +472,8 @@ tsApp
           utilService.setSortField('' + table, field, $scope.paging);
 
           // retrieve the correct table
-          if (table === 'component') {
-            findComponents();
+          if (table === 'concept') {
+            findConcepts();
           }
           if (table === 'review') {
             getPagedReview();
@@ -567,12 +555,13 @@ tsApp
           console.debug('**** Set Terminology ****', terminology, $scope.lists)
           // Set shared model (may already be set)
           metadataService.setTerminology(terminology);
-          
+
           // get all metadata for this terminology
-          metadataService.getAllMetadata(terminology.terminology, terminology.version).then(function(data) {
-            console.debug('All Metadata', data);
-            metadataService.setModel(data);
-          });
+          metadataService.getAllMetadata(terminology.terminology, terminology.version).then(
+            function(data) {
+              console.debug('All Metadata', data);
+              metadataService.setModel(data);
+            });
 
           // get the semantic types for this terminolog y
           metadataService.getSemanticTypes(terminology.terminology, terminology.version).then(
@@ -587,6 +576,8 @@ tsApp
             if (p.terminology == terminology.terminology) {
               $scope.selected.project = p;
             }
+
+            console.debug('PROJECT', $scope.selected.project);
           }
           if (!$scope.selected.project) {
             utilService
@@ -600,7 +591,7 @@ tsApp
 
           // perform actions
           $scope.clearImportResults();
-          $scope.findComponents();
+          $scope.findConcepts();
         };
 
         //
