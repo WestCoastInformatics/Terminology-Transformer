@@ -166,7 +166,7 @@ public interface MldpServiceRest {
    * @return the validation result
    * @throws Exception the exception
    */
-  public void importConceptsFile(
+  public ValidationResult importConcepts(
     FormDataContentDisposition contentDispositionHeader, InputStream in,
     Long projectId, boolean keepIds, String authToken) throws Exception;
 
@@ -180,9 +180,8 @@ public interface MldpServiceRest {
    * @return the input stream
    * @throws Exception the exception
    */
-  public InputStream exportConceptsFile(Long projectId, boolean acceptNew,
+  public InputStream exportConcepts(Long projectId, boolean acceptNew,
     boolean readyOnly, String authToken) throws Exception;
 
   
-
 }

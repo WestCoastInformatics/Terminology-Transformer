@@ -38,6 +38,7 @@ import com.wci.umls.server.jpa.helpers.PfsParameterJpa;
 import com.wci.umls.server.jpa.helpers.TypeKeyValueJpa;
 import com.wci.umls.server.jpa.services.ProjectServiceJpa;
 import com.wci.umls.server.jpa.services.SecurityServiceJpa;
+import com.wci.umls.server.model.workflow.WorkflowStatus;
 import com.wci.umls.server.rest.impl.RootServiceRestImpl;
 import com.wci.umls.server.services.ProjectService;
 import com.wci.umls.server.services.SecurityService;
@@ -65,8 +66,7 @@ import io.swagger.annotations.SwaggerDefinition;
 })
 public class MldpServiceRestImpl extends RootServiceRestImpl
     implements MldpServiceRest {
-  
-  
+
   /** The security service. */
   private SecurityService securityService;
 
@@ -165,8 +165,8 @@ public class MldpServiceRestImpl extends RootServiceRestImpl
     final ProjectService projectService = new ProjectServiceJpa();
     final AbbreviationHandler abbrHandler = new DefaultAbbreviationHandler();
     try {
-      final String username = authorizeApp(securityService, authToken, "export abbreviations",
-          UserRole.USER);
+      final String username = authorizeApp(securityService, authToken,
+          "export abbreviations", UserRole.USER);
       projectService.setLastModifiedBy(username);
       abbrHandler.setService(projectService);
       return abbrHandler.exportAbbreviationFile(type, acceptNew, readyOnly);
@@ -380,7 +380,7 @@ public class MldpServiceRestImpl extends RootServiceRestImpl
     }
 
   }
-  
+
   @Override
   @Path("/abbr/remove")
   @POST
@@ -454,7 +454,7 @@ public class MldpServiceRestImpl extends RootServiceRestImpl
       securityService.close();
     }
   }
-  
+
   //
   // Concept import/export/validation
   //
@@ -463,7 +463,7 @@ public class MldpServiceRestImpl extends RootServiceRestImpl
   @POST
   @Consumes(MediaType.MULTIPART_FORM_DATA)
   @ApiOperation(value = "Import concepts", notes = "Import concepts from CSV file", response = TypeKeyValueJpa.class)
-  public void importConceptsFile(
+  public ValidationResult importConcepts(
     @ApiParam(value = "Form data header", required = true) @FormDataParam("file") FormDataContentDisposition contentDispositionHeader,
     @ApiParam(value = "Content of concepts file", required = true) @FormDataParam("file") InputStream in,
     @ApiParam(value = "Project id, e.g. 3", required = true) @QueryParam("projectId") Long projectId,
@@ -473,33 +473,40 @@ public class MldpServiceRestImpl extends RootServiceRestImpl
     Logger.getLogger(getClass()).info("RESTful call (MLDP/Concept): /import");
     final ProjectService projectService = new ProjectServiceJpa();
     try {
+      final Project project = projectService.getProject(projectId);
       final String username = authorizeApp(securityService, authToken,
-          "import abbreviations", UserRole.USER);
-      projectService.setLastModifiedBy(username);
-      TerminologySimpleCsvLoaderAlgorithm algo = new TerminologySimpleCsvLoaderAlgorithm();
+          "import concepts", UserRole.USER);
+      final TerminologySimpleCsvLoaderAlgorithm algo =
+          new TerminologySimpleCsvLoaderAlgorithm();
       algo.setAssignIdentifiersFlag(true);
       algo.setInputStream(in);
       algo.setLastModifiedBy(username);
       algo.setKeepFileIdsFlag(keepIds);
+      algo.setTerminology(project.getTerminology());
+      algo.setVersion(project.getVersion());
+      algo.setProject(project);
+      algo.setWorkflowStatus(WorkflowStatus.NEW);
       algo.compute();
+      return algo.getValidationResult();
     } catch (
 
     Exception e) {
       handleException(e, "trying to import abbreviations ");
+      return null;
     } finally {
       // NOTE: No need to close, but included for future safety
       projectService.close();
       securityService.close();
     }
   }
-  
+
   @POST
   @Override
   @Produces("application/octet-stream")
   @Path("/concept/export")
-  @ApiOperation(value = "Export abbreviations", notes = "Exports abbreviations for type as comma or tab-delimited file", response = TypeKeyValueJpa.class)
-  public InputStream exportConceptsFile(
-    @ApiParam(value = "Project id, e.g. 3", required = true) @PathParam("projectId") Long projectId,
+  @ApiOperation(value = "Export concepts", notes = "Exports concepts for terminology as comma or tab-delimited file", response = TypeKeyValueJpa.class)
+  public InputStream exportConcepts(
+    @ApiParam(value = "Project id, e.g. 3", required = true) @QueryParam("projectId") Long projectId,
     @ApiParam(value = "Flag to accept all new concepts, e.g. \t", required = false) @QueryParam("acceptNew") boolean acceptNew,
     @ApiParam(value = "Flag to export only concepts not flagged for review", required = false) @QueryParam("readyOnly") boolean readyOnly,
     @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
@@ -508,12 +515,14 @@ public class MldpServiceRestImpl extends RootServiceRestImpl
     final ProjectService projectService = new ProjectServiceJpa();
     final AbbreviationHandler abbrHandler = new DefaultAbbreviationHandler();
     try {
-      final String username = authorizeApp(securityService, authToken, "export abbreviations",
-          UserRole.USER);
+      final String username = authorizeApp(securityService, authToken,
+          "export abbreviations", UserRole.USER);
       projectService.setLastModifiedBy(username);
-      Project project = projectService.getProject(projectId);
-      TerminologySimpleCsvLoaderAlgorithm algo = new TerminologySimpleCsvLoaderAlgorithm();
-      algo.export(project.getTerminology(), project.getVersion(), acceptNew, readyOnly);
+      final Project project = projectService.getProject(projectId);
+      final TerminologySimpleCsvLoaderAlgorithm algo =
+          new TerminologySimpleCsvLoaderAlgorithm();
+      return algo.export(project.getTerminology(), project.getVersion(),
+          acceptNew, readyOnly);
     } catch (Exception e) {
       handleException(e, "trying to export abbreviations");
       return null;
@@ -523,10 +532,7 @@ public class MldpServiceRestImpl extends RootServiceRestImpl
       projectService.close();
       securityService.close();
     }
-    return null;
 
   }
-
- 
 
 }
