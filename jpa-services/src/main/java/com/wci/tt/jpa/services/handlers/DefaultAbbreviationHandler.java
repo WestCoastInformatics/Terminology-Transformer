@@ -191,7 +191,7 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
   /* see superclass */
   @Override
   public boolean isHeaderLine(String line) {
-    return line != null && line.toLowerCase().startsWith("abbreviation");
+    return line != null && (line.toLowerCase().startsWith("abbreviation") || line.toLowerCase().startsWith("lowWord"));
   }
 
   /**
@@ -285,7 +285,7 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
               .add("Line " + lineCt + ": Key with null/empty value found");
         }
 
-        // CHECK: exactly one single field or two fields and
+        // CHECK: exactly one single field or two fields and second field empty
         else if (fields.length == 1 || fields[1] == null
             || fields[1].trim().isEmpty()) {
           // if not empty, check for duplicate
@@ -330,6 +330,12 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
 
           if (keyMatches.getTotalCount() > 0) {
             for (TypeKeyValue match : keyMatches.getObjects()) {
+              if (fields[1] == null) {
+                System.out.println(lineCt + " " + line);
+              }
+              if (match == null) {
+                System.out.println("MATCH NULL: " + lineCt + " " + line);
+              }
               if (fields[1].equals(match.getValue())) {
                 pairMatchFound = true;
                 dupPairCt++;
@@ -492,8 +498,8 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
     // Write RF2 simple refset pattern to a StringBuilder
     // wrap and return the string for that as an input stream
     StringBuilder sb = new StringBuilder();
-    sb.append("abbreviation").append("\t");
-    sb.append("expansion").append("\r\n");
+    sb.append("lowWord").append("\t");
+    sb.append("fullWord").append("\r\n");
 
     // sort by key
     PfsParameter pfs = new PfsParameterJpa();
