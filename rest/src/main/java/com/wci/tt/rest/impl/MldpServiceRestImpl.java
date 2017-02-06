@@ -82,7 +82,7 @@ public class MldpServiceRestImpl extends RootServiceRestImpl
     securityService = new SecurityServiceJpa();
     System.out.println("********* ABBR *************");
   }
-  
+
   @Override
   @Path("/abbr/import/{type}")
   @POST
@@ -94,7 +94,8 @@ public class MldpServiceRestImpl extends RootServiceRestImpl
     @ApiParam(value = "Type of abbreviation, e.g. medAbbr", required = true) @PathParam("type") String type,
     @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
     throws Exception {
-    Logger.getLogger(getClass()).info("RESTful call (MLDP, POST): /abbr/import/" + type);
+    Logger.getLogger(getClass())
+        .info("RESTful call (MLDP, POST): /abbr/import/" + type);
     final ProjectService projectService = new ProjectServiceJpa();
     final AbbreviationHandler abbrHandler = new DefaultAbbreviationHandler();
     try {
@@ -127,7 +128,8 @@ public class MldpServiceRestImpl extends RootServiceRestImpl
     @ApiParam(value = "Type of abbreviation, e.g. medAbbr", required = true) @PathParam("type") String type,
     @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
     throws Exception {
-    Logger.getLogger(getClass()).info("RESTful call (MLDP, POST): /abbr/import/" + type + "/validate");
+    Logger.getLogger(getClass())
+        .info("RESTful call (MLDP, POST): /abbr/import/" + type + "/validate");
     final ProjectService projectService = new ProjectServiceJpa();
     final AbbreviationHandler abbrHandler = new DefaultAbbreviationHandler();
     try {
@@ -160,7 +162,8 @@ public class MldpServiceRestImpl extends RootServiceRestImpl
     @ApiParam(value = "Flag to export only abbreviations not flagged for review", required = false) @QueryParam("readyOnly") boolean readyOnly,
     @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
     throws Exception {
-    Logger.getLogger(getClass()).info("RESTful call (MLDP, POST): /abbr/export/" + type);
+    Logger.getLogger(getClass())
+        .info("RESTful call (MLDP, POST): /abbr/export/" + type);
     final ProjectService projectService = new ProjectServiceJpa();
     final AbbreviationHandler abbrHandler = new DefaultAbbreviationHandler();
     try {
@@ -189,7 +192,8 @@ public class MldpServiceRestImpl extends RootServiceRestImpl
     @ApiParam(value = "Type of abbreviation, e.g. medAbbr", required = true) @PathParam("type") String type,
     @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
     throws Exception {
-    Logger.getLogger(getClass()).info("RESTful call (MLDP): /abbr/review/" + type + "/compute");
+    Logger.getLogger(getClass())
+        .info("RESTful call (MLDP): /abbr/review/" + type + "/compute");
     final ProjectService projectService = new ProjectServiceJpa();
 
     final AbbreviationHandler abbrHandler = new DefaultAbbreviationHandler();
@@ -218,7 +222,8 @@ public class MldpServiceRestImpl extends RootServiceRestImpl
     @ApiParam(value = "Id of abbreviation, e.g. 1", required = true) @PathParam("id") Long id,
     @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
     throws Exception {
-    Logger.getLogger(getClass()).info("RESTful call (MLDP, GET): /abbr/review/" + id);
+    Logger.getLogger(getClass())
+        .info("RESTful call (MLDP, GET): /abbr/review/" + id);
     final ProjectService projectService = new ProjectServiceJpa();
     final AbbreviationHandler abbrHandler = new DefaultAbbreviationHandler();
     try {
@@ -246,7 +251,8 @@ public class MldpServiceRestImpl extends RootServiceRestImpl
     @ApiParam(value = "List of abbreviation ids", required = true) List<Long> ids,
     @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
     throws Exception {
-    Logger.getLogger(getClass()).info("RESTful call (MLDP, POST): /abbr/review");
+    Logger.getLogger(getClass())
+        .info("RESTful call (MLDP, POST): /abbr/review");
     final ProjectService projectService = new ProjectServiceJpa();
     final AbbreviationHandler abbrHandler = new DefaultAbbreviationHandler();
     try {
@@ -278,7 +284,8 @@ public class MldpServiceRestImpl extends RootServiceRestImpl
     @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
     throws Exception {
     {
-      Logger.getLogger(getClass()).info("RESTful call (MLDP, Get): /abbr/ " + id);
+      Logger.getLogger(getClass())
+          .info("RESTful call (MLDP, Get): /abbr/ " + id);
       final ProjectService projectService = new ProjectServiceJpa();
       try {
         authorizeApp(securityService, authToken, "get abbreviation",
@@ -331,9 +338,8 @@ public class MldpServiceRestImpl extends RootServiceRestImpl
     @ApiParam(value = "The abbreviation to add") TypeKeyValueJpa typeKeyValue,
     @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
     throws Exception {
-    Logger.getLogger(getClass())
-        .info("RESTful call (MLDP, POST): /abbr/update "
-            + typeKeyValue.toString());
+    Logger.getLogger(getClass()).info(
+        "RESTful call (MLDP, POST): /abbr/update " + typeKeyValue.toString());
     final ProjectService projectService = new ProjectServiceJpa();
     final AbbreviationHandler abbrHandler = new DefaultAbbreviationHandler();
     try {
@@ -421,8 +427,8 @@ public class MldpServiceRestImpl extends RootServiceRestImpl
     @ApiParam(value = "PFS Parameter, e.g. '{ \"startIndex\":\"1\", \"maxResults\":\"5\" }'", required = false) PfsParameterJpa pfs,
     @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
     throws Exception {
-    Logger.getLogger(getClass()).info(
-        "RESTful call (MLDPr): /abbr/find, " + query + ", " + filter + ", " + pfs);
+    Logger.getLogger(getClass()).info("RESTful call (MLDPr): /abbr/find, "
+        + query + ", " + filter + ", " + pfs);
     final ProjectService projectService = new ProjectServiceJpa();
     try {
       authorizeApp(securityService, authToken, "find abbreviations",
@@ -469,7 +475,8 @@ public class MldpServiceRestImpl extends RootServiceRestImpl
     @ApiParam(value = "Whether to keep file ids or assign new", required = false) @QueryParam("keepIds") boolean keepIds,
     @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
     throws Exception {
-    Logger.getLogger(getClass()).info("RESTful call (MLDP, POST): /concept/import");
+    Logger.getLogger(getClass())
+        .info("RESTful call (MLDP, POST): /concept/import");
     final ProjectService projectService = new ProjectServiceJpa();
     try {
       final Project project = projectService.getProject(projectId);
@@ -510,7 +517,8 @@ public class MldpServiceRestImpl extends RootServiceRestImpl
     @ApiParam(value = "Flag to export only concepts not flagged for review", required = false) @QueryParam("readyOnly") boolean readyOnly,
     @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
     throws Exception {
-    Logger.getLogger(getClass()).info("RESTful call (MLDP, POST): /concept/export");
+    Logger.getLogger(getClass())
+        .info("RESTful call (MLDP, POST): /concept/export");
     final ProjectService projectService = new ProjectServiceJpa();
     final AbbreviationHandler abbrHandler = new DefaultAbbreviationHandler();
     try {
@@ -532,36 +540,52 @@ public class MldpServiceRestImpl extends RootServiceRestImpl
       securityService.close();
     }
   }
-  
+
   @Override
   @Path("/concept/workflow")
   @POST
   @ApiOperation(value = "Mark concepts with workflow status", notes = "Marks concepts for workflow status given a list of ids", response = TypeKeyValueJpa.class)
   public void putConceptsInWorkflow(
+    @ApiParam(value = "The project id, e.g. 1", required = true) @QueryParam("projectId") Long projectId,
     @ApiParam(value = "The list of concept ids", required = true) List<Long> conceptIds,
-    @ApiParam(value = "The workflow status, e.g. REVIEW_NEEDED", required = true) @QueryParam("workflowStatus") WorkflowStatus workflowStatus,
+    @ApiParam(value = "The workflow status, e.g. REVIEW_NEEDED", required = false) @QueryParam("workflowStatus") WorkflowStatus workflowStatus,
     @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
     throws Exception {
     Logger.getLogger(getClass())
-        .info("RESTful call (MLDP, POST): /concept/workflow " + workflowStatus + ", " + conceptIds);
+        .info("RESTful call (MLDP, POST): /concept/workflow " + workflowStatus
+            + ", " + conceptIds);
     final ContentService contentService = new ContentServiceJpa();
     try {
       final String username = authorizeApp(securityService, authToken,
           "put concepts in workflow", UserRole.USER);
+      final Project project = contentService.getProject(projectId);
+      contentService.setMolecularActionFlag(false);
       contentService.setLastModifiedBy(username);
       contentService.setTransactionPerOperation(false);
       contentService.beginTransaction();
-      
-      for (Long id : conceptIds) {
+
+      List<Long> lconceptIds = null;
+      if (conceptIds != null) {
+        lconceptIds = conceptIds;
+      } else {
+        lconceptIds = contentService.getAllConceptIds(project.getTerminology(),
+            project.getVersion(), project.getBranch());
+      }
+
+      for (Long id : lconceptIds) {
+
         final Concept concept = contentService.getConcept(id);
         if (concept == null) {
           throw new Exception("Concept not found");
+        }
+        if (!concept.getTerminology().equals(project.getTerminology())) {
+          throw new Exception("Concept not in project");
         }
         concept.setWorkflowStatus(workflowStatus);
         contentService.updateConcept(concept);
       }
       contentService.commit();
-      
+
     } catch (Exception e) {
       handleException(e, "trying to add abbreviation ");
       contentService.rollback();
@@ -570,6 +594,5 @@ public class MldpServiceRestImpl extends RootServiceRestImpl
       securityService.close();
     }
   }
-  
 
 }

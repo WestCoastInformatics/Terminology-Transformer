@@ -188,12 +188,13 @@ public interface MldpServiceRest {
    * Put concepts in workflow.
    * NOTE: Temporary API prior to implementations of proper workflow
    *
+   * @param projectId the project id
    * @param conceptIds the concept ids
    * @param workflowStatus the workflow status
    * @param authToken the auth token
    * @throws Exception the exception
    */
-  public void putConceptsInWorkflow(List<Long> conceptIds,
+   public void putConceptsInWorkflow(Long projectId, List<Long> conceptIds,
     WorkflowStatus workflowStatus, String authToken) throws Exception;
 
 
