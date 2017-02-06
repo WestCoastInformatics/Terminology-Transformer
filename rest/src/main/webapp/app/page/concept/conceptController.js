@@ -33,11 +33,10 @@ tsApp
         // always enable simple editing
         editService.enableEditing();
 
-        $scope.selected = {
-          metadata : metadataService.getModel(),
-          concept : null,
-          project : null
-        };
+        $scope.display = {
+          qaStatus : null,
+          qaStatusType : null
+        }
 
         // Scope variables
         $scope.selected = {
@@ -137,7 +136,7 @@ tsApp
         };
 
         // pass utility functions to scope
-        $scope.toDate = utilService.toDate;
+        $scope.toShortDate = utilService.toShortDate;
 
         $scope.findConcepts = function(concept) {
           findConcepts(concept);
@@ -274,7 +273,7 @@ tsApp
 
         $scope.updateConcept = function(concept) {
           editService.updateConcept($scope.selected.project.id, concept).then(function() {
-            $scope.processConceptChange();
+            processConceptChange();
           })
         }
 
@@ -305,7 +304,7 @@ tsApp
                   $scope.selected.component = null;
                 }
                 // perform all actions triggered by concept change
-                $scope.processConceptChange();
+                processConceptChange();
               });
         }
 
@@ -329,14 +328,14 @@ tsApp
         // Validation and Review
         //
 
-        $scope.finishReview = function() {
+        $scope.finishReview = function(concept) {
           var deferred = [];
           gpService.increment();
-          angular.forEach($scope.lists.conceptsReviewed.typeKeyValues, function(concept) {
-            if (concept.workflowStatus == 'NEEDS_REVIEW') {
-              concept.workflowStatus = 'NEW';
+          if ($scope.selected.component.workflowStatus == 'NEEDS_REVIEW') {
+            $scope.selected.component.workflowStatus = 'NEW';
 
-              angular.forEach(concept.atoms, function(atom) {
+            angular.forEach($scope.selected.component.atoms,
+              function(atom) {
                 if (atom.workflowStatus == 'NEEDS_REVIEW') {
                   atom.workflowStatus = 'NEW';
                   deferred.push(editService
@@ -344,26 +343,48 @@ tsApp
                 }
               })
 
-              // NOTE: skip checks to prevent NEEDS_REVIEW from being re-applied
-              deferred.push(editService.updateConcept(concept, true));
-            }
-          })
+            deferred.push(editService.updateConcept($scope.selected.project.id, $scope.selected.component, true));
+          }
+
           console.debug('deferred', deferred);
           $q.all(deferred).then(function() {
-            findConcepts();
+            processConceptChange();
             gpService.decrement();
-            $scope.lists.conceptsReviewed = null;
+            
           });
         }
 
         $scope.performChecks = function() {
+          $scope.display.qaStatus = null;
           if (!$scope.selected.check) {
             return;
           }
+          $scope.display.qaStatus = {
+            warning : 'Validating concepts in ' + $scope.selected.project.terminology
+              + ($scope.selected.check ? ' for check ' + $scope.selected.check : '')
+          };
           contentService.validateConcepts($scope.selected.project.id, null,
-            $scope.selected.check ? $scope.selected.check : null).then(function(response) {
-            console.debug('validateConcepts results', response);
-          })
+            $scope.selected.check ? $scope.selected.check : null).then(
+            function(ids) {
+              if (ids && ids.length > 0) {
+
+                mldpService.putConceptsInWorkflow($scope.selected.project.id, ids, 'NEEDS_REVIEW')
+                  .then(
+                    function() {
+                      $scope.display.qaStatus = {
+                        error : ids.length + ' concepts failed validation  '
+                          + ($scope.selected.check ? ' for check ' + $scope.selected.check : '')
+                          + ' and were marked for review'
+                      };
+                    })
+              } else {
+                $scope.display.qaStatus = {
+                  success : 'All concepts passed validation '
+                    + ($scope.selected.check ? ' for check ' + $scope.selected.check : '')
+                }
+              }
+
+            })
         }
 
         //

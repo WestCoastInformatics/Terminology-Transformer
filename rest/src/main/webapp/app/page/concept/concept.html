@@ -67,6 +67,9 @@
             <th ng-click="setSortField('concept','semanticTypes.semanticType')">{{selected.metadata.semanticTypesLabel}}<span
               ng-bind="getSortIndicator('concept','semanticTypes.semanticType')"></span></th>
 
+            <th ng-click="setSortField('concept', 'lastModified')">Last
+              Modified<span ng-bind="getSortIndicator('concept','lastModified')"></span>
+            </th>
             <th><i class="noul glyphicon glyphicon-trash"
               confirm="Are you sure you want to remove {{lists.conceptsViewed.totalCount}} concepts?"
               ng-click="removeConcepts()"></i>
@@ -86,15 +89,9 @@
                 style="background-color: green; margin-top: 5px;"
                 ng-show="concept.workflowStatus == 'NEW'" title="New concept"></span></td>
 
-              <td class="col-md-5" ng-click="setConceptViewed(concept)">{{concept.name}}</td>
-              <td class="col-md-3" ng-click="setConceptViewed(concept)">{{concept.semanticTypes[0].semanticType}}
-
-
-
-
-
-
-              
+              <td class="col-md-4" ng-click="setConceptViewed(concept)">{{concept.name}}</td>
+              <td class="col-md-2" ng-click="setConceptViewed(concept)">{{concept.semanticTypes[0].semanticType}}
+              <td class="col-md-2" ng-click="setConceptViewed(concept)">{{toShortDate(concept.lastModified)}}</td>
               <td class="col-md-1"><i
                 class="noul glyphicon glyphicon-trash"
                 ng-click="removeConcept(concept)"></i>
@@ -150,6 +147,7 @@
               class="alert alert-success">{{comment}}</div>
 
             <button class="btn btn-xs btn-primary" title="Mark resolved"
+              ng-show="selected.component.workflowStatus == 'NEEDS_REVIEW'"
               ng-click="finishReview()">Finish Review</button>
 
           </div>
@@ -238,6 +236,12 @@
           <button class="btn btn-primary btn-xs" ng-click="performChecks()"
             title="Run all available checks on all concepts in project">Perform
             Checks</button>
+
+          <div ng-show="display.qaStatus">
+            <div class="alert alert-success" ng-show="display.qaStatus.success">{{display.qaStatus.success}}</div>
+            <div class="alert alert-warning" ng-show="display.qaStatus.warning">{{display.qaStatus.warning}}</div>
+            <div class="alert alert-danger" ng-show="display.qaStatus.error">{{display.qaStatus.error}}</div>
+          </div>
 
 
         </div>
