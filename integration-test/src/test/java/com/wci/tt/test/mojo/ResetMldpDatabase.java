@@ -6,6 +6,7 @@ package com.wci.tt.test.mojo;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -76,7 +77,6 @@ public class ResetMldpDatabase {
     // output identifier handler
     Logger.getLogger(getClass()).info("DEFAULT id assignment handler: "
         + config.getProperty("identifier.assignment.handler.DEFAULT.class"));
-  
 
     // re-create the database by triggering a JPA event
     Logger.getLogger(getClass()).info("Re-creating database...");
@@ -84,7 +84,7 @@ public class ResetMldpDatabase {
     new MetadataServiceJpa().close();
     config.setProperty("hibernate.hbm2ddl.auto", "update");
     Logger.getLogger(getClass()).info("  Done.");
-    
+
     // clear index
     Logger.getLogger(getClass()).info("Clearing lucene indexes...");
     LuceneReindexAlgorithm luceneAlgo = new LuceneReindexAlgorithm();
@@ -133,6 +133,9 @@ public class ResetMldpDatabase {
     userRoleMap.put(viewer, UserRole.VIEWER);
     Logger.getLogger(getClass()).info("  Done.");
 
+    final String[] validationChecks =
+        config.getProperty("validation.service.handler").split(",");
+
     // for each terminology
     // - Create an editing project
     // - Load csv concepts file
@@ -140,7 +143,6 @@ public class ResetMldpDatabase {
     // - Load txt synonyms file
     for (String mldpTerminology : mldpTerminologies) {
 
-  
       final String terminology = "HKFT-" + mldpTerminology.toUpperCase();
       final String version = "latest";
       final String loaderUser = "loader";
@@ -197,7 +199,7 @@ public class ResetMldpDatabase {
 
       // create a project for the terminology
       Logger.getLogger(getClass())
-      .info("Creating project for terminology " + mldpTerminology);
+          .info("Creating project for terminology " + mldpTerminology);
 
       project = new ProjectJpa();
       project.setAutomationsEnabled(true);
@@ -210,6 +212,10 @@ public class ResetMldpDatabase {
       project.setVersion(version);
       project.setBranch(Branch.ROOT);
       project.setUserRoleMap(userRoleMap);
+
+      // add all validation checks to project
+      project.setValidationChecks(Arrays.asList(validationChecks));
+
       service.setLastModifiedBy(loaderUser);
 
       PrecedenceList precedenceList =
