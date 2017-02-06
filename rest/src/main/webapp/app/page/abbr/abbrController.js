@@ -123,7 +123,7 @@ tsApp
         };
 
         // pass utility functions to scope
-        $scope.toDate = utilService.toDate;
+        $scope.toShortDate = utilService.toShortDate;
 
         // Sets the terminololgy
         $scope.setTerminology = function(terminology) {

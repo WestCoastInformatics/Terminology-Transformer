@@ -87,7 +87,7 @@
               </td>
 
               <td class="col-md-5" ng-click="setAbbreviationViewed(abbr)">{{abbr.value}}</td>
-              <td class="col-md-3" ng-click="setAbbreviationViewed(abbr)">{{toDate(abbr.lastModified)}}</td>
+              <td class="col-md-3" ng-click="setAbbreviationViewed(abbr)">{{toShortDate(abbr.lastModified)}}</td>
               <td><i class="noul glyphicon glyphicon-trash"
                 ng-click="removeAbbreviation(abbr)"></i>
             </tr>
