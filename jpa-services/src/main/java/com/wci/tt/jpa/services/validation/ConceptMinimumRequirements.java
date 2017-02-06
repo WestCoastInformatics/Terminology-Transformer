@@ -40,7 +40,7 @@ public class ConceptMinimumRequirements
       result.getErrors().add("Concept does not have preferred term");
     }
     if (c.getSemanticTypes() == null || c.getSemanticTypes().size() == 0) {
-      result.getErrors().add("Concept has no specified features / semantic types");
+      result.getErrors().add("Concept does not have feature (semantic type)");
     }
     return result;
   }

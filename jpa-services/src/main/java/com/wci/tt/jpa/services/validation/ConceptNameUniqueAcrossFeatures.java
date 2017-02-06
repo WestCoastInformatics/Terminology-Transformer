@@ -32,8 +32,9 @@ public class ConceptNameUniqueAcrossFeatures extends AbstractValidationCheck {
   public ValidationResult validate(Concept c) {
     ValidationResult result = new ValidationResultJpa();
     ContentService contentService = null;
-    
-    if (c.getName() == null || c.getName().isEmpty()) {
+
+    if (c.getName() == null || c.getName().isEmpty()
+        || c.getSemanticTypes() == null || c.getSemanticTypes().size() == 0) {
       return result;
     }
     try {
@@ -41,10 +42,13 @@ public class ConceptNameUniqueAcrossFeatures extends AbstractValidationCheck {
 
       final ConceptList concepts = contentService.findConcepts(
           c.getTerminology(), c.getVersion(), c.getBranch(),
-          "NOT id:" + c.getId() + " AND name:\"" + c.getName() + "\"", null);
+          "NOT id:" + c.getId() + " AND name:\"" + c.getName() + "\""
+              + " AND NOT semanticTypes.semanticType:"
+              + c.getSemanticTypes().get(0).getSemanticType(),
+          null);
 
       for (Concept concept : concepts.getObjects()) {
-        
+
         // see if matches are non-overlapping across features
         boolean featureMatch = false;
         for (SemanticTypeComponent sty1 : c.getSemanticTypes()) {
@@ -57,7 +61,9 @@ public class ConceptNameUniqueAcrossFeatures extends AbstractValidationCheck {
         if (!featureMatch) {
           result.addError(
               "Concept name not unique across features, duplicated on concept "
-                  + concept.getTerminologyId());
+                  + concept.getTerminologyId() + ": " + concept.getName()
+                  + " in feature "
+                  + concept.getSemanticTypes().get(0).getSemanticType());
         }
 
       }
@@ -76,9 +82,10 @@ public class ConceptNameUniqueAcrossFeatures extends AbstractValidationCheck {
 
     return result;
   }
-  
+
   @Override
-  public Set<Long> validateConcepts(Set<Long> conceptIds, String terminology, String version, ContentService service) throws Exception {
+  public Set<Long> validateConcepts(Set<Long> conceptIds, String terminology,
+    String version, ContentService service) throws Exception {
     final Set<Long> failedConceptIds = new HashSet<>();
     for (final Long id : conceptIds) {
       final Concept concept = service.getConcept(id);
