@@ -7,9 +7,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Properties;
 
 import com.wci.umls.server.helpers.PrecedenceList;
@@ -25,12 +23,6 @@ import com.wci.umls.server.services.handlers.ComputePreferredNameHandler;
 public class MldpComputePreferredNameHandler extends AbstractConfigurable
     implements ComputePreferredNameHandler {
 
-  /** The tty rank map. */
-  private Map<Long, Map<String, String>> ttyRankMap = new HashMap<>();
-
-  /** The terminology rank map. */
-  private Map<Long, Map<String, String>> terminologyRankMap = new HashMap<>();
-
   /**
    * Instantiates an empty {@link MldpComputePreferredNameHandler}.
    */
@@ -43,17 +35,16 @@ public class MldpComputePreferredNameHandler extends AbstractConfigurable
   public String computePreferredName(final Collection<Atom> atoms,
     final PrecedenceList list) throws Exception {
     String name = null;
-    
-    // immediately return PT, otherwise use first non-PT value
+
+    // immediately return PT, otherwise use first alphabetical value
     for (Atom atom : atoms) {
       if (atom.getTermType().equals("PT")) {
         return atom.getName();
       }
-      if (name == null) {
-        name = atom.getName();
-      }
+      name = name == null || name.compareTo(atom.getName()) > 0 ? atom.getName()
+          : name;
     }
-    return name;
+    return name == null ? "" : name;
   }
 
   /* see superclass */
@@ -113,7 +104,6 @@ public class MldpComputePreferredNameHandler extends AbstractConfigurable
    */
   public void cacheList(PrecedenceList list) throws Exception {
 
-   
   }
 
   /* see superclass */
