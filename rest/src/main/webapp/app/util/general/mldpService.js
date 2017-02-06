@@ -351,6 +351,29 @@ tsApp.service('mldpService', [
       return deferred.promise;
     };
     
+    // TODO Temporary function in advance of workflow operations
+    this.putConceptsInWorkflow = function(projectId, conceptIds, workflowStatus) {
+      var deferred = $q.defer();
+      
+      console.debug('putConceptsInWorkflow', projectId, conceptIds, workflowStatus);
+
+      // Get projects
+      gpService.increment();
+      $http.post(mldpUrl + '/concept/workflow/?projectId=' + projectId + '&workflowStatus=' + workflowStatus, conceptIds).then(
+      // success
+      function(response) {
+        gpService.decrement();
+        deferred.resolve(response.data);
+      },
+      // error
+      function(response) {
+        utilService.handleError(response);
+        gpService.decrement();
+        deferred.reject(response.data);
+      });
+      return deferred.promise;
+    }
+    
  
 
   } ]);
