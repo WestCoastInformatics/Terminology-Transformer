@@ -17,6 +17,9 @@ tsApp.run([
     tabService, utilService, $route) {
 
     console.debug('Configuring routes');
+    
+    // set page title
+    window.title(appConfig['deploy.title']);
 
     // Register
     var initNextPath;
