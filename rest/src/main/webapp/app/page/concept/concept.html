@@ -28,7 +28,12 @@
         Terminology: <select ng-model="selected.metadata.terminology"
           ng-change="setTerminology(selected.metadata.terminology)"
           ng-options="terminology as terminology.terminology for terminology in getViewableTerminologies() | orderBy:'terminology'">
-        </select> <span class="pull-right"> <span class="color-box"
+        </select> {{selected.metadata.semanticTypesLabel}}: <select
+          ng-model="paging['concept'].semanticTypeFilter"
+          ng-options="sty.value as sty.value for sty in selected.metadata.semanticTypes"
+          ng-change="findConcepts()">
+          <option value="">All</option>
+        </select><span class="pull-right"> <span class="color-box"
           style="background-color: green;" ng-show="paging['concept'].hasNew"
           ng-click="toggleNewMode()" title="New concepts"></span>&nbsp;<span
           class="color-box" style="background-color: red;"
@@ -42,14 +47,14 @@
           <div class="col-md-8" pager paging="paging['concept']"
             count="lists.conceptsViewed.totalCount"
             callbacks="paging['concept'].callbacks" style="margin-top: 10px;"></div>
-          <div class="col-md-4" ng-show="lists.conceptsViewed.totalCount > 10"
-            style="float: right; margin-top: 10px;">
-            Page size: <select ng-model="paging['concept'].pageSize"
-              title="Page Size"
+          <div class="col-md-4 pull-right"
+            ng-show="lists.conceptsViewed.totalCount > 10"
+            style="margin-top: 10px;">
+            <span class="pull-right"> Page size: <select
+              ng-model="paging['concept'].pageSize" title="Page Size"
               ng-change="paging['concept'].callbacks.getPagedList()"
               ng-options="pageSize.key as pageSize.value for pageSize in lists.pageSizes">
-
-            </select>
+            </select></span>
           </div>
         </div>
         <div class="alert alert-warning"
@@ -91,6 +96,9 @@
 
               <td class="col-md-4" ng-click="setConceptViewed(concept)">{{concept.name}}</td>
               <td class="col-md-2" ng-click="setConceptViewed(concept)">{{concept.semanticTypes[0].semanticType}}
+
+
+              
               <td class="col-md-2" ng-click="setConceptViewed(concept)">{{toShortDate(concept.lastModified)}}</td>
               <td class="col-md-1"><i
                 class="noul glyphicon glyphicon-trash"

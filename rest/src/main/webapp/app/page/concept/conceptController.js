@@ -100,7 +100,7 @@ tsApp
         $scope.paging['concept'] = utilService.getPaging();
         $scope.paging['concept'].sortField = 'terminologyId';
         $scope.paging['concept'].workflowStatus = null;
-        $scope.paging['concept'].filterType = null;
+        $scope.paging['concept'].semanticTypeFilter = null;
         $scope.paging['concept'].pageSize = 10;
         $scope.paging['concept'].callbacks = {
           getPagedList : findConcepts
@@ -150,7 +150,7 @@ tsApp
           }
           var searchParams = prepConceptPfs('concept');
 
-          console.debug('findConcepts', searchParams);
+          console.debug('findConcepts!', searchParams, $scope.paging['concept']);
 
           contentService.getConceptsForQuery($scope.paging['concept'].filter,
             $scope.selected.metadata.terminology.terminology,
@@ -191,6 +191,7 @@ tsApp
             queryRestriction : null
           };
 
+          // apply workflow filter
           switch ($scope.paging['concept'].workflowStatus) {
           case 'PUBLISHED':
             pfs.queryRestriction = 'workflowStatus:PUBLISHED';
@@ -203,6 +204,14 @@ tsApp
             break;
           default:
             // do nothing
+          }
+
+          // apply semantic type filter
+          if ($scope.paging['concept'].semanticTypeFilter) {
+
+            pfs.queryRestriction = (pfs.queryRestriction != null ? pfs.queryRestriction + " AND "
+              : "")
+              + 'semanticTypes.semanticType:' + $scope.paging['concept'].semanticTypeFilter;
           }
           return pfs;
         }
@@ -343,22 +352,19 @@ tsApp
                 }
               })
 
-            deferred.push(editService.updateConcept($scope.selected.project.id, $scope.selected.component, true));
+            deferred.push(editService.updateConcept($scope.selected.project.id,
+              $scope.selected.component, true));
           }
 
           console.debug('deferred', deferred);
           $q.all(deferred).then(function() {
             processConceptChange();
             gpService.decrement();
-            
+
           });
         }
 
         $scope.performChecks = function() {
-          $scope.display.qaStatus = null;
-          if (!$scope.selected.check) {
-            return;
-          }
           $scope.display.qaStatus = {
             warning : 'Validating concepts in ' + $scope.selected.project.terminology
               + ($scope.selected.check ? ' for check ' + $scope.selected.check : '')
