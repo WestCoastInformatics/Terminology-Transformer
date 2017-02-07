@@ -520,20 +520,22 @@ public class MldpServiceRestImpl extends RootServiceRestImpl
     Logger.getLogger(getClass())
         .info("RESTful call (MLDP, POST): /concept/export");
     final ProjectService projectService = new ProjectServiceJpa();
-    
+
     try {
       final Project project = projectService.getProject(projectId);
-      authorizeApp(securityService, authToken,
-          "import concepts", UserRole.USER);
+      final String username = authorizeApp(securityService, authToken, "import concepts",
+          UserRole.USER);
       final TerminologySimpleCsvLoaderAlgorithm algo =
           new TerminologySimpleCsvLoaderAlgorithm();
-      return algo.export(project.getTerminology(), project.getVersion(), project.getBranch(), acceptNew, readyOnly);
+      algo.setLastModifiedBy(username);
+      return algo.export(project.getTerminology(), project.getVersion(),
+          project.getBranch(), acceptNew, readyOnly);
     } catch (Exception e) {
       handleException(e, "trying to export concepts");
       return null;
     } finally {
       // NOTE: No need to close, but included for future safety
-     
+
       projectService.close();
       securityService.close();
     }
@@ -586,6 +588,56 @@ public class MldpServiceRestImpl extends RootServiceRestImpl
 
     } catch (Exception e) {
       handleException(e, "trying to add abbreviation ");
+      contentService.rollback();
+    } finally {
+      contentService.close();
+      securityService.close();
+    }
+  }
+
+  @Override
+  @Path("/concept/workflow/clear")
+  @POST
+  @ApiOperation(value = "Mark concepts with workflow status", notes = "Marks concepts for workflow status given a list of ids", response = TypeKeyValueJpa.class)
+  public void clearReviewWorkflowForProject(
+    @ApiParam(value = "The project id, e.g. 1", required = true) @QueryParam("projectId") Long projectId,
+    @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
+    throws Exception {
+    Logger.getLogger(getClass())
+        .info("RESTful call (MLDP, POST): /concept/workflow/clear");
+    final ContentService contentService = new ContentServiceJpa();
+    try {
+      final String username = authorizeApp(securityService, authToken,
+          "clear workflow status for concepts in review", UserRole.USER);
+      final Project project = contentService.getProject(projectId);
+      contentService.setMolecularActionFlag(false);
+      contentService.setLastModifiedBy(username);
+      contentService.setTransactionPerOperation(false);
+      contentService.beginTransaction();
+
+      final List<Long> conceptIds = contentService.getAllConceptIds(
+          project.getTerminology(), project.getVersion(), project.getBranch());
+
+      for (Long id : conceptIds) {
+
+        final Concept concept = contentService.getConcept(id);
+        if (concept == null) {
+          throw new Exception("Concept not found");
+        }
+        if (!concept.getTerminology().equals(project.getTerminology())) {
+          throw new Exception("Concept not in project");
+        }
+        if (concept.getWorkflowStatus().equals(WorkflowStatus.NEEDS_REVIEW)) {
+          concept.setWorkflowStatus(WorkflowStatus.NEW);
+          contentService.updateConcept(concept);
+        }
+      }
+      contentService.commit();
+
+    } catch (
+
+    Exception e) {
+      handleException(e, "trying clear workflow status for concepts in review");
       contentService.rollback();
     } finally {
       contentService.close();

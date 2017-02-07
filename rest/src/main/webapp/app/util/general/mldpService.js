@@ -290,7 +290,7 @@ tsApp.service('mldpService', [
 
     this.importConcepts = function(projectId, file) {
       var deferred = $q.defer();
-      
+
       console.debug('importConcepts', projectId, file);
 
       // Get projects
@@ -350,17 +350,42 @@ tsApp.service('mldpService', [
       });
       return deferred.promise;
     };
-    
+
     // TODO Temporary function in advance of workflow operations
     this.putConceptsInWorkflow = function(projectId, conceptIds, workflowStatus) {
       var deferred = $q.defer();
-      
+
       console.debug('putConceptsInWorkflow', projectId, conceptIds, workflowStatus);
 
       // Get projects
       gpService.increment();
-      $http.post(mldpUrl + '/concept/workflow/?projectId=' + projectId + '&workflowStatus=' + workflowStatus, conceptIds).then(
-      // success
+      $http
+        .post(
+          mldpUrl + '/concept/workflow/?projectId=' + projectId + '&workflowStatus='
+            + workflowStatus, conceptIds).then(
+        // success
+        function(response) {
+          gpService.decrement();
+          deferred.resolve(response.data);
+        },
+        // error
+        function(response) {
+          utilService.handleError(response);
+          gpService.decrement();
+          deferred.reject(response.data);
+        });
+      return deferred.promise;
+    }
+
+    // TODO Temporary function in advance of workflow operations
+    this.clearReviewWorkflow = function(projectId) {
+      var deferred = $q.defer();
+
+      console.debug('clearReviewWorkflow', projectId);
+      
+      // Get projects
+      gpService.increment();
+      $http.post(mldpUrl + '/concept/workflow/clear?projectId=' + projectId).then(// success
       function(response) {
         gpService.decrement();
         deferred.resolve(response.data);
@@ -373,7 +398,5 @@ tsApp.service('mldpService', [
       });
       return deferred.promise;
     }
-    
- 
 
   } ]);

@@ -58,8 +58,8 @@ public interface MldpServiceRest {
    * @return the input stream
    * @throws Exception the exception
    */
-  public InputStream exportAbbreviationsFile(String type, 
-    boolean readyOnly, boolean acceptNew, String authToken) throws Exception;
+  public InputStream exportAbbreviationsFile(String type, boolean readyOnly,
+    boolean acceptNew, String authToken) throws Exception;
 
   /**
    * Adds the abbreviation.
@@ -154,7 +154,8 @@ public interface MldpServiceRest {
    * @param authToken the auth token
    * @throws Exception the exception
    */
-  public void removeAbbreviations(List<Long> ids, String authToken) throws Exception;
+  public void removeAbbreviations(List<Long> ids, String authToken)
+    throws Exception;
 
   /**
    * Import concepts file.
@@ -185,8 +186,8 @@ public interface MldpServiceRest {
     boolean readyOnly, String authToken) throws Exception;
 
   /**
-   * Put concepts in workflow.
-   * NOTE: Temporary API prior to implementations of proper workflow
+   * Put concepts in workflow. NOTE: Temporary API prior to implementation of
+   * proper workflow
    *
    * @param projectId the project id
    * @param conceptIds the concept ids
@@ -194,9 +195,17 @@ public interface MldpServiceRest {
    * @param authToken the auth token
    * @throws Exception the exception
    */
-   public void putConceptsInWorkflow(Long projectId, List<Long> conceptIds,
+  public void putConceptsInWorkflow(Long projectId, List<Long> conceptIds,
     WorkflowStatus workflowStatus, String authToken) throws Exception;
 
+  /**
+   * Clear workflow for project.
+   *
+   * @param projectId the project id
+   * @param authToken the auth token
+   * @throws Exception the exception
+   */
+  public void clearReviewWorkflowForProject(Long projectId, String authToken)
+    throws Exception;
 
-  
 }

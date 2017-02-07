@@ -395,6 +395,20 @@ tsApp
 
             })
         }
+        
+        $scope.clearReviewWorkflow = function() {
+          $scope.display.qaStatus = {
+            warning : 'Clearing review workflow for ' + $scope.selected.project.terminology + '...'
+          };
+          mldpService.clearReviewWorkflow($scope.selected.project.id).then(function() {
+            $scope.display.qaStatus = {
+              success : 'All concepts in review moved to \'New\' status'
+            }
+            findConcepts();
+          }, function(error) {
+            $scope.display.qaStatus = null;
+          });
+        }
 
         //
         // Import/export

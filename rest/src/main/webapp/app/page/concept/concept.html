@@ -98,6 +98,8 @@
               <td class="col-md-2" ng-click="setConceptViewed(concept)">{{concept.semanticTypes[0].semanticType}}
 
 
+
+
               
               <td class="col-md-2" ng-click="setConceptViewed(concept)">{{toShortDate(concept.lastModified)}}</td>
               <td class="col-md-1"><i
@@ -232,18 +234,36 @@
           </div>
         </div>
         <div ng-show="selected.editTab == 'QA'">
-          <h4>Run Single Check</h4>
 
-          <select ng-model="selected.check"
-            ng-options="check as check.value for check in lists.checks"></select>
-          <button ng-show="selected.check" class="btn btn-primary btn-xs"
-            title="Run selected check on all concepts in project"
-            ng-click="performChecks(selected.check)">Perform Check</button>
+          <h4>QA</h4>
 
-          <h4>Run All Checks</h4>
+          <p style="margin-top: 5px;">Runs all QA checks for all concepts in
+            terminology.</p>
           <button class="btn btn-primary btn-xs" ng-click="performChecks()"
-            title="Run all available checks on all concepts in project">Perform
-            Checks</button>
+            title="Run all available checks on all concepts in project">Run
+            All Checks</button>
+
+          <hr>
+          <p style="margin-top: 5px;">Run single QA check for all concepts
+            in terminology.</p>
+
+          Select check <select ng-model="selected.check"
+            ng-options="check as check.value for check in lists.checks"></select>
+          <button ng-disabled="!selected.check" class="btn btn-primary btn-xs"
+            title="Run single check on all concepts in terminology"
+            ng-click="performChecks(selected.check)">Run Single Check</button>
+
+
+
+          <hr>
+          <p style="margin-top: 5px;">Transition all concepts needing review
+            into 'New' status.</p>
+          <button class="btn btn-primary btn-xs"
+            ng-click="clearReviewWorkflow()"
+            title="Remove review status from all concepts">Reset
+            Reviews</button>
+
+          <hr ng-show="display.qaStatus">
 
           <div ng-show="display.qaStatus">
             <div class="alert alert-success" ng-show="display.qaStatus.success">{{display.qaStatus.success}}</div>
