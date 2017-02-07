@@ -229,7 +229,7 @@ public class TerminologySimpleCsvLoaderAlgorithm
     for (final String key : statsList) {
       logInfo("  " + key + " = " + stats.get(key));
     }
-   
+
     try {
       commit();
     } catch (Exception e) {
@@ -343,10 +343,9 @@ public class TerminologySimpleCsvLoaderAlgorithm
       list.getPrecedence()
           .addKeyValuePair(new KeyValuePair(getTerminology(), "SY"));
       addPrecedenceList(list);
-      
+
       String[] labels = new String[] {
-          "Atoms_Label", 
-          "Semantic_Types_Label"
+          "Atoms_Label", "Semantic_Types_Label"
       };
       String[] labelValues = new String[] {
           "Terms", "Features"
@@ -463,7 +462,7 @@ public class TerminologySimpleCsvLoaderAlgorithm
       atom.setDescriptorId("");
       atom.setStringClassId("");
       atom.setLexicalClassId("");
-     
+
       // Add atom
       addAtom(atom);
       concept.getAtoms().add(atom);
@@ -487,7 +486,7 @@ public class TerminologySimpleCsvLoaderAlgorithm
         sty.setLastModifiedBy(loader);
         sty.setPublished(true);
         sty.setPublishable(true);
-        
+
         addSemanticType(sty);
         stysAdded++;
         existingStys.add(sty.getExpandedForm());
@@ -501,7 +500,7 @@ public class TerminologySimpleCsvLoaderAlgorithm
         }
       }
       if (!styPresent) {
-       
+
         final SemanticTypeComponent sty = new SemanticTypeComponentJpa();
         setCommonFields(sty);
         sty.setSemanticType(record.get(1));
@@ -666,18 +665,20 @@ public class TerminologySimpleCsvLoaderAlgorithm
   public ByteArrayInputStream export(String terminology, String version,
     String branch, boolean acceptNew, boolean readyOnly) throws Exception {
 
-    ContentService service = new ContentServiceJpa();
+    setMolecularActionFlag(false);
+    setLastModifiedFlag(true);
+
     if (acceptNew) {
-      final ConceptList concepts = service.findConcepts(terminology, version,
+      final ConceptList concepts = findConcepts(terminology, version,
           branch == null ? Branch.ROOT : branch, "workflowStatus:NEW", null);
       if (concepts.getTotalCount() > 0) {
-        service.setTransactionPerOperation(false);
-        service.beginTransaction();
+        setTransactionPerOperation(false);
+        beginTransaction();
         for (Concept concept : concepts.getObjects()) {
           concept.setWorkflowStatus(WorkflowStatus.PUBLISHED);
-          service.updateConcept(concept);
+          updateConcept(concept);
         }
-        service.commit();
+        commit();
       }
     }
 
@@ -686,7 +687,7 @@ public class TerminologySimpleCsvLoaderAlgorithm
     // Write RF2 simple refset pattern to a StringBuilder
     // wrap and return the string for that as an input stream
     StringBuilder sb = new StringBuilder();
-    sb.append("\"").append("terminologyId").append(",");
+    sb.append("terminologyId").append(",");
     sb.append("feature").append(",");
     sb.append("name").append(",");
     sb.append("termType").append("\r\n");
@@ -696,7 +697,7 @@ public class TerminologySimpleCsvLoaderAlgorithm
     pfs.setSortField("key");
 
     ConceptList concepts =
-        service.findConcepts(terminology, version, Branch.ROOT, null, null);
+        findConcepts(terminology, version, Branch.ROOT, null, null);
     for (Concept concept : concepts.getObjects()) {
       if (!readyOnly
           || !WorkflowStatus.NEEDS_REVIEW.equals(concept.getWorkflowStatus())) {
