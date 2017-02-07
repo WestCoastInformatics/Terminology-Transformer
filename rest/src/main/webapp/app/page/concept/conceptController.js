@@ -96,9 +96,10 @@ tsApp
           } ]
         };
 
+       
         $scope.paging = {};
         $scope.paging['concept'] = utilService.getPaging();
-        $scope.paging['concept'].sortField = 'terminologyId';
+        $scope.paging['concept'].sortField = 'name';
         $scope.paging['concept'].workflowStatus = null;
         $scope.paging['concept'].semanticTypeFilter = null;
         $scope.paging['concept'].pageSize = 10;

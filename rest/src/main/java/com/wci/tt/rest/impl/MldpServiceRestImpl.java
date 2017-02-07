@@ -523,8 +523,8 @@ public class MldpServiceRestImpl extends RootServiceRestImpl
 
     try {
       final Project project = projectService.getProject(projectId);
-      final String username = authorizeApp(securityService, authToken, "import concepts",
-          UserRole.USER);
+      final String username = authorizeApp(securityService, authToken,
+          "export concepts", UserRole.USER);
       final TerminologySimpleCsvLoaderAlgorithm algo =
           new TerminologySimpleCsvLoaderAlgorithm();
       algo.setLastModifiedBy(username);
@@ -644,5 +644,4 @@ public class MldpServiceRestImpl extends RootServiceRestImpl
       securityService.close();
     }
   }
-
 }
