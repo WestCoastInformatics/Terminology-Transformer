@@ -41,6 +41,7 @@ import com.wci.umls.server.jpa.content.ConceptJpa;
 import com.wci.umls.server.jpa.content.SemanticTypeComponentJpa;
 import com.wci.umls.server.jpa.helpers.PfsParameterJpa;
 import com.wci.umls.server.jpa.helpers.PrecedenceListJpa;
+import com.wci.umls.server.jpa.meta.GeneralMetadataEntryJpa;
 import com.wci.umls.server.jpa.meta.LanguageJpa;
 import com.wci.umls.server.jpa.meta.RootTerminologyJpa;
 import com.wci.umls.server.jpa.meta.SemanticTypeJpa;
@@ -52,6 +53,7 @@ import com.wci.umls.server.model.content.Component;
 import com.wci.umls.server.model.content.Concept;
 import com.wci.umls.server.model.content.SemanticTypeComponent;
 import com.wci.umls.server.model.meta.CodeVariantType;
+import com.wci.umls.server.model.meta.GeneralMetadataEntry;
 import com.wci.umls.server.model.meta.IdType;
 import com.wci.umls.server.model.meta.Language;
 import com.wci.umls.server.model.meta.NameVariantType;
@@ -227,13 +229,8 @@ public class TerminologySimpleCsvLoaderAlgorithm
     for (final String key : statsList) {
       logInfo("  " + key + " = " + stats.get(key));
     }
-
-    // clear and commit
-    // TODO Odd behavior with getReleaseVersion being overwritten with current
-    // date
-    // surrounded with try to allow imports to succeed, track down issue
+   
     try {
-
       commit();
     } catch (Exception e) {
       // do nothing
@@ -346,6 +343,30 @@ public class TerminologySimpleCsvLoaderAlgorithm
       list.getPrecedence()
           .addKeyValuePair(new KeyValuePair(getTerminology(), "SY"));
       addPrecedenceList(list);
+      
+      String[] labels = new String[] {
+          "Atoms_Label", 
+          "Semantic_Types_Label"
+      };
+      String[] labelValues = new String[] {
+          "Terms", "Features"
+      };
+      int i = 0;
+      for (final String label : labels) {
+        final GeneralMetadataEntry entry = new GeneralMetadataEntryJpa();
+        entry.setTerminology(getTerminology());
+        entry.setVersion(getVersion());
+        entry.setLastModified(date);
+        entry.setLastModifiedBy(loader);
+        entry.setPublishable(true);
+        entry.setPublished(true);
+        entry.setAbbreviation(label);
+        entry.setExpandedForm(labelValues[i++]);
+        entry.setKey("label_metadata");
+        entry.setType("label_values");
+        addGeneralMetadataEntry(entry);
+      }
+      commitClearBegin();
 
       commitClearBegin();
     }
@@ -442,9 +463,7 @@ public class TerminologySimpleCsvLoaderAlgorithm
       atom.setDescriptorId("");
       atom.setStringClassId("");
       atom.setLexicalClassId("");
-      if (atom.getName() == null) {
-        System.out.println("ATOM AT " + record.get(0));
-      }
+     
       // Add atom
       addAtom(atom);
       concept.getAtoms().add(atom);
@@ -468,8 +487,7 @@ public class TerminologySimpleCsvLoaderAlgorithm
         sty.setLastModifiedBy(loader);
         sty.setPublished(true);
         sty.setPublishable(true);
-        Logger.getLogger(getClass())
-            .debug("    add new semantic type - " + sty);
+        
         addSemanticType(sty);
         stysAdded++;
         existingStys.add(sty.getExpandedForm());
@@ -478,21 +496,12 @@ public class TerminologySimpleCsvLoaderAlgorithm
       // Add semantic type
       boolean styPresent = false;
       for (SemanticTypeComponent conceptSty : concept.getSemanticTypes()) {
-        if (record.get(2).equals("Body lice")) {
-          System.out.println("checking: " + conceptSty.getSemanticType() + " - "
-              + record.get(1));
-        }
         if (conceptSty.getSemanticType().equals(record.get(1))) {
-          if (record.get(2).equals("Body lice")) {
-            System.out.println("--> FOUND");
-          }
           styPresent = true;
         }
       }
       if (!styPresent) {
-        if (record.get(2).equals("Body lice")) {
-          System.out.println("Adding semantic type " + record.get(1));
-        }
+       
         final SemanticTypeComponent sty = new SemanticTypeComponentJpa();
         setCommonFields(sty);
         sty.setSemanticType(record.get(1));
@@ -646,13 +655,21 @@ public class TerminologySimpleCsvLoaderAlgorithm
     this.keepFileIds = keepFileIds;
   }
 
+  // wraps quotes around text containing commas
+  private String getCsvField(String field) {
+    if (field.contains(",")) {
+      return "\"" + field + "\"";
+    }
+    return field;
+  }
+
   public ByteArrayInputStream export(String terminology, String version,
-    boolean acceptNew, boolean readyOnly) throws Exception {
+    String branch, boolean acceptNew, boolean readyOnly) throws Exception {
 
     ContentService service = new ContentServiceJpa();
     if (acceptNew) {
       final ConceptList concepts = service.findConcepts(terminology, version,
-          Branch.ROOT, "workflowStatus:NEW", null);
+          branch == null ? Branch.ROOT : branch, "workflowStatus:NEW", null);
       if (concepts.getTotalCount() > 0) {
         service.setTransactionPerOperation(false);
         service.beginTransaction();
@@ -669,8 +686,10 @@ public class TerminologySimpleCsvLoaderAlgorithm
     // Write RF2 simple refset pattern to a StringBuilder
     // wrap and return the string for that as an input stream
     StringBuilder sb = new StringBuilder();
-    sb.append("abbreviation").append("\t");
-    sb.append("expansion").append("\r\n");
+    sb.append("\"").append("terminologyId").append(",");
+    sb.append("feature").append(",");
+    sb.append("name").append(",");
+    sb.append("termType").append("\r\n");
 
     // sort by key
     PfsParameter pfs = new PfsParameterJpa();
@@ -682,15 +701,15 @@ public class TerminologySimpleCsvLoaderAlgorithm
       if (!readyOnly
           || !WorkflowStatus.NEEDS_REVIEW.equals(concept.getWorkflowStatus())) {
         for (Atom atom : concept.getAtoms()) {
-          sb.append(concept.getTerminologyId());
-          if (concept.getSemanticTypes() == null
-              || concept.getSemanticTypes().size() == 0) {
-            throw new Exception("Concept " + concept.getTerminologyId()
-                + " does not have semantic type");
-          }
-          sb.append(concept.getSemanticTypes().get(0).getSemanticType());
-          sb.append(atom.getName());
-          sb.append(atom.getTermType());
+          sb.append(getCsvField(concept.getTerminologyId())).append(",");
+          sb.append(concept.getSemanticTypes() != null
+              && concept.getSemanticTypes().size() > 0
+                  ? getCsvField(
+                      concept.getSemanticTypes().get(0).getSemanticType())
+                  : "")
+              .append(",");
+          sb.append(getCsvField(atom.getName())).append(",");
+          sb.append(getCsvField(atom.getTermType())).append("\r\n");
         }
       }
     }
