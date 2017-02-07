@@ -4,10 +4,13 @@
  */
 package com.wci.tt.test.mojo;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
@@ -29,7 +32,6 @@ import com.wci.umls.server.helpers.ConfigUtility;
 import com.wci.umls.server.helpers.PrecedenceList;
 import com.wci.umls.server.jpa.ProjectJpa;
 import com.wci.umls.server.jpa.UserJpa;
-import com.wci.umls.server.jpa.algo.LuceneReindexAlgorithm;
 import com.wci.umls.server.jpa.services.MetadataServiceJpa;
 import com.wci.umls.server.jpa.services.SecurityServiceJpa;
 import com.wci.umls.server.services.MetadataService;
@@ -45,6 +47,9 @@ public class ResetMldpDatabase {
 
   /** The server. */
   static String server = "false";
+
+  /** The input directory */
+  private String inputDirPath = null;
 
   /**
    * Create test fixtures for class.
@@ -74,6 +79,45 @@ public class ResetMldpDatabase {
   @Test
   public void test() throws Exception {
 
+    // check for existence of non-empty input directory
+    inputDirPath = config.getProperty("input.dir");
+
+    if (inputDirPath == null) {
+      inputDirPath = "../config/mldp/src/main/resources/data/";
+    }
+    if (!inputDirPath.endsWith("/")) {
+      inputDirPath += "/";
+    }
+    File inputDir = new File(inputDirPath);
+    if (!inputDir.isDirectory()) {
+      throw new Exception("Specified input directory is not a directory");
+    }
+    if (inputDir.list().length == 0) {
+      throw new Exception("Specified input directory is empty");
+    }
+
+    // List of MLDP terminologies
+    final List<String> mldpTerminologies = new ArrayList<>();
+
+    // {
+    // "allergy", "anatomy", "condition", "immunization", "lab", "med",
+    // "procedure", "vital"
+    // };
+    //
+    // extract the folder names
+    for (final File f : inputDir.listFiles()) {
+      if (f.isDirectory()) {
+        Logger.getLogger(getClass())
+            .info("Discovered terminology: " + f.getName());
+        mldpTerminologies.add(f.getName());
+        for (final String fileName : f.list()) {
+          Logger.getLogger(getClass()).info("  File: " + fileName);
+        }
+      }
+    }
+    
+    Logger.getLogger(getClass()).info("Number of terminologies to load: " + mldpTerminologies.size());
+
     // output identifier handler
     Logger.getLogger(getClass()).info("DEFAULT id assignment handler: "
         + config.getProperty("identifier.assignment.handler.DEFAULT.class"));
@@ -86,16 +130,13 @@ public class ResetMldpDatabase {
     Logger.getLogger(getClass()).info("  Done.");
 
     // clear index
-    Logger.getLogger(getClass()).info("Clearing lucene indexes...");
-    LuceneReindexAlgorithm luceneAlgo = new LuceneReindexAlgorithm();
-    luceneAlgo.reset();
-    Logger.getLogger(getClass()).info("  Done.");
-
-    // List of MLDP terminologies
-    String[] mldpTerminologies = {
-        "allergy", "anatomy", "condition", "immunization", "lab", "med",
-        "procedure", "vital"
-    };
+    // TODO Need to specify all indexed field names -- for now assume clean
+    // build
+    // Logger.getLogger(getClass()).info("Purging lucene indexes...");
+    // LuceneReindexAlgorithm luceneAlgo = new LuceneReindexAlgorithm();
+    // luceneAlgo.setProperties(config);
+    // luceneAlgo.reset();
+    // Logger.getLogger(getClass()).info(" Done.");
 
     final SecurityService securityService = new SecurityServiceJpa();
     final MetadataService service = new MetadataServiceJpa();
@@ -123,8 +164,8 @@ public class ResetMldpDatabase {
     user = securityService.addUser(user);
     User viewer = new UserJpa();
     viewer.setApplicationRole(UserRole.VIEWER);
-    viewer.setName("Viewer");
-    viewer.setUserName("viewer");
+    viewer.setName("Guest");
+    viewer.setUserName("guest");
     viewer.setEmail("");
     viewer = securityService.addUser(viewer);
 
@@ -150,17 +191,16 @@ public class ResetMldpDatabase {
       // load terminology
       Logger.getLogger(getClass())
           .info("Loading terminology " + mldpTerminology);
-      Logger.getLogger(getClass())
-          .info("  File: " + "../config/mldp/src/main/resources/data/"
-              + mldpTerminology + "/" + mldpTerminology + "Concepts.csv");
+      Logger.getLogger(getClass()).info("  File: " + inputDirPath
+          + mldpTerminology + "/" + mldpTerminology + "Concepts.csv");
 
       final TerminologySimpleCsvLoaderAlgorithm termAlgo =
           new TerminologySimpleCsvLoaderAlgorithm();
       termAlgo.setTerminology(terminology);
       termAlgo.setVersion(version);
       termAlgo.setAssignIdentifiersFlag(true);
-      termAlgo.setInputFile("../config/mldp/src/main/resources/data/"
-          + mldpTerminology + "/" + mldpTerminology + "Concepts.csv");
+      termAlgo.setInputFile(inputDirPath + mldpTerminology + "/"
+          + mldpTerminology + "Concepts.csv");
       termAlgo.setReleaseVersion(version);
       termAlgo.setLastModifiedBy(loaderUser);
       termAlgo.compute();
@@ -168,11 +208,10 @@ public class ResetMldpDatabase {
       // load abbreviations file
       Logger.getLogger(getClass())
           .info("Loading abbreviations for terminology " + mldpTerminology);
-      Logger.getLogger(getClass())
-          .info("  File: " + "../config/mldp/src/main/resources/data/"
-              + mldpTerminology + "/" + mldpTerminology + "Abbr.txt");
+      Logger.getLogger(getClass()).info("  File: " + inputDirPath
+          + mldpTerminology + "/" + mldpTerminology + "Abbr.txt");
 
-      inStream = new FileInputStream("../config/mldp/src/main/resources/data/"
+      inStream = new FileInputStream(inputDirPath
           + mldpTerminology + "/" + mldpTerminology + "Abbr.txt");
       abbrHandler = new DefaultAbbreviationHandler();
       abbrHandler.setService(service);
@@ -185,11 +224,11 @@ public class ResetMldpDatabase {
       // Logger.getLogger(getClass())
       // .info("Loading synonyms for terminology " + mldpTerminology);
       // Logger.getLogger(getClass())
-      // .info(" File: " + "../config/mldp/src/main/resources/data/"
+      // .info(" File: " +inputDirPath
       // + mldpTerminology + "/" + mldpTerminology + "Sy.txt");
       //
       // inStream = new
-      // FileInputStream("../config/mldp/src/main/resources/data/"
+      // FileInputStream(inputDirPath
       // + mldpTerminology + "/" + mldpTerminology + "Sy.txt");
       // abbrHandler = new DefaultAbbreviationHandler();
       // abbrHandler.setService(projectService);
