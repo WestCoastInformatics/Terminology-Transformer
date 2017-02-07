@@ -25,6 +25,7 @@ import com.wci.umls.server.rest.impl.ObjectMapperProvider;
 import com.wci.umls.server.rest.impl.ProjectServiceRestImpl;
 import com.wci.umls.server.rest.impl.SecurityServiceRestImpl;
 import com.wci.umls.server.rest.impl.SimpleEditServiceRestImpl;
+import com.wci.umls.server.rest.impl.WorkflowServiceRestImpl;
 import com.wci.umls.server.services.MetadataService;
 
 import io.swagger.jaxrs.config.BeanConfig;
@@ -61,6 +62,7 @@ public class TransformerServerApplication extends ResourceConfig {
     register(MetadataServiceRestImpl.class);
     register(ContentServiceRestImpl.class);
     register(SimpleEditServiceRestImpl.class);
+    register(WorkflowServiceRestImpl.class);
 
     // Need transformer services
     register(MldpServiceRestImpl.class);
