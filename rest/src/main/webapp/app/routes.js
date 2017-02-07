@@ -18,8 +18,7 @@ tsApp.run([
 
     console.debug('Configuring routes');
     
-    // set page title
-    window.title(appConfig['deploy.title']);
+
 
     // Register
     var initNextPath;
@@ -70,6 +69,12 @@ tsApp.run([
               }
 
             }
+            // set page title if set
+            if (appConfig['deploy.title']) {
+              console.debug('setting deployment title: ' + appConfig['deploy.title']);
+              document.title = appConfig['deploy.title'];
+            }
+           
             // if login not enabled, set guest user
             if (appConfig['deploy.login.enabled'] !== 'true') {
               console.debug("LOGIN not enabled - set guest user");
