@@ -520,22 +520,20 @@ public class MldpServiceRestImpl extends RootServiceRestImpl
     Logger.getLogger(getClass())
         .info("RESTful call (MLDP, POST): /concept/export");
     final ProjectService projectService = new ProjectServiceJpa();
-    final AbbreviationHandler abbrHandler = new DefaultAbbreviationHandler();
+    
     try {
-      final String username = authorizeApp(securityService, authToken,
-          "export concepts", UserRole.USER);
-      projectService.setLastModifiedBy(username);
       final Project project = projectService.getProject(projectId);
+      authorizeApp(securityService, authToken,
+          "import concepts", UserRole.USER);
       final TerminologySimpleCsvLoaderAlgorithm algo =
           new TerminologySimpleCsvLoaderAlgorithm();
-      return algo.export(project.getTerminology(), project.getVersion(),
-          acceptNew, readyOnly);
+      return algo.export(project.getTerminology(), project.getVersion(), project.getBranch(), acceptNew, readyOnly);
     } catch (Exception e) {
       handleException(e, "trying to export concepts");
       return null;
     } finally {
       // NOTE: No need to close, but included for future safety
-      abbrHandler.close();
+     
       projectService.close();
       securityService.close();
     }
