@@ -20,7 +20,7 @@ import com.wci.umls.server.services.ContentService;
 /**
  * Default checks that apply to all terminologies.
  */
-public class ConceptSemanticTypesValid extends AbstractValidationCheck {
+public class ConceptFeatureValidForTerminology extends AbstractValidationCheck {
 
   /* see superclass */
   @Override

@@ -17,7 +17,7 @@ import com.wci.umls.server.services.ContentService;
 /**
  * Default checks that apply to all terminologies.
  */
-public class ConceptMinimumRequirements
+public class ConceptHasPreferredTerm
     extends AbstractValidationCheck {
 
   /* see superclass */
@@ -39,9 +39,6 @@ public class ConceptMinimumRequirements
     if (!hasPreferredTerm) {
       result.getErrors().add("Concept does not have preferred term");
     }
-    if (c.getSemanticTypes() == null || c.getSemanticTypes().size() == 0) {
-      result.getErrors().add("Concept does not have feature (semantic type)");
-    }
     return result;
   }
   
@@ -60,7 +57,7 @@ public class ConceptMinimumRequirements
   /* see superclass */
   @Override
   public String getName() {
-    return "Concept Minimum Requirements";
+    return "Concept Has Preferred Term";
   }
 
 }

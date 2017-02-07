@@ -224,9 +224,9 @@
           <div style="margin-top: 25px;">
             <h4>Export</h4>
             <span class="btn btn-xs btn-primary" style="margin-right: 10px;"
-              ng-click="exportConcepts()">Export Concepts</span> <br> <br>
+              ng-click="exportConceptsFile()">Export Concepts</span> <br> <br>
             <input type="checkbox" ng-model="selected.exportReadyOnly">
-            Skip abbbreviations needing review<br> <br> <input
+            Skip concepts needing review<br> <br> <input
               type="checkbox" ng-model="selected.exportAcceptNew"> Mark
             new concepts accepted
           </div>
@@ -235,7 +235,7 @@
           <h4>Run Single Check</h4>
 
           <select ng-model="selected.check"
-            ng-options="check as check for check in selected.project.validationChecks"></select>
+            ng-options="check as check.value for check in lists.checks"></select>
           <button ng-show="selected.check" class="btn btn-primary btn-xs"
             title="Run selected check on all concepts in project"
             ng-click="performChecks(selected.check)">Perform Check</button>
@@ -250,8 +250,6 @@
             <div class="alert alert-warning" ng-show="display.qaStatus.warning">{{display.qaStatus.warning}}</div>
             <div class="alert alert-danger" ng-show="display.qaStatus.error">{{display.qaStatus.error}}</div>
           </div>
-
-
         </div>
       </div>
     </div>

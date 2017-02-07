@@ -47,12 +47,17 @@ public class ConceptNameUniqueWithinFeature extends AbstractValidationCheck {
               + c.getSemanticTypes().get(0).getSemanticType(),
           null);
       for (Concept concept : concepts.getObjects()) {
+        // TODO Placeholder -- search handler aggressively returning non-exact
+        // matches
+        if (!concept.getName().equals(c.getName())) {
+          continue;
+        }
+        
         for (SemanticTypeComponent sty1 : c.getSemanticTypes()) {
           for (SemanticTypeComponent sty2 : concept.getSemanticTypes()) {
             if (sty1.getSemanticType().equals(sty2.getSemanticType())) {
               result.addError("Concept name not unique within feature "
-                  + sty2.getSemanticType() + ", duplicated on concept "
-                  + concept.getTerminologyId() + ": " + concept.getName());
+                  + sty2.getSemanticType());
             }
           }
         }

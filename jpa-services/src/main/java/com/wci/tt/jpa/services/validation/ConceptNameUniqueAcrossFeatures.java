@@ -49,6 +49,12 @@ public class ConceptNameUniqueAcrossFeatures extends AbstractValidationCheck {
 
       for (Concept concept : concepts.getObjects()) {
 
+        // TODO Placeholder -- search handler aggressively returning non-exact
+        // matches
+        if (!concept.getName().equals(c.getName())) {
+          continue;
+        }
+
         // see if matches are non-overlapping across features
         boolean featureMatch = false;
         for (SemanticTypeComponent sty1 : c.getSemanticTypes()) {
@@ -60,10 +66,8 @@ public class ConceptNameUniqueAcrossFeatures extends AbstractValidationCheck {
         }
         if (!featureMatch) {
           result.addError(
-              "Concept name not unique across features, duplicated on concept "
-                  + concept.getTerminologyId() + ": " + concept.getName()
-                  + " in feature "
-                  + concept.getSemanticTypes().get(0).getSemanticType());
+              "Concept name not unique across features, duplicated in feature '"
+                  + concept.getSemanticTypes().get(0).getSemanticType() + "'");
         }
 
       }

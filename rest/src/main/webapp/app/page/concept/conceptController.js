@@ -286,6 +286,8 @@ tsApp
           })
         }
 
+        // used for removing concept from list
+        // see UMLS report.js for concept removal in simple edit mode from report
         $scope.removeConcept = function(concept) {
           console.debug('remove concept', concept);
           editService.removeConcept($scope.selected.project.id, concept.id).then(function() {
@@ -362,15 +364,15 @@ tsApp
             gpService.decrement();
 
           });
-        }
+        };
 
         $scope.performChecks = function() {
           $scope.display.qaStatus = {
             warning : 'Validating concepts in ' + $scope.selected.project.terminology
-              + ($scope.selected.check ? ' for check ' + $scope.selected.check : '')
+              + ($scope.selected.check ? ' for check ' + $scope.selected.check.value : '')
           };
           contentService.validateConcepts($scope.selected.project.id, null,
-            $scope.selected.check ? $scope.selected.check : null).then(
+            $scope.selected.check ? $scope.selected.check.key : null).then(
             function(ids) {
               if (ids && ids.length > 0) {
 
@@ -379,14 +381,15 @@ tsApp
                     function() {
                       $scope.display.qaStatus = {
                         error : ids.length + ' concepts failed validation  '
-                          + ($scope.selected.check ? ' for check ' + $scope.selected.check : '')
+                          + ($scope.selected.check ? ' for check \'' + $scope.selected.check.value + '\'' : '')
                           + ' and were marked for review'
                       };
+                      findConcepts();
                     })
               } else {
                 $scope.display.qaStatus = {
                   success : 'All concepts passed validation '
-                    + ($scope.selected.check ? ' for check ' + $scope.selected.check : '')
+                    + ($scope.selected.check ? ' for check \' ' + $scope.selected.check.value + '\'' : '')
                 }
               }
 
@@ -531,9 +534,21 @@ tsApp
             if (p.terminology == terminology.terminology) {
               $scope.selected.project = p;
             }
-
             console.debug('PROJECT', $scope.selected.project);
           }
+
+          // initialize validation check human readable map
+          if ($scope.selected.project) {
+            $scope.lists.checks = [];
+            angular.forEach($scope.selected.project.validationChecks, function(checkId) {
+              var name = checkId.replace(/([A-Z])/g, " $1");
+              $scope.lists.checks.push({
+                'key' : checkId,
+                'value' : name.charAt(0).toUpperCase() + name.slice(1)
+              })
+            })
+          }
+
           if (!$scope.selected.project) {
             utilService
               .setError('Configuration Error: Terminology has no project; add via Admin tab')
