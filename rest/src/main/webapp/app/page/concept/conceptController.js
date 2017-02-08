@@ -149,34 +149,34 @@ tsApp
           if (concept) {
             $scope.setConceptViewed(concept);
           }
-          var searchParams = prepConceptPfs('concept');
+          var pfs = prepConceptPfs('concept');
 
-          console.debug('findConcepts!', searchParams, $scope.paging['concept']);
+          console.debug('findConcepts', pfs, $scope.paging['concept']);
 
           contentService.getConceptsForQuery($scope.paging['concept'].filter,
             $scope.selected.metadata.terminology.terminology,
-            $scope.selected.metadata.terminology.version, $scope.selected.project.id, searchParams)
+            $scope.selected.metadata.terminology.version, $scope.selected.project.id, pfs)
             .then(function(response) {
               $scope.lists.conceptsViewed = response;
               console.debug('concepts', $scope.lists.conceptsViewed);
             });
 
           //  truncated NEEDS_REVIEW and NEW calls
-          searchParams = prepConceptPfs('concept');
-          searchParams.maxResults = 0;
-          searchParams.queryRestriction = 'workflowStatus:NEEDS_REVIEW';
+          pfs = prepConceptPfs('concept');
+          pfs.maxResults = 0;
+          pfs.queryRestriction = 'workflowStatus:NEEDS_REVIEW';
           contentService.getConceptsForQuery($scope.paging['concept'].filter,
             $scope.selected.metadata.terminology.terminology,
-            $scope.selected.metadata.terminology.version, $scope.selected.project.id, searchParams)
+            $scope.selected.metadata.terminology.version, $scope.selected.project.id, pfs)
             .then(function(response) {
               $scope.paging['concept'].hasNeedsReview = response.totalCount > 0;
             });
-          searchParams = prepConceptPfs('concept');
-          searchParams.maxResults = 0;
-          searchParams.queryRestriction = 'workflowStatus:NEW';
+          pfs = prepConceptPfs('concept');
+          pfs.maxResults = 0;
+          pfs.queryRestriction = 'workflowStatus:NEW';
           contentService.getConceptsForQuery($scope.paging['concept'].filter,
             $scope.selected.metadata.terminology.terminology,
-            $scope.selected.metadata.terminology.version, $scope.selected.project.id, searchParams)
+            $scope.selected.metadata.terminology.version, $scope.selected.project.id, pfs)
             .then(function(response) {
               $scope.paging['concept'].hasNew = response.totalCount > 0;
             });
@@ -242,6 +242,12 @@ tsApp
           console.debug('SET EDITED: ', concept);
 
           $scope.selected.review = null;
+          
+          // if set to null, clear selected and stop
+          if (!concept) {
+            $scope.selected.component = null;
+            return;
+          }
 
           // NOTE: UMLS TermServer report uses "component" instead of "concept"
           // NOTE: Always re-retrieve concept for up-to-date state
@@ -290,13 +296,12 @@ tsApp
         // used for removing concept from list
         // see UMLS report.js for concept removal in simple edit mode from report
         $scope.removeConcept = function(concept) {
-          console.debug('remove concept', concept);
+          console.debug('remove concept', concept, $scope.selected.component);
           editService.removeConcept($scope.selected.project.id, concept.id).then(function() {
-            if ($scope.conceptEdited && $scope.conceptEdited.id == concept.id) {
-              $scope.conceptEdited = null;
+            if ($scope.selected.component && $scope.selected.component.id == concept.id) {
+              $scope.selected.component = null;
             }
             processConceptChange();
-
           });
         }
 
@@ -305,7 +310,7 @@ tsApp
           pfs.startIndex = -1;
           pfs.maxResults = -1;
 
-          editService.removeConcepts($scope.selected.project.id, ids)
+          editService.removeConcepts($scope.selected.project.id, $scope.paging['concept'].filter, pfs)
             .then(
               function() {
 
@@ -340,7 +345,7 @@ tsApp
         // Validation and Review
         //
 
-        $scope.finishReview = function(concept) {
+        $scope.finishReview = function() {
           var deferred = [];
           gpService.increment();
           if ($scope.selected.component.workflowStatus == 'NEEDS_REVIEW') {
@@ -351,7 +356,7 @@ tsApp
                 if (atom.workflowStatus == 'NEEDS_REVIEW') {
                   atom.workflowStatus = 'NEW';
                   deferred.push(editService
-                    .updateAtom($scope.selected.project.id, concept.id, atom));
+                    .updateAtom($scope.selected.project.id, $scope.selected.component.id, atom));
                 }
               })
 
@@ -417,7 +422,8 @@ tsApp
 
         $scope.importConceptsFile = function() {
           mldpService.importConcepts($scope.selected.project.id, $scope.selected.file).then(
-            function() {
+            function(response) {
+              $scope.importConceptsFileResults = response;
               findConcepts();
             })
         };
@@ -425,7 +431,9 @@ tsApp
         $scope.exportConceptsFile = function() {
           mldpService.exportConcepts($scope.selected.project, $scope.selected.exportAcceptNew,
             $scope.selected.exportReadyOnly).then(function() {
-            // do nothing
+            if ($scope.selected.exportAcceptNew) {
+              findConcepts();
+            }
           });
         };
 

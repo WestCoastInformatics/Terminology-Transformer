@@ -27,6 +27,7 @@ import com.wci.tt.services.handlers.AbbreviationHandler;
 import com.wci.umls.server.Project;
 import com.wci.umls.server.User;
 import com.wci.umls.server.UserRole;
+import com.wci.umls.server.ValidationResult;
 import com.wci.umls.server.helpers.Branch;
 import com.wci.umls.server.helpers.ConfigUtility;
 import com.wci.umls.server.helpers.PrecedenceList;
@@ -49,7 +50,7 @@ public class ResetMldpDatabase {
   static String server = "false";
 
   /** The input directory */
-  private String inputDirPath = null;
+  private String inputDir = null;
 
   /**
    * Create test fixtures for class.
@@ -80,19 +81,21 @@ public class ResetMldpDatabase {
   public void test() throws Exception {
 
     // check for existence of non-empty input directory
-    inputDirPath = config.getProperty("input.dir");
+    inputDir = System.getProperty("input.dir");
 
-    if (inputDirPath == null) {
-      inputDirPath = "../config/mldp/src/main/resources/data/";
+    if (inputDir == null) {
+      Logger.getLogger(getClass()).info("No input directory specified, using stock config files");
+      inputDir = "../config/mldp/src/main/resources/data/";
     }
-    if (!inputDirPath.endsWith("/")) {
-      inputDirPath += "/";
+    if (!inputDir.endsWith("/")) {
+      inputDir += "/";
     }
-    File inputDir = new File(inputDirPath);
-    if (!inputDir.isDirectory()) {
+    Logger.getLogger(getClass()).info("Input directory: " + inputDir);
+    File inputDirFile = new File(inputDir);
+    if (!inputDirFile.isDirectory()) {
       throw new Exception("Specified input directory is not a directory");
     }
-    if (inputDir.list().length == 0) {
+    if (inputDirFile.list().length == 0) {
       throw new Exception("Specified input directory is empty");
     }
 
@@ -104,14 +107,21 @@ public class ResetMldpDatabase {
     // "procedure", "vital"
     // };
     //
-    // extract the folder names
-    for (final File f : inputDir.listFiles()) {
+    // extract the terminologies from folder names
+    for (final File f : inputDirFile.listFiles()) {
       if (f.isDirectory()) {
         Logger.getLogger(getClass())
             .info("Discovered terminology: " + f.getName());
         mldpTerminologies.add(f.getName());
+        
+        // log discovered files
         for (final String fileName : f.list()) {
-          Logger.getLogger(getClass()).info("  File: " + fileName);
+          if (fileName.endsWith("Abbr.txt")) {
+            Logger.getLogger(getClass()).info("  Found abbreviations file: " + fileName);
+          }
+          else if (fileName.endsWith("Concepts.csv")) {
+            Logger.getLogger(getClass()).info("  Found concepts file     : " + fileName);
+          }
         }
       }
     }
@@ -176,6 +186,8 @@ public class ResetMldpDatabase {
 
     final String[] validationChecks =
         config.getProperty("validation.service.handler").split(",");
+    
+    ValidationResult result;
 
     // for each terminology
     // - Create an editing project
@@ -191,7 +203,7 @@ public class ResetMldpDatabase {
       // load terminology
       Logger.getLogger(getClass())
           .info("Loading terminology " + mldpTerminology);
-      Logger.getLogger(getClass()).info("  File: " + inputDirPath
+      Logger.getLogger(getClass()).info("  File: " + inputDir
           + mldpTerminology + "/" + mldpTerminology + "Concepts.csv");
 
       final TerminologySimpleCsvLoaderAlgorithm termAlgo =
@@ -199,25 +211,49 @@ public class ResetMldpDatabase {
       termAlgo.setTerminology(terminology);
       termAlgo.setVersion(version);
       termAlgo.setAssignIdentifiersFlag(true);
-      termAlgo.setInputFile(inputDirPath + mldpTerminology + "/"
+      termAlgo.setInputFile(inputDir + mldpTerminology + "/"
           + mldpTerminology + "Concepts.csv");
       termAlgo.setReleaseVersion(version);
       termAlgo.setLastModifiedBy(loaderUser);
       termAlgo.compute();
+      result = termAlgo.getValidationResult();
+      
+      // output results
+      for (String error : result.getErrors()) {
+        Logger.getLogger(getClass()).info("Error: " + error);
+      }
+      for (String comment : result.getComments()) {
+        Logger.getLogger(getClass()).info(comment);
+      }
+      for (String warning : result.getWarnings()) {
+        Logger.getLogger(getClass()).info("Warning: " + warning);
+      }
+     
 
       // load abbreviations file
       Logger.getLogger(getClass())
           .info("Loading abbreviations for terminology " + mldpTerminology);
-      Logger.getLogger(getClass()).info("  File: " + inputDirPath
+      Logger.getLogger(getClass()).info("  File: " + inputDir
           + mldpTerminology + "/" + mldpTerminology + "Abbr.txt");
 
-      inStream = new FileInputStream(inputDirPath
+      inStream = new FileInputStream(inputDir
           + mldpTerminology + "/" + mldpTerminology + "Abbr.txt");
       abbrHandler = new DefaultAbbreviationHandler();
       abbrHandler.setService(service);
       abbrHandler.setReviewFlag(false);
-      abbrHandler.importAbbreviationFile(
+      result = abbrHandler.importAbbreviationFile(
           "HKFT-" + mldpTerminology.toUpperCase() + "-ABBR", inStream);
+      
+      // output results
+      for (String error : result.getErrors()) {
+        Logger.getLogger(getClass()).info("Error: " + error);
+      }
+      for (String comment : result.getComments()) {
+        Logger.getLogger(getClass()).info(comment);
+      }
+      for (String warning : result.getWarnings()) {
+        Logger.getLogger(getClass()).info("Warning: " + warning);
+      }
 
       // load synonyms file
       // TODO Commented out for now, out of scope and time-consuming

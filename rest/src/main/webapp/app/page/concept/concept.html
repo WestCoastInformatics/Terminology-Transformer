@@ -202,7 +202,7 @@
             <div ng-show="importConceptsFileResults">
               <h4>Import Results</h4>
               <div class="alert alert-success"
-                ng-repeat="comment in importConceptsFileResults.comments">{{comment}}</div>
+                ng-repeat="comment in importConceptsFileResults.comments | orderBy:'+'">{{comment}}</div>
               <div class="alert alert-danger "
                 ng-repeat="error in importConceptsFileResults.errors | orderBy:'+'">{{error}}</div>
               <div class="alert alert-warning"

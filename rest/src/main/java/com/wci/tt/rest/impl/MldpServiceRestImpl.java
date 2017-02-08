@@ -480,13 +480,14 @@ public class MldpServiceRestImpl extends RootServiceRestImpl
     final ProjectService projectService = new ProjectServiceJpa();
     try {
       final Project project = projectService.getProject(projectId);
-      final String username = authorizeApp(securityService, authToken,
-          "import concepts", UserRole.USER);
+      final String userName = authorizeProject(projectService, projectId,
+          securityService, authToken, "import concepts", UserRole.USER);
+     
       final TerminologySimpleCsvLoaderAlgorithm algo =
           new TerminologySimpleCsvLoaderAlgorithm();
       algo.setAssignIdentifiersFlag(true);
       algo.setInputStream(in);
-      algo.setLastModifiedBy(username);
+      algo.setLastModifiedBy(userName);
       algo.setKeepFileIdsFlag(keepIds);
       algo.setTerminology(project.getTerminology());
       algo.setVersion(project.getVersion());
@@ -523,11 +524,12 @@ public class MldpServiceRestImpl extends RootServiceRestImpl
 
     try {
       final Project project = projectService.getProject(projectId);
-      final String username = authorizeApp(securityService, authToken,
-          "export concepts", UserRole.USER);
+      final String userName = authorizeProject(projectService, projectId,
+          securityService, authToken, "export concepts", UserRole.USER);
+     
       final TerminologySimpleCsvLoaderAlgorithm algo =
           new TerminologySimpleCsvLoaderAlgorithm();
-      algo.setLastModifiedBy(username);
+      algo.setLastModifiedBy(userName);
       return algo.export(project.getTerminology(), project.getVersion(),
           project.getBranch(), acceptNew, readyOnly);
     } catch (Exception e) {
@@ -556,11 +558,12 @@ public class MldpServiceRestImpl extends RootServiceRestImpl
             + ", " + conceptIds);
     final ContentService contentService = new ContentServiceJpa();
     try {
-      final String username = authorizeApp(securityService, authToken,
-          "put concepts in workflow", UserRole.USER);
+      final String userName = authorizeProject(contentService, projectId,
+          securityService, authToken, "put concepts in workflow", UserRole.USER);
+     
       final Project project = contentService.getProject(projectId);
       contentService.setMolecularActionFlag(false);
-      contentService.setLastModifiedBy(username);
+      contentService.setLastModifiedBy(userName);
       contentService.setTransactionPerOperation(false);
       contentService.beginTransaction();
 
@@ -607,11 +610,12 @@ public class MldpServiceRestImpl extends RootServiceRestImpl
         .info("RESTful call (MLDP, POST): /concept/workflow/clear");
     final ContentService contentService = new ContentServiceJpa();
     try {
-      final String username = authorizeApp(securityService, authToken,
-          "clear workflow status for concepts in review", UserRole.USER);
+      final String userName = authorizeProject(contentService, projectId,
+          securityService, authToken, "remove concepts from project", UserRole.USER);
+     
       final Project project = contentService.getProject(projectId);
       contentService.setMolecularActionFlag(false);
-      contentService.setLastModifiedBy(username);
+      contentService.setLastModifiedBy(userName);
       contentService.setTransactionPerOperation(false);
       contentService.beginTransaction();
 

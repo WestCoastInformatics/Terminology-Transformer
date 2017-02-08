@@ -386,7 +386,10 @@ public class TerminologySimpleCsvLoaderAlgorithm
         .getObjects()) {
       existingStys.add(type.getExpandedForm());
     }
-    int stysAdded = 0;
+    int styCt = 0;
+    int conceptCt = 0;
+    int atomsCt = 0;
+    int skipCt = 0;
 
     Concept concept = null;
     String lastConceptId = null;
@@ -401,7 +404,6 @@ public class TerminologySimpleCsvLoaderAlgorithm
     Logger.getLogger(getClass())
         .info("Compute preferred name handler: " + pnHandler.getName());
 
-    int objectCt = 0, conceptCt = 0;
     final PushBackReader reader = inputStream != null
         ? new PushBackReader(new InputStreamReader(inputStream, "UTF-8"))
         : new PushBackReader(new FileReader(new File(inputFile)));
@@ -409,11 +411,20 @@ public class TerminologySimpleCsvLoaderAlgorithm
     Iterator<CSVRecord> iterator = parser.iterator();
     CSVRecord record = iterator.next();
 
+    // get term types for validation
+    List<String> termTypes = new ArrayList<>();
+    for (TermType tty : getTermTypes(getTerminology(), getVersion())
+        .getObjects()) {
+      termTypes.add(tty.getAbbreviation());
+    }
+
     // skip header line
     if (record.get(0).equals("terminologyId")) {
       record = iterator.next();
     }
     do {
+
+      boolean skip = false;
 
       // Field Description
       // 0 conceptid
@@ -421,111 +432,155 @@ public class TerminologySimpleCsvLoaderAlgorithm
       // 2 name
       // 3 term type
 
-      if (!record.get(0).equals(lastConceptId)) {
+      // check for completeness
+      if (record.size() != 4) {
+        validationResult.addError("Line " + record.getRecordNumber()
+            + ": Expected 4 fields but found " + record.size());
+        skip = true;
+      }
+      if (record.get(0) == null || record.get(0).isEmpty()) {
+        validationResult.addError(
+            "Line " + record.getRecordNumber() + ": Terminology id blank");
+        skip = true;
+      }
+      if (record.get(1) == null || record.get(1).isEmpty()) {
+        validationResult
+            .addError("Line " + record.getRecordNumber() + ": Feature blank");
+        skip = true;
+      }
+      if (record.get(2) == null || record.get(2).isEmpty()) {
+        validationResult
+            .addError("Line " + record.getRecordNumber() + ": Name blank");
+        skip = true;
+      }
+      if (record.get(3) == null || record.get(3).isEmpty()) {
+        validationResult
+            .addError("Line " + record.getRecordNumber() + ": Term type blank");
+        skip = true;
+      }
+      if (!termTypes.contains(record.get(3).toUpperCase())) {
+        validationResult.addError(
+            "Line " + record.getRecordNumber() + ": Term type invalid");
+        skip = true;
+      }
 
-        if (concept != null) {
+      if (!skip) {
 
-          concept.setName(pnHandler.computePreferredName(concept.getAtoms(),
-              precedenceList));
-          updateConcept(concept);
+        if (!record.get(0).equals(lastConceptId)) {
 
-          // commit periodically
-          logAndCommit(++objectCt, RootService.logCt, RootService.commitCt);
+          if (concept != null) {
+
+            concept.setName(pnHandler.computePreferredName(concept.getAtoms(),
+                precedenceList));
+            updateConcept(concept);
+            conceptCt++;
+
+            // commit periodically
+            logAndCommit(conceptCt, RootService.logCt, RootService.commitCt);
+
+          }
+
+          // create and add next concept
+          concept = new ConceptJpa();
+          setCommonFields(concept);
+          concept.setTerminologyId(keepFileIds ? record.get(0)
+              : idHandler.getTerminologyId(concept));
+          concept.setWorkflowStatus(workflowStatus == null
+              ? WorkflowStatus.PUBLISHED : workflowStatus);
+          concept.setName("TBD");
+          concept = addConcept(concept);
+
+          // last concept id
+          lastConceptId = record.get(0);
+        }
+
+        final Atom atom = new AtomJpa();
+        setCommonFields(atom);
+        atom.setWorkflowStatus(WorkflowStatus.PUBLISHED);
+        atom.setName(record.get(2));
+        atom.setTerminologyId(idHandler.getTerminologyId(atom));
+        atom.setTermType(record.get(3).toUpperCase());
+        atom.setLanguage("en");
+        atom.setCodeId("");
+        atom.setConceptId(concept.getTerminologyId());
+        atom.setDescriptorId("");
+        atom.setStringClassId("");
+        atom.setLexicalClassId("");
+
+        // Add atom
+        addAtom(atom);
+        concept.getAtoms().add(atom);
+        atomsCt++;
+
+        // add semantic type if does not exist
+        if (!existingStys.contains(record.get(1))) {
+          final SemanticType sty = new SemanticTypeJpa();
+          sty.setAbbreviation(record.get(1));
+          sty.setBranch(branch);
+          sty.setDefinition("");
+          sty.setExample("");
+          sty.setExpandedForm(record.get(1));
+          sty.setNonHuman(false);
+          sty.setTerminology(getTerminology());
+          sty.setVersion(getVersion());
+          sty.setTreeNumber("");
+          sty.setTypeId("");
+          sty.setUsageNote("");
+          sty.setTimestamp(date);
+          sty.setLastModified(date);
+          sty.setLastModifiedBy(loader);
+          sty.setPublished(true);
+          sty.setPublishable(true);
+
+          addSemanticType(sty);
+          styCt++;
+          existingStys.add(sty.getExpandedForm());
+        }
+
+        // Add semantic type
+        boolean styPresent = false;
+        for (SemanticTypeComponent conceptSty : concept.getSemanticTypes()) {
+          if (conceptSty.getSemanticType().equals(record.get(1))) {
+            styPresent = true;
+          }
+        }
+        if (!styPresent) {
+
+          final SemanticTypeComponent sty = new SemanticTypeComponentJpa();
+          setCommonFields(sty);
+          sty.setSemanticType(record.get(1));
+          sty.setTerminologyId("");
+          sty.setWorkflowStatus(WorkflowStatus.PUBLISHED);
+          addSemanticTypeComponent(sty, concept);
+          concept.getSemanticTypes().add(sty);
 
         }
 
-        // create and add next concept
-        concept = new ConceptJpa();
-        setCommonFields(concept);
-        concept.setTerminologyId(
-            keepFileIds ? record.get(0) : idHandler.getTerminologyId(concept));
-        concept.setWorkflowStatus(
-            workflowStatus == null ? WorkflowStatus.PUBLISHED : workflowStatus);
-        concept.setName("TBD");
-        concept = addConcept(concept);
-
-        // last concept id
-        lastConceptId = record.get(0);
+        // update concept changes (atoms, stys)
+        updateConcept(concept);
+      } else {
+        skipCt++;
       }
 
-      final Atom atom = new AtomJpa();
-      setCommonFields(atom);
-      atom.setWorkflowStatus(WorkflowStatus.PUBLISHED);
-      atom.setName(record.get(2));
-      atom.setTerminologyId(idHandler.getTerminologyId(atom));
-      atom.setTermType(record.get(3).toUpperCase());
-      atom.setLanguage("en");
-      atom.setCodeId("");
-      atom.setConceptId(concept.getTerminologyId());
-      atom.setDescriptorId("");
-      atom.setStringClassId("");
-      atom.setLexicalClassId("");
-
-      // Add atom
-      addAtom(atom);
-      concept.getAtoms().add(atom);
-
-      // add semantic type if does not exist
-      if (!existingStys.contains(record.get(1))) {
-        final SemanticType sty = new SemanticTypeJpa();
-        sty.setAbbreviation(record.get(1));
-        sty.setBranch(branch);
-        sty.setDefinition("");
-        sty.setExample("");
-        sty.setExpandedForm(record.get(1));
-        sty.setNonHuman(false);
-        sty.setTerminology(getTerminology());
-        sty.setVersion(getVersion());
-        sty.setTreeNumber("");
-        sty.setTypeId("");
-        sty.setUsageNote("");
-        sty.setTimestamp(date);
-        sty.setLastModified(date);
-        sty.setLastModifiedBy(loader);
-        sty.setPublished(true);
-        sty.setPublishable(true);
-
-        addSemanticType(sty);
-        stysAdded++;
-        existingStys.add(sty.getExpandedForm());
-      }
-
-      // Add semantic type
-      boolean styPresent = false;
-      for (SemanticTypeComponent conceptSty : concept.getSemanticTypes()) {
-        if (conceptSty.getSemanticType().equals(record.get(1))) {
-          styPresent = true;
-        }
-      }
-      if (!styPresent) {
-
-        final SemanticTypeComponent sty = new SemanticTypeComponentJpa();
-        setCommonFields(sty);
-        sty.setSemanticType(record.get(1));
-        sty.setTerminologyId("");
-        sty.setWorkflowStatus(WorkflowStatus.PUBLISHED);
-        addSemanticTypeComponent(sty, concept);
-        concept.getSemanticTypes().add(sty);
-
-      }
-
-      // update concept changes (atoms, stys)
-      updateConcept(concept);
-
+    // cycle while still records and the next record is not blank (proxy for EOF)
     } while (iterator.hasNext() && (record = iterator.next()) != null);
 
     // update and commit last concept
     concept.setName(
         pnHandler.computePreferredName(concept.getAtoms(), precedenceList));
     updateConcept(concept);
+    conceptCt++;
+    
+    if (skipCt > 0) {
+      validationResult.getWarnings().add("Skipped " + skipCt + " + terms");
+    }
 
     commitClearBegin();
 
-    validationResult.getComments().add("Added " + objectCt + " terms");
+    validationResult.getComments().add("Added " + atomsCt + " terms");
     validationResult.getComments().add("Added " + conceptCt + " concepts");
-    if (stysAdded > 0) {
-      validationResult.getComments()
-          .add("Added " + stysAdded + " semantic types");
+    if (styCt > 0) {
+      validationResult.getComments().add("Added " + styCt + " features");
     }
     reader.close();
   }

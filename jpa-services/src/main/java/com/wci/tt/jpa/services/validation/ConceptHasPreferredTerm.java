@@ -33,6 +33,10 @@ public class ConceptHasPreferredTerm
     boolean hasPreferredTerm = false;
     for (Atom atom : c.getAtoms()) {
        if (atom.getTermType().equals("PT")) {
+         if (hasPreferredTerm) {
+           result.getErrors().add("Concept has multiple preferred terms");
+           return result;
+         }
          hasPreferredTerm = true;
        }
     }
