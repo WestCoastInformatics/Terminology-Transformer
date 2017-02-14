@@ -83,26 +83,27 @@ public class MldpServiceRestImpl extends RootServiceRestImpl
   }
 
   @Override
-  @Path("/abbr/import/{type}")
+  @Path("/abbr/import")
   @POST
   @Consumes(MediaType.MULTIPART_FORM_DATA)
-  @ApiOperation(value = "Import abbreviations", notes = "Import abbreviations of single type from comma or tab-delimited file", response = TypeKeyValueJpa.class)
+  @ApiOperation(value = "Import abbreviations", notes = "Import abbreviations for a project from tab-delimited file", response = TypeKeyValueJpa.class)
   public ValidationResult importAbbreviations(
     @ApiParam(value = "Form data header", required = true) @FormDataParam("file") FormDataContentDisposition contentDispositionHeader,
     @ApiParam(value = "Content of definition file", required = true) @FormDataParam("file") InputStream in,
-    @ApiParam(value = "Type of abbreviation, e.g. medAbbr", required = true) @PathParam("type") String type,
+    @ApiParam(value = "The project id, e.g. 1", required = true) @QueryParam("projectId") Long projectId,
     @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
     throws Exception {
     Logger.getLogger(getClass())
-        .info("RESTful call (MLDP, POST): /abbr/import/" + type);
+        .info("RESTful call (MLDP, POST): /abbr/import/" + projectId);
     final ProjectService projectService = new ProjectServiceJpa();
     final AbbreviationHandler abbrHandler = new DefaultAbbreviationHandler();
     try {
-      final String username = authorizeApp(securityService, authToken,
+      final String username = authorizeProject(projectService, projectId, securityService, authToken,
           "import abbreviations", UserRole.USER);
+      Project project = projectService.getProject(projectId);
       projectService.setLastModifiedBy(username);
       abbrHandler.setService(projectService);
-      return abbrHandler.importAbbreviationFile(type, in);
+      return abbrHandler.importAbbreviationFile(project.getTerminology(), in);
     } catch (
 
     Exception e) {
@@ -117,25 +118,26 @@ public class MldpServiceRestImpl extends RootServiceRestImpl
   }
 
   @Override
-  @Path("/abbr/import/{type}/validate")
+  @Path("/abbr/import/validate")
   @POST
   @Consumes(MediaType.MULTIPART_FORM_DATA)
   @ApiOperation(value = "Validate abbreviations import file", notes = "Validates abbreviations from comma or tab-delimited file", response = TypeKeyValueJpa.class)
   public ValidationResult validateAbbreviationsFile(
     @ApiParam(value = "Form data header", required = true) @FormDataParam("file") FormDataContentDisposition contentDispositionHeader,
     @ApiParam(value = "Content of definition file", required = true) @FormDataParam("file") InputStream in,
-    @ApiParam(value = "Type of abbreviation, e.g. medAbbr", required = true) @PathParam("type") String type,
+    @ApiParam(value = "The project id, e.g. 1", required = true) @QueryParam("projectId") Long projectId,
     @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
     throws Exception {
     Logger.getLogger(getClass())
-        .info("RESTful call (MLDP, POST): /abbr/import/" + type + "/validate");
+        .info("RESTful call (MLDP, POST): /abbr/import/validate");
     final ProjectService projectService = new ProjectServiceJpa();
+    final Project project = projectService.getProject(projectId);
     final AbbreviationHandler abbrHandler = new DefaultAbbreviationHandler();
     try {
-      authorizeApp(securityService, authToken, "validate abbreviations file",
+      authorizeProject(projectService, projectId, securityService, authToken, "validate abbreviations file",
           UserRole.USER);
       abbrHandler.setService(projectService);
-      return abbrHandler.validateAbbreviationFile(type, in);
+      return abbrHandler.validateAbbreviationFile(project.getTerminology(), in);
 
     } catch (
 
@@ -153,24 +155,25 @@ public class MldpServiceRestImpl extends RootServiceRestImpl
   @POST
   @Override
   @Produces("application/octet-stream")
-  @Path("/abbr/export/{type}")
+  @Path("/abbr/export")
   @ApiOperation(value = "Export abbreviations", notes = "Exports abbreviations for type as comma or tab-delimited file", response = TypeKeyValueJpa.class)
   public InputStream exportAbbreviationsFile(
-    @ApiParam(value = "Type of abbreviation, e.g. medAbbr", required = true) @PathParam("type") String type,
+    @ApiParam(value = "The project id, e.g. 1", required = true) @QueryParam("projectId") Long projectId,
     @ApiParam(value = "Flag to accept all new abbreviations, e.g. \t", required = false) @QueryParam("acceptNew") boolean acceptNew,
     @ApiParam(value = "Flag to export only abbreviations not flagged for review", required = false) @QueryParam("readyOnly") boolean readyOnly,
     @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
     throws Exception {
     Logger.getLogger(getClass())
-        .info("RESTful call (MLDP, POST): /abbr/export/" + type);
+        .info("RESTful call (MLDP, POST): /abbr/export/" + projectId);
     final ProjectService projectService = new ProjectServiceJpa();
+    final Project project = projectService.getProject(projectId);
     final AbbreviationHandler abbrHandler = new DefaultAbbreviationHandler();
     try {
-      final String username = authorizeApp(securityService, authToken,
+      final String username = authorizeProject(projectService, projectId, securityService, authToken,
           "export abbreviations", UserRole.USER);
       projectService.setLastModifiedBy(username);
       abbrHandler.setService(projectService);
-      return abbrHandler.exportAbbreviationFile(type, acceptNew, readyOnly);
+      return abbrHandler.exportAbbreviationFile(project.getTerminology(), acceptNew, readyOnly);
     } catch (Exception e) {
       handleException(e, "trying to export abbreviations");
       return null;
@@ -184,24 +187,24 @@ public class MldpServiceRestImpl extends RootServiceRestImpl
   }
 
   @Override
-  @Path("/abbr/review/{type}/compute")
+  @Path("/abbr/review/compute")
   @POST
   @ApiOperation(value = "Compute abbreviations review status", notes = "Recomputes review statuses for abbreviations of specified type")
   public void computeReviewStatuses(
-    @ApiParam(value = "Type of abbreviation, e.g. medAbbr", required = true) @PathParam("type") String type,
+    @ApiParam(value = "The project id, e.g. 1", required = true) @QueryParam("projectId") Long projectId,
     @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
     throws Exception {
     Logger.getLogger(getClass())
-        .info("RESTful call (MLDP): /abbr/review/" + type + "/compute");
+        .info("RESTful call (MLDP): /abbr/review/compute");
     final ProjectService projectService = new ProjectServiceJpa();
-
+    final Project project = projectService.getProject(projectId);
     final AbbreviationHandler abbrHandler = new DefaultAbbreviationHandler();
     try {
-      final String username = authorizeApp(securityService, authToken,
+      final String username = authorizeProject(projectService, projectId, securityService, authToken,
           "compute reviews for abbreviations", UserRole.USER);
       projectService.setLastModifiedBy(username);
       abbrHandler.setService(projectService);
-      abbrHandler.computeAbbreviationStatuses(type);
+      abbrHandler.computeAbbreviationStatuses(project.getTerminology());
     } catch (Exception e) {
       handleException(e, "trying to compute reviews for abbreviations");
 
@@ -219,6 +222,7 @@ public class MldpServiceRestImpl extends RootServiceRestImpl
   @ApiOperation(value = "Retrieve review list for abbreviation", notes = "Retrieve list of abbreviations requiring review for a abbreviation by id")
   public TypeKeyValueList getReviewForAbbreviation(
     @ApiParam(value = "Id of abbreviation, e.g. 1", required = true) @PathParam("id") Long id,
+    @ApiParam(value = "The project id, e.g. 1", required = true) @QueryParam("projectId") Long projectId,
     @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
     throws Exception {
     Logger.getLogger(getClass())
@@ -226,7 +230,7 @@ public class MldpServiceRestImpl extends RootServiceRestImpl
     final ProjectService projectService = new ProjectServiceJpa();
     final AbbreviationHandler abbrHandler = new DefaultAbbreviationHandler();
     try {
-      authorizeApp(securityService, authToken, "get review for abbreviation",
+     authorizeProject(projectService, projectId, securityService, authToken, "get review for abbreviation",
           UserRole.USER);
       abbrHandler.setService(projectService);
       TypeKeyValue abbr = projectService.getTypeKeyValue(id);
@@ -248,6 +252,7 @@ public class MldpServiceRestImpl extends RootServiceRestImpl
   @ApiOperation(value = "Retrieve review list for abbreviations", notes = "Retrieve list of abbreviations requiring review for a list of abbreviations ids")
   public TypeKeyValueList getReviewForAbbreviations(
     @ApiParam(value = "List of abbreviation ids", required = true) List<Long> ids,
+    @ApiParam(value = "The project id, e.g. 1", required = true) @QueryParam("projectId") Long projectId,
     @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
     throws Exception {
     Logger.getLogger(getClass())
@@ -255,7 +260,7 @@ public class MldpServiceRestImpl extends RootServiceRestImpl
     final ProjectService projectService = new ProjectServiceJpa();
     final AbbreviationHandler abbrHandler = new DefaultAbbreviationHandler();
     try {
-      authorizeApp(securityService, authToken, "get review for abbreviations",
+      authorizeProject(projectService, projectId, securityService, authToken, "get review for abbreviations",
           UserRole.USER);
       abbrHandler.setService(projectService);
       List<TypeKeyValue> abbrs = new ArrayList<>();
@@ -280,6 +285,7 @@ public class MldpServiceRestImpl extends RootServiceRestImpl
   @ApiOperation(value = "Get a abbreviation", notes = "Gets a abbreviation object by id", response = TypeKeyValueJpa.class)
   public TypeKeyValue getAbbreviation(
     @ApiParam(value = "The abbreviation id, e.g. 1") @PathParam("id") Long id,
+    @ApiParam(value = "The project id, e.g. 1", required = true) @QueryParam("projectId") Long projectId,
     @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
     throws Exception {
     {
@@ -287,7 +293,7 @@ public class MldpServiceRestImpl extends RootServiceRestImpl
           .info("RESTful call (MLDP, Get): /abbr/ " + id);
       final ProjectService projectService = new ProjectServiceJpa();
       try {
-        authorizeApp(securityService, authToken, "get abbreviation",
+        authorizeProject(projectService, projectId, securityService, authToken, "get abbreviation",
             UserRole.USER);
         return projectService.getTypeKeyValue(id);
       } catch (Exception e) {
@@ -306,18 +312,21 @@ public class MldpServiceRestImpl extends RootServiceRestImpl
   @ApiOperation(value = "Add a abbreviation", notes = "Adds a abbreviation object", response = TypeKeyValueJpa.class)
   public TypeKeyValue addAbbreviation(
     @ApiParam(value = "The abbreviation to add") TypeKeyValueJpa typeKeyValue,
+    @ApiParam(value = "The project id, e.g. 1", required = true) @QueryParam("projectId") Long projectId,
     @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
     throws Exception {
     Logger.getLogger(getClass())
         .info("RESTful call (MLDP, PUT): /abbr/add " + typeKeyValue);
     final ProjectService projectService = new ProjectServiceJpa();
+    final Project project = projectService.getProject(projectId);
     final AbbreviationHandler abbrHandler = new DefaultAbbreviationHandler();
     try {
-      final String username = authorizeApp(securityService, authToken,
+      final String username = authorizeProject(projectService, projectId, securityService, authToken,
           "add abbreviation", UserRole.USER);
       projectService.setLastModifiedBy(username);
       abbrHandler.setService(projectService);
       abbrHandler.updateWorkflowStatus(typeKeyValue);
+      typeKeyValue.setType(abbrHandler.getAbbrType(project.getTerminology()));
       return projectService.addTypeKeyValue(typeKeyValue);
     } catch (Exception e) {
       handleException(e, "trying to add abbreviation ");
@@ -335,6 +344,7 @@ public class MldpServiceRestImpl extends RootServiceRestImpl
 
   public void updateAbbreviation(
     @ApiParam(value = "The abbreviation to add") TypeKeyValueJpa typeKeyValue,
+    @ApiParam(value = "The project id, e.g. 1", required = true) @QueryParam("projectId") Long projectId,
     @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
     throws Exception {
     Logger.getLogger(getClass()).info(
@@ -342,7 +352,7 @@ public class MldpServiceRestImpl extends RootServiceRestImpl
     final ProjectService projectService = new ProjectServiceJpa();
     final AbbreviationHandler abbrHandler = new DefaultAbbreviationHandler();
     try {
-      final String username = authorizeApp(securityService, authToken,
+      final String username = authorizeProject(projectService, projectId, securityService, authToken,
           "update abbreviation", UserRole.USER);
       projectService.setLastModifiedBy(username);
       abbrHandler.setService(projectService);
@@ -365,13 +375,14 @@ public class MldpServiceRestImpl extends RootServiceRestImpl
   @ApiOperation(value = "Removes a abbreviation", notes = "Removes a abbreviation object by id", response = TypeKeyValueJpa.class)
   public void removeAbbreviation(
     @ApiParam(value = "The abbreviation to remove") @PathParam("id") Long id,
+    @ApiParam(value = "The project id, e.g. 1", required = true) @QueryParam("projectId") Long projectId,
     @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
     throws Exception {
     Logger.getLogger(getClass())
         .info("RESTful call (MLDP, DELETE): /abbr/remove " + id);
     final ProjectService projectService = new ProjectServiceJpa();
     try {
-      final String username = authorizeApp(securityService, authToken,
+      final String username = authorizeProject(projectService, projectId, securityService, authToken,
           "remove abbreviation", UserRole.USER);
       projectService.setLastModifiedBy(username);
       projectService.removeTypeKeyValue(id);
@@ -391,13 +402,14 @@ public class MldpServiceRestImpl extends RootServiceRestImpl
   @ApiOperation(value = "Removes abbreviations", notes = "Removes abbreviation objects for id list", response = TypeKeyValueJpa.class)
   public void removeAbbreviations(
     @ApiParam(value = "The abbreviation to remove") List<Long> ids,
+    @ApiParam(value = "The project id, e.g. 1", required = true) @QueryParam("projectId") Long projectId,
     @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
     throws Exception {
     Logger.getLogger(getClass())
         .info("RESTful call (MLDP, POST): /abbr/remove " + ids);
     final ProjectService projectService = new ProjectServiceJpa();
     try {
-      final String username = authorizeApp(securityService, authToken,
+      final String username = authorizeProject(projectService, projectId, securityService, authToken,
           "remove abbreviation", UserRole.USER);
       projectService.setLastModifiedBy(username);
       projectService.setTransactionPerOperation(false);
@@ -421,7 +433,8 @@ public class MldpServiceRestImpl extends RootServiceRestImpl
   @POST
   @ApiOperation(value = "Finds abbreviations", notes = "Finds abbreviation objects", response = TypeKeyValueJpa.class)
   public TypeKeyValueList findAbbreviations(
-    @ApiParam(value = "Query", required = false) @QueryParam("query") String query,
+    @ApiParam(value = "The project id, e.g. 1", required = true) @QueryParam("projectId") Long projectId,
+     @ApiParam(value = "Query", required = false) @QueryParam("query") String query,
     @ApiParam(value = "Filter type", required = false) @QueryParam("filter") String filter,
     @ApiParam(value = "PFS Parameter, e.g. '{ \"startIndex\":\"1\", \"maxResults\":\"5\" }'", required = false) PfsParameterJpa pfs,
     @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
@@ -430,7 +443,7 @@ public class MldpServiceRestImpl extends RootServiceRestImpl
         + query + ", " + filter + ", " + pfs);
     final ProjectService projectService = new ProjectServiceJpa();
     try {
-      authorizeApp(securityService, authToken, "find abbreviations",
+      authorizeProject(projectService, projectId, securityService, authToken, "find abbreviations",
           UserRole.USER);
 
       TypeKeyValueList list = null;
@@ -481,7 +494,7 @@ public class MldpServiceRestImpl extends RootServiceRestImpl
       final Project project = projectService.getProject(projectId);
       final String userName = authorizeProject(projectService, projectId,
           securityService, authToken, "import concepts", UserRole.USER);
-     
+
       final TerminologySimpleCsvLoaderAlgorithm algo =
           new TerminologySimpleCsvLoaderAlgorithm();
       algo.setAssignIdentifiersFlag(true);
@@ -525,7 +538,7 @@ public class MldpServiceRestImpl extends RootServiceRestImpl
       final Project project = projectService.getProject(projectId);
       final String userName = authorizeProject(projectService, projectId,
           securityService, authToken, "export concepts", UserRole.USER);
-     
+
       final TerminologySimpleCsvLoaderAlgorithm algo =
           new TerminologySimpleCsvLoaderAlgorithm();
       algo.setLastModifiedBy(userName);
@@ -557,9 +570,10 @@ public class MldpServiceRestImpl extends RootServiceRestImpl
             + ", " + conceptIds);
     final ContentService contentService = new ContentServiceJpa();
     try {
-      final String userName = authorizeProject(contentService, projectId,
-          securityService, authToken, "put concepts in workflow", UserRole.USER);
-     
+      final String userName =
+          authorizeProject(contentService, projectId, securityService,
+              authToken, "put concepts in workflow", UserRole.USER);
+
       final Project project = contentService.getProject(projectId);
       contentService.setMolecularActionFlag(false);
       contentService.setLastModifiedBy(userName);
@@ -609,9 +623,10 @@ public class MldpServiceRestImpl extends RootServiceRestImpl
         .info("RESTful call (MLDP, POST): /concept/workflow/clear");
     final ContentService contentService = new ContentServiceJpa();
     try {
-      final String userName = authorizeProject(contentService, projectId,
-          securityService, authToken, "remove concepts from project", UserRole.USER);
-     
+      final String userName =
+          authorizeProject(contentService, projectId, securityService,
+              authToken, "remove concepts from project", UserRole.USER);
+
       final Project project = contentService.getProject(projectId);
       contentService.setMolecularActionFlag(false);
       contentService.setLastModifiedBy(userName);

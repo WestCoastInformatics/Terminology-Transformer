@@ -49,43 +49,43 @@ public interface AbbreviationHandler extends Configurable {
   /**
    * Compute abbreviation statuses.
    *
-   * @param abbrType the abbr type
+   * @param terminology the terminology
    * @throws Exception the exception
    */
-  public void computeAbbreviationStatuses(String abbrType) throws Exception;
+  public void computeAbbreviationStatuses(String terminology) throws Exception;
 
   /**
    * Validate abbreviation file.
    *
-   * @param abbrType the abbr type
+   * @param terminology the terminology
    * @param inFile the in file
    * @return the validation result
    * @throws Exception the exception
    */
-  public ValidationResult validateAbbreviationFile(String abbrType,
+  public ValidationResult validateAbbreviationFile(String terminology,
     InputStream inFile) throws Exception;
 
   /**
    * Import abbreviation file.
    *
-   * @param abbrType the abbr type
+   * @param terminology the terminology
    * @param inFile the in file
    * @return the validation result
    * @throws Exception the exception
    */
-  public ValidationResult importAbbreviationFile(String abbrType,
+  public ValidationResult importAbbreviationFile(String terminology,
     InputStream inFile) throws Exception;
 
   /**
    * Export abbreviation file.
    *
-   * @param abbrType the abbr type
+   * @param terminology the terminology
    * @param acceptNew the accept new
    * @param readyOnly the ready only
    * @return the input stream
    * @throws Exception the exception
    */
-  public InputStream exportAbbreviationFile(String abbrType, boolean acceptNew,
+  public InputStream exportAbbreviationFile(String terminology, boolean acceptNew,
     boolean readyOnly) throws Exception;
 
   /**
@@ -131,5 +131,13 @@ public interface AbbreviationHandler extends Configurable {
    * @param reviewFlag the review flag
    */
   public void setReviewFlag(boolean reviewFlag);
+
+  /**
+   * Returns the type used in type-key-value triple for terminology
+   *
+   * @param terminology the terminology
+   * @return the abbr type
+   */
+  public String getAbbrType(String terminology);
 
 }

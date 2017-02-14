@@ -32,7 +32,7 @@ public interface MldpServiceRest {
    */
   public ValidationResult importAbbreviations(
     FormDataContentDisposition contentDispositionHeader, InputStream in,
-    String type, String authToken) throws Exception;
+    Long projectId, String authToken) throws Exception;
 
   /**
    * Validate abbreviations file.
@@ -46,7 +46,7 @@ public interface MldpServiceRest {
    */
   public ValidationResult validateAbbreviationsFile(
     FormDataContentDisposition contentDispositionHeader, InputStream in,
-    String type, String authToken) throws Exception;
+    Long projectId, String authToken) throws Exception;
 
   /**
    * Export abbreviations file.
@@ -58,7 +58,7 @@ public interface MldpServiceRest {
    * @return the input stream
    * @throws Exception the exception
    */
-  public InputStream exportAbbreviationsFile(String type, boolean readyOnly,
+  public InputStream exportAbbreviationsFile(Long projectId, boolean readyOnly,
     boolean acceptNew, String authToken) throws Exception;
 
   /**
@@ -69,7 +69,7 @@ public interface MldpServiceRest {
    * @return the type key value
    * @throws Exception the exception
    */
-  public TypeKeyValue addAbbreviation(TypeKeyValueJpa typeKeyValue,
+  public TypeKeyValue addAbbreviation(TypeKeyValueJpa typeKeyValue, Long projectId,
     String authToken) throws Exception;
 
   /**
@@ -80,7 +80,7 @@ public interface MldpServiceRest {
    * @return the abbreviation
    * @throws Exception the exception
    */
-  public TypeKeyValue getAbbreviation(Long id, String authToken)
+  public TypeKeyValue getAbbreviation(Long id, Long projectId, String authToken)
     throws Exception;
 
   /**
@@ -90,7 +90,7 @@ public interface MldpServiceRest {
    * @param authToken the auth token
    * @throws Exception the exception
    */
-  public void updateAbbreviation(TypeKeyValueJpa typeKeyValue, String authToken)
+  public void updateAbbreviation(TypeKeyValueJpa typeKeyValue, Long projectId, String authToken)
     throws Exception;
 
   /**
@@ -100,7 +100,7 @@ public interface MldpServiceRest {
    * @param authToken the auth token
    * @throws Exception the exception
    */
-  public void removeAbbreviation(Long id, String authToken) throws Exception;
+  public void removeAbbreviation(Long id, Long projectId, String authToken) throws Exception;
 
   /**
    * Find abbreviations.
@@ -112,7 +112,7 @@ public interface MldpServiceRest {
    * @return the type key value list
    * @throws Exception the exception
    */
-  public TypeKeyValueList findAbbreviations(String query, String filter,
+  public TypeKeyValueList findAbbreviations(Long projectId, String query, String filter,
     PfsParameterJpa pfs, String authToken) throws Exception;
 
   /**
@@ -122,7 +122,7 @@ public interface MldpServiceRest {
    * @param authToken the auth token
    * @throws Exception the exception
    */
-  public void computeReviewStatuses(String type, String authToken)
+  public void computeReviewStatuses(Long projectId, String authToken)
     throws Exception;
 
   /**
@@ -133,7 +133,7 @@ public interface MldpServiceRest {
    * @return the review for abbreviation
    * @throws Exception the exception
    */
-  public TypeKeyValueList getReviewForAbbreviation(Long id, String authToken)
+  public TypeKeyValueList getReviewForAbbreviation(Long id, Long projectId, String authToken)
     throws Exception;
 
   /**
@@ -144,7 +144,7 @@ public interface MldpServiceRest {
    * @return the review for abbreviations
    * @throws Exception the exception
    */
-  public TypeKeyValueList getReviewForAbbreviations(List<Long> ids,
+  public TypeKeyValueList getReviewForAbbreviations(List<Long> ids, Long projectId,
     String authToken) throws Exception;
 
   /**
@@ -154,7 +154,7 @@ public interface MldpServiceRest {
    * @param authToken the auth token
    * @throws Exception the exception
    */
-  public void removeAbbreviations(List<Long> ids, String authToken)
+  public void removeAbbreviations(List<Long> ids, Long projectId, String authToken)
     throws Exception;
 
   /**

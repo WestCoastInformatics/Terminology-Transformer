@@ -12,17 +12,17 @@ tsApp.service('mldpService', [
   'Upload',
   function($q, $http, utilService, gpService, Upload) {
 
-    this.findAbbreviations = function(query, typeFilter, pfs) {
+    this.findAbbreviations = function(query, projectId, typeFilter, pfs) {
       var deferred = $q.defer();
 
       console.debug('find abbreviations', query, typeFilter, pfs);
 
-      var lquery = (query ? '?query=' + utilService.prepQuery(query, false) : '')
-        + (typeFilter ? (query ? '&' : '?') + 'filter=' + typeFilter : '');
+      var lquery = '? projectId=' + projectId
+        + (query ? '&query=' + utilService.prepQuery(query, false) : '')
+        + (typeFilter ? '&filter=' + typeFilter : '');
 
       // Get projects
       gpService.increment();
-      console.debug(' PFS: ' + pfs);
       $http.post(mldpUrl + '/abbr/find' + lquery, pfs).then(
       // success
       function(response) {
@@ -38,12 +38,12 @@ tsApp.service('mldpService', [
       return deferred.promise;
     }
 
-    this.getAbbreviation = function(id) {
+    this.getAbbreviation = function(id, projectId) {
       var deferred = $q.defer();
 
       // Get projects
       gpService.increment();
-      $http.get(mldpUrl + '/abbr/' + id).then(
+      $http.get(mldpUrl + '/abbr/' + id + '?projectId=' + projectId).then(
       // success
       function(response) {
         gpService.decrement();
@@ -59,13 +59,13 @@ tsApp.service('mldpService', [
       return deferred.promise;
     }
 
-    this.removeAbbreviation = function(id) {
+    this.removeAbbreviation = function(id, projectId) {
       var deferred = $q.defer();
 
       console.debug('remove abbreviation', id);
       // Get projects
       gpService.increment();
-      $http['delete'](mldpUrl + '/abbr/remove/' + id).then(
+      $http['delete'](mldpUrl + '/abbr/remove/' + id + '?projectId=' + projectId).then(
       // success
       function(response) {
         gpService.decrement();
@@ -80,14 +80,14 @@ tsApp.service('mldpService', [
       return deferred.promise;
     }
 
-    this.removeAbbreviations = function(ids) {
+    this.removeAbbreviations = function(ids, projectId) {
       var deferred = $q.defer();
 
       console.debug('remove abbreviations', ids);
 
       // Get projects
       gpService.increment();
-      $http.post(mldpUrl + '/abbr/remove', ids).then(
+      $http.post(mldpUrl + '/abbr/remove' + '?projectId=' + projectId, ids).then(
       // success
       function(response) {
         gpService.decrement();
@@ -102,7 +102,7 @@ tsApp.service('mldpService', [
       return deferred.promise;
     }
 
-    this.updateAbbreviation = function(abbreviation, useProjectService) {
+    this.updateAbbreviation = function(abbreviation, projectId, useProjectService) {
       var deferred = $q.defer();
 
       gpService.increment();
@@ -111,8 +111,8 @@ tsApp.service('mldpService', [
       // abbreviation endpoint performs post-processing, which re-applies
       // NEEDS_REVIEW on finishReview updates
       $http.post(
-        useProjectService ? projectUrl + '/typeKeyValue/update' : mldpUrl + '/abbr/update/',
-        abbreviation).then(
+        useProjectService ? projectUrl + '/typeKeyValue/update' : mldpUrl + '/abbr/update/'
+          + '?projectId=' + projectId, abbreviation).then(
       // success
       function(response) {
         gpService.decrement();
@@ -127,12 +127,12 @@ tsApp.service('mldpService', [
       return deferred.promise;
     }
 
-    this.addAbbreviation = function(abbreviation) {
+    this.addAbbreviation = function(abbr, projectId) {
       var deferred = $q.defer();
 
       // Get projects
       gpService.increment();
-      $http.put(mldpUrl + '/abbr/add/', abbreviation).then(
+      $http.put(mldpUrl + '/abbr/add?projectId=' + projectId, abbr ).then(
       // success
       function(response) {
         gpService.decrement();
@@ -147,13 +147,14 @@ tsApp.service('mldpService', [
       return deferred.promise;
     }
 
-    this.importAbbreviationsFile = function(type, file) {
+    this.importAbbreviationsFile = function(projectId, file) {
       var deferred = $q.defer();
 
+      console.debug('import abbreviations file', projectId, file);
       // Get projects
       gpService.increment();
       Upload.upload({
-        url : mldpUrl + '/abbr/import/' + type,
+        url : mldpUrl + '/abbr/import' + '?projectId=' + projectId,
         data : {
           file : file
         }
@@ -172,15 +173,15 @@ tsApp.service('mldpService', [
       return deferred.promise;
     }
 
-    this.validateAbbreviationsFile = function(type, file) {
+    this.validateAbbreviationsFile = function(projectId, file) {
       var deferred = $q.defer();
 
-      console.debug('validate', type, file);
+      console.debug('validate', projectId, file);
 
       // Get projects
       gpService.increment();
       Upload.upload({
-        url : mldpUrl + '/abbr/import/' + type + '/validate',
+        url : mldpUrl + '/abbr/import/validate' + '?projectId=' + projectId,
         data : {
           file : file
         }
@@ -199,13 +200,13 @@ tsApp.service('mldpService', [
       return deferred.promise;
     }
 
-    this.exportAbbreviations = function(type, acceptNew, readyOnly) {
-      console.debug('exportAbbreviations', type, acceptNew, readyOnly);
+    this.exportAbbreviations = function(project, acceptNew, readyOnly) {
+      console.debug('exportAbbreviations', project, acceptNew, readyOnly);
       var deferred = $q.defer();
       gpService.increment()
-      var queryParams = (readyOnly ? 'readyOnly=true' : '');
-      queryParams += acceptNew ? (queryParams.length > 0 ? '&' : '') + 'acceptNew=true' : '';
-      $http.post(mldpUrl + '/abbr/export/' + type + (queryParams ? '?' + queryParams : '')).then(
+      $http.post(
+        mldpUrl + '/abbr/export' + '?projectId=' + project.id + (readyOnly ? '&readyOnly=true' : '')
+          + (acceptNew ? '&acceptNew=true' : '')).then(
       // Success
       function(response) {
         var blob = new Blob([ response.data ], {
@@ -217,13 +218,12 @@ tsApp.service('mldpService', [
         var a = document.createElement('a');
         a.href = fileURL;
         a.target = '_blank';
-        a.download = 'abbreviations.' + type + ".txt";
+        a.download = project.terminology + "Abbr.txt";
         document.body.appendChild(a);
         gpService.decrement();
         a.click();
 
         deferred.resolve();
-
       },
       // Error
       function(response) {
@@ -234,14 +234,14 @@ tsApp.service('mldpService', [
       return deferred.promise;
     };
 
-    this.computeReviewStatuses = function(type) {
+    this.computeReviewStatuses = function(projectId) {
       var deferred = $q.defer();
 
       console.debug('compute review statuses', type);
 
       // Get projects
       gpService.increment();
-      $http.post(mldpUrl + '/abbr/review/' + type + '/compute').then(
+      $http.post(mldpUrl + '/abbr/review/compute' + '?projectId=' + projectId).then(
       // success
       function(response) {
         gpService.decrement();
@@ -256,10 +256,10 @@ tsApp.service('mldpService', [
       return deferred.promise;
     }
 
-    this.getReviewForAbbreviations = function(abbrs) {
+    this.getReviewForAbbreviations = function(abbrs, projectId) {
       var deferred = $q.defer();
 
-      console.debug('get review for abbreviations', abbrs);
+      console.debug('get review for abbreviations', abbrs, projectId);
 
       if (!abbrs || abbrs.length == 0) {
         deferred.reject('getReviewForAbbreviations: Bad argument');
@@ -272,7 +272,7 @@ tsApp.service('mldpService', [
 
         // Get projects
         gpService.increment();
-        $http.post(mldpUrl + '/abbr/review', ids).then(
+        $http.post(mldpUrl + '/abbr/review' + '?projectId=' + projectId, ids).then(
         // success
         function(response) {
           gpService.decrement();
@@ -382,7 +382,7 @@ tsApp.service('mldpService', [
       var deferred = $q.defer();
 
       console.debug('clearReviewWorkflow', projectId);
-      
+
       // Get projects
       gpService.increment();
       $http.post(mldpUrl + '/concept/workflow/clear?projectId=' + projectId).then(// success

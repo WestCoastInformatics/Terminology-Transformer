@@ -187,7 +187,7 @@ tsApp
           var pfs = prepAbbrPfs('abbr');
           console.debug('pfs', pfs);
           // retrieval call
-          mldpService.findAbbreviations($scope.paging['abbr'].filter,
+          mldpService.findAbbreviations($scope.paging['abbr'].filter, $scope.selected.project.id,
             $scope.paging['abbr'].filterType, pfs).then(function(response) {
             $scope.lists.abbrsViewed = response;
             console.debug('abbreviations', $scope.lists.abbrsViewed);
@@ -196,15 +196,14 @@ tsApp
           //truncated NEEDS_REVIEW and NEW calls
           pfs = prepAbbrPfs('abbr');
           pfs.maxResults = 0;
-          mldpService.findAbbreviations('workflowStatus:NEEDS_REVIEW',
+          mldpService.findAbbreviations('workflowStatus:NEEDS_REVIEW', $scope.selected.project.id,
             $scope.paging['abbr'].filterType, pfs).then(function(response) {
             $scope.paging['abbr'].hasNeedsReview = response.totalCount > 0;
           });
-          mldpService
-            .findAbbreviations('workflowStatus:NEW', $scope.paging['abbr'].filterType, pfs).then(
-              function(response) {
-                $scope.paging['abbr'].hasNew = response.totalCount > 0;
-              });
+          mldpService.findAbbreviations('workflowStatus:NEW', $scope.selected.project.id,
+            $scope.paging['abbr'].filterType, pfs).then(function(response) {
+            $scope.paging['abbr'].hasNew = response.totalCount > 0;
+          });
 
         }
 
@@ -220,10 +219,7 @@ tsApp
 
           // construct the query restriction clauses
           var clauses = [];
-
-          // first, restriction by type (required)
-          clauses.push('type:\"' + $scope.selected.metadata.terminology.preferredName + '-ABBR\"');
-
+          
           // restriction by workflow status (optional)
           if ($scope.paging['abbr'].workflowStatus) {
             clauses.push('workflowStatus:' + $scope.paging[type].workflowStatus);
@@ -253,7 +249,7 @@ tsApp
 
         $scope.createAbbreviation = function() {
           var abbr = {
-            type : $scope.selected.metadata.terminology.preferredName + '-ABBR',
+            type : null,
             key : null,
             value : null
           }
@@ -265,8 +261,8 @@ tsApp
         }
 
         $scope.addAbbreviation = function(abbr) {
-          mldpService.addAbbreviation(abbr).then(function(newAbbr) {
-            findAbbreviations();
+          mldpService.addAbbreviation(abbr, $scope.selected.project.id).then(function(newAbbr) {
+
             $scope.setAbbreviationViewed(newAbbr);
 
             // perform all actions triggered by abbreviation change
@@ -276,7 +272,7 @@ tsApp
         }
 
         $scope.updateAbbreviation = function(abbr) {
-          mldpService.updateAbbreviation(abbr).then(function() {
+          mldpService.updateAbbreviation(abbr, $scope.selected.project.id).then(function() {
 
             // perform all actions triggered by abbreviation change
             $scope.processAbbreviationChange();
@@ -288,12 +284,12 @@ tsApp
           pfs.startIndex = -1;
           pfs.maxResults = -1;
 
-          mldpService.findAbbreviations($scope.paging['abbr'].filter,
+          mldpService.findAbbreviations($scope.paging['abbr'].filter, $scope.selected.project.id,
             $scope.paging['abbr'].filterType, pfs).then(function(response) {
             var ids = response.typeKeyValues.map(function(t) {
               return t.id;
             });
-            mldpService.removeAbbreviations(ids).then(function() {
+            mldpService.removeAbbreviations(ids, $scope.selected.project.id).then(function() {
               findAbbreviations();
 
               // clear edited abbreviation
@@ -320,7 +316,7 @@ tsApp
 
         $scope.removeAbbreviation = function(abbr) {
           console.debug('remove abbreviation', abbr);
-          mldpService.removeAbbreviation(abbr.id).then(function() {
+          mldpService.removeAbbreviation(abbr.id, $scope.selected.project.id).then(function() {
 
             // clear edited abbreviation
             $scope.setAbbreviationEdited(null);
@@ -328,12 +324,14 @@ tsApp
             console.debug('cycling over review list', $scope.lists.abbrsReviewed);
 
             // remove the abbreviation from the review list if present
-            for (var i = 0; i < $scope.lists.abbrsReviewed.typeKeyValues.length; i++) {
-              console.debug('checking', abbr.id, $scope.lists.abbrsReviewed.typeKeyValues[i].id)
-              if ($scope.lists.abbrsReviewed.typeKeyValues[i].id == abbr.id) {
+            if ($scope.lists.abbrsReviewed && $scope.lists.abbrsReviewed.typeKeyValues) {
+              for (var i = 0; i < $scope.lists.abbrsReviewed.typeKeyValues.length; i++) {
+                console.debug('checking', abbr.id, $scope.lists.abbrsReviewed.typeKeyValues[i].id)
+                if ($scope.lists.abbrsReviewed.typeKeyValues[i].id == abbr.id) {
 
-                $scope.lists.abbrsReviewed.typeKeyValues.splice(i, 1);
-                console.debug('-> found, new list ', $scope.lists.abbrsReviewed);
+                  $scope.lists.abbrsReviewed.typeKeyValues.splice(i, 1);
+                  console.debug('-> found, new list ', $scope.lists.abbrsReviewed);
+                }
               }
             }
 
@@ -380,23 +378,23 @@ tsApp
             deferred.reject('No abbreviations');
           } else {
 
-            mldpService.getReviewForAbbreviations($scope.lists.abbrsReviewed.typeKeyValues).then(
-              function(abbrReviews) {
-                $scope.lists.abbrsReviewed = abbrReviews;
+            mldpService.getReviewForAbbreviations($scope.lists.abbrsReviewed.typeKeyValues,
+              $scope.selected.project.id).then(function(abbrReviews) {
+              $scope.lists.abbrsReviewed = abbrReviews;
 
-                // on review load, find and select for editing the viewed abbreviation in the review list
-                angular.forEach($scope.lists.abbrsReviewed.typeKeyValues, function(abbrReview) {
-                  if (abbrReview.id == $scope.selected.abbrViewed.id) {
-                    $scope.setAbbreviationEdited(abbrReview);
-                  }
-                });
-
-                // get paged list
-                getPagedReview();
-                deferred.resolve();
-              }, function(error) {
-                deferred.reject();
+              // on review load, find and select for editing the viewed abbreviation in the review list
+              angular.forEach($scope.lists.abbrsReviewed.typeKeyValues, function(abbrReview) {
+                if (abbrReview.id == $scope.selected.abbrViewed.id) {
+                  $scope.setAbbreviationEdited(abbrReview);
+                }
               });
+
+              // get paged list
+              getPagedReview();
+              deferred.resolve();
+            }, function(error) {
+              deferred.reject();
+            });
           }
           return deferred.promise;
         }
@@ -412,8 +410,7 @@ tsApp
         // NOTE: Helper function intended for DEBUG use only
         // recomputes workflow status for ALL abbreviations in type
         $scope.recomputeAllReviewStatuses = function() {
-          mldpService.computeReviewStatuses(
-            $scope.selected.metadata.terminology.preferredName + '-ABBR').then(function() {
+          mldpService.computeReviewStatuses($scope.selected.project.id).then(function() {
             $scope.findAbbreviations();
           });
         }
@@ -429,7 +426,7 @@ tsApp
             // call update to force re-check (unless the currently edited abbreviation)
             if (abbr.workflowStatus == 'NEEDS_REVIEW'
               && (!$scope.selected.abbrEdited || $scope.selected.abbrEdited.id != abbr.id)) {
-              deferred.push(mldpService.updateAbbreviation(abbr));
+              deferred.push(mldpService.updateAbbreviation(abbr, $scope.selected.project.id));
             }
           });
 
@@ -446,19 +443,21 @@ tsApp
         $scope.finishReview = function() {
           var deferred = [];
           gpService.increment();
-          angular.forEach($scope.lists.abbrsReviewed.typeKeyValues, function(abbr) {
-            if (abbr.workflowStatus == 'NEEDS_REVIEW') {
-              abbr.workflowStatus = 'NEW';
+          angular.forEach($scope.lists.abbrsReviewed.typeKeyValues,
+            function(abbr) {
+              if (abbr.workflowStatus == 'NEEDS_REVIEW') {
+                abbr.workflowStatus = 'NEW';
 
-              // NOTE: skip checks to prevent NEEDS_REVIEW from being re-applied
-              deferred.push(mldpService.updateAbbreviation(abbr, true));
-            }
-          })
+                // NOTE: skip checks to prevent NEEDS_REVIEW from being re-applied
+                deferred.push(mldpService
+                  .updateAbbreviation(abbr, $scope.selected.project.id, true));
+              }
+            })
           console.debug('deferred', deferred);
           $q.all(deferred).then(function() {
             findAbbreviations();
             gpService.decrement();
-            $scope.lists.abbrsReviewed = null;
+            $scope.getReviewForAbbreviations();
           });
         }
 
@@ -469,16 +468,14 @@ tsApp
           if (!$scope.selected.file) {
             return;
           }
-          mldpService.validateAbbreviationsFile(
-            $scope.selected.metadata.terminology.preferredName + '-ABBR', $scope.selected.file)
+          mldpService.validateAbbreviationsFile($scope.selected.project.id, $scope.selected.file)
             .then(function(response) {
               $scope.validateAbbreviationsFileResults = response;
             })
         }
 
         $scope.importAbbreviationsFile = function() {
-          mldpService.importAbbreviationsFile(
-            $scope.selected.metadata.terminology.preferredName + '-ABBR', $scope.selected.file)
+          mldpService.importAbbreviationsFile($scope.selected.project.id, $scope.selected.file)
             .then(function(response) {
               $scope.importAbbreviationsFileResults = response;
               $scope.findAbbreviations();
@@ -486,10 +483,11 @@ tsApp
         };
 
         $scope.exportAbbreviations = function() {
-          mldpService.exportAbbreviations(
-            $scope.selected.metadata.terminology.preferredName + '-ABBR',
-            $scope.selected.exportAcceptNew, $scope.selected.exportReadyOnly).then(function() {
-            // do nothing
+          mldpService.exportAbbreviations($scope.selected.project, $scope.selected.exportAcceptNew,
+            $scope.selected.exportReadyOnly).then(function() {
+            if ($scope.selected.exportAcceptNew) {
+              $scope.findAbbreviations();
+            }
           })
         };
 
@@ -532,41 +530,51 @@ tsApp
         // Wait for "terminologies" to load
         $scope.initMetadata = function() {
 
-          metadataService.getTerminologies().then(
-          // Success
-          function(data) {
+          projectService.getProjectsForUser($scope.user).then(
+            // Success
+            function(projectData) {
+              $scope.lists.projects = projectData.projects;
+              $scope.selected.project = projectData.project;
+              if ($scope.selected.project) {
+                securityService.saveProjectId($scope.user.userPreferences,
+                  $scope.selected.project.id);
+              }
 
-            $scope.lists.terminologies = data.terminologies;
-            // Load all terminologies upon controller load (unless already
-            // loaded)
-            if ($scope.lists.terminologies) {
-              // look for user preferences
-              var found = false;
-              if ($scope.user.userPreferences && $scope.user.userPreferences.lastTerminology) {
-                for (var i = 0; i < $scope.lists.terminologies.length; i++) {
-                  var terminology = $scope.lists.terminologies[i];
-                  // set from user prefs
-                  if (terminology.terminology === $scope.user.userPreferences.lastTerminology) {
-                    $scope.setTerminology(terminology);
-                    found = true;
-                    break;
+              metadataService.getTerminologies().then(
+              // Success
+              function(metadata) {
+
+                $scope.lists.terminologies = metadata.terminologies;
+                // Load all terminologies upon controller load (unless already
+                // loaded)
+                if ($scope.lists.terminologies) {
+                  // look for user preferences
+                  var found = false;
+                  if ($scope.user.userPreferences && $scope.user.userPreferences.lastTerminology) {
+                    for (var i = 0; i < $scope.lists.terminologies.length; i++) {
+                      var terminology = $scope.lists.terminologies[i];
+                      // set from user prefs
+                      if (terminology.terminology === $scope.user.userPreferences.lastTerminology) {
+                        $scope.setTerminology(terminology);
+                        found = true;
+                        break;
+                      }
+                    }
+                  }
+
+                  // If nothing set, pick the first one
+                  if (!found) {
+
+                    if (!$scope.lists.terminologies) {
+                      window.alert('No terminologies found, database may not be properly loaded.');
+                    } else {
+                      $scope.setTerminology($scope.lists.terminologies[0]);
+                    }
                   }
                 }
-              }
 
-              // If nothing set, pick the first one
-              if (!found) {
-
-                if (!$scope.lists.terminologies) {
-                  window.alert('No terminologies found, database may not be properly loaded.');
-                } else {
-                  $scope.setTerminology($scope.lists.terminologies[0]);
-                }
-              }
-            }
-
-          });
-
+              });
+            });
         }
 
         // Function to filter viewable terminologies for picklist
@@ -590,8 +598,20 @@ tsApp
           metadataService.setTerminology(terminology);
           $scope.user.userPreferences.lastTerminology = terminology.terminology;
           securityService.updateUserPreferences($scope.user.userPreferences);
-          $scope.clearImportResults();
-          $scope.findAbbreviations();
+
+          $scope.selected.project = null;
+          for (var i = 0; i < $scope.lists.projects.length; i++) {
+            if ($scope.lists.projects[i].terminology == terminology.terminology) {
+              $scope.selected.project = $scope.lists.projects[i];
+              console.debug('  project found: ', $scope.selected.project);
+              $scope.clearImportResults();
+              $scope.findAbbreviations();
+            }
+          }
+          if ($scope.selected.project == null) {
+            utilService.setError('Unexpected error: no project for terminology');
+          }
+
         };
 
         //
