@@ -166,7 +166,7 @@ public class TerminologySimpleCsvLoaderAlgorithm
     // Turn off action handling
     setMolecularActionFlag(false);
 
-    this.branch = getProject() == null || getProject().getBranch() == null
+    branch = getProject() == null || getProject().getBranch() == null
         ? Branch.ROOT : getProject().getBranch();
 
     // Check the input directory XOR input stream
@@ -213,8 +213,9 @@ public class TerminologySimpleCsvLoaderAlgorithm
       info.setTimestamp(new Date());
       addReleaseInfo(info);
     } else {
-      throw new Exception("Release info unexpectedly already exists for "
-          + getReleaseVersion());
+      info.setLastModified(date);
+      info.setLastModifiedBy(loader);
+      updateReleaseInfo(info);
     }
 
     // Clear concept cache
@@ -228,12 +229,7 @@ public class TerminologySimpleCsvLoaderAlgorithm
       logInfo("  " + key + " = " + stats.get(key));
     }
 
-    try {
-      commit();
-    } catch (Exception e) {
-      // do nothing
-    }
-
+    commit();
     clear();
 
     // Final logging messages
@@ -395,9 +391,9 @@ public class TerminologySimpleCsvLoaderAlgorithm
     String lastConceptId = null;
 
     ComputePreferredNameHandler pnHandler =
-        this.getComputePreferredNameHandler(getTerminology());
+        getComputePreferredNameHandler(getTerminology());
     PrecedenceList precedenceList =
-        this.getPrecedenceList(getTerminology(), getVersion());
+        getPrecedenceList(getTerminology(), getVersion());
 
     Logger.getLogger(getClass())
         .info("Identifier handler: " + idHandler.getName());

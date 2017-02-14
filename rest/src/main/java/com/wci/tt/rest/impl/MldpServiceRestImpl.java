@@ -80,7 +80,6 @@ public class MldpServiceRestImpl extends RootServiceRestImpl
    */
   public MldpServiceRestImpl() throws Exception {
     securityService = new SecurityServiceJpa();
-    System.out.println("********* ABBR *************");
   }
 
   @Override

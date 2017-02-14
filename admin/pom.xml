@@ -413,6 +413,39 @@
         </plugins>
       </build>
     </profile>
+    
+    <profile>
+      <id>SimpleCsv</id>
+      <build>
+        <plugins>
+
+          <!-- Update the database schema (or create it) -->
+          <plugin>
+            <groupId>com.wcinformatics.tt</groupId>
+            <artifactId>tt-admin</artifactId>
+            <version>${project.version}</version>
+            <executions>
+              <execution>
+                <id>simple-csv-loader</id>
+                <phase>package</phase>
+                <goals>
+                  <goal>simple-csv-loader</goal>
+                </goals>
+                <configuration>
+                  <terminology>${terminology}</terminology>
+                  <version>${version}</version>
+                  <inputFile>${input.file}</inputFile>
+                  <server>${server}</server>
+                  <keepIds>${keep.ids}</keepIds>
+                  <replace>${replace}</replace>
+                  <mode>${mode}</mode>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
   </profiles>
 
 </project>
