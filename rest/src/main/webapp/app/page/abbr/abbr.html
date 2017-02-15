@@ -66,7 +66,7 @@
             <th ng-click="setSortField('abbr','lastModified')">Last
               Modified<span ng-bind="getSortIndicator('abbr','lastModified')"></span>
             </th>
-            <th><i class="noul glyphicon glyphicon-trash"
+            <th><i class="noul glyphicon glyphicon-trash" title="Remove all viewed abbreviations"
               confirm="Are you sure you want to remove {{lists.abbrsViewed.totalCount}} abbreviations?"
               ng-click="removeAbbreviations()"></i>
           </tr>
@@ -88,7 +88,7 @@
 
               <td class="col-md-5" ng-click="setAbbreviationViewed(abbr)">{{abbr.value}}</td>
               <td class="col-md-3" ng-click="setAbbreviationViewed(abbr)">{{toShortDate(abbr.lastModified)}}</td>
-              <td><i class="noul glyphicon glyphicon-trash"
+              <td><i class="noul glyphicon glyphicon-trash" title="Remove abbreviation"
                 ng-click="removeAbbreviation(abbr)"></i>
             </tr>
           </tbody>

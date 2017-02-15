@@ -10,7 +10,6 @@ import java.util.Set;
 
 import com.wci.umls.server.ValidationResult;
 import com.wci.umls.server.helpers.ConfigUtility;
-import com.wci.umls.server.helpers.content.ConceptList;
 import com.wci.umls.server.jpa.ValidationResultJpa;
 import com.wci.umls.server.jpa.content.ConceptJpa;
 import com.wci.umls.server.jpa.services.ContentServiceJpa;
@@ -24,7 +23,7 @@ import com.wci.umls.server.services.handlers.SearchHandler;
 /**
  * Default checks that apply to all terminologies.
  */
-public class ConceptTerminologyIdUnique extends AbstractValidationCheck {
+public class ConceptTermsUniqueAcrossFeatures extends AbstractValidationCheck {
 
   /* see superclass */
   @Override
@@ -39,31 +38,47 @@ public class ConceptTerminologyIdUnique extends AbstractValidationCheck {
     ContentServiceJpa contentService = null;
     int totalCt[] = new int[1];
 
-    if (c.getTerminologyId() == null || c.getTerminologyId().isEmpty()) {
-      result.getErrors().add("Terminology id null or empty");
-      return result;
-    }
     try {
       contentService = new ContentServiceJpa();
+
+      final Set<Concept> matchingConcepts = new HashSet<>();
+
       SearchHandler handler = new DefaultSearchHandler();
       // getQueryResults(String terminology,
       // String version, String branch, String query, String literalField,
       // Class<T> clazz, PfsParameter pfs, int[] totalCt, EntityManager manager)
 
       // Cycle over atoms
+      for (Atom atom : c.getAtoms()) {
+        final String query = "NOT id:" + c.getId() + " AND atoms.nameNorm:\""
+            + ConfigUtility.normalize(atom.getName()) + "\""
+            + (c.getSemanticTypes() == null || c.getSemanticTypes().size() == 0
+                ? "" : " AND NOT semanticTypes.semanticType:"
+                    + c.getSemanticTypes().get(0).getSemanticType());
+        List<ConceptJpa> matches = handler.getQueryResults(c.getTerminology(),
+            c.getVersion(), c.getBranch(), query, "atoms.nameNorm",
+            ConceptJpa.class, null, totalCt, contentService.getEntityManager());
 
-      List<ConceptJpa> matches = handler
-          .getQueryResults(c.getTerminology(), c.getVersion(), c.getBranch(),
-              "NOT id:" + c.getId() + " AND terminologyId:"
-                  + c.getTerminologyId(),
-              "terminologyId", ConceptJpa.class, null, totalCt,
-              contentService.getEntityManager());
+        for (Concept match : matches) {
+          matchingConcepts.add(match);
+        }
+      }
 
-      if (matches.size() > 0) {
-        for (Concept concept : matches) {
-          result.addError("Terminology id " + c.getTerminologyId()
-              + " not unique, duplicated on internal id " + concept.getId()
-              + ", " + concept.getName());
+      for (Concept concept : matchingConcepts) {
+        // find matching atoms
+        for (Atom atom1 : c.getAtoms()) {
+          if (atom1.getName() == null || atom1.getName().isEmpty()) {
+            continue;
+          }
+          for (Atom atom2 : concept.getAtoms()) {
+            if (atom1.getName().equals(atom2.getName())) {
+              result.addError(
+                  "Exact term match (" + atom1.getName() + ") in feature '"
+                      + concept.getSemanticTypes().get(0).getSemanticType()
+                      + "' to " + concept.getTerminologyId() + " "
+                      + concept.getName());
+            }
+          }
         }
       }
 
@@ -98,7 +113,7 @@ public class ConceptTerminologyIdUnique extends AbstractValidationCheck {
   /* see superclass */
   @Override
   public String getName() {
-    return "Concept Terminology Id Unique";
+    return "Concept Name Unique Across Features";
   }
 
 }

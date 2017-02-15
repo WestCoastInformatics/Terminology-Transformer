@@ -75,7 +75,7 @@
             <th ng-click="setSortField('concept', 'lastModified')">Last
               Modified<span ng-bind="getSortIndicator('concept','lastModified')"></span>
             </th>
-            <th><i class="noul glyphicon glyphicon-trash"
+            <th><i class="noul glyphicon glyphicon-trash" title="Remove all viewed concepts"
               confirm="Are you sure you want to remove {{lists.conceptsViewed.totalCount}} concepts?"
               ng-click="removeConcepts()"></i>
           </tr>
@@ -103,7 +103,7 @@
               
               <td class="col-md-2" ng-click="setConceptViewed(concept)">{{toShortDate(concept.lastModified)}}</td>
               <td class="col-md-1"><i
-                class="noul glyphicon glyphicon-trash"
+                class="noul glyphicon glyphicon-trash" title="Remove concept"
                 ng-click="removeConcept(concept)"></i>
             </tr>
           </tbody>
@@ -149,7 +149,7 @@
             ng-show="selected.component.workflowStatus == 'NEEDS_REVIEW' || selected.review.errors.length > 0 || selected.review.warnings.length > 0 || selected.review.comments.length > 0">
             <h5>Review</h5>
 
-            <div ng-repeat="error in selected.review.errors"
+            <div ng-repeat="error in selected.review.errors | orderBy:'+'"
               class="alert alert-danger">{{error}}</div>
             <div ng-repeat="warning in selected.review.warnings"
               class="alert alert-warning">{{warning}}</div>

@@ -24,7 +24,6 @@ import org.apache.commons.csv.CSVRecord;
 import org.apache.log4j.Logger;
 
 import com.wci.umls.server.AlgorithmParameter;
-import com.wci.umls.server.ReleaseInfo;
 import com.wci.umls.server.ValidationResult;
 import com.wci.umls.server.helpers.Branch;
 import com.wci.umls.server.helpers.ConfigUtility;
@@ -33,7 +32,6 @@ import com.wci.umls.server.helpers.PfsParameter;
 import com.wci.umls.server.helpers.PrecedenceList;
 import com.wci.umls.server.helpers.content.ConceptList;
 import com.wci.umls.server.jpa.AlgorithmParameterJpa;
-import com.wci.umls.server.jpa.ReleaseInfoJpa;
 import com.wci.umls.server.jpa.ValidationResultJpa;
 import com.wci.umls.server.jpa.algo.AbstractTerminologyLoaderAlgorithm;
 import com.wci.umls.server.jpa.content.AtomJpa;
