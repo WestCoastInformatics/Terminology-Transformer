@@ -34,8 +34,10 @@ import com.wci.umls.server.helpers.PrecedenceList;
 import com.wci.umls.server.jpa.ProjectJpa;
 import com.wci.umls.server.jpa.UserJpa;
 import com.wci.umls.server.jpa.services.MetadataServiceJpa;
+import com.wci.umls.server.jpa.services.ProjectServiceJpa;
 import com.wci.umls.server.jpa.services.SecurityServiceJpa;
 import com.wci.umls.server.services.MetadataService;
+import com.wci.umls.server.services.ProjectService;
 import com.wci.umls.server.services.SecurityService;
 
 /**
@@ -150,6 +152,14 @@ public class ResetMldpDatabase {
 
     final SecurityService securityService = new SecurityServiceJpa();
     final MetadataService service = new MetadataServiceJpa();
+    final ProjectService projectService = new ProjectServiceJpa();
+    
+
+    // set last modified by
+    final String loaderUser = "loader";
+    service.setLastModifiedBy(loaderUser);
+    projectService.setLastModifiedBy(loaderUser);
+
 
     // shared variables
     InputStream inStream;
@@ -158,30 +168,24 @@ public class ResetMldpDatabase {
 
     Logger.getLogger(getClass()).info("Creating default users...");
     final Map<User, UserRole> userRoleMap = new HashMap<>();
+    
+    final Map<String, UserRole> userNames = new HashMap<>();
+    userNames.put("admin", UserRole.ADMINISTRATOR);
+    userNames.put("user", UserRole.USER);
+    userNames.put("viewer", UserRole.VIEWER);
 
-    // add admin, user, and viewer users
-    User admin = new UserJpa();
-    admin.setApplicationRole(UserRole.ADMINISTRATOR);
-    admin.setName("Administrator");
-    admin.setUserName("admin");
-    admin.setEmail("");
-    admin = securityService.addUser(admin);
-    User user = new UserJpa();
-    user.setApplicationRole(UserRole.USER);
-    user.setName("User");
-    user.setUserName("user");
-    user.setEmail("");
-    user = securityService.addUser(user);
-    User viewer = new UserJpa();
-    viewer.setApplicationRole(UserRole.VIEWER);
-    viewer.setName("Guest");
-    viewer.setUserName("guest");
-    viewer.setEmail("");
-    viewer = securityService.addUser(viewer);
+    for (String userName : userNames.keySet()) {
+      User user = new UserJpa();
+      user.setApplicationRole(userNames.get(userName));
+      user.setEmail(userName + "@example.com");
+      user.setUserName(userName);
+      user.setName(userName.substring(0, 1).toUpperCase() + userName.substring(1));
+      user = securityService.addUser(user);
+      userRoleMap.put(user, userNames.get(userName));
+    }
+    
 
-    userRoleMap.put(admin, UserRole.ADMINISTRATOR);
-    userRoleMap.put(user, UserRole.USER);
-    userRoleMap.put(viewer, UserRole.VIEWER);
+    
     Logger.getLogger(getClass()).info("  Done.");
 
     final String[] validationChecks =
@@ -198,8 +202,7 @@ public class ResetMldpDatabase {
 
       final String terminology = "HKFT-" + mldpTerminology.toUpperCase();
       final String version = "latest";
-      final String loaderUser = "loader";
-
+    
       // load terminology
       Logger.getLogger(getClass())
           .info("Loading terminology " + mldpTerminology);
@@ -239,10 +242,10 @@ public class ResetMldpDatabase {
       inStream = new FileInputStream(inputDir
           + mldpTerminology + "/" + mldpTerminology + "Abbr.txt");
       abbrHandler = new DefaultAbbreviationHandler();
-      abbrHandler.setService(service);
+      abbrHandler.setService(projectService);
       abbrHandler.setReviewFlag(false);
       result = abbrHandler.importAbbreviationFile(
-          "HKFT-" + mldpTerminology.toUpperCase() + "-ABBR", inStream);
+          "HKFT-" + mldpTerminology.toUpperCase(), inStream);
       
       // output results
       for (String error : result.getErrors()) {
@@ -287,17 +290,28 @@ public class ResetMldpDatabase {
       project.setVersion(version);
       project.setBranch(Branch.ROOT);
       project.setUserRoleMap(userRoleMap);
-
+  
       // add all validation checks to project
       project.setValidationChecks(Arrays.asList(validationChecks));
 
-      service.setLastModifiedBy(loaderUser);
-
+      // use metadata service here (no commit clashing)
+   
       PrecedenceList precedenceList =
           service.getPrecedenceList(terminology, version);
       project.setPrecedenceList(precedenceList);
-      service.addProject(project);
+      
+       project = service.addProject(project);
+      
+      Logger.getLogger(getClass()).info("  Project successfully created");
+     
     }
+    
+    // close project service
+  
+    service.close();
+    service.closeFactory();
+    
+    Logger.getLogger(getClass()).info("Reset MLDP database complete");
 
   }
 

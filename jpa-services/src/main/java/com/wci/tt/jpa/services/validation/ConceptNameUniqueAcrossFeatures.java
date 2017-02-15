@@ -8,6 +8,7 @@ import java.util.Properties;
 import java.util.Set;
 
 import com.wci.umls.server.ValidationResult;
+import com.wci.umls.server.helpers.ConfigUtility;
 import com.wci.umls.server.helpers.content.ConceptList;
 import com.wci.umls.server.jpa.ValidationResultJpa;
 import com.wci.umls.server.jpa.services.ContentServiceJpa;
@@ -39,10 +40,11 @@ public class ConceptNameUniqueAcrossFeatures extends AbstractValidationCheck {
     }
     try {
       contentService = new ContentServiceJpa();
-
+      
+      // TODO Cycle over atoms 
       final ConceptList concepts = contentService.findConcepts(
           c.getTerminology(), c.getVersion(), c.getBranch(),
-          "NOT id:" + c.getId() + " AND name:\"" + c.getName() + "\""
+          "NOT id:" + c.getId() + " AND nameNorm:\"" + ConfigUtility.normalize(c.getName()) + "\""
               + " AND NOT semanticTypes.semanticType:"
               + c.getSemanticTypes().get(0).getSemanticType(),
           null);

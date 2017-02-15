@@ -203,16 +203,92 @@
                   <td class="col-md-5"
                     ng-bind-html="abbr.value |
                     highlightExact:selected.abbrEdited.value"></td>
-                  <td class="col-md-3">{{toDate(abbr.lastModified)}}</td>
+                  <td class="col-md-3">{{toShortDate(abbr.lastModified)}}</td>
                 </tr>
               </tbody>
             </table>
 
-            <button class="btn btn-xs btn-primary" title="Mark all resolved" ng-show="selected.abbrEdited.workflowStatus == 'NEEDS_REVIEW'"
+            <button class="btn btn-xs btn-primary" title="Mark all resolved"
+              ng-show="selected.abbrEdited.workflowStatus == 'NEEDS_REVIEW'"
               ng-click="finishReview()">Finish Review</button>
 
           </div>
+
+          <!-- Matches Across Terminologies section  -->
+
+          <div ng-show="lists.abbrsReviewedOther.totalCount > 0">
+          
+          <hr>
+
+            <div class="row"
+              style="margin-top: 10px; margin-bottom: 10px; margin-right: 0px;">
+              <div class="col-md-12">
+                <i style="float: left" class="noul glyphicon"
+                  ng-click="abbrsReviewedOtherShowing = !abbrsReviewedOtherShowing"
+                  ng-class="[{'glyphicon-chevron-down' : abbrsReviewedOtherShowing}, {'glyphicon-chevron-right' : !abbrsReviewedOtherShowing}]"></i>
+
+                <h5 style="margin: 0px;">&nbsp;Matches Across Terminologies
+                  ({{lists.abbrsReviewedOther.totalCount}})</h5>
+              </div>
+
+            </div>
+            <div ng-show="abbrsReviewedOtherShowing">
+
+
+              <div class="row"
+                ng-show="lists.abbrsReviewedOther.totalCount > paging['reviewOther'].pageSize"></div>
+              <div class="col-md-8" pager paging="paging['reviewOther']"
+                count="lists.abbrsReviewedOther.totalCount"
+                callbacks="paging['reviewOther'].callbacks"
+                style="margin-top: 10px;"></div>
+              <div class="col-md-4"
+                ng-show="lists.abbrsReviewedOther.totalCount > 10"
+                style="float: right; margin-top: 10px;">
+                Page size: <select ng-model="paging['reviewOther'].pageSize"
+                  title="Page Size"
+                  ng-change="paging['reviewOther'].callbacks.getPagedList()"
+                  ng-options="pageSize.key as pageSize.value for pageSize in lists.pageSizes">
+                </select>
+              </div>
+
+
+              <table class="slim table" style="margin-top: 10px;"
+                ng-show="lists.pagedReviewOther.data.length > 0">
+                <tr>
+                  <th ng-click="setSortField('reviewOther','key')">Abbreviation<span
+                    ng-bind="getSortIndicator('reviewOther','key')"></span></th>
+                  <th></th>
+                  <th ng-click="setSortField('reviewOther','value')">Expansion<span
+                    ng-bind="getSortIndicator('reviewOther','value')"></span></th>
+                  <th ng-click="setSortField('reviewOther','type')">Type<span
+                    ng-bind="getSortIndicator('reviewOther','type')"></span>
+                  </th>
+
+                </tr>
+                <tbody>
+                  <!-- table-hover makes use of the active class -->
+                  <tr ng-class="{selected: abbr.id == selected.abbrEdited.id}"
+                    ng-repeat="abbr in lists.pagedReviewOther.data">
+                    <td class="col-md-3">{{abbr.key}}</td>
+                    <td class="col-md-1"><span class="color-box"
+                      style="background-color: red;"
+                      ng-show="abbr.workflowStatus == 'NEEDS_REVIEW'"
+                      uib-tooltip="Needs review"></span> <span class="color-box"
+                      style="background-color: green; margin-top: 5px;"
+                      ng-show="abbr.workflowStatus == 'NEW'"
+                      title="New abbreviation"></span>
+                    <td class="col-md-5"
+                      ng-bind-html="abbr.value |
+                    highlightExact:selected.abbrEdited.value"></td>
+                    <td class="col-md-3">{{abbr.type}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+          </div>
         </div>
+
         <div ng-show="selected.editTab == 'Import'">
 
           <!-- Import section -->

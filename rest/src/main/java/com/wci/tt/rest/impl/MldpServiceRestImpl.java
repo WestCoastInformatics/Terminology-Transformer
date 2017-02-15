@@ -98,8 +98,8 @@ public class MldpServiceRestImpl extends RootServiceRestImpl
     final ProjectService projectService = new ProjectServiceJpa();
     final AbbreviationHandler abbrHandler = new DefaultAbbreviationHandler();
     try {
-      final String username = authorizeProject(projectService, projectId, securityService, authToken,
-          "import abbreviations", UserRole.USER);
+      final String username = authorizeProject(projectService, projectId,
+          securityService, authToken, "import abbreviations", UserRole.USER);
       Project project = projectService.getProject(projectId);
       projectService.setLastModifiedBy(username);
       abbrHandler.setService(projectService);
@@ -134,8 +134,8 @@ public class MldpServiceRestImpl extends RootServiceRestImpl
     final Project project = projectService.getProject(projectId);
     final AbbreviationHandler abbrHandler = new DefaultAbbreviationHandler();
     try {
-      authorizeProject(projectService, projectId, securityService, authToken, "validate abbreviations file",
-          UserRole.USER);
+      authorizeProject(projectService, projectId, securityService, authToken,
+          "validate abbreviations file", UserRole.USER);
       abbrHandler.setService(projectService);
       return abbrHandler.validateAbbreviationFile(project.getTerminology(), in);
 
@@ -169,11 +169,12 @@ public class MldpServiceRestImpl extends RootServiceRestImpl
     final Project project = projectService.getProject(projectId);
     final AbbreviationHandler abbrHandler = new DefaultAbbreviationHandler();
     try {
-      final String username = authorizeProject(projectService, projectId, securityService, authToken,
-          "export abbreviations", UserRole.USER);
+      final String username = authorizeProject(projectService, projectId,
+          securityService, authToken, "export abbreviations", UserRole.USER);
       projectService.setLastModifiedBy(username);
       abbrHandler.setService(projectService);
-      return abbrHandler.exportAbbreviationFile(project.getTerminology(), acceptNew, readyOnly);
+      return abbrHandler.exportAbbreviationFile(project.getTerminology(),
+          acceptNew, readyOnly);
     } catch (Exception e) {
       handleException(e, "trying to export abbreviations");
       return null;
@@ -200,8 +201,9 @@ public class MldpServiceRestImpl extends RootServiceRestImpl
     final Project project = projectService.getProject(projectId);
     final AbbreviationHandler abbrHandler = new DefaultAbbreviationHandler();
     try {
-      final String username = authorizeProject(projectService, projectId, securityService, authToken,
-          "compute reviews for abbreviations", UserRole.USER);
+      final String username =
+          authorizeProject(projectService, projectId, securityService,
+              authToken, "compute reviews for abbreviations", UserRole.USER);
       projectService.setLastModifiedBy(username);
       abbrHandler.setService(projectService);
       abbrHandler.computeAbbreviationStatuses(project.getTerminology());
@@ -230,8 +232,8 @@ public class MldpServiceRestImpl extends RootServiceRestImpl
     final ProjectService projectService = new ProjectServiceJpa();
     final AbbreviationHandler abbrHandler = new DefaultAbbreviationHandler();
     try {
-     authorizeProject(projectService, projectId, securityService, authToken, "get review for abbreviation",
-          UserRole.USER);
+      authorizeProject(projectService, projectId, securityService, authToken,
+          "get review for abbreviation", UserRole.USER);
       abbrHandler.setService(projectService);
       TypeKeyValue abbr = projectService.getTypeKeyValue(id);
       return abbrHandler.getReviewForAbbreviation(abbr);
@@ -260,8 +262,8 @@ public class MldpServiceRestImpl extends RootServiceRestImpl
     final ProjectService projectService = new ProjectServiceJpa();
     final AbbreviationHandler abbrHandler = new DefaultAbbreviationHandler();
     try {
-      authorizeProject(projectService, projectId, securityService, authToken, "get review for abbreviations",
-          UserRole.USER);
+      authorizeProject(projectService, projectId, securityService, authToken,
+          "get review for abbreviations", UserRole.USER);
       abbrHandler.setService(projectService);
       List<TypeKeyValue> abbrs = new ArrayList<>();
       for (Long id : ids) {
@@ -293,8 +295,8 @@ public class MldpServiceRestImpl extends RootServiceRestImpl
           .info("RESTful call (MLDP, Get): /abbr/ " + id);
       final ProjectService projectService = new ProjectServiceJpa();
       try {
-        authorizeProject(projectService, projectId, securityService, authToken, "get abbreviation",
-            UserRole.USER);
+        authorizeProject(projectService, projectId, securityService, authToken,
+            "get abbreviation", UserRole.USER);
         return projectService.getTypeKeyValue(id);
       } catch (Exception e) {
         handleException(e, "trying to get abbreviation ");
@@ -321,12 +323,12 @@ public class MldpServiceRestImpl extends RootServiceRestImpl
     final Project project = projectService.getProject(projectId);
     final AbbreviationHandler abbrHandler = new DefaultAbbreviationHandler();
     try {
-      final String username = authorizeProject(projectService, projectId, securityService, authToken,
-          "add abbreviation", UserRole.USER);
+      final String username = authorizeProject(projectService, projectId,
+          securityService, authToken, "add abbreviation", UserRole.USER);
       projectService.setLastModifiedBy(username);
       abbrHandler.setService(projectService);
-      abbrHandler.updateWorkflowStatus(typeKeyValue);
       typeKeyValue.setType(abbrHandler.getAbbrType(project.getTerminology()));
+      abbrHandler.updateWorkflowStatus(typeKeyValue);
       return projectService.addTypeKeyValue(typeKeyValue);
     } catch (Exception e) {
       handleException(e, "trying to add abbreviation ");
@@ -352,8 +354,8 @@ public class MldpServiceRestImpl extends RootServiceRestImpl
     final ProjectService projectService = new ProjectServiceJpa();
     final AbbreviationHandler abbrHandler = new DefaultAbbreviationHandler();
     try {
-      final String username = authorizeProject(projectService, projectId, securityService, authToken,
-          "update abbreviation", UserRole.USER);
+      final String username = authorizeProject(projectService, projectId,
+          securityService, authToken, "update abbreviation", UserRole.USER);
       projectService.setLastModifiedBy(username);
       abbrHandler.setService(projectService);
       // TODO Decide whether we want update to change workflow status
@@ -382,8 +384,8 @@ public class MldpServiceRestImpl extends RootServiceRestImpl
         .info("RESTful call (MLDP, DELETE): /abbr/remove " + id);
     final ProjectService projectService = new ProjectServiceJpa();
     try {
-      final String username = authorizeProject(projectService, projectId, securityService, authToken,
-          "remove abbreviation", UserRole.USER);
+      final String username = authorizeProject(projectService, projectId,
+          securityService, authToken, "remove abbreviation", UserRole.USER);
       projectService.setLastModifiedBy(username);
       projectService.removeTypeKeyValue(id);
     } catch (Exception e) {
@@ -409,8 +411,8 @@ public class MldpServiceRestImpl extends RootServiceRestImpl
         .info("RESTful call (MLDP, POST): /abbr/remove " + ids);
     final ProjectService projectService = new ProjectServiceJpa();
     try {
-      final String username = authorizeProject(projectService, projectId, securityService, authToken,
-          "remove abbreviation", UserRole.USER);
+      final String username = authorizeProject(projectService, projectId,
+          securityService, authToken, "remove abbreviation", UserRole.USER);
       projectService.setLastModifiedBy(username);
       projectService.setTransactionPerOperation(false);
       projectService.beginTransaction();
@@ -434,7 +436,7 @@ public class MldpServiceRestImpl extends RootServiceRestImpl
   @ApiOperation(value = "Finds abbreviations", notes = "Finds abbreviation objects", response = TypeKeyValueJpa.class)
   public TypeKeyValueList findAbbreviations(
     @ApiParam(value = "The project id, e.g. 1", required = true) @QueryParam("projectId") Long projectId,
-     @ApiParam(value = "Query", required = false) @QueryParam("query") String query,
+    @ApiParam(value = "Query", required = false) @QueryParam("query") String query,
     @ApiParam(value = "Filter type", required = false) @QueryParam("filter") String filter,
     @ApiParam(value = "PFS Parameter, e.g. '{ \"startIndex\":\"1\", \"maxResults\":\"5\" }'", required = false) PfsParameterJpa pfs,
     @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
@@ -442,24 +444,31 @@ public class MldpServiceRestImpl extends RootServiceRestImpl
     Logger.getLogger(getClass()).info("RESTful call (MLDPr): /abbr/find, "
         + query + ", " + filter + ", " + pfs);
     final ProjectService projectService = new ProjectServiceJpa();
+  
     try {
-      authorizeProject(projectService, projectId, securityService, authToken, "find abbreviations",
-          UserRole.USER);
+      authorizeProject(projectService, projectId, securityService, authToken,
+          "find abbreviations", UserRole.USER);
 
       TypeKeyValueList list = null;
+      final Project project = projectService.getProject(projectId);
+      final AbbreviationHandler abbrHandler = new DefaultAbbreviationHandler();
+      
+      // use query restriction to restrict by computed type
+      PfsParameter lpfs = new PfsParameterJpa(pfs);
+      lpfs.setQueryRestriction((pfs.getQueryRestriction() == null
+          || pfs.getQueryRestriction().isEmpty() ? ""
+              : pfs.getQueryRestriction() + " AND ") + "type:\""
+                  + abbrHandler.getAbbrType(project.getTerminology()) + "\"");
 
       // if filter supplied, retrieve all results and pass to handler
       if (filter != null) {
-        PfsParameter lpfs = new PfsParameterJpa(pfs);
         lpfs.setMaxResults(-1);
         lpfs.setStartIndex(-1);
         list = projectService.findTypeKeyValuesForQuery(query, lpfs);
-        final AbbreviationHandler abbrHandler =
-            new DefaultAbbreviationHandler();
         abbrHandler.setService(projectService);
         list = abbrHandler.filterResults(list, filter, pfs);
       } else {
-        list = projectService.findTypeKeyValuesForQuery(query, pfs);
+        list = projectService.findTypeKeyValuesForQuery(query, lpfs);
       }
 
       return list;

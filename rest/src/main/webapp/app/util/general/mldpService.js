@@ -17,7 +17,7 @@ tsApp.service('mldpService', [
 
       console.debug('find abbreviations', query, typeFilter, pfs);
 
-      var lquery = '? projectId=' + projectId
+      var lquery = '?projectId=' + projectId
         + (query ? '&query=' + utilService.prepQuery(query, false) : '')
         + (typeFilter ? '&filter=' + typeFilter : '');
 
@@ -205,7 +205,7 @@ tsApp.service('mldpService', [
       var deferred = $q.defer();
       gpService.increment()
       $http.post(
-        mldpUrl + '/abbr/export' + '?projectId=' + project.id + (readyOnly ? '&readyOnly=true' : '')
+        mldpUrl + '/abbr/export?projectId=' + project.id + (readyOnly ? '&readyOnly=true' : '')
           + (acceptNew ? '&acceptNew=true' : '')).then(
       // Success
       function(response) {

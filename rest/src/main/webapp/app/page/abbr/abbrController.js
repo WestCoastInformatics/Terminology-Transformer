@@ -54,6 +54,7 @@ tsApp
           terminologies : [],
           abbrsViewed : [],
           abbrsReviewed : [],
+          abbrsReviewedAcrossTerminologies : [],
           fileTypesFilter : '.txt',
           workflowStatus : [ {
             key : null,
@@ -85,8 +86,12 @@ tsApp
             value : 'Duplicate abbr'
           }, {
             key : 'duplicateValue',
-            value : 'Duplicate expansion'
+            value : 'Duplicate expansion within terminology'
+          }, {
+            key : 'duplicateValueAcrossTerminologies',
+            value : 'Duplicate expansion in another terminology'
           } ],
+
           pageSizes : [ {
             key : 10,
             value : "10"
@@ -121,58 +126,17 @@ tsApp
         $scope.paging['review'].callbacks = {
           getPagedList : getPagedReview
         };
+        $scope.paging['reviewOther'] = utilService.getPaging();
+        $scope.paging['reviewOther'].sortField = 'key';
+        $scope.paging['reviewOther'].workflowStatus = null;
+        $scope.paging['reviewOther'].callbacks = {
+          getPagedList : getPagedReview
+        };
 
         // pass utility functions to scope
         $scope.toShortDate = utilService.toShortDate;
 
-        // Sets the terminololgy
-        $scope.setTerminology = function(terminology) {
-          // Set shared model (may already be set)
-          metadataService.setTerminology(terminology);
-
-          // set the autocomplete url, with pattern:
-          // /type/{terminology}/{version}/autocomplete/{searchTerm}
-          $scope.autocompleteUrl = $scope.selected.metadata.terminology.organizingClassType
-            .toLowerCase()
-            + '/'
-            + $scope.selected.metadata.terminology.terminology
-            + '/'
-            + $scope.selected.metadata.terminology.version + "/autocomplete/";
-
-          // Choose a project
-          for (var i = 0; i < $scope.lists.projects.length; i++) {
-            var p = $scope.lists.projects[i];
-            // Pick the first project if nothing has been selected
-            if (!$scope.selected.project) {
-              $scope.selected.project = p;
-            }
-            if (p.terminology == terminology.terminology) {
-              $scope.selected.project = p;
-            }
-          }
-          if ($scope.selected.project) {
-            securityService.saveProjectId($scope.user.userPreferences, $scope.selected.project.id);
-          }
-
-          // otherwise, leave project setting as is (last chosen)
-
-          // Load all metadata for this terminology, store it in the metadata
-          // service and return deferred promise
-          var deferred = $q.defer();
-          metadataService.getAllMetadata(terminology.terminology, terminology.version).then(
-          // Success
-          function(data) {
-
-            // Set the shared model in the metadata service
-            metadataService.setModel(data);
-
-            deferred.resolve();
-          }, function() {
-            deferred.reject();
-          });
-
-          return deferred.promise;
-        };
+       
 
         $scope.findAbbreviations = function(abbr) {
           findAbbreviations(abbr);
@@ -214,23 +178,9 @@ tsApp
             maxResults : paging.pageSize,
             sortField : paging.sortField,
             ascending : paging.sortAscending,
-            queryRestriction : null
+            queryRestriction : $scope.paging['abbr'].workflowStatus ? 'workflowStatus:'
+              + $scope.paging[type].workflowStatus : null
           };
-
-          // construct the query restriction clauses
-          var clauses = [];
-          
-          // restriction by workflow status (optional)
-          if ($scope.paging['abbr'].workflowStatus) {
-            clauses.push('workflowStatus:' + $scope.paging[type].workflowStatus);
-          }
-
-          // construct the query restriction
-          pfs.queryRestriction = '';
-          for (var i = 0; i < clauses.length; i++) {
-            pfs.queryRestriction += clauses[i] + (i < clauses.length - 1 ? ' AND ' : '');
-          }
-
           return pfs;
         }
 
@@ -239,7 +189,6 @@ tsApp
           $scope.selected.abbrViewed = abbr;
           $scope.setAbbreviationEdited(abbr);
           $scope.getReviewForAbbreviations(abbr);
-
         }
 
         $scope.setAbbreviationEdited = function(abbr) {
@@ -380,7 +329,23 @@ tsApp
 
             mldpService.getReviewForAbbreviations($scope.lists.abbrsReviewed.typeKeyValues,
               $scope.selected.project.id).then(function(abbrReviews) {
-              $scope.lists.abbrsReviewed = abbrReviews;
+
+              // filter by whether in current terminology
+              var abbrsReviewed = {
+                'typeKeyValues' : abbrReviews.typeKeyValues.filter(function(abbr) {
+                  return abbr.type == $scope.selected.abbrEdited.type;
+                })
+              };
+              abbrsReviewed.totalCount = abbrsReviewed.typeKeyValues.length;
+              $scope.lists.abbrsReviewed = abbrsReviewed;
+
+              var abbrsReviewedOther = {
+                'typeKeyValues' : abbrReviews.typeKeyValues.filter(function(abbr) {
+                  return abbr.type != $scope.selected.abbrEdited.type;
+                })
+              };
+              abbrsReviewedOther.totalCount = abbrsReviewedOther.typeKeyValues.length;
+              $scope.lists.abbrsReviewedOther = abbrsReviewedOther;
 
               // on review load, find and select for editing the viewed abbreviation in the review list
               angular.forEach($scope.lists.abbrsReviewed.typeKeyValues, function(abbrReview) {
@@ -402,9 +367,11 @@ tsApp
         // paging done client-side
         function getPagedReview() {
           console.debug('getPagedReview', $scope.lists.abbrsReviewed.typeKeyValues,
-            $scope.paging['review']);
+            $scope.paging['review'], $scope.paging['reviewOther']);
           $scope.lists.pagedReview = utilService.getPagedArray(
             $scope.lists.abbrsReviewed.typeKeyValues, $scope.paging['review']);
+          $scope.lists.pagedReviewOther = utilService.getPagedArray(
+            $scope.lists.abbrsReviewedOther.typeKeyValues, $scope.paging['reviewOther']);
         }
 
         // NOTE: Helper function intended for DEBUG use only
@@ -598,6 +565,13 @@ tsApp
           metadataService.setTerminology(terminology);
           $scope.user.userPreferences.lastTerminology = terminology.terminology;
           securityService.updateUserPreferences($scope.user.userPreferences);
+          
+          console.debug('clearing selected and computed lists');
+         
+
+          $scope.selected.abbrEdited = null;
+          $scope.lists.abbrsReviewed = null;
+          $scope.lists.abbrsReviewedOther = null;
 
           $scope.selected.project = null;
           for (var i = 0; i < $scope.lists.projects.length; i++) {

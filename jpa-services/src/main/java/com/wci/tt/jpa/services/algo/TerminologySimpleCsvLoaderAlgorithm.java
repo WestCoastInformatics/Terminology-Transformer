@@ -194,30 +194,7 @@ public class TerminologySimpleCsvLoaderAlgorithm
     final Terminology terminology =
         getTerminologyLatestVersion(getTerminology());
 
-    // Add release info for this load
-
-    ReleaseInfo info =
-        getReleaseInfo(terminology.getTerminology(), getReleaseVersion());
-    if (info == null) {
-      info = new ReleaseInfoJpa();
-      info.setName(getTerminology());
-      info.setDescription(terminology.getTerminology() + " "
-          + getReleaseVersion() + " release");
-      info.setPlanned(false);
-      info.setPublished(true);
-      info.setReleaseBeginDate(null);
-      info.setTerminology(terminology.getTerminology());
-      info.setVersion(getReleaseVersion());
-      info.setLastModified(date);
-      info.setLastModifiedBy(loader);
-      info.setTimestamp(new Date());
-      addReleaseInfo(info);
-    } else {
-      info.setLastModified(date);
-      info.setLastModifiedBy(loader);
-      updateReleaseInfo(info);
-    }
-
+  
     // Clear concept cache
 
     logInfo("Log component stats");

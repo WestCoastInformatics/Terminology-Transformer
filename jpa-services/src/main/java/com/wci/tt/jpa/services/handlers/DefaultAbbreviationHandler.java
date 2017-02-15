@@ -66,6 +66,9 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
   public void close() throws Exception {
     // do nothing
   }
+  
+  // the original transaction-per-operation state of the service
+  private boolean origTPO;
 
   /**
    * Recurse helper function to compute potential reviews in abbreviations.
@@ -75,7 +78,7 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
    * @return the review for abbreviations helper
    * @throws Exception the exception
    */
-  private List<TypeKeyValue> getReviewForAbbreviationsHelper(
+  private List<TypeKeyValue> getReviewForAbbreviationsHelper(String rootType,
     List<TypeKeyValue> abbrsToCheck, List<TypeKeyValue> computedConflicts)
     throws Exception {
 
@@ -99,24 +102,39 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
       return finalResults;
     }
 
-
     // construct query from all keys and values
     // NOTE: Could be optimized for values already searched, but don't expect
     // this to be very big
     final List<String> clauses = new ArrayList<>();
     for (TypeKeyValue abbr : abbrsToCheck) {
-      // clause: key OR value matches for abbreviation not htis one
-      clauses.add("(NOT id:" + abbr.getId() + " AND (keySort:\"" + abbr.getKey()
-          + "\" OR value:\"" + abbr.getValue() + "\"))");
+      if (abbr.getType().equals(rootType)) {
+        // clause: key OR value matches for abbreviation within root type
+        clauses.add("(type:\"" + rootType + "\" AND NOT id:" + abbr.getId()
+            + " AND (keySort:\"" + abbr.getKey() + "\" OR value:\""
+            + abbr.getValue() + "\"))");
+
+       // clause: value matches for abbreviation not in root type
+        clauses.add("(value:\""
+            + abbr.getValue() + "\" AND NOT type:\"" + rootType + "\")");
+      }
+    }
+    
+    
+    // if no query, no more to search, return local conflicts
+    if (clauses.size() == 0) {
+      return lcomputedConflicts;
     }
 
     String query = "";
     for (int i = 0; i < clauses.size(); i++) {
       query += clauses.get(i) + (i == clauses.size() - 1 ? "" : " OR ");
     }
-
+ 
+    
+    // otherwise continue
     PfsParameter pfs = new PfsParameterJpa();
-    pfs.setQueryRestriction("type:\"" + abbrsToCheck.get(0).getType() + "\"");
+    pfs.setMaxResults(-1);
+    pfs.setStartIndex(-1);
 
     // get all matching results
     final List<TypeKeyValue> results =
@@ -143,14 +161,15 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
     }
 
     // call with new results and updated reviews
-    return getReviewForAbbreviationsHelper(newResults, lcomputedConflicts);
+    return getReviewForAbbreviationsHelper(rootType, newResults,
+        lcomputedConflicts);
   }
 
   /* see superclass */
   @Override
   public TypeKeyValueList getReviewForAbbreviation(TypeKeyValue abbr)
     throws Exception {
-    List<TypeKeyValue> reviews = getReviewForAbbreviationsHelper(
+    List<TypeKeyValue> reviews = getReviewForAbbreviationsHelper(abbr.getType(),
         new ArrayList<>(Arrays.asList(abbr)), null);
     TypeKeyValueList list = new TypeKeyValueListJpa();
     list.setTotalCount(reviews.size());
@@ -162,8 +181,8 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
   @Override
   public TypeKeyValueList getReviewForAbbreviations(List<TypeKeyValue> abbrList)
     throws Exception {
-    List<TypeKeyValue> reviews =
-        getReviewForAbbreviationsHelper(abbrList, null);
+    List<TypeKeyValue> reviews = getReviewForAbbreviationsHelper(
+        abbrList.get(0).getType(), abbrList, null);
     TypeKeyValueList list = new TypeKeyValueListJpa();
     list.setTotalCount(reviews.size());
     list.setObjects(reviews);
@@ -189,7 +208,8 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
   /* see superclass */
   @Override
   public boolean isHeaderLine(String line) {
-    return line != null && (line.toLowerCase().startsWith("abbreviation") || line.toLowerCase().startsWith("lowWord"));
+    return line != null && (line.toLowerCase().startsWith("abbreviation")
+        || line.toLowerCase().startsWith("lowWord"));
   }
 
   /**
@@ -232,6 +252,7 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
 
       // if execute, prepare services and existing
       if (executeImport) {
+        origTPO = service.getTransactionPerOperation();
         service.setTransactionPerOperation(false);
         service.beginTransaction();
       }
@@ -256,7 +277,7 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
           continue;
         }
 
-       boolean pairMatchFound = false;
+        boolean pairMatchFound = false;
 
         // CHECK: Must be fields
         if (fields.length == 0) {
@@ -289,10 +310,9 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
           // if not empty, check for duplicate
           if (fields[0] != null && !fields[0].trim().isEmpty()) {
             // check for type/pair matches
-            final TypeKeyValueList keyMatches =
-                service.findTypeKeyValuesForQuery(
-                    "type:\"" + getAbbrType(terminology) + "\"" + " AND key:\"" + fields[0] + "\"",
-                    pfs);
+            final TypeKeyValueList keyMatches = service
+                .findTypeKeyValuesForQuery("type:\"" + getAbbrType(terminology)
+                    + "\"" + " AND key:\"" + fields[0] + "\"", pfs);
             for (TypeKeyValue keyMatch : keyMatches.getObjects()) {
               if (keyMatch.getValue() == null
                   || keyMatch.getValue().trim().isEmpty()) {
@@ -301,8 +321,8 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
               }
             }
             if (!pairMatchFound && executeImport) {
-              TypeKeyValue typeKeyValue =
-                  new TypeKeyValueJpa(getAbbrType(terminology), fields[0], null);
+              TypeKeyValue typeKeyValue = new TypeKeyValueJpa(
+                  getAbbrType(terminology), fields[0], null);
               service.addTypeKeyValue(typeKeyValue);
               newAbbrs.add(typeKeyValue);
               addedCt++;
@@ -320,8 +340,9 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
           // CHECK: Check for exact pair matches, key matches, and value matches
 
           // check for type/pair matches
-          final TypeKeyValueList keyMatches = service.findTypeKeyValuesForQuery(
-              "type:\"" + getAbbrType(terminology) + "\"" + " AND key:\"" + fields[0] + "\"", pfs);
+          final TypeKeyValueList keyMatches = service
+              .findTypeKeyValuesForQuery("type:\"" + getAbbrType(terminology)
+                  + "\"" + " AND key:\"" + fields[0] + "\"", pfs);
 
           // check for exact match
           pairMatchFound = false;
@@ -352,9 +373,9 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
             toAddCt++;
 
             // check for key match, pair not match
-            final TypeKeyValueList valueMatches =
-                service.findTypeKeyValuesForQuery("type:\"" + getAbbrType(terminology) + "\""
-                    + " AND value:\"" + fields[1] + "\"", null);
+            final TypeKeyValueList valueMatches = service
+                .findTypeKeyValuesForQuery("type:\"" + getAbbrType(terminology)
+                    + "\"" + " AND value:\"" + fields[1] + "\"", null);
             if (valueMatches.getTotalCount() > 0) {
               dupValCt++;
             }
@@ -363,8 +384,8 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
           // if no exact match found and import, add the new abbreviation
           if (!pairMatchFound && executeImport) {
             // add different expansion for same
-            TypeKeyValue typeKeyValue =
-                new TypeKeyValueJpa(getAbbrType(terminology), fields[0], fields[1]);
+            TypeKeyValue typeKeyValue = new TypeKeyValueJpa(
+                getAbbrType(terminology), fields[0], fields[1]);
             service.addTypeKeyValue(typeKeyValue);
             newAbbrs.add(typeKeyValue);
             addedCt++;
@@ -377,18 +398,20 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
       // apply workflow status and commit
       // NOTE: Must commit first to allow lucene searching
       if (executeImport) {
-        
-        Logger.getLogger(getClass()).info("Commiting " + addedCt + " new abbreviations...");
+
+        Logger.getLogger(getClass())
+            .info("Commiting " + addedCt + " new abbreviations...");
 
         service.commit();
-        
+
         Logger.getLogger(getClass()).info("  Done.");
 
         if (reviewFlag) {
-          Logger.getLogger(getClass()).info("Checking review status for new abbreviations");
+          Logger.getLogger(getClass())
+              .info("Checking review status for new abbreviations");
           service.beginTransaction();
           for (TypeKeyValue newAbbr : newAbbrs) {
-           
+
             // if review has greater than one element -- needs review
             if (getReviewForAbbreviation(newAbbr).size() > 1) {
               newAbbr.setWorkflowStatus(WorkflowStatus.NEEDS_REVIEW);
@@ -465,19 +488,22 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
       if (pbr != null) {
         pbr.close();
       }
+      service.setTransactionPerOperation(origTPO);
     }
     return result;
   }
 
   /* see superclass */
   @Override
-  public InputStream exportAbbreviationFile(String terminology, boolean acceptNew,
-    boolean readyOnly) throws Exception {
+  public InputStream exportAbbreviationFile(String terminology,
+    boolean acceptNew, boolean readyOnly) throws Exception {
 
     if (acceptNew) {
       final TypeKeyValueList newAbbrs = service.findTypeKeyValuesForQuery(
-          "type:\"" + getAbbrType(terminology) + "\" AND workflowStatus:NEW", null);
+          "type:\"" + getAbbrType(terminology) + "\" AND workflowStatus:NEW",
+          null);
       if (newAbbrs.size() > 0) {
+        origTPO = service.getTransactionPerOperation();
         service.setTransactionPerOperation(false);
         service.beginTransaction();
         for (TypeKeyValue abbr : newAbbrs.getObjects()) {
@@ -485,6 +511,7 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
           service.updateTypeKeyValue(abbr);
         }
         service.commit();
+        service.setTransactionPerOperation(origTPO);
       }
     }
 
@@ -500,8 +527,8 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
     PfsParameter pfs = new PfsParameterJpa();
     pfs.setSortField("key");
 
-    TypeKeyValueList abbrs =
-        service.findTypeKeyValuesForQuery("type:\"" + getAbbrType(terminology) + "\"", pfs);
+    TypeKeyValueList abbrs = service.findTypeKeyValuesForQuery(
+        "type:\"" + getAbbrType(terminology) + "\"", pfs);
     for (TypeKeyValue abbr : abbrs.getObjects()) {
       if (!readyOnly
           || !WorkflowStatus.NEEDS_REVIEW.equals(abbr.getWorkflowStatus())) {
@@ -518,11 +545,12 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
 
     // NOTE: This is a debug helper function only and not intended for
     // actual use
+    origTPO = service.getTransactionPerOperation();
     service.setTransactionPerOperation(false);
     service.beginTransaction();
 
-    final TypeKeyValueList abbrs =
-        service.findTypeKeyValuesForQuery("type:\"" + getAbbrType(terminology) + "\"", null);
+    final TypeKeyValueList abbrs = service.findTypeKeyValuesForQuery(
+        "type:\"" + getAbbrType(terminology) + "\"", null);
     for (final TypeKeyValue abbr : abbrs.getObjects()) {
       final TypeKeyValueList reviews = getReviewForAbbreviation(abbr);
 
@@ -537,6 +565,7 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
     }
 
     service.commit();
+    service.setTransactionPerOperation(origTPO);
 
   }
 
@@ -544,6 +573,7 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
   @Override
   public void updateWorkflowStatus(TypeKeyValue abbr) throws Exception {
     // NOTE: Review always contains the abbreviation itself
+    TypeKeyValueList temp = getReviewForAbbreviation(abbr);
     if (getReviewForAbbreviation(abbr).getTotalCount() > 1) {
       // set to NEEDS_REVIEW
       abbr.setWorkflowStatus(WorkflowStatus.NEEDS_REVIEW);
@@ -571,6 +601,10 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
       case "duplicate":
         filteredList = filterDuplicates(list.getObjects());
         break;
+      case "duplicateValueAcrossTerminologies":
+        filteredList =
+            filterExpansionDuplicateAcrossTerminologies(list.getObjects());
+        break;
       default:
         filteredList = list.getObjects();
     }
@@ -581,7 +615,7 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
       String query = ConfigUtility.composeQuery("OR", filteredList.stream()
           .map(t -> "id:" + t.getId()).collect(Collectors.toList()));
       results = service.findTypeKeyValuesForQuery(query, pfs);
-  
+
     }
     return results;
 
@@ -690,7 +724,26 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
     }
     return results;
   }
-  
+
+  private List<TypeKeyValue> filterExpansionDuplicateAcrossTerminologies(
+    List<TypeKeyValue> list) throws Exception {
+
+    final List<TypeKeyValue> results = new ArrayList<>();
+
+    for (TypeKeyValue abbr : list) {
+      System.out.println("Checking value for : " + abbr.getId() + " / " + abbr.getValue());
+      final TypeKeyValueList matches =
+          service.findTypeKeyValuesForQuery("value:\"" + abbr.getValue()
+              + "\" AND NOT type:\"" + abbr.getType() + "\"", null);
+      if (matches.getTotalCount() > 0) {
+        System.out.println("  Matched : " + abbr.getId() + " / " + matches.getTotalCount());
+        results.add(abbr);
+      }
+    }
+
+    return results;
+  }
+
   @Override
   public String getAbbrType(String terminology) {
     return terminology + "-ABBR";
