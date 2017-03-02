@@ -1,0 +1,370 @@
+<!-- Controlled by AbbrCtrl (in abbrController.js)  -->
+
+<style>
+.color-box {
+	width: 10px;
+	height: 10px;
+	display: inline-block;
+	border-radius: 2px;
+	background-color: #ccc;
+	left: 5px;
+	top: 5px;
+	vertical-align: center;
+}
+</style>
+<div class="row">
+
+  <!-- Content -->
+  <div class="col-md-12 col-xs-12">
+    <!-- Abbreviation Management section -->
+
+    <div class="row">
+      <div class="col-md-6">
+        <h4
+          ng-show="user.applicationRole == 'ADMINISTRATOR' || user.applicationRole == 'USER'">Abbreviations
+          ({{lists.abbrsViewed.totalCount}})</h4>
+
+
+        Terminology: <select ng-model="selected.metadata.terminology"
+          ng-change="setTerminology(selected.metadata.terminology)"
+          ng-options="terminology as terminology.terminology for terminology in getViewableTerminologies() | orderBy:'terminology'">
+        </select> <span style="float: right"> <span class="color-box"
+          style="background-color: green;" ng-show="paging['abbr'].hasNew"
+          ng-click="toggleNewMode()" title="New abbreviations"></span> &nbsp; <span
+          class="color-box" style="background-color: red;"
+          ng-show="paging['abbr'].hasNeedsReview" ng-click="toggleReviewMode()"
+          title="Some abbreviations need review"> </span> Status: <select
+          ng-options="status.key as status.label for status in lists.workflowStatus"
+          ng-model="paging['abbr'].workflowStatus"
+          ng-change="findAbbreviations()"></select>
+        </span>
+        <div class="row">
+          <div pager paging="paging['abbr']"
+            count="lists.abbrsViewed.totalCount"
+            callbacks="paging['abbr'].callbacks" style="margin-top: 10px;"></div>
+          <span ng-show="lists.abbrsViewed.totalCount > 10"
+            style="float: right; margin-top: 10px;"> Page size: <select
+            ng-model="paging['abbr'].pageSize" title="Page Size"
+            ng-change="paging['abbr'].callbacks.getPagedList()"
+            ng-options="pageSize.key as pageSize.value for pageSize in lists.pageSizes">
+          </select>
+          </span>
+        </div>
+
+        <div class="alert alert-warning"
+          ng-show="lists.abbrsViewed.totalCount == 0">No results</div>
+
+
+        <table class="slim table table-hover" style="margin-top: 10px;"
+          ng-show="lists.abbrsViewed.typeKeyValues.length > 0">
+          <tr>
+            <th ng-click="setSortField('abbr','key')">Abbreviation<span
+              ng-bind="getSortIndicator('abbr','key')"></span></th>
+            <th></th>
+            <th ng-click="setSortField('abbr','value')">Expansion<span
+              ng-bind="getSortIndicator('abbr','value')"></span></th>
+            <th ng-click="setSortField('abbr','lastModified')">Last
+              Modified<span ng-bind="getSortIndicator('abbr','lastModified')"></span>
+            </th>
+            <th><i class="noul glyphicon glyphicon-trash" title="Remove all viewed abbreviations"
+              confirm="Are you sure you want to remove {{lists.abbrsViewed.totalCount}} abbreviations?"
+              ng-click="removeAbbreviations()"></i>
+          </tr>
+          <tbody>
+            <!-- table-hover makes use of the active class -->
+            <tr ng-class="{selected: abbr.id == selected.abbrViewed.id}"
+              class="breakword"
+              ng-repeat="abbr in lists.abbrsViewed.typeKeyValues">
+              <td class="col-md-3" ng-click="setAbbreviationViewed(abbr)">{{abbr.key}}</td>
+              <td ng-click="setAbbreviationViewed(abbr)"><span
+                class="color-box"
+                style="background-color: red; margin-top: 5px;"
+                ng-show="abbr.workflowStatus == 'NEEDS_REVIEW'"
+                ng-click="setReviewMode()" title="Needs review"></span> <span
+                class="color-box"
+                style="background-color: green; margin-top: 5px;"
+                ng-show="abbr.workflowStatus == 'NEW'" title="New abbreviation"></span>
+              </td>
+
+              <td class="col-md-5" ng-click="setAbbreviationViewed(abbr)">{{abbr.value}}</td>
+              <td class="col-md-3" ng-click="setAbbreviationViewed(abbr)">{{toShortDate(abbr.lastModified)}}</td>
+              <td><i class="noul glyphicon glyphicon-trash" title="Remove abbreviation"
+                ng-click="removeAbbreviation(abbr)"></i>
+            </tr>
+          </tbody>
+        </table>
+
+        <div>
+          Additional Filter: <select ng-model="paging['abbr'].filterType"
+            ng-change="findAbbreviations()"
+            ng-options="filterType.key as filterType.value for filterType in lists.filterTypes">
+
+          </select>
+        </div>
+      </div>
+      <div class="col-md-6" ng-show="selected.metadata.terminology">
+
+        <ul class="pointer nav nav-tabs">
+          <li ng-class="{active : selected.editTab == 'Edit'}"
+            ng-click="selected.editTab = 'Edit';"><a>Edit</a></li>
+          <li ng-class="{active : selected.editTab == 'Import'}"
+            ng-click="selected.editTab = 'Import';"><a>Import</a></li>
+          <li ng-class="{active : selected.editTab == 'Export'}"
+            ng-click="selected.editTab = 'Export';"><a>Export</a></li>
+        </ul>
+        <div ng-show="selected.editTab == 'Edit'">
+
+          <div style="margin-top: 14px;">
+            <span ng-click="createAbbreviation()" class="btn btn-xs btn-primary">Create
+              New</span> or select from table
+          </div>
+          <h5 ng-show="selected.abbrEdited">
+            <span ng-show="!selected.abbrEdited.id">Add</span> <span
+              ng-show="selected.abbrEdited.id">Edit</span> Abbreviation
+          </h5>
+          <table class="" ng-show="selected.abbrEdited">
+            <tr class="row">
+              <td class="col-md-3">Abbr</td>
+              <td class="col-md-9"><textarea style="width: 100%;"
+                  ng-model="selected.abbrEdited.key"></textarea></td>
+            </tr>
+            <tr class="row">
+              <td class="col-md-3">Expansion</td>
+              <td class="col-md-9"><textarea style="width: 100%;"
+                  ng-model="selected.abbrEdited.value"></textarea></td>
+            </tr>
+            <tr class="row">
+              <td class="col-md-3"></td>
+              <td class="col-md-9" style="padding-top: 5px;"><span
+                class="btn btn-xs btn-primary"
+                ng-click="addAbbreviation(selected.abbrEdited)"
+                ng-show="!selected.abbrEdited.id">Add</span> <span
+                class="btn btn-xs btn-primary"
+                ng-click="updateAbbreviation(selected.abbrEdited)"
+                ng-show="selected.abbrEdited.id">Update</span> <span
+                class="btn btn-xs btn-warning" ng-click="cancelAbbreviation()">Cancel</span>
+                <span style="float: right" confirm="Are you sure?"
+                ng-show="selected.abbrEdited.id"
+                ng-click="removeAbbreviation(selected.abbrEdited)"
+                class="btn btn-xs btn-danger">Remove</span></td>
+            </tr>
+          </table>
+
+          <!-- Review section  -->
+          <div
+            ng-show="lists.abbrsReviewed && lists.abbrsReviewed.totalCount > 1">
+            <h5>Review</h5>
+
+            <div class="row">
+              <div class="col-md-8" pager paging="paging['review']"
+                count="lists.abbrsReviewed.totalCount"
+                callbacks="paging['review'].callbacks" style="margin-top: 10px;"></div>
+              <div class="col-md-4"
+                ng-show="lists.abbrsReviewed.totalCount > 10"
+                style="float: right; margin-top: 10px;">
+                Page size: <select ng-model="paging['review'].pageSize"
+                  title="Page Size"
+                  ng-change="paging['review'].callbacks.getPagedList()"
+                  ng-options="pageSize.key as pageSize.value for pageSize in lists.pageSizes">
+
+                </select>
+              </div>
+            </div>
+
+            <table class="slim table table-hover" style="margin-top: 10px;"
+              ng-show="lists.pagedReview.data.length > 0">
+              <tr>
+                <th ng-click="setSortField('review','key')">Abbreviation<span
+                  ng-bind="getSortIndicator('review','key')"></span></th>
+                <th></th>
+                <th ng-click="setSortField('review','value')">Expansion<span
+                  ng-bind="getSortIndicator('review','value')"></span></th>
+                <th ng-click="setSortField('review','lastModified')">Last
+                  Modified<span
+                  ng-bind="getSortIndicator('review','lastModified')"></span>
+                </th>
+
+              </tr>
+              <tbody>
+                <!-- table-hover makes use of the active class -->
+                <tr ng-class="{selected: abbr.id == selected.abbrEdited.id}"
+                  ng-repeat="abbr in lists.pagedReview.data"
+                  ng-click="setAbbreviationEdited(abbr)">
+                  <td class="col-md-3"
+                    ng-bind-html="abbr.key |
+                    highlightExact:selected.abbrEdited.key"></td>
+                  <td class="col-md-1"><span class="color-box"
+                    style="background-color: red;"
+                    ng-show="abbr.workflowStatus == 'NEEDS_REVIEW'"
+                    uib-tooltip="Needs review"></span> <span class="color-box"
+                    style="background-color: green; margin-top: 5px;"
+                    ng-show="abbr.workflowStatus == 'NEW'"
+                    title="New abbreviation"></span>
+                  <td class="col-md-5"
+                    ng-bind-html="abbr.value |
+                    highlightExact:selected.abbrEdited.value"></td>
+                  <td class="col-md-3">{{toShortDate(abbr.lastModified)}}</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <button class="btn btn-xs btn-primary" title="Mark all resolved"
+              ng-show="selected.abbrEdited.workflowStatus == 'NEEDS_REVIEW'"
+              ng-click="finishReview()">Finish Review</button>
+
+          </div>
+
+          <!-- Matches Across Terminologies section  -->
+
+          <div ng-show="lists.abbrsReviewedOther.totalCount > 0">
+          
+          <hr>
+
+            <div class="row"
+              style="margin-top: 10px; margin-bottom: 10px; margin-right: 0px;">
+              <div class="col-md-12">
+                <i style="float: left" class="noul glyphicon"
+                  ng-click="abbrsReviewedOtherShowing = !abbrsReviewedOtherShowing"
+                  ng-class="[{'glyphicon-chevron-down' : abbrsReviewedOtherShowing}, {'glyphicon-chevron-right' : !abbrsReviewedOtherShowing}]"></i>
+
+                <h5 style="margin: 0px;">&nbsp;Matches Across Terminologies
+                  ({{lists.abbrsReviewedOther.totalCount}})</h5>
+              </div>
+
+            </div>
+            <div ng-show="abbrsReviewedOtherShowing">
+
+
+              <div class="row"
+                ng-show="lists.abbrsReviewedOther.totalCount > paging['reviewOther'].pageSize"></div>
+              <div class="col-md-8" pager paging="paging['reviewOther']"
+                count="lists.abbrsReviewedOther.totalCount"
+                callbacks="paging['reviewOther'].callbacks"
+                style="margin-top: 10px;"></div>
+              <div class="col-md-4"
+                ng-show="lists.abbrsReviewedOther.totalCount > 10"
+                style="float: right; margin-top: 10px;">
+                Page size: <select ng-model="paging['reviewOther'].pageSize"
+                  title="Page Size"
+                  ng-change="paging['reviewOther'].callbacks.getPagedList()"
+                  ng-options="pageSize.key as pageSize.value for pageSize in lists.pageSizes">
+                </select>
+              </div>
+
+
+              <table class="slim table" style="margin-top: 10px;"
+                ng-show="lists.pagedReviewOther.data.length > 0">
+                <tr>
+                  <th ng-click="setSortField('reviewOther','key')">Abbreviation<span
+                    ng-bind="getSortIndicator('reviewOther','key')"></span></th>
+                  <th></th>
+                  <th ng-click="setSortField('reviewOther','value')">Expansion<span
+                    ng-bind="getSortIndicator('reviewOther','value')"></span></th>
+                  <th ng-click="setSortField('reviewOther','type')">Type<span
+                    ng-bind="getSortIndicator('reviewOther','type')"></span>
+                  </th>
+
+                </tr>
+                <tbody>
+                  <!-- table-hover makes use of the active class -->
+                  <tr ng-class="{selected: abbr.id == selected.abbrEdited.id}"
+                    ng-repeat="abbr in lists.pagedReviewOther.data">
+                    <td class="col-md-3">{{abbr.key}}</td>
+                    <td class="col-md-1"><span class="color-box"
+                      style="background-color: red;"
+                      ng-show="abbr.workflowStatus == 'NEEDS_REVIEW'"
+                      uib-tooltip="Needs review"></span> <span class="color-box"
+                      style="background-color: green; margin-top: 5px;"
+                      ng-show="abbr.workflowStatus == 'NEW'"
+                      title="New abbreviation"></span>
+                    <td class="col-md-5"
+                      ng-bind-html="abbr.value |
+                    highlightExact:selected.abbrEdited.value"></td>
+                    <td class="col-md-3">{{abbr.type}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+          </div>
+        </div>
+
+        <div ng-show="selected.editTab == 'Import'">
+
+          <!-- Import section -->
+          <div style="margin-top: 25px;">
+            <h4>Import</h4>
+            <table class="table">
+              <tr>
+                <td>Choose File</td>
+                <td>
+                  <button type="file" ngf-select ng-model="selected.file"
+                    ng-change="clearImportResults()" name="file"
+                    ngf-pattern="lists.fileTypesFilter" ngf-max-size="10MB">Browse
+                    for File</button> {{lists.fileTypesFilter}}
+                </td>
+                <td>
+                  <div ngf-drop ng-model="selected.file" class="drop-box"
+                    ng-change="clearImportResults()" style="margin: 0px;"
+                    ngf-drag-over-class="'dragover'" ngf-max-size="10MB"
+                    ngf-pattern="selectedIoHandler.fileTypeFilter">Drop
+                    file here</div>
+                </td>
+              </tr>
+              <tr ng-show="selected.file">
+                <td>Selected File</td>
+                <td>{{selected.file.name}}<br> <span
+                  class="btn btn-xs btn-primary"
+                  ng-click="validateAbbreviationsFile()"
+                  ng-show="!validateAbbreviationsFileResults"
+                  title="Validate file">Validate</span> <span
+                  class="btn btn-xs btn-success" ng-click="cancelImport()"
+                  ng-show="validateAbbreviationsFileResults && importAbbreviationsFileResults"
+                  title="">Completed</span> <span class="btn btn-xs btn-primary"
+                  ng-click="importAbbreviationsFile()"
+                  ng-show="validateAbbreviationsFileResults && !importAbbreviationsFileResults"
+                  title="Import file">Import</span> &nbsp; <span
+                  class="btn btn-xs btn-warning" ng-click="cancelImport()"
+                  ng-show="validateAbbreviationsFileResults && !importAbbreviationsFileResults"
+                  title="Cancel import">Cancel</span>
+                <td></td>
+              </tr>
+            </table>
+
+            <div ng-show="importAbbreviationsFileResults">
+              <h4>Import Results</h4>
+              <div class="alert alert-success"
+                ng-repeat="comment in importAbbreviationsFileResults.comments">{{comment}}</div>
+              <div class="alert alert-danger "
+                ng-repeat="error in importAbbreviationsFileResults.errors | orderBy:'+'">{{error}}</div>
+              <div class="alert alert-warning"
+                ng-repeat="warning in importAbbreviationsFileResults.warnings | orderBy:'+'">{{warning}}</div>
+            </div>
+            <div ng-show="validateAbbreviationsFileResults">
+              <h4>File Validation</h4>
+
+              <div class="alert alert-success"
+                ng-repeat="comment in validateAbbreviationsFileResults.comments">{{comment}}</div>
+              <div class="alert alert-danger "
+                ng-repeat="error in validateAbbreviationsFileResults.errors | orderBy:'+'">{{error}}</div>
+              <div class="alert alert-warning"
+                ng-repeat="warning in validateAbbreviationsFileResults.warnings | orderBy:'+'">{{warning}}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div ng-show="selected.editTab == 'Export'">
+          <!-- Export section -->
+          <div style="margin-top: 25px;">
+            <h4>Export</h4>
+            <span class="btn btn-xs btn-primary" style="margin-right: 10px;"
+              ng-click="exportAbbreviations()">Export Abbreviations</span> <br>
+            <br> <input type="checkbox" ng-model="selected.exportReadyOnly">
+            Skip abbbreviations needing review<br> <br> <input
+              type="checkbox" ng-model="selected.exportAcceptNew"> Mark
+            new abbreviations accepted
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
