@@ -7,11 +7,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 import com.wci.tt.infomodels.InfoModel;
-import com.wci.tt.jpa.helpers.ValueRawModel;
 import com.wci.umls.server.helpers.ConfigUtility;
 
 /**
@@ -36,38 +36,45 @@ import com.wci.umls.server.helpers.ConfigUtility;
  * .
  */
 @XmlRootElement(name = "medication")
-public class MedicationModel implements InfoModel<MedicationModel> {
+public class MedicationOutputModel implements InfoModel<MedicationOutputModel> {
+
+  /** The Constant FLOOR_MODEL_SCORE. */
+  @SuppressWarnings("unused")
+  private static final float FLOOR_MODEL_SCORE = 0.11f;
+
+  /** The Constant MINIMUM_COMMON_SCORE. */
+  private static final float MINIMUM_COMMON_SCORE = .015f;
 
   /** The ingredients. */
   private List<IngredientModel> ingredients;
 
   /** The brand name. */
-  private ValueRawModel brandName;
+  private String brandName;
 
   /** The dose form. */
-  private ValueRawModel doseForm;
+  private String doseForm;
 
   /** The form qualifier. */
-  private ValueRawModel doseFormQualifier;
+  private String doseFormQualifier;
 
   /** The route. */
-  private ValueRawModel route;
+  private String route;
 
   /** The release period.. */
-  private ValueRawModel releasePeriod;
+  private String releasePeriod;
 
   /**
-   * Instantiates an empty {@link MedicationModel}.
+   * Instantiates an empty {@link MedicationOutputModel}.
    */
-  public MedicationModel() {
+  public MedicationOutputModel() {
   }
 
   /**
-   * Instantiates a {@link MedicationModel} from the specified parameters.
+   * Instantiates a {@link MedicationOutputModel} from the specified parameters.
    *
    * @param model the model
    */
-  public MedicationModel(MedicationModel model) {
+  public MedicationOutputModel(MedicationOutputModel model) {
     this.ingredients = model.getIngredients();
     this.brandName = model.getBrandName();
     this.doseForm = model.getDoseForm();
@@ -110,7 +117,7 @@ public class MedicationModel implements InfoModel<MedicationModel> {
   public boolean verify(String model) throws Exception {
     // Accept only JSON representation
     try {
-      ConfigUtility.getGraphForJson(model, MedicationModel.class);
+      ConfigUtility.getGraphForJson(model, MedicationOutputModel.class);
       return true;
     } catch (Exception e) {
       return false;
@@ -123,11 +130,11 @@ public class MedicationModel implements InfoModel<MedicationModel> {
    * @see com.wci.tt.infomodels.InfoModel#getModel(java.lang.String)
    */
   /* see superclass */
-  public MedicationModel getModel(String model) throws Exception {
+  public MedicationOutputModel getModel(String model) throws Exception {
     // Only accept json in correct format
     try {
-      return (MedicationModel) ConfigUtility.getGraphForJson(model,
-          MedicationModel.class);
+      return (MedicationOutputModel) ConfigUtility.getGraphForJson(model,
+          MedicationOutputModel.class);
     } catch (Exception e) {
       throw new Exception("Malformed model - " + model);
     }
@@ -170,7 +177,7 @@ public class MedicationModel implements InfoModel<MedicationModel> {
    *
    * @return the brand name
    */
-  public ValueRawModel getBrandName() {
+  public String getBrandName() {
     return brandName;
   }
 
@@ -179,7 +186,7 @@ public class MedicationModel implements InfoModel<MedicationModel> {
    *
    * @param brandName the brand name
    */
-  public void setBrandName(ValueRawModel brandName) {
+  public void setBrandName(String brandName) {
     this.brandName = brandName;
   }
 
@@ -188,7 +195,7 @@ public class MedicationModel implements InfoModel<MedicationModel> {
    *
    * @return the dose form
    */
-  public ValueRawModel getDoseForm() {
+  public String getDoseForm() {
     return doseForm;
   }
 
@@ -197,7 +204,7 @@ public class MedicationModel implements InfoModel<MedicationModel> {
    *
    * @param doseForm the dose form
    */
-  public void setDoseForm(ValueRawModel doseForm) {
+  public void setDoseForm(String doseForm) {
     this.doseForm = doseForm;
   }
 
@@ -206,7 +213,7 @@ public class MedicationModel implements InfoModel<MedicationModel> {
    *
    * @return the route
    */
-  public ValueRawModel getRoute() {
+  public String getRoute() {
     return route;
   }
 
@@ -215,7 +222,7 @@ public class MedicationModel implements InfoModel<MedicationModel> {
    *
    * @param route the route
    */
-  public void setRoute(ValueRawModel route) {
+  public void setRoute(String route) {
     this.route = route;
   }
 
@@ -224,7 +231,7 @@ public class MedicationModel implements InfoModel<MedicationModel> {
    *
    * @return the dose form qualifier
    */
-  public ValueRawModel getDoseFormQualifier() {
+  public String getDoseFormQualifier() {
     return doseFormQualifier;
   }
 
@@ -233,7 +240,7 @@ public class MedicationModel implements InfoModel<MedicationModel> {
    *
    * @param doseFormQualifier the dose form qualifier
    */
-  public void setDoseFormQualifier(ValueRawModel doseFormQualifier) {
+  public void setDoseFormQualifier(String doseFormQualifier) {
     this.doseFormQualifier = doseFormQualifier;
   }
 
@@ -242,7 +249,7 @@ public class MedicationModel implements InfoModel<MedicationModel> {
    *
    * @return the release period
    */
-  public ValueRawModel getReleasePeriod() {
+  public String getReleasePeriod() {
     return releasePeriod;
   }
 
@@ -251,7 +258,7 @@ public class MedicationModel implements InfoModel<MedicationModel> {
    *
    * @param releasePeriod the release period
    */
-  public void setReleasePeriod(ValueRawModel releasePeriod) {
+  public void setReleasePeriod(String releasePeriod) {
     this.releasePeriod = releasePeriod;
   }
 
@@ -272,7 +279,7 @@ public class MedicationModel implements InfoModel<MedicationModel> {
   }
 
   @Override
-  public MedicationModel getModelInCommon(MedicationModel model,
+  public MedicationOutputModel getModelInCommon(MedicationOutputModel model,
     boolean analysisMode) throws Exception {
     throw new UnsupportedOperationException();
   }
@@ -301,7 +308,7 @@ public class MedicationModel implements InfoModel<MedicationModel> {
       return false;
     if (getClass() != obj.getClass())
       return false;
-    MedicationModel other = (MedicationModel) obj;
+    MedicationOutputModel other = (MedicationOutputModel) obj;
     if (brandName == null) {
       if (other.brandName != null)
         return false;

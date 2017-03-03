@@ -33,6 +33,9 @@ public abstract class AbstractNormalizer implements NormalizerHandler {
   /** The patterns. */
   private Map<String, String> patterns = new TreeMap<>();
 
+  /** The synonyms. */
+  private Map<String, String> synonyms = new TreeMap<>();
+
   /**
    * Instantiates an empty {@link AbstractNormalizer}.
    */
@@ -150,6 +153,30 @@ public abstract class AbstractNormalizer implements NormalizerHandler {
           acronyms.put(tvk.getKey(), new HashSet<String>(2));
         }
         acronyms.get(tvk.getKey()).add(tvk.getValue());
+      }
+    } catch (Exception e) {
+      throw e;
+    } finally {
+      service.close();
+    }
+  }
+
+  /**
+   * Cache acronyms.
+   *
+   * @param type the type
+   * @throws Exception the exception
+   */
+  private void cacheSynonyms(String type) throws Exception {
+    if (!synonyms.isEmpty()) {
+      return;
+    }
+    CoordinatorService service = new CoordinatorServiceJpa();
+    try {
+
+      for (final TypeKeyValue tvk : service
+          .findTypeKeyValuesForQuery("type:" + type, null).getObjects()) {
+        synonyms.put(tvk.getKey(), tvk.getValue());
       }
     } catch (Exception e) {
       throw e;

@@ -362,11 +362,14 @@ public class TransformServiceRestImpl extends RootServiceRestImpl
 
   /* see superclass */
   @Override
-  @Path("/feedback")
-  @PUT
+  @Path("/feedback/{feedback}")
+  @POST
   @ApiOperation(value = "Submit feedback", notes = "Submit feedback object with data context", response = Response.class)
-  public void submitFeedback(String feedback, DataContext dataContext,
-    String authToken) throws Exception {
+  public void submitFeedback(
+    @ApiParam(value = "Feedback string", required = true) @PathParam("feedback") String feedback, 
+    @ApiParam(value = "Data context'", required = true) DataContext dataContext,
+    @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
+    throws Exception {
     Logger.getLogger(getClass())
         .info("RESTful POST call (Transform): /feedback");
 

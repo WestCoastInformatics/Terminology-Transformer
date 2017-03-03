@@ -16,10 +16,8 @@ import com.wci.tt.helpers.DataContextType;
 import com.wci.tt.helpers.ScoredDataContext;
 import com.wci.tt.helpers.ScoredResult;
 import com.wci.tt.jpa.helpers.ScoredDataContextJpa;
-import com.wci.tt.jpa.infomodels.IngredientModel;
-import com.wci.tt.jpa.infomodels.MedicationModel;
-import com.wci.tt.jpa.infomodels.ProcedureModel;
-import com.wci.tt.jpa.infomodels.SiteModel;
+import com.wci.tt.jpa.helpers.ScoredResultJpa;
+import com.wci.tt.jpa.infomodels.MedicationOutputModel;
 import com.wci.tt.jpa.services.helper.DataContextMatcher;
 import com.wci.tt.services.handlers.ProviderHandler;
 import com.wci.umls.server.helpers.Branch;
@@ -41,11 +39,11 @@ public class MldpMedicationProvider extends AbstractAcceptsHandler
 
     // Configure input/output matchers
     DataContextMatcher inputMatcher = new DataContextMatcher();
-    inputMatcher.configureContext(DataContextType.NAME, null, "Med", null,
-        null, null, null);
+    inputMatcher.configureContext(DataContextType.NAME, null, null, null, null,
+        null, null);
     DataContextMatcher outputMatcher = new DataContextMatcher();
     outputMatcher.configureContext(DataContextType.INFO_MODEL, null, null, null,
-        ProcedureModel.class.getName(), null, null);
+        MedicationOutputModel.class.getName(), null, null);
     addMatcher(inputMatcher, outputMatcher);
   }
 
@@ -123,6 +121,7 @@ public class MldpMedicationProvider extends AbstractAcceptsHandler
 
     final String inputString = record.getInputString();
     final DataContext inputContext = record.getInputContext();
+    // TODO Create medication output context
     final DataContext outputContext = record.getProviderOutputContext();
 
     // Validate input/output context
@@ -131,7 +130,15 @@ public class MldpMedicationProvider extends AbstractAcceptsHandler
     // Set up return value
     final List<ScoredResult> results = new ArrayList<ScoredResult>();
 
-    // TODO
+    // do something with the string "A/B C.D E F-G"
+    
+    // Ordered removal: ingredients, brandName, dose form, dose form modifier, strength, route
+
+    // TODO Put the MedicationOutputModel (extends infomodel) into the value of
+    // ScoredResult
+    MedicationOutputModel model = new MedicationOutputModel();
+    ScoredResult result = new ScoredResultJpa(model.getModelValue(), 1.0f);
+    results.add(result);
 
     return results;
   }
@@ -193,10 +200,8 @@ public class MldpMedicationProvider extends AbstractAcceptsHandler
         continue;
       }
 
-      if (service
-          .findConcepts("HKFT-MED", "latest", Branch.ROOT,
-              "atoms.name:\"" + word + "\"", null)
-          .size() > 0) {
+      if (service.findConcepts("HKFT-MED", "latest", Branch.ROOT,
+          "atoms.name:\"" + word + "\"", null).size() > 0) {
         Logger.getLogger(getClass()).debug("  med word = " + word);
         return true;
       }

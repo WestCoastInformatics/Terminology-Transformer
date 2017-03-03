@@ -67,6 +67,7 @@ public class TransformerServerApplication extends ResourceConfig {
     // Need transformer services
     register(MldpServiceRestImpl.class);
     register(NdcServiceRestImpl.class);
+    register(TransformServiceRestImpl.class);
 
     // register swagger classes
     register(io.swagger.jaxrs.listing.ApiListingResource.class);
