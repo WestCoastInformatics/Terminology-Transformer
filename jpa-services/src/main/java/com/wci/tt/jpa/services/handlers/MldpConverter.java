@@ -39,13 +39,7 @@ public class MldpConverter extends AbstractAcceptsHandler
     // Convert a condition model to itself
     DataContextMatcher matcher = new DataContextMatcher();
     matcher.configureContext(DataContextType.INFO_MODEL, null, null, null,
-        ConditionModel.class.getName(), null, null);
-    addMatcher(matcher, matcher);
-
-    // Convert a procedure model to itself
-    matcher = new DataContextMatcher();
-    matcher.configureContext(DataContextType.INFO_MODEL, null, null, null,
-        ProcedureModel.class.getName(), null, null);
+        null, null, null);
     addMatcher(matcher, matcher);
 
   }
@@ -68,84 +62,11 @@ public class MldpConverter extends AbstractAcceptsHandler
     throws Exception {
     Logger.getLogger(getClass()).debug("  convert - " + inputString);
 
-    final DataContext inputContext = record.getInputContext();
-    final DataContext outputContext = record.getProviderOutputContext();
-    // final String origInputString = record.getInputString();
-    // final DataContext origInputContext = record.getOutputContext();
+    // Pass-thru converter
+    DataContextTuple tuple = new DataContextTupleJpa();
+    tuple.setData(inputString);
+    tuple.setDataContext(record.getProviderOutputContext());
 
-    // Validate input/output context
-    validate(inputContext, outputContext);
-
-    // DefaultHandler returns "converted form" of input with ids looked up as
-    // names
-    final DataContextTuple tuple = new DataContextTupleJpa();
-
-    final ContentService service = new ContentServiceJpa();
-
-    // Ensure that input is valid, then pass through
-    if (inputString != null && !inputString.isEmpty() && inputContext != null
-        && outputContext != null) {
-
-      // Handle procedure model
-      if (inputContext.getInfoModelClass()
-          .equals(ProcedureModel.class.getName())) {
-
-        if (record.getOutputs().size() == 1) {
-          final String data = record.getOutputs().get(0).getValue();
-          final ProcedureModel model = new ProcedureModel().getModel(data);
-
-          model.setProcedure(getNameForId(service, model.getProcedure()));
-          model.setCondition(getNameForId(service, model.getCondition()));
-          if (model.getSite() != null) {
-            final SiteModel site = model.getSite();
-            site.setBodySite(getNameForId(service, site.getBodySite()));
-            site.setLaterality(getNameForId(service, site.getLaterality()));
-            site.setPosition(getNameForId(service, site.getPosition()));
-          }
-          if (model.getRelatedSite() != null) {
-            final SiteModel site = model.getRelatedSite();
-            site.setBodySite(getNameForId(service, site.getBodySite()));
-            site.setLaterality(getNameForId(service, site.getLaterality()));
-            site.setPosition(getNameForId(service, site.getPosition()));
-          }
-          model.setApproach(getNameForId(service, model.getApproach()));
-          model.setDevice(getNameForId(service, model.getDevice()));
-          model.setSubstance(getNameForId(service, model.getSubstance()));
-          model.setQual(getNameForId(service, model.getQual()));
-
-          tuple.setData(model.getModelValue());
-        }
-
-      } else if (inputContext.getInfoModelClass()
-          .equals(ConditionModel.class.getName())) {
-
-        if (record.getOutputs().size() == 1) {
-          final String data = record.getOutputs().get(0).getValue();
-          final ConditionModel model = new ConditionModel().getModel(data);
-
-          model.setCondition(getNameForId(service, model.getCondition()));
-          model.setSubcondition(getNameForId(service, model.getSubcondition()));
-          if (model.getSite() != null) {
-            final SiteModel site = model.getSite();
-            site.setBodySite(getNameForId(service, site.getBodySite()));
-            site.setLaterality(getNameForId(service, site.getLaterality()));
-            site.setPosition(getNameForId(service, site.getPosition()));
-          }
-          model.setCause(getNameForId(service, model.getCause()));
-          model.setOccurrence(getNameForId(service, model.getOccurrence()));
-          model.setCourse(getNameForId(service, model.getCourse()));
-          model.setCategory(getNameForId(service, model.getCategory()));
-          model.setSeverity(getNameForId(service, model.getSeverity()));
-
-          tuple.setData(model.getModelValue());
-        }
-
-      }
-
-      tuple.setDataContext(outputContext);
-    }
-
-    service.close();
     return tuple;
   }
 
