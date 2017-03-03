@@ -283,4 +283,11 @@ public class TransformClientRest extends RootClientRest
         KeyValuePairList.class);
   }
 
+  @Override
+  public void submitFeedback(String feedback, DataContext dataContext, String authToken)
+    throws Exception {
+    // TODO Auto-generated method stub
+    
+  }
+
 }

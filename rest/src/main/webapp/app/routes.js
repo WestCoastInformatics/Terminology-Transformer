@@ -157,6 +157,17 @@ tsApp.run([
                 reloadOnSearch : false
               });
             }
+            
+            // Abbreviations page
+            if (appConfig['deploy.enabled.tabs']
+              && appConfig['deploy.enabled.tabs'].split(',').indexOf('term') != -1) {
+              console.debug('Route enabled: /term');
+              $routeProviderReference.when('/term', {
+                templateUrl : 'app/page/term/term.html',
+                controller : 'TermCtrl',
+                reloadOnSearch : false
+              });
+            }
 
             // Workflow page
             if (appConfig['deploy.enabled.tabs']

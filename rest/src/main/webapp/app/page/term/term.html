@@ -1,0 +1,209 @@
+<!-- Controlled by AbbrCtrl (in termController.js)  -->
+
+<style>
+.color-box {
+	width: 10px;
+	height: 10px;
+	display: inline-block;
+	border-radius: 2px;
+	background-color: #ccc;
+	left: 5px;
+	top: 5px;
+	vertical-align: center;
+}
+</style>
+<div class="row">
+
+  <!-- Content -->
+  <div class="col-md-12 col-xs-12">
+    <!-- Term Management section -->
+
+    <div class="row">
+      <div class="col-md-6">
+        <h4
+          ng-show="user.applicationRole == 'ADMINISTRATOR' || user.applicationRole == 'USER'">Terms
+          ({{lists.terms.totalCount}})</h4>
+
+
+        Terminology: <select ng-model="selected.metadata.terminology"
+          ng-change="setTerminology(selected.metadata.terminology)"
+          ng-options="terminology as terminology.terminology for terminology in getViewableTerminologies() | orderBy:'terminology'">
+        </select>
+        <div class="row">
+
+          <div class="col-md-8" pager paging="paging['term']"
+            count="lists.terms.totalCount" callbacks="paging['term'].callbacks"
+            style="margin-top: 10px;"></div>
+          <div class="col-md-4">
+            <span ng-show="lists.termsViewed.totalCount > 10"
+              style="float: right; margin-top: 10px;"> Page size: <select
+              ng-model="paging['term'].pageSize" title="Page Size"
+              ng-change="paging['term'].callbacks.getPagedList()"
+              ng-options="pageSize.key as pageSize.value for pageSize in lists.pageSizes">
+            </select>
+            </span>
+          </div>
+        </div>
+
+        <div class="alert alert-warning"
+          ng-show="lists.termsViewed.totalCount == 0">No results</div>
+
+
+        <table class="slim table table-hover" style="margin-top: 10px;"
+          ng-show="lists.terms.typeKeyValues.length > 0">
+          <tr>
+            <th ng-click="setSortField('term','key')">Term<span
+              ng-bind="getSortIndicator('term','key')"></span></th>
+     
+            <th ng-click="setSortField('term','lastModified')">Last
+              Modified<span ng-bind="getSortIndicator('term','lastModified')"></span>
+            </th>
+            <th><i class="noul glyphicon glyphicon-trash"
+              title="Remove all viewed raw terms"
+              confirm="Are you sure you want to remove {{lists.terms.totalCount}} raw terms"
+              ng-click="removeTerms()"></i>
+          </tr>
+          <tbody>
+            <!-- table-hover makes use of the active class -->
+            <tr ng-class="{selected: term.id == selected.termViewed.id}"
+              class="breakword" ng-repeat="term in lists.terms.typeKeyValues">
+              <td class="col-md-8" ng-click="setTermViewed(term)">{{term.key}}</td>
+              <td class="col-md-3" ng-click="setTermViewed(term)">{{toShortDate(term.lastModified)}}</td>
+              <td class="col-md-1"><i
+                class="noul glyphicon glyphicon-trash" title="Remove term"
+                ng-click="removeTerm(term)"></i>
+            </tr>
+          </tbody>
+        </table>
+
+      
+
+      </div>
+      <div class="col-md-6" ng-show="selected.metadata.terminology">
+
+        <ul class="pointer nav nav-tabs">
+          <li ng-class="{active : selected.tab == 'Edit'}"
+            ng-click="selected.tab = 'Edit';"><a>Edit</a></li>
+          <li ng-class="{active : selected.tab == 'Import'}"
+            ng-click="selected.tab = 'Import';"><a>Import</a></li>
+          <li ng-class="{active : selected.tab == 'Export'}"
+            ng-click="selected.tab = 'Export';"><a>Export</a></li>
+        </ul>
+        <div ng-show="selected.tab == 'Edit'">
+
+          <!-- Review section  -->
+          <div>
+            <h5>Review Raw Term</h5>
+
+            <table class="table slim">
+              <tr>
+                <td>Raw</td>
+                <td>{{selected.term.raw}}</td>
+              </tr>
+              <tr>
+                <td>Removed</td>
+                <td><span ng-repeat="removed in selected.term.removed">{{removed}}<br></span>
+              <tr>
+                <td>Unmatched</td>
+                <td>{{selected.term.unmatched}}</td>
+              </tr>
+            </table>
+          </div>
+
+          <!-- Concept search  -->
+          <div>
+            <hr>
+            <div class="row">
+              <div class="col-md-8" pager paging="paging['concept']"
+                count="lists.concepts.totalCount"
+                callbacks="paging['concept'].callbacks"
+                style="margin-top: 10px;"></div>
+              <div class="col-md-4 pull-right"
+                ng-show="lists.concepts.totalCount > 10"
+                style="margin-top: 10px;">
+                <span class="pull-right"> Page size: <select
+                  ng-model="paging['concept'].pageSize" title="Page Size"
+                  ng-change="paging['concept'].callbacks.getPagedList()"
+                  ng-options="pageSize.key as pageSize.value for pageSize in lists.pageSizes">
+                </select></span>
+              </div>
+            </div>
+            <div class="alert alert-warning"
+              ng-show="lists.concepts.totalCount == 0">No results</div>
+
+          </div>
+
+          <!-- Concept search -->
+        </div>
+
+        <div ng-show="selected.tab == 'Import'">
+
+          <!-- Import section -->
+          <div style="margin-top: 25px;">
+            <h4>Import</h4>
+            <table class="table">
+              <tr>
+                <td>Choose File</td>
+                <td>
+                  <button type="file" ngf-select ng-model="selected.file"
+                    ng-change="clearImportResults()" name="file"
+                    ngf-pattern="lists.fileTypesFilter" ngf-max-size="10MB">Browse
+                    for File</button> {{lists.fileTypesFilter}}
+                </td>
+                <td>
+                  <div ngf-drop ng-model="selected.file" class="drop-box"
+                    ng-change="clearImportResults()" style="margin: 0px;"
+                    ngf-drag-over-class="'dragover'" ngf-max-size="10MB"
+                    ngf-pattern="selectedIoHandler.fileTypeFilter">Drop
+                    file here</div>
+                </td>
+              </tr>
+              <tr ng-show="selected.file">
+                <td>Selected File</td>
+                <td>{{selected.file.name}}<br> <span
+                  class="btn btn-xs btn-primary" ng-click="importTermsFile()"
+                  title="Import file">Import</span> &nbsp; <span
+                  class="btn btn-xs btn-warning" ng-click="cancelImport()"
+                  ng-show="validateTermsFileResults && !importTermsFileResults"
+                  title="Cancel import">Cancel</span>
+                <td></td>
+              </tr>
+            </table>
+
+            <div ng-show="importTermsFileResults">
+              <h4>Import Results</h4>
+              <div class="alert alert-success"
+                ng-repeat="comment in importTermsFileResults.comments">{{comment}}</div>
+              <div class="alert alert-danger "
+                ng-repeat="error in importTermsFileResults.errors | orderBy:'+'">{{error}}</div>
+              <div class="alert alert-warning"
+                ng-repeat="warning in importTermsFileResults.warnings | orderBy:'+'">{{warning}}</div>
+            </div>
+            <div ng-show="validateTermsFileResults">
+              <h4>File Validation</h4>
+
+              <div class="alert alert-success"
+                ng-repeat="comment in validateTermsFileResults.comments">{{comment}}</div>
+              <div class="alert alert-danger "
+                ng-repeat="error in validateTermsFileResults.errors | orderBy:'+'">{{error}}</div>
+              <div class="alert alert-warning"
+                ng-repeat="warning in validateTermsFileResults.warnings | orderBy:'+'">{{warning}}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div ng-show="selected.tab == 'Export'">
+          <!-- Export section -->
+          <div style="margin-top: 25px;">
+            <h4>Export</h4>
+            <span class="btn btn-xs btn-primary" style="margin-right: 10px;"
+              ng-click="exportTerms()">Export Terms</span> <br> <br> <input
+              type="checkbox" ng-model="selected.exportReadyOnly"> Skip
+            abbbreviations needing review<br> <br> <input
+              type="checkbox" ng-model="selected.exportAcceptNew"> Mark
+            new raw terms accepted
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

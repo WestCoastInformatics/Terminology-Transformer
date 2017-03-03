@@ -25,6 +25,7 @@ import org.glassfish.jersey.media.multipart.FormDataParam;
 
 import com.wci.tt.jpa.services.algo.TerminologySimpleCsvLoaderAlgorithm;
 import com.wci.tt.jpa.services.handlers.DefaultAbbreviationHandler;
+import com.wci.tt.jpa.services.handlers.TermHandler;
 import com.wci.tt.jpa.services.rest.MldpServiceRest;
 import com.wci.tt.jpa.services.rest.TransformServiceRest;
 import com.wci.tt.services.handlers.AbbreviationHandler;
@@ -444,7 +445,7 @@ public class MldpServiceRestImpl extends RootServiceRestImpl
     Logger.getLogger(getClass()).info("RESTful call (MLDPr): /abbr/find, "
         + query + ", " + filter + ", " + pfs);
     final ProjectService projectService = new ProjectServiceJpa();
-  
+
     try {
       authorizeProject(projectService, projectId, securityService, authToken,
           "find abbreviations", UserRole.USER);
@@ -452,13 +453,14 @@ public class MldpServiceRestImpl extends RootServiceRestImpl
       TypeKeyValueList list = null;
       final Project project = projectService.getProject(projectId);
       final AbbreviationHandler abbrHandler = new DefaultAbbreviationHandler();
-      
+
       // use query restriction to restrict by computed type
       PfsParameter lpfs = new PfsParameterJpa(pfs);
       lpfs.setQueryRestriction((pfs.getQueryRestriction() == null
           || pfs.getQueryRestriction().isEmpty() ? ""
-              : pfs.getQueryRestriction() + " AND ") + "type:\""
-                  + abbrHandler.getAbbrType(project.getTerminology()) + "\"");
+              : pfs.getQueryRestriction() + " AND ")
+          + "type:\"" + abbrHandler.getAbbrType(project.getTerminology())
+          + "\"");
 
       // if filter supplied, retrieve all results and pass to handler
       if (filter != null) {
@@ -670,5 +672,235 @@ public class MldpServiceRestImpl extends RootServiceRestImpl
       contentService.close();
       securityService.close();
     }
+  }
+
+  //
+  // Term functions
+  //
+
+  @Override
+  @Path("/term/find")
+  @POST
+  @ApiOperation(value = "Finds abbreviations", notes = "Finds abbreviation objects", response = TypeKeyValueJpa.class)
+  public TypeKeyValueList findTerms(
+    @ApiParam(value = "The project id, e.g. 1", required = true) @QueryParam("projectId") Long projectId,
+    @ApiParam(value = "Query", required = false) @QueryParam("query") String query,
+    @ApiParam(value = "PFS Parameter, e.g. '{ \"startIndex\":\"1\", \"maxResults\":\"5\" }'", required = false) PfsParameterJpa pfs,
+    @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
+    throws Exception {
+    Logger.getLogger(getClass()).info("RESTful call (MLDPr): /term/find, "
+        + query + ", " + ", " + pfs);
+    final ProjectService projectService = new ProjectServiceJpa();
+
+    try {
+      authorizeProject(projectService, projectId, securityService, authToken,
+          "find abbreviations", UserRole.USER);
+
+      TypeKeyValueList list = null;
+      final Project project = projectService.getProject(projectId);
+      final AbbreviationHandler termHandler = new TermHandler();
+
+      // use query restriction to restrict by computed type
+      PfsParameter lpfs = new PfsParameterJpa(pfs);
+      lpfs.setQueryRestriction((pfs.getQueryRestriction() == null
+          || pfs.getQueryRestriction().isEmpty() ? ""
+              : pfs.getQueryRestriction() + " AND ")
+          + "type:\"" + termHandler.getAbbrType(project.getTerminology())
+          + "\"");
+
+      list = projectService.findTypeKeyValuesForQuery(query, lpfs);
+
+      return list;
+    } catch (Exception e) {
+      handleException(e, "trying to find abbreviations ");
+      return null;
+    } finally {
+      projectService.close();
+      securityService.close();
+    }
+  }
+
+  @Override
+  @Path("/term/import")
+  @POST
+  @Consumes(MediaType.MULTIPART_FORM_DATA)
+  @ApiOperation(value = "Import abbreviations", notes = "Import abbreviations for a project from tab-delimited file", response = TypeKeyValueJpa.class)
+  public ValidationResult importTerms(
+    @ApiParam(value = "Form data header", required = true) @FormDataParam("file") FormDataContentDisposition contentDispositionHeader,
+    @ApiParam(value = "Content of terms file", required = true) @FormDataParam("file") InputStream in,
+    @ApiParam(value = "The project id, e.g. 1", required = true) @QueryParam("projectId") Long projectId,
+    @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
+    throws Exception {
+    Logger.getLogger(getClass())
+        .info("RESTful call (MLDP, POST): /term/import/" + projectId);
+    final ProjectService projectService = new ProjectServiceJpa();
+    final AbbreviationHandler handler = new TermHandler();
+    try {
+      final String username = authorizeProject(projectService, projectId,
+          securityService, authToken, "import terms", UserRole.USER);
+      Project project = projectService.getProject(projectId);
+      projectService.setLastModifiedBy(username);
+      handler.setService(projectService);
+      return handler.importAbbreviationFile(project.getTerminology(), in);
+    } catch (
+
+    Exception e) {
+      handleException(e, "trying to import terms ");
+      return null;
+    } finally {
+      // NOTE: No need to close, but included for future safety
+      handler.close();
+      projectService.close();
+      securityService.close();
+    }
+  }
+  
+  @Override
+  @Path("/term/{id}")
+  @GET
+  @ApiOperation(value = "Get a term", notes = "Gets a term object by id", response = TypeKeyValueJpa.class)
+  public TypeKeyValue getTerm(
+    @ApiParam(value = "The term id, e.g. 1") @PathParam("id") Long id,
+    @ApiParam(value = "The project id, e.g. 1", required = true) @QueryParam("projectId") Long projectId,
+    @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
+    throws Exception {
+    {
+      Logger.getLogger(getClass())
+          .info("RESTful call (MLDP, Get): /term/ " + id);
+      final ProjectService projectService = new ProjectServiceJpa();
+      try {
+        authorizeProject(projectService, projectId, securityService, authToken,
+            "get term", UserRole.USER);
+        return projectService.getTypeKeyValue(id);
+      } catch (Exception e) {
+        handleException(e, "trying to get term ");
+        return null;
+      } finally {
+        projectService.close();
+        securityService.close();
+      }
+    }
+  }
+
+  @Override
+  @Path("/term/add")
+  @PUT
+  @ApiOperation(value = "Add a term", notes = "Adds a term object", response = TypeKeyValueJpa.class)
+  public TypeKeyValue addTerm(
+    @ApiParam(value = "The term to add") TypeKeyValueJpa typeKeyValue,
+    @ApiParam(value = "The project id, e.g. 1", required = true) @QueryParam("projectId") Long projectId,
+    @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
+    throws Exception {
+    Logger.getLogger(getClass())
+        .info("RESTful call (MLDP, PUT): /term/add " + typeKeyValue);
+    final ProjectService projectService = new ProjectServiceJpa();
+    final Project project = projectService.getProject(projectId);
+    final TermHandler termHandler = new TermHandler();
+    try {
+      final String username = authorizeProject(projectService, projectId,
+          securityService, authToken, "add term", UserRole.USER);
+      projectService.setLastModifiedBy(username);
+      termHandler.setService(projectService);
+      typeKeyValue.setType(termHandler.getAbbrType(project.getTerminology()));
+      termHandler.updateWorkflowStatus(typeKeyValue);
+      return projectService.addTypeKeyValue(typeKeyValue);
+    } catch (Exception e) {
+      handleException(e, "trying to add term ");
+      return null;
+    } finally {
+      projectService.close();
+      securityService.close();
+    }
+  }
+
+  @Override
+  @Path("/term/update")
+  @POST
+  @ApiOperation(value = "Update a term", notes = "Updates a term object", response = TypeKeyValueJpa.class)
+
+  public void updateTerm(
+    @ApiParam(value = "The term to add") TypeKeyValueJpa typeKeyValue,
+    @ApiParam(value = "The project id, e.g. 1", required = true) @QueryParam("projectId") Long projectId,
+    @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
+    throws Exception {
+    Logger.getLogger(getClass()).info(
+        "RESTful call (MLDP, POST): /term/update " + typeKeyValue.toString());
+    final ProjectService projectService = new ProjectServiceJpa();
+    final TermHandler termHandler = new TermHandler();
+    try {
+      final String username = authorizeProject(projectService, projectId,
+          securityService, authToken, "update term", UserRole.USER);
+      projectService.setLastModifiedBy(username);
+      termHandler.setService(projectService);
+      // TODO Decide whether we want update to change workflow status
+      // i.e. should updates be set to NEW or NEEDS_REVIEW?
+      termHandler.updateWorkflowStatus(typeKeyValue);
+      projectService.updateTypeKeyValue(typeKeyValue);
+    } catch (Exception e) {
+      handleException(e, "trying to update term ");
+    } finally {
+      projectService.close();
+      securityService.close();
+    }
+
+  }
+
+  @Override
+  @Path("/term/remove/{id}")
+  @DELETE
+  @ApiOperation(value = "Removes a term", notes = "Removes a term object by id", response = TypeKeyValueJpa.class)
+  public void removeTerm(
+    @ApiParam(value = "The term to remove") @PathParam("id") Long id,
+    @ApiParam(value = "The project id, e.g. 1", required = true) @QueryParam("projectId") Long projectId,
+    @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
+    throws Exception {
+    Logger.getLogger(getClass())
+        .info("RESTful call (MLDP, DELETE): /term/remove " + id);
+    final ProjectService projectService = new ProjectServiceJpa();
+    try {
+      final String username = authorizeProject(projectService, projectId,
+          securityService, authToken, "remove term", UserRole.USER);
+      projectService.setLastModifiedBy(username);
+      projectService.removeTypeKeyValue(id);
+    } catch (Exception e) {
+      handleException(e, "trying to remove term ");
+
+    } finally {
+      projectService.close();
+      securityService.close();
+    }
+
+  }
+
+  @Override
+  @Path("/term/remove")
+  @POST
+  @ApiOperation(value = "Removes terms", notes = "Removes term objects for id list", response = TypeKeyValueJpa.class)
+  public void removeTerms(
+    @ApiParam(value = "The term to remove") List<Long> ids,
+    @ApiParam(value = "The project id, e.g. 1", required = true) @QueryParam("projectId") Long projectId,
+    @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
+    throws Exception {
+    Logger.getLogger(getClass())
+        .info("RESTful call (MLDP, POST): /term/remove " + ids);
+    final ProjectService projectService = new ProjectServiceJpa();
+    try {
+      final String username = authorizeProject(projectService, projectId,
+          securityService, authToken, "remove term", UserRole.USER);
+      projectService.setLastModifiedBy(username);
+      projectService.setTransactionPerOperation(false);
+      projectService.beginTransaction();
+      for (Long id : ids) {
+        projectService.removeTypeKeyValue(id);
+      }
+      projectService.commit();
+    } catch (Exception e) {
+      handleException(e, "trying to remove term ");
+
+    } finally {
+      projectService.close();
+      securityService.close();
+    }
+
   }
 }

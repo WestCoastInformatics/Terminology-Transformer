@@ -11,6 +11,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -49,6 +50,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.Info;
 import io.swagger.annotations.SwaggerDefinition;
+import io.swagger.models.Response;
 
 /**
  * Class implementation the REST Service for Transform routines for
@@ -356,6 +358,29 @@ public class TransformServiceRestImpl extends RootServiceRestImpl
       securityService.close();
     }
     return null;
+  }
+
+  /* see superclass */
+  @Override
+  @Path("/feedback")
+  @PUT
+  @ApiOperation(value = "Submit feedback", notes = "Submit feedback object with data context", response = Response.class)
+  public void submitFeedback(String feedback, DataContext dataContext,
+    String authToken) throws Exception {
+    Logger.getLogger(getClass())
+        .info("RESTful POST call (Transform): /feedback");
+
+    final CoordinatorService service = new CoordinatorServiceJpa();
+    try {
+      authorizeApp(securityService, authToken, "submit feedback",
+          UserRole.VIEWER);
+
+    } catch (Exception e) {
+      handleException(e, "submit feedback");
+    } finally {
+      service.close();
+      securityService.close();
+    }
   }
 
 }

@@ -313,7 +313,7 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
             final TypeKeyValueList keyMatches = service
                 .findTypeKeyValuesForQuery("type:\"" + getAbbrType(terminology)
                     + "\"" + " AND key:\"" + fields[0] + "\"", pfs);
-            for (TypeKeyValue keyMatch : keyMatches.getObjects()) {
+            for (final TypeKeyValue keyMatch : keyMatches.getObjects()) {
               if (keyMatch.getValue() == null
                   || keyMatch.getValue().trim().isEmpty()) {
                 pairMatchFound = true;
@@ -321,7 +321,7 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
               }
             }
             if (!pairMatchFound && executeImport) {
-              TypeKeyValue typeKeyValue = new TypeKeyValueJpa(
+              final TypeKeyValue typeKeyValue = new TypeKeyValueJpa(
                   getAbbrType(terminology), fields[0], null);
               service.addTypeKeyValue(typeKeyValue);
               newAbbrs.add(typeKeyValue);

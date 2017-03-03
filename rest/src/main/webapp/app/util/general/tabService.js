@@ -61,10 +61,17 @@ tsApp
                 break;
               case 'abbr':
                 this.tabs.push({
-                  link: 'abbr',
+                  link : 'abbr',
                   label : 'Abbreviations',
                   role : 'USER'
                 })
+                break;
+              case 'term':
+                this.tabs.push({
+                  link : 'term',
+                  label : 'Raw Terms',
+                  role : 'USER'
+                });
                 break;
               case 'admin':
                 this.tabs.push({
@@ -110,7 +117,7 @@ tsApp
         this.setSelectedTabByLabel = function(label) {
           for (var i = 0; i < this.tabs.length; i++) {
             if (this.tabs[i].label === label) {
-           
+
               this.selectedTab = this.tabs[i];
               $location.path(this.selectedTab.link);
               break;

@@ -25,7 +25,7 @@ public interface MldpServiceRest {
    *
    * @param contentDispositionHeader the content disposition header
    * @param in the in
-   * @param type the type
+   * @param projectId the project id
    * @param authToken the auth token
    * @return the validation result
    * @throws Exception the exception
@@ -39,7 +39,7 @@ public interface MldpServiceRest {
    *
    * @param contentDispositionHeader the content disposition header
    * @param in the in
-   * @param type the type
+   * @param projectId the project id
    * @param authToken the auth token
    * @return the validation result
    * @throws Exception the exception
@@ -51,7 +51,7 @@ public interface MldpServiceRest {
   /**
    * Export abbreviations file.
    *
-   * @param type the type
+   * @param projectId the project id
    * @param readyOnly the ready only flag
    * @param acceptNew the accept new
    * @param authToken the auth token
@@ -65,17 +65,19 @@ public interface MldpServiceRest {
    * Adds the abbreviation.
    *
    * @param typeKeyValue the type key value
+   * @param projectId the project id
    * @param authToken the auth token
    * @return the type key value
    * @throws Exception the exception
    */
-  public TypeKeyValue addAbbreviation(TypeKeyValueJpa typeKeyValue, Long projectId,
-    String authToken) throws Exception;
+  public TypeKeyValue addAbbreviation(TypeKeyValueJpa typeKeyValue,
+    Long projectId, String authToken) throws Exception;
 
   /**
    * Returns the abbreviation.
    *
    * @param id the id
+   * @param projectId the project id
    * @param authToken the auth token
    * @return the abbreviation
    * @throws Exception the exception
@@ -87,24 +89,28 @@ public interface MldpServiceRest {
    * Update abbreviation.
    *
    * @param typeKeyValue the type key value
+   * @param projectId the project id
    * @param authToken the auth token
    * @throws Exception the exception
    */
-  public void updateAbbreviation(TypeKeyValueJpa typeKeyValue, Long projectId, String authToken)
-    throws Exception;
+  public void updateAbbreviation(TypeKeyValueJpa typeKeyValue, Long projectId,
+    String authToken) throws Exception;
 
   /**
    * Removes the abbreviation.
    *
    * @param id the id
+   * @param projectId the project id
    * @param authToken the auth token
    * @throws Exception the exception
    */
-  public void removeAbbreviation(Long id, Long projectId, String authToken) throws Exception;
+  public void removeAbbreviation(Long id, Long projectId, String authToken)
+    throws Exception;
 
   /**
    * Find abbreviations.
    *
+   * @param projectId the project id
    * @param query the query
    * @param filter the filter
    * @param pfs the pfs
@@ -112,13 +118,13 @@ public interface MldpServiceRest {
    * @return the type key value list
    * @throws Exception the exception
    */
-  public TypeKeyValueList findAbbreviations(Long projectId, String query, String filter,
-    PfsParameterJpa pfs, String authToken) throws Exception;
+  public TypeKeyValueList findAbbreviations(Long projectId, String query,
+    String filter, PfsParameterJpa pfs, String authToken) throws Exception;
 
   /**
    * Compute review statuses.
    *
-   * @param type the type
+   * @param projectId the project id
    * @param authToken the auth token
    * @throws Exception the exception
    */
@@ -129,33 +135,36 @@ public interface MldpServiceRest {
    * Returns the review for abbreviation.
    *
    * @param id the id
+   * @param projectId the project id
    * @param authToken the auth token
    * @return the review for abbreviation
    * @throws Exception the exception
    */
-  public TypeKeyValueList getReviewForAbbreviation(Long id, Long projectId, String authToken)
-    throws Exception;
+  public TypeKeyValueList getReviewForAbbreviation(Long id, Long projectId,
+    String authToken) throws Exception;
 
   /**
    * Returns the review for abbreviations.
    *
    * @param ids the ids
+   * @param projectId the project id
    * @param authToken the auth token
    * @return the review for abbreviations
    * @throws Exception the exception
    */
-  public TypeKeyValueList getReviewForAbbreviations(List<Long> ids, Long projectId,
-    String authToken) throws Exception;
+  public TypeKeyValueList getReviewForAbbreviations(List<Long> ids,
+    Long projectId, String authToken) throws Exception;
 
   /**
    * Removes the abbreviations.
    *
    * @param ids the ids
+   * @param projectId the project id
    * @param authToken the auth token
    * @throws Exception the exception
    */
-  public void removeAbbreviations(List<Long> ids, Long projectId, String authToken)
-    throws Exception;
+  public void removeAbbreviations(List<Long> ids, Long projectId,
+    String authToken) throws Exception;
 
   /**
    * Import concepts file.
@@ -206,6 +215,90 @@ public interface MldpServiceRest {
    * @throws Exception the exception
    */
   public void clearReviewWorkflowForProject(Long projectId, String authToken)
+    throws Exception;
+
+  /**
+   * Import terms.
+   *
+   * @param contentDispositionHeader the content disposition header
+   * @param in the in
+   * @param projectId the project id
+   * @param authToken the auth token
+   * @return the validation result
+   * @throws Exception the exception
+   */
+  public ValidationResult importTerms(
+    FormDataContentDisposition contentDispositionHeader, InputStream in,
+    Long projectId, String authToken) throws Exception;
+
+  /**
+   * Find terms.
+   *
+   * @param projectId the project id
+   * @param query the query
+   * @param pfs the pfs
+   * @param authToken the auth token
+   * @return the type key value list
+   * @throws Exception the exception
+   */
+  public TypeKeyValueList findTerms(Long projectId, String query,
+    PfsParameterJpa pfs, String authToken) throws Exception;
+
+  /**
+   * Returns the term.
+   *
+   * @param id the id
+   * @param projectId the project id
+   * @param authToken the auth token
+   * @return the term
+   * @throws Exception the exception
+   */
+  public TypeKeyValue getTerm(Long id, Long projectId, String authToken)
+    throws Exception;
+
+  /**
+   * Adds the term.
+   *
+   * @param typeKeyValue the type key value
+   * @param projectId the project id
+   * @param authToken the auth token
+   * @return the type key value
+   * @throws Exception the exception
+   */
+  public TypeKeyValue addTerm(TypeKeyValueJpa typeKeyValue, Long projectId,
+    String authToken) throws Exception;
+
+  /**
+   * Update term.
+   *
+   * @param typeKeyValue the type key value
+   * @param projectId the project id
+   * @param authToken the auth token
+   * @throws Exception the exception
+   */
+  public void updateTerm(TypeKeyValueJpa typeKeyValue, Long projectId,
+    String authToken) throws Exception;
+
+  /**
+   * Removes the terms.
+   *
+   * @param ids the ids
+   * @param projectId the project id
+   * @param authToken the auth token
+   * @throws Exception the exception
+   */
+  public void removeTerms(List<Long> ids, Long projectId, String authToken)
+    throws Exception;
+
+  /**
+   * Removes the term.
+   *
+   * @param id the id
+   * @param projectId the project id
+   * @param authToken the auth token
+   * @throws Exception the exception
+   */
+  public void removeTerm(Long id, Long projectId, String authToken)
     throws Exception;
 
 }

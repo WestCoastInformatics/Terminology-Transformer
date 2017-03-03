@@ -3,6 +3,7 @@
  */
 package com.wci.tt.jpa.services.rest;
 
+import com.wci.tt.DataContext;
 import com.wci.tt.helpers.ScoredDataContextList;
 import com.wci.tt.helpers.ScoredDataContextTupleList;
 import com.wci.tt.jpa.DataContextJpa;
@@ -93,6 +94,16 @@ public interface TransformServiceRest {
    * @throws Exception the exception
    */
   public KeyValuePairList getConverters(String authToken) throws Exception;
+  
+  /**
+   * Submit feedback.
+   *
+   * @param feedback the feedback
+   * @param dataContext the data context
+   * @param authToken the auth token
+   * @throws Exception the exception
+   */
+  public void submitFeedback(String feedback, DataContext dataContext, String authToken) throws Exception;
 
   
 }
