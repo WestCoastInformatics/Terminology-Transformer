@@ -404,7 +404,7 @@ public class TerminologySimpleCsvLoaderAlgorithm
       // 3 term type
 
       // check for completeness
-      if (record.size() != 4) {
+      if (record.size() != 5) {
         validationResult.addError("Line " + record.getRecordNumber()
             + ": Expected 4 fields but found " + record.size());
         skip = true;
@@ -415,21 +415,26 @@ public class TerminologySimpleCsvLoaderAlgorithm
         skip = true;
       }
       if (record.get(1) == null || record.get(1).isEmpty()) {
-        validationResult
-            .addError("Line " + record.getRecordNumber() + ": Feature blank");
+        validationResult.addError(
+            "Line " + record.getRecordNumber() + ": Source data blank");
         skip = true;
       }
       if (record.get(2) == null || record.get(2).isEmpty()) {
         validationResult
-            .addError("Line " + record.getRecordNumber() + ": Name blank");
+            .addError("Line " + record.getRecordNumber() + ": Feature blank");
         skip = true;
       }
       if (record.get(3) == null || record.get(3).isEmpty()) {
         validationResult
+            .addError("Line " + record.getRecordNumber() + ": Name blank");
+        skip = true;
+      }
+      if (record.get(4) == null || record.get(4).isEmpty()) {
+        validationResult
             .addError("Line " + record.getRecordNumber() + ": Term type blank");
         skip = true;
       }
-      if (!termTypes.contains(record.get(3).toUpperCase())) {
+      if (!termTypes.contains(record.get(4).toUpperCase())) {
         validationResult.addError(
             "Line " + record.getRecordNumber() + ": Term type invalid");
         skip = true;
@@ -468,15 +473,18 @@ public class TerminologySimpleCsvLoaderAlgorithm
         final Atom atom = new AtomJpa();
         setCommonFields(atom);
         atom.setWorkflowStatus(WorkflowStatus.PUBLISHED);
-        atom.setName(record.get(2));
+        atom.setName(record.get(3));
         atom.setTerminologyId(idHandler.getTerminologyId(atom));
-        atom.setTermType(record.get(3).toUpperCase());
+        atom.setTermType(record.get(4).toUpperCase());
         atom.setLanguage("en");
         atom.setCodeId("");
         atom.setConceptId(concept.getTerminologyId());
         atom.setDescriptorId("");
         atom.setStringClassId("");
         atom.setLexicalClassId("");
+        
+        // put source data in lastModifiedBy
+        atom.setLastModifiedBy(record.get(1));
 
         // Add atom
         addAtom(atom);
@@ -486,11 +494,11 @@ public class TerminologySimpleCsvLoaderAlgorithm
         // add semantic type if does not exist
         if (!existingStys.contains(record.get(1))) {
           final SemanticType sty = new SemanticTypeJpa();
-          sty.setAbbreviation(record.get(1));
+          sty.setAbbreviation(record.get(2));
           sty.setBranch(branch);
           sty.setDefinition("");
           sty.setExample("");
-          sty.setExpandedForm(record.get(1));
+          sty.setExpandedForm(record.get(2));
           sty.setNonHuman(false);
           sty.setTerminology(getTerminology());
           sty.setVersion(getVersion());
@@ -519,7 +527,7 @@ public class TerminologySimpleCsvLoaderAlgorithm
 
           final SemanticTypeComponent sty = new SemanticTypeComponentJpa();
           setCommonFields(sty);
-          sty.setSemanticType(record.get(1));
+          sty.setSemanticType(record.get(2));
           sty.setTerminologyId("");
           sty.setWorkflowStatus(WorkflowStatus.PUBLISHED);
           addSemanticTypeComponent(sty, concept);
@@ -535,7 +543,11 @@ public class TerminologySimpleCsvLoaderAlgorithm
 
     // cycle while still records and the next record is not blank (proxy for EOF)
     } while (iterator.hasNext() && (record = iterator.next()) != null);
-
+    
+    System.out.println("OHAI: ");
+    System.out.println(concept == null ? "null concept" : "non-null concept");
+    System.out.println(pnHandler == null ? "null pnHandler" : "non-null pnHandler");
+    
     // update and commit last concept
     concept.setName(
         pnHandler.computePreferredName(concept.getAtoms(), precedenceList));

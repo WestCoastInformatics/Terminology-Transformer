@@ -8,14 +8,25 @@ tsApp.service('transformService', [
   'Upload',
   function($q, $http, utilService, gpService, Upload) {
 
+    /**
+     * Returns input/output data contexts as two-item DataContextList
+     */
     this.getDataContextList = function(terminology) {
-      var list = [{
-        type : 'INFO_MODEL',
-        terminology : terminology
-      }];
+
       return {
-        dataContexts: list,
-        totalCount: list.length
+        dataContexts : [
+        // input model
+        {
+          type : 'NAME',
+          terminology : terminology
+        },
+
+        // output model
+        {
+          type : 'INFO_MODEL',
+          terminology : terminology
+        } ],
+        totalCount : 2
       };
     }
 
@@ -28,19 +39,19 @@ tsApp.service('transformService', [
       // if flag set, update type key value directly without additional checks
       // abbreviation endpoint performs post-processing, which re-applies
       // NEEDS_REVIEW on finishReview updates
-      $http.post(transformUrl + '/process/' + encodeURIComponent(utilService.cleanQuery(inputStr)), dataContext)
-        .then(
-        // success
-        function(response) {
-          gpService.decrement();
-          deferred.resolve(response.data);
-        },
-        // error
-        function(response) {
-          utilService.handleError(response);
-          gpService.decrement();
-          deferred.reject(response.data);
-        });
+      $http.post(transformUrl + '/process/' + encodeURIComponent(inputStr),
+        dataContext).then(
+      // success
+      function(response) {
+        gpService.decrement();
+        deferred.resolve(JSON.parse(response.data));
+      },
+      // error
+      function(response) {
+        utilService.handleError(response);
+        gpService.decrement();
+        deferred.reject(response.data);
+      });
       return deferred.promise;
     }
 

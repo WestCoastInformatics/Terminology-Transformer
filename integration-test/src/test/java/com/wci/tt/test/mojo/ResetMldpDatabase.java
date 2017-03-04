@@ -33,6 +33,7 @@ import com.wci.umls.server.helpers.ConfigUtility;
 import com.wci.umls.server.helpers.PrecedenceList;
 import com.wci.umls.server.jpa.ProjectJpa;
 import com.wci.umls.server.jpa.UserJpa;
+import com.wci.umls.server.jpa.algo.LuceneReindexAlgorithm;
 import com.wci.umls.server.jpa.services.MetadataServiceJpa;
 import com.wci.umls.server.jpa.services.ProjectServiceJpa;
 import com.wci.umls.server.jpa.services.SecurityServiceJpa;
@@ -86,7 +87,8 @@ public class ResetMldpDatabase {
     inputDir = System.getProperty("input.dir");
 
     if (inputDir == null) {
-      Logger.getLogger(getClass()).info("No input directory specified, using stock config files");
+      Logger.getLogger(getClass())
+          .info("No input directory specified, using stock config files");
       inputDir = "../config/mldp/src/main/resources/data/";
     }
     if (!inputDir.endsWith("/")) {
@@ -103,6 +105,9 @@ public class ResetMldpDatabase {
 
     // List of MLDP terminologies
     final List<String> mldpTerminologies = new ArrayList<>();
+    final List<String> requestedTerminologies =
+        System.getProperty("mldp.terminologies") == null ? null : Arrays
+            .asList(System.getProperty("mldp.terminologies").split(","));
 
     // {
     // "allergy", "anatomy", "condition", "immunization", "lab", "med",
@@ -114,21 +119,33 @@ public class ResetMldpDatabase {
       if (f.isDirectory()) {
         Logger.getLogger(getClass())
             .info("Discovered terminology: " + f.getName());
-        mldpTerminologies.add(f.getName());
-        
-        // log discovered files
-        for (final String fileName : f.list()) {
-          if (fileName.endsWith("Abbr.txt")) {
-            Logger.getLogger(getClass()).info("  Found abbreviations file: " + fileName);
+
+        // if terminologies specified
+        if (requestedTerminologies == null
+            || requestedTerminologies.contains(f.getName())) {
+          
+          mldpTerminologies.add(f.getName());
+
+          // log discovered files
+          for (final String fileName : f.list()) {
+            if (fileName.endsWith("Abbr.txt")) {
+              Logger.getLogger(getClass())
+                  .info("  Found abbreviations file: " + fileName);
+            } else if (fileName.endsWith("Concepts.csv")) {
+              Logger.getLogger(getClass())
+                  .info("  Found concepts file     : " + fileName);
+            }
           }
-          else if (fileName.endsWith("Concepts.csv")) {
-            Logger.getLogger(getClass()).info("  Found concepts file     : " + fileName);
-          }
+        } else {
+          Logger.getLogger(getClass()).info("  Skipping terminology.");
         }
       }
     }
-    
-    Logger.getLogger(getClass()).info("Number of terminologies to load: " + mldpTerminologies.size());
+
+    Logger.getLogger(
+
+        getClass())
+        .info("Number of terminologies to load: " + mldpTerminologies.size());
 
     // output identifier handler
     Logger.getLogger(getClass()).info("DEFAULT id assignment handler: "
@@ -142,24 +159,21 @@ public class ResetMldpDatabase {
     Logger.getLogger(getClass()).info("  Done.");
 
     // clear index
-    // TODO Need to specify all indexed field names -- for now assume clean
-    // build
-    // Logger.getLogger(getClass()).info("Purging lucene indexes...");
-    // LuceneReindexAlgorithm luceneAlgo = new LuceneReindexAlgorithm();
-    // luceneAlgo.setProperties(config);
-    // luceneAlgo.reset();
-    // Logger.getLogger(getClass()).info(" Done.");
+
+    Logger.getLogger(getClass()).info("Purging lucene indexes...");
+    LuceneReindexAlgorithm luceneAlgo = new LuceneReindexAlgorithm();
+    luceneAlgo.setProperties(config);
+    luceneAlgo.reset();
+    Logger.getLogger(getClass()).info(" Done.");
 
     final SecurityService securityService = new SecurityServiceJpa();
     final MetadataService service = new MetadataServiceJpa();
     final ProjectService projectService = new ProjectServiceJpa();
-    
 
     // set last modified by
     final String loaderUser = "loader";
     service.setLastModifiedBy(loaderUser);
     projectService.setLastModifiedBy(loaderUser);
-
 
     // shared variables
     InputStream inStream;
@@ -168,7 +182,7 @@ public class ResetMldpDatabase {
 
     Logger.getLogger(getClass()).info("Creating default users...");
     final Map<User, UserRole> userRoleMap = new HashMap<>();
-    
+
     final Map<String, UserRole> userNames = new HashMap<>();
     userNames.put("admin", UserRole.ADMINISTRATOR);
     userNames.put("user", UserRole.USER);
@@ -179,18 +193,17 @@ public class ResetMldpDatabase {
       user.setApplicationRole(userNames.get(userName));
       user.setEmail(userName + "@example.com");
       user.setUserName(userName);
-      user.setName(userName.substring(0, 1).toUpperCase() + userName.substring(1));
+      user.setName(
+          userName.substring(0, 1).toUpperCase() + userName.substring(1));
       user = securityService.addUser(user);
       userRoleMap.put(user, userNames.get(userName));
     }
-    
 
-    
     Logger.getLogger(getClass()).info("  Done.");
 
     final String[] validationChecks =
         config.getProperty("validation.service.handler").split(",");
-    
+
     ValidationResult result;
 
     // for each terminology
@@ -202,25 +215,25 @@ public class ResetMldpDatabase {
 
       final String terminology = "HKFT-" + mldpTerminology.toUpperCase();
       final String version = "latest";
-    
+
       // load terminology
       Logger.getLogger(getClass())
           .info("Loading terminology " + mldpTerminology);
-      Logger.getLogger(getClass()).info("  File: " + inputDir
-          + mldpTerminology + "/" + mldpTerminology + "Concepts.csv");
+      Logger.getLogger(getClass()).info("  File: " + inputDir + mldpTerminology
+          + "/" + mldpTerminology + "Concepts.csv");
 
       final TerminologySimpleCsvLoaderAlgorithm termAlgo =
           new TerminologySimpleCsvLoaderAlgorithm();
       termAlgo.setTerminology(terminology);
       termAlgo.setVersion(version);
       termAlgo.setAssignIdentifiersFlag(true);
-      termAlgo.setInputFile(inputDir + mldpTerminology + "/"
-          + mldpTerminology + "Concepts.csv");
+      termAlgo.setInputFile(
+          inputDir + mldpTerminology + "/" + mldpTerminology + "Concepts.csv");
       termAlgo.setReleaseVersion(version);
       termAlgo.setLastModifiedBy(loaderUser);
       termAlgo.compute();
       result = termAlgo.getValidationResult();
-      
+
       // output results
       for (String error : result.getErrors()) {
         Logger.getLogger(getClass()).info("Error: " + error);
@@ -231,22 +244,21 @@ public class ResetMldpDatabase {
       for (String warning : result.getWarnings()) {
         Logger.getLogger(getClass()).info("Warning: " + warning);
       }
-     
 
       // load abbreviations file
       Logger.getLogger(getClass())
           .info("Loading abbreviations for terminology " + mldpTerminology);
-      Logger.getLogger(getClass()).info("  File: " + inputDir
-          + mldpTerminology + "/" + mldpTerminology + "Abbr.txt");
+      Logger.getLogger(getClass()).info("  File: " + inputDir + mldpTerminology
+          + "/" + mldpTerminology + "Abbr.txt");
 
-      inStream = new FileInputStream(inputDir
-          + mldpTerminology + "/" + mldpTerminology + "Abbr.txt");
+      inStream = new FileInputStream(
+          inputDir + mldpTerminology + "/" + mldpTerminology + "Abbr.txt");
       abbrHandler = new DefaultAbbreviationHandler();
       abbrHandler.setService(projectService);
       abbrHandler.setReviewFlag(false);
       result = abbrHandler.importAbbreviationFile(
           "HKFT-" + mldpTerminology.toUpperCase(), inStream);
-      
+
       // output results
       for (String error : result.getErrors()) {
         Logger.getLogger(getClass()).info("Error: " + error);
@@ -290,27 +302,27 @@ public class ResetMldpDatabase {
       project.setVersion(version);
       project.setBranch(Branch.ROOT);
       project.setUserRoleMap(userRoleMap);
-  
+
       // add all validation checks to project
       project.setValidationChecks(Arrays.asList(validationChecks));
 
       // use metadata service here (no commit clashing)
-   
+
       PrecedenceList precedenceList =
           service.getPrecedenceList(terminology, version);
       project.setPrecedenceList(precedenceList);
-      
-       project = service.addProject(project);
-      
+
+      project = service.addProject(project);
+
       Logger.getLogger(getClass()).info("  Project successfully created");
-     
+
     }
-    
+
     // close project service
-  
+
     service.close();
     service.closeFactory();
-    
+
     Logger.getLogger(getClass()).info("Reset MLDP database complete");
 
   }

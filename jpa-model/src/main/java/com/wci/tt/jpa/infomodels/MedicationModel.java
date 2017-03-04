@@ -100,11 +100,6 @@ public class MedicationModel implements InfoModel<MedicationModel> {
     // n/a
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see com.wci.tt.infomodels.InfoModel#verify(java.lang.String)
-   */
   /* see superclass */
   @Override
   public boolean verify(String model) throws Exception {
@@ -117,12 +112,8 @@ public class MedicationModel implements InfoModel<MedicationModel> {
     }
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see com.wci.tt.infomodels.InfoModel#getModel(java.lang.String)
-   */
   /* see superclass */
+  @Override
   public MedicationModel getModel(String model) throws Exception {
     // Only accept json in correct format
     try {
@@ -133,13 +124,9 @@ public class MedicationModel implements InfoModel<MedicationModel> {
     }
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see com.wci.tt.infomodels.InfoModel#getModelValue()
-   */
   /* see superclass */
   @XmlTransient
+  @Override
   public String getModelValue() throws Exception {
     return ConfigUtility.getJsonForGraph(this);
   }
@@ -255,13 +242,9 @@ public class MedicationModel implements InfoModel<MedicationModel> {
     this.releasePeriod = releasePeriod;
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see com.wci.tt.infomodels.InfoModel#getVersion()
-   */
   /* see superclass */
   @XmlTransient
+  @Override
   public String getVersion() {
     return "1.0";
   }

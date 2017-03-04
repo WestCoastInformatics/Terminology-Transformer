@@ -23,7 +23,7 @@ public class MldpNormalizer extends AbstractNormalizer {
   private float quality;
 
   /** The semantic type. */
-  private String semanticType = null;
+  // private String semanticType = null;
 
   /** The abbr type. */
   private String abbrType = null;
@@ -74,9 +74,15 @@ public class MldpNormalizer extends AbstractNormalizer {
     if (!p.containsKey("abbrType")) {
       throw new Exception("A abbrType property is required");
     }
-    if (!p.containsKey("semanticType")) {
-      throw new Exception("A semanticType property is required");
+    if (!p.containsKey("syType")) {
+      throw new Exception("A syType property is required");
     }
+    if (!p.containsKey("patternType")) {
+      throw new Exception("A patternType property is required");
+    }
+//    if (!p.containsKey("semanticType")) {
+//      throw new Exception("A semanticType property is required");
+//    }
 
     try {
       quality = Float.parseFloat(p.getProperty("quality"));
@@ -90,7 +96,7 @@ public class MldpNormalizer extends AbstractNormalizer {
 
     abbrType = p.getProperty("abbrType");
 
-    semanticType = p.getProperty("semanticType");
+    // semanticType = p.getProperty("semanticType");
   }
 
   /* see superclass */
@@ -103,8 +109,9 @@ public class MldpNormalizer extends AbstractNormalizer {
   @Override
   public boolean accepts(DataContext inputContext) throws Exception {
     // Handle text-only types with matching semantic type
-    return inputContext.getSemanticType().equals(semanticType)
-        && (inputContext.getType() == DataContextType.TEXT
+    return 
+        //inputContext.getSemanticType().equals(semanticType) &&
+        (inputContext.getType() == DataContextType.TEXT
             || inputContext.getType() == DataContextType.NAME);
   }
 
