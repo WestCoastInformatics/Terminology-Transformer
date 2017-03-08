@@ -44,7 +44,11 @@ tsApp.service('transformService', [
       // success
       function(response) {
         gpService.decrement();
-        deferred.resolve(JSON.parse(response.data));
+        console.debug(response);
+        angular.forEach(response.data.scoredDataContextTuples, function(tuple) {
+          tuple.data = JSON.parse(tuple.data);
+        });
+        deferred.resolve(response.data);
       },
       // error
       function(response) {

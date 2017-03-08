@@ -70,13 +70,23 @@ tsApp.controller('TermCtrl', [
       getPagedList : findTerms
     };
     $scope.paging['concept'] = utilService.getPaging();
-    $scope.paging['concept'].sortField = 'name';
     $scope.paging['concept'].showFilter = true;
-    $scope.paging['concept'].pageSize = 10;
+    $scope.paging['concept'].pageSize = 5;
     $scope.paging['concept'].callbacks = {
       getPagedList : findConcepts
     };
-
+    
+    //
+    // Local variables
+    //
+    $scope.local = {
+      newConcept : {
+        pt : null,
+        sys : [],
+        feature : null
+      }
+    }
+   
     // pass utility functions to scope
     $scope.toShortDate = utilService.toShortDate;
 
@@ -122,6 +132,11 @@ tsApp.controller('TermCtrl', [
       if (concept) {
         $scope.setConceptViewed(concept);
       }
+      
+      // only display values if filter text entered (no blank search)
+      if (!$scope.paging['concept'].filter) {
+        $scope.lists.concepts = null;
+      }
       var pfs = prepConceptPfs('concept');
 
       console.debug('findConcepts', pfs, $scope.paging['concept']);
@@ -130,8 +145,9 @@ tsApp.controller('TermCtrl', [
         $scope.selected.metadata.terminology.terminology,
         $scope.selected.metadata.terminology.version, $scope.selected.project.id, pfs).then(
         function(response) {
-          $scope.lists.conceptsViewed = response;
-          console.debug('concepts', $scope.lists.conceptsViewed);
+          $scope.lists.concepts = response;
+          $scope.lists.concepts.totalCount = response.totalCount;
+          console.debug('concepts', $scope.lists.concepts);
         });
 
     }
@@ -164,8 +180,12 @@ tsApp.controller('TermCtrl', [
         .getDataContextList($scope.selected.metadata.terminology.terminology);
       transformService.process(term.key, dataContext).then(function(response) {
         console.debug('process response', response);
+        if (!response || !Array.isArray(response.scoredDataContextTuples) || response.scoredDataContextTuples.length == 1) {
+        $scope.selected.term = response.scoredDataContextTuples[0];
+        } else {
+          utilService.setError('Process response invalid');
+        }
       });
-
     }
 
     $scope.createTerm = function() {
@@ -333,8 +353,18 @@ tsApp.controller('TermCtrl', [
           console.debug('  project found: ', $scope.selected.project);
 
           $scope.findTerms();
+          
+          // get features (semantic types)
+          metadataService.getSemanticTypes($scope.selected.project.terminology,
+            $scope.selected.project.version).then(function(response) {
+            console.debug('semantic types', response);
+
+            $scope.lists.features = response.types;
+          });
         }
       }
+     
+      
       if ($scope.selected.project == null) {
         utilService.setError('Unexpected error: no project for terminology');
       }
