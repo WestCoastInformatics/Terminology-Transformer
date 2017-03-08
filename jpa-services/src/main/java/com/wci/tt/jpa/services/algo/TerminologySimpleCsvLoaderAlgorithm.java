@@ -192,7 +192,6 @@ public class TerminologySimpleCsvLoaderAlgorithm
     final Terminology terminology =
         getTerminologyLatestVersion(getTerminology());
 
-  
     // Clear concept cache
 
     logInfo("Log component stats");
@@ -482,7 +481,7 @@ public class TerminologySimpleCsvLoaderAlgorithm
         atom.setDescriptorId("");
         atom.setStringClassId("");
         atom.setLexicalClassId("");
-        
+
         // put source data in lastModifiedBy
         atom.setLastModifiedBy(record.get(1));
 
@@ -541,19 +540,19 @@ public class TerminologySimpleCsvLoaderAlgorithm
         skipCt++;
       }
 
-    // cycle while still records and the next record is not blank (proxy for EOF)
+      // cycle while still records and the next record is not blank (proxy for
+      // EOF)
     } while (iterator.hasNext() && (record = iterator.next()) != null);
-    
-    System.out.println("OHAI: ");
-    System.out.println(concept == null ? "null concept" : "non-null concept");
-    System.out.println(pnHandler == null ? "null pnHandler" : "non-null pnHandler");
-    
-    // update and commit last concept
-    concept.setName(
-        pnHandler.computePreferredName(concept.getAtoms(), precedenceList));
-    updateConcept(concept);
-    conceptCt++;
-    
+
+    // fail gracefully on blank end lines
+    if (concept != null) {
+      // update and commit last concept
+      concept.setName(
+          pnHandler.computePreferredName(concept.getAtoms(), precedenceList));
+      updateConcept(concept);
+      conceptCt++;
+    }
+
     if (skipCt > 0) {
       validationResult.getWarnings().add("Skipped " + skipCt + " + terms");
     }
