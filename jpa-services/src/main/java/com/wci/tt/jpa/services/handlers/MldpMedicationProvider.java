@@ -4,12 +4,14 @@
 package com.wci.tt.jpa.services.handlers;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
 import org.apache.log4j.Logger;
+import org.apache.lucene.analysis.core.StopAnalyzer;
 
 import com.wci.tt.DataContext;
 import com.wci.tt.TransformRecord;
@@ -182,7 +184,7 @@ public class MldpMedicationProvider extends AbstractAcceptsHandler
 
     // Ordered removal
     String[] orderedFeatures = {
-        "Ingredient", "Strength", "BrandName", "DoseForm", "DoseFormModifier",
+        "BrandName", "Ingredient", "Strength", "DoseForm", "DoseFormQualifier",
         "Route"
     };
 
@@ -207,11 +209,13 @@ public class MldpMedicationProvider extends AbstractAcceptsHandler
           break;
         }
 
-        final ConceptList matches = service.findConcepts(
-            inputContext.getTerminology(), inputContext.getVersion(),
-            Branch.ROOT, "semanticTypes.semanticType:" + feature
-                + " AND atoms.nameNorm:\"" + ConfigUtility.normalize(subsequence) + "\"",
-            null);
+        final ConceptList matches =
+            service.findConcepts(inputContext.getTerminology(),
+                inputContext.getVersion(), Branch.ROOT,
+                "semanticTypes.semanticType:" + feature
+                    + " AND atoms.nameNorm:\""
+                    + ConfigUtility.normalize(subsequence) + "\"",
+                null);
         for (final Concept match : matches.getObjects()) {
           System.out
               .println("Potential match found on concept " + match.getName());
@@ -232,7 +236,19 @@ public class MldpMedicationProvider extends AbstractAcceptsHandler
 
     }
 
-    model.setRemainingString(remainingString);
+    // stop words
+    final List<String> tokens = Arrays.asList(remainingString.split("\\s"));
+    for (String token : remainingString.split("\\s")) {
+      if (StopAnalyzer.ENGLISH_STOP_WORDS_SET.contains(token)) {
+        tokens.remove(token);
+      }
+    }
+    String remaining = "";
+    for (String token : tokens) {
+      remaining += token + " ";
+    }
+
+    model.setRemainingString(remaining.trim());
 
     ScoredResult result = new ScoredResultJpa(model.getModelValue(), 1.0f);
     results.add(result);

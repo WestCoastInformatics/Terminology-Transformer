@@ -41,9 +41,9 @@ public class MldpIdentifierAssignmentHandler extends AbstractConfigurable
     implements IdentifierAssignmentHandler {
 
   /** The max concept id. */
-  private long maxConceptId = -1;
+  private static long maxConceptId = -1;
 
-  private long maxAtomId = -1;
+  private static long maxAtomId = -1;
 
   /* see superclass */
   @Override

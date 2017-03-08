@@ -492,7 +492,7 @@ public class TerminologySimpleCsvLoaderAlgorithm
         atomsCt++;
 
         // add semantic type if does not exist
-        if (!existingStys.contains(record.get(1))) {
+        if (!existingStys.contains(record.get(2))) {
           final SemanticType sty = new SemanticTypeJpa();
           sty.setAbbreviation(record.get(2));
           sty.setBranch(branch);
