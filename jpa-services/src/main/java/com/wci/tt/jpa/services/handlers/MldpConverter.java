@@ -7,18 +7,15 @@ import java.util.Properties;
 
 import org.apache.log4j.Logger;
 
-import com.wci.tt.DataContext;
 import com.wci.tt.TransformRecord;
 import com.wci.tt.helpers.DataContextTuple;
 import com.wci.tt.helpers.DataContextType;
 import com.wci.tt.jpa.helpers.DataContextTupleJpa;
-import com.wci.tt.jpa.infomodels.ConditionModel;
-import com.wci.tt.jpa.infomodels.ProcedureModel;
-import com.wci.tt.jpa.infomodels.SiteModel;
+import com.wci.tt.jpa.infomodels.MedicationModel;
+import com.wci.tt.jpa.infomodels.MedicationOutputModel;
 import com.wci.tt.jpa.services.helper.DataContextMatcher;
 import com.wci.tt.services.handlers.ConverterHandler;
 import com.wci.umls.server.helpers.Branch;
-import com.wci.umls.server.jpa.services.ContentServiceJpa;
 import com.wci.umls.server.model.content.Concept;
 import com.wci.umls.server.services.ContentService;
 
@@ -37,9 +34,9 @@ public class MldpConverter extends AbstractAcceptsHandler
     // Configure input/output matchers
 
     // Convert a condition model to itself
-    DataContextMatcher matcher = new DataContextMatcher();
-    matcher.configureContext(DataContextType.INFO_MODEL, null, null, null,
-        null, null, null);
+    final DataContextMatcher matcher = new DataContextMatcher();
+    matcher.configureContext(DataContextType.INFO_MODEL, null, null, null, null,
+        null, null);
     addMatcher(matcher, matcher);
 
   }

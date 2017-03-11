@@ -4,14 +4,18 @@
 package com.wci.tt.jpa.services.handlers;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.log4j.Logger;
-import org.apache.lucene.analysis.core.StopAnalyzer;
 
 import com.wci.tt.DataContext;
 import com.wci.tt.TransformRecord;
@@ -20,6 +24,9 @@ import com.wci.tt.helpers.ScoredDataContext;
 import com.wci.tt.helpers.ScoredResult;
 import com.wci.tt.jpa.helpers.ScoredDataContextJpa;
 import com.wci.tt.jpa.helpers.ScoredResultJpa;
+import com.wci.tt.jpa.helpers.ValueRawModel;
+import com.wci.tt.jpa.infomodels.IngredientModel;
+import com.wci.tt.jpa.infomodels.MedicationModel;
 import com.wci.tt.jpa.infomodels.MedicationOutputModel;
 import com.wci.tt.jpa.services.helper.DataContextMatcher;
 import com.wci.tt.services.handlers.ProviderHandler;
@@ -37,6 +44,14 @@ import com.wci.umls.server.services.ContentService;
 public class MldpMedicationProvider extends AbstractAcceptsHandler
     implements ProviderHandler {
 
+  final String enclosingPunctuationPatternStr = "[\\[\\{\\(](.+)[\\]\\}\\)]";
+
+  final String stopwordPattern =
+      ".&\\b(a|an|and|are|as|at|be|but|by|for|if|in|into|is|it|no|not|of|on|or|such|that|the|their|then|there|these|they|this|to|was|will|with)\\b.*";
+
+  final Pattern enclosingPunctuationPattern =
+      Pattern.compile(enclosingPunctuationPatternStr);
+
   /**
    * Instantiates an empty {@link MldpMedicationProvider}.
    *
@@ -53,6 +68,7 @@ public class MldpMedicationProvider extends AbstractAcceptsHandler
     outputMatcher.configureContext(DataContextType.INFO_MODEL, null, null, null,
         MedicationOutputModel.class.getName(), null, null);
     addMatcher(inputMatcher, outputMatcher);
+
   }
 
   /* see superclass */
@@ -78,10 +94,20 @@ public class MldpMedicationProvider extends AbstractAcceptsHandler
     final ContentService service = new ContentServiceJpa();
 
     try {
+      if (record.getNormalizedResults().size() == 0) {
+        final ScoredDataContext context = new ScoredDataContextJpa();
+        context.setSpecialty("Garbage");
+        results.add(context);
+      }
 
-      // Bail if we find any reason to believe this is NOT a procedure.
       for (final ScoredResult result : record.getNormalizedResults()) {
         final String value = result.getValue().toLowerCase();
+        final ScoredDataContext outputContext = new ScoredDataContextJpa();
+
+        // TODO Decide length constraint
+        if (value.split("\\w+").length > 15) {
+          outputContext.setSpecialty("Long");
+        }
 
         // RULES about words
         // TODO Add non-med rules here
@@ -90,18 +116,27 @@ public class MldpMedicationProvider extends AbstractAcceptsHandler
         // return results;
         // }
 
-        // RULE about procedure words
-        if (!hasMedicationWords(service, value)) {
-          return results;
+        // RULE about immunization words
+        if (hasImmunizationWords(service, value)) {
+          outputContext.setSpecialty("Immunization");
         }
 
-        if (value.length() > 150) {
-          Logger.getLogger(getClass())
-              .debug("  matched MULTIPLE (length) procedure");
+        // RULE about medication words
+        else if (hasMedicationWords(service, value)) {
+          outputContext.setSpecialty("Medication");
         }
+
+        // OTHERWISE consider garbage
+        else {
+          outputContext.setSpecialty("Garbage");
+        }
+
+        results.add(outputContext);
+
       }
 
       results.add(new ScoredDataContextJpa(inputContext));
+
       return results;
 
     } catch (Exception e) {
@@ -122,8 +157,9 @@ public class MldpMedicationProvider extends AbstractAcceptsHandler
   /* see superclass */
   @Override
   public List<ScoredResult> process(TransformRecord record) throws Exception {
-    Logger.getLogger(getClass())
-        .debug("  process - " + record.getInputString());
+    // System.out.println(" process - " + record.getInputString());
+
+    Long startTime = System.currentTimeMillis();
 
     final String inputString = record.getInputString();
     final DataContext inputContext = record.getInputContext();
@@ -136,124 +172,305 @@ public class MldpMedicationProvider extends AbstractAcceptsHandler
     // Set up return value
     final List<ScoredResult> results = new ArrayList<ScoredResult>();
 
-    // do something with the string "A/B C.D E F-G"
-
-    // TODO Determine type
+    // identify
+    List<ScoredDataContext> idContext = identify(record);
 
     // TODO Put the MedicationOutputModel (extends infomodel) into the value of
     // ScoredResult
-    MedicationOutputModel model = new MedicationOutputModel();
-    model.setInputString(inputString);
-    model.setNormalizedString(record.getNormalizedResults().get(0).getValue());
-
-    // Construct all subsequences
-    List<String> subsequences = new ArrayList<>();
-
-    String[] splitTerms = inputString.split(" ");
-    System.out.println("split terms: ");
-
-    for (int i = 0; i < splitTerms.length; i++) {
-      System.out.println("  " + splitTerms[i]);
-    }
-
-    for (int i = 0; i < splitTerms.length; i++) {
-      for (int j = i; j < splitTerms.length; j++) {
-        String subsequence = "";
-        for (int k = i; k <= j; k++) {
-          subsequence += splitTerms[k] + " ";
-        }
-        // skip duplicates
-        if (!subsequences.contains(subsequence.trim())) {
-          subsequences.add(subsequence.trim());
-        }
-      }
-    }
-
-    // sort by decreasing length
-    subsequences.sort(new Comparator<String>() {
-      @Override
-      public int compare(String u1, String u2) {
-        return u2.length() - u1.length();
-      }
-    });
-
-    System.out.println("subsequences");
-    for (String s : subsequences) {
-      System.out.println("  " + s);
-    }
-
-    // Ordered removal
-    String[] orderedFeatures = {
-        "BrandName", "Ingredient", "Strength", "DoseForm", "DoseFormQualifier",
-        "Route"
-    };
+    MedicationOutputModel outputModel = new MedicationOutputModel();
+    MedicationModel medModel = new MedicationModel();
+    outputModel.setInputString(inputString);
 
     final ContentService service = new ContentServiceJpa();
-    String remainingString = inputString;
-    // cycle over subsequences
-    for (final String subsequence : subsequences) {
 
-      System.out.println("*** CHECKING SUBSEQUENCE: " + subsequence);
-      boolean matched = false;
+    try {
+      outputModel
+          .setNormalizedString(record.getNormalizedResults().get(0).getValue());
+      outputModel.setType(idContext.get(0).getSpecialty());
 
-      // if subsequence no longer appears, skip
-      if (!remainingString.contains(subsequence)) {
-        System.out.println("subsequence no longer in string: " + subsequence
-            + " | " + remainingString);
-        continue;
+      // if not medication, do not process
+      if (!outputModel.getType().equals("Medication")) {
+        outputModel.setRemainingString(inputString);
       }
 
-      // cycle over ordered featuers
-      for (final String feature : orderedFeatures) {
-        if (matched) {
-          break;
-        }
+      // otherwise continue
+      else {
 
-        final ConceptList matches =
-            service.findConcepts(inputContext.getTerminology(),
-                inputContext.getVersion(), Branch.ROOT,
-                "semanticTypes.semanticType:" + feature
-                    + " AND atoms.nameNorm:\""
-                    + ConfigUtility.normalize(subsequence) + "\"",
-                null);
-        for (final Concept match : matches.getObjects()) {
-          System.out
-              .println("Potential match found on concept " + match.getName());
-          for (final Atom atom : match.getAtoms()) {
-            System.out.println("  Checking: " + atom.getName());
-            if (atom.getName().toLowerCase()
-                .equals(subsequence.toLowerCase())) {
-              System.out
-                  .println("    Match found for subsequence " + subsequence);
-              model.getRemovedTerms().add(subsequence);
-              remainingString = remainingString.replaceAll(subsequence, "");
-              matched = true;
-              System.out.println("  NEW REMAINING: " + remainingString);
+        // Construct all subsequences
+        List<String> subsequences = new ArrayList<>();
+
+        String[] splitTerms = inputString.split(" ");
+        // System.out.println("split terms: ");
+
+        // for (int i = 0; i < splitTerms.length; i++) {
+        // System.out.println(" " + splitTerms[i]);
+        // }
+
+        for (int i = 0; i < splitTerms.length; i++) {
+          for (int j = i; j < Math.min(i + 7, splitTerms.length); j++) {
+            String subsequence = "";
+            for (int k = i; k <= j; k++) {
+              subsequence += splitTerms[k] + " ";
+            }
+            // skip duplicates
+            if (!subsequences.contains(subsequence.trim())) {
+              subsequences.add(subsequence.trim());
+            }
+
+            // if enclosed in punctuation, add enclosed term (wil be checked
+            // after
+            // full term)
+            Matcher matcher = enclosingPunctuationPattern.matcher(subsequence);
+            if (matcher.find()) {
+              subsequences.add(matcher.group(1).trim());
             }
           }
         }
+
+        // sort by decreasing length
+        subsequences.sort(new Comparator<String>() {
+          @Override
+          public int compare(String u1, String u2) {
+            return u2.length() - u1.length();
+          }
+        });
+
+        // System.out.println("subsequences");
+        // for (String s : subsequences) {
+        // System.out.println(" " + s);
+        // }
+
+        // Ordered removal
+        String[] orderedFeatures = {
+            "BrandName", "Ingredient", "Strength", "DoseForm",
+            "DoseFormQualifier", "Route", "ReleasePeriod"
+        };
+
+        final Set<Atom> ingredients = new HashSet<>();
+        final Set<Atom> strengths = new HashSet<>();
+
+        String remainingString = inputString;
+        // cycle over subsequences
+        for (final String subsequence : subsequences) {
+
+          boolean matched = false;
+
+          // check if empty string or subsequence no longer exists
+          if (normalizeString(remainingString).isEmpty()) {
+            break;
+          }
+          if (!remainingString.contains(subsequence)) {
+            continue;
+          }
+
+          final ConceptList matches = service.findConcepts(
+              inputContext.getTerminology(), inputContext.getVersion(),
+              Branch.ROOT,
+              "atoms.nameNorm:\"" + ConfigUtility.normalize(subsequence) + "\"",
+              null);
+
+          // if matches found
+          if (matches.getTotalCount() > 0) {
+
+            // cycle over ordered featuers
+            for (final String feature : orderedFeatures) {
+              if (matched) {
+                break;
+              }
+
+              // cycle over potential matches
+              for (final Concept match : matches.getObjects()) {
+                if (matched) {
+                  break;
+                }
+
+                // if match is in current semantic type
+                if (match.getSemanticTypes().get(0).getSemanticType()
+                    .equals(feature)) {
+
+                  // cycle over atoms to find match
+                  for (final Atom atom : match.getAtoms()) {
+                    if (matched) {
+
+                      break;
+                    }
+
+                    // NOTE: case insensitive comparison
+                    if (atom.getName().toLowerCase()
+                        .equals(subsequence.toLowerCase())) {
+
+                      // process removed and remaining terms
+                      outputModel.getRemovedTerms().add(subsequence);
+                      remainingString = remainingString
+                          .replaceAll("\\b" + subsequence + "\\b", "");
+                      matched = true;
+
+                      // add to the medication model based on feature
+                      switch (feature) {
+                        case "BrandName":
+                          medModel.setBrandName(new ValueRawModel(
+                              atom.getTerminologyId(), atom.getName()));
+                          break;
+                        case "Ingredient":
+                          ingredients.add(atom);
+                          break;
+                        case "Strength":
+                          strengths.add(atom);
+                          break;
+
+                        case "DoseForm":
+                          medModel.setDoseForm(new ValueRawModel(
+                              atom.getTerminologyId(), atom.getName()));
+                          break;
+                        case "DoseFormQualifier":
+                          medModel.setDoseFormQualifier(new ValueRawModel(
+                              atom.getTerminologyId(), atom.getName()));
+                          break;
+                        case "Route":
+                          medModel.setRoute(new ValueRawModel(
+                              atom.getTerminologyId(), atom.getName()));
+                          break;
+                        case "ReleasePeriod":
+                          medModel.setReleasePeriod(new ValueRawModel(
+                              atom.getTerminologyId(), atom.getName()));
+                          break;
+                        default:
+                          // do nothing
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+
+        }
+
+        if (ingredients.size() > 0) {
+
+          // match ingredients and strengths
+          final HashMap<Integer, Atom> ingrPos = new HashMap<>();
+          final HashMap<Integer, Atom> strPos = new HashMap<>();
+
+          for (final Atom atom : ingredients) {
+            int pos =
+                inputString.toLowerCase().indexOf(atom.getName().toLowerCase());
+            while (pos >= 0) {
+
+              ingrPos.put(pos, atom);
+              pos = inputString.indexOf(atom.getName(), pos + 1);
+            }
+          }
+
+          for (final Atom atom : strengths) {
+            int pos =
+                inputString.toLowerCase().indexOf(atom.getName().toLowerCase());
+            while (pos >= 0) {
+
+              strPos.put(pos, atom);
+              pos = inputString.toLowerCase()
+                  .indexOf(atom.getName().toLowerCase(), pos + 1);
+
+            }
+          }
+
+          final List<Integer> orderedIngrPos =
+              new ArrayList<>(ingrPos.keySet());
+          Collections.sort(orderedIngrPos);
+          final List<Integer> orderedStrPos = new ArrayList<>(strPos.keySet());
+          Collections.sort(orderedStrPos);
+
+          for (int i = 0; i < orderedIngrPos.size(); i++) {
+            final IngredientModel ingrModel = new IngredientModel();
+
+            final ValueRawModel ingr = new ValueRawModel();
+            ingr.setRaw(ingrPos.get(orderedIngrPos.get(i)).getTerminologyId());
+            ingr.setValue(ingrPos.get(orderedIngrPos.get(i)).getName());
+            final ValueRawModel str = new ValueRawModel();
+            if (orderedStrPos.size() > i) {
+              str.setRaw(strPos.get(orderedStrPos.get(i)).getTerminologyId());
+              str.setValue(strPos.get(orderedStrPos.get(i)).getName());
+            } else {
+              str.setValue("NO STRENGTH FOUND");
+            }
+            ingrModel.setIngredient(ingr);
+            ingrModel.setStrength(str);
+            medModel.getIngredients().add(ingrModel);
+          }
+
+          for (int pos = 0; pos < ingrPos.keySet().size(); pos++) {
+
+          }
+
+        }
+
+        outputModel.setRemainingString(remainingString.trim());
+        outputModel
+            .setNormalizedRemainingString(normalizeString(remainingString));
+
+        if (!outputModel.getNormalizedRemainingString().isEmpty()) {
+          System.out.println("inputString: " + inputString);
+          System.out
+              .println("  remaining: " + outputModel.getRemainingString());
+
+        }
       }
+    } catch (
+
+    Exception e) {
+      outputModel.setType("Process Error");
+    } finally {
+
+      service.close();
+    }
+
+    // if (!outputModel.getRemainingString().isEmpty()) {
+    // System.out
+    // .println(" final remaining - " + outputModel.getRemainingString());
+    // }
+
+    // System.out.println(medModel.getModelValue());
+
+    // set the constructed medication model
+    outputModel.setModel(medModel);
+
+    ScoredResult result = new ScoredResultJpa();
+    result.setValue(outputModel.getModelValue());
+
+    // NOTE: See MldpServiceJpa.processTerms for score values
+    switch (outputModel.getType()) {
+      case "Medication":
+
+        if (outputModel.getNormalizedRemainingString().isEmpty()) {
+          // represents PUBLISHED -- complete coverage
+          result.setScore(1.0f);
+        } else {
+          // represents NEEDS_REVIEW -- incomplete coverage
+          result.setScore(0.0f);
+        }
+
+        break;
+      case "Process Error":
+        // NOTE: Value arbitrary
+        result.setScore(0.25f);
+        break;
+      default:
+        // represents REVIEW_DONE -- excluded terms
+        result.setScore(0.5f);
 
     }
 
-    // stop words
-    final List<String> tokens = Arrays.asList(remainingString.split("\\s"));
-    for (String token : remainingString.split("\\s")) {
-      if (StopAnalyzer.ENGLISH_STOP_WORDS_SET.contains(token)) {
-        tokens.remove(token);
-      }
-    }
-    String remaining = "";
-    for (String token : tokens) {
-      remaining += token + " ";
-    }
-
-    model.setRemainingString(remaining.trim());
-
-    ScoredResult result = new ScoredResultJpa(model.getModelValue(), 1.0f);
     results.add(result);
 
+    // System.out.println((System.currentTimeMillis() - startTime) + " ms");
+
     return results;
+  }
+
+  private String normalizeString(String string) {
+
+    return string.replaceAll(stopwordPattern, "")
+        .replaceAll(ConfigUtility.PUNCTUATION_REGEX, "").trim();
   }
 
   /* see superclass */
@@ -320,6 +537,18 @@ public class MldpMedicationProvider extends AbstractAcceptsHandler
       }
 
     }
+    return false;
+  }
+
+  private final String immunizationPattern = "(tdap|vaccine|measles|influenza)";
+
+  private boolean hasImmunizationWords(ContentService service, String value)
+    throws Exception {
+
+    if (value.toLowerCase().matches(".*\\b" + immunizationPattern + "\\b.*")) {
+      return true;
+    }
+
     return false;
   }
 

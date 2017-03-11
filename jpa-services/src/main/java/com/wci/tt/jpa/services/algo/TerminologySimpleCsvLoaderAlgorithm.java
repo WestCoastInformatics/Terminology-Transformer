@@ -435,13 +435,13 @@ public class TerminologySimpleCsvLoaderAlgorithm
       }
       if (!termTypes.contains(record.get(4).toUpperCase())) {
         validationResult.addError(
-            "Line " + record.getRecordNumber() + ": Term type invalid");
+            "Line " + record.getRecordNumber() + ": Term type invalid: " + record.get(4));
         skip = true;
       }
 
       if (!skip) {
 
-        if (!record.get(0).equals(lastConceptId)) {
+        if (!record.get(0).trim().equals(lastConceptId)) {
 
           if (concept != null) {
 
@@ -458,7 +458,7 @@ public class TerminologySimpleCsvLoaderAlgorithm
           // create and add next concept
           concept = new ConceptJpa();
           setCommonFields(concept);
-          concept.setTerminologyId(keepFileIds ? record.get(0)
+          concept.setTerminologyId(keepFileIds ? record.get(0).trim()
               : idHandler.getTerminologyId(concept));
           concept.setWorkflowStatus(workflowStatus == null
               ? WorkflowStatus.PUBLISHED : workflowStatus);
@@ -466,15 +466,15 @@ public class TerminologySimpleCsvLoaderAlgorithm
           concept = addConcept(concept);
 
           // last concept id
-          lastConceptId = record.get(0);
+          lastConceptId = record.get(0).trim();
         }
 
-        final Atom atom = new AtomJpa();
+        Atom atom = new AtomJpa();
         setCommonFields(atom);
         atom.setWorkflowStatus(WorkflowStatus.PUBLISHED);
-        atom.setName(record.get(3));
+        atom.setName(record.get(3).trim());
         atom.setTerminologyId(idHandler.getTerminologyId(atom));
-        atom.setTermType(record.get(4).toUpperCase());
+        atom.setTermType(record.get(4).trim().toUpperCase());
         atom.setLanguage("en");
         atom.setCodeId("");
         atom.setConceptId(concept.getTerminologyId());
@@ -483,21 +483,22 @@ public class TerminologySimpleCsvLoaderAlgorithm
         atom.setLexicalClassId("");
 
         // put source data in lastModifiedBy
-        atom.setLastModifiedBy(record.get(1));
+        atom.setLastModifiedBy(record.get(1).trim());
 
         // Add atom
-        addAtom(atom);
+        atom = addAtom(atom);
         concept.getAtoms().add(atom);
+        updateConcept(concept);
         atomsCt++;
 
         // add semantic type if does not exist
-        if (!existingStys.contains(record.get(2))) {
+        if (!existingStys.contains(record.get(2).trim())) {
           final SemanticType sty = new SemanticTypeJpa();
-          sty.setAbbreviation(record.get(2));
+          sty.setAbbreviation(record.get(2).trim());
           sty.setBranch(branch);
           sty.setDefinition("");
           sty.setExample("");
-          sty.setExpandedForm(record.get(2));
+          sty.setExpandedForm(record.get(2).trim());
           sty.setNonHuman(false);
           sty.setTerminology(getTerminology());
           sty.setVersion(getVersion());

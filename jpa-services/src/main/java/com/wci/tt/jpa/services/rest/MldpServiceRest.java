@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 
+import com.wci.tt.helpers.ScoredDataContextTupleList;
 import com.wci.umls.server.ValidationResult;
 import com.wci.umls.server.helpers.TypeKeyValue;
 import com.wci.umls.server.helpers.TypeKeyValueList;
@@ -300,5 +301,27 @@ public interface MldpServiceRest {
    */
   public void removeTerm(Long id, Long projectId, String authToken)
     throws Exception;
+
+  
+  /**
+   * Process term.
+   *
+   * @param projectId the project id
+   * @param term the term
+   * @param authToken the auth token
+   * @return the scored data context tuple list
+   * @throws Exception the exception
+   */
+  public ScoredDataContextTupleList processTerm(Long projectId, TypeKeyValueJpa term,
+    String authToken) throws Exception;
+
+  /**
+   * Process all terms.
+   *
+   * @param projectId the project id
+   * @param authToken the auth token
+   * @throws Exception the exception
+   */
+  public void processAllTerms(Long projectId, String authToken) throws Exception;
 
 }

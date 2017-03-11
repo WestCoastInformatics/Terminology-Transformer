@@ -5,7 +5,9 @@ package com.wci.tt.rest.impl;
 
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -23,11 +25,14 @@ import org.apache.log4j.Logger;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 
+import com.wci.tt.helpers.ScoredDataContextTupleList;
+import com.wci.tt.jpa.services.MldpServiceJpa;
 import com.wci.tt.jpa.services.algo.TerminologySimpleCsvLoaderAlgorithm;
 import com.wci.tt.jpa.services.handlers.DefaultAbbreviationHandler;
 import com.wci.tt.jpa.services.handlers.TermHandler;
 import com.wci.tt.jpa.services.rest.MldpServiceRest;
 import com.wci.tt.jpa.services.rest.TransformServiceRest;
+import com.wci.tt.services.MldpService;
 import com.wci.tt.services.handlers.AbbreviationHandler;
 import com.wci.umls.server.Project;
 import com.wci.umls.server.UserRole;
@@ -688,8 +693,8 @@ public class MldpServiceRestImpl extends RootServiceRestImpl
     @ApiParam(value = "PFS Parameter, e.g. '{ \"startIndex\":\"1\", \"maxResults\":\"5\" }'", required = false) PfsParameterJpa pfs,
     @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
     throws Exception {
-    Logger.getLogger(getClass()).info("RESTful call (MLDPr): /term/find, "
-        + query + ", " + ", " + pfs);
+    Logger.getLogger(getClass())
+        .info("RESTful call (MLDPr): /term/find, " + query + ", " + ", " + pfs);
     final ProjectService projectService = new ProjectServiceJpa();
 
     try {
@@ -739,9 +744,19 @@ public class MldpServiceRestImpl extends RootServiceRestImpl
       final String username = authorizeProject(projectService, projectId,
           securityService, authToken, "import terms", UserRole.USER);
       Project project = projectService.getProject(projectId);
+
+      final ContentService contentService = new ContentServiceJpa();
+      final Set<Long> conceptIds = new HashSet<>(
+          contentService.getAllConceptIds(project.getTerminology(),
+              project.getVersion(), project.getBranch()));
+
+      System.out.println(conceptIds.size());
+      System.out.println(conceptIds);
+
       projectService.setLastModifiedBy(username);
       handler.setService(projectService);
       return handler.importAbbreviationFile(project.getTerminology(), in);
+
     } catch (
 
     Exception e) {
@@ -754,7 +769,7 @@ public class MldpServiceRestImpl extends RootServiceRestImpl
       securityService.close();
     }
   }
-  
+
   @Override
   @Path("/term/{id}")
   @GET
@@ -903,4 +918,68 @@ public class MldpServiceRestImpl extends RootServiceRestImpl
     }
 
   }
+
+  @Override
+  @Path("term/process")
+  @POST
+  @ApiOperation(value = "Process a term", notes = "Process a term and apply workflow status")
+  public ScoredDataContextTupleList processTerm(
+    @ApiParam(value = "The project id, e.g. 1", required = true) @QueryParam("projectId") Long projectId,
+    @ApiParam(value = "The term object", required = true) TypeKeyValueJpa term,
+    @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
+    throws Exception {
+    Logger.getLogger(getClass()).info(
+        "RESTful call (MLDP, GET): /term/process" + projectId + " " + term);
+    final ProjectService projectService = new ProjectServiceJpa();
+    final MldpService mldpService = new MldpServiceJpa();
+    try {
+      authorizeProject(projectService, projectId, securityService, authToken,
+          "process term", UserRole.USER);
+      // Get input/output contexts from JPA
+     return mldpService.processTerm(term);
+
+    } catch (Exception e) {
+      handleException(e, "trying to process term");
+      return null;
+    } finally {
+      // NOTE: No need to close, but included for future safety
+      mldpService.close();
+      projectService.close();
+      securityService.close();
+    }
+  }
+
+  @Override
+  @Path("term/process/all")
+  @POST
+  @ApiOperation(value = "Process all terms", notes = "Process all terms for a project")
+  public void processAllTerms(
+    @ApiParam(value = "The project id, e.g. 1", required = true) @QueryParam("projectId") Long projectId,
+    @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
+    throws Exception {
+    Logger.getLogger(getClass()).info(
+        "RESTful call (MLDP, GET): /term/process/all" + projectId);
+    final ProjectService projectService = new ProjectServiceJpa();
+    final MldpService mldpService = new MldpServiceJpa();
+    try {
+      final String userName = authorizeProject(projectService, projectId, securityService, authToken,
+          "process terms", UserRole.USER);
+     final  Project project = projectService.getProject(projectId);
+      // Get input/output contexts from JPA
+      final TypeKeyValueList terms =
+          mldpService.findTypeKeyValuesForQuery("type:" + project.getTerminology() + "-TERM", null);
+
+      mldpService.setLastModifiedBy(userName);
+      mldpService.processTerms(terms.getObjects());
+
+    } catch (Exception e) {
+      handleException(e, "trying to process terms");
+    } finally {
+      // NOTE: No need to close, but included for future safety
+      mldpService.close();
+      projectService.close();
+      securityService.close();
+    }
+  }
+
 }

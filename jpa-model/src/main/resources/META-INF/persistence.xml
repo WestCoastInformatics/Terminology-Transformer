@@ -100,6 +100,10 @@
     <!-- Action objects -->
     <class>com.wci.umls.server.jpa.actions.AtomicActionJpa</class>
     <class>com.wci.umls.server.jpa.actions.MolecularActionJpa</class>
-
+    
+    <!-- REport objects -->
+    <class>com.wci.umls.server.jpa.report.ReportJpa</class>
+    <class>com.wci.umls.server.jpa.report.ReportResultJpa</class>
+    <class>com.wci.umls.server.jpa.report.ReportResultItemJpa</class>
   </persistence-unit>
 </persistence>

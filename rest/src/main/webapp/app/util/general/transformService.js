@@ -11,7 +11,7 @@ tsApp.service('transformService', [
     /**
      * Returns input/output data contexts as two-item DataContextList
      */
-    this.getDataContextList = function(terminology) {
+    this.getDataContextList = function(terminology, outputType) {
 
       return {
         dataContexts : [
@@ -23,7 +23,7 @@ tsApp.service('transformService', [
 
         // output model
         {
-          type : 'INFO_MODEL',
+          type : outputType,
           terminology : terminology
         } ],
         totalCount : 2

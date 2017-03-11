@@ -254,4 +254,5 @@ public class ValueRawModel implements InfoModel<ValueRawModel> {
     // TODO Auto-generated method stub
     
   }
+
 }

@@ -9,6 +9,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 import com.wci.tt.infomodels.InfoModel;
+import com.wci.tt.jpa.helpers.ValueRawModel;
 import com.wci.umls.server.helpers.ConfigUtility;
 
 /**
@@ -20,15 +21,15 @@ import com.wci.umls.server.helpers.ConfigUtility;
  *       unit: "<Strength unit>" }
  * </pre>
  */
-@XmlRootElement
+@XmlRootElement(name="ingredient")
 public class IngredientModel
     implements InfoModel<IngredientModel>, Comparable<IngredientModel> {
 
   /** The ingredient name. */
-  private String ingredient;
+  private ValueRawModel ingredient;
 
   /** The value. */
-  private String strength;
+  private ValueRawModel strength;
 
   /**
    * Instantiates an empty {@link IngredientModel}.
@@ -43,7 +44,7 @@ public class IngredientModel
    * @param ingredientName the ingredient name
    * @param strength the strength
    */
-  public IngredientModel(String ingredientName, String strength) {
+  public IngredientModel(ValueRawModel ingredientName, ValueRawModel strength) {
     this.ingredient = ingredientName;
     this.strength = strength;
   }
@@ -63,7 +64,7 @@ public class IngredientModel
    *
    * @return the ingredient
    */
-  public String getIngredient() {
+  public ValueRawModel getIngredient() {
     return ingredient;
   }
 
@@ -72,7 +73,7 @@ public class IngredientModel
    *
    * @param ingredient the ingredient
    */
-  public void setIngredient(String ingredient) {
+  public void setIngredient(ValueRawModel ingredient) {
     this.ingredient = ingredient;
   }
 
@@ -81,7 +82,7 @@ public class IngredientModel
    *
    * @return the strength
    */
-  public String getStrength() {
+  public ValueRawModel getStrength() {
     return strength;
   }
 
@@ -90,7 +91,7 @@ public class IngredientModel
    *
    * @param strength the strength
    */
-  public void setStrength(String strength) {
+  public void setStrength(ValueRawModel strength) {
     this.strength = strength;
   }
 
@@ -100,6 +101,7 @@ public class IngredientModel
   }
 
   @Override
+  @XmlTransient
   public String getName() {
     return "MLDP Ingredient Model";
   }
@@ -111,10 +113,10 @@ public class IngredientModel
 
   @Override
   public int compareTo(IngredientModel o) {
-    if (o.getIngredient().compareTo(ingredient) != 0) {
-      return o.getIngredient().compareTo(ingredient);
+    if (o.getIngredient().getValue().compareTo(ingredient.getValue()) != 0) {
+      return o.getIngredient().getValue().compareTo(ingredient.getValue());
     }
-    return o.getStrength().compareTo(strength);
+    return o.getStrength().getValue().compareTo(strength.getValue());
   }
 
   @Override
@@ -134,6 +136,7 @@ public class IngredientModel
   }
 
   @Override
+  @XmlTransient
   public String getModelValue() throws Exception {
     return ConfigUtility.getJsonForGraph(this);
   }
@@ -145,6 +148,7 @@ public class IngredientModel
   }
 
   @Override
+  @XmlTransient
   public String getVersion() {
    return "1.0";
   }

@@ -4,14 +4,15 @@
 package com.wci.tt.rest.impl;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -40,8 +41,10 @@ import com.wci.umls.server.UserRole;
 import com.wci.umls.server.helpers.KeyValuePair;
 import com.wci.umls.server.helpers.KeyValuePairList;
 import com.wci.umls.server.helpers.StringList;
+import com.wci.umls.server.jpa.services.ContentServiceJpa;
 import com.wci.umls.server.jpa.services.SecurityServiceJpa;
 import com.wci.umls.server.rest.impl.RootServiceRestImpl;
+import com.wci.umls.server.services.ContentService;
 import com.wci.umls.server.services.SecurityService;
 import com.wci.umls.server.services.handlers.SourceDataHandler;
 
@@ -141,7 +144,8 @@ public class TransformServiceRestImpl extends RootServiceRestImpl
     try {
       authorizeApp(securityService, authToken, "transform input string",
           UserRole.ADMINISTRATOR);
-
+      
+   
       // Get input/output contexts from JPA
       final DataContext inputContext = inputOutputContexts.getObjects().get(0);
       final DataContext outputContext = inputOutputContexts.getObjects().get(1);

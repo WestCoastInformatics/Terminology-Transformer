@@ -170,4 +170,55 @@ tsApp.service('termService', [
       return deferred.promise;
     }
     
+   
+    this.processTerm = function(projectId, term) {
+      console.debug('process', term)
+      var deferred = $q.defer();
+
+      gpService.increment();
+
+      // if flag set, update type key value directly without additional checks
+      // abbreviation endpoint performs post-processing, which re-applies
+      // NEEDS_REVIEW on finishReview updates
+      $http.post(termUrl + '/term/process?projectId=' + projectId, term).then(
+      // success
+      function(response) {
+        gpService.decrement();
+        console.debug(response);
+        angular.forEach(response.data.scoredDataContextTuples, function(tuple) {
+          tuple.data = JSON.parse(tuple.data);
+        });
+        deferred.resolve(response.data);
+      },
+      // error
+      function(response) {
+        utilService.handleError(response);
+        gpService.decrement();
+        deferred.reject(response.data);
+      });
+      return deferred.promise;
+    }
+    
+    this.processAllTerms = function(projectId) {
+      console.debug('process all terms', projectId)
+      var deferred = $q.defer();
+
+      gpService.increment();
+      
+      $http.post(termUrl + '/term/process/all?projectId=' + projectId).then(
+      // success
+      function(response) {
+        gpService.decrement();
+        console.debug(response);
+        deferred.resolve(response.data);
+      },
+      // error
+      function(response) {
+        utilService.handleError(response);
+        gpService.decrement();
+        deferred.reject(response.data);
+      });
+      return deferred.promise;
+    }
+    
   } ]);

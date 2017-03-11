@@ -82,6 +82,8 @@ public class ResetMldpDatabase {
   @SuppressWarnings("static-method")
   @Test
   public void test() throws Exception {
+    
+    Logger.getLogger(getClass()).info("Resetting MLDP Database");
 
     // check for existence of non-empty input directory
     inputDir = System.getProperty("input.dir");
