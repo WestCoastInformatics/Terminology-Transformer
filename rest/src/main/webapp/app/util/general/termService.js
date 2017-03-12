@@ -199,13 +199,13 @@ tsApp.service('termService', [
       return deferred.promise;
     }
     
-    this.processAllTerms = function(projectId) {
+    this.processAllTerms = function(projectId, status) {
       console.debug('process all terms', projectId)
       var deferred = $q.defer();
 
       gpService.increment();
       
-      $http.post(termUrl + '/term/process/all?projectId=' + projectId).then(
+      $http.post(termUrl + '/term/process/batch?projectId=' + projectId + (status ? '&status=' + status : '')).then(
       // success
       function(response) {
         gpService.decrement();

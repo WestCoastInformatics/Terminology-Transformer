@@ -315,13 +315,8 @@ public interface MldpServiceRest {
   public ScoredDataContextTupleList processTerm(Long projectId, TypeKeyValueJpa term,
     String authToken) throws Exception;
 
-  /**
-   * Process all terms.
-   *
-   * @param projectId the project id
-   * @param authToken the auth token
-   * @throws Exception the exception
-   */
-  public void processAllTerms(Long projectId, String authToken) throws Exception;
+  public void processTermBatch(Long projectId, WorkflowStatus status, String authToken)
+    throws Exception;
+
 
 }

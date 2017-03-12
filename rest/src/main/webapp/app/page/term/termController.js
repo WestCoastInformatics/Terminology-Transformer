@@ -48,7 +48,19 @@ tsApp
           terminologies : [],
           concepts : [],
 
-          workflowStatus : [ 'Covered', 'Needs Review', 'Excluded' ],
+          workflowStatus : [ {
+            key : 'PUBLISHED',
+            value : 'Fully covered'
+          }, {
+            key : 'NEW',
+            value : 'New'
+          }, {
+            key : 'NEEDS_REVIEW',
+            value : 'Incomplete coverage'
+          }, {
+            key : 'DEMOTION',
+            value : 'Excluded'
+          } ],
 
           pageSizes : [ {
             key : 5,
@@ -68,8 +80,9 @@ tsApp
           }, {
             key : 200,
             value : '200'
-          } ]
-
+          } ],
+          suffixes : [ 'hydrochloride', 'diacetate', 'dihydrochloride', 'hydrobromide', 'bromide', 'trihydrate']
+       
         };
 
         $scope.paging = {};
@@ -94,7 +107,8 @@ tsApp
             pt : null,
             sys : [],
             feature : null
-          }
+          },
+          suffix : null
         }
 
         // pass utility functions to scope
@@ -119,42 +133,60 @@ tsApp
             console.debug('term', $scope.lists.terms);
           });
 
-          // status calls
-          var pfsCovered = prepTermPfs('term');
-          pfsCovered.maxResults = 0;
-          pfsCovered.startIndex = 0;
-          pfsCovered.queryRestriction = 'workflowStatus:PUBLISHED';
-          termService.findTerms($scope.paging['term'].filter, $scope.selected.project.id,
-            $scope.paging['term'].filterType, pfsCovered).then(function(response) {
-            $scope.paging['term'].hasCovered = response.totalCount > 0;
-          });
+          if ($scope.paging['term'].workflowStatus) {
+              $scope.paging['term'].hasNew = $scope.paging['term'].workflowStatus == 'NEW';
+              $scope.paging['term'].hasCovered = $scope.paging['term'].workflowStatus ==  'PUBLISHED';
+              $scope.paging['term'].hasNeedsReview = $scope.paging['term'].workflowStatus == 'NEEDS_REVIEW';
+              $scope.paging['term'].hasExcluded = $scope.paging['term'].workflowStatus == 'DEMOTION';
+          } else {
 
-          // status calls
-          var pfsNeedsReview = prepTermPfs('term');
-          pfsNeedsReview.maxResults = 0;
-          pfsNeedsReview.startIndex = 0;
-          pfsNeedsReview.queryRestriction = 'workflowStatus:NEEDS_REVIEW';
-          termService.findTerms($scope.paging['term'].filter, $scope.selected.project.id,
-            $scope.paging['term'].filterType, pfsNeedsReview).then(function(response) {
-            $scope.paging['term'].hasNeedsReview = response.totalCount > 0;
-          });
+            // status calls
+            var pfsCovered = prepTermPfs('term');
+            pfsCovered.maxResults = 0;
+            pfsCovered.startIndex = 0;
+            pfsCovered.queryRestriction = 'workflowStatus:PUBLISHED';
+            termService.findTerms($scope.paging['term'].filter, $scope.selected.project.id,
+              $scope.paging['term'].filterType, pfsCovered).then(function(response) {
+              $scope.paging['term'].hasCovered = response.totalCount > 0;
+            });
 
-          // status calls
-          var pfsExcluded = prepTermPfs('term');
-          pfsExcluded.maxResults = 0;
-          pfsExcluded.startIndex = 0;
-          pfsExcluded.queryRestriction = 'workflowStatus:REVIEW_DONE';
-          termService.findTerms($scope.paging['term'].filter, $scope.selected.project.id,
-            $scope.paging['term'].filterType, pfsExcluded).then(function(response) {
-            $scope.paging['term'].hasExcluded = response.totalCount > 0;
-          });
+            // status calls
+            var pfsNew = prepTermPfs('term');
+            pfsNew.maxResults = 0;
+            pfsNew.startIndex = 0;
+            pfsNew.queryRestriction = 'workflowStatus:NEW';
+            termService.findTerms($scope.paging['term'].filter, $scope.selected.project.id,
+              $scope.paging['term'].filterType, pfsNew).then(function(response) {
+              $scope.paging['term'].hasNew = response.totalCount > 0;
+            });
+
+            // status calls
+            var pfsNeedsReview = prepTermPfs('term');
+            pfsNeedsReview.maxResults = 0;
+            pfsNeedsReview.startIndex = 0;
+            pfsNeedsReview.queryRestriction = 'workflowStatus:NEEDS_REVIEW';
+            termService.findTerms($scope.paging['term'].filter, $scope.selected.project.id,
+              $scope.paging['term'].filterType, pfsNeedsReview).then(function(response) {
+              $scope.paging['term'].hasNeedsReview = response.totalCount > 0;
+            });
+
+            // status calls
+            var pfsExcluded = prepTermPfs('term');
+            pfsExcluded.maxResults = 0;
+            pfsExcluded.startIndex = 0;
+            pfsExcluded.queryRestriction = 'workflowStatus:REVIEW_DONE';
+            termService.findTerms($scope.paging['term'].filter, $scope.selected.project.id,
+              $scope.paging['term'].filterType, pfsExcluded).then(function(response) {
+              $scope.paging['term'].hasExcluded = response.totalCount > 0;
+            });
+          }
 
         }
 
         function prepTermPfs(type) {
           var paging = $scope.paging[type];
           var pfs = {
-            startIndex : (paging.page - 1) * paging.pageSize,
+            startIndex : paging.page <= 0 ? 0 : (paging.page - 1) * paging.pageSize,
             maxResults : paging.pageSize,
             sortField : paging.sortField,
             ascending : paging.sortAscending,
@@ -189,9 +221,11 @@ tsApp
             function(response) {
               $scope.lists.concepts = response;
               $scope.lists.concepts.totalCount = response.totalCount;
+              if ($scope.paging['concept'].filter && $scope.lists.concepts.concepts.length > 0) {
+                $scope.editConcept($scope.lists.concepts.concepts[0]);
+              }
               console.debug('concepts', $scope.lists.concepts);
             });
-
         }
 
         function prepConceptPfs(type) {
@@ -201,17 +235,16 @@ tsApp
             maxResults : paging.pageSize,
             sortField : paging.sortField,
             ascending : paging.sortAscending,
-            queryRestriction : null
+            queryRestriction : paging.feature ? 'semanticTypes.semanticType:' + paging.feature : ''
           };
-
           return pfs;
         }
 
         $scope.setTermViewed = function(term) {
           console.debug('set term viewed', term);
           $scope.selected.editTab = 'Edit';
-          $scope.selected.termViewed = term;
-          $scope.processTerm(term);
+          $scope.selected.term = term;
+          $scope.processTerm();
         }
 
         $scope.createTerm = function() {
@@ -276,8 +309,20 @@ tsApp
         }
 
         $scope.callbacks = {
-          getComponent : findConcepts
+          getComponent : processChange
         };
+
+        function processChange() {
+          if ($scope.selected.component) {
+            setConceptEdited($scope.selected.component);
+          } else {
+            setConceptEdited(null);
+          }
+          findTerms();
+          if ($scope.selected.term) {
+            processTerm();
+          }
+        }
 
         // add simple editing callbacks if enabled
         if (editService.canEdit()) {
@@ -356,7 +401,7 @@ tsApp
 
         $scope.updateConcept = function(concept) {
           editService.updateConcept($scope.selected.project.id, concept).then(function() {
-            processConceptChange();
+            processChange();
           })
         }
 
@@ -368,7 +413,7 @@ tsApp
             if ($scope.selected.component && $scope.selected.component.id == concept.id) {
               $scope.selected.component = null;
             }
-            processConceptChange();
+            processChange();
           });
         }
 
@@ -380,17 +425,22 @@ tsApp
           $scope.paging['term'].workflowStatus = $scope.paging['term'].workflowStatus == 'PUBLISHED' ? null
             : 'PUBLISHED';
           $scope.findTerms();
-        }
+        };
 
+        $scope.toggleNewMode = function() {
+          $scope.paging['term'].workflowStatus = $scope.paging['term'].workflowStatus == 'NEW' ? null
+            : 'NEW';
+          $scope.findTerms();
+        };
         $scope.toggleReviewMode = function() {
           $scope.paging['term'].workflowStatus = $scope.paging['term'].workflowStatus == 'NEEDS_REVIEW' ? null
             : 'NEEDS_REVIEW';
           $scope.findTerms();
-        }
+        };
 
         $scope.toggleExcludedMode = function() {
-          $scope.paging['term'].workflowStatus = $scope.paging['term'].workflowStatus == 'REVIEW_DONE' ? null
-            : 'REVIEW_DONE';
+          $scope.paging['term'].workflowStatus = $scope.paging['term'].workflowStatus == 'REVIEW_IN_PROGRESS' ? null
+            : 'REVIEW_IN_PROGRESS';
           $scope.findTerms();
         }
 
@@ -415,6 +465,61 @@ tsApp
         $scope.getSortIndicator = function(table, field) {
           return utilService.getSortIndicator('' + table, field, $scope.paging);
         };
+
+        //
+        // Shortcuts
+        //
+        $scope.splitString = function(string) {
+          if (!string) {
+            return;
+          }
+          console.debug('split string', string.split(/\s+/));
+          var split = string.split(/\s+/);
+          for (var i = 0; i < split.length; i++) {
+            if (split == '/') {
+              split.splice(i--, 1);
+            }
+          }
+          return split;
+        };
+        $scope.isSuffix = function(string) {
+          if (!string) {
+            return;
+          }
+          return $scope.lists.suffixes.indexOf(string.toLowerCase()) != -1;
+        };
+
+        $scope.addSuffixFromPt = function(suffix) {
+          if (!suffix) {
+            return;
+          }
+          console.debug('suffix', suffix);
+          var ptTerm = null;
+          angular.forEach($scope.selected.component.atoms, function(atom) {
+            if (atom.termType == 'PT') {
+              ptTerm = atom.name;
+            }
+          });
+          if (ptTerm) {
+            var atom = {
+              workflowStatus : 'NEEDS_REVIEW',
+              publishable : true,
+              language : $scope.selected.metadata.languages[0].key,
+              termType : 'SY',
+              name : ptTerm + ' ' + suffix.toLowerCase()
+            };
+            editService.addAtom($scope.selected.project.id, $scope.selected.component.id, atom)
+              .then(function() {
+                processChange();
+                $scope.local.suffix = null;
+                if ($scope.list.suffixes.indexOf(suffix) == -1) {
+                  $scope.list.suffixes.push(suffix);
+                }
+              });
+          } else {
+            utilService.setError('Concept has no PT; failed to add suffix synonym');
+          }
+        }
 
         // 
         // Initialization
@@ -507,7 +612,6 @@ tsApp
             }
             console.debug('PROJECT', $scope.selected.project);
           }
-  
 
           if (!$scope.selected.project) {
             utilService
@@ -521,6 +625,7 @@ tsApp
 
           // perform actions
           $scope.findTerms();
+          $scope.findConcepts();
         };
 
         //
@@ -535,19 +640,37 @@ tsApp
             })
         };
 
-        
         //
         // Term Processing
         //
-        $scope.processTerm = function(term) {
-          console.debug('process all terms', $scope.selected);
 
-          termService.processTerm($scope.selected.project.id, term).then(
+        $scope.changeWorkflowStatus = function(status) {
+          console.debug('change workflow status', $scope.selected.term, status);
+          if (!status) {
+            return;
+          }
+          $scope.selected.term.workflowStatus = status;
+          termService.updateTerm($scope.selected.term, $scope.selected.project.id, true).then(
+            function() {
+              $scope.selected.term = null;
+              processChange();
+            });
+        }
+
+        function processTerm() {
+          $scope.processTerm();
+        }
+        $scope.processTerm = function() {
+          console.debug('process term', $scope.selected);
+
+          termService.processTerm($scope.selected.project.id, $scope.selected.term).then(
             function(response) {
               console.debug('process response', response);
               if (!response || !Array.isArray(response.scoredDataContextTuples)
                 || response.scoredDataContextTuples.length == 1) {
-                $scope.selected.term = response.scoredDataContextTuples[0];
+                $scope.selected.termResult = response.scoredDataContextTuples[0];
+                findTerms();
+                findConcepts();
               } else {
                 utilService.setError('Process response invalid');
               }

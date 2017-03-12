@@ -29,24 +29,36 @@
           ng-change="setTerminology(selected.metadata.terminology)"
           ng-options="terminology as terminology.terminology for terminology in getViewableTerminologies() | orderBy:'terminology'">
         </select> <span class="pull-right"> <span class="color-box"
-          style="background-color: green;" ng-show="paging['term'].hasCovered"
-          ng-click="toggleCoveredMode()" title="Fully covered terms"></span>&nbsp;<span
-          class="color-box" style="background-color: red;"
-          ng-show="paging['term'].hasNeedsReview" ng-click="toggleReviewMode()"
-          title="Some terms need review"> </span> <span class="color-box"
-          style="background-color: light-grey;" ng-show="paging['term'].hasExcluded"
-          ng-click="toggleExcludedMode()" title="Excluded terms"> </span>
-          Status:<select
-          ng-options="status.key as status.label for status in lists.workflowStatus"
-          ng-model="paging['concept'].workflowStatus" ng-change="findConcepts()"></select>
+          style="background-color: blue;" ng-show="paging['term'].hasCovered"
+          ng-click="toggleCoveredMode()" title="Fully covered"></span>&nbsp;<span
+          class="color-box" style="background-color: green;"
+          ng-show="paging['term'].hasNew" ng-click="toggleNewMode()"
+          title="New term"></span>&nbsp;<span class="color-box"
+          style="background-color: red;" ng-show="paging['term'].hasNeedsReview"
+          ng-click="toggleReviewMode()" title="Some terms need review"> </span>&nbsp;
+          <span class="color-box" style="background-color: light-grey;"
+          ng-show="paging['term'].hasExcluded" ng-click="toggleExcludedMode()"
+          title="Excluded terms"> </span>&nbsp;  Status:<select
+          ng-options="status.key as status.value for status in lists.workflowStatus"
+          ng-model="paging['term'].workflowStatus" ng-change="findTerms()"></select>
+
         </span>
+
         <div class="row">
 
-          <div class="col-md-8" pager paging="paging['term']"
+          <div class="col-md-5" pager paging="paging['term']"
             count="lists.terms.totalCount" callbacks="paging['term'].callbacks"
             style="margin-top: 10px;"></div>
-          <div class="col-md-4">
-            <span ng-show="lists.termsViewed.totalCount > 10"
+          <div class="col-md-3 pull-right"
+            ng-show="lists.terms.totalCount > 10" style="margin-top: 10px;">
+            <span class="pull-right"> Page <input style="width: 50px;"
+              ng-model="paging['term'].page"
+              ng-model-options="{debounce : 700}"
+              ng-change="paging['term'].callbacks.getPagedList()">
+            </span>
+          </div>
+          <div class="col-md-3">
+            <span ng-show="lists.terms.totalCount > 10"
               style="float: right; margin-top: 10px;"> Page size: <select
               ng-model="paging['term'].pageSize" title="Page Size"
               ng-change="paging['term'].callbacks.getPagedList()"
@@ -57,7 +69,7 @@
         </div>
 
         <div class="alert alert-warning"
-          ng-show="lists.termsViewed.totalCount == 0">No results</div>
+          ng-show="lists.terms.totalCount == 0">No results</div>
 
 
         <table class="slim table table-hover" style="margin-top: 10px;"
@@ -83,21 +95,26 @@
             <tr ng-class="{selected: term.id == selected.termViewed.id}"
               class="breakword" ng-repeat="term in lists.terms.typeKeyValues">
               <td class="col-md-7" ng-click="setTermViewed(term)">{{term.key}}</td>
-              <td class="col-md-1"><span class="color-box"
-                style="background-color: red; margin-top: 5px;"
+              <td class="col-md-1" style="padding-left:15px;"><span class="color-box"
+                style="background-color: red; margin-top: 5px; "
                 ng-show="term.workflowStatus == 'NEEDS_REVIEW'"
                 ng-click="toggleReviewMode()" title="Incomplete coverage"></span>
                 <span class="color-box"
-                style="background-color: green; margin-top: 5px;"
+                style="background-color: blue; margin-top: 5px;"
                 ng-show="term.workflowStatus == 'PUBLISHED'"
                 ng-click="toggleCoveredMode()" title="Fully covered"></span> <span
                 class="color-box"
+                style="background-color: green; margin-top: 5px;"
+                ng-show="term.workflowStatus == 'NEW'"
+                ng-click="toggleNewMode()" title="New from import"></span> <span
+                class="color-box"
                 style="background-color: light-grey; margin-top: 5px;"
                 ng-show="term.workflowStatus == 'REVIEW_DONE'"
-                ng-click="toggleExcludedMode()" title="Excluded"></span></td>
+                ng-click="toggleExcludedMode()" title="Excluded"></span> <span
+                class="label label-danger"
+                ng-show="term.workflowStatus == 'DEMOTION'"> Error</span></td>
 
-              <span style="" ng-show="term.workflowStatus == 'DEMOTION'">Process
-                Error</span>
+
               <td class="col-md-3" ng-click="setTermViewed(term)">{{toShortDate(term.lastModified)}}</td>
               <td class="col-md-1"><i
                 class="noul glyphicon glyphicon-trash" title="Remove term"
@@ -124,75 +141,101 @@
           <div>
 
             <h5>Review Raw Term</h5>
-            <table class="table slim">
+            <span ng-show="!selected.termResult" class="alert alert-warning">Select
+              a term</span>
+            <table class="table slim" ng-show="selected.termResult">
+
               <tr>
                 <td>Type</td>
-                <td>{{selected.term.data.type}}</td>
+                <td>{{selected.termResult.data.type}}</td>
               </tr>
               <tr>
                 <td>Raw</td>
-                <td>{{selected.term.data.inputString}}</td>
+                <td>{{selected.termResult.data.inputString}}</td>
+              </tr>
+              <tr>
+                <td>Removed</td>
+                <td><span style="margin-right: 5px; margin-top: 5px;"
+                  ng-repeat="removedTerm in selected.termResult.data.removedTerms">{{removedTerm}}</span>
+              <tr ng-show="selected.termResult.data.remainingString">
+                <td>Unmatched</td>
+                <td><span ng-if="selected.termResult.data.remainingString"
+                  ng-repeat="word in splitString(selected.termResult.data.remainingString)">{{word}}<span
+                    ng-show="selected.component && isSuffix(word)"
+                    ng-click="addSuffixFromPt(word)"
+                    class="btn btn-primary btn-xs">Add to PT</span>&nbsp;
+                </span></td>
               </tr>
 
               <tr>
-                <td>Removed</td>
-                <td><span
-                  ng-repeat="removedTerm in selected.term.data.removedTerms">{{removedTerm}}<br></span>
-              <tr ng-show="selected.term.data.remainingString">
-                <td>Unmatched</td>
-                <td>{{selected.term.data.remainingString}}</td>
-              </tr>
-              <tr
-                ng-show="!selected.term.data.remainingString || selected.term.data.remainingString.length == 0">
                 <td></td>
-                <td><div class="alert alert-success">Term Fully
-                    Matched</div></td>
+                <td><div class="alert alert-success"
+                    ng-show="!selected.termResult.data.normalizedRemainingString || selected.termResult.data.normalizedRemainingString == ''">
+                    Term Fully Matched</div>
+
+                  <button
+                    ng-show="!elected.termResult.data.normalizedRemainingString && selected.termResult.data.normalizedRemainingString != ''"
+                    ng-click="changeWorkflowStatus('REVIEW_DONE')"
+                    class="btn  btn-xs btn-danger">Exclude</button>
+
+                  <button
+                    ng-show="!elected.termResult.data.normalizedRemainingString && selected.termResult.data.normalizedRemainingString != ''"
+                    ng-click="changeWorkflowStatus('PUBLISHED')"
+                    class="btn  btn-xs btn-primary">Approve</button></td>
+                </td>
               </tr>
               <tr>
                 <td>Model</td>
-                <td class="preformatted">{{selected.term.data.model}}</td>
+                <td class="preformatted">{{selected.termResult.data.model}}</td>
             </table>
-          </div>
 
-          <!-- Concept search  -->
-          <div>
+            <hr style="margin: 5px;">
+
+            <!-- Concept search  -->
+            <div>
+              <h5>Search/Edit Concepts</h5>
 
 
-            <input ng-model="paging['concept'].filter"
-              ng-change="paging['concept'].callbacks.getPagedList()">
+              <div class="row" style="margin-bottom: 10px;">
+                <div class="col-md-5" pager paging="paging['concept']"
+                  count="lists.concepts.totalCount"
+                  callbacks="paging['concept'].callbacks"
+                  style="margin-top: 10px;"></div>
+                <div class="col-md-4" style="margin-top: 10px;">
+                  Feature: <select ng-model="paging['concept'].feature"
+                    ng-options="feature.expandedForm as feature.expandedForm for feature in lists.features.types"
+                    ng-change="paging['concept'].callbacks.getPagedList()"><option
+                      value=""></select>
 
-            <div class="row" style="margin-bottom: 10px;">
-              <div class="col-md-8" pager paging="paging['concept']"
-                count="lists.concepts.totalCount"
-                callbacks="paging['concept'].callbacks"
-                style="margin-top: 10px;"></div>
-              <div class="col-md-4 pull-right"
-                ng-show="lists.concepts.totalCount > 10"
-                style="margin-top: 10px;">
-                <span class="pull-right"> Page size: <select
-                  ng-model="paging['concept'].pageSize" title="Page Size"
-                  ng-change="paging['concept'].callbacks.getPagedList()"
-                  ng-options="pageSize.key as pageSize.value for pageSize in lists.pageSizes">
-                </select></span>
-              </div>
-            </div>
-            <div class="col-md-6">
-              {{lists.concepts.totalCount}} results
-              <div ng-repeat="concept in lists.concepts.concepts"
-              ng-class="{selected: concept.id == selected.component.id}"
-                ng-click="editConcept(concept)"
-                style="margin-bottom: 10px; border-top: thin solid #dddddd">
-
-                <div class="row">
-                  <div class="col-md-2">Feature</div>
-                  <div class="col-md-8">{{concept.semanticTypes[0].semanticType}}</div>
                 </div>
-                <div class="row"
-                  ng-repeat="atom in concept.atoms | orderBy:'termType' | orderBy:'name'">
-                  <div class="col-md-2">
-                    {{atom.termType}} </span>
+                <div class="col-md-3 pull-right"
+                  ng-show="lists.concepts.totalCount > 10"
+                  style="margin-top: 10px;">
+                  <span class="pull-right"> Page size: <select
+                    ng-model="paging['concept'].pageSize" title="Page Size"
+                    ng-change="paging['concept'].callbacks.getPagedList()"
+                    ng-options="pageSize.key as pageSize.value for pageSize in lists.pageSizes">
+                  </select></span>
+                </div>
+              </div>
+              <div class="col-md-6">
+                {{lists.concepts.totalCount}} results
+
+
+                <div ng-repeat="concept in lists.concepts.concepts"
+                  ng-class="{selected: concept.id == selected.component.id}"
+                  ng-click="editConcept(concept)"
+                  style="margin-bottom: 10px; border-top: thin solid #dddddd">
+
+                  <div class="row">
+                    <div class="col-md-2">Feature</div>
+                    <div class="col-md-8">{{concept.semanticTypes[0].semanticType}}</div>
                   </div>
-                  <div class="col-md-8">{{atom.name}}</div>
+                  <div class="row"
+                    ng-repeat="atom in concept.atoms | orderBy:'termType' | orderBy:'name'">
+                    <div class="col-md-2">{{atom.termType}}</div>
+                    <div class="col-md-8">{{atom.name}}</div>
+                  </div>
                 </div>
 
 
@@ -212,12 +255,16 @@
               <span ng-click="createConcept()" class="btn btn-xs btn-primary">Create
                 New</span> or select from table
             </div>
-            <h5>
+            <h5 ng-show="selected.component">
               <span ng-show="!selected.component.id">Add</span><span
                 ng-show="selected.component.id">Edit</span> Concept
             </h5>
+            <div class="small" ng-show="selected.component">
+              Last modified: {{toShortDate(selected.component.lastModified)}}<br>
 
-            <div report selected="selected" lists="lists" callbacks="callbacks"></div>
+              <div report selected="selected" lists="lists"
+                callbacks="callbacks"></div>
+            </div>
           </div>
         </div>
 
@@ -296,7 +343,11 @@
           <div style="margin-top: 25px;">
             <h4>QA</h4>
             <span class="btn btn-xs btn-primary" style="margin-right: 10px;"
-              ng-click="processAllTerms()">Process Terms</span>
+              ng-click="processAllTerms(status)">Process Terms</span> <select
+              ng-options="status.key as status.value for status in lists.workflowStatus"
+              ng-model="status">
+              <option value=""></option>
+            </select>
           </div>
         </div>
       </div>

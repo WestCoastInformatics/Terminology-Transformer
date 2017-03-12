@@ -42,6 +42,7 @@ import com.wci.umls.server.helpers.TypeKeyValue;
 import com.wci.umls.server.helpers.TypeKeyValueList;
 import com.wci.umls.server.jpa.helpers.PfsParameterJpa;
 import com.wci.umls.server.jpa.helpers.TypeKeyValueJpa;
+import com.wci.umls.server.jpa.helpers.TypeKeyValueListJpa;
 import com.wci.umls.server.jpa.services.ContentServiceJpa;
 import com.wci.umls.server.jpa.services.ProjectServiceJpa;
 import com.wci.umls.server.jpa.services.SecurityServiceJpa;
@@ -933,10 +934,11 @@ public class MldpServiceRestImpl extends RootServiceRestImpl
     final ProjectService projectService = new ProjectServiceJpa();
     final MldpService mldpService = new MldpServiceJpa();
     try {
-      authorizeProject(projectService, projectId, securityService, authToken,
-          "process term", UserRole.USER);
+      final String userName = authorizeProject(projectService, projectId,
+          securityService, authToken, "process term", UserRole.USER);
+      mldpService.setLastModifiedBy(userName);
       // Get input/output contexts from JPA
-     return mldpService.processTerm(term);
+      return mldpService.processTerm(term);
 
     } catch (Exception e) {
       handleException(e, "trying to process term");
@@ -950,27 +952,42 @@ public class MldpServiceRestImpl extends RootServiceRestImpl
   }
 
   @Override
-  @Path("term/process/all")
+  @Path("term/process/batch")
   @POST
-  @ApiOperation(value = "Process all terms", notes = "Process all terms for a project")
-  public void processAllTerms(
+  @ApiOperation(value = "Process batch of terms", notes = "Process batch of terms for a project")
+  public void processTermBatch(
     @ApiParam(value = "The project id, e.g. 1", required = true) @QueryParam("projectId") Long projectId,
+    @ApiParam(value = "Workflow status restriction", required = false) @QueryParam("status") WorkflowStatus status,
     @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
     throws Exception {
-    Logger.getLogger(getClass()).info(
-        "RESTful call (MLDP, GET): /term/process/all" + projectId);
+    Logger.getLogger(getClass())
+        .info("RESTful call (MLDP, GET): /term/process/all" + projectId);
     final ProjectService projectService = new ProjectServiceJpa();
     final MldpService mldpService = new MldpServiceJpa();
     try {
-      final String userName = authorizeProject(projectService, projectId, securityService, authToken,
-          "process terms", UserRole.USER);
-     final  Project project = projectService.getProject(projectId);
+      final String userName = authorizeProject(projectService, projectId,
+          securityService, authToken, "process terms", UserRole.USER);
+      final Project project = projectService.getProject(projectId);
+
       // Get input/output contexts from JPA
-      final TypeKeyValueList terms =
-          mldpService.findTypeKeyValuesForQuery("type:" + project.getTerminology() + "-TERM", null);
+      final TypeKeyValueList allTerms = mldpService.findTypeKeyValuesForQuery(
+          "type:" + project.getTerminology() + "-TERM", null);
+
+      TypeKeyValueList termsToProcess = new TypeKeyValueListJpa();
+      
+      // if status specified, filter
+      if (status != null) {
+        for (final TypeKeyValue term : termsToProcess.getObjects()) {
+          if (term.getWorkflowStatus().equals(status)) {
+            termsToProcess.getObjects().add(term);
+          }
+        }
+      } else {
+        termsToProcess = allTerms;
+      }
 
       mldpService.setLastModifiedBy(userName);
-      mldpService.processTerms(terms.getObjects());
+      mldpService.processTerms(termsToProcess.getObjects());
 
     } catch (Exception e) {
       handleException(e, "trying to process terms");

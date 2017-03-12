@@ -33,9 +33,12 @@ import com.wci.tt.services.handlers.ProviderHandler;
 import com.wci.umls.server.helpers.Branch;
 import com.wci.umls.server.helpers.ConfigUtility;
 import com.wci.umls.server.helpers.content.ConceptList;
+import com.wci.umls.server.jpa.content.AtomJpa;
+import com.wci.umls.server.jpa.content.ConceptJpa;
 import com.wci.umls.server.jpa.services.ContentServiceJpa;
 import com.wci.umls.server.model.content.Atom;
 import com.wci.umls.server.model.content.Concept;
+import com.wci.umls.server.model.workflow.WorkflowStatus;
 import com.wci.umls.server.services.ContentService;
 
 /**
@@ -51,6 +54,9 @@ public class MldpMedicationProvider extends AbstractAcceptsHandler
 
   final Pattern enclosingPunctuationPattern =
       Pattern.compile(enclosingPunctuationPatternStr);
+
+ 
+  final HashMap<String, Concept> atomToConceptMap = new HashMap<>();
 
   /**
    * Instantiates an empty {@link MldpMedicationProvider}.
@@ -68,7 +74,26 @@ public class MldpMedicationProvider extends AbstractAcceptsHandler
     outputMatcher.configureContext(DataContextType.INFO_MODEL, null, null, null,
         MedicationOutputModel.class.getName(), null, null);
     addMatcher(inputMatcher, outputMatcher);
+    
+  
 
+
+  }
+  
+  public void cacheObjects(String terminology, String version) throws Exception {
+    atomToConceptMap.clear();
+    
+    final ContentService service = new ContentServiceJpa();
+    final ConceptList concepts = service.findConcepts("HKFT-MED", "latest", Branch.ROOT, null, null);
+
+    Logger.getLogger(getClass()).info("Caching atoms for " + concepts.getTotalCount() + " concepts");
+ 
+    for (final Concept concept : concepts.getObjects()) {
+      for (final Atom atom : concept.getAtoms()) {
+        atomToConceptMap.put(atom.getName().toLowerCase(), new ConceptJpa(concept, false));
+      }
+    }
+    Logger.getLogger(getClass()).info("  done");
   }
 
   /* see superclass */
@@ -105,7 +130,7 @@ public class MldpMedicationProvider extends AbstractAcceptsHandler
         final ScoredDataContext outputContext = new ScoredDataContextJpa();
 
         // TODO Decide length constraint
-        if (value.split("\\w+").length > 15) {
+        if (value.split("\\w+").length > 25) {
           outputContext.setSpecialty("Long");
         }
 
@@ -120,7 +145,8 @@ public class MldpMedicationProvider extends AbstractAcceptsHandler
         if (hasImmunizationWords(service, value)) {
           outputContext.setSpecialty("Immunization");
         }
-
+        
+      
         // RULE about medication words
         else if (hasMedicationWords(service, value)) {
           outputContext.setSpecialty("Medication");
@@ -147,6 +173,47 @@ public class MldpMedicationProvider extends AbstractAcceptsHandler
 
   }
 
+  private List<String> getSubsequences(String inputString) {
+    final List<String> subsequences = new ArrayList<>();
+    String[] splitTerms = inputString.split(" ");
+    // System.out.println("split terms: ");
+
+    // for (int i = 0; i < splitTerms.length; i++) {
+    // System.out.println(" " + splitTerms[i]);
+    // }
+
+    for (int i = 0; i < splitTerms.length; i++) {
+      for (int j = i; j < Math.min(i + 7, splitTerms.length); j++) {
+        String subsequence = "";
+        for (int k = i; k <= j; k++) {
+          subsequence += splitTerms[k] + " ";
+        }
+        // skip duplicates
+        if (!subsequences.contains(subsequence.trim())) {
+          subsequences.add(subsequence.trim());
+        }
+
+        // if enclosed in punctuation, add enclosed term (wil be checked
+        // after
+        // full term)
+        Matcher matcher = enclosingPunctuationPattern.matcher(subsequence);
+        if (matcher.find()) {
+          subsequences.add(matcher.group(1).trim());
+        }
+      }
+    }
+
+    // sort by decreasing length
+    subsequences.sort(new Comparator<String>() {
+      @Override
+      public int compare(String u1, String u2) {
+        return u2.length() - u1.length();
+      }
+    });
+
+    return subsequences;
+  }
+
   /**
    * Process.
    *
@@ -160,6 +227,9 @@ public class MldpMedicationProvider extends AbstractAcceptsHandler
     // System.out.println(" process - " + record.getInputString());
 
     Long startTime = System.currentTimeMillis();
+    
+    // TODO Pass as input the type key value itself instead of the string
+    // Update based on type
 
     final String inputString = record.getInputString();
     final DataContext inputContext = record.getInputContext();
@@ -197,48 +267,7 @@ public class MldpMedicationProvider extends AbstractAcceptsHandler
       else {
 
         // Construct all subsequences
-        List<String> subsequences = new ArrayList<>();
-
-        String[] splitTerms = inputString.split(" ");
-        // System.out.println("split terms: ");
-
-        // for (int i = 0; i < splitTerms.length; i++) {
-        // System.out.println(" " + splitTerms[i]);
-        // }
-
-        for (int i = 0; i < splitTerms.length; i++) {
-          for (int j = i; j < Math.min(i + 7, splitTerms.length); j++) {
-            String subsequence = "";
-            for (int k = i; k <= j; k++) {
-              subsequence += splitTerms[k] + " ";
-            }
-            // skip duplicates
-            if (!subsequences.contains(subsequence.trim())) {
-              subsequences.add(subsequence.trim());
-            }
-
-            // if enclosed in punctuation, add enclosed term (wil be checked
-            // after
-            // full term)
-            Matcher matcher = enclosingPunctuationPattern.matcher(subsequence);
-            if (matcher.find()) {
-              subsequences.add(matcher.group(1).trim());
-            }
-          }
-        }
-
-        // sort by decreasing length
-        subsequences.sort(new Comparator<String>() {
-          @Override
-          public int compare(String u1, String u2) {
-            return u2.length() - u1.length();
-          }
-        });
-
-        // System.out.println("subsequences");
-        // for (String s : subsequences) {
-        // System.out.println(" " + s);
-        // }
+        List<String> subsequences = getSubsequences(inputString);
 
         // Ordered removal
         String[] orderedFeatures = {
@@ -374,31 +403,42 @@ public class MldpMedicationProvider extends AbstractAcceptsHandler
             }
           }
 
-          final List<Integer> orderedIngrPos =
-              new ArrayList<>(ingrPos.keySet());
-          Collections.sort(orderedIngrPos);
-          final List<Integer> orderedStrPos = new ArrayList<>(strPos.keySet());
-          Collections.sort(orderedStrPos);
-
-          for (int i = 0; i < orderedIngrPos.size(); i++) {
-            final IngredientModel ingrModel = new IngredientModel();
-
-            final ValueRawModel ingr = new ValueRawModel();
-            ingr.setRaw(ingrPos.get(orderedIngrPos.get(i)).getTerminologyId());
-            ingr.setValue(ingrPos.get(orderedIngrPos.get(i)).getName());
-            final ValueRawModel str = new ValueRawModel();
-            if (orderedStrPos.size() > i) {
-              str.setRaw(strPos.get(orderedStrPos.get(i)).getTerminologyId());
-              str.setValue(strPos.get(orderedStrPos.get(i)).getName());
-            } else {
-              str.setValue("NO STRENGTH FOUND");
-            }
-            ingrModel.setIngredient(ingr);
-            ingrModel.setStrength(str);
-            medModel.getIngredients().add(ingrModel);
+          // TODO Remove this once decision made about e.g. 1 ML ingredient
+          // 5MG/ML
+          if (ingredients.size() != strengths.size()) {
+            outputModel.setType("Ingr/Str Mismatch");
           }
 
-          for (int pos = 0; pos < ingrPos.keySet().size(); pos++) {
+          if (ingredients.size() > 5
+              && inputString.matches("oral|tablet|capsule")) {
+            outputModel.setType("Multivitamin");
+          } else {
+
+            final List<Integer> orderedIngrPos =
+                new ArrayList<>(ingrPos.keySet());
+            Collections.sort(orderedIngrPos);
+            final List<Integer> orderedStrPos =
+                new ArrayList<>(strPos.keySet());
+            Collections.sort(orderedStrPos);
+
+            for (int i = 0; i < orderedIngrPos.size(); i++) {
+              final IngredientModel ingrModel = new IngredientModel();
+
+              final ValueRawModel ingr = new ValueRawModel();
+              ingr.setRaw(
+                  ingrPos.get(orderedIngrPos.get(i)).getTerminologyId());
+              ingr.setValue(ingrPos.get(orderedIngrPos.get(i)).getName());
+              final ValueRawModel str = new ValueRawModel();
+              if (orderedStrPos.size() > i) {
+                str.setRaw(strPos.get(orderedStrPos.get(i)).getTerminologyId());
+                str.setValue(strPos.get(orderedStrPos.get(i)).getName());
+              } else {
+                str.setValue("NO STRENGTH FOUND");
+              }
+              ingrModel.setIngredient(ingr);
+              ingrModel.setStrength(str);
+              medModel.getIngredients().add(ingrModel);
+            }
 
           }
 
@@ -409,9 +449,9 @@ public class MldpMedicationProvider extends AbstractAcceptsHandler
             .setNormalizedRemainingString(normalizeString(remainingString));
 
         if (!outputModel.getNormalizedRemainingString().isEmpty()) {
-          System.out.println("inputString: " + inputString);
-          System.out
-              .println("  remaining: " + outputModel.getRemainingString());
+          // System.out.println("inputString: " + inputString);
+          // System.out
+          // .println(" remaining: " + outputModel.getRemainingString());
 
         }
       }
@@ -435,7 +475,9 @@ public class MldpMedicationProvider extends AbstractAcceptsHandler
     outputModel.setModel(medModel);
 
     ScoredResult result = new ScoredResultJpa();
-    result.setValue(outputModel.getModelValue());
+    // NOTE: Removed for speed, construction of value happens in MldpServiceJpa
+   // result.setValue(outputModel.getModelValue());
+    result.setModel(outputModel);
 
     // NOTE: See MldpServiceJpa.processTerms for score values
     switch (outputModel.getType()) {
@@ -462,7 +504,8 @@ public class MldpMedicationProvider extends AbstractAcceptsHandler
 
     results.add(result);
 
-    // System.out.println((System.currentTimeMillis() - startTime) + " ms");
+    System.out.println(
+        "Time for term: " + (System.currentTimeMillis() - startTime) + " ms");
 
     return results;
   }
@@ -556,4 +599,5 @@ public class MldpMedicationProvider extends AbstractAcceptsHandler
   public void checkProperties(Properties arg0) throws Exception {
     // n/a
   }
+
 }

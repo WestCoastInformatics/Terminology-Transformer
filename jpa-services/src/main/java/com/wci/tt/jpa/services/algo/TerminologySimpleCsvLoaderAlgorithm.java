@@ -519,7 +519,7 @@ public class TerminologySimpleCsvLoaderAlgorithm
         // Add semantic type
         boolean styPresent = false;
         for (SemanticTypeComponent conceptSty : concept.getSemanticTypes()) {
-          if (conceptSty.getSemanticType().equals(record.get(1))) {
+          if (conceptSty.getSemanticType().equals(record.get(2))) {
             styPresent = true;
           }
         }

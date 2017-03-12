@@ -307,6 +307,7 @@ public class TermHandler extends AbstractConfigurable
         else {
           final TypeKeyValue typeKeyValue = new TypeKeyValueJpa(
               getAbbrType(terminology), fields[0], null);
+          typeKeyValue.setWorkflowStatus(WorkflowStatus.NEW);
           service.addTypeKeyValue(typeKeyValue);
           addedCt++;
         }

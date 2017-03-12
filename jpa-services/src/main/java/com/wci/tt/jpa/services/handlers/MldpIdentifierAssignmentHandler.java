@@ -54,19 +54,20 @@ public class MldpIdentifierAssignmentHandler extends AbstractConfigurable
   /* see superclass */
   @Override
   public String getTerminologyId(Concept concept) throws Exception {
-    // Unpublishable concepts don't get assigned ids
-    if (!concept.isPublishable()) {
+
+    if (concept.getTerminologyId() != null
+        && !concept.getTerminologyId().isEmpty()) {
       return concept.getTerminologyId();
     }
-
     long conceptId = 1000L;
     // If this is the first time this is called, lookup max ID from the database
     if (maxConceptId == -1) {
       final ContentServiceJpa service = new ContentServiceJpa();
       try {
-        final javax.persistence.Query query = service.getEntityManager()
-            .createQuery("select max(cast(terminologyId as long)) from ConceptJpa");
-       
+        final javax.persistence.Query query =
+            service.getEntityManager().createQuery(
+                "select max(cast(terminologyId as long)) from ConceptJpa");
+
         Long result = (Long) query.getSingleResult();
         if (result != null) {
           conceptId = result;
@@ -112,8 +113,7 @@ public class MldpIdentifierAssignmentHandler extends AbstractConfigurable
   /* see superclass */
   @Override
   public String getTerminologyId(Atom atom) throws Exception {
-    // Unpublishable atoms don't get assigned ids
-    if (!atom.isPublishable()) {
+    if (atom.getTerminologyId() != null && !atom.getTerminologyId().isEmpty()) {
       return atom.getTerminologyId();
     }
 
@@ -122,9 +122,10 @@ public class MldpIdentifierAssignmentHandler extends AbstractConfigurable
     if (maxAtomId == -1) {
       final ContentServiceJpa service = new ContentServiceJpa();
       try {
-        final javax.persistence.Query query = service.getEntityManager()
-            .createQuery("select max(cast(terminologyId as long)) from AtomJpa");
-      
+        final javax.persistence.Query query =
+            service.getEntityManager().createQuery(
+                "select max(cast(terminologyId as long)) from AtomJpa");
+
         Long result = (Long) query.getSingleResult();
         if (result != null) {
           atomId = result;

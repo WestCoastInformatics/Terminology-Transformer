@@ -10,7 +10,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
+import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Field;
@@ -22,6 +24,7 @@ import org.hibernate.search.bridge.builtin.FloatBridge;
 import org.hibernate.search.bridge.builtin.LongBridge;
 
 import com.wci.tt.helpers.ScoredResult;
+import com.wci.tt.infomodels.InfoModel;
 
 /**
  * JPA enabled scored implementation of {@link ScoredResult}.
@@ -46,6 +49,10 @@ public class ScoredResultJpa implements ScoredResult {
   /** The value. */
   @Column(nullable = false)
   private String value;
+  
+  /** The object. */
+  @Transient
+  private InfoModel<?> model;
 
   /** The obsolete. */
   @Column(nullable = false)
@@ -132,6 +139,17 @@ public class ScoredResultJpa implements ScoredResult {
   @Override
   public void setObsolete(boolean obsolete) {
     this.obsolete = obsolete;
+  }
+  
+  
+  @XmlTransient
+  @Override
+  public InfoModel<?> getModel() {
+    return model;
+  }
+  @Override
+  public void setModel(InfoModel<?> model) {
+    this.model = model;
   }
 
   /* see superclass */

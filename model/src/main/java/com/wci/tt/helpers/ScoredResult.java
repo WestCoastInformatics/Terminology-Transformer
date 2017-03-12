@@ -1,8 +1,9 @@
 /*
- *    Copyright 2016 West Coast Informatics, LLC
+ *    Copyright 2015 West Coast Informatics, LLC
  */
 package com.wci.tt.helpers;
 
+import com.wci.tt.infomodels.InfoModel;
 import com.wci.umls.server.helpers.HasId;
 
 /**
@@ -39,5 +40,19 @@ public interface ScoredResult
    * @param obsolete the obsolete
    */
   public void setObsolete(boolean obsolete);
+
+  /**
+   * Returns the model.
+   *
+   * @return the model
+   */
+  public InfoModel<?> getModel();
+
+  /**
+   * Sets the model.
+   *
+   * @param model the model
+   */
+  public void setModel(InfoModel<?> model);
 
 }
