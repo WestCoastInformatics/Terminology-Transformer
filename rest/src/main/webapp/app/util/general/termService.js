@@ -177,10 +177,7 @@ tsApp.service('termService', [
 
       gpService.increment();
 
-      // if flag set, update type key value directly without additional checks
-      // abbreviation endpoint performs post-processing, which re-applies
-      // NEEDS_REVIEW on finishReview updates
-      $http.post(termUrl + '/term/process?projectId=' + projectId, term).then(
+        $http.post(termUrl + '/term/process?projectId=' + projectId, term).then(
       // success
       function(response) {
         gpService.decrement();

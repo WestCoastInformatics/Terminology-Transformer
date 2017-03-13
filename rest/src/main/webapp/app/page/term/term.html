@@ -39,12 +39,12 @@
           <span class="color-box" style="background-color: light-grey;"
           ng-show="paging['term'].hasExcluded" ng-click="toggleExcludedMode()"
           title="Excluded terms"> </span>&nbsp;<span class="color-box"
-          style="background-color: orange;"
+          style="background-color: purple;"
           ng-show="paging['term'].hasModelingRequired"
           ng-click="toggleModelingRequiredMode()" title="Modeling required">
         </span>&nbsp;<span class="color-box"
-          style="background-color: yellow;" ng-show="paging['term'].hasHeld"
-          ng-click="toggleHeldMode()" title="Held for late review"></span>&nbsp; Status:<select
+          style="background-color: orange;" ng-show="paging['term'].hasUserHold"
+          ng-click="toggleUserHoldMode()" title="Held for later review"></span>&nbsp; Status:<select
           ng-options="status.key as status.value for status in lists.workflowStatus"
           ng-model="paging['term'].workflowStatus" ng-change="findTerms()"></select>
 
@@ -111,17 +111,18 @@
                 ng-click="toggleReviewMode()" title="Incomplete coverage"></span>
                 <span
                 class="color-box"
-                style="background-color: yellow; margin-top: 5px;"
+                style="background-color: orange; margin-top: 5px;"
                 ng-show="term.workflowStatus == 'EDITING_IN_PROGRESS'"
                 ng-click="toggleHeldMode()" title="Held for later review"></span>
                 <span class="color-box"
-                style="background-color: orange; margin-top: 5px;"
+                style="background-color: purple; margin-top: 5px;"
                 ng-show="term.workflowStatus == 'REVIEW_IN_PROGRESS'"
                 ng-click="toggleModelingRequiredMode()" title="Modeling required"></span>
                 <span class="color-box"
                 style="background-color: blue; margin-top: 5px;"
                 ng-show="term.workflowStatus == 'PUBLISHED'"
-                ng-click="toggleCoveredMode()" title="Fully covered"></span> <span
+                ng-click="toggleCoveredMode()" title="Fully covered"></span>
+                  <span
                 class="color-box"
                 style="background-color: green; margin-top: 5px;"
                 ng-show="term.workflowStatus == 'NEW'"
@@ -143,9 +144,11 @@
           </tbody>
         </table>
         
+        <hr>
+        
         <h5>Perform bulk action on results</h5>
-        <button class="btn btn-xs btn-warning" title="Mark terms for user hold. Status will remain unchanged until removed" ng-click="markForUserHold()">Mark for User Hold</button>
-        <button class="btn btn-xs btn-primary" title="Mark terms for user hold. Recomputes status." ng-click="unmarkForUserHold()">Remove User Hold</button>
+        <button class="btn btn-xs btn-warning" title="Mark terms for user hold. Status will remain unchanged until removed" ng-click="markAllForUserHold()">Mark for User Hold</button>
+        <button ng-show="paging['term'].hasUserHold" class="btn btn-xs btn-primary" title="Mark terms for user hold. Recomputes status." ng-click="unmarkAllForUserHold()">Remove User Hold</button>
       </div>
       <div class="col-md-6" ng-show="selected.metadata.terminology">
 
@@ -205,9 +208,14 @@
                     class="btn  btn-xs btn-primary">Approve</button>
                     
                      <button
-                    ng-show="!elected.termResult.data.normalizedRemainingString && selected.termResult.data.normalizedRemainingString != ''"
-                    ng-click="changeWorkflowStatus('EDITING_IN_PROGRESS')"
-                    class="btn  btn-xs btn-warning">Mark for Hold</button></td>
+                    ng-show="workflowStatus != 'EDITING_IN_PROGRESS'"
+                    ng-click="markForUserHold()"
+                    class="btn  btn-xs btn-warning">Mark for Hold</button>
+                    
+                    <button
+                    ng-show="workflowStatus == 'EDITING_IN_PROGRESS'"
+                    ng-click="unmarkForUserHold()"
+                    class="btn  btn-xs btn-warning">Release Hold</button></td>
                 </td>
               </tr>
               <tr>

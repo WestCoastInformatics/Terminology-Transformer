@@ -47,7 +47,7 @@ import com.wci.umls.server.services.ContentService;
 public class MldpMedicationProvider extends AbstractAcceptsHandler
     implements ProviderHandler {
 
-  private final static String bnPatternStr = "^\\[(.*)\\]$";
+  private final static String bnPatternStr = "\\[(.*)\\]";
 
   private final static String stopwordPattern =
       ".&\\b(a|an|and|are|as|at|be|but|by|for|if|in|into|is|it|no|not|of|on|or|such|that|the|their|then|there|these|they|this|to|was|will|with)\\b.*";
@@ -59,6 +59,8 @@ public class MldpMedicationProvider extends AbstractAcceptsHandler
   private static boolean cacheMode = false;
 
   private boolean debugMode = false;
+  
+  private static int phraseLength = 7;
 
   /**
    * Instantiates an empty {@link MldpMedicationProvider}.
@@ -203,19 +205,30 @@ public class MldpMedicationProvider extends AbstractAcceptsHandler
 
   }
 
-  private List<String> getSubsequences(String inputString) {
+  private List<String> getSubsequences(String string) {
     final List<String> subsequences = new ArrayList<>();
+    String inputString = string;
+    
+    
+    // brand names check: not limited by phrase length
+    Matcher matcher = bnPattern.matcher(inputString);
+    while (matcher.find()) {
+      if (debugMode) {
+        System.out.println("Found potential brand name: " + matcher.group(1));
+      }
+      subsequences.add(matcher.group(1));
+    }
+    
     String[] splitTerms = inputString.split(" ");
     if (debugMode) {
       System.out.println("split terms: ");
-
       for (int i = 0; i < splitTerms.length; i++) {
         System.out.println(" " + splitTerms[i]);
       }
     }
-
+    
     for (int i = 0; i < splitTerms.length; i++) {
-      for (int j = i; j < Math.min(i + 7, splitTerms.length); j++) {
+      for (int j = i; j < Math.min(i + phraseLength, splitTerms.length); j++) {
         String subsequence = "";
         for (int k = i; k <= j; k++) {
           subsequence += splitTerms[k] + " ";
@@ -227,17 +240,6 @@ public class MldpMedicationProvider extends AbstractAcceptsHandler
         // skip duplicates
         if (!subsequences.contains(subsequence.trim())) {
           subsequences.add(subsequence.trim());
-        }
-
-        // if enclosed in brackets, add contents as subsequence
-        // NOTE: original bracketed value will be matched first by length
-
-        Matcher matcher = bnPattern.matcher(subsequence);
-        if (matcher.matches()) {
-          if (debugMode) {
-            System.out.println(" adding bn subsequence: " + matcher.group(1));
-          }
-          subsequences.add(matcher.group(1).trim());
         }
       }
     }

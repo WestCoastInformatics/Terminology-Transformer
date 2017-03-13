@@ -937,8 +937,16 @@ public class MldpServiceRestImpl extends RootServiceRestImpl
       final String userName = authorizeProject(projectService, projectId,
           securityService, authToken, "process term", UserRole.USER);
       mldpService.setLastModifiedBy(userName);
+      
+      // if id supplied, refresh from database to capture workflow changes
+      TypeKeyValue localTerm;
+      if (term.getId() != null) {
+        localTerm = projectService.getTypeKeyValue(term.getId());
+      } else {
+        localTerm = term;
+      }
       // Get input/output contexts from JPA
-      return mldpService.processTerm(term);
+      return mldpService.processTerm(localTerm);
 
     } catch (Exception e) {
       handleException(e, "trying to process term");
@@ -961,7 +969,7 @@ public class MldpServiceRestImpl extends RootServiceRestImpl
     @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
     throws Exception {
     Logger.getLogger(getClass())
-        .info("RESTful call (MLDP, GET): /term/process/all" + projectId);
+        .info("RESTful call (MLDP, GET): /term/process/all" + projectId + " " + status);
     final ProjectService projectService = new ProjectServiceJpa();
     final MldpService mldpService = new MldpServiceJpa();
     try {
@@ -977,7 +985,8 @@ public class MldpServiceRestImpl extends RootServiceRestImpl
 
       // if status specified, filter
       if (status != null) {
-        for (final TypeKeyValue term : termsToProcess.getObjects()) {
+        for (final TypeKeyValue term : allTerms.getObjects()) {
+          System.out.println("term: " + term.getWorkflowStatus());
           if (term.getWorkflowStatus().equals(status)) {
             termsToProcess.getObjects().add(term);
           }

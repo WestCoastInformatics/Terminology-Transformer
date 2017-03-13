@@ -48,7 +48,11 @@ tsApp
           terminologies : [],
           concepts : [],
 
+          
           workflowStatus : [ {
+            key : null,
+            value : 'All'
+          },{
             key : 'PUBLISHED',
             value : 'Fully covered'
           }, {
@@ -60,7 +64,10 @@ tsApp
           }, {
             key : 'DEMOTION',
             value : 'Excluded'
-          } ],
+          }, {
+            key : 'EDITING_IN_PROGRESS',
+            value : 'Held by user'
+          }],
 
           rawTermTypes : [ 'Medication', 'Immunization', 'Multivitamin', 'Ingr/str Mismatch',
             'Long', 'Garbage' ],
@@ -142,6 +149,9 @@ tsApp
             $scope.paging['term'].hasCovered = $scope.paging['term'].workflowStatus == 'PUBLISHED';
             $scope.paging['term'].hasNeedsReview = $scope.paging['term'].workflowStatus == 'NEEDS_REVIEW';
             $scope.paging['term'].hasExcluded = $scope.paging['term'].workflowStatus == 'DEMOTION';
+            $scope.paging['term'].hasModelingRequired = $scope.paging['term'].workflowStatus == 'REVIEW_IN_PROGRESS';
+            $scope.paging['term'].hasUserHold = $scope.paging['term'].workflowStatus == 'EDITING_IN_PROGRESS';
+            
           } else {
 
             // status calls
@@ -152,6 +162,16 @@ tsApp
             termService.findTerms($scope.paging['term'].filter, $scope.selected.project.id,
               $scope.paging['term'].filterType, pfsCovered).then(function(response) {
               $scope.paging['term'].hasCovered = response.totalCount > 0;
+            });
+            
+            // status calls
+            var pfsUserHold = prepTermPfs('term');
+            pfsUserHold.maxResults = 0;
+            pfsUserHold.startIndex = 0;
+            pfsUserHold.queryRestriction = 'workflowStatus:EDITING_IN_PROGRESS';
+            termService.findTerms($scope.paging['term'].filter, $scope.selected.project.id,
+              $scope.paging['term'].filterType, pfsUserHold).then(function(response) {
+              $scope.paging['term'].hasUserHold = response.totalCount > 0;
             });
 
             // status calls
@@ -232,7 +252,7 @@ tsApp
           }
           var pfs = prepConceptPfs('concept');
 
-          console.debug('findConcepts', pfs, $scope.paging['concept']);
+          console.debug('findConcepts',concept, pfs, $scope.paging['concept']);
 
           contentService.getConceptsForQuery($scope.paging['concept'].filter,
             $scope.selected.metadata.terminology.terminology,
@@ -240,7 +260,7 @@ tsApp
             function(response) {
               $scope.lists.concepts = response;
               $scope.lists.concepts.totalCount = response.totalCount;
-              if ($scope.paging['concept'].filter && $scope.lists.concepts.concepts.length > 0) {
+              if (!concept && $scope.paging['concept'].filter && $scope.lists.concepts.concepts.length > 0) {
                 $scope.editConcept($scope.lists.concepts.concepts[0]);
               }
               console.debug('concepts', $scope.lists.concepts);
@@ -463,7 +483,7 @@ tsApp
           $scope.findTerms();
         };
         
-        $scope.toggleHeldMode = function() {
+        $scope.toggleUserHoldMode = function() {
           $scope.paging['term'].workflowStatus = $scope.paging['term'].workflowStatus == 'EDITING_IN_PROGRESS' ? null
             : 'EDITING_IN_PROGRESS';
           $scope.findTerms();
@@ -688,15 +708,26 @@ tsApp
             });
         }
         
-       function batchChangeWorkflowStatus(status) {
-         
-        }
+      
+       $scope.markForUserHold = function() {
+         $scope.changeWorkflowStatus('EDITING_IN_PROGRESS').then(function() {
+           processChange();
+         })
+       }
+       
+       $scope.unmarkForUserHold = function() {
+         $scope.changeWorkflowStatus('EDITING_DONE').then(function() {
+           $scope.processTerm($scope.selected.term).then(function() {
+             processsChange();
+           })
+         })
+       }
         
         $scope.markAllForUserHold = function() {
           console.debug('mark all for user hold', $scope.paging['term']);
           var pfs = prepTermPfs('term');
-          pfs.setStartIndex = -1;
-          pfs.setMaxResults = -1;
+          pfs.startIndex = -1;
+          pfs.maxResults = -1;
           console.debug('pfs', pfs);
           // retrieval call
           termService.findTerms($scope.paging['term'].filter, $scope.selected.project.id,
@@ -704,15 +735,17 @@ tsApp
             var ids = response.typeKeyValues.map(function(term) {
               return term.id;
             });
-            termService.putTermsInWorkflow($scope.selected.projectId, ids, 'EDITING_IN_PROGRESS');
+            termService.putTermsInWorkflow($scope.selected.project.id, ids, 'EDITING_IN_PROGRESS').then(function() {
+              processChange();
+            });
           });
         };
         
         $scope.unmarkAllForUserHold = function() {
           console.debug('unmark all for user hold', $scope.paging['term']);
           var pfs = prepTermPfs('term');
-          pfs.setStartIndex = -1;
-          pfs.setMaxResults = -1;
+          pfs.startIndex = -1;
+          pfs.maxResults = -1;
           console.debug('pfs', pfs);
           // retrieval call
           termService.findTerms($scope.paging['term'].filter, $scope.selected.project.id,
@@ -720,8 +753,10 @@ tsApp
             var ids = response.typeKeyValues.map(function(term) {
               return term.id;
             });
-            termService.putTermsInWorkflow($scope.selected.projectId, ids, 'EDITING_DONE').then(function() {
-              termService.processAllTerms($scope.selected.projectId, 'EDITING_DONE');
+            termService.putTermsInWorkflow($scope.selected.project.id, ids, 'EDITING_DONE').then(function() {
+              termService.processAllTerms($scope.selected.project.id, 'EDITING_DONE').then(function() {
+                processChange();
+              })
             })
           });
         };
