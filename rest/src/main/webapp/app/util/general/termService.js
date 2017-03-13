@@ -221,4 +221,30 @@ tsApp.service('termService', [
       return deferred.promise;
     }
     
+ // TODO Temporary function in advance of workflow operations
+    this.putTermsInWorkflow = function(projectId, termIds, workflowStatus) {
+      var deferred = $q.defer();
+
+      console.debug('putTermsInWorkflow', projectId, termIds, workflowStatus);
+
+      // Get projects
+      gpService.increment();
+      $http
+        .post(
+          mldpUrl + '/term/workflow/?projectId=' + projectId + '&workflowStatus='
+            + workflowStatus, termIds).then(
+        // success
+        function(response) {
+          gpService.decrement();
+          deferred.resolve(response.data);
+        },
+        // error
+        function(response) {
+          utilService.handleError(response);
+          gpService.decrement();
+          deferred.reject(response.data);
+        });
+      return deferred.promise;
+    }
+    
   } ]);

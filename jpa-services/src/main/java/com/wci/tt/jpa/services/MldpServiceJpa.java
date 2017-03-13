@@ -5,6 +5,10 @@
 package com.wci.tt.jpa.services;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import org.apache.log4j.Logger;
 
 import com.wci.tt.DataContext;
 import com.wci.tt.helpers.DataContextType;
@@ -15,7 +19,6 @@ import com.wci.tt.jpa.DataContextJpa;
 import com.wci.tt.jpa.helpers.ScoredDataContextTupleJpa;
 import com.wci.tt.jpa.helpers.ScoredDataContextTupleListJpa;
 import com.wci.tt.jpa.infomodels.MedicationModel;
-import com.wci.tt.jpa.infomodels.MedicationOutputModel;
 import com.wci.tt.services.CoordinatorService;
 import com.wci.tt.services.MldpService;
 import com.wci.umls.server.helpers.TypeKeyValue;
@@ -27,15 +30,20 @@ import com.wci.umls.server.model.workflow.WorkflowStatus;
 public class MldpServiceJpa extends CoordinatorServiceJpa
     implements MldpService {
 
+  private final static Pattern typePattern =
+      Pattern.compile("\\\"type\\\"\\s*:\\s*\"([^,]*)\",");
+
   public MldpServiceJpa() throws Exception {
     super();
 
   }
-  
 
   @Override
   public ScoredDataContextTupleList processTerm(TypeKeyValue term)
     throws Exception {
+    Logger.getLogger(getClass()).info("process term " + term);
+
+    System.setProperty("mldpdebug", "true");
 
     // Translate tuples into JPA object
     final ScoredDataContextTupleList tuples =
@@ -61,27 +69,14 @@ public class MldpServiceJpa extends CoordinatorServiceJpa
     if (results.size() == 0) {
       throw new Exception("No results returned for " + term);
     }
-    if (results.get(0).getScore() == 0.0f) {
-      // represents incomplete coverage
-      term.setWorkflowStatus(WorkflowStatus.NEEDS_REVIEW);
 
-    } else if (results.get(0).getScore() == 1.0f) {
-      // represents complete coverage
-      term.setWorkflowStatus(WorkflowStatus.PUBLISHED);
-      updateHasLastModified(term);
-    } else if (results.get(0).getScore() == 0.5f) {
-      // represents excluded terms
-      term.setWorkflowStatus(WorkflowStatus.REVIEW_DONE);
-
-    } else {
-      // represents errors
-      term.setWorkflowStatus(WorkflowStatus.DEMOTION);
-    }
+    final ScoredResult scoredResult = results.get(0);
+    updateFromResult(term, scoredResult);
     updateHasLastModified(term);
 
     for (final ScoredResult result : results) {
       final ScoredDataContextTuple tuple = new ScoredDataContextTupleJpa();
-      tuple.setData(result.getModel().getModelValue());
+      tuple.setData(result.getValue());
       tuple.setScore(result.getScore());
       tuple.setDataContext(outputContext);
       tuples.getObjects().add(tuple);
@@ -94,7 +89,7 @@ public class MldpServiceJpa extends CoordinatorServiceJpa
   public void processTerms(List<TypeKeyValue> terms) throws Exception {
 
     System.out.println("Processing " + terms.size() + " terms");
-
+    System.setProperty("mldpdebug", "false");
     if (terms.size() > 0) {
 
       // input context: NAME
@@ -106,15 +101,16 @@ public class MldpServiceJpa extends CoordinatorServiceJpa
           getTerminologyLatestVersion(terminology).getVersion();
       inputContext.setTerminology(terminology);
       inputContext.setVersion(version);
+      inputContext.getParameters().put("cacheMode", "true");
 
       // output context: MEDICATION_MODEL
       final DataContext outputContext = new DataContextJpa();
       outputContext.setType(DataContextType.INFO_MODEL);
-      outputContext.setInfoModelClass(MedicationModel.class.getName());\
+      outputContext.setInfoModelClass(MedicationModel.class.getName());
 
       outputContext.setTerminology(terminology);
       outputContext.setVersion(version);
-      
+
       final Long lastCommitTime = System.currentTimeMillis();
       try {
         setTransactionPerOperation(false);
@@ -123,38 +119,23 @@ public class MldpServiceJpa extends CoordinatorServiceJpa
         int i = 0;
 
         for (final TypeKeyValue term : terms) {
+          // skip all terms with user-marked hold
+          if (WorkflowStatus.EDITING_IN_PROGRESS
+              .equals(term.getWorkflowStatus())) {
+            continue;
+          }
           final List<ScoredResult> results =
               process(term.getKey(), inputContext, outputContext);
           if (results.size() == 0) {
             throw new Exception("No results returned for " + term);
           }
-          final ScoredResult result = results.get(0);
-          
-          if (result.getScore() == 0.0f) {
-            // represents incomplete coverage
-            term.setWorkflowStatus(WorkflowStatus.NEEDS_REVIEW);
+          final ScoredResult scoredResult = results.get(0);
+          updateFromResult(term, scoredResult);
 
-          } else if (result.getScore() == 1.0f) {
-            // represents complete coverage
-            term.setWorkflowStatus(WorkflowStatus.PUBLISHED);
-            updateHasLastModified(term);
-          } else if (result.getScore() == 0.5f) {
-            // represents excluded terms
-            term.setWorkflowStatus(WorkflowStatus.REVIEW_DONE);
-
-          } else {
-            // represents errors
-            term.setWorkflowStatus(WorkflowStatus.DEMOTION);
-          }
-          
-          term.setValue(((MedicationOutputModel) result.getModel()).getType()); 
+          // term.setValue(model.getType());
           updateHasLastModified(term);
-      
-          logAndCommit(++i, 200, 200);
-//          if (Math.floorMod(i, 10) == 0) {
-//            Logger.getLogger(getClass()).info(RootService.commitCt / ((System.currentTimeMillis() - lastCommitTime) / 1000));
-//            lastCommitTime = System.currentTimeMillis();
-//          }
+
+          logAndCommit(++i, 1000, 1000);
 
         }
         commit();
@@ -164,6 +145,38 @@ public class MldpServiceJpa extends CoordinatorServiceJpa
       }
     }
 
+  }
+
+  private void updateFromResult(TypeKeyValue term, ScoredResult scoredResult) {
+
+    // TODO Use getModel once unit tests settled
+    // final MedicationOutputModel model =
+    // ConfigUtility.getGraphForJson(result.getValue(),
+    // MedicationOutputModel.class);
+
+    final Matcher matcher = typePattern.matcher(scoredResult.getValue());
+    if (matcher.find()) {
+      term.setValue(matcher.group(1));
+    }
+
+    // set the workflow
+    if (scoredResult.getScore() == 0.0f) {
+      // represents incomplete coverage
+      term.setWorkflowStatus(WorkflowStatus.NEEDS_REVIEW);
+    } else if (scoredResult.getScore() == 1.0f) {
+      // represents complete coverage
+      term.setWorkflowStatus(WorkflowStatus.PUBLISHED);
+    } else if (scoredResult.getScore() == 0.5f) {
+      // represents excluded terms
+      term.setWorkflowStatus(WorkflowStatus.REVIEW_DONE);
+
+    } else if (scoredResult.getScore() == 0.75f) {
+      // represents ingr/str mismatch i.e. concentrations
+      term.setWorkflowStatus(WorkflowStatus.REVIEW_IN_PROGRESS);
+    } else {
+      // represents errors
+      term.setWorkflowStatus(WorkflowStatus.DEMOTION);
+    }
   }
 
 }

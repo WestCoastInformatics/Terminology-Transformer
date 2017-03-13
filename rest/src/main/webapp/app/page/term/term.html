@@ -38,7 +38,13 @@
           ng-click="toggleReviewMode()" title="Some terms need review"> </span>&nbsp;
           <span class="color-box" style="background-color: light-grey;"
           ng-show="paging['term'].hasExcluded" ng-click="toggleExcludedMode()"
-          title="Excluded terms"> </span>&nbsp;  Status:<select
+          title="Excluded terms"> </span>&nbsp;<span class="color-box"
+          style="background-color: orange;"
+          ng-show="paging['term'].hasModelingRequired"
+          ng-click="toggleModelingRequiredMode()" title="Modeling required">
+        </span>&nbsp;<span class="color-box"
+          style="background-color: yellow;" ng-show="paging['term'].hasHeld"
+          ng-click="toggleHeldMode()" title="Held for late review"></span>&nbsp; Status:<select
           ng-options="status.key as status.value for status in lists.workflowStatus"
           ng-model="paging['term'].workflowStatus" ng-change="findTerms()"></select>
 
@@ -46,30 +52,30 @@
 
         <div class="row">
 
-          <div class="col-md-5" pager paging="paging['term']"
+          <div class="col-md-6" pager paging="paging['term']"
             count="lists.terms.totalCount" callbacks="paging['term'].callbacks"
             style="margin-top: 10px;"></div>
-          <div class="col-md-3 pull-right"
-            ng-show="lists.terms.totalCount > 10" style="margin-top: 10px;">
-            <span class="pull-right"> Page <input style="width: 50px;"
-              ng-model="paging['term'].page"
-              ng-model-options="{debounce : 700}"
-              ng-change="paging['term'].callbacks.getPagedList()">
-            </span>
-          </div>
+          <div class="col-md-3" style="margin-top: 10px;">
+          <select ng-options="type as type for type in lists.rawTermTypes"
+            ng-change="paging['term'].callbacks.getPagedList()"
+            ng-model="paging['term'].termType"></select>
+            </div>
           <div class="col-md-3">
             <span ng-show="lists.terms.totalCount > 10"
-              style="float: right; margin-top: 10px;"> Page size: <select
+              style="float: right;""> Page size: <select
               ng-model="paging['term'].pageSize" title="Page Size"
               ng-change="paging['term'].callbacks.getPagedList()"
               ng-options="pageSize.key as pageSize.value for pageSize in lists.pageSizes">
             </select>
+            </span> <span class="pull-right"> Page <input style="width: 50px;"
+              ng-model="paging['term'].page" ng-model-options="{debounce : 700}"
+              ng-change="paging['term'].callbacks.getPagedList()">
             </span>
           </div>
         </div>
 
-        <div class="alert alert-warning"
-          ng-show="lists.terms.totalCount == 0">No results</div>
+        <div class="alert alert-warning" ng-show="lists.terms.totalCount == 0">No
+          results</div>
 
 
         <table class="slim table table-hover" style="margin-top: 10px;"
@@ -83,6 +89,9 @@
               <th ng-click="setSortField('term','lastModified')">Last
                 Modified<span ng-bind="getSortIndicator('term','lastModified')"></span>
               </th>
+              <th ng-click="setSortField('term', 'value')">Type<span
+                ng-bind="getSortIndicator('term','value')"></span>
+              </th>
 
               <th><i class="noul glyphicon glyphicon-trash"
                 title="Remove all viewed raw terms"
@@ -94,11 +103,21 @@
             <!-- table-hover makes use of the active class -->
             <tr ng-class="{selected: term.id == selected.termViewed.id}"
               class="breakword" ng-repeat="term in lists.terms.typeKeyValues">
-              <td class="col-md-7" ng-click="setTermViewed(term)">{{term.key}}</td>
-              <td class="col-md-1" style="padding-left:15px;"><span class="color-box"
-                style="background-color: red; margin-top: 5px; "
+              <td class="col-md-6" ng-click="setTermViewed(term)">{{term.key}}</td>
+              <td class="col-md-1" style="padding-left: 15px;"><span
+                class="color-box"
+                style="background-color: red; margin-top: 5px;"
                 ng-show="term.workflowStatus == 'NEEDS_REVIEW'"
                 ng-click="toggleReviewMode()" title="Incomplete coverage"></span>
+                <span
+                class="color-box"
+                style="background-color: yellow; margin-top: 5px;"
+                ng-show="term.workflowStatus == 'EDITING_IN_PROGRESS'"
+                ng-click="toggleHeldMode()" title="Held for later review"></span>
+                <span class="color-box"
+                style="background-color: orange; margin-top: 5px;"
+                ng-show="term.workflowStatus == 'REVIEW_IN_PROGRESS'"
+                ng-click="toggleModelingRequiredMode()" title="Modeling required"></span>
                 <span class="color-box"
                 style="background-color: blue; margin-top: 5px;"
                 ng-show="term.workflowStatus == 'PUBLISHED'"
@@ -115,13 +134,18 @@
                 ng-show="term.workflowStatus == 'DEMOTION'"> Error</span></td>
 
 
-              <td class="col-md-3" ng-click="setTermViewed(term)">{{toShortDate(term.lastModified)}}</td>
+              <td class="col-md-2" ng-click="setTermViewed(term)">{{toShortDate(term.lastModified)}}</td>
+              <td class="col-md-3">{{term.value}}</td>
               <td class="col-md-1"><i
                 class="noul glyphicon glyphicon-trash" title="Remove term"
                 ng-click="removeTerm(term)"></i>
             </tr>
           </tbody>
         </table>
+        
+        <h5>Perform bulk action on results</h5>
+        <button class="btn btn-xs btn-warning" title="Mark terms for user hold. Status will remain unchanged until removed" ng-click="markForUserHold()">Mark for User Hold</button>
+        <button class="btn btn-xs btn-primary" title="Mark terms for user hold. Recomputes status." ng-click="unmarkForUserHold()">Remove User Hold</button>
       </div>
       <div class="col-md-6" ng-show="selected.metadata.terminology">
 
@@ -159,12 +183,9 @@
                   ng-repeat="removedTerm in selected.termResult.data.removedTerms">{{removedTerm}}</span>
               <tr ng-show="selected.termResult.data.remainingString">
                 <td>Unmatched</td>
-                <td><span ng-if="selected.termResult.data.remainingString"
-                  ng-repeat="word in splitString(selected.termResult.data.remainingString)">{{word}}<span
-                    ng-show="selected.component && isSuffix(word)"
-                    ng-click="addSuffixFromPt(word)"
-                    class="btn btn-primary btn-xs">Add to PT</span>&nbsp;
-                </span></td>
+                <td>
+                  {{selected.termResult.data.remainingString}}
+                </td>
               </tr>
 
               <tr>
@@ -181,7 +202,12 @@
                   <button
                     ng-show="!elected.termResult.data.normalizedRemainingString && selected.termResult.data.normalizedRemainingString != ''"
                     ng-click="changeWorkflowStatus('PUBLISHED')"
-                    class="btn  btn-xs btn-primary">Approve</button></td>
+                    class="btn  btn-xs btn-primary">Approve</button>
+                    
+                     <button
+                    ng-show="!elected.termResult.data.normalizedRemainingString && selected.termResult.data.normalizedRemainingString != ''"
+                    ng-click="changeWorkflowStatus('EDITING_IN_PROGRESS')"
+                    class="btn  btn-xs btn-warning">Mark for Hold</button></td>
                 </td>
               </tr>
               <tr>

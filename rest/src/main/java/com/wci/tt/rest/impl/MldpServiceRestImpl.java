@@ -974,7 +974,7 @@ public class MldpServiceRestImpl extends RootServiceRestImpl
           "type:" + project.getTerminology() + "-TERM", null);
 
       TypeKeyValueList termsToProcess = new TypeKeyValueListJpa();
-      
+
       // if status specified, filter
       if (status != null) {
         for (final TypeKeyValue term : termsToProcess.getObjects()) {
@@ -994,6 +994,63 @@ public class MldpServiceRestImpl extends RootServiceRestImpl
     } finally {
       // NOTE: No need to close, but included for future safety
       mldpService.close();
+      projectService.close();
+      securityService.close();
+    }
+  }
+
+  @Override
+  @Path("/term/workflow")
+  @POST
+  @ApiOperation(value = "Mark terms with workflow status", notes = "Marks terms for workflow status given a list of ids", response = TypeKeyValueJpa.class)
+  public void putTermsInWorkflow(
+    @ApiParam(value = "The project id, e.g. 1", required = true) @QueryParam("projectId") Long projectId,
+    @ApiParam(value = "The list of term ids", required = true) List<Long> termIds,
+    @ApiParam(value = "The workflow status, e.g. REVIEW_NEEDED", required = false) @QueryParam("workflowStatus") WorkflowStatus workflowStatus,
+    @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
+    throws Exception {
+    Logger.getLogger(getClass())
+        .info("RESTful call (MLDP, POST): /term/workflow " + workflowStatus
+            + ", " + termIds);
+    final ProjectService projectService = new ProjectServiceJpa();
+    try {
+      final String userName = authorizeProject(projectService, projectId,
+          securityService, authToken, "put terms in workflow", UserRole.USER);
+
+      final Project project = projectService.getProject(projectId);
+      projectService.setMolecularActionFlag(false);
+      projectService.setLastModifiedBy(userName);
+      projectService.setTransactionPerOperation(false);
+      projectService.beginTransaction();
+
+      final TermHandler handler = new TermHandler();
+
+      List<Long> ltermIds = null;
+      if (termIds != null) {
+        ltermIds = termIds;
+      } else {
+        TypeKeyValueList terms = projectService.findTypeKeyValuesForQuery(
+            "type:" + handler.getAbbrType(project.getTerminology()), null);
+      }
+
+      for (Long id : ltermIds) {
+
+        final TypeKeyValue term = projectService.getTypeKeyValue(id);
+        if (term == null) {
+          throw new Exception("Term not found");
+        }
+        if (!term.getType().equals(handler.getAbbrType(project.getTerminology()))) {
+          throw new Exception("Term type " + term.getType() + " not valid for project");
+        }
+        term.setWorkflowStatus(workflowStatus);
+        projectService.updateTypeKeyValue(term);
+      }
+      projectService.commit();
+
+    } catch (Exception e) {
+      handleException(e, "trying to add abbreviation ");
+      projectService.rollback();
+    } finally {
       projectService.close();
       securityService.close();
     }

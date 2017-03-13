@@ -141,8 +141,6 @@ public class ScoredResultJpa implements ScoredResult {
     this.obsolete = obsolete;
   }
   
-  
-  @XmlTransient
   @Override
   public InfoModel<?> getModel() {
     return model;

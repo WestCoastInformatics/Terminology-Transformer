@@ -62,6 +62,9 @@ tsApp
             value : 'Excluded'
           } ],
 
+          rawTermTypes : [ 'Medication', 'Immunization', 'Multivitamin', 'Ingr/str Mismatch',
+            'Long', 'Garbage' ],
+
           pageSizes : [ {
             key : 5,
             value : "5"
@@ -81,8 +84,9 @@ tsApp
             key : 200,
             value : '200'
           } ],
-          suffixes : [ 'hydrochloride', 'diacetate', 'dihydrochloride', 'hydrobromide', 'bromide', 'trihydrate']
-       
+          suffixes : [ 'hydrochloride', 'diacetate', 'dihydrochloride', 'hydrobromide', 'bromide',
+            'trihydrate' ]
+
         };
 
         $scope.paging = {};
@@ -134,10 +138,10 @@ tsApp
           });
 
           if ($scope.paging['term'].workflowStatus) {
-              $scope.paging['term'].hasNew = $scope.paging['term'].workflowStatus == 'NEW';
-              $scope.paging['term'].hasCovered = $scope.paging['term'].workflowStatus ==  'PUBLISHED';
-              $scope.paging['term'].hasNeedsReview = $scope.paging['term'].workflowStatus == 'NEEDS_REVIEW';
-              $scope.paging['term'].hasExcluded = $scope.paging['term'].workflowStatus == 'DEMOTION';
+            $scope.paging['term'].hasNew = $scope.paging['term'].workflowStatus == 'NEW';
+            $scope.paging['term'].hasCovered = $scope.paging['term'].workflowStatus == 'PUBLISHED';
+            $scope.paging['term'].hasNeedsReview = $scope.paging['term'].workflowStatus == 'NEEDS_REVIEW';
+            $scope.paging['term'].hasExcluded = $scope.paging['term'].workflowStatus == 'DEMOTION';
           } else {
 
             // status calls
@@ -179,8 +183,17 @@ tsApp
               $scope.paging['term'].filterType, pfsExcluded).then(function(response) {
               $scope.paging['term'].hasExcluded = response.totalCount > 0;
             });
+            
+         // status calls
+            var pfsModelingRequired = prepTermPfs('term');
+            pfsModelingRequired.maxResults = 0;
+            pfsModelingRequired.startIndex = 0;
+            pfsModelingRequired.queryRestriction = 'workflowStatus:REVIEW_IN_PROGRESS';
+            termService.findTerms($scope.paging['term'].filter, $scope.selected.project.id,
+              $scope.paging['term'].filterType, pfsModelingRequired).then(function(response) {
+              $scope.paging['term'].hasModelingRequired = response.totalCount > 0;
+            });
           }
-
         }
 
         function prepTermPfs(type) {
@@ -190,9 +203,15 @@ tsApp
             maxResults : paging.pageSize,
             sortField : paging.sortField,
             ascending : paging.sortAscending,
-            queryRestriction : paging.workflowStatus ? 'workflowStatus:' + paging.workflowStatus
-              : null
+            queryRestriction : null
           };
+          if (paging.termType || paging.workflowStatus) {
+            pfs.queryRestriction = (paging.termType ? 'value:' + paging.termType : '') + ' AND '
+              + (paging.workflowStatus ? 'workflowStatus:' + paging.workflowStatus : '');
+            if (pfs.queryRestriction.startsWith(' AND ')) {
+              pfs.queryRestriction = pfs.queryRestriction.substring(5);
+            }
+          }
           return pfs;
         }
 
@@ -438,9 +457,21 @@ tsApp
           $scope.findTerms();
         };
 
-        $scope.toggleExcludedMode = function() {
+        $scope.toggleModelingRequiredMode = function() {
           $scope.paging['term'].workflowStatus = $scope.paging['term'].workflowStatus == 'REVIEW_IN_PROGRESS' ? null
             : 'REVIEW_IN_PROGRESS';
+          $scope.findTerms();
+        };
+        
+        $scope.toggleHeldMode = function() {
+          $scope.paging['term'].workflowStatus = $scope.paging['term'].workflowStatus == 'EDITING_IN_PROGRESS' ? null
+            : 'EDITING_IN_PROGRESS';
+          $scope.findTerms();
+        };
+
+        $scope.toggleExcludedMode = function() {
+          $scope.paging['term'].workflowStatus = $scope.paging['term'].workflowStatus == 'REVIEW_IN_PROGRESS' ? null
+            : 'REVIEW_DONE';
           $scope.findTerms();
         }
 
@@ -656,6 +687,44 @@ tsApp
               processChange();
             });
         }
+        
+       function batchChangeWorkflowStatus(status) {
+         
+        }
+        
+        $scope.markAllForUserHold = function() {
+          console.debug('mark all for user hold', $scope.paging['term']);
+          var pfs = prepTermPfs('term');
+          pfs.setStartIndex = -1;
+          pfs.setMaxResults = -1;
+          console.debug('pfs', pfs);
+          // retrieval call
+          termService.findTerms($scope.paging['term'].filter, $scope.selected.project.id,
+            $scope.paging['term'].filterType, pfs).then(function(response) {
+            var ids = response.typeKeyValues.map(function(term) {
+              return term.id;
+            });
+            termService.putTermsInWorkflow($scope.selected.projectId, ids, 'EDITING_IN_PROGRESS');
+          });
+        };
+        
+        $scope.unmarkAllForUserHold = function() {
+          console.debug('unmark all for user hold', $scope.paging['term']);
+          var pfs = prepTermPfs('term');
+          pfs.setStartIndex = -1;
+          pfs.setMaxResults = -1;
+          console.debug('pfs', pfs);
+          // retrieval call
+          termService.findTerms($scope.paging['term'].filter, $scope.selected.project.id,
+            $scope.paging['term'].filterType, pfs).then(function(response) {
+            var ids = response.typeKeyValues.map(function(term) {
+              return term.id;
+            });
+            termService.putTermsInWorkflow($scope.selected.projectId, ids, 'EDITING_DONE').then(function() {
+              termService.processAllTerms($scope.selected.projectId, 'EDITING_DONE');
+            })
+          });
+        };
 
         function processTerm() {
           $scope.processTerm();
@@ -677,10 +746,10 @@ tsApp
             });
         }
 
-        $scope.processAllTerms = function() {
+        $scope.processAllTerms = function(status) {
           console.debug('process terms', $scope.selected);
 
-          termService.processAllTerms($scope.selected.project.id).then(function() {
+          termService.processAllTerms($scope.selected.project.id, status).then(function() {
             // TODO Consider validation result for output display
           })
         }

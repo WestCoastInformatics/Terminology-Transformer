@@ -17,7 +17,6 @@ import com.wci.umls.server.helpers.ConfigUtility;
  * The Class MedicationOutputModel.
  */
 
-// TODO Consider genericizing this
 @XmlRootElement(name = "outputModel")
 public class MedicationOutputModel implements InfoModel<MedicationOutputModel> {
 

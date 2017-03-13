@@ -27,8 +27,6 @@ public enum DataContextType {
   ACRONYM,
 
   /** The pattern. */
-  PATTERN,
+  PATTERN
   
-  /** The medication model. */
-  MEDICATION_MODEL;
 }

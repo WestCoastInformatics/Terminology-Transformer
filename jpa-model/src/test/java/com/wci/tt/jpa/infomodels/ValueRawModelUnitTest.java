@@ -17,27 +17,16 @@ import com.wci.tt.jpa.helpers.ValueRawModel;
 import com.wci.umls.server.helpers.CopyConstructorTester;
 import com.wci.umls.server.helpers.EqualsHashcodeTester;
 import com.wci.umls.server.helpers.GetterSetterTester;
-import com.wci.umls.server.helpers.ProxyTester;
 import com.wci.umls.server.helpers.XmlSerializationTester;
 
 /**
- * Unit testing for {@link MedicationModel}.
+ * Unit testing for {@link ValueRawModel}.
  */
-public class MedicationModelUnitTest extends JpaSupport {
+public class ValueRawModelUnitTest extends JpaSupport {
 
   /** The model object to test. */
-  private MedicationModel object;
-
-  /** the test fixture s1. */
-  private IngredientModel s1;
-
-  /** the test fixture s2. */
-  private IngredientModel s2;
+  private ValueRawModel object;
   
-  private ValueRawModel v1;
-  
-  private ValueRawModel v2;
-
   /**
    * Setup class.
    */
@@ -53,13 +42,7 @@ public class MedicationModelUnitTest extends JpaSupport {
    */
   @Before
   public void setup() throws Exception {
-    object = new MedicationModel();
-    ProxyTester tester = new ProxyTester(new IngredientModel());
-    s1 = (IngredientModel) tester.createObject(1);
-    s2 = (IngredientModel) tester.createObject(2);
-    v1 = (ValueRawModel) tester.createObject(3);
-    v2 = (ValueRawModel) tester.createObject(4);
-  
+    object = new ValueRawModel();
   }
 
   /**
@@ -71,6 +54,7 @@ public class MedicationModelUnitTest extends JpaSupport {
   public void testModelGetSet() throws Exception {
     Logger.getLogger(getClass()).debug("TEST " + name.getMethodName());
     GetterSetterTester tester = new GetterSetterTester(object);
+   
     tester.exclude("properties");
     tester.test();
   }
@@ -84,17 +68,10 @@ public class MedicationModelUnitTest extends JpaSupport {
   public void testModelEqualsHashcode() throws Exception {
     Logger.getLogger(getClass()).debug("TEST " + name.getMethodName());
     EqualsHashcodeTester tester = new EqualsHashcodeTester(object);
-    tester.include("ingredients");
-    tester.include("brandName");
-    tester.include("doseForm");
-    tester.include("doseFormQualifier");
-    tester.include("route");
-    tester.include("releasePeriod");
+    tester.include("raw");
+    tester.include("value");
+    
 
-    tester.proxy(IngredientModel.class, 1, s1);
-    tester.proxy(IngredientModel.class, 2, s2);
-    tester.proxy(ValueRawModel.class, 3, v1);
-    tester.proxy(ValueRawModel.class, 4, v2);
     assertTrue(tester.testIdentityFieldEquals());
     assertTrue(tester.testNonIdentityFieldEquals());
     assertTrue(tester.testIdentityFieldNotEquals());
@@ -112,11 +89,7 @@ public class MedicationModelUnitTest extends JpaSupport {
   public void testModelCopy() throws Exception {
     Logger.getLogger(getClass()).debug("TEST " + name.getMethodName());
     CopyConstructorTester tester = new CopyConstructorTester(object);
-    tester.proxy(IngredientModel.class, 1, s1);
-    tester.proxy(IngredientModel.class, 2, s2);
-    tester.proxy(ValueRawModel.class, 1, v1);
-    tester.proxy(ValueRawModel.class, 2, v2);
-    assertTrue(tester.testCopyConstructor(MedicationModel.class));
+    assertTrue(tester.testCopyConstructor(ValueRawModel.class));
   }
 
   /**
@@ -128,7 +101,7 @@ public class MedicationModelUnitTest extends JpaSupport {
   public void testModelXmlSerialization() throws Exception {
     Logger.getLogger(getClass()).debug("TEST " + name.getMethodName());
     XmlSerializationTester tester = new XmlSerializationTester(object);
-    tester.proxy(IngredientModel.class, 1, s1);
+
     tester.testXmlSerialization();
   }
 

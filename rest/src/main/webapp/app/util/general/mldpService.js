@@ -132,7 +132,7 @@ tsApp.service('mldpService', [
 
       // Get projects
       gpService.increment();
-      $http.put(mldpUrl + '/abbr/add?projectId=' + projectId, abbr ).then(
+      $http.put(mldpUrl + '/abbr/add?projectId=' + projectId, abbr).then(
       // success
       function(response) {
         gpService.decrement();
@@ -350,8 +350,7 @@ tsApp.service('mldpService', [
       });
       return deferred.promise;
     };
-
-    // TODO Temporary function in advance of workflow operations
+    
     this.putConceptsInWorkflow = function(projectId, conceptIds, workflowStatus) {
       var deferred = $q.defer();
 
