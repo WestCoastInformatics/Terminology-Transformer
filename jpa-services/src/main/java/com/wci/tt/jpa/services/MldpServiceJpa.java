@@ -160,6 +160,8 @@ public class MldpServiceJpa extends CoordinatorServiceJpa
     }
 
     // set the workflow
+    // TODO This seriously needs to reworked, score mismatch potential very high
+    // Incorporate into model later, perhaps
     if (scoredResult.getScore() == 0.0f) {
       // represents incomplete coverage
       term.setWorkflowStatus(WorkflowStatus.NEEDS_REVIEW);
@@ -170,6 +172,9 @@ public class MldpServiceJpa extends CoordinatorServiceJpa
       // represents excluded terms
       term.setWorkflowStatus(WorkflowStatus.REVIEW_DONE);
 
+    } else if (scoredResult.getScore() == 0.70f) {
+      // represents ingr/str mismatch i.e. concentrations
+      term.setWorkflowStatus(WorkflowStatus.REVIEW_NEW);
     } else if (scoredResult.getScore() == 0.75f) {
       // represents ingr/str mismatch i.e. concentrations
       term.setWorkflowStatus(WorkflowStatus.REVIEW_IN_PROGRESS);

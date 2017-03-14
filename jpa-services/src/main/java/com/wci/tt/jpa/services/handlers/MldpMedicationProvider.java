@@ -50,17 +50,24 @@ public class MldpMedicationProvider extends AbstractAcceptsHandler
   private final static String bnPatternStr = "\\[(.*)\\]";
 
   private final static String stopwordPattern =
-      ".&\\b(a|an|and|are|as|at|be|but|by|for|if|in|into|is|it|no|not|of|on|or|such|that|the|their|then|there|these|they|this|to|was|will|with)\\b.*";
+      ".+\\b(a|an|and|are|as|at|be|but|by|for|if|in|into|is|it|no|not|of|on|or|such|that|the|their|then|there|these|they|this|to|was|will|with)\\b.+";
 
   private final static Pattern bnPattern = Pattern.compile(bnPatternStr);
 
-  final static HashMap<String, Concept> atomToConceptMap = new HashMap<>();
+  private final static HashMap<String, Concept> atomToConceptMap =
+      new HashMap<>();
 
   private static boolean cacheMode = false;
 
   private boolean debugMode = false;
-  
-  private static int phraseLength = 7;
+
+  private final static int defaultPhraseLength = 7;
+
+  private final static int defaultLongTermWordThreshold = 25;
+
+  private static int longTermWordThreshold = -1;
+
+  private static int maxPhraseLength = -1;
 
   /**
    * Instantiates an empty {@link MldpMedicationProvider}.
@@ -81,24 +88,67 @@ public class MldpMedicationProvider extends AbstractAcceptsHandler
 
   }
 
+  private void setParameters(DataContext inputContext) throws Exception {
+    // check parameter: cache mode
+    // NOTE: Once cached, cache is static until a process request disables it
+    // via cacheMode parameter false or absent
+    if (inputContext.getParameters().containsKey("cacheMode")
+        && inputContext.getParameters().get("cacheMode").equals("true")) {
+      if (!cacheMode) {
+        enableCacheMode(inputContext);
+      }
+    } else {
+      disableCacheMode();
+    }
+
+    // check parameter: phrase length
+    if (inputContext.getParameters().containsKey("longTermWordThreshold")
+        && inputContext.getParameters().get("longTermWordThreshold") != null) {
+      try {
+        longTermWordThreshold = Integer
+            .valueOf(inputContext.getParameters().get("longTermWordThreshold"));
+      } catch (Exception e) {
+        throw new Exception("Parameter phraseLength not a valid integer");
+      }
+    } else {
+      longTermWordThreshold = defaultLongTermWordThreshold;
+    }
+
+    // check parameter: long term word count length threshold
+    if (inputContext.getParameters().containsKey("phraseLength")
+        && inputContext.getParameters().get("phraseLength") != null) {
+      try {
+        maxPhraseLength =
+            Integer.valueOf(inputContext.getParameters().get("phraseLength"));
+      } catch (Exception e) {
+        throw new Exception(
+            "Parameter longTermWordThreshold not a valid integer");
+      }
+    } else {
+      maxPhraseLength = defaultPhraseLength;
+    }
+  }
+
   public void disableCacheMode() throws Exception {
+    if (debugMode) {
+      System.out.println("disable cache mode");
+    }
     atomToConceptMap.clear();
     cacheMode = false;
   }
 
   public void enableCacheMode(DataContext inputContext) throws Exception {
     if (debugMode) {
-      System.out.println("enableCacheMode - current cacheMode: " + cacheMode);
+      System.out.println("enable cache mode");
     }
     atomToConceptMap.clear();
 
-    PfsParameter tempPfs = new PfsParameterJpa();
-    // tempPfs.setMaxResults(10);
-    // tempPfs.setStartIndex(0);
     final ContentService service = new ContentServiceJpa();
+
+    // get all concepts for input context
     final ConceptList concepts =
         service.findConcepts(inputContext.getTerminology(),
-            inputContext.getVersion(), Branch.ROOT, null, tempPfs);
+            inputContext.getVersion(), Branch.ROOT, null, null);
 
     Logger.getLogger(getClass())
         .info("Caching atoms for " + concepts.getTotalCount() + " concepts");
@@ -112,13 +162,10 @@ public class MldpMedicationProvider extends AbstractAcceptsHandler
 
         for (final Atom atom : concept.getAtoms()) {
           atomToConceptMap.put(atom.getName().toLowerCase(), c);
-          // if
-          // (atom.getName().toLowerCase().matches(".*(vincamine|oral|capsule).*"))
-          // {
-          // System.out.println("caching atom: " + atom.getName());
-          // }
         }
       } else {
+        // NOTE: Warning here primarily for debug, not intended for full
+        // validation
         Logger.getLogger(getClass())
             .info("WARNING: Expected one feature on concept "
                 + concept.getTerminologyId() + " but found "
@@ -141,8 +188,8 @@ public class MldpMedicationProvider extends AbstractAcceptsHandler
     throws Exception {
 
     final DataContext inputContext = record.getInputContext();
-
     final List<ScoredDataContext> results = new ArrayList<>();
+
     // ONLY handle NAME and TEXT
     if (inputContext.getType() != DataContextType.NAME
         && inputContext.getType() != DataContextType.TEXT) {
@@ -152,6 +199,8 @@ public class MldpMedicationProvider extends AbstractAcceptsHandler
     final ContentService service = new ContentServiceJpa();
 
     try {
+
+      // if no normalized results, consider garbage
       if (record.getNormalizedResults().size() == 0) {
         final ScoredDataContext context = new ScoredDataContextJpa();
         context.setSpecialty("Garbage");
@@ -162,21 +211,18 @@ public class MldpMedicationProvider extends AbstractAcceptsHandler
         final String value = result.getValue().toLowerCase();
         final ScoredDataContext outputContext = new ScoredDataContextJpa();
 
-        // TODO Decide length constraint
-        if (value.split("\\w+").length > 25) {
+        if (value.split("\\w+").length > longTermWordThreshold) {
           outputContext.setSpecialty("Long");
         }
-
-        // RULES about words
-        // TODO Add non-med rules here
-        // if (false) {
-        // Logger.getLogger(getClass()).debug(" matched NON-MED pattern");
-        // return results;
-        // }
 
         // RULE about immunization words
         if (hasImmunizationWords(service, value)) {
           outputContext.setSpecialty("Immunization");
+        }
+        
+        // RULE about allergy words
+        if (hasAllergyWords(service, value)) {
+          outputContext.setSpecialty("Allergy");
         }
 
         // RULE about medication words
@@ -190,11 +236,9 @@ public class MldpMedicationProvider extends AbstractAcceptsHandler
         }
 
         results.add(outputContext);
-
       }
 
       results.add(new ScoredDataContextJpa(inputContext));
-
       return results;
 
     } catch (Exception e) {
@@ -208,8 +252,7 @@ public class MldpMedicationProvider extends AbstractAcceptsHandler
   private List<String> getSubsequences(String string) {
     final List<String> subsequences = new ArrayList<>();
     String inputString = string;
-    
-    
+
     // brand names check: not limited by phrase length
     Matcher matcher = bnPattern.matcher(inputString);
     while (matcher.find()) {
@@ -218,7 +261,7 @@ public class MldpMedicationProvider extends AbstractAcceptsHandler
       }
       subsequences.add(matcher.group(1));
     }
-    
+
     String[] splitTerms = inputString.split(" ");
     if (debugMode) {
       System.out.println("split terms: ");
@@ -226,9 +269,10 @@ public class MldpMedicationProvider extends AbstractAcceptsHandler
         System.out.println(" " + splitTerms[i]);
       }
     }
-    
+
     for (int i = 0; i < splitTerms.length; i++) {
-      for (int j = i; j < Math.min(i + phraseLength, splitTerms.length); j++) {
+      for (int j = i; j < Math.min(i + maxPhraseLength,
+          splitTerms.length); j++) {
         String subsequence = "";
         for (int k = i; k <= j; k++) {
           subsequence += splitTerms[k] + " ";
@@ -266,34 +310,25 @@ public class MldpMedicationProvider extends AbstractAcceptsHandler
   @Override
   public List<ScoredResult> process(TransformRecord record) throws Exception {
 
-    // TODO Remove after dev testing
     debugMode = "true".equals(System.getProperty("mldpdebug"));
 
     Long startTime = System.currentTimeMillis();
 
-    // TODO Pass as input the type key value itself instead of the string
-    // Update based on type
-
     final String inputString = record.getInputString();
     final DataContext inputContext = record.getInputContext();
-    // TODO Create medication output context
     final DataContext outputContext = record.getProviderOutputContext();
 
     // Validate input/output context
     validate(inputContext, outputContext);
 
-    // System.out.println(inputContext.getParameters());
+    // set parameters from input context
+    setParameters(inputContext);
 
-    // check for cache mode
-    // NOTE: Once cached, cache is static until a process request disables it
-    // via cacheMode parameter false or absent
-    if (inputContext.getParameters().containsKey("cacheMode")
-        && inputContext.getParameters().get("cacheMode").equals("true")) {
-      if (!cacheMode) {
-        enableCacheMode(inputContext);
-      }
-    } else {
-      disableCacheMode();
+    if (maxPhraseLength == -1) {
+      throw new Exception("Maximum phrase length has no default value");
+    }
+    if (longTermWordThreshold == -1) {
+      throw new Exception("Long term word threshold has no default value");
     }
 
     // Set up return value
@@ -329,7 +364,7 @@ public class MldpMedicationProvider extends AbstractAcceptsHandler
 
         // Ordered removal
         String[] orderedFeatures = {
-            "BrandName", "Ingredient", "Strength", "DoseForm",
+            "BrandName", "Strength","Ingredient",  "DoseForm",
             "DoseFormQualifier", "Route", "ReleasePeriod"
         };
 
@@ -507,13 +542,17 @@ public class MldpMedicationProvider extends AbstractAcceptsHandler
             }
           }
 
-          // TODO Remove this once decision made about e.g. 1 ML ingredient
-          // 5MG/ML
+          // TODO Naive check for potential concentrations
+          // Once modeling decided, handle concentrations and mismatch scenarios
           if (ingredients.size() != strengths.size()) {
             if (debugMode) {
               System.out.println("ingr/str mismatch");
             }
-            outputModel.setType("Ingr/Str Mismatch");
+            if (strengths.size() == 0) {
+              outputModel.setType("Ingredients with no strengths");
+            } else {
+              outputModel.setType("Ingredient/strength mismatch");
+            }
           }
 
           if (ingredients.size() > 4
@@ -595,7 +634,14 @@ public class MldpMedicationProvider extends AbstractAcceptsHandler
         }
 
         break;
-      case "Ingr/Str Mismatch":
+      case "Ingredients with no strengths":
+        if (outputModel.getNormalizedRemainingString().isEmpty()) {
+          result.setScore(0.70f);
+        } else {
+          result.setScore(0.0f);
+        }
+        break;
+      case "Ingredient/strength mismatch":
         if (outputModel.getNormalizedRemainingString().isEmpty()) {
           result.setScore(0.75f);
         } else {
@@ -623,8 +669,12 @@ public class MldpMedicationProvider extends AbstractAcceptsHandler
   }
 
   private String normalizeString(String string) {
-
-    return string.replaceAll(stopwordPattern, "")
+    
+    if (debugMode) {
+    System.out.println("normalizing string " + string);
+    System.out.println(" after stopword: " + string.toLowerCase().replaceAll("\\b" + stopwordPattern + "\\b*\\B", ""));
+    }
+    return string.toLowerCase().replaceAll("\\b" + stopwordPattern + "\\b*\\B", "")
         .replaceAll(ConfigUtility.PUNCTUATION_REGEX, "").trim();
   }
 
@@ -694,13 +744,23 @@ public class MldpMedicationProvider extends AbstractAcceptsHandler
     }
     return false;
   }
+  
+  private final String allergyPattern = "(antigen)";
+  
+  private boolean hasAllergyWords(ContentService service, String value) throws Exception {
+    
+    if (value.toLowerCase().matches(".*\\b" + allergyPattern + "(\\b|\\B).*")) {
+      return true;
+    }
+    return false;
+  }
 
   private final String immunizationPattern = "(tdap|vaccine|measles|influenza)";
 
   private boolean hasImmunizationWords(ContentService service, String value)
     throws Exception {
 
-    if (value.toLowerCase().matches(".*\\b" + immunizationPattern + "\\b.*")) {
+    if (value.toLowerCase().matches(".*\\b" + immunizationPattern + "(\\b|\\B).*")) {
       return true;
     }
 

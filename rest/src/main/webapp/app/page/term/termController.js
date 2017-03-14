@@ -48,11 +48,10 @@ tsApp
           terminologies : [],
           concepts : [],
 
-          
           workflowStatus : [ {
             key : null,
             value : 'All'
-          },{
+          }, {
             key : 'PUBLISHED',
             value : 'Fully covered'
           }, {
@@ -67,10 +66,10 @@ tsApp
           }, {
             key : 'EDITING_IN_PROGRESS',
             value : 'Held by user'
-          }],
+          } ],
 
-          rawTermTypes : [ 'Medication', 'Immunization', 'Multivitamin', 'Ingr/str Mismatch',
-            'Long', 'Garbage' ],
+          rawTermTypes : [ 'Medication', 'Immunization', 'Allergy', 'Multivitamin',
+            'Ingr/str Mismatch', 'Long', 'Garbage' ],
 
           pageSizes : [ {
             key : 5,
@@ -151,7 +150,7 @@ tsApp
             $scope.paging['term'].hasExcluded = $scope.paging['term'].workflowStatus == 'DEMOTION';
             $scope.paging['term'].hasModelingRequired = $scope.paging['term'].workflowStatus == 'REVIEW_IN_PROGRESS';
             $scope.paging['term'].hasUserHold = $scope.paging['term'].workflowStatus == 'EDITING_IN_PROGRESS';
-            
+
           } else {
 
             // status calls
@@ -163,7 +162,7 @@ tsApp
               $scope.paging['term'].filterType, pfsCovered).then(function(response) {
               $scope.paging['term'].hasCovered = response.totalCount > 0;
             });
-            
+
             // status calls
             var pfsUserHold = prepTermPfs('term');
             pfsUserHold.maxResults = 0;
@@ -203,8 +202,8 @@ tsApp
               $scope.paging['term'].filterType, pfsExcluded).then(function(response) {
               $scope.paging['term'].hasExcluded = response.totalCount > 0;
             });
-            
-         // status calls
+
+            // status calls
             var pfsModelingRequired = prepTermPfs('term');
             pfsModelingRequired.maxResults = 0;
             pfsModelingRequired.startIndex = 0;
@@ -252,7 +251,7 @@ tsApp
           }
           var pfs = prepConceptPfs('concept');
 
-          console.debug('findConcepts',concept, pfs, $scope.paging['concept']);
+          console.debug('findConcepts', concept, pfs, $scope.paging['concept']);
 
           contentService.getConceptsForQuery($scope.paging['concept'].filter,
             $scope.selected.metadata.terminology.terminology,
@@ -260,7 +259,8 @@ tsApp
             function(response) {
               $scope.lists.concepts = response;
               $scope.lists.concepts.totalCount = response.totalCount;
-              if (!concept && $scope.paging['concept'].filter && $scope.lists.concepts.concepts.length > 0) {
+              if (!concept && $scope.paging['concept'].filter
+                && $scope.lists.concepts.concepts.length > 0) {
                 $scope.editConcept($scope.lists.concepts.concepts[0]);
               }
               console.debug('concepts', $scope.lists.concepts);
@@ -399,63 +399,6 @@ tsApp
             });
         }
 
-        $scope.editConcept = function(concept) {
-          console.debug('edit concept', concept);
-          var ptFound = false;
-          angular.forEach(concept.atoms, function(atom) {
-            if (atom.termType == 'PT') {
-              console.debug('found pt');
-              ptFound = true;
-            }
-          })
-          $scope.selected.defaultTermType = ptFound ? 'SY' : 'PT';
-
-          console.debug('default term group', $scope.selected.defaultTermType);
-
-          $scope.setConceptEdited(concept);
-        }
-
-        $scope.createConcept = function() {
-
-          console.debug('create concept');
-
-          $scope.selected.defaultTermType = 'PT';
-          var concept = {
-            type : $scope.selected.metadata.terminology.organizingClassType,
-            terminologyId : null,
-            terminology : $scope.selected.metadata.terminology.terminology,
-            version : $scope.selected.metadata.terminology.version,
-            name : '(New Concept)',
-            atoms : [],
-            semanticTypes : []
-          }
-          editService.addConcept($scope.selected.project.id, concept).then(function(newConcept) {
-            $scope.setConceptEdited(newConcept);
-          })
-        }
-
-        $scope.cancelConcept = function() {
-          $scope.setConceptEdited(null);
-        }
-
-        $scope.updateConcept = function(concept) {
-          editService.updateConcept($scope.selected.project.id, concept).then(function() {
-            processChange();
-          })
-        }
-
-        // used for removing concept from list
-        // see UMLS report.js for concept removal in simple edit mode from report
-        $scope.removeConcept = function(concept) {
-          console.debug('remove concept', concept, $scope.selected.component);
-          editService.removeConcept($scope.selected.project.id, concept.id).then(function() {
-            if ($scope.selected.component && $scope.selected.component.id == concept.id) {
-              $scope.selected.component = null;
-            }
-            processChange();
-          });
-        }
-
         //
         // Display functions
         //
@@ -482,7 +425,7 @@ tsApp
             : 'REVIEW_IN_PROGRESS';
           $scope.findTerms();
         };
-        
+
         $scope.toggleUserHoldMode = function() {
           $scope.paging['term'].workflowStatus = $scope.paging['term'].workflowStatus == 'EDITING_IN_PROGRESS' ? null
             : 'EDITING_IN_PROGRESS';
@@ -707,22 +650,21 @@ tsApp
               processChange();
             });
         }
-        
-      
-       $scope.markForUserHold = function() {
-         $scope.changeWorkflowStatus('EDITING_IN_PROGRESS').then(function() {
-           processChange();
-         })
-       }
-       
-       $scope.unmarkForUserHold = function() {
-         $scope.changeWorkflowStatus('EDITING_DONE').then(function() {
-           $scope.processTerm($scope.selected.term).then(function() {
-             processsChange();
-           })
-         })
-       }
-        
+
+        $scope.markForUserHold = function() {
+          $scope.changeWorkflowStatus('EDITING_IN_PROGRESS').then(function() {
+            processChange();
+          })
+        }
+
+        $scope.unmarkForUserHold = function() {
+          $scope.changeWorkflowStatus('EDITING_DONE').then(function() {
+            $scope.processTerm($scope.selected.term).then(function() {
+              processsChange();
+            })
+          })
+        }
+
         $scope.markAllForUserHold = function() {
           console.debug('mark all for user hold', $scope.paging['term']);
           var pfs = prepTermPfs('term');
@@ -731,16 +673,19 @@ tsApp
           console.debug('pfs', pfs);
           // retrieval call
           termService.findTerms($scope.paging['term'].filter, $scope.selected.project.id,
-            $scope.paging['term'].filterType, pfs).then(function(response) {
-            var ids = response.typeKeyValues.map(function(term) {
-              return term.id;
+            $scope.paging['term'].filterType, pfs).then(
+            function(response) {
+              var ids = response.typeKeyValues.map(function(term) {
+                return term.id;
+              });
+              termService
+                .putTermsInWorkflow($scope.selected.project.id, ids, 'EDITING_IN_PROGRESS').then(
+                  function() {
+                    processChange();
+                  });
             });
-            termService.putTermsInWorkflow($scope.selected.project.id, ids, 'EDITING_IN_PROGRESS').then(function() {
-              processChange();
-            });
-          });
         };
-        
+
         $scope.unmarkAllForUserHold = function() {
           console.debug('unmark all for user hold', $scope.paging['term']);
           var pfs = prepTermPfs('term');
@@ -749,16 +694,19 @@ tsApp
           console.debug('pfs', pfs);
           // retrieval call
           termService.findTerms($scope.paging['term'].filter, $scope.selected.project.id,
-            $scope.paging['term'].filterType, pfs).then(function(response) {
-            var ids = response.typeKeyValues.map(function(term) {
-              return term.id;
+            $scope.paging['term'].filterType, pfs).then(
+            function(response) {
+              var ids = response.typeKeyValues.map(function(term) {
+                return term.id;
+              });
+              termService.putTermsInWorkflow($scope.selected.project.id, ids, 'EDITING_DONE').then(
+                function() {
+                  termService.processAllTerms($scope.selected.project.id, 'EDITING_DONE').then(
+                    function() {
+                      processChange();
+                    })
+                })
             });
-            termService.putTermsInWorkflow($scope.selected.project.id, ids, 'EDITING_DONE').then(function() {
-              termService.processAllTerms($scope.selected.project.id, 'EDITING_DONE').then(function() {
-                processChange();
-              })
-            })
-          });
         };
 
         function processTerm() {
@@ -785,9 +733,127 @@ tsApp
           console.debug('process terms', $scope.selected);
 
           termService.processAllTerms($scope.selected.project.id, status).then(function() {
-            // TODO Consider validation result for output display
+            processChange();
           })
         }
+
+        //
+        // Concept and atom direct creation
+        //
+
+        $scope.editConcept = function(concept) {
+          console.debug('edit concept', concept);
+          var ptFound = false;
+          angular.forEach(concept.atoms, function(atom) {
+            if (atom.termType == 'PT') {
+              console.debug('found pt');
+              ptFound = true;
+            }
+          })
+          $scope.selected.defaultTermType = ptFound ? 'SY' : 'PT';
+
+          console.debug('default term group', $scope.selected.defaultTermType);
+
+          $scope.setConceptEdited(concept);
+        }
+
+        $scope.createConcept = function() {
+
+          var deferred = $q.defer();
+
+          console.debug('create concept');
+
+          $scope.selected.defaultTermType = 'PT';
+          var concept = {
+            type : $scope.selected.metadata.terminology.organizingClassType,
+            terminologyId : null,
+            terminology : $scope.selected.metadata.terminology.terminology,
+            version : $scope.selected.metadata.terminology.version,
+            name : '(New Concept)',
+            atoms : [],
+            semanticTypes : []
+          }
+          editService.addConcept($scope.selected.project.id, concept).then(function(newConcept) {
+            $scope.setConceptEdited(newConcept);
+            deferred.resolve();
+          }, function() {
+            deferred.reject();
+          });
+          return deferred.promise;
+        }
+
+        $scope.cancelConcept = function() {
+          $scope.setConceptEdited(null);
+        }
+
+        $scope.updateConcept = function(concept) {
+          editService.updateConcept($scope.selected.project.id, concept).then(function() {
+            processChange();
+          })
+        }
+
+        // used for removing concept from list
+        // see UMLS report.js for concept removal in simple edit mode from report
+        $scope.removeConcept = function(concept) {
+          console.debug('remove concept', concept, $scope.selected.component);
+          editService.removeConcept($scope.selected.project.id, concept.id).then(function() {
+            if ($scope.selected.component && $scope.selected.component.id == concept.id) {
+              $scope.selected.component = null;
+            }
+            processChange();
+          });
+        }
+
+        $scope.addAtomToConcept = function(name, termType, skipRefresh) {
+          var deferred = $q.defer();
+
+          editService.addAtom($scope.selected.project.id, $scope.selected.component.id, atom).then(
+            function() {
+              deferred.resolve();
+              if (!skipRefresh) {
+                processChange();
+              }
+            }, function() {
+              deferred.reject('Failed to add atom to concept');
+            });
+
+          return deferred.promise;
+        }
+
+        $scope.addFeatureToConcept = function(feature, skipRefresh) {
+          var deferred = $q.defer();
+          var sty = null;
+          angular.forEach($scope.lists.features, function(f) {
+            if (f.semanticType == feature) {
+              sty = f;
+            }
+          });
+          if (!sty) {
+            utilService
+              .setError('Error adding feature to concept: ' + feature + ' not in metadata');
+          } else {
+            editService.addSemanticType($scope.selected.project.id, $scope.selected.component.id,
+              sty).then(function() {
+                if (!skipRefresh) {
+                  processChange();
+                }
+            }, function() {
+              deferred.reject('Failed to add semantic type')
+            });
+          }
+          return deferred.promise;
+        }
+
+        $scope.createConceptFromTerm = function(term, feature) {
+          $scope.createConcept().then(function() {
+            $scope.addAtomToConcept(term, 'PT', true).then(function() {
+              $scope.addFeatureToConcept(feature, true).then(function() {
+                processChange();
+              });
+            });
+          });
+        }
+
         //
         // Initialize - DO NOT PUT ANYTHING AFTER THIS SECTION OTHER THAN CONFIG CHECK
         //

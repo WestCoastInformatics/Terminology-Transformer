@@ -56,18 +56,18 @@
             count="lists.terms.totalCount" callbacks="paging['term'].callbacks"
             style="margin-top: 10px;"></div>
           <div class="col-md-3" style="margin-top: 10px;">
-          <select ng-options="type as type for type in lists.rawTermTypes"
+          Type:<select ng-options="type as type for type in lists.rawTermTypes"
             ng-change="paging['term'].callbacks.getPagedList()"
-            ng-model="paging['term'].termType"></select>
+            ng-model="paging['term'].termType"><option value=""></option></select>
             </div>
           <div class="col-md-3">
             <span ng-show="lists.terms.totalCount > 10"
-              style="float: right;""> Page size: <select
+              style="float: right;""> Page size:<select
               ng-model="paging['term'].pageSize" title="Page Size"
               ng-change="paging['term'].callbacks.getPagedList()"
               ng-options="pageSize.key as pageSize.value for pageSize in lists.pageSizes">
             </select>
-            </span> <span class="pull-right"> Page <input style="width: 50px;"
+            </span> <span class="pull-right"> Page:<input style="width: 50px;"
               ng-model="paging['term'].page" ng-model-options="{debounce : 700}"
               ng-change="paging['term'].callbacks.getPagedList()">
             </span>
