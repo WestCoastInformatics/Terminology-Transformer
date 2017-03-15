@@ -43,6 +43,7 @@ public class MldpServiceJpa extends CoordinatorServiceJpa
     throws Exception {
     Logger.getLogger(getClass()).info("process term " + term);
 
+    // TODO Remove after dev testing
     System.setProperty("mldpdebug", "true");
 
     // Translate tuples into JPA object
@@ -88,8 +89,8 @@ public class MldpServiceJpa extends CoordinatorServiceJpa
   @Override
   public void processTerms(List<TypeKeyValue> terms) throws Exception {
 
-    System.out.println("Processing " + terms.size() + " terms");
-    System.setProperty("mldpdebug", "false");
+   Logger.getLogger(getClass()).info("Processing " + terms.size() + " terms");
+   System.setProperty("mldpdebug", "false");
     if (terms.size() > 0) {
 
       // input context: NAME
@@ -148,6 +149,11 @@ public class MldpServiceJpa extends CoordinatorServiceJpa
   }
 
   private void updateFromResult(TypeKeyValue term, ScoredResult scoredResult) {
+    
+    if ("true".equals(System.getProperty("mldpdebug"))) {
+      System.out.println("term: " + term);
+      System.out.println("  result: " + scoredResult.getScore() + " " + scoredResult.getValue());
+    }
 
     // TODO Use getModel once unit tests settled
     // final MedicationOutputModel model =

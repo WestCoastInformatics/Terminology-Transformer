@@ -33,7 +33,7 @@ tsApp.service('termService', [
       });
       return deferred.promise;
     }
-    
+
     this.getTerm = function(id, projectId) {
       var deferred = $q.defer();
 
@@ -128,7 +128,7 @@ tsApp.service('termService', [
 
       // Get projects
       gpService.increment();
-      $http.put(mldpUrl + '/term/add?projectId=' + projectId, term ).then(
+      $http.put(mldpUrl + '/term/add?projectId=' + projectId, term).then(
       // success
       function(response) {
         gpService.decrement();
@@ -142,8 +142,7 @@ tsApp.service('termService', [
       });
       return deferred.promise;
     }
-    
-    
+
     this.importTermsFile = function(projectId, file) {
       var deferred = $q.defer();
 
@@ -169,15 +168,14 @@ tsApp.service('termService', [
       });
       return deferred.promise;
     }
-    
-   
+
     this.processTerm = function(projectId, term) {
       console.debug('process', term)
       var deferred = $q.defer();
 
       gpService.increment();
 
-        $http.post(termUrl + '/term/process?projectId=' + projectId, term).then(
+      $http.post(termUrl + '/term/process?projectId=' + projectId, term).then(
       // success
       function(response) {
         gpService.decrement();
@@ -195,14 +193,16 @@ tsApp.service('termService', [
       });
       return deferred.promise;
     }
-    
+
     this.processAllTerms = function(projectId, status) {
       console.debug('process all terms', projectId)
       var deferred = $q.defer();
 
       gpService.increment();
-      
-      $http.post(termUrl + '/term/process/batch?projectId=' + projectId + (status ? '&status=' + status : '')).then(
+
+      $http.post(
+        termUrl + '/term/process/batch?projectId=' + projectId
+          + (status ? '&status=' + status : '')).then(
       // success
       function(response) {
         gpService.decrement();
@@ -217,8 +217,8 @@ tsApp.service('termService', [
       });
       return deferred.promise;
     }
-    
- // TODO Temporary function in advance of workflow operations
+
+    // TODO Temporary function in advance of workflow operations
     this.putTermsInWorkflow = function(projectId, termIds, workflowStatus) {
       var deferred = $q.defer();
 
@@ -226,22 +226,57 @@ tsApp.service('termService', [
 
       // Get projects
       gpService.increment();
-      $http
-        .post(
-          mldpUrl + '/term/workflow/?projectId=' + projectId + '&workflowStatus='
-            + workflowStatus, termIds).then(
-        // success
+      $http.post(
+        mldpUrl + '/term/workflow/?projectId=' + projectId + '&workflowStatus=' + workflowStatus,
+        termIds).then(
+      // success
+      function(response) {
+        gpService.decrement();
+        deferred.resolve(response.data);
+      },
+      // error
+      function(response) {
+        utilService.handleError(response);
+        gpService.decrement();
+        deferred.reject(response.data);
+      });
+      return deferred.promise;
+    }
+
+    this.exportTerms = function(project, status) {
+      console.debug('exportTerms', status);
+      var deferred = $q.defer();
+      gpService.increment()
+
+      $http.post(
+        mldpUrl + '/term/export?projectId=' + project.id + (status ? '&status=' + status : ''))
+        .then(
+        // Success
         function(response) {
+          var blob = new Blob([ response.data ], {
+            type : ''
+          });
+
+          // fake a file URL and download it
+          var fileURL = URL.createObjectURL(blob);
+          var a = document.createElement('a');
+          a.href = fileURL;
+          a.target = '_blank';
+          a.download = 'terms.' + project.terminology + ".txt";
+          document.body.appendChild(a);
           gpService.decrement();
-          deferred.resolve(response.data);
+          a.click();
+
+          deferred.resolve();
+
         },
-        // error
+        // Error
         function(response) {
           utilService.handleError(response);
           gpService.decrement();
           deferred.reject(response.data);
         });
       return deferred.promise;
-    }
-    
+    };
+
   } ]);

@@ -193,6 +193,40 @@ public class MldpServiceRestImpl extends RootServiceRestImpl
     }
 
   }
+  
+  @POST
+  @Override
+  @Produces("application/octet-stream")
+  @Path("/term/export")
+  @ApiOperation(value = "Export abbreviations", notes = "Exports abbreviations for type as comma or tab-delimited file", response = TypeKeyValueJpa.class)
+  public InputStream exportTermsFile(
+    @ApiParam(value = "The project id, e.g. 1", required = true) @QueryParam("projectId") Long projectId,
+    @ApiParam(value = "Workflow status, e.g. PUBLISHED", required = false) @QueryParam("status") WorkflowStatus status,
+    @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
+    throws Exception {
+    Logger.getLogger(getClass())
+        .info("RESTful call (MLDP, POST): /abbr/export/" + projectId + " " + status);
+    final ProjectService projectService = new ProjectServiceJpa();
+    final Project project = projectService.getProject(projectId);
+    final TermHandler handler = new TermHandler();
+    try {
+      final String username = authorizeProject(projectService, projectId,
+          securityService, authToken, "export abbreviations", UserRole.USER);
+      projectService.setLastModifiedBy(username);
+      handler.setService(projectService);
+      return handler.exportAbbreviationFile(project.getTerminology(),
+          status);
+    } catch (Exception e) {
+      handleException(e, "trying to export abbreviations");
+      return null;
+    } finally {
+      // NOTE: No need to close, but included for future safety
+      handler.close();
+      projectService.close();
+      securityService.close();
+    }
+
+  }
 
   @Override
   @Path("/abbr/review/compute")
@@ -986,7 +1020,6 @@ public class MldpServiceRestImpl extends RootServiceRestImpl
       // if status specified, filter
       if (status != null) {
         for (final TypeKeyValue term : allTerms.getObjects()) {
-          System.out.println("term: " + term.getWorkflowStatus());
           if (term.getWorkflowStatus().equals(status)) {
             termsToProcess.getObjects().add(term);
           }

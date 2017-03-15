@@ -61,15 +61,18 @@ tsApp
             key : 'NEEDS_REVIEW',
             value : 'Incomplete coverage'
           }, {
-            key : 'DEMOTION',
+            key : 'REVIEW_DONE',
             value : 'Excluded'
+          }, {
+            key : 'DEMOTION',
+            value : 'Error'
           }, {
             key : 'EDITING_IN_PROGRESS',
             value : 'Held by user'
           } ],
 
           rawTermTypes : [ 'Medication', 'Immunization', 'Allergy', 'Multivitamin',
-            'Ingr/str Mismatch', 'Long', 'Garbage' ],
+            'Ingr/str Mismatch', 'Package', 'Long', 'Garbage' ],
 
           pageSizes : [ {
             key : 5,
@@ -89,10 +92,7 @@ tsApp
           }, {
             key : 200,
             value : '200'
-          } ],
-          suffixes : [ 'hydrochloride', 'diacetate', 'dihydrochloride', 'hydrobromide', 'bromide',
-            'trihydrate' ]
-
+          } ]
         };
 
         $scope.paging = {};
@@ -225,10 +225,13 @@ tsApp
             queryRestriction : null
           };
           if (paging.termType || paging.workflowStatus) {
-            pfs.queryRestriction = (paging.termType ? 'value:' + paging.termType : '') + ' AND '
+            pfs.queryRestriction = (paging.termType ? 'value:\"' + paging.termType + '\"' : '') + ' AND '
               + (paging.workflowStatus ? 'workflowStatus:' + paging.workflowStatus : '');
             if (pfs.queryRestriction.startsWith(' AND ')) {
               pfs.queryRestriction = pfs.queryRestriction.substring(5);
+            }
+            if (pfs.queryRestriction.endsWith(' AND ')) {
+              pfs.queryRestriction = pfs.queryRestriction.substring(0, pfs.queryRestriction.length - 5);
             }
           }
           return pfs;
@@ -633,6 +636,12 @@ tsApp
               $scope.findTerms();
             })
         };
+        $scope.exportTerms = function(status) {
+          console.debug('export terms')
+          termService.exportTerms($scope.selected.project, status).then(function() {
+            
+          })
+        }
 
         //
         // Term Processing

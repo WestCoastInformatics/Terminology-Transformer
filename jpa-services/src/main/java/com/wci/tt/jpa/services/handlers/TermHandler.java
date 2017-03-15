@@ -32,8 +32,7 @@ import com.wci.umls.server.services.ProjectService;
 import com.wci.umls.server.services.helpers.PushBackReader;
 
 /**
- * Default implementation of {@link AbbreviationHandler} for handling
- * terms.
+ * Default implementation of {@link AbbreviationHandler} for handling terms.
  */
 public class TermHandler extends AbstractConfigurable
     implements AbbreviationHandler {
@@ -66,7 +65,7 @@ public class TermHandler extends AbstractConfigurable
   public void close() throws Exception {
     // do nothing
   }
-  
+
   // the original transaction-per-operation state of the service
   private boolean origTPO;
 
@@ -113,13 +112,12 @@ public class TermHandler extends AbstractConfigurable
             + " AND (keySort:\"" + abbr.getKey() + "\" OR value:\""
             + abbr.getValue() + "\"))");
 
-       // clause: value matches for term not in root type
-        clauses.add("(value:\""
-            + abbr.getValue() + "\" AND NOT type:\"" + rootType + "\")");
+        // clause: value matches for term not in root type
+        clauses.add("(value:\"" + abbr.getValue() + "\" AND NOT type:\""
+            + rootType + "\")");
       }
     }
-    
-    
+
     // if no query, no more to search, return local conflicts
     if (clauses.size() == 0) {
       return lcomputedConflicts;
@@ -129,8 +127,7 @@ public class TermHandler extends AbstractConfigurable
     for (int i = 0; i < clauses.size(); i++) {
       query += clauses.get(i) + (i == clauses.size() - 1 ? "" : " OR ");
     }
- 
-    
+
     // otherwise continue
     PfsParameter pfs = new PfsParameterJpa();
     pfs.setMaxResults(-1);
@@ -277,8 +274,6 @@ public class TermHandler extends AbstractConfigurable
           continue;
         }
 
-      
-
         // CHECK: Must be fields
         if (fields.length == 0) {
           result.getErrors().add("Line " + lineCt + ": Empty line");
@@ -293,7 +288,8 @@ public class TermHandler extends AbstractConfigurable
               fieldsStr += "[" + fields[i] + "] ";
             }
             result.getErrors()
-                .add("Line " + lineCt + ": Expected one fields but found " + fields.length + ": " + fieldsStr);
+                .add("Line " + lineCt + ": Expected one fields but found "
+                    + fields.length + ": " + fieldsStr);
           }
         }
 
@@ -302,19 +298,16 @@ public class TermHandler extends AbstractConfigurable
           result.getErrors()
               .add("Line " + lineCt + ": Key with null/empty value found");
         }
-        
+
         // if passes checks, add the type key value
         else {
-          final TypeKeyValue typeKeyValue = new TypeKeyValueJpa(
-              getAbbrType(terminology), fields[0], null);
+          final TypeKeyValue typeKeyValue =
+              new TypeKeyValueJpa(getAbbrType(terminology), fields[0], null);
           typeKeyValue.setWorkflowStatus(WorkflowStatus.NEW);
           service.addTypeKeyValue(typeKeyValue);
           addedCt++;
         }
 
-       
-
-        
       } while ((line = pbr.readLine()) != null);
 
       // after all terms loaded and if review indicated
@@ -371,16 +364,16 @@ public class TermHandler extends AbstractConfigurable
         if (addedCt == 0) {
           result.getWarnings().add("No terms added.");
         } else {
-          result.getComments().add(addedCt + " term "
-              + (addedCt == 1 ? "" : "s") + " added");
+          result.getComments()
+              .add(addedCt + " term " + (addedCt == 1 ? "" : "s") + " added");
         }
         if (ignoredCt != 0) {
           result.getComments().add(ignoredCt + " term "
               + (ignoredCt == 1 ? "" : "s") + " marked as ignored");
         }
         if (dupPairCt != 0) {
-          result.getWarnings().add(
-              dupPairCt + " duplicate term/expansion pairs skipped");
+          result.getWarnings()
+              .add(dupPairCt + " duplicate term/expansion pairs skipped");
         }
         if (errorCt != 0) {
           result.getErrors().add(errorCt + " lines with errors skipped");
@@ -399,6 +392,39 @@ public class TermHandler extends AbstractConfigurable
       service.setTransactionPerOperation(origTPO);
     }
     return result;
+  }
+
+  public InputStream exportAbbreviationFile(String terminology,
+    WorkflowStatus status) throws Exception {
+
+    // Write a header
+    // Obtain members for refset,
+    // Write RF2 simple refset pattern to a StringBuilder
+    // wrap and return the string for that as an input stream
+    StringBuilder sb = new StringBuilder();
+    sb.append("type").append("\t");
+    sb.append("key").append("\t");
+    sb.append("value").append("\r\n");
+
+    // sort by key
+    PfsParameter pfs = new PfsParameterJpa();
+    pfs.setSortField("key");
+
+    final String query = "type:\"" + getAbbrType(terminology) + "\""
+        + (status == null ? "" : " AND workflowStatus:" + status);
+
+    TypeKeyValueList abbrs = service.findTypeKeyValuesForQuery(query, pfs);
+
+    Logger.getLogger(getClass())
+        .info("Exporting " + abbrs.getTotalCount() + " terms");
+    for (TypeKeyValue abbr : abbrs.getObjects()) {
+      sb.append(abbr.getType()).append("\t");
+      sb.append(abbr.getKey()).append("\t");
+      sb.append(abbr.getValue()).append("\r\n");
+    }
+
+    return new ByteArrayInputStream(sb.toString().getBytes("UTF-8"));
+
   }
 
   /* see superclass */
@@ -639,12 +665,14 @@ public class TermHandler extends AbstractConfigurable
     final List<TypeKeyValue> results = new ArrayList<>();
 
     for (TypeKeyValue abbr : list) {
-      System.out.println("Checking value for : " + abbr.getId() + " / " + abbr.getValue());
+      System.out.println(
+          "Checking value for : " + abbr.getId() + " / " + abbr.getValue());
       final TypeKeyValueList matches =
           service.findTypeKeyValuesForQuery("value:\"" + abbr.getValue()
               + "\" AND NOT type:\"" + abbr.getType() + "\"", null);
       if (matches.getTotalCount() > 0) {
-        System.out.println("  Matched : " + abbr.getId() + " / " + matches.getTotalCount());
+        System.out.println(
+            "  Matched : " + abbr.getId() + " / " + matches.getTotalCount());
         results.add(abbr);
       }
     }

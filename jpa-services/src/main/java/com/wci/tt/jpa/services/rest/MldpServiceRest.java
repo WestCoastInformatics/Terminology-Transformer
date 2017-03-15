@@ -330,5 +330,8 @@ public interface MldpServiceRest {
   void putTermsInWorkflow(Long projectId, List<Long> termIds,
     WorkflowStatus workflowStatus, String authToken) throws Exception;
 
+  public InputStream exportTermsFile(Long projectId, WorkflowStatus status,
+    String authToken) throws Exception;
+
 
 }

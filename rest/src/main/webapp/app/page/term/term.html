@@ -198,12 +198,12 @@
                     Term Fully Matched</div>
 
                   <button
-                    ng-show="!elected.termResult.data.normalizedRemainingString && selected.termResult.data.normalizedRemainingString != ''"
+                    ng-show="!selected.termResult.data.normalizedRemainingString && selected.termResult.data.normalizedRemainingString != ''"
                     ng-click="changeWorkflowStatus('REVIEW_DONE')"
                     class="btn  btn-xs btn-danger">Exclude</button>
 
                   <button
-                    ng-show="!elected.termResult.data.normalizedRemainingString && selected.termResult.data.normalizedRemainingString != ''"
+                    ng-show="!selected.termResult.data.normalizedRemainingString && selected.termResult.data.normalizedRemainingString != ''"
                     ng-click="changeWorkflowStatus('PUBLISHED')"
                     class="btn  btn-xs btn-primary">Approve</button>
                     
@@ -364,11 +364,11 @@
           <div style="margin-top: 25px;">
             <h4>Export</h4>
             <span class="btn btn-xs btn-primary" style="margin-right: 10px;"
-              ng-click="exportTerms()">Export Terms</span> <br> <br> <input
-              type="checkbox" ng-model="selected.exportReadyOnly"> Skip
-            abbbreviations needing review<br> <br> <input
-              type="checkbox" ng-model="selected.exportAcceptNew"> Mark
-            new raw terms accepted
+              ng-click="exportTerms(status)">Export Terms</span> <select
+              ng-options="status.key as status.value for status in lists.workflowStatus"
+              ng-model="status">
+              <option value=""></option>
+            </select>
           </div>
         </div>
 
