@@ -193,7 +193,7 @@ public class MldpServiceRestImpl extends RootServiceRestImpl
     }
 
   }
-  
+
   @POST
   @Override
   @Produces("application/octet-stream")
@@ -202,11 +202,13 @@ public class MldpServiceRestImpl extends RootServiceRestImpl
   public InputStream exportTermsFile(
     @ApiParam(value = "The project id, e.g. 1", required = true) @QueryParam("projectId") Long projectId,
     @ApiParam(value = "Workflow status, e.g. PUBLISHED", required = false) @QueryParam("status") WorkflowStatus status,
+    @ApiParam(value = "Append model flag", required = false) @QueryParam("exportModel") boolean exportModel,
     @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
     throws Exception {
-    Logger.getLogger(getClass())
-        .info("RESTful call (MLDP, POST): /abbr/export/" + projectId + " " + status);
+    Logger.getLogger(getClass()).info(
+        "RESTful call (MLDP, POST): /abbr/export/" + projectId + " " + status);
     final ProjectService projectService = new ProjectServiceJpa();
+    final MldpService mldpService = new MldpServiceJpa();
     final Project project = projectService.getProject(projectId);
     final TermHandler handler = new TermHandler();
     try {
@@ -214,8 +216,12 @@ public class MldpServiceRestImpl extends RootServiceRestImpl
           securityService, authToken, "export abbreviations", UserRole.USER);
       projectService.setLastModifiedBy(username);
       handler.setService(projectService);
-      return handler.exportAbbreviationFile(project.getTerminology(),
-          status);
+      if (exportModel) {
+        return null; //handler.exportModelFile(project.getTerminology(), status,
+         //   mldpService);
+      } else {
+        return handler.exportAbbreviationFile(project.getTerminology(), status);
+      }
     } catch (Exception e) {
       handleException(e, "trying to export abbreviations");
       return null;
@@ -223,6 +229,7 @@ public class MldpServiceRestImpl extends RootServiceRestImpl
       // NOTE: No need to close, but included for future safety
       handler.close();
       projectService.close();
+      mldpService.close();
       securityService.close();
     }
 
@@ -971,7 +978,7 @@ public class MldpServiceRestImpl extends RootServiceRestImpl
       final String userName = authorizeProject(projectService, projectId,
           securityService, authToken, "process term", UserRole.USER);
       mldpService.setLastModifiedBy(userName);
-      
+
       // if id supplied, refresh from database to capture workflow changes
       TypeKeyValue localTerm;
       if (term.getId() != null) {
@@ -1003,7 +1010,8 @@ public class MldpServiceRestImpl extends RootServiceRestImpl
     @ApiParam(value = "Authorization token, e.g. 'author1'", required = true) @HeaderParam("Authorization") String authToken)
     throws Exception {
     Logger.getLogger(getClass())
-        .info("RESTful call (MLDP, GET): /term/process/all" + projectId + " " + status);
+        .info("RESTful call (MLDP, GET): /term/process/all" + projectId + " "
+            + status);
     final ProjectService projectService = new ProjectServiceJpa();
     final MldpService mldpService = new MldpServiceJpa();
     try {
@@ -1081,8 +1089,10 @@ public class MldpServiceRestImpl extends RootServiceRestImpl
         if (term == null) {
           throw new Exception("Term not found");
         }
-        if (!term.getType().equals(handler.getAbbrType(project.getTerminology()))) {
-          throw new Exception("Term type " + term.getType() + " not valid for project");
+        if (!term.getType()
+            .equals(handler.getAbbrType(project.getTerminology()))) {
+          throw new Exception(
+              "Term type " + term.getType() + " not valid for project");
         }
         term.setWorkflowStatus(workflowStatus);
         projectService.updateTypeKeyValue(term);

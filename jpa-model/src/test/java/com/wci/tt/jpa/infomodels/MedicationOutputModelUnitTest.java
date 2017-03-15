@@ -5,6 +5,9 @@ package com.wci.tt.jpa.infomodels;
 
 import static org.junit.Assert.assertTrue;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.log4j.Logger;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -26,13 +29,16 @@ public class MedicationOutputModelUnitTest extends JpaSupport {
 
   /** The model object to test. */
   private MedicationOutputModel object;
-  
 
   /** the test fixture s1. */
   private MedicationModel s1;
 
   /** the test fixture s2. */
   private MedicationModel s2;
+
+  private List<String> v1;
+
+  private List<String> v2;
 
   /**
    * Setup class.
@@ -49,10 +55,22 @@ public class MedicationOutputModelUnitTest extends JpaSupport {
    */
   @Before
   public void setup() throws Exception {
+    
     object = new MedicationOutputModel();
+    
     ProxyTester tester = new ProxyTester(new MedicationModel());
     s1 = (MedicationModel) tester.createObject(1);
     s2 = (MedicationModel) tester.createObject(2);
+    
+    s1.setIngredients(new ArrayList<>());
+    s2.setIngredients(new ArrayList<>());
+
+    v1 = new ArrayList<>();
+    v1.add("1");
+    v1.add("2");
+    v2 = new ArrayList<>();
+    v2.add("3");
+
   }
 
   /**
@@ -83,10 +101,13 @@ public class MedicationOutputModelUnitTest extends JpaSupport {
     tester.include("normalizedRemainingString");
     tester.include("removedTerms");
     tester.include("type");
-    tester.include("model");
-    
+  
+
     tester.proxy(MedicationModel.class, 1, s1);
     tester.proxy(MedicationModel.class, 2, s2);
+
+    tester.proxy(List.class, 1, v1);
+    tester.proxy(List.class, 2, v2);
 
     assertTrue(tester.testIdentityFieldEquals());
     assertTrue(tester.testNonIdentityFieldEquals());

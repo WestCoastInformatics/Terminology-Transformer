@@ -28,7 +28,15 @@
         Terminology: <select ng-model="selected.metadata.terminology"
           ng-change="setTerminology(selected.metadata.terminology)"
           ng-options="terminology as terminology.terminology for terminology in getViewableTerminologies() | orderBy:'terminology'">
-        </select> <span class="pull-right"> <span class="color-box"
+        </select> 
+      
+            Type:<select style="max-width:150px;"
+              ng-options="type as type for type in lists.rawTermTypes"
+              ng-change="paging['term'].callbacks.getPagedList()"
+              ng-model="paging['term'].termType"><option value=""></option></select>
+         
+        
+        <span class="pull-right"> <span class="color-box"
           style="background-color: blue;" ng-show="paging['term'].hasCovered"
           ng-click="toggleCoveredMode()" title="Fully covered"></span>&nbsp;<span
           class="color-box" style="background-color: green;"
@@ -42,9 +50,9 @@
           style="background-color: purple;"
           ng-show="paging['term'].hasModelingRequired"
           ng-click="toggleModelingRequiredMode()" title="Modeling required">
-        </span>&nbsp;<span class="color-box"
-          style="background-color: orange;" ng-show="paging['term'].hasUserHold"
-          ng-click="toggleUserHoldMode()" title="Held for later review"></span>&nbsp; Status:<select
+        </span>&nbsp;<span class="color-box" style="background-color: orange;"
+          ng-show="paging['term'].hasUserHold" ng-click="toggleUserHoldMode()"
+          title="Held for later review"></span>&nbsp; Status:<select
           ng-options="status.key as status.value for status in lists.workflowStatus"
           ng-model="paging['term'].workflowStatus" ng-change="findTerms()"></select>
 
@@ -55,15 +63,11 @@
           <div class="col-md-6" pager paging="paging['term']"
             count="lists.terms.totalCount" callbacks="paging['term'].callbacks"
             style="margin-top: 10px;"></div>
-          <div class="col-md-3" style="margin-top: 10px;">
-          Type:<select ng-options="type as type for type in lists.rawTermTypes"
-            ng-change="paging['term'].callbacks.getPagedList()"
-            ng-model="paging['term'].termType"><option value=""></option></select>
-            </div>
-          <div class="col-md-3">
-            <span ng-show="lists.terms.totalCount > 10"
-              style="float: right;""> Page size:<select
-              ng-model="paging['term'].pageSize" title="Page Size"
+         
+          <div class="col-md-6">
+            <span ng-show="lists.terms.totalCount > 10" style="float: right;"">
+              Page size:<select ng-model="paging['term'].pageSize"
+              title="Page Size"
               ng-change="paging['term'].callbacks.getPagedList()"
               ng-options="pageSize.key as pageSize.value for pageSize in lists.pageSizes">
             </select>
@@ -109,20 +113,18 @@
                 style="background-color: red; margin-top: 5px;"
                 ng-show="term.workflowStatus == 'NEEDS_REVIEW'"
                 ng-click="toggleReviewMode()" title="Incomplete coverage"></span>
-                <span
-                class="color-box"
+                <span class="color-box"
                 style="background-color: orange; margin-top: 5px;"
                 ng-show="term.workflowStatus == 'EDITING_IN_PROGRESS'"
                 ng-click="toggleHeldMode()" title="Held for later review"></span>
                 <span class="color-box"
                 style="background-color: purple; margin-top: 5px;"
                 ng-show="term.workflowStatus == 'REVIEW_IN_PROGRESS'"
-                ng-click="toggleModelingRequiredMode()" title="Modeling required"></span>
-                <span class="color-box"
+                ng-click="toggleModelingRequiredMode()"
+                title="Modeling required"></span> <span class="color-box"
                 style="background-color: blue; margin-top: 5px;"
                 ng-show="term.workflowStatus == 'PUBLISHED'"
-                ng-click="toggleCoveredMode()" title="Fully covered"></span>
-                  <span
+                ng-click="toggleCoveredMode()" title="Fully covered"></span> <span
                 class="color-box"
                 style="background-color: green; margin-top: 5px;"
                 ng-show="term.workflowStatus == 'NEW'"
@@ -143,12 +145,17 @@
             </tr>
           </tbody>
         </table>
-        
+
         <hr>
-        
+
         <h5>Perform bulk action on results</h5>
-        <button class="btn btn-xs btn-warning" title="Mark terms for user hold. Status will remain unchanged until removed" ng-click="markAllForUserHold()">Mark for User Hold</button>
-        <button ng-show="paging['term'].hasUserHold" class="btn btn-xs btn-primary" title="Mark terms for user hold. Recomputes status." ng-click="unmarkAllForUserHold()">Remove User Hold</button>
+        <button class="btn btn-xs btn-warning"
+          title="Mark terms for user hold. Status will remain unchanged until removed"
+          ng-click="markAllForUserHold()">Mark for User Hold</button>
+        <button ng-show="paging['term'].hasUserHold"
+          class="btn btn-xs btn-primary"
+          title="Mark terms for user hold. Recomputes status."
+          ng-click="unmarkAllForUserHold()">Remove User Hold</button>
       </div>
       <div class="col-md-6" ng-show="selected.metadata.terminology">
 
@@ -186,9 +193,7 @@
                   ng-repeat="removedTerm in selected.termResult.data.removedTerms">{{removedTerm}}</span>
               <tr ng-show="selected.termResult.data.remainingString">
                 <td>Unmatched</td>
-                <td>
-                  {{selected.termResult.data.remainingString}}
-                </td>
+                <td>{{selected.termResult.data.remainingString}}</td>
               </tr>
 
               <tr>
@@ -206,21 +211,22 @@
                     ng-show="!selected.termResult.data.normalizedRemainingString && selected.termResult.data.normalizedRemainingString != ''"
                     ng-click="changeWorkflowStatus('PUBLISHED')"
                     class="btn  btn-xs btn-primary">Approve</button>
-                    
-                     <button
-                    ng-show="workflowStatus != 'EDITING_IN_PROGRESS'"
-                    ng-click="markForUserHold()"
-                    class="btn  btn-xs btn-warning">Mark for Hold</button>
-                    
-                    <button
-                    ng-show="workflowStatus == 'EDITING_IN_PROGRESS'"
+
+                  <button ng-show="workflowStatus != 'EDITING_IN_PROGRESS'"
+                    ng-click="markForUserHold()" class="btn  btn-xs btn-warning">Mark
+                    for Hold</button>
+
+                  <button ng-show="workflowStatus == 'EDITING_IN_PROGRESS'"
                     ng-click="unmarkForUserHold()"
                     class="btn  btn-xs btn-warning">Release Hold</button></td>
                 </td>
               </tr>
               <tr>
-                <td>Model</td>
-                <td class="preformatted">{{selected.termResult.data.model}}</td>
+                <td>Model <i class="noul glyphicon small"
+                  ng-class="[{'glyphicon-plus' : !local.isModelExpanded}, {'glyphicon-minus' : local.isModelExpanded}]"
+                  ng-click="local.isModelExpanded = !local.isModelExpanded"></i></td>
+                <td class="preformatted"><span ng-show="local.isModelExpanded">{{selected.formattedResult}}</span><span
+                  ng-show="!local.isModelExpanded">{{selected.termResult.data.model}}</span></td>
             </table>
 
             <hr style="margin: 5px;">

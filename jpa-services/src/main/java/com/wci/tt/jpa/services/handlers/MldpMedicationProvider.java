@@ -4,14 +4,11 @@
 package com.wci.tt.jpa.services.handlers;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -32,10 +29,8 @@ import com.wci.tt.jpa.services.helper.DataContextMatcher;
 import com.wci.tt.services.handlers.ProviderHandler;
 import com.wci.umls.server.helpers.Branch;
 import com.wci.umls.server.helpers.ConfigUtility;
-import com.wci.umls.server.helpers.PfsParameter;
 import com.wci.umls.server.helpers.content.ConceptList;
 import com.wci.umls.server.jpa.content.ConceptJpa;
-import com.wci.umls.server.jpa.helpers.PfsParameterJpa;
 import com.wci.umls.server.jpa.services.ContentServiceJpa;
 import com.wci.umls.server.model.content.Atom;
 import com.wci.umls.server.model.content.Concept;
@@ -47,10 +42,10 @@ import com.wci.umls.server.services.ContentService;
 public class MldpMedicationProvider extends AbstractAcceptsHandler
     implements ProviderHandler {
 
-
- 
   /** Package pattern */
-  private final static Pattern pkPattern = Pattern.compile("\\{.*\\}.*pack.*", Pattern.CASE_INSENSITIVE);  
+  private final static Pattern pkPattern =
+      Pattern.compile("\\{.*\\}.*pack.*", Pattern.CASE_INSENSITIVE);
+
   /** Brand name pattern */
   private final static Pattern bnPattern = Pattern.compile("\\[(.*)\\]");
 
@@ -61,7 +56,8 @@ public class MldpMedicationProvider extends AbstractAcceptsHandler
   private final static HashMap<String, Concept> atomToConceptMap =
       new HashMap<>();
 
-  private static boolean cacheMode = false;
+  // TODO This is not thread-safe, but fine for single user
+  private boolean cacheMode = false;
 
   private boolean debugMode = false;
 
@@ -212,7 +208,7 @@ public class MldpMedicationProvider extends AbstractAcceptsHandler
         final String value = result.getValue().toLowerCase();
         final ScoredDataContext outputContext = new ScoredDataContextJpa();
 
-       // RULE about packages
+        // RULE about packages
         if (pkPattern.matcher(value).find()) {
           outputContext.setSpecialty("Package");
         }
@@ -231,7 +227,7 @@ public class MldpMedicationProvider extends AbstractAcceptsHandler
         else if (hasMedicationWords(service, value)) {
           outputContext.setSpecialty("Medication");
         }
-        
+
         else if (value.split("\\w+").length > longTermWordThreshold) {
           outputContext.setSpecialty("Long");
         }
@@ -315,6 +311,7 @@ public class MldpMedicationProvider extends AbstractAcceptsHandler
     final String inputString = record.getInputString();
     final DataContext inputContext = record.getInputContext();
     final DataContext outputContext = record.getProviderOutputContext();
+    outputContext.setInfoModelClass(MedicationOutputModel.class.getName());
 
     // Validate input/output context
     validate(inputContext, outputContext);
@@ -377,8 +374,11 @@ public class MldpMedicationProvider extends AbstractAcceptsHandler
             "DoseFormQualifier", "Route", "ReleasePeriod"
         };
 
-        final Set<Concept> ingredients = new HashSet<>();
-        final Set<Concept> strengths = new HashSet<>();
+        // save ingredients and strengths along route
+        // KEY: the matched term (from atom match)
+        // VALUE: The concept containing atom
+        final Map<String, Concept> ingredients = new HashMap<>();
+        final Map<String, Concept> strengths = new HashMap<>();
 
         // NOTE: Must be surrounded with buffer space, see replaceAll below
         String remainingString = " " + inputString + " ";
@@ -476,9 +476,6 @@ public class MldpMedicationProvider extends AbstractAcceptsHandler
                       + Pattern.quote(subsequence) + "[\\s"
                       + (feature.equals("BrandName") ? "\\]" : "") + "]";
 
-              // "(^\\QFibrinogen\\E$|^\\QFibrinogen\\E\\s|\\s\\QFibrinogen\\E\\s|\\s\\QFibrinogen\\E$)";
-              // "(^" + escapedPattern + "$|^" + escapedPattern + "\\s|\\s"
-              // + escapedPattern + "\\s|\\s" + escapedPattern + "$)";
               if (debugMode) {
                 System.out.println("remaining: " + remainingString);
               }
@@ -491,13 +488,13 @@ public class MldpMedicationProvider extends AbstractAcceptsHandler
                   medModel.setBrandName(new ValueRawModel(
                       matchConcept.getTerminologyId(), matchConcept.getName()));
                   break;
+                // NOTE: Ingredients and strengths are combined below
                 case "Ingredient":
-                  ingredients.add(matchConcept);
+                  ingredients.put(subsequence, matchConcept);
                   break;
                 case "Strength":
-                  strengths.add(matchConcept);
+                  strengths.put(subsequence, matchConcept);
                   break;
-
                 case "DoseForm":
                   medModel.setDoseForm(new ValueRawModel(
                       matchConcept.getTerminologyId(), matchConcept.getName()));
@@ -525,73 +522,60 @@ public class MldpMedicationProvider extends AbstractAcceptsHandler
         // after all phrases/features checked, match ingredients and strengths
         if (ingredients.size() > 0) {
 
-          // match ingredients and strengths
-          final HashMap<Integer, Concept> ingrPos = new HashMap<>();
-          final HashMap<Integer, Concept> strPos = new HashMap<>();
+          // compute initial match
+          // mismatch will still attempt to match strength where available
+          boolean ingrStrMatch = true;
 
-          for (final Concept concept : ingredients) {
-            int pos = inputString.toLowerCase()
-                .indexOf(concept.getName().toLowerCase());
-            while (pos >= 0) {
-              ingrPos.put(pos, concept);
-              pos = inputString.indexOf(concept.getName(), pos + 1);
-            }
+          if (debugMode) {
+            System.out.println("Checking ingredients and strengths");
+            System.out.println(inputString);
           }
 
-          for (final Concept concept : strengths) {
-            int pos = inputString.toLowerCase()
-                .indexOf(concept.getName().toLowerCase());
-            while (pos >= 0) {
-              strPos.put(pos, concept);
-              pos = inputString.toLowerCase()
-                  .indexOf(concept.getName().toLowerCase(), pos + 1);
-            }
-          }
-
-          // TODO Naive check for potential concentrations
-          // Once modeling decided, handle concentrations and mismatch scenarios
-          if (ingredients.size() != strengths.size()) {
-            if (debugMode) {
-              System.out.println("ingr/str mismatch");
-            }
-            if (strengths.size() > 0) {
-              outputModel.setType("Ingredient/strength mismatch");
-            }
-          }
-
-          if (ingredients.size() > 6
-              && inputString.matches("(oral|tablet|capsule)")) {
-            if (debugMode) {
-              System.out.println("multivitamin");
-            }
-            outputModel.setType("Multivitamin");
-          } else {
-
-            final List<Integer> orderedIngrPos =
-                new ArrayList<>(ingrPos.keySet());
-            Collections.sort(orderedIngrPos);
-            final List<Integer> orderedStrPos =
-                new ArrayList<>(strPos.keySet());
-            Collections.sort(orderedStrPos);
-
-            for (int i = 0; i < orderedIngrPos.size(); i++) {
-              final IngredientModel ingrModel = new IngredientModel();
-
-              final ValueRawModel ingr = new ValueRawModel();
-              ingr.setRaw(
-                  ingrPos.get(orderedIngrPos.get(i)).getTerminologyId());
-              ingr.setValue(ingrPos.get(orderedIngrPos.get(i)).getName());
-              final ValueRawModel str = new ValueRawModel();
-              if (orderedStrPos.size() > i) {
-                str.setRaw(strPos.get(orderedStrPos.get(i)).getTerminologyId());
-                str.setValue(strPos.get(orderedStrPos.get(i)).getName());
+          // match ingredients and strengths (naive form for now)
+          // always expect sequence "Ingredient Strength"
+          // e.g. Alanine 5.7 MG/ML / Arginine 3.16 MG/ML
+          // NOTE: Ratios/concentrations not yet handled, see TODO above
+          for (final String ingredient : ingredients.keySet()) {
+            final IngredientModel ingrModel = new IngredientModel();
+            ingrModel.setIngredient(new ValueRawModel(ingredient,
+                ingredients.get(ingredient).getTerminologyId()));
+            for (final String strength : strengths.keySet()) {
+              final String pattern =
+                  ".*\\b" + ingredient + " " + strength + "\\b.*";
+              if (debugMode) {
+                System.out.println("  Checking: " + pattern);
               }
-              ingrModel.setIngredient(ingr);
-              ingrModel.setStrength(str);
-              medModel.getIngredients().add(ingrModel);
+              if (inputString.matches(pattern)) {
+                if (debugMode) {
+                  System.out.println("    Found ingr/str match: " + ingredient
+                      + " " + strength);
+                  ingrModel.setStrength(new ValueRawModel(strength,
+                      strengths.get(strength).getTerminologyId()));
+                }
+
+              }
+            }
+            if (ingrModel.getStrength() == null) {
+              System.out.println("    Flagging ingr/str mismatch");
+              ingrStrMatch = false;
+            }
+            medModel.getIngredients().add(ingrModel);
+          }
+
+          if (!ingrStrMatch) {
+            if (debugMode) {
+              System.out.println(" ingr/str mismatch");
+            }
+            if (strengths.size() == 0) {
+              outputModel.setType("Ingrs/no strengths");
+            } else {
+              outputModel.setType("Ingr/str mismatch");
             }
 
+          } else if (debugMode) {
+            System.out.println(" Ingr/str matched");
           }
+
         }
 
         outputModel.setRemainingString(remainingString.trim());
@@ -639,14 +623,14 @@ public class MldpMedicationProvider extends AbstractAcceptsHandler
         }
 
         break;
-      case "Ingredients with no strengths":
+      case "Ingrs/no strengths":
         if (outputModel.getNormalizedRemainingString().isEmpty()) {
           result.setScore(0.70f);
         } else {
           result.setScore(0.0f);
         }
         break;
-      case "Ingredient/strength mismatch":
+      case "Ingr/str mismatch":
         if (outputModel.getNormalizedRemainingString().isEmpty()) {
           result.setScore(0.75f);
         } else {

@@ -5,6 +5,9 @@ package com.wci.tt.jpa.infomodels;
 
 import static org.junit.Assert.assertTrue;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.log4j.Logger;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -29,13 +32,13 @@ public class MedicationModelUnitTest extends JpaSupport {
   private MedicationModel object;
 
   /** the test fixture s1. */
-  private IngredientModel s1;
+  private List<IngredientModel> s1;
 
   /** the test fixture s2. */
-  private IngredientModel s2;
-  
+  private List<IngredientModel> s2;
+
   private ValueRawModel v1;
-  
+
   private ValueRawModel v2;
 
   /**
@@ -55,11 +58,19 @@ public class MedicationModelUnitTest extends JpaSupport {
   public void setup() throws Exception {
     object = new MedicationModel();
     ProxyTester tester = new ProxyTester(new IngredientModel());
-    s1 = (IngredientModel) tester.createObject(1);
-    s2 = (IngredientModel) tester.createObject(2);
-    v1 = (ValueRawModel) tester.createObject(3);
-    v2 = (ValueRawModel) tester.createObject(4);
-  
+
+    s1 = new ArrayList<>();
+    s1.add((IngredientModel) tester.createObject(1));
+    s1.add((IngredientModel) tester.createObject(3));
+    s2 = new ArrayList<>();
+    s2.add((IngredientModel) tester.createObject(2));
+    
+    
+    ProxyTester tester2 = new ProxyTester(new ValueRawModel());
+
+    v1 = (ValueRawModel) tester2.createObject(3);
+    v2 = (ValueRawModel) tester2.createObject(4);
+
   }
 
   /**
@@ -91,10 +102,10 @@ public class MedicationModelUnitTest extends JpaSupport {
     tester.include("route");
     tester.include("releasePeriod");
 
-    tester.proxy(IngredientModel.class, 1, s1);
-    tester.proxy(IngredientModel.class, 2, s2);
-    tester.proxy(ValueRawModel.class, 3, v1);
-    tester.proxy(ValueRawModel.class, 4, v2);
+    tester.proxy(List.class, 1, s1);
+    tester.proxy(List.class, 2, s2);
+    tester.proxy(ValueRawModel.class, 1, v1);
+    tester.proxy(ValueRawModel.class, 2, v2);
     assertTrue(tester.testIdentityFieldEquals());
     assertTrue(tester.testNonIdentityFieldEquals());
     assertTrue(tester.testIdentityFieldNotEquals());
@@ -112,8 +123,8 @@ public class MedicationModelUnitTest extends JpaSupport {
   public void testModelCopy() throws Exception {
     Logger.getLogger(getClass()).debug("TEST " + name.getMethodName());
     CopyConstructorTester tester = new CopyConstructorTester(object);
-    tester.proxy(IngredientModel.class, 1, s1);
-    tester.proxy(IngredientModel.class, 2, s2);
+    tester.proxy(List.class, 1, s1);
+    tester.proxy(List.class, 2, s2);
     tester.proxy(ValueRawModel.class, 1, v1);
     tester.proxy(ValueRawModel.class, 2, v2);
     assertTrue(tester.testCopyConstructor(MedicationModel.class));
@@ -128,7 +139,10 @@ public class MedicationModelUnitTest extends JpaSupport {
   public void testModelXmlSerialization() throws Exception {
     Logger.getLogger(getClass()).debug("TEST " + name.getMethodName());
     XmlSerializationTester tester = new XmlSerializationTester(object);
-    tester.proxy(IngredientModel.class, 1, s1);
+    tester.proxy(List.class, 1, s1);
+    tester.proxy(List.class, 2, s2);
+    tester.proxy(ValueRawModel.class, 1, v1);
+    tester.proxy(ValueRawModel.class, 2, v1);
     tester.testXmlSerialization();
   }
 

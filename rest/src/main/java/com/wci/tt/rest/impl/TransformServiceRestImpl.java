@@ -4,11 +4,8 @@
 package com.wci.tt.rest.impl;
 
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
@@ -41,10 +38,8 @@ import com.wci.umls.server.UserRole;
 import com.wci.umls.server.helpers.KeyValuePair;
 import com.wci.umls.server.helpers.KeyValuePairList;
 import com.wci.umls.server.helpers.StringList;
-import com.wci.umls.server.jpa.services.ContentServiceJpa;
 import com.wci.umls.server.jpa.services.SecurityServiceJpa;
 import com.wci.umls.server.rest.impl.RootServiceRestImpl;
-import com.wci.umls.server.services.ContentService;
 import com.wci.umls.server.services.SecurityService;
 import com.wci.umls.server.services.handlers.SourceDataHandler;
 

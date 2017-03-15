@@ -17,6 +17,7 @@ import com.wci.tt.jpa.helpers.ValueRawModel;
 import com.wci.umls.server.helpers.CopyConstructorTester;
 import com.wci.umls.server.helpers.EqualsHashcodeTester;
 import com.wci.umls.server.helpers.GetterSetterTester;
+import com.wci.umls.server.helpers.ProxyTester;
 import com.wci.umls.server.helpers.XmlSerializationTester;
 
 /**
@@ -49,6 +50,9 @@ public class IngredientModelUnitTest extends JpaSupport {
   @Before
   public void setup() throws Exception {
     object = new IngredientModel();
+    ProxyTester tester = new ProxyTester(new ValueRawModel());
+    s1 = (ValueRawModel) tester.createObject(1);
+    s2 = (ValueRawModel) tester.createObject(2);
   }
 
   /**

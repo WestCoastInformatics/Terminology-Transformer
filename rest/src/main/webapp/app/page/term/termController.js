@@ -72,8 +72,9 @@ tsApp
           } ],
 
           rawTermTypes : [ 'Medication', 'Immunization', 'Allergy', 'Multivitamin',
-            'Ingr/str Mismatch', 'Package', 'Long', 'Garbage' ],
+            'Ingredient/strength mismatch', 'Package', 'Long', 'Garbage' ],
 
+           
           pageSizes : [ {
             key : 5,
             value : "5"
@@ -113,12 +114,7 @@ tsApp
         // Local variables
         //
         $scope.local = {
-          newConcept : {
-            pt : null,
-            sys : [],
-            feature : null
-          },
-          suffix : null
+          isModelExpanded : false
         }
 
         // pass utility functions to scope
@@ -224,6 +220,8 @@ tsApp
             ascending : paging.sortAscending,
             queryRestriction : null
           };
+          
+          // apply query restriction
           if (paging.termType || paging.workflowStatus) {
             pfs.queryRestriction = (paging.termType ? 'value:\"' + paging.termType + '\"' : '') + ' AND '
               + (paging.workflowStatus ? 'workflowStatus:' + paging.workflowStatus : '');
@@ -235,7 +233,7 @@ tsApp
             }
           }
           return pfs;
-        }
+        } 
 
         $scope.findConcepts = function(concept) {
           findConcepts(concept);
@@ -730,6 +728,7 @@ tsApp
               if (!response || !Array.isArray(response.scoredDataContextTuples)
                 || response.scoredDataContextTuples.length == 1) {
                 $scope.selected.termResult = response.scoredDataContextTuples[0];
+                $scope.selected.formattedResult = JSON.stringify($scope.selected.termResult.data.model, undefined, 2);
                 findTerms();
                 findConcepts();
               } else {

@@ -16,6 +16,10 @@ import java.util.stream.Collectors;
 
 import org.apache.log4j.Logger;
 
+import com.wci.tt.helpers.ScoredDataContextTuple;
+import com.wci.tt.infomodels.InfoModel;
+import com.wci.tt.jpa.infomodels.MedicationModel;
+import com.wci.tt.services.MldpService;
 import com.wci.tt.services.handlers.AbbreviationHandler;
 import com.wci.umls.server.ValidationResult;
 import com.wci.umls.server.helpers.ConfigUtility;
@@ -224,8 +228,6 @@ public class TermHandler extends AbstractConfigurable
     PushBackReader pbr = null;
     try {
 
-      List<TypeKeyValue> newAbbrs = new ArrayList<>();
-
       // Read from input stream
       Reader reader = new InputStreamReader(in, "UTF-8");
       pbr = new PushBackReader(reader);
@@ -238,7 +240,6 @@ public class TermHandler extends AbstractConfigurable
       int dupPairCt = 0;
       int dupKeyCt = 0;
       int dupValCt = 0;
-      PfsParameter pfs = new PfsParameterJpa();
 
       String line = pbr.readLine();
 
@@ -427,6 +428,61 @@ public class TermHandler extends AbstractConfigurable
 
   }
 
+  @SuppressWarnings("unchecked")
+  public InputStream exportModelFile(String terminology, WorkflowStatus status, Class<InfoModel<?>> modelClass,
+    MldpService mldpService) throws Exception {
+
+    // Write a header
+    // Obtain members for refset,
+    // Write RF2 simple refset pattern to a StringBuilder
+    // wrap and return the string for that as an input stream
+    StringBuilder sb = new StringBuilder();
+    sb.append("type").append("\t");
+    sb.append("key").append("\t");
+    sb.append("value").append("\r\n");
+
+    // sort by key
+    PfsParameter pfs = new PfsParameterJpa();
+    pfs.setSortField("key");
+    
+    // TODO remove after debug
+    pfs.setStartIndex(0);
+    pfs.setMaxResults(50);
+
+    final String query = "type:\"" + getAbbrType(terminology) + "\""
+        + (status == null ? "" : " AND workflowStatus:" + status);
+
+    TypeKeyValueList terms = mldpService.findTypeKeyValuesForQuery(query, pfs);
+
+    Logger.getLogger(getClass())
+        .info("Exporting " + terms.getTotalCount() + " terms");
+
+   
+    for (TypeKeyValue term : terms.getObjects()) {
+      
+      System.out.println("term: " + term);
+
+      // TODO Once converters handle model output, remove this casting and
+      // access directly
+      final ScoredDataContextTuple tuple =
+          mldpService.processTerm(term).getObjects().get(0);
+     
+      System.out.println("tuple data:" + tuple.getData());
+      final InfoModel<?> outputModel =
+          ConfigUtility.getGraphForJson(tuple.getData(), modelClass);
+      
+      System.out.println("  model value: " + outputModel.getModelValue());
+
+      sb.append(term.getType()).append("\t");
+      sb.append(term.getKey()).append("\t");
+      sb.append(term.getValue()).append("\t");
+      sb.append(outputModel.getModelValue()).append("\r\n");
+    }
+
+    return new ByteArrayInputStream(sb.toString().getBytes("UTF-8"));
+
+  }
+
   /* see superclass */
   @Override
   public InputStream exportAbbreviationFile(String terminology,
@@ -506,15 +562,7 @@ public class TermHandler extends AbstractConfigurable
   /* see superclass */
   @Override
   public void updateWorkflowStatus(TypeKeyValue abbr) throws Exception {
-    // NOTE: Review always contains the term itself
-    TypeKeyValueList temp = getReviewForAbbreviation(abbr);
-    if (getReviewForAbbreviation(abbr).getTotalCount() > 1) {
-      // set to NEEDS_REVIEW
-      abbr.setWorkflowStatus(WorkflowStatus.NEEDS_REVIEW);
-    } else {
-      // otherwise set to
-      abbr.setWorkflowStatus(WorkflowStatus.NEW);
-    }
+    throw new UnsupportedOperationException();
   }
 
   /* see superclass */
@@ -683,6 +731,11 @@ public class TermHandler extends AbstractConfigurable
   @Override
   public String getAbbrType(String terminology) {
     return terminology + "-TERM";
+  }
+  
+  @Override
+  public String getTerminologyFromAbbrType(String type) {
+    return type.replace("-TERM", "");
   }
 
 }

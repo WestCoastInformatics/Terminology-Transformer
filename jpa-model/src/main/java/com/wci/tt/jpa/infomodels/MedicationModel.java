@@ -68,7 +68,7 @@ public class MedicationModel implements InfoModel<MedicationModel> {
    * @param model the model
    */
   public MedicationModel(MedicationModel model) {
-    this.ingredients = model.getIngredients();
+    this.ingredients = new ArrayList<>(model.getIngredients());
     this.brandName = model.getBrandName();
     this.doseForm = model.getDoseForm();
     this.doseFormQualifier = model.getDoseFormQualifier();
@@ -259,7 +259,7 @@ public class MedicationModel implements InfoModel<MedicationModel> {
     boolean analysisMode) throws Exception {
     throw new UnsupportedOperationException();
   }
-
+  
   @Override
   public int hashCode() {
     final int prime = 31;
@@ -325,5 +325,6 @@ public class MedicationModel implements InfoModel<MedicationModel> {
         + doseFormQualifier + ", route=" + route + ", releasePeriod="
         + releasePeriod + "]";
   }
+
 
 }

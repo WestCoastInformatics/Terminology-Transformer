@@ -9,14 +9,11 @@ import java.util.Properties;
 import java.util.Set;
 
 import com.wci.umls.server.ValidationResult;
-import com.wci.umls.server.helpers.ConfigUtility;
-import com.wci.umls.server.helpers.content.ConceptList;
 import com.wci.umls.server.jpa.ValidationResultJpa;
 import com.wci.umls.server.jpa.content.ConceptJpa;
 import com.wci.umls.server.jpa.services.ContentServiceJpa;
 import com.wci.umls.server.jpa.services.handlers.DefaultSearchHandler;
 import com.wci.umls.server.jpa.services.validation.AbstractValidationCheck;
-import com.wci.umls.server.model.content.Atom;
 import com.wci.umls.server.model.content.Concept;
 import com.wci.umls.server.services.ContentService;
 import com.wci.umls.server.services.handlers.SearchHandler;

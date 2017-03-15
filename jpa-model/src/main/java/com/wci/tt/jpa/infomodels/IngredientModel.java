@@ -190,7 +190,7 @@ public class IngredientModel
     return "IngredientModel [ingredient=" + ingredient + ", strength="
         + strength + "]";
   }
-  
+
   
 
 }

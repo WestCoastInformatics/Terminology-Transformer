@@ -140,4 +140,6 @@ public interface AbbreviationHandler extends Configurable {
    */
   public String getAbbrType(String terminology);
 
+  String getTerminologyFromAbbrType(String type);
+
 }

@@ -19,6 +19,8 @@ import com.wci.tt.jpa.DataContextJpa;
 import com.wci.tt.jpa.helpers.ScoredDataContextTupleJpa;
 import com.wci.tt.jpa.helpers.ScoredDataContextTupleListJpa;
 import com.wci.tt.jpa.infomodels.MedicationModel;
+import com.wci.tt.jpa.infomodels.MedicationOutputModel;
+import com.wci.tt.jpa.services.handlers.TermHandler;
 import com.wci.tt.services.CoordinatorService;
 import com.wci.tt.services.MldpService;
 import com.wci.umls.server.helpers.TypeKeyValue;
@@ -30,6 +32,8 @@ import com.wci.umls.server.model.workflow.WorkflowStatus;
 public class MldpServiceJpa extends CoordinatorServiceJpa
     implements MldpService {
 
+  // NOTE: Discard this once CoordinatorService converter handling
+  // allows passing of the model object itself
   private final static Pattern typePattern =
       Pattern.compile("\\\"type\\\"\\s*:\\s*\"([^,]*)\",");
 
@@ -43,9 +47,6 @@ public class MldpServiceJpa extends CoordinatorServiceJpa
     throws Exception {
     Logger.getLogger(getClass()).info("process term " + term);
 
-    // TODO Remove after dev testing
-    System.setProperty("mldpdebug", "true");
-
     // Translate tuples into JPA object
     final ScoredDataContextTupleList tuples =
         new ScoredDataContextTupleListJpa();
@@ -58,9 +59,14 @@ public class MldpServiceJpa extends CoordinatorServiceJpa
         getTerminologyLatestVersion(terminology).getVersion();
     inputContext.setTerminology(terminology);
     inputContext.setVersion(version);
+    
+    // single term does not use cache mode
+    inputContext.getParameters().put("cacheMode", "false");
+    inputContext.getParameters().put("mldpdebug", "true");
 
-    final DataContext outputContext = new DataContextJpa();
+    DataContext outputContext = new DataContextJpa();
     outputContext.setType(DataContextType.INFO_MODEL);
+    outputContext.setInfoModelClass(MedicationOutputModel.class.getName());
     outputContext.setTerminology(terminology);
     outputContext.setVersion(version);
 
@@ -89,30 +95,37 @@ public class MldpServiceJpa extends CoordinatorServiceJpa
   @Override
   public void processTerms(List<TypeKeyValue> terms) throws Exception {
 
-   Logger.getLogger(getClass()).info("Processing " + terms.size() + " terms");
-   System.setProperty("mldpdebug", "false");
-    if (terms.size() > 0) {
+    Logger.getLogger(getClass()).info("Processing " + terms.size() + " terms");
+   if (terms.size() > 0) {
+
+      TermHandler handler = new TermHandler();
+
+      // get terminology and version from type
+      final String terminology =
+          handler.getTerminologyFromAbbrType(terms.get(0).getType());
+      final String version =
+          getTerminologyLatestVersion(terminology).getVersion();
 
       // input context: NAME
       final DataContext inputContext = new DataContextJpa();
-      inputContext.setType(DataContextType.NAME);
-
-      final String terminology = terms.get(0).getType().replace("-TERM", "");
-      final String version =
-          getTerminologyLatestVersion(terminology).getVersion();
       inputContext.setTerminology(terminology);
       inputContext.setVersion(version);
+      inputContext.setType(DataContextType.NAME);
+      
+      // multiple terms uses cache mode
       inputContext.getParameters().put("cacheMode", "true");
+      inputContext.getParameters().put("mldpdebug", "true");
 
       // output context: MEDICATION_MODEL
       final DataContext outputContext = new DataContextJpa();
-      outputContext.setType(DataContextType.INFO_MODEL);
-      outputContext.setInfoModelClass(MedicationModel.class.getName());
 
       outputContext.setTerminology(terminology);
       outputContext.setVersion(version);
+      outputContext.setType(DataContextType.INFO_MODEL);
+      outputContext.setInfoModelClass(MedicationOutputModel.class.getName());
 
-      final Long lastCommitTime = System.currentTimeMillis();
+
+
       try {
         setTransactionPerOperation(false);
         beginTransaction();
@@ -149,10 +162,11 @@ public class MldpServiceJpa extends CoordinatorServiceJpa
   }
 
   private void updateFromResult(TypeKeyValue term, ScoredResult scoredResult) {
-    
+
     if ("true".equals(System.getProperty("mldpdebug"))) {
       System.out.println("term: " + term);
-      System.out.println("  result: " + scoredResult.getScore() + " " + scoredResult.getValue());
+      System.out.println("  result: " + scoredResult.getScore() + " "
+          + scoredResult.getValue());
     }
 
     // TODO Use getModel once unit tests settled
@@ -166,8 +180,8 @@ public class MldpServiceJpa extends CoordinatorServiceJpa
     }
 
     // set the workflow
-    // TODO This seriously needs to reworked, score mismatch potential very high
-    // Incorporate into model later, perhaps
+    // TODO Eliminate this once the TKV itself is passed in as part
+    // of input model
     if (scoredResult.getScore() == 0.0f) {
       // represents incomplete coverage
       term.setWorkflowStatus(WorkflowStatus.NEEDS_REVIEW);

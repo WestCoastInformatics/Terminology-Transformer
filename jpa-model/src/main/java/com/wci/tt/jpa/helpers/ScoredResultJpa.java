@@ -75,6 +75,7 @@ public class ScoredResultJpa implements ScoredResult {
     this.obsolete = result.isObsolete();
     this.value = result.getValue();
     this.score = result.getScore();
+    this.model = result.getModel();
   }
 
   /**
@@ -142,10 +143,12 @@ public class ScoredResultJpa implements ScoredResult {
   }
   
   @Override
+  @XmlTransient
   public InfoModel<?> getModel() {
     return model;
   }
   @Override
+  
   public void setModel(InfoModel<?> model) {
     this.model = model;
   }

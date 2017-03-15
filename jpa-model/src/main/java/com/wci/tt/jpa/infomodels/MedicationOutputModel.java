@@ -62,16 +62,25 @@ public class MedicationOutputModel implements InfoModel<MedicationOutputModel> {
    *
    * @param model the model
    */
-  public MedicationOutputModel(MedicationOutputModel model) {
-    this.inputString = model.getInputString();
-    this.model = model.getModel();
-    this.normalizedRemainingString = model.getNormalizedRemainingString();
-    this.normalizedString = model.getNormalizedString();
-    this.remainingString = model.getRemainingString();
-    this.removedTerms = model.getRemovedTerms();
-    this.type = model.getType();
+  public MedicationOutputModel(MedicationOutputModel outputModel) {
+    inputString = outputModel.getInputString();
+    model = outputModel.getModel();
+    normalizedRemainingString = outputModel.getNormalizedRemainingString();
+    normalizedString = outputModel.getNormalizedString();
+    remainingString = outputModel.getRemainingString();
+    removedTerms = new ArrayList<>(outputModel.getRemovedTerms());
+    type = outputModel.getType();
   }
   
+
+  @Override
+  public String toString() {
+    return "MedicationOutputModel [model=" + model + ", inputString="
+        + inputString + ", normalizedString=" + normalizedString
+        + ", remainingString=" + remainingString
+        + ", normalizedRemainingString=" + normalizedRemainingString
+        + ", removedTerms=" + removedTerms + ", type=" + type + "]";
+  }
 
   /**
    * Sets the model.
@@ -173,7 +182,7 @@ public class MedicationOutputModel implements InfoModel<MedicationOutputModel> {
    */
   public void setNormalizedRemainingString(String normalizedRemainingString) {
     this.normalizedRemainingString = normalizedRemainingString;
-    this.getName();
+    getName();
   }
 
   /**
@@ -202,6 +211,7 @@ public class MedicationOutputModel implements InfoModel<MedicationOutputModel> {
 
   /* see superclass */
   @Override
+  @XmlTransient
   public String getName() {
     return "MLDP Medication Output ModeL";
   }
@@ -240,9 +250,73 @@ public class MedicationOutputModel implements InfoModel<MedicationOutputModel> {
 
   /* see superclass */
   @Override
+  @XmlTransient
   public String getVersion() {
     return "1.0";
   }
+
+  @Override
+  public int hashCode() {
+    final int prime = 31;
+    int result = 1;
+    result =
+        prime * result + ((inputString == null) ? 0 : inputString.hashCode());
+    result = prime * result + ((normalizedRemainingString == null) ? 0
+        : normalizedRemainingString.hashCode());
+    result = prime * result
+        + ((normalizedString == null) ? 0 : normalizedString.hashCode());
+    result = prime * result
+        + ((remainingString == null) ? 0 : remainingString.hashCode());
+    result =
+        prime * result + ((removedTerms == null) ? 0 : removedTerms.hashCode());
+    result = prime * result + ((type == null) ? 0 : type.hashCode());
+    return result;
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj)
+      return true;
+    if (obj == null)
+      return false;
+    if (getClass() != obj.getClass())
+      return false;
+    MedicationOutputModel other = (MedicationOutputModel) obj;
+    if (inputString == null) {
+      if (other.inputString != null)
+        return false;
+    } else if (!inputString.equals(other.inputString))
+      return false;
+    if (normalizedRemainingString == null) {
+      if (other.normalizedRemainingString != null)
+        return false;
+    } else if (!normalizedRemainingString
+        .equals(other.normalizedRemainingString))
+      return false;
+    if (normalizedString == null) {
+      if (other.normalizedString != null)
+        return false;
+    } else if (!normalizedString.equals(other.normalizedString))
+      return false;
+    if (remainingString == null) {
+      if (other.remainingString != null)
+        return false;
+    } else if (!remainingString.equals(other.remainingString))
+      return false;
+    if (removedTerms == null) {
+      if (other.removedTerms != null)
+        return false;
+    } else if (!removedTerms.equals(other.removedTerms))
+      return false;
+    if (type == null) {
+      if (other.type != null)
+        return false;
+    } else if (!type.equals(other.type))
+      return false;
+    return true;
+  }
+  
+  
 
 
 }

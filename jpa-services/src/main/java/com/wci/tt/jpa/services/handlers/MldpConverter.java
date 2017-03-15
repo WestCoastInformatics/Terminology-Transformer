@@ -11,8 +11,6 @@ import com.wci.tt.TransformRecord;
 import com.wci.tt.helpers.DataContextTuple;
 import com.wci.tt.helpers.DataContextType;
 import com.wci.tt.jpa.helpers.DataContextTupleJpa;
-import com.wci.tt.jpa.infomodels.MedicationModel;
-import com.wci.tt.jpa.infomodels.MedicationOutputModel;
 import com.wci.tt.jpa.services.helper.DataContextMatcher;
 import com.wci.tt.services.handlers.ConverterHandler;
 import com.wci.umls.server.helpers.Branch;

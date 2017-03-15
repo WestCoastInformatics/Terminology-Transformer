@@ -749,4 +749,9 @@ public class DefaultAbbreviationHandler extends AbstractConfigurable
     return terminology + "-ABBR";
   }
 
+  @Override
+  public String getTerminologyFromAbbrType(String type) {
+    return type.replace("-TERM", "");
+  }
+
 }

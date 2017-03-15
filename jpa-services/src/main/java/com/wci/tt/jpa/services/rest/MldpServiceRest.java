@@ -327,11 +327,30 @@ public interface MldpServiceRest {
     throws Exception;
 
 
-  void putTermsInWorkflow(Long projectId, List<Long> termIds,
+  /**
+   * Put terms in workflow.
+   *
+   * @param projectId the project id
+   * @param termIds the term ids
+   * @param workflowStatus the workflow status
+   * @param authToken the auth token
+   * @throws Exception the exception
+   */
+  public void putTermsInWorkflow(Long projectId, List<Long> termIds,
     WorkflowStatus workflowStatus, String authToken) throws Exception;
 
+  /**
+   * Export terms file.
+   *
+   * @param projectId the project id
+   * @param status the status
+   * @param exportModel the export model
+   * @param authToken the auth token
+   * @return the input stream
+   * @throws Exception the exception
+   */
   public InputStream exportTermsFile(Long projectId, WorkflowStatus status,
-    String authToken) throws Exception;
+    boolean exportModel, String authToken) throws Exception;
 
 
 }
