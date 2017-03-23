@@ -15,7 +15,24 @@ import com.wci.umls.server.helpers.TypeKeyValue;
 public interface MldpService extends CoordinatorService {
 
 
+  /**
+   * Process term.
+   *
+   * @param term the term
+   * @return the scored data context tuple list
+   * @throws Exception the exception
+   */
   public ScoredDataContextTupleList processTerm(TypeKeyValue term) throws Exception;
+
+  
+  /**
+   * Process term with caching.
+   *
+   * @param term the term
+   * @return the scored data context tuple list
+   * @throws Exception the exception
+   */
+  public ScoredDataContextTupleList processTermWithCaching(TypeKeyValue term) throws Exception;
 
   /**
    * Process terms.

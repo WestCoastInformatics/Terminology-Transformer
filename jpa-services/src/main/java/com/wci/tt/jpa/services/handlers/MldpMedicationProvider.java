@@ -304,7 +304,11 @@ public class MldpMedicationProvider extends AbstractAcceptsHandler
   @Override
   public List<ScoredResult> process(TransformRecord record) throws Exception {
 
-    debugMode = "true".equals(System.getProperty("mldpdebug"));
+    debugMode = "true".equals(System.getProperty("mldpDebug"));
+
+    if (debugMode) {
+      System.out.println("** DEBUG MODE **");
+    }
 
     Long startTime = System.currentTimeMillis();
 
@@ -318,6 +322,10 @@ public class MldpMedicationProvider extends AbstractAcceptsHandler
 
     // set parameters from input context
     setParameters(inputContext);
+
+    if (!cacheMode) {
+      System.out.println("************************* Not in cache mode");
+    }
 
     if (maxPhraseLength == -1) {
       throw new Exception("Maximum phrase length has no default value");
@@ -470,13 +478,13 @@ public class MldpMedicationProvider extends AbstractAcceptsHandler
               outputModel.getRemovedTerms().add(subsequence);
 
               // NOTE: Match either space-surrounded or bracket-surrounded
-              // (BrandName only) contents
+              // (to catch fully enclosed terms in brackets)
+              // TODO Consider expanding to parentheses/braces
               final String pattern =
-                  "[\\s" + (feature.equals("BrandName") ? "\\[" : "") + "]"
-                      + Pattern.quote(subsequence) + "[\\s"
-                      + (feature.equals("BrandName") ? "\\]" : "") + "]";
+                  "[\\s\\[]" + Pattern.quote(subsequence) + "[\\s\\]]";
 
               if (debugMode) {
+                System.out.println("pattern  : " + pattern);
                 System.out.println("remaining: " + remainingString);
               }
               remainingString = remainingString.replaceAll(pattern, " ");
@@ -529,19 +537,23 @@ public class MldpMedicationProvider extends AbstractAcceptsHandler
           if (debugMode) {
             System.out.println("Checking ingredients and strengths");
             System.out.println(inputString);
+            System.out.println("ingrs : " + ingredients);
+            System.out.println("strs  : " + strengths);
           }
 
           // match ingredients and strengths (naive form for now)
           // always expect sequence "Ingredient Strength"
           // e.g. Alanine 5.7 MG/ML / Arginine 3.16 MG/ML
           // NOTE: Ratios/concentrations not yet handled, see TODO above
+
+          // check ingredients against strengths and construct
           for (final String ingredient : ingredients.keySet()) {
             final IngredientModel ingrModel = new IngredientModel();
             ingrModel.setIngredient(new ValueRawModel(ingredient,
                 ingredients.get(ingredient).getTerminologyId()));
             for (final String strength : strengths.keySet()) {
-              final String pattern =
-                  ".*\\b" + ingredient + " " + strength + "\\b.*";
+              final String pattern = ".*\\b"
+                  + Pattern.quote(ingredient + " " + strength) + "\\b.*";
               if (debugMode) {
                 System.out.println("  Checking: " + pattern);
               }
@@ -549,31 +561,21 @@ public class MldpMedicationProvider extends AbstractAcceptsHandler
                 if (debugMode) {
                   System.out.println("    Found ingr/str match: " + ingredient
                       + " " + strength);
-                  ingrModel.setStrength(new ValueRawModel(strength,
-                      strengths.get(strength).getTerminologyId()));
                 }
+                ingrModel.setStrength(new ValueRawModel(strength,
+                    strengths.get(strength).getTerminologyId()));
 
               }
             }
             if (ingrModel.getStrength() == null) {
-              System.out.println("    Flagging ingr/str mismatch");
               ingrStrMatch = false;
             }
+            if (inputString.contains("Plerixafor")) {
+              System.out.println("  test case: " + inputString);
+              System.out
+                  .println("    test ingredient: " + ingrModel.toString());
+            }
             medModel.getIngredients().add(ingrModel);
-          }
-
-          if (!ingrStrMatch) {
-            if (debugMode) {
-              System.out.println(" ingr/str mismatch");
-            }
-            if (strengths.size() == 0) {
-              outputModel.setType("Ingrs/no strengths");
-            } else {
-              outputModel.setType("Ingr/str mismatch");
-            }
-
-          } else if (debugMode) {
-            System.out.println(" Ingr/str matched");
           }
 
         }
@@ -623,14 +625,7 @@ public class MldpMedicationProvider extends AbstractAcceptsHandler
         }
 
         break;
-      case "Ingrs/no strengths":
-        if (outputModel.getNormalizedRemainingString().isEmpty()) {
-          result.setScore(0.70f);
-        } else {
-          result.setScore(0.0f);
-        }
-        break;
-      case "Ingr/str mismatch":
+      case "Medication - Modeling Required":
         if (outputModel.getNormalizedRemainingString().isEmpty()) {
           result.setScore(0.75f);
         } else {
@@ -732,7 +727,7 @@ public class MldpMedicationProvider extends AbstractAcceptsHandler
     return false;
   }
 
-  private final String allergyPattern = "(antigen)";
+  private final String allergyPattern = "(antigen|ragweed)";
 
   private boolean hasAllergyWords(ContentService service, String value)
     throws Exception {
@@ -743,7 +738,8 @@ public class MldpMedicationProvider extends AbstractAcceptsHandler
     return false;
   }
 
-  private final String immunizationPattern = "(tdap|vaccine|measles|influenza)";
+  private final String immunizationPattern =
+      "(tdap|vaccine|measles|influenza|meningitidis)";
 
   private boolean hasImmunizationWords(ContentService service, String value)
     throws Exception {

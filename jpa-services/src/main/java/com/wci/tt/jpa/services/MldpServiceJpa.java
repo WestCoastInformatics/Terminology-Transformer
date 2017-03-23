@@ -35,7 +35,7 @@ public class MldpServiceJpa extends CoordinatorServiceJpa
   // NOTE: Discard this once CoordinatorService converter handling
   // allows passing of the model object itself
   private final static Pattern typePattern =
-      Pattern.compile("\\\"type\\\"\\s*:\\s*\"([^,]*)\",");
+      Pattern.compile("\\\"type\\\"\\s*:\\s*\"([^\"]*)\"");
 
   public MldpServiceJpa() throws Exception {
     super();
@@ -43,9 +43,20 @@ public class MldpServiceJpa extends CoordinatorServiceJpa
   }
 
   @Override
+  public ScoredDataContextTupleList processTermWithCaching(TypeKeyValue term)
+    throws Exception {
+    return processTermHelper(term, true);
+  }
+
+  @Override
   public ScoredDataContextTupleList processTerm(TypeKeyValue term)
     throws Exception {
     Logger.getLogger(getClass()).info("process term " + term);
+    return processTermHelper(term, false);
+  }
+
+  private ScoredDataContextTupleList processTermHelper(TypeKeyValue term,
+    boolean cacheMode) throws Exception {
 
     // Translate tuples into JPA object
     final ScoredDataContextTupleList tuples =
@@ -59,10 +70,9 @@ public class MldpServiceJpa extends CoordinatorServiceJpa
         getTerminologyLatestVersion(terminology).getVersion();
     inputContext.setTerminology(terminology);
     inputContext.setVersion(version);
-    
+
     // single term does not use cache mode
-    inputContext.getParameters().put("cacheMode", "false");
-    inputContext.getParameters().put("mldpdebug", "true");
+    inputContext.getParameters().put("cacheMode", cacheMode ? "true" : "false");
 
     DataContext outputContext = new DataContextJpa();
     outputContext.setType(DataContextType.INFO_MODEL);
@@ -96,7 +106,7 @@ public class MldpServiceJpa extends CoordinatorServiceJpa
   public void processTerms(List<TypeKeyValue> terms) throws Exception {
 
     Logger.getLogger(getClass()).info("Processing " + terms.size() + " terms");
-   if (terms.size() > 0) {
+    if (terms.size() > 0) {
 
       TermHandler handler = new TermHandler();
 
@@ -111,10 +121,9 @@ public class MldpServiceJpa extends CoordinatorServiceJpa
       inputContext.setTerminology(terminology);
       inputContext.setVersion(version);
       inputContext.setType(DataContextType.NAME);
-      
+
       // multiple terms uses cache mode
       inputContext.getParameters().put("cacheMode", "true");
-      inputContext.getParameters().put("mldpdebug", "true");
 
       // output context: MEDICATION_MODEL
       final DataContext outputContext = new DataContextJpa();
@@ -123,8 +132,6 @@ public class MldpServiceJpa extends CoordinatorServiceJpa
       outputContext.setVersion(version);
       outputContext.setType(DataContextType.INFO_MODEL);
       outputContext.setInfoModelClass(MedicationOutputModel.class.getName());
-
-
 
       try {
         setTransactionPerOperation(false);
@@ -163,7 +170,7 @@ public class MldpServiceJpa extends CoordinatorServiceJpa
 
   private void updateFromResult(TypeKeyValue term, ScoredResult scoredResult) {
 
-    if ("true".equals(System.getProperty("mldpdebug"))) {
+    if ("true".equals(System.getProperty("mldpDebug"))) {
       System.out.println("term: " + term);
       System.out.println("  result: " + scoredResult.getScore() + " "
           + scoredResult.getValue());
@@ -201,6 +208,10 @@ public class MldpServiceJpa extends CoordinatorServiceJpa
     } else {
       // represents errors
       term.setWorkflowStatus(WorkflowStatus.DEMOTION);
+    }
+
+    if ("true".equals(System.getProperty("mldpDebug"))) {
+      System.out.println("updated type key value: " + term);
     }
   }
 

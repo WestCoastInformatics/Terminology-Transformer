@@ -3,9 +3,13 @@
  */
 package com.wci.tt.jpa.services.handlers;
 
+import java.io.BufferedWriter;
 import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,8 +21,8 @@ import java.util.stream.Collectors;
 import org.apache.log4j.Logger;
 
 import com.wci.tt.helpers.ScoredDataContextTuple;
-import com.wci.tt.infomodels.InfoModel;
-import com.wci.tt.jpa.infomodels.MedicationModel;
+import com.wci.tt.jpa.infomodels.MedicationOutputModel;
+import com.wci.tt.jpa.services.MldpServiceJpa;
 import com.wci.tt.services.MldpService;
 import com.wci.tt.services.handlers.AbbreviationHandler;
 import com.wci.umls.server.ValidationResult;
@@ -411,6 +415,8 @@ public class TermHandler extends AbstractConfigurable
     PfsParameter pfs = new PfsParameterJpa();
     pfs.setSortField("key");
 
+    int ct = 0;
+
     final String query = "type:\"" + getAbbrType(terminology) + "\""
         + (status == null ? "" : " AND workflowStatus:" + status);
 
@@ -429,57 +435,70 @@ public class TermHandler extends AbstractConfigurable
   }
 
   @SuppressWarnings("unchecked")
-  public InputStream exportModelFile(String terminology, WorkflowStatus status, Class<InfoModel<?>> modelClass,
-    MldpService mldpService) throws Exception {
+  public void exportModelFile(List<TypeKeyValue> terms, String fileName)
+    throws Exception {
+
+    // TODO Have handler extend service
+    final MldpService mldpService = new MldpServiceJpa();
+    mldpService.setLastModifiedBy("admin");
+    mldpService.setTransactionPerOperation(false);
+    mldpService.beginTransaction();
 
     // Write a header
     // Obtain members for refset,
     // Write RF2 simple refset pattern to a StringBuilder
     // wrap and return the string for that as an input stream
-    StringBuilder sb = new StringBuilder();
-    sb.append("type").append("\t");
-    sb.append("key").append("\t");
-    sb.append("value").append("\r\n");
 
     // sort by key
     PfsParameter pfs = new PfsParameterJpa();
     pfs.setSortField("key");
-    
+
     // TODO remove after debug
     pfs.setStartIndex(0);
     pfs.setMaxResults(50);
 
-    final String query = "type:\"" + getAbbrType(terminology) + "\""
-        + (status == null ? "" : " AND workflowStatus:" + status);
+    Logger.getLogger(getClass()).info("Exporting " + terms.size() + " terms");
 
-    TypeKeyValueList terms = mldpService.findTypeKeyValuesForQuery(query, pfs);
+    // TODO Parameterize
+    File outputFile = new File(fileName);
+    FileOutputStream fos = new FileOutputStream(outputFile);
+    BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
 
-    Logger.getLogger(getClass())
-        .info("Exporting " + terms.getTotalCount() + " terms");
+    StringBuilder sb = new StringBuilder();
+    sb.append("type").append("\t");
+    sb.append("term").append("\t");
+    sb.append("model").append("\r\n");
 
-   
-    for (TypeKeyValue term : terms.getObjects()) {
-      
-      System.out.println("term: " + term);
+    bw.write(sb.toString());
+
+    int i = 0;
+
+    for (TypeKeyValue term : terms) {
 
       // TODO Once converters handle model output, remove this casting and
       // access directly
       final ScoredDataContextTuple tuple =
-          mldpService.processTerm(term).getObjects().get(0);
-     
-      System.out.println("tuple data:" + tuple.getData());
-      final InfoModel<?> outputModel =
-          ConfigUtility.getGraphForJson(tuple.getData(), modelClass);
-      
-      System.out.println("  model value: " + outputModel.getModelValue());
+          mldpService.processTermWithCaching(term).getObjects().get(0);
+      // TODO Make this configurable or discoverable in some way
+      // e.g. HKFT-MED maps to MedicationModel
+      final MedicationOutputModel outputModel = ConfigUtility
+          .getGraphForJson(tuple.getData(), MedicationOutputModel.class);
 
-      sb.append(term.getType()).append("\t");
+      // TODO Line by line writing for convenience, may impact performance
+      // slightly
+
+      sb = new StringBuilder();
+      sb.append(outputModel.getType()).append("\t");
       sb.append(term.getKey()).append("\t");
-      sb.append(term.getValue()).append("\t");
-      sb.append(outputModel.getModelValue()).append("\r\n");
-    }
+      sb.append(outputModel.getModel().getModelValue()).append("\r\n");
+      bw.write(sb.toString());
 
-    return new ByteArrayInputStream(sb.toString().getBytes("UTF-8"));
+      mldpService.logAndCommit(++i, 100, 100);
+      
+
+    }
+    mldpService.commit();
+    mldpService.close();
 
   }
 
@@ -732,7 +751,7 @@ public class TermHandler extends AbstractConfigurable
   public String getAbbrType(String terminology) {
     return terminology + "-TERM";
   }
-  
+
   @Override
   public String getTerminologyFromAbbrType(String type) {
     return type.replace("-TERM", "");
